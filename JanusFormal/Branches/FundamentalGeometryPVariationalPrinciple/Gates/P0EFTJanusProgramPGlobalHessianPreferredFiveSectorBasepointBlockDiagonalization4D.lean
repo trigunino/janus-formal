@@ -33,16 +33,43 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionResolutionBridge4D
+open P0EFTJanusProgramPGlobalCandidateAFiveSectorCompletionCoordinates4D
+open P0EFTJanusProgramPGlobalCandidateAFiveSectorOrthogonalProduct4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPFiveSectorOperatorBlockDiagonalization4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  commonHilbertNormedAddCommGroup
+  commonHilbertInnerProductSpace
+  commonHilbertNormedSpace
+  commonHilbertModule
+  commonHilbertCompleteSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -64,6 +91,8 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+
 variable
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -76,7 +105,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -88,13 +117,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 private def fivePhysicalSectorToCandidateA :
@@ -128,13 +157,31 @@ def preferredCandidateABasepointCommutingOperator
   commutes := by
     intro sector vector
     let candidateSector := fivePhysicalSectorToCandidateA sector
-    let sectorData :=
-      input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.
-        closure.frontier.analytic.geometry.coordinates
+    let baseClosure :=
+      input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.closure
+    let sectorData := baseClosure.frontier.analytic.geometry.coordinates
+    let concreteOperator :=
+      globalCandidateAActualKernelOperator period hPeriod configuration data
+        analysis
+        (globalCandidateAActualKernelChart period hPeriod configuration data
+          analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelSameAction period hPeriod configuration data
+          analysis einsteinScale hTransverse family)
+        (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
+          hPeriod configuration data analysis einsteinScale hTransverse family
+          chartBound)
     have hCommute :=
-      input.familyIndex.baseFamily.quillen.intrinsicFamily.basepoint.intrinsic.
-        closure.frontier.analytic.geometry.commute period hPeriod
-          candidateSector vector
+      baseClosure.frontier.analytic.geometry.commute period hPeriod
+        candidateSector vector
+    change concreteOperator
+        (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+          (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+            period hPeriod configuration data analysis sectorData)
+          candidateSector vector) =
+      globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+        (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+          period hPeriod configuration data analysis sectorData)
+        candidateSector (concreteOperator vector) at hCommute
     have hProjection :=
       globalCandidateAFiveSectorOrthogonalProjection_agreement period hPeriod
         configuration data analysis sectorData candidateSector vector
@@ -147,42 +194,67 @@ def preferredCandidateABasepointCommutingOperator
             (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
               period hPeriod configuration data analysis sectorData)
             candidateSector vector =
-          (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
-            sectorProjector sector vector := by
-      simpa [preferredCandidateAFiveSectorHilbertCoordinates, candidateSector,
-        sectorData] using hProjection
-    rw [input.familyIndex.baseFamily.actual_zero] at hProjectionOperator
-    have hProjectionOperator' := hProjectionOperator
-    have hProjectionOperator'' :
+          (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector
+            sector vector := by
+      change globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+          (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+            period hPeriod configuration data analysis sectorData)
+          candidateSector vector =
+        sectorData.coordinates.sectorProjector sector vector
+      simpa only [candidateSector, candidateA_to_fivePhysical_leftInverse] using
+        hProjection
+    have hProjectionOperator' :
         globalCandidateAFiveSectorOrthogonalProjection period hPeriod
             (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
               period hPeriod configuration data analysis sectorData)
             candidateSector
-            (globalCandidateAActualKernelOperator period hPeriod configuration data
-              analysis
-              (globalCandidateAActualKernelChart period hPeriod configuration data
-                analysis einsteinScale hTransverse family)
-              (globalCandidateAActualKernelSameAction period hPeriod configuration
-                data analysis einsteinScale hTransverse family)
-              (globalCandidateACanonicalSixPhysicalExtension_of_chartBound
-                period hPeriod configuration data analysis einsteinScale
-                hTransverse family chartBound) vector) =
-          (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).
-            sectorProjector sector
-            (globalCandidateAActualKernelOperator period hPeriod configuration data
-              analysis
-              (globalCandidateAActualKernelChart period hPeriod configuration data
-                analysis einsteinScale hTransverse family)
-              (globalCandidateAActualKernelSameAction period hPeriod configuration
-                data analysis einsteinScale hTransverse family)
-              (globalCandidateACanonicalSixPhysicalExtension_of_chartBound
-                period hPeriod configuration data analysis einsteinScale
-                hTransverse family chartBound) vector) := by
-      simpa [preferredCandidateAFiveSectorHilbertCoordinates, candidateSector,
-        sectorData] using hProjectionOperator'
-    rw [input.familyIndex.baseFamily.actual_zero]
-    rw [← hProjection', ← hProjectionOperator'']
-    exact hCommute
+            (input.familyIndex.baseFamily.actualOperator 0 vector) =
+          (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector sector
+            (input.familyIndex.baseFamily.actualOperator 0 vector) := by
+      change globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+          (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+            period hPeriod configuration data analysis sectorData)
+          candidateSector _ = sectorData.coordinates.sectorProjector sector _
+      simpa only [candidateSector, candidateA_to_fivePhysical_leftInverse] using
+        hProjectionOperator
+    have hOperator_apply (value :
+        GlobalHessianPreferredFiveSectorBismutFreedHilbert4D period hPeriod
+          configuration data analysis) :
+        input.familyIndex.baseFamily.actualOperator 0 value =
+          concreteOperator value := by
+      rw [input.familyIndex.baseFamily.actual_zero]
+      rfl
+    have hCommute' :
+        input.familyIndex.baseFamily.actualOperator 0
+            (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+              (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+                period hPeriod configuration data analysis sectorData)
+              candidateSector vector) =
+          globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+            (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+              period hPeriod configuration data analysis sectorData)
+            candidateSector
+            (input.familyIndex.baseFamily.actualOperator 0 vector) := by
+      rw [hOperator_apply, hOperator_apply]
+      exact hCommute
+    calc
+      input.familyIndex.baseFamily.actualOperator 0
+          ((preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector
+            sector vector) =
+        input.familyIndex.baseFamily.actualOperator 0
+          (globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+            (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+              period hPeriod configuration data analysis sectorData)
+            candidateSector vector) := congrArg _ hProjection'.symm
+      _ = globalCandidateAFiveSectorOrthogonalProjection period hPeriod
+            (globalCandidateAFiveSectorOrthogonalProductOfCompletionCoordinates
+              period hPeriod configuration data analysis sectorData)
+            candidateSector
+            (input.familyIndex.baseFamily.actualOperator 0 vector) := hCommute'
+      _ = (preferredCandidateAFiveSectorHilbertCoordinates period hPeriod input).sectorProjector
+            sector
+            (input.familyIndex.baseFamily.actualOperator 0 vector) :=
+        hProjectionOperator'
 
 /-- The five blocks extracted from the actual basepoint Hessian. -/
 def preferredCandidateABasepointMetricBlock
@@ -226,8 +298,7 @@ theorem preferredCandidateABasepoint_blockDiagonal
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
     (x : FiveSectorProduct Metric Abelian Matter Longitudinal Boundary) :
-    (preferredCandidateABasepointCommutingOperator period hPeriod input).
-        conjugatedOperator x =
+    (preferredCandidateABasepointCommutingOperator period hPeriod input).conjugatedOperator x =
       fiveSectorMetricAxis
           (preferredCandidateABasepointMetricBlock period hPeriod input
             (fiveSectorMetricCoordinate x)) +
@@ -243,8 +314,7 @@ theorem preferredCandidateABasepoint_blockDiagonal
         fiveSectorBoundaryAxis
           (preferredCandidateABasepointBoundaryBlock period hPeriod input
             (fiveSectorBoundaryCoordinate x)) :=
-  (preferredCandidateABasepointCommutingOperator period hPeriod input).
-    conjugatedOperator_blockDiagonal x
+  (preferredCandidateABasepointCommutingOperator period hPeriod input).conjugatedOperator_blockDiagonal x
 
 /-- Public Candidate-A basepoint block-diagonalization checkpoint. -/
 theorem global_hessian_preferred_five_sector_basepoint_block_diagonalization_gate
@@ -252,8 +322,7 @@ theorem global_hessian_preferred_five_sector_basepoint_block_diagonalization_gat
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index) :
     ∀ x : FiveSectorProduct Metric Abelian Matter Longitudinal Boundary,
-      (preferredCandidateABasepointCommutingOperator period hPeriod input).
-          conjugatedOperator x =
+      (preferredCandidateABasepointCommutingOperator period hPeriod input).conjugatedOperator x =
         fiveSectorMetricAxis
             (preferredCandidateABasepointMetricBlock period hPeriod input
               (fiveSectorMetricCoordinate x)) +

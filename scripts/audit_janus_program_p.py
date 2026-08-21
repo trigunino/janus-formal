@@ -6012,6 +6012,30 @@ PROGRAM_P_GATES = {
             "theorem diagonalExtendedBulkL2GraphTypedCoreLinearMap_injective",
         ),
     ),
+    "P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2CorePairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem diagonalExtendedBulkSmoothCoreToLegacy_injective",
+            "theorem diagonalExtendedBulkL2SmoothEmbedding_injective",
+            "theorem diagonalExtendedBulkL2SmoothEmbedding_inner",
+            "theorem diagonalExtendedBulkL2CoreInner_self_eq_zero_iff",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkD10SpineL2Bridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateADiagonalExtendedBulkD10SpineEmbedding_injective",
+            "theorem globalCandidateADiagonalExtendedBulkD10Coordinate_section",
+            "theorem globalCandidateADiagonalExtendedBulkD10Section_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaugeFixedTangentDenseRaccord4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem candidateANormalBoundarySmoothGaugeFixedTangentLinearMap_injective",
+            "theorem global_candidateA_normal_boundary_gauge_fixed_tangent_dense_raccord_gate",
+        ),
+    ),
     "P0EFTJanusProgramPGlobalCandidateAMatterFiniteGraphVariationalChart4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

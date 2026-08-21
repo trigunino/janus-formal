@@ -81,11 +81,6 @@ attribute [local instance]
   actualKernelNormedSpace
   actualKernelModule
   actualKernelCompleteSpace
-  translationNormedAddCommGroup
-  translationInnerProductSpace
-  translationNormedSpace
-  translationModule
-  translationCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 

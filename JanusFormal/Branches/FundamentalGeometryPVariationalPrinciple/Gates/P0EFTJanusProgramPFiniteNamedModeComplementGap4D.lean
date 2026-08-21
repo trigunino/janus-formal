@@ -1,4 +1,4 @@
-import Mathlib.Analysis.InnerProductSpace.Projection
+import Mathlib.Analysis.InnerProductSpace.Projection.Basic
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
@@ -31,14 +31,15 @@ set_option synthInstance.maxHeartbeats 1300000
 
 noncomputable section
 
+universe u v
+
 open Set
 open scoped InnerProductSpace
 open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Ambient span of finitely many named modes. -/
 def finiteNamedModeAmbientSpan
@@ -50,7 +51,7 @@ local instance finiteNamedModeAmbientSpanFiniteDimensional
     (vector : ZeroMode → E) :
     FiniteDimensional Real (finiteNamedModeAmbientSpan vector) := by
   unfold finiteNamedModeAmbientSpan
-  exact FiniteDimensional.span_of_finite (Set.finite_range vector)
+  exact FiniteDimensional.span_of_finite Real (Set.finite_range vector)
 
 /-- The span of named vectors lies in the genuine kernel. -/
 theorem finiteNamedModeAmbientSpan_le_kernel
@@ -143,7 +144,7 @@ their ambient span.  No finite-dimensionality of `ker operator` is stored. -/
 structure FiniteNamedModeComplementGapData
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type v) [Fintype ZeroMode] : Type (max u v) where
   vector : ZeroMode → E
   annihilated : ∀ mode, operator (vector mode) = 0
   gap : Real
@@ -168,10 +169,11 @@ theorem kernel_eq_namedSpan
     letI : FiniteDimensional Real span :=
       finiteNamedModeAmbientSpanFiniteDimensional data.vector
     letI : CompleteSpace span := FiniteDimensional.complete Real span
-    let projected : span := span.orthogonalProjection zeroMode
+    let projected : span := span.orthogonalProjectionOnto zeroMode
     let remainder : spanᗮ :=
       ⟨zeroMode - projected.1,
-        span.sub_orthogonalProjection_mem_orthogonal zeroMode⟩
+        by simpa [projected] using
+          span.sub_starProjection_mem_orthogonal zeroMode⟩
     have hProjectedZero : operator projected.1 = 0 :=
       operator_zero_on_finiteNamedModeAmbientSpan operator data.vector
         data.annihilated projected
@@ -180,7 +182,9 @@ theorem kernel_eq_namedSpan
           data.annihilated remainder = 0 := by
       apply Subtype.ext
       change operator (zeroMode - projected.1) = 0
-      rw [map_sub, LinearMap.mem_ker.mp hZeroMode, hProjectedZero, sub_self]
+      have hZeroMode' : operator zeroMode = 0 := by
+        exact LinearMap.mem_ker.mp hZeroMode
+      rw [map_sub, hZeroMode', hProjectedZero, sub_self]
     have hLower := data.lowerBound remainder
     rw [hRemainderZero, norm_zero] at hLower
     have hRemainderNorm : ‖remainder‖ = 0 := by
@@ -236,8 +240,8 @@ theorem finite_named_mode_complement_gap_gate
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : FiniteNamedModeComplementGapData operator hSelfAdjoint ZeroMode) :
     operator.ker = finiteNamedModeAmbientSpan data.vector ∧
-      SelfAdjointKernelComplementGapData operator hSelfAdjoint :=
-  ⟨data.kernel_eq_namedSpan, data.toActualKernelGap⟩
+      Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) :=
+  ⟨data.kernel_eq_namedSpan, ⟨data.toActualKernelGap⟩⟩
 
 end FiniteNamedModeComplementGapData
 

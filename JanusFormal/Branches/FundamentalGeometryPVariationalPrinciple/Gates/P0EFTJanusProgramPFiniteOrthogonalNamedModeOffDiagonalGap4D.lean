@@ -30,15 +30,16 @@ open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
 open P0EFTJanusProgramPFiniteNamedModeComplementGap4D
 open P0EFTJanusProgramPFiniteNamedModeComplementExactCount4D
 open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalOffDiagonalOperatorGarding4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- Orthogonal named zero modes and the complete one-form sector estimate on
@@ -46,7 +47,7 @@ the complement of their span. -/
 structure FiniteOrthogonalNamedModeOffDiagonalGapData
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode → E
   annihilated : ∀ mode, operator (vector mode) = 0
   nonzero : ∀ mode, vector mode ≠ 0
@@ -87,8 +88,11 @@ theorem kernelLinearIndependent
       (Component := Component) operator hSelfAdjoint ZeroMode) :
     LinearIndependent Real
       (finiteKernelNamedVector operator data.vector data.annihilated) := by
-  exact linearIndependent_of_ne_zero_of_inner_eq_zero
-    data.nonzero data.orthogonal
+  apply linearIndependent_of_ne_zero_of_inner_eq_zero
+  · intro mode hZero
+    exact data.nonzero mode (congrArg Subtype.val hZero)
+  · intro first second hNe
+    exact data.orthogonal hNe
 
 /-- Actual kernel gap without a supplied finite-kernel premise. -/
 def toActualKernelGap
@@ -108,8 +112,8 @@ theorem kernel_finrank_eq_card
     (data : FiniteOrthogonalNamedModeOffDiagonalGapData
       (Component := Component) operator hSelfAdjoint ZeroMode) :
     Module.finrank Real operator.ker = Fintype.card ZeroMode :=
-  (data.toComplementGap Component).kernel_finrank_eq_card
-    (data.kernelLinearIndependent Component)
+  P0EFTJanusProgramPFiniteNamedModeComplementExactCount4D.FiniteNamedModeComplementGapData.kernel_finrank_eq_card
+    (data.toComplementGap Component) (data.kernelLinearIndependent Component)
 
 /-- Public strongest generic named-mode/off-diagonal checkpoint. -/
 theorem finite_orthogonal_named_mode_offDiagonal_gap_gate
@@ -120,10 +124,10 @@ theorem finite_orthogonal_named_mode_offDiagonal_gap_gate
       (Component := Component) operator hSelfAdjoint ZeroMode) :
     operator.ker = finiteNamedModeAmbientSpan data.vector ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode ∧
-      SelfAdjointKernelComplementGapData operator hSelfAdjoint :=
+      Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) :=
   ⟨(data.toComplementGap Component).kernel_eq_namedSpan,
     data.kernel_finrank_eq_card Component,
-    data.toActualKernelGap Component⟩
+    ⟨data.toActualKernelGap Component⟩⟩
 
 end FiniteOrthogonalNamedModeOffDiagonalGapData
 

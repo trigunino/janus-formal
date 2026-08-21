@@ -37,9 +37,16 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearDuhamelSemigroupRankOneAverage4D
 open P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceShortDominatedProductThroatLongTimeCanonicalSchwarzAssembly4D
@@ -53,13 +60,30 @@ open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorResolvedKernelFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorDifferentiableNamedKernelFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11OperatorNormUnitaryFrame4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11PhysicalReferenceClosure4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceInvariantDomainSchwarzSpectralReferenceAtlas4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedLongExponentialSpectralReferenceAtlas4D
 open P0EFTJanusProductThroatPositiveHeatGapLongTime4D
 open P0EFTJanusProgramPLongTimeExponentialDominatingFunction4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelNormedAddCommGroup
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelNormedSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelModule
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelCompleteSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
+
+universe v x y z
 
 private abbrev EffectiveQuotient :=
   MappingTorus (reflectedSphereData period hPeriod)
@@ -78,89 +102,10 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
-private abbrev CandidateAHilbert
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) candidateAHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
 
 variable
-    {Slice ShortCutoff LongCutoff : Type*}
+    {Slice : Type x} {ShortCutoff : Type y} {LongCutoff : Type z}
     [MeasurableSpace Slice]
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -173,7 +118,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -185,13 +130,13 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     {fold : Fold} {Index : Type*}
 
 private abbrev OldAtlas
@@ -216,7 +161,8 @@ structure GlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProdu
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index) where
-  actual : UnitaryActualZetaFamilyData (E := BaseReduced period hPeriod input)
+  actual : UnitaryActualZetaFamilyData.{0, v}
+    (E := BaseReduced period hPeriod input)
   baseReferenceFamily : RelativeHeatMellinZetaFamilyData
   baseDifference : RelativeHeatMellinAnalyticDifferenceFamilyData
     (OldAtlas period hPeriod input).baseFamily.familyIndex.zetaFamily
@@ -226,27 +172,19 @@ structure GlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProdu
   baseShortTimeRegion : Set Real
   baseLongTimeStart : Real
   baseAssembly :
-    ReferenceNuclearHeatFinitePartSelectedTraceShortDominatedProductThroatLongTimeCanonicalSchwarzAssemblyData
+    ReferenceNuclearHeatFinitePartSelectedTraceShortDominatedProductThroatLongTimeCanonicalSchwarzAssemblyData.{0, 0, x, y, z}
       (E := BaseReduced period hPeriod input) baseProductData fold baseTwist
         sliceMeasure shortCutoffFilter longCutoffFilter
           (OldAtlas period hPeriod input).baseFamily.referenceOperator
             (OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace
               baseReferenceFamily baseShortTimeRegion baseLongTimeStart
-  baseSliceAverage : NuclearDuhamelSemigroupRankOneAverageData sliceMeasure
+  baseSliceAverage : NuclearDuhamelSemigroupRankOneAverageData.{x, 0, 0} sliceMeasure
     baseAssembly.nuclear
   baseShortSemigroup_eq :
-    baseAssembly.toShortDominatedLongExponentialCanonicalSchwarzAssembly.
-        toDominatedExponentialCanonicalSchwarzAssembly.
-          toSelectedTraceExponentialCanonicalSchwarzAssembly.
-            toSelectedTraceCanonicalSchwarzAssembly.spectralBoundary.
-              toFullySpectralBoundaryLimits.shortTime.semigroup =
+    baseAssembly.toShortDominatedLongExponentialCanonicalSchwarzAssembly.toDominatedExponentialCanonicalSchwarzAssembly.toSelectedTraceExponentialCanonicalSchwarzAssembly.toSelectedTraceCanonicalSchwarzAssembly.spectralBoundary.toFullySpectralBoundaryLimits.shortTime.semigroup =
       baseSliceAverage.toSemigroupProbabilityFamily
   baseLongSemigroup_eq :
-    baseAssembly.toShortDominatedLongExponentialCanonicalSchwarzAssembly.
-        toDominatedExponentialCanonicalSchwarzAssembly.
-          toSelectedTraceExponentialCanonicalSchwarzAssembly.
-            toSelectedTraceCanonicalSchwarzAssembly.spectralBoundary.
-              toFullySpectralBoundaryLimits.longTime.semigroup =
+    baseAssembly.toShortDominatedLongExponentialCanonicalSchwarzAssembly.toDominatedExponentialCanonicalSchwarzAssembly.toSelectedTraceExponentialCanonicalSchwarzAssembly.toSelectedTraceCanonicalSchwarzAssembly.spectralBoundary.toFullySpectralBoundaryLimits.longTime.semigroup =
       baseSliceAverage.toSemigroupProbabilityFamily
   localReferenceFamily : Index → RelativeHeatMellinZetaFamilyData
   localDifference : ∀ index,
@@ -258,7 +196,7 @@ structure GlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProdu
   localShortTimeRegion : Index → Set Real
   localLongTimeStart : Index → Real
   localAssembly : ∀ index,
-    ReferenceNuclearHeatFinitePartSelectedTraceShortDominatedProductThroatLongTimeCanonicalSchwarzAssemblyData
+    ReferenceNuclearHeatFinitePartSelectedTraceShortDominatedProductThroatLongTimeCanonicalSchwarzAssemblyData.{0, 0, x, y, z}
       (E := BaseReduced period hPeriod input) (localProductData index) fold
         (localTwist index) sliceMeasure shortCutoffFilter longCutoffFilter
           ((OldAtlas period hPeriod input).referenceOperator index)
@@ -266,21 +204,13 @@ structure GlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProdu
               (localReferenceFamily index) (localShortTimeRegion index)
                 (localLongTimeStart index)
   localSliceAverage : ∀ index,
-    NuclearDuhamelSemigroupRankOneAverageData sliceMeasure
+    NuclearDuhamelSemigroupRankOneAverageData.{x, 0, 0} sliceMeasure
       (localAssembly index).nuclear
   localShortSemigroup_eq : ∀ index,
-    (localAssembly index).toShortDominatedLongExponentialCanonicalSchwarzAssembly.
-        toDominatedExponentialCanonicalSchwarzAssembly.
-          toSelectedTraceExponentialCanonicalSchwarzAssembly.
-            toSelectedTraceCanonicalSchwarzAssembly.spectralBoundary.
-              toFullySpectralBoundaryLimits.shortTime.semigroup =
+    (localAssembly index).toShortDominatedLongExponentialCanonicalSchwarzAssembly.toDominatedExponentialCanonicalSchwarzAssembly.toSelectedTraceExponentialCanonicalSchwarzAssembly.toSelectedTraceCanonicalSchwarzAssembly.spectralBoundary.toFullySpectralBoundaryLimits.shortTime.semigroup =
       (localSliceAverage index).toSemigroupProbabilityFamily
   localLongSemigroup_eq : ∀ index,
-    (localAssembly index).toShortDominatedLongExponentialCanonicalSchwarzAssembly.
-        toDominatedExponentialCanonicalSchwarzAssembly.
-          toSelectedTraceExponentialCanonicalSchwarzAssembly.
-            toSelectedTraceCanonicalSchwarzAssembly.spectralBoundary.
-              toFullySpectralBoundaryLimits.longTime.semigroup =
+    (localAssembly index).toShortDominatedLongExponentialCanonicalSchwarzAssembly.toDominatedExponentialCanonicalSchwarzAssembly.toSelectedTraceExponentialCanonicalSchwarzAssembly.toSelectedTraceCanonicalSchwarzAssembly.spectralBoundary.toFullySpectralBoundaryLimits.longTime.semigroup =
       (localSliceAverage index).toSemigroupProbabilityFamily
 
 namespace GlobalHessianPreferredFiveSectorH14D11SelectedTraceShortDominatedProductThroatLongTimeSpectralReferenceData
@@ -305,8 +235,7 @@ def toShortDominatedLongExponentialSpectralReferenceData
   baseShortTimeRegion := spectral.baseShortTimeRegion
   baseLongTimeStart := spectral.baseLongTimeStart
   baseAssembly :=
-    spectral.baseAssembly.
-      toShortDominatedLongExponentialCanonicalSchwarzAssembly
+    spectral.baseAssembly.toShortDominatedLongExponentialCanonicalSchwarzAssembly
   baseSliceAverage := spectral.baseSliceAverage
   baseShortSemigroup_eq := spectral.baseShortSemigroup_eq
   baseLongSemigroup_eq := spectral.baseLongSemigroup_eq
@@ -315,8 +244,7 @@ def toShortDominatedLongExponentialSpectralReferenceData
   localShortTimeRegion := spectral.localShortTimeRegion
   localLongTimeStart := spectral.localLongTimeStart
   localAssembly := fun index =>
-    (spectral.localAssembly index).
-      toShortDominatedLongExponentialCanonicalSchwarzAssembly
+    (spectral.localAssembly index).toShortDominatedLongExponentialCanonicalSchwarzAssembly
   localSliceAverage := spectral.localSliceAverage
   localShortSemigroup_eq := spectral.localShortSemigroup_eq
   localLongSemigroup_eq := spectral.localLongSemigroup_eq
@@ -342,8 +270,8 @@ def toPhysicalReferenceClosure
     GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D period hPeriod
       configuration data analysis einsteinScale hTransverse family chartBound
         Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index :=
-  (spectral.toShortDominatedLongExponentialSpectralReferenceData period hPeriod
-    input).toPhysicalReferenceClosure period hPeriod input natural frame zeroTrace
+  (spectral.toShortDominatedLongExponentialSpectralReferenceData period hPeriod input)
+    |>.toPhysicalReferenceClosure period hPeriod input natural frame zeroTrace
 
 /-- Public Candidate-A product-throat spectral checkpoint. -/
 theorem global_hessian_preferred_five_sector_H14_D11_selected_trace_short_dominated_product_throat_long_time_spectral_reference_atlas_gate
@@ -376,22 +304,19 @@ theorem global_hessian_preferred_five_sector_H14_D11_selected_trace_short_domina
     (∀ parameter,
       Integrable
         (longTimeExponentialBound
-          (spectral.baseAssembly.spectralBoundary.longTime.weighted.
-            longTimeScale parameter)
+          (spectral.baseAssembly.spectralBoundary.longTime.weighted.longTimeScale parameter)
           (productThroatPositiveHeatGap spectral.baseProductData))
         (volume.restrict (Set.Ioi spectral.baseLongTimeStart))) ∧
     (∀ index parameter,
       Integrable
         (longTimeExponentialBound
-          ((spectral.localAssembly index).spectralBoundary.longTime.weighted.
-            longTimeScale parameter)
+          ((spectral.localAssembly index).spectralBoundary.longTime.weighted.longTimeScale parameter)
           (productThroatPositiveHeatGap (spectral.localProductData index)))
         (volume.restrict (Set.Ioi (spectral.localLongTimeStart index)))) ∧
     (∀ parameter,
       relativeZetaConnectionCoefficient
           spectral.baseReferenceFamily.toZetaFamily parameter =
-        -((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.
-          trace parameter : Complex)) ∧
+        -((OldAtlas period hPeriod input).baseFamily.familyIndex.referenceTrace.trace parameter : Complex)) ∧
     (∀ index parameter,
       relativeZetaConnectionCoefficient
           (spectral.localReferenceFamily index).toZetaFamily parameter =
@@ -409,8 +334,7 @@ theorem global_hessian_preferred_five_sector_H14_D11_selected_trace_short_domina
   let closure := spectral.toPhysicalReferenceClosure period hPeriod input natural
     frame zeroTrace
   have hSelected :=
-    selected.
-      global_hessian_preferred_five_sector_H14_D11_selected_trace_invariant_domain_schwarz_spectral_reference_atlas_gate
+    selected.global_hessian_preferred_five_sector_H14_D11_selected_trace_invariant_domain_schwarz_spectral_reference_atlas_gate
         period hPeriod sliceMeasure shortCutoffFilter longCutoffFilter input
           natural frame zeroTrace
   exact

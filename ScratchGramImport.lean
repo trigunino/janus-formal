@@ -1,9 +1,0 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteFamilyGramBasis4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianPreferredFiveSectorProjectedKernelBasisFamily4D
-
-#check @LinearMap.mk
-#check @AddHom.mk
-#check @LinearIndependent.of_comp
-#check @LinearIndependent.map'
-#check NormedAddGroup.toIsTopologicalAddGroup
-#check NormedAddCommGroup.toIsTopologicalAddGroup

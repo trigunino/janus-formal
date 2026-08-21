@@ -19,6 +19,7 @@ open P0EFTJanusProgramPCandidateAFiveSectorCrossFormGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [NormedSpace Real E]
@@ -119,10 +120,11 @@ theorem candidateA_five_sector_principal_block_garding_gate
     0 < data.margin ∧
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.principalForm vector vector := by
-  simpa [margin, crossForm,
-    CandidateAFiveSectorCrossFormGardingData.margin,
-    CandidateAFiveSectorCrossFormGardingData.couplingConstant]
-    using data.toCrossFormGardingData.candidateA_five_sector_cross_form_garding_gate
+  change 0 < data.toCrossFormGardingData.margin ∧
+    ∀ vector : E,
+      data.toCrossFormGardingData.margin * ‖vector‖ ^ 2 ≤
+        data.toCrossFormGardingData.principalEnergy vector
+  exact data.toCrossFormGardingData.candidateA_five_sector_cross_form_garding_gate
 
 end CandidateAFiveSectorPrincipalBlockData
 

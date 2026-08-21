@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPProductThroatSphereNuclearBasepointOperatorBoundaryFinitePartAssembly4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPReferenceNuclearDuhamelFullyCountableTerminalBoundaryFrontend4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPProductThroatNuclearDuhamelLocallyUniformBochnerOperatorIntegral4D
 
 /-!
 # Fully countable spherical-basepoint operator-boundary frontend
@@ -19,6 +20,7 @@ noncomputable section
 
 open Filter MeasureTheory Set
 open P0EFTJanusGlobalSeparatedDiracModel
+open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProgramPFiniteHeatCountertermFinitePartVariation4D
 open P0EFTJanusProgramPFiniteHeatCountertermVariation4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
@@ -27,6 +29,7 @@ open P0EFTJanusProgramPNuclearHeatDuhamelCountertermSubtractedShortTimeQuadratic
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
 open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 open P0EFTJanusProgramPProductThroatSphereNuclearBasepointOperatorBoundaryFinitePartAssembly4D
+open P0EFTJanusProgramPProductThroatNuclearDuhamelLocallyUniformBochnerOperatorIntegral4D
 open P0EFTJanusProgramPProductThroatSphereNuclearHeatDuhamelCountertermSubtractedShortTimeBasepointQuadratic4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelFullyCountableTerminalBoundaryFrontend4D
 open P0EFTJanusProgramPRenormalizedNuclearDuhamelCountableRankOneBochnerFrontend4D
@@ -43,6 +46,7 @@ integrals.  No preassembled Green boundary packet is supplied. -/
 structure ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFrontendData
     (Index : Type*)
     (sphereData : ProductThroatSpectralData)
+    (fold : Fold) (twist : CircleTwist)
     (family : RelativeHeatMellinZetaFamilyData)
     (nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)) where
   finiteCounterterm : FiniteHeatCountertermFinitePartVariationData Index
@@ -52,11 +56,8 @@ structure ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFront
     RenormalizedNuclearDuhamelCountableRankOneBochnerFrontendData nuclear
       shortTimeBasepoint.toCountertermSubtractedShortTimeQuadratic
   longFrontend :
-    NuclearDuhamelCountableRankOneBochnerOperatorIntegralData nuclear
-      (Set.Ioi (1 : Real))
-  longIntegrand_continuousOn : ∀ parameter,
-    ContinuousOn (longFrontend.operatorIntegrand parameter)
-      (Set.Ici (1 : Real))
+    ProductThroatNuclearDuhamelLocallyUniformBochnerOperatorIntegralData
+      sphereData fold twist nuclear 1
   finitePartOperator : Real → E →L[Real] E
   finitePartTraceClass : ∀ parameter,
     IntrinsicNuclearTraceData.{u, v} (finitePartOperator parameter)
@@ -67,7 +68,9 @@ structure ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFront
   shortBoundaryIdentity : ∀ parameter,
     (shortFrontend.toRenormalizedOperatorIntegral.integratedOperator parameter -
         finitePartOperator parameter) +
-      longFrontend.integratedOperator parameter =
+      (longFrontend.toCountableRankOneBochnerOperatorIntegral
+        |>.toCountableRankOneBochnerOperatorIntegral
+        |>.toNuclearDuhamelOperatorIntegral).integratedOperator parameter =
         logarithmicDerivativeOperator parameter
   familyHeatTrace_eq : ∀ parameter time,
     family.finitePartFamily.heatTrace parameter time =
@@ -86,42 +89,63 @@ structure ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFront
 
 namespace ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFrontendData
 
-/-- Fully countable Green-boundary frontend generated from the two regional
-operator integrands. -/
-def toFullyCountableTerminalBoundaryFrontend
+/-- Canonical generated product-throat terminal boundary. -/
+def toGeneratedBochnerTerminalBoundary
     {Index : Type*}
     {sphereData : ProductThroatSpectralData}
+    {fold : Fold} {twist : CircleTwist}
     {family : RelativeHeatMellinZetaFamilyData}
     {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     (data :
       ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFrontendData
-        Index sphereData family nuclear) :
-    ReferenceNuclearDuhamelFullyCountableTerminalBoundaryFrontendData nuclear
-      data.finiteCounterterm
-      data.shortTimeBasepoint.toCountertermSubtractedShortTimeQuadratic where
+        Index sphereData fold twist family nuclear) :
+    ProductThroatReferenceNuclearDuhamelGeneratedBochnerTerminalBoundaryData
+      Index sphereData fold twist nuclear data.finiteCounterterm
+        data.shortTimeBasepoint.toCountertermSubtractedShortTimeQuadratic where
   shortFrontend := data.shortFrontend
-  longFrontend := data.longFrontend
-  longIntegrand_continuousOn := data.longIntegrand_continuousOn
+  longTime := data.longFrontend
   finitePartOperator := data.finitePartOperator
   finitePartTraceClass := data.finitePartTraceClass
   finitePartDerivative_eq_trace := data.finitePartDerivative_eq_trace
   logarithmicDerivativeOperator := data.logarithmicDerivativeOperator
   shortBoundaryIdentity := data.shortBoundaryIdentity
 
-/-- Canonical spherical operator-boundary assembly. -/
-def toOperatorBoundaryFinitePartAssembly
+/-- Fully countable Green-boundary frontend generated from the two regional
+operator integrands. -/
+def toFullyCountableTerminalBoundaryFrontend
     {Index : Type*}
     {sphereData : ProductThroatSpectralData}
+    {fold : Fold} {twist : CircleTwist}
     {family : RelativeHeatMellinZetaFamilyData}
     {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
     (data :
       ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFrontendData
-        Index sphereData family nuclear) :
+        Index sphereData fold twist family nuclear) :
+    ReferenceNuclearDuhamelFullyCountableTerminalBoundaryFrontendData nuclear
+      data.finiteCounterterm
+      data.shortTimeBasepoint.toCountertermSubtractedShortTimeQuadratic :=
+  data.toGeneratedBochnerTerminalBoundary
+    |>.toLocallyUniformFullyCountableTerminalBoundary
+    |>.toFullyCountableTerminalBoundary
+    |>.toFullyCountableTerminalBoundaryFrontend
+
+/-- Canonical spherical operator-boundary assembly. -/
+def toOperatorBoundaryFinitePartAssembly
+    {Index : Type*}
+    {sphereData : ProductThroatSpectralData}
+    {fold : Fold} {twist : CircleTwist}
+    {family : RelativeHeatMellinZetaFamilyData}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E)}
+    (data :
+      ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFrontendData
+        Index sphereData fold twist family nuclear) :
     ProductThroatSphereNuclearBasepointOperatorBoundaryFinitePartAssemblyData
       Index (atTop : Filter Real) sphereData family nuclear where
   finiteCounterterm := data.finiteCounterterm
   shortTimeBasepoint := data.shortTimeBasepoint
-  longTime := data.longFrontend.toNuclearDuhamelOperatorIntegral
+  longTime := data.longFrontend.toCountableRankOneBochnerOperatorIntegral
+    |>.toCountableRankOneBochnerOperatorIntegral
+    |>.toNuclearDuhamelOperatorIntegral
   operatorBoundary :=
     data.toFullyCountableTerminalBoundaryFrontend.toGreenBoundaryData
   familyHeatTrace_eq := data.familyHeatTrace_eq
@@ -135,15 +159,18 @@ canonical operator-boundary assembly. -/
 theorem product_throat_sphere_nuclear_basepoint_fully_countable_operator_boundary_frontend_gate
     (Index : Type*)
     (sphereData : ProductThroatSpectralData)
+    (fold : Fold) (twist : CircleTwist)
     (family : RelativeHeatMellinZetaFamilyData)
     (nuclear : NuclearHeatDuhamelTraceVariationData.{u, v} (E := E))
     (data :
       ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFrontendData
-        Index sphereData family nuclear) :
+        Index sphereData fold twist family nuclear) :
     (∀ parameter,
       ((data.shortFrontend.toRenormalizedOperatorIntegral.integratedOperator
           parameter - data.finitePartOperator parameter) +
-        data.longFrontend.toNuclearDuhamelOperatorIntegral.integratedOperator
+        (data.longFrontend.toCountableRankOneBochnerOperatorIntegral
+          |>.toCountableRankOneBochnerOperatorIntegral
+          |>.toNuclearDuhamelOperatorIntegral).integratedOperator
           parameter) =
         data.logarithmicDerivativeOperator parameter) ∧
     (∀ parameter,
@@ -161,12 +188,16 @@ theorem product_throat_sphere_nuclear_basepoint_fully_countable_operator_boundar
           relativeHeatFinitePartLogDeterminant
             (family.finitePartFamily.finitePart current))
         ((data.toOperatorBoundaryFinitePartAssembly.operatorBoundary).logarithmicTrace
-          parameter) parameter) := by
+          parameter) parameter) ∧
+    (∀ parameter,
+      Integrable (data.longFrontend.operatorIntegrand parameter)
+        (volume.restrict (Set.Ioi (1 : Real)))) := by
   have hAssembly :=
     ProductThroatSphereNuclearBasepointOperatorBoundaryFinitePartAssemblyData.product_throat_sphere_nuclear_basepoint_operator_boundary_finite_part_assembly_gate
         Index (atTop : Filter Real) sphereData family nuclear
           data.toOperatorBoundaryFinitePartAssembly
-  exact ⟨hAssembly.2.1, hAssembly.2.2.1, hAssembly.2.2.2⟩
+  exact ⟨hAssembly.2.1, hAssembly.2.2.1, hAssembly.2.2.2,
+    data.longFrontend.operatorIntegrable⟩
 
 end ProductThroatSphereNuclearBasepointFullyCountableOperatorBoundaryFrontendData
 

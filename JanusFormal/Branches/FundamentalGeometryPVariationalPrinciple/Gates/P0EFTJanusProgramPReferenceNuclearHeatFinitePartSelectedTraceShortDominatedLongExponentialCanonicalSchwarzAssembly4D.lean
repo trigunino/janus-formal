@@ -21,17 +21,24 @@ namespace P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceShortDomi
 set_option autoImplicit false
 noncomputable section
 
-open Filter Set
+open Filter Set MeasureTheory
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
+open P0EFTJanusProgramPLongTimeExponentialDominatingFunction4D
 open P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTrace4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenSelectedTraceShortDominatedLongExponentialBoundaryLimits4D
 open P0EFTJanusProgramPReferenceNuclearHeatFinitePartSelectedTraceDominatedExponentialCanonicalSchwarzAssembly4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaCanonicalSchwarzReflection4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 
-variable {Slice ShortCutoff LongCutoff E : Type*}
+universe e i s a b
+
+variable {Slice : Type s} {ShortCutoff : Type a} {LongCutoff : Type b}
+  {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 structure ReferenceNuclearHeatFinitePartSelectedTraceShortDominatedLongExponentialCanonicalSchwarzAssemblyData
@@ -39,29 +46,25 @@ structure ReferenceNuclearHeatFinitePartSelectedTraceShortDominatedLongExponenti
     (shortCutoffFilter : Filter ShortCutoff) [NeBot shortCutoffFilter]
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
     (referenceOperator : Real → E →L[Real] E)
-    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator)
+    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i}
+      referenceOperator)
     (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion : Set Real) (longTimeStart : Real) where
-  nuclear : NuclearHeatDuhamelTraceVariationData (E := E)
+  nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)
   countertermContribution : Real → Real
   spectralBoundary :
-    ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedLongExponentialBoundaryLimitsData
+    ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedLongExponentialBoundaryLimitsData.{e, i, s, a, b}
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
         countertermContribution shortTimeRegion longTimeStart
           referenceOperator selectedTrace
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter +
-        spectralBoundary.toDominatedExponentialBoundaryLimits.
-            toSelectedTraceExponentialBoundaryLimits.toSelectedTraceBoundaryLimits.
-              toFullySpectralBoundaryLimits.shortTime.weighted.
-                toWeightedHeatTraceVariation.contribution parameter +
-          spectralBoundary.toDominatedExponentialBoundaryLimits.
-              toSelectedTraceExponentialBoundaryLimits.toSelectedTraceBoundaryLimits.
-                toFullySpectralBoundaryLimits.longTime.weighted.
-                  toWeightedHeatTraceVariation.contribution parameter
+        spectralBoundary.toDominatedExponentialBoundaryLimits.toSelectedTraceExponentialBoundaryLimits.toSelectedTraceBoundaryLimits.toFullySpectralBoundaryLimits.shortTime.weighted.toWeightedHeatTraceVariation.contribution
+            parameter +
+          spectralBoundary.toDominatedExponentialBoundaryLimits.toSelectedTraceExponentialBoundaryLimits.toSelectedTraceBoundaryLimits.toFullySpectralBoundaryLimits.longTime.weighted.toWeightedHeatTraceVariation.contribution
+              parameter
   zetaCanonicalSchwarz : ∀ parameter,
     RelativeHeatMellinZetaCanonicalSchwarzReflectionData
       (family.continuation parameter)
@@ -75,7 +78,7 @@ def toDominatedExponentialCanonicalSchwarzAssembly
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     (data :
@@ -98,7 +101,7 @@ theorem longTime_bound_integrable
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     (data :
@@ -107,8 +110,7 @@ theorem longTime_bound_integrable
           referenceOperator selectedTrace family shortTimeRegion longTimeStart)
     (parameter : Real) :
     Integrable
-      (P0EFTJanusProgramPLongTimeExponentialDominatingFunction4D.
-        longTimeExponentialBound
+      (longTimeExponentialBound
           (data.spectralBoundary.longTime.weighted.scale parameter)
           (data.spectralBoundary.longTime.weighted.rate parameter))
       (volume.restrict (Set.Ioi longTimeStart)) :=
@@ -120,7 +122,7 @@ theorem shortTime_hasDerivAt
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     (data :
@@ -129,12 +131,11 @@ theorem shortTime_hasDerivAt
           referenceOperator selectedTrace family shortTimeRegion longTimeStart)
     (parameter : Real) :
     HasDerivAt
-      data.spectralBoundary.shortTime.toCollapsedRankOneIntegral.weighted.
-        toWeightedHeatTraceVariation.contribution
+      data.spectralBoundary.shortTime.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
       (-(∫ time in shortTimeRegion,
-        data.nuclear.extendedDuhamelTrace parameter time)) parameter :=
-  data.toDominatedExponentialCanonicalSchwarzAssembly.
-    shortTime_hasDerivAt parameter
+        extendedDuhamelTrace data.nuclear parameter time)) parameter :=
+  data.toDominatedExponentialCanonicalSchwarzAssembly.shortTime_hasDerivAt
+    parameter
 
 /-- Exponentially dominated long-time differentiation. -/
 theorem longTime_hasDerivAt
@@ -142,7 +143,7 @@ theorem longTime_hasDerivAt
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     (data :
@@ -151,11 +152,9 @@ theorem longTime_hasDerivAt
           referenceOperator selectedTrace family shortTimeRegion longTimeStart)
     (parameter : Real) :
     HasDerivAt
-      data.spectralBoundary.longTime.toDominatedCollapsedRankOneIntegral.
-        toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.
-          contribution
+      data.spectralBoundary.longTime.toDominatedCollapsedRankOneIntegral.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
       (-(∫ time in Set.Ioi longTimeStart,
-        data.nuclear.extendedDuhamelTrace parameter time)) parameter :=
+        extendedDuhamelTrace data.nuclear parameter time)) parameter :=
   data.spectralBoundary.longTime_hasDerivAt parameter
 
 /-- The selected standalone reference coefficient. -/
@@ -164,7 +163,7 @@ theorem connectionCoefficient_eq_neg_selectedTrace
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     {family : RelativeHeatMellinZetaFamilyData}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     (data :
@@ -172,11 +171,10 @@ theorem connectionCoefficient_eq_neg_selectedTrace
         (E := E) sliceMeasure shortCutoffFilter longCutoffFilter
           referenceOperator selectedTrace family shortTimeRegion longTimeStart)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
       -(selectedTrace.trace parameter : Complex) :=
-  data.toDominatedExponentialCanonicalSchwarzAssembly.
-    connectionCoefficient_eq_neg_selectedTrace parameter
+  data.toDominatedExponentialCanonicalSchwarzAssembly.connectionCoefficient_eq_neg_selectedTrace
+    parameter
 
 /-- Public selected-reference short/long checkpoint. -/
 theorem reference_nuclear_heat_finite_part_selected_trace_short_dominated_long_exponential_canonical_schwarz_assembly_gate
@@ -184,7 +182,7 @@ theorem reference_nuclear_heat_finite_part_selected_trace_short_dominated_long_e
     (shortCutoffFilter : Filter ShortCutoff) [NeBot shortCutoffFilter]
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
     (referenceOperator : Real → E →L[Real] E)
-    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator)
+    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator)
     (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion : Set Real) (longTimeStart : Real)
     (data :
@@ -193,27 +191,22 @@ theorem reference_nuclear_heat_finite_part_selected_trace_short_dominated_long_e
           referenceOperator selectedTrace family shortTimeRegion longTimeStart) :
     (∀ parameter,
       Integrable
-        (P0EFTJanusProgramPLongTimeExponentialDominatingFunction4D.
-          longTimeExponentialBound
+        (longTimeExponentialBound
             (data.spectralBoundary.longTime.weighted.scale parameter)
             (data.spectralBoundary.longTime.weighted.rate parameter))
         (volume.restrict (Set.Ioi longTimeStart))) ∧
     (∀ parameter,
       HasDerivAt
-        data.spectralBoundary.shortTime.toCollapsedRankOneIntegral.weighted.
-          toWeightedHeatTraceVariation.contribution
+        data.spectralBoundary.shortTime.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
         (-(∫ time in shortTimeRegion,
-          data.nuclear.extendedDuhamelTrace parameter time)) parameter) ∧
+          extendedDuhamelTrace data.nuclear parameter time)) parameter) ∧
     (∀ parameter,
       HasDerivAt
-        data.spectralBoundary.longTime.toDominatedCollapsedRankOneIntegral.
-          toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.
-            contribution
+        data.spectralBoundary.longTime.toDominatedCollapsedRankOneIntegral.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
         (-(∫ time in Set.Ioi longTimeStart,
-          data.nuclear.extendedDuhamelTrace parameter time)) parameter) ∧
+          extendedDuhamelTrace data.nuclear parameter time)) parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
         -(selectedTrace.trace parameter : Complex)) :=
   ⟨data.longTime_bound_integrable,
     data.shortTime_hasDerivAt,

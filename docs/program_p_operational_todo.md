@@ -16,6 +16,68 @@ finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 En cas de contradiction entre prose et code, le type exact du théorème Lean
 compilé fait autorité.
 
+### Synthèse active au 2026-08-19
+
+Les quatorze portes restent la mesure finale. Leur travail restant se regroupe
+maintenant en six lots, sans compter les adaptateurs déjà compilés :
+
+1. **Validation globale (`T01`)** : reconstruire la façade Programme P et
+   exécuter l'audit terminal sur l'ensemble du graphe, pas seulement les gates
+   ciblées.
+2. **Calcul variationnel global (`T02`--`T06`)** : promouvoir les résultats
+   chartwise vers l'atlas physique brut, puis fermer Euler global, Helmholtz
+   non linéaire, bicomplexe local et classification des lagrangiens nuls/bords.
+3. **Hessien, Fredholm et déterminant (`T07`, `T12`)** : construire les trois
+   données physiques restantes H10--H14 (famille locale `C²`, sept extensions
+   continues, obstruction finie/coercivité), identifier la famille naturelle
+   Candidate-A et compléter le vrai noyau/D11.
+4. **Chaleur, Mellin et BF (`T07`, `T12`)** : instancier pour la référence de
+   base et chaque cut local le spectre ProductThroat, l'identification de
+   l'opérateur de chaleur, les expansions de Bochner et estimations
+   insertion/primitive, le contre-terme court, la continuation Mellin
+   paramétrique, puis les deux identités BF/families-index multidimensionnelles.
+   Les assemblages génériques finite-part (avec propagation depuis un seul
+   basepoint court), bord Green, identité Duhamel, continuité uniforme de la
+   série longue, champ dérivé paramétrique, Schwarz et atlas base/local sont
+   désormais construits et compilés. La continuité temporelle du reste court
+   et un seul majorant intégrable au basepoint engendrent maintenant la
+   mesurabilité et l'intégrabilité de toute la famille courte ; l'atlas ainsi
+   obtenu utilise le poids Mellin canonique `t⁻¹` et est raccordé exactement
+   au spectre ProductThroat Candidate-A, à son opérateur de chaleur par
+   équivalence isométrique ; l'expansion réelle canonique en déduit désormais
+   seule la trace nucléaire (facteur de réalification `2`), sans hypothèse de
+   normalisation séparée. La dérivée nucléaire `(-t)D(t)` est aussi engendrée
+   par le certificat de `D(t)`, et un commutateur nucléaire certifié force sa
+   trace à zéro. La régularité temporelle de la trace est dérivée de la
+   série spectrale lisse ; la combinaison finie des profils de contre-terme
+   engendre aussi automatiquement sa continuité et sa dérivée paramétrique.
+   Le reste sphérique existant fournit directement l'intégrabilité au
+   basepoint, sans majorant auxiliaire, et les trois profils réduits
+   `t⁻¹`, `1`, `t` sont continus sur l'intervalle court. Son paquet quadratique
+   alimente désormais directement l'assembly Schwarz différentiable. Sur la
+   partie longue, le facteur réel `2` engendre l'intégrabilité de la trace de
+   chaleur depuis le gap spectral ; la continuité locale uniforme des termes
+   de rang un et une borne intégrable sur la somme de leurs normes engendrent
+   maintenant aussi l'intégrabilité Bochner de l'opérateur complet. En amont
+   de la fermeture NamedKernel, le paquet H12 stable-physical-form existant et
+   le transport D11 différentiable engendrent désormais directement une base de `ker(H₀)`,
+   la famille complète des vrais noyaux, la régularité globale du Gram et la
+   constance du rang. Les frontends plus primitifs acceptent alternativement
+   une estimation globale de Gårding, ou l'orthogonalité interne aux secteurs
+   avec le gap cinq-secteurs sur le complément du span ; l'orthogonalité entre
+   secteurs est dérivée automatiquement du frontier.
+   Les preuves concrètes précédentes restent les entrées mathématiques.
+5. **Sélection microscopique (`T08`--`T11`)** : fournir un principe parent-bulk,
+   fixer normalisation et contre-termes finis, puis sélectionner une unique
+   classe d'action globale. Les no-go actuels interdisent de fermer ce lot par
+   simple convention.
+6. **Vide et échelle (`T13`, `T14`)** : démontrer la stabilité globale sur le
+   quotient contraint et fournir une donnée dimensionnée indépendante fixant
+   l'échelle absolue.
+
+Aucun de ces regroupements ne modifie le compteur terminal tant que le gate
+global correspondant n'est pas construit, importé et audité.
+
 Les champs `Limite` des cartes `DONE` décrivent la frontière historique au
 jour de leur validation. Ils ne constituent plus une tâche active lorsqu'une
 carte ultérieure les ferme. L'arriéré actif est formé uniquement des cartes
@@ -3823,3 +3885,18 @@ variation diagonale en zéro est donc exactement le Hessien symétrique certifi�
   borné auto-adjoint ;
 - limite : les déformations normales et la géométrie de bord générale restent
   ouvertes.
+
+### Raccord terminal H14--D11 au frame basepoint — fermé (2026-08-21)
+
+- la façade terminale construit désormais la famille de vrais noyaux, la
+  factorisation naturelle sectorielle, le frame unitaire en norme opérateur et
+  la trace nucléaire nulle depuis un seul frame admissible `0 → a` ;
+- aucune famille d'isomorphismes pairwise `(a,b)` ni donnée `zeroTrace`
+  indépendante ne reste en entrée ;
+- restent honnêtement externes : représentation/refinement/pullback, cinq lois
+  de norme sectorielles du frame basepoint, sa régularité en norme opérateur et
+  le paquet spectral selected-trace complet ;
+- le paquet spectral exige encore les différences actual/reference, les
+  frontières filtrées, les moyennes de slices et leurs identités de
+  semi-groupes. Les frontends Bochner fixes ne prouvent pas encore ce pont ; le
+  décompte terminal demeure donc `0/14`.

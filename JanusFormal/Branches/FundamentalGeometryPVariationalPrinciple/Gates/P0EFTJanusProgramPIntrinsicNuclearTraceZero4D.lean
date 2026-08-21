@@ -1,4 +1,5 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPIntrinsicNuclearTrace4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPIntrinsicNuclearTraceSubtraction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPIntrinsicNuclearTraceIsometricEquivalenceTransport4D
 
 /-!
 # Intrinsic nuclear trace of the zero operator
@@ -20,6 +21,7 @@ noncomputable section
 
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
+open P0EFTJanusProgramPIntrinsicNuclearTraceIsometricEquivalenceTransport4D
 
 universe u v
 
@@ -43,6 +45,31 @@ theorem zeroRankOneExpansion_expansionTrace :
     (zeroRankOneExpansion (E := E)).expansionTrace = 0 := by
   simp [zeroRankOneExpansion,
     SummableRankOneOperatorExpansion.expansionTrace]
+
+/-- Any existing intrinsic trace certificate on the same Hilbert space
+canonically supplies the intrinsic trace certificate for the zero operator. -/
+def intrinsicNuclearTraceData_zero_of_source
+    [CompleteSpace E]
+    {operator : E →L[Real] E}
+    (source : IntrinsicNuclearTraceData.{u, v} operator) :
+    IntrinsicNuclearTraceData.{u, v} (0 : E →L[Real] E) where
+  expansion := zeroRankOneExpansion
+  presentation_independent := by
+    intro other
+    let combinedRaw := source.expansion.sub other
+    let combined := transportExpansionOperator combinedRaw (sub_zero operator)
+    have h : source.expansion.expansionTrace - other.expansionTrace =
+        source.expansion.expansionTrace := by
+      calc
+        source.expansion.expansionTrace - other.expansionTrace =
+            combinedRaw.expansionTrace :=
+          (source.expansion.sub_expansionTrace other).symm
+        _ = combined.expansionTrace := by
+          exact (transportExpansionOperator_expansionTrace combinedRaw
+            (sub_zero operator)).symm
+        _ = source.expansion.expansionTrace :=
+          source.presentation_independent combined
+    simpa using (sub_eq_self.mp h)
 
 /-- Every intrinsic trace certificate for the zero operator has trace zero. -/
 theorem intrinsicNuclearTrace_zero

@@ -32,11 +32,12 @@ open P0EFTJanusProgramPFiniteSelfAdjointProjectionResolution4D
 open P0EFTJanusProgramPCandidateAFiveSectorPrincipalBlockDecomposition4D
 open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointPrincipalResolution4D
 open P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D
+open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- Principal Candidate-A data before storing any block-expansion identity. -/
 structure CandidateAFiveSectorAutomaticPrincipalData where
@@ -92,12 +93,11 @@ theorem principal_decomposition
   let l := data.resolution.projection .longitudinalLL vector
   let b := data.resolution.projection .boundaryFiniteBV vector
   have hsum : m + a + s + l + b = vector := by
-    simpa [m, a, s, l, b, sector_univ] using
+    simpa [m, a, s, l, b, sector_univ, add_assoc] using
       data.resolution.sum_projection vector
-  rw [← hsum]
+  conv_lhs => rw [← hsum]
   simp only [map_add, ContinuousLinearMap.add_apply]
-  rw [sector_univ, crossPair_univ]
-  simp only [Finset.sum_insert, Finset.sum_singleton,
+  simp [sector_univ, crossPair_univ, m, a, s, l, b,
     CandidateACrossSectorPair.first, CandidateACrossSectorPair.second,
     candidateASectorSymmetricCrossForm,
     ContinuousLinearMap.add_apply, ContinuousLinearMap.bilinearComp_apply]

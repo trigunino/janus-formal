@@ -31,6 +31,7 @@ namespace P0EFTJanusProgramPGlobalCandidateAActionSymmetryOrthogonalOffDiagonalG
 set_option autoImplicit false
 set_option maxHeartbeats 9800000
 set_option synthInstance.maxHeartbeats 4900000
+set_option maxRecDepth 10000
 
 noncomputable section
 
@@ -44,13 +45,17 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
 open P0EFTJanusProgramPFiniteNamedModeComplementGap4D
 open P0EFTJanusProgramPFiniteOrthogonalNamedModeOffDiagonalGap4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
+open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalOffDiagonalOperatorGarding4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -81,8 +86,7 @@ private abbrev ActionSymmetryGapHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 local instance (priority := 30000) actionSymmetryGapNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
@@ -152,10 +156,10 @@ local instance (priority := 30000) actionSymmetryGapCompleteSpace
       (ActionSymmetryGapHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- Exact action symmetries and the one-form five-sector estimate on the
@@ -175,12 +179,12 @@ structure GlobalCandidateAActionSymmetryOrthogonalOffDiagonalGap4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   translations : GlobalCandidateAActionTranslationSymmetryModes4D period hPeriod
     configuration data analysis chart sameAction physical ZeroMode
   nonzero : ∀ mode, translations.vector mode ≠ 0
   orthogonal : Pairwise fun first second =>
-    ⟪translations.vector first, translations.vector second, Real⟫ = 0
+    inner Real (translations.vector first) (translations.vector second) = 0
   complementGarding :
     CandidateAFiveSectorOrthogonalOffDiagonalOperatorGardingData
       (Component := Component)
@@ -285,7 +289,7 @@ theorem kernel_finrank_eq_card
   input.toGeneric period hPeriod Component |>.kernel_finrank_eq_card Component
 
 /-- H12 closes directly from action symmetries and the complement margin. -/
-theorem h12
+def h12
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -328,13 +332,13 @@ theorem global_candidateA_action_symmetry_orthogonal_offDiagonal_gap_gate
     (input : GlobalCandidateAActionSymmetryOrthogonalOffDiagonalGap4D period
       hPeriod Component configuration data analysis chart sameAction physical
         ZeroMode) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    Nonempty (GlobalCandidateAActualKernelGap4D period hPeriod configuration
+        data analysis chart sameAction physical) ∧
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =
         Fintype.card ZeroMode :=
-  ⟨input.toActualKernelGap period hPeriod Component,
+  ⟨⟨input.toActualKernelGap period hPeriod Component⟩,
     input.kernel_finrank_eq_card period hPeriod Component⟩
 
 end GlobalCandidateAActionSymmetryOrthogonalOffDiagonalGap4D

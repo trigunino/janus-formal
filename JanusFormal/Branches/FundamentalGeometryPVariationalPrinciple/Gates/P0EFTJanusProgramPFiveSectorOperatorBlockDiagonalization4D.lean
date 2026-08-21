@@ -30,7 +30,7 @@ variable
   [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
   [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
 
-private abbrev ProductSpace :=
+local notation "ProductSpace" =>
   FiveSectorProduct Metric Abelian Matter Longitudinal Boundary
 
 /-- One bounded operator together with the one physical coordinate system and

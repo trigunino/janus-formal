@@ -22,7 +22,7 @@ namespace P0EFTJanusProgramPReferenceNuclearDuhamelGreenSelectedTraceShortDomina
 set_option autoImplicit false
 noncomputable section
 
-open Filter Set
+open Filter Set Topology MeasureTheory
 open P0EFTJanusGlobalSeparatedDiracModel
 open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTrace4D
@@ -37,9 +37,12 @@ open P0EFTJanusProgramPReferenceNuclearDuhamelProductThroatLongTimeDecay4D
 open P0EFTJanusProductThroatPositiveHeatGapLongTime4D
 open P0EFTJanusProgramPLongTimeExponentialDominatingFunction4D
 
-variable {Slice ShortCutoff LongCutoff E : Type*}
+universe e i s a b
+
+variable {Slice : Type s} {ShortCutoff : Type a} {LongCutoff : Type b}
+  {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Selected-reference endpoint data whose complete long-time analysis comes
@@ -50,38 +53,39 @@ structure ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLo
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
     (shortCutoffFilter : Filter ShortCutoff) [NeBot shortCutoffFilter]
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (countertermContribution : Real → Real)
     (shortTimeRegion : Set Real) (longTimeStart : Real)
     (referenceOperator : Real → E →L[Real] E)
-    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator) where
+    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i}
+      referenceOperator) where
   countertermVariation :
-    ReferenceNuclearCountertermRankOneVariationData
+    ReferenceNuclearCountertermRankOneVariationData.{i, e}
       (E := E) countertermContribution
   shortTime :
-    NuclearDuhamelDominatedCollapsedRankOneIntegralData sliceMeasure nuclear
+    NuclearDuhamelDominatedCollapsedRankOneIntegralData.{e, i, s} sliceMeasure nuclear
       shortTimeRegion
   longTime :
-    NuclearDuhamelProductThroatLongTimeCollapsedRankOneIntegralData
+    NuclearDuhamelProductThroatLongTimeCollapsedRankOneIntegralData.{e, i, s}
       productData fold twist sliceMeasure nuclear longTimeStart
   countertermMinusShortTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{e, i}
       (countertermVariation.derivativeOperator parameter -
         shortTime.integratedOperator parameter)
   totalTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{e, i}
       ((countertermVariation.derivativeOperator parameter -
           shortTime.integratedOperator parameter) -
         longTime.integratedOperator parameter)
   matchingOperator : Real → E →L[Real] E
   shortBoundaryLimit : ∀ parameter,
-    ReferenceNuclearDuhamelShortTimeBoundaryLimitData shortCutoffFilter
+    ReferenceNuclearDuhamelShortTimeBoundaryLimitData.{a, e} shortCutoffFilter
       (countertermVariation.derivativeOperator parameter)
       (shortTime.integratedOperator parameter)
       (selectedTrace.family.logarithmicDerivativeOperator parameter)
       (matchingOperator parameter)
   longBoundaryDecay : ∀ parameter,
-    ReferenceNuclearDuhamelProductThroatLongTimeDecayData
+    ReferenceNuclearDuhamelProductThroatLongTimeDecayData.{b, e}
       productData fold twist longCutoffFilter
         (longTime.integratedOperator parameter)
         (matchingOperator parameter)
@@ -97,11 +101,11 @@ def toShortDominatedLongExponentialBoundaryLimits
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {countertermContribution : Real → Real}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     (data :
       ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLongTimeBoundaryLimitsData
         productData fold twist sliceMeasure shortCutoffFilter longCutoffFilter
@@ -129,11 +133,11 @@ def toShortDominatedLongExponentialBoundaryLimits
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {countertermContribution : Real → Real}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     (data :
       ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLongTimeBoundaryLimitsData
         productData fold twist sliceMeasure shortCutoffFilter longCutoffFilter
@@ -152,11 +156,11 @@ def toShortDominatedLongExponentialBoundaryLimits
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {countertermContribution : Real → Real}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     (data :
       ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLongTimeBoundaryLimitsData
         productData fold twist sliceMeasure shortCutoffFilter longCutoffFilter
@@ -174,11 +178,11 @@ theorem longTime_bound_integrable
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {countertermContribution : Real → Real}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     (data :
       ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLongTimeBoundaryLimitsData
         productData fold twist sliceMeasure shortCutoffFilter longCutoffFilter
@@ -199,11 +203,11 @@ theorem terminalPrimitive_tendsto_zero
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {countertermContribution : Real → Real}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     (data :
       ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLongTimeBoundaryLimitsData
         productData fold twist sliceMeasure shortCutoffFilter longCutoffFilter
@@ -221,25 +225,21 @@ theorem terminalPrimitive_tendsto_zero
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
     {shortCutoffFilter : Filter ShortCutoff} [NeBot shortCutoffFilter]
     {longCutoffFilter : Filter LongCutoff} [NeBot longCutoffFilter]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {countertermContribution : Real → Real}
     {shortTimeRegion : Set Real} {longTimeStart : Real}
     {referenceOperator : Real → E →L[Real] E}
-    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator}
+    {selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator}
     (data :
       ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLongTimeBoundaryLimitsData
         productData fold twist sliceMeasure shortCutoffFilter longCutoffFilter
           nuclear countertermContribution shortTimeRegion longTimeStart
             referenceOperator selectedTrace)
     (parameter : Real) :
-    data.toShortDominatedLongExponentialBoundaryLimits.
-        toDominatedExponentialBoundaryLimits.
-          toSelectedTraceExponentialBoundaryLimits.toSelectedTraceBoundaryLimits.
-            toFullySpectralBoundaryLimits.toCollapsedBoundaryLimits.
-              toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.
-                logarithmicTrace parameter = selectedTrace.trace parameter :=
-  data.toShortDominatedLongExponentialBoundaryLimits.
-    generatedLogarithmicTrace_eq_selectedTrace parameter
+    data.toShortDominatedLongExponentialBoundaryLimits.toDominatedExponentialBoundaryLimits.toSelectedTraceExponentialBoundaryLimits.toSelectedTraceBoundaryLimits.toFullySpectralBoundaryLimits.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+        parameter = selectedTrace.trace parameter :=
+  data.toShortDominatedLongExponentialBoundaryLimits.generatedLogarithmicTrace_eq_selectedTrace
+    parameter
 
 /-- Public selected-reference product-throat long-time boundary checkpoint. -/
 theorem reference_nuclear_duhamel_green_selected_trace_short_dominated_product_throat_long_time_boundary_limits_gate
@@ -248,11 +248,11 @@ theorem reference_nuclear_duhamel_green_selected_trace_short_dominated_product_t
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
     (shortCutoffFilter : Filter ShortCutoff) [NeBot shortCutoffFilter]
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (countertermContribution : Real → Real)
     (shortTimeRegion : Set Real) (longTimeStart : Real)
     (referenceOperator : Real → E →L[Real] E)
-    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData referenceOperator)
+    (selectedTrace : IntrinsicLogarithmicDerivativeTraceData.{e, i} referenceOperator)
     (data :
       ReferenceNuclearDuhamelGreenSelectedTraceShortDominatedProductThroatLongTimeBoundaryLimitsData
         productData fold twist sliceMeasure shortCutoffFilter longCutoffFilter
@@ -269,12 +269,8 @@ theorem reference_nuclear_duhamel_green_selected_trace_short_dominated_product_t
       Tendsto (data.longBoundaryDecay parameter).terminalPrimitive
         longCutoffFilter (𝓝 0)) ∧
     (∀ parameter,
-      data.toShortDominatedLongExponentialBoundaryLimits.
-          toDominatedExponentialBoundaryLimits.
-            toSelectedTraceExponentialBoundaryLimits.toSelectedTraceBoundaryLimits.
-              toFullySpectralBoundaryLimits.toCollapsedBoundaryLimits.
-                toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.
-                  logarithmicTrace parameter = selectedTrace.trace parameter) :=
+      data.toShortDominatedLongExponentialBoundaryLimits.toDominatedExponentialBoundaryLimits.toSelectedTraceExponentialBoundaryLimits.toSelectedTraceBoundaryLimits.toFullySpectralBoundaryLimits.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+          parameter = selectedTrace.trace parameter) :=
   ⟨productThroatPositiveHeatGap_pos productData,
     data.longTime_bound_integrable,
     data.terminalPrimitive_tendsto_zero,

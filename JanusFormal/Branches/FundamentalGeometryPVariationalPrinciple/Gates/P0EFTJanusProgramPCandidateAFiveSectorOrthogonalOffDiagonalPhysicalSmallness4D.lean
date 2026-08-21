@@ -23,14 +23,14 @@ noncomputable section
 open scoped InnerProductSpace
 open P0EFTJanusProgramPFiniteSectorPhysicalSmallnessGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalOffDiagonalGarding4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- Canonical principal diagonal/off-diagonal split plus one H11 physical
@@ -61,9 +61,7 @@ def toFiniteSectorPhysicalSmallness
   physicalConstant := data.physicalConstant
   physicalConstant_nonneg := data.physicalConstant_nonneg
   physical_bound := data.physical_bound
-  physical_small := by
-    simpa [CandidateAFiveSectorOrthogonalOffDiagonalGardingData.margin,
-      FiniteSectorQuadraticGardingData.margin] using data.physical_small
+  physical_small := data.physical_small
   totalEnergy := data.totalEnergy
   total_eq := data.total_eq
 
@@ -81,11 +79,11 @@ theorem candidateA_five_sector_orthogonal_offDiagonal_physical_smallness_gate
     0 < data.margin Component ∧
       ∀ vector : E,
         data.margin Component * ‖vector‖ ^ 2 ≤ data.totalEnergy vector := by
-  simpa [margin, FiniteSectorPhysicalSmallnessGardingData.margin,
-    CandidateAFiveSectorOrthogonalOffDiagonalGardingData.margin,
-    FiniteSectorQuadraticGardingData.margin] using
-      data.toFiniteSectorPhysicalSmallness Component
-        |>.finite_sector_physical_smallness_garding_gate
+  have h := data.toFiniteSectorPhysicalSmallness Component
+    |>.finite_sector_physical_smallness_garding_gate
+  constructor
+  · exact h.1
+  · exact h.2
 
 end CandidateAFiveSectorOrthogonalOffDiagonalPhysicalSmallnessData
 

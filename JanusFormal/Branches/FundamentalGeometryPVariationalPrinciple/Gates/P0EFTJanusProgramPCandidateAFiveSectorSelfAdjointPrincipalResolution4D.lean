@@ -18,14 +18,15 @@ noncomputable section
 open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPFiniteSelfAdjointProjectionResolution4D
 open P0EFTJanusProgramPCandidateAFiveSectorPrincipalProjectionResolution4D
+open P0EFTJanusProgramPCandidateAFiveSectorPrincipalBlockDecomposition4D
 open P0EFTJanusProgramPCandidateAFiveSectorCrossFormGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- One principal Hessian and five symmetric idempotent sector projections. -/
 structure CandidateAFiveSectorSelfAdjointPrincipalResolutionData where
