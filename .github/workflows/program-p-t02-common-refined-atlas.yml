@@ -1,0 +1,87 @@
+name: Program P T02 common refined atlas
+
+on:
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean"
+      - ".github/workflows/program-p-t02-common-refined-atlas.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  LEAN_FILE: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean
+  LEAN_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetCommonRefinedAtlas
+  OLEAN_FILE: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.olean
+
+jobs:
+  focused-t02-atlas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Restore exact Lean caches
+        id: lean-cache
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            .b/l
+            .lake/packages/mathlib/.lake/build
+          key: t02-atlas-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          restore-keys: |
+            t02-atlas-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
+            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
+
+      - name: Set up Lean 4.31 without a project build
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-github-cache: false
+          use-mathlib-cache: false
+
+      - name: Populate the pinned Mathlib cache when absent
+        run: |
+          if [[ -n "$(find .lake/packages/mathlib/.lake/build -name Mathlib.olean -print -quit 2>/dev/null)" ]]; then
+            echo "Pinned Mathlib cache already present."
+          else
+            lake exe cache get
+          fi
+
+      - name: Elaborate only the new gate with one Lean worker
+        run: lake lean "$LEAN_FILE" -- -j 1
+
+      - name: Build only the new olean artifact
+        run: lake build +"$LEAN_MODULE":olean
+
+      - name: Verify the exact olean artifact
+        run: test -f "$OLEAN_FILE"
+
+      - name: Reject proof placeholders and unfinished markers
+        run: |
+          if grep -nE '\b(sorry|admit|axiom|TODO|FIXME)\b' "$LEAN_FILE"; then
+            exit 1
+          fi
+
+      - name: Run the Program P integrity audit
+        run: python scripts/audit_janus_program_p.py
+
+      - name: Check the branch diff
+        run: git diff --check "origin/${{ github.base_ref }}...HEAD"
+
+      - name: Save exact Lean caches
+        if: ${{ always() && steps.lean-cache.outputs.cache-hit != 'true' }}
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            .b/l
+            .lake/packages/mathlib/.lake/build
+          key: t02-atlas-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
