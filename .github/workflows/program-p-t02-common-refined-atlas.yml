@@ -5,6 +5,8 @@ on:
     branches:
       - agent/t02-common-refined-atlas
     paths:
+      - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.lean"
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore.lean"
       - ".github/workflows/program-p-t02-common-refined-atlas.yml"
 
@@ -31,13 +33,11 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Restore exact Lean caches
+      - name: Restore exact project Lean artifacts
         id: lean-cache
         uses: actions/cache/restore@v5
         with:
-          path: |
-            .b/l
-            .lake/packages/mathlib/.lake/build
+          path: .b/l
           key: t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
           restore-keys: |
             t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
@@ -55,13 +55,8 @@ jobs:
           use-github-cache: false
           use-mathlib-cache: false
 
-      - name: Populate the pinned Mathlib cache when absent
-        run: |
-          if [[ -n "$(find .lake/packages/mathlib/.lake/build -name Mathlib.olean -print -quit 2>/dev/null)" ]]; then
-            echo "Pinned Mathlib cache already present."
-          else
-            lake exe cache get
-          fi
+      - name: Fetch the pinned Mathlib package cache
+        run: lake exe cache get
 
       - name: Ensure the compiled product-core import exists
         run: |
@@ -96,11 +91,9 @@ jobs:
       - name: Check the branch diff
         run: git diff --check origin/dev-branch...HEAD
 
-      - name: Save exact Lean caches
+      - name: Save exact project Lean artifacts
         if: ${{ always() && steps.lean-cache.outputs.cache-hit != 'true' }}
         uses: actions/cache/save@v5
         with:
-          path: |
-            .b/l
-            .lake/packages/mathlib/.lake/build
+          path: .b/l
           key: t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
