@@ -1,6 +1,6 @@
 # Programme P — registre opérationnel canonique
 
-Date de référence : 2026-07-26.
+Date de référence : 2026-08-26.
 
 ## 1. Rôle de ce document
 
@@ -10,28 +10,33 @@ mesuraient surtout l'accumulation de microlemmes. Son historique reste
 consultable dans Git.
 
 La fermeture globale est mesurée uniquement par les **14 portes terminales**
-de la section 7. État actuel : **0/14**. Une preuve locale, pointwise,
+de la section 7. État actuel : **1/14**. Une preuve locale, pointwise,
 finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 
 En cas de contradiction entre prose et code, le type exact du théorème Lean
 compilé fait autorité.
 
-### Synthèse active au 2026-08-19
+### Synthèse active au 2026-08-26
 
-Les quatorze portes restent la mesure finale. Leur travail restant se regroupe
-maintenant en six lots, sans compter les adaptateurs déjà compilés :
+Les quatorze portes restent la mesure finale. Après le lot `T01` fermé, leur
+travail restant se regroupe en six lots ouverts :
 
-1. **Validation globale (`T01`)** : reconstruire la façade Programme P et
-   exécuter l'audit terminal sur l'ensemble du graphe, pas seulement les gates
-   ciblées.
-2. **Calcul variationnel global (`T02`--`T06`)** : promouvoir les résultats
+1. **Validation globale (`T01`) — FERMÉE** : le certificat typé commun, sa
+   complétion L2 intrinsèque, son import de façade et l'audit terminal `1/14`
+   sont verts, sans axiome métier.
+2. **Classification locale (`T02`)** : prolonger l'extraction `C²` réelle du
+   paquet primitif SpinC+LL en carte fixe et le quotient bas ordre `(II, F)`
+   vers l'ensemble du carrier bulk/gorge, les changements de carte et l'action
+   structurée, puis prouver l'exhaustivité d'une classe admissible explicitement
+   bornée. Le classificateur historique à six invariants reste une troncature.
+3. **Calcul variationnel global (`T03`--`T06`)** : promouvoir les résultats
    chartwise vers l'atlas physique brut, puis fermer Euler global, Helmholtz
    non linéaire, bicomplexe local et classification des lagrangiens nuls/bords.
-3. **Hessien, Fredholm et déterminant (`T07`, `T12`)** : construire les trois
+4. **Hessien, Fredholm et déterminant (`T07`, `T12`)** : construire les trois
    données physiques restantes H10--H14 (famille locale `C²`, sept extensions
    continues, obstruction finie/coercivité), identifier la famille naturelle
    Candidate-A et compléter le vrai noyau/D11.
-4. **Chaleur, Mellin et BF (`T07`, `T12`)** : instancier pour la référence de
+5. **Chaleur, Mellin et BF (`T07`, `T12`)** : instancier pour la référence de
    base et chaque cut local le spectre ProductThroat, l'identification de
    l'opérateur de chaleur, les expansions de Bochner et estimations
    insertion/primitive, le contre-terme court, la continuation Mellin
@@ -67,11 +72,11 @@ maintenant en six lots, sans compter les adaptateurs déjà compilés :
    avec le gap cinq-secteurs sur le complément du span ; l'orthogonalité entre
    secteurs est dérivée automatiquement du frontier.
    Les preuves concrètes précédentes restent les entrées mathématiques.
-5. **Sélection microscopique (`T08`--`T11`)** : fournir un principe parent-bulk,
+6. **Sélection microscopique (`T08`--`T11`)** : fournir un principe parent-bulk,
    fixer normalisation et contre-termes finis, puis sélectionner une unique
    classe d'action globale. Les no-go actuels interdisent de fermer ce lot par
    simple convention.
-6. **Vide et échelle (`T13`, `T14`)** : démontrer la stabilité globale sur le
+7. **Vide et échelle (`T13`, `T14`)** : démontrer la stabilité globale sur le
    quotient contraint et fournir une donnée dimensionnée indépendante fixant
    l'échelle absolue.
 
@@ -1588,8 +1593,8 @@ que si leur critère le dit explicitement.
   coordonnée tangente D9 ; la classification invariante est transportée aux
   variations lisses complètes du domaine géométrique commun, avec certificat
   canonique compilé.
-- Limite : les pairings spin-two, spinor et BRST, puis leur globalisation en
-  module naturel, restent requis ; `T01` reste ouverte.
+- Limite historique : à cette étape, les pairings spin-two, spinor et BRST,
+  puis leur globalisation en module naturel, restaient requis.
 - Porte terminale : aucune ; prérequis direct de `T01`.
 
 ### `P-T01-COMMON-SPINTWO-PAIRING` — Pairing spin-two sur le domaine commun
@@ -1600,8 +1605,8 @@ que si leur critère le dit explicitement.
   D9 et le modèle spin-two ; l’unique pairing invariant devient exactement le
   pairing de Frobenius, à une normalisation près, sur les variations métriques
   globales du domaine commun.
-- Limite : les pairings spinor et BRST, puis la globalisation en module naturel,
-  restent requis ; `T01` reste ouverte.
+- Limite historique : à cette étape, les pairings spinor et BRST, puis la
+  globalisation en module naturel, restaient requis.
 - Porte terminale : aucune ; prérequis direct de `T01`.
 
 ### `P-T01-COMMON-GHOST-PAIRING` — Pairing ghost sur le domaine commun
@@ -1611,9 +1616,8 @@ que si leur critère le dit explicitement.
 - Résultat : les deux labels historiques sont reliés aux deux coordonnées de
   l’algèbre de Lie `U(1)²` D9 ; la classification du pairing dirigé est exacte.
   Ces labels ne sont pas un couple ghost/antighost nonminimal.
-- Limite : les vrais types distincts `c/c̄/B` existent désormais dans les
-  gauge fermions D9, mais leur chart lisse global et leur pairing intégré
-  restent à construire ; `T01` reste ouverte.
+- Limite historique : à cette étape, les vrais types distincts `c/c̄/B`, leur
+  chart lisse global et leur pairing intégré restaient à construire.
 - Porte terminale : aucune ; prérequis direct de `T01`.
 
 ### `P-T01-SPINOR-COORDINATE-NOGO` — Le rang quatre ne choisit pas le pairing
@@ -2068,8 +2072,9 @@ que si leur critère le dit explicitement.
   l'espace actuel échoue la transition spinorielle après un tour de gorge.
   Les `SmoothQuotientField MatterFiber` actuels ne peuvent donc pas servir
   directement de sections du bundle spinoriel non trivial.
-- Limite : `T01` exige désormais une redéfinition ou une restriction typée du
-  champ `matter` comme section compatible, puis la migration de ses usages.
+- Limite historique : à cette étape, `T01` exigeait une redéfinition ou une
+  restriction typée du champ `matter` comme section compatible, puis la
+  migration de ses usages.
 - Porte terminale : aucune ; obstruction constructive et verrou suivant précis.
 
 ### `P-T01-THROAT-MATTER-SPINOR-SECTIONS` — Espace de sections spinorielles
@@ -3729,13 +3734,655 @@ seulement leur fermeture fonctionnelle chartwise.
 `BLOQUÉ-PHYSIQUE`. Aucun LLM ne doit les rendre vrais par définition ou par
 choix arbitraire de constantes.
 
+Cent dix gates de support non terminales `T02` sont désormais compilées et
+importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
+
+### `P-T02-PHYSICAL-SECOND-ORDER-JET-CARRIER` — Carrier local physique stratifié
+
+- État : `DONE` (2026-08-26). Portée : `LOCAL/RAW/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPPhysicalSecondOrderJetCarrier4D`.
+- Résultat : un jet encadré d'ordre deux stocke valeur, dérivée première et
+  dérivée seconde symétrique. Le background se projette exactement vers le
+  jet structuré et sa réduction géométrique existants. Les carriers physiques
+  bulk et gorge restent séparés sur leurs vraies bases ; SpinC primitif et LL
+  restent sur la gorge, et les champs nonminimaux typés sont explicites.
+- Limite : aucun extracteur depuis la configuration globale, aucun recollement
+  de cartes, aucun accord trace bulk--gorge, aucune symétrie métrique imposée
+  aux tenseurs ambiants et aucune classification exhaustive ne sont revendiqués.
+- Porte terminale : aucune ; premier carrier concret requis par `T02`.
+
+### `P-T02-PHYSICAL-SECOND-ORDER-JET-CHARTWISE-EXTRACTION` — Extraction `C²` en carte fixe
+
+- État : `DONE` (2026-08-26). Portée : `LOCAL/RAW/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPPhysicalSecondOrderJetChartwiseExtraction4D`.
+- Résultat : un représentant coordonné `C²` produit sa valeur, sa dérivée de
+  Fréchet et sa dérivée seconde réelle, dont la symétrie est fournie par le
+  théorème de Schwarz. Un paquet abstrait regroupe les jets SpinC et LL de la
+  gorge dans une carte et des trivialisations fixées.
+- Limite : aucune trivialisation globale, loi de recouvrement, action de deck,
+  extraction du fond/métrique ou construction du carrier physique complet
+  depuis la configuration globale n'est revendiquée.
+- Porte terminale : aucune ; sous-verrou local de `T02`.
+
+### `P-T02-ACTUAL-THROAT-PACKET-CHARTWISE-JETS` — Jets réels SpinC+LL de gorge
+
+- État : `DONE` (2026-08-26). Portée : `LOCAL/INDEXÉE/NONTERMINALE`.
+- Gates : `P0EFTJanusProgramPGlobalSpinCMatterChartwiseJetExtraction4D`,
+  `P0EFTJanusProgramPActualLLChartwiseSecondOrderJetExtraction4D` et
+  `P0EFTJanusProgramPActualThroatPacketChartwiseSecondOrderJetExtraction4D`.
+- Résultat : les sections SpinC primitives et les trois vrais champs LL d'une
+  configuration globale gauge-fixée fournissent leurs jets d'ordre deux dans
+  une même carte de gorge et une trivialisation SpinC fixées. Les théorèmes de
+  valeur identifient exactement chaque jet au champ global correspondant.
+- Limite : ce gate seul construit en une carte, un point et un indice fixés ;
+  la chaîne 68--75 ci-dessous recolle désormais les trois slots LL séparément.
+  Ce paquet ne transporte ni fond ni métrique, et aucun
+  carrier physique gorge complet ni classification exhaustive n'est revendiqué.
+- Porte terminale : aucune ; sous-verrou d'extraction réelle de `T02`.
+
+### `P-T02-ACTUAL-THROAT-ABELIAN-POTENTIAL-JETS` — Jets `U(1)²` réels de gorge
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/INDEXÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatAbelianPotentialChartwiseSecondOrderJetExtraction4D`.
+- Résultat : les deux potentiels Candidate-A sectorisés et leurs deux
+  composantes sont tirés en arrière par le `mfderiv` de l'inclusion réelle de
+  gorge. Leur évaluation sur le fibré tangent est lisse ; une trivialisation
+  tangentielle centrée fournit les germes covecteurs `C²`, leurs jets dans
+  `ThroatCoverCoordinates`, puis leur transport par une équivalence linéaire
+  continue explicite vers exactement
+  `Sector → Fin 2 → FramedSecondOrderJet EuclideanR3 (FramedCovector EuclideanR3)`.
+- Limite : ancre, carte étendue et trivialisation sont locales et fixées. Ce
+  gate d'extraction seul ne construit
+  ni quadratique tangentielle/Christoffel de gorge, ni seconde forme, ni
+  normale physique, ni `StructuredBackgroundSecondJet EuclideanR3` complet.
+- Porte terminale : aucune ; sous-verrou gauge réel de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-TRIVIALIZATION-RECONSTRUCTION` — Reconstruction exacte du covecteur gauge
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/ORDRE-ZÉRO/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeTrivializationReconstruction4D`.
+- Résultat : sur tout le `baseSet` de la trivialisation tangente centrée,
+  l'expansion finie des coefficients est exactement le covecteur intrinsèque
+  tiré en arrière par l'inverse de `continuousLinearEquivAt`. Pour Candidate-A,
+  c'est exactement l'expression dans le repère centré du potentiel bulk composé
+  avec `mfderiv` de l'inclusion puis l'inverse de `continuousLinearEquivAt`, en
+  tout point du `baseSet`. Au centre, elle identifie aussi la valeur du jet
+  intrinsèque et son transport `EuclideanR3`.
+- Limite : aucune loi de jets, transition de carte de base, descente globale,
+  action de deck ou transformation de jauge n'est déduite.
+- Porte terminale : aucune ; certification exacte du slot gauge de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-ZERO-ORDER-TRIVIALIZATION-OVERLAP` — Recouvrement tangent exact d'ordre zéro
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/ORDRE-ZÉRO/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatAbelianPotentialZeroOrderTrivializationOverlap4D`.
+- Résultat : sur l'intersection de deux `baseSet`, le vrai `coordChangeL`
+  relie les évaluations et induit exactement la loi contragrédiente
+  `arrowCongr`, y compris pour les potentiels Candidate-A.
+- Limite : recouvrement de fibre/repère d'ordre zéro seulement ; aucune loi aux
+  ordres un/deux, transition de carte de base, descente globale, action de deck
+  ou transformation de jauge `U(1)²` n'est établie.
+- Porte terminale : aucune ; sous-verrou de recouvrement gauge de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-ZERO-ORDER-TRANSITION-COCYCLE` — Cocycle exact des transitions d'ordre zéro
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/ORDRE-ZÉRO/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeZeroOrderTransitionCocycle4D`.
+- Résultat : la transition covectorielle est l'action `arrowCongr`. La
+  transition tangente est l'identité à ancre répétée, s'inverse par échange des
+  ancres et vérifie `T₁₂.trans T₂₃ = T₁₃` sur toute triple intersection. Le
+  transport dual vérifie dans le même ordre `D₁₂.trans D₂₃ = D₁₃`.
+- Limite : cocycle fibre/repère d'ordre zéro seulement ; aucun cocycle de jets
+  d'ordre un/deux, transition de cartes de base, descente globale, action de
+  deck ou transformation de jauge `U(1)²` n'est établi.
+- Porte terminale : aucune ; cohérence triple du sous-verrou gauge de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-ZERO-ORDER-TRANSITION-SMOOTHNESS` — Régularité des transitions d'ordre zéro
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/ORDRE-ZÉRO/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeZeroOrderTransitionSmoothness4D`.
+- Résultat : pour deux repères centrés fixés, la transition tangente et son
+  inverse varient `C∞` sur l'intersection de leurs `baseSet` lorsqu'elles sont
+  lues comme applications linéaires continues du modèle tangent.
+- Limite : régularité du changement de repère d'ordre zéro seulement ; aucune
+  loi de transformation des jets d'ordre un/deux, descente de cartes de base,
+  transformation de jauge, géométrie normale ou connexion globale n'en suit.
+- Porte terminale : aucune ; prérequis de régularité pour les overlaps de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-ZERO-ORDER-OVERLAP-DATA-SMOOTHNESS` — Régularité des représentants d'overlap
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/ORDRE-ZÉRO/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeZeroOrderOverlapDataSmoothness4D`.
+- Résultat : chaque coefficient de repère et le covecteur reconstruit sont `C∞`
+  sur tout le `baseSet` centré. Sur un double overlap, l'action contragrédiente
+  sur les covecteurs modèles est aussi `C∞` comme application linéaire continue.
+- Limite : ce gate seul fournit les prérequis de différentiation, sans identité
+  transformée des dérivées ni transition de carte de base.
+- Porte terminale : aucune ; données lisses du sous-verrou d'overlap de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-DIFFERENTIATED-OVERLAP` — Congruence différentiée sur l'overlap
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/DIFFÉRENTIÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeDifferentiatedOverlap4D`.
+- Résultat : le représentant du premier repère transporté est égal au second
+  sur tout le double overlap. Ils admettent exactement les mêmes certificats
+  `HasMFDerivWithinAt` pour toute dérivée première candidate.
+- Limite : ce gate seul n'explicite pas la formule de Leibniz, l'identification au
+  `secondDerivative` du jet encadré, dérivée seconde ou descente entre cartes de
+  base.
+- Porte terminale : aucune ; congruence différentiée du sous-verrou gauge `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-CHARTWISE-FIRST-ORDER-OVERLAP` — Loi de Leibniz en carte fixée
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/PREMIER-ORDRE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeChartwiseFirstOrderOverlap4D`.
+- Résultat : dans la carte étendue de gorge centrée en tout point du double
+  overlap, la dérivée de Fréchet du second représentant vérifie exactement
+  `dC₂ = D₁₂ ∘ dC₁ + (dD₁₂) · C₁`. Le premier terme transporte la
+  dérivée du premier représentant et le second mesure la variation du changement
+  de repère.
+- Limite : carte de base centrée fixée ; aucune descente intrinsèque du premier
+  jet, compatibilité entre cartes de base, loi d'ordre deux, transformation de
+  jauge `U(1)²`, géométrie normale ou connexion globale.
+- Porte terminale : aucune ; première loi de transformation différentiée
+  explicite du sous-verrou gauge `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-CHARTWISE-FIRST-ORDER-JET-OVERLAP` — Loi dans le carrier de jet
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/JET/PREMIER-ORDRE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeChartwiseFirstOrderJetOverlap4D`.
+- Résultat : un carrier `FramedSecondOrderJet` sépare l'ancre du repère du
+  centre de la carte de base en tout point du `baseSet`. Ses champs `value`,
+  `firstDerivative` et `secondDerivative` sont les vraies données de Fréchet
+  du représentant `C²`. Sur la diagonale, il est exactement l'ancien jet
+  Candidate-A. Sur un double overlap, son champ `firstDerivative` satisfait la
+  formule `dC₂ = D₁₂ ∘ dC₁ + (dD₁₂) · C₁`.
+- Limite : ce gate seul ne donne aucune loi de transformation de
+  `secondDerivative`, descente
+  intrinsèque entre cartes de base, transformation de jauge `U(1)²`, géométrie
+  normale ou connexion globale.
+- Porte terminale : aucune ; pont entre l'overlap différentié et le carrier
+  physique local de `T02`.
+
+### `P-T02-CLM-SECOND-ORDER-LEIBNIZ` — Leibniz générique d'ordre deux
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/CALCUL/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPContinuousLinearMapSecondOrderLeibniz4D`.
+- Résultat : pour une famille `C²` d'applications linéaires continues `D` et
+  un vecteur `C²` variable `C`, la seconde dérivée de `D(x)(C(x))`, évaluée
+  dans deux directions, est exactement la somme des quatre termes de Leibniz.
+- Limite : identité de calcul de Fréchet sur espaces normés ; aucune géométrie
+  de gorge ou descente n'est contenue dans ce gate seul.
+- Porte terminale : aucune ; lemme technique isolé du recollement gauge `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-CHARTWISE-SECOND-ORDER-JET-OVERLAP` — Loi d'ordre deux en carte fixée
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/JET/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeChartwiseSecondOrderJetOverlap4D`.
+- Résultat : la transition contragrédiente est `C²` dans la carte centrée et
+  le produit transporté est égal au second représentant comme germe. Le champ
+  `secondDerivative` du carrier réel vérifie alors, dans deux directions, la loi
+  exacte à quatre termes : `D₁₂·D²C₁`, les deux termes mixtes
+  `dD₁₂·dC₁`, et `D²D₁₂·C₁`.
+- Limite : carte de base centrée fixée ; aucune descente intrinsèque entre
+  cartes, transformation de jauge `U(1)²`, géométrie normale ou connexion
+  globale.
+- Porte terminale : aucune ; loi d'ordre deux chartwise du sous-verrou gauge
+  `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-EUCLIDEAN-SECOND-ORDER-JET-OVERLAP` — Loi dans le carrier physique
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/JET/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeEuclideanSecondOrderJetOverlap4D`.
+- Résultat : le carrier local à deux paramètres, sa transition et ses deux
+  premières variations sont transportés par l'équivalence fixe vers exactement
+  `FramedSecondOrderJet EuclideanR3 (FramedCovector EuclideanR3)`. Les lois
+  d'overlap d'ordres un et deux y gardent leurs formes à deux et quatre termes,
+  et le jet diagonal coïncide avec l'extracteur Candidate-A physique existant.
+- Limite : transport linéaire fixe d'une loi encore écrite dans une carte de
+  base centrée ; aucune descente globale ou transformation de jauge.
+- Porte terminale : aucune ; pont exact vers le slot gauge physique de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-BASE-CHART-TRANSITION-GERM` — Germe entre cartes de base
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/GERME/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionGerm4D`.
+- Résultat : la transition réelle `extChartAt₂ ∘ extChartAt₁⁻¹` envoie la
+  coordonnée du point commun sur sa seconde coordonnée, est `C²` à ce point et,
+  à repère tangent fixé, identifie exactement les deux représentants comme
+  germes.
+- Limite : aucun cocycle combiné repère--carte, aucune descente globale.
+- Porte terminale : aucune ; premier germe de transition de carte de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-BASE-CHART-SECOND-ORDER-JET-OVERLAP` — Lois de chaîne entre cartes
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/JET/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeBaseChartSecondOrderJetOverlap4D`.
+- Résultat : un jet à trois paramètres sépare ancre du repère, ancre de la
+  carte et point d'évaluation. Il retrouve le carrier précédent sur la
+  diagonale et vérifie entre deux cartes les règles exactes
+  `dR₁ = dR₂ ∘ dT₁₂` et
+  `D²R₁(u,v) = D²R₂(dT₁₂u,dT₁₂v) + dR₂(D²T₁₂(u,v))`.
+- Limite : repère tangent fixé ; la combinaison avec les transitions de repère,
+  leur cocycle de jets et la descente globale restent à construire.
+- Porte terminale : aucune ; loi de carte d'ordre deux du sous-verrou `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-BASE-CHART-SECOND-ORDER-COCYCLE` — Cocycle des jets de transition
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/COCYCLE/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionSecondOrderCocycle4D`.
+- Résultat : chaque transition réelle entre cartes étendues fournit son jet
+  d'ordre deux. Sur un triple overlap, la transition directe est égale comme
+  germe à la composée ; ses Jacobiennes se composent et ses Hessiennes vérifient
+  exactement la règle de chaîne à deux termes.
+- Limite : cocycle des cartes de base seules, à repère tangent fixé ; aucune
+  descente globale n'est encore construite.
+- Porte terminale : aucune ; cohérence groupoïde d'ordre deux de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-COMBINED-FRAME-BASE-CHART-OVERLAP` — Transition combinée centrée
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/JET/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeCombinedFrameBaseChartSecondOrderJetOverlap4D`.
+- Résultat : depuis la carte source centrée au point commun, le changement de
+  repère variable puis le changement de carte donnent un même germe cible. Les
+  champs `value`, `firstDerivative` et `secondDerivative` satisfont la loi
+  combinée exacte : Jacobien/Hessien de carte à gauche, quatre termes de
+  Leibniz du repère à droite.
+- Limite : gate historique centré ; la généralisation et son cocycle sont fermés ci-dessous.
+- Porte terminale : aucune ; première synthèse repère--carte de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-EUCLIDEAN-BASE-CHART-OVERLAP` — Jet à trois paramètres physique
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/JET/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeEuclideanBaseChartSecondOrderJetOverlap4D`.
+- Résultat : le jet à trois paramètres, la Jacobienne et la Hessienne de la
+  transition de carte sont transportés vers `EuclideanR3`. Les règles de chaîne
+  d'ordres un et deux y sont prouvées directement dans le type exact du slot
+  gauge du background physique.
+- Limite : transport linéaire fixe, sans quotient de jets holonomes ni connexion
+  globale ; le terme hessien interdit de déclarer le carrier brut invariant.
+- Porte terminale : aucune ; pont physique de la loi de carte de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-FRAME-TRANSITION-IN-BASE-CHART` — Repères dans une carte arbitraire
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/JET/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeFrameTransitionInBaseChartSecondOrderJetOverlap4D`.
+- Résultat : dans toute carte source contenant le point commun, la transition
+  de repère variable est `C²`, identifie les représentants comme germes et
+  donne les lois exactes de Leibniz aux ordres un et deux.
+- Limite : les deux repères utilisent encore la même carte de base ; aucun
+  cocycle combiné ou quotient global n'est construit.
+- Porte terminale : aucune ; changement de repère chartwise de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-ARBITRARY-FRAME-BASE-CHART-OVERLAP` — Couples repère--carte arbitraires
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/JET/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeArbitraryFrameBaseChartSecondOrderJetOverlap4D`.
+- Résultat : les jets se transportent exactement entre deux couples
+  `(ancre de repère, centre de carte)` arbitraires sur leur overlap commun.
+- Limite : résultat pairwise ; le quotient et la descente globale restent ouverts.
+- Porte terminale : aucune ; transition locale générale du sous-verrou gauge.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-ARBITRARY-FRAME-BASE-CHART-COCYCLE` — Cocycle combiné
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/COCYCLE/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeArbitraryFrameBaseChartSecondOrderCocycle4D`.
+- Résultat : sur tout triple overlap, la transition semi-directe repère--carte
+  vérifie le cocycle exact pour le germe, la valeur et la Jacobienne, avec la
+  formule hessienne fibre complète à cinq termes.
+- Limite : aucune relation quotient ni section globale n'est encore construite.
+- Porte terminale : aucune ; associativité locale d'ordre deux de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-BASE-CHART-SECOND-ORDER-GROUPOID` — Unité et inverse
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/GROUPOIDE/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionSecondOrderGroupoid4D`.
+- Résultat : unité et inverse sont prouvés pour le germe, la Jacobienne et la Hessienne.
+- Limite : repère fixé ; aucun quotient global n'est encore construit.
+- Porte terminale : aucune ; groupoïde local d'ordre deux de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-COMBINED-SECOND-ORDER-GROUPOID` — Groupoïde combiné
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/GROUPOIDE/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeCombinedFrameBaseChartSecondOrderGroupoid4D`.
+- Résultat : unité et inverse sont prouvés pour le germe semi-direct, sa Jacobienne et sa Hessienne.
+- Limite : la descente lisse globale reste ouverte.
+- Porte terminale : aucune ; groupoïde combiné local de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-SECOND-ORDER-PRESENTATION-SETOID` — Présentations locales engendrées
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/QUOTIENT/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationSetoid4D`.
+- Résultat : une présentation stocke repère, carte, preuves de validité et jet
+  brut. La relation directe est exactement la loi valeur/Jacobienne/Hessienne ;
+  sa clôture équivalente engendrée fournit un `Setoid`. Deux présentations
+  extraites du même vrai jet gauge sont directement compatibles.
+- Limite : ce gate seul utilise encore la clôture engendrée ; les gates suivants
+  prouvent qu'elle coïncide avec la relation directe.
+- Porte terminale : aucune ; carrier quotient local de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-SECOND-ORDER-DIRECT-REFLEXIVITY` — Identité directe
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/GROUPOIDE/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationDirectReflexivity4D`.
+- Résultat : toute présentation brute est directement compatible avec elle-même
+  aux niveaux valeur, Jacobienne et Hessienne.
+- Limite : aucune structure lisse sur le quotient ponctuel.
+- Porte terminale : aucune ; unité directe du quotient local de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-SECOND-ORDER-DIRECT-SYMMETRY` — Inversion directe
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/GROUPOIDE/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationDirectSymmetry4D`.
+- Résultat : toute compatibilité directe s'inverse exactement, y compris les
+  termes mixtes et hessiens de la transition semi-directe.
+- Limite : aucune structure lisse sur le quotient ponctuel.
+- Porte terminale : aucune ; inverse direct du quotient local de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-SECOND-ORDER-DIRECT-TRANSITIVITY` — Composition directe
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/GROUPOIDE/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationDirectTransitivity4D`.
+- Résultat : deux compatibilités directes composent en une compatibilité directe,
+  par les cocycles exacts de base et de fibre jusqu'au Hessien à cinq termes.
+- Limite : aucune structure lisse sur le quotient ponctuel.
+- Porte terminale : aucune ; composition directe du quotient local de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-SECOND-ORDER-DIRECT-SETOID` — Quotient direct exact
+
+- État : `DONE` (2026-08-26). Portée : `PONCTUELLE/QUOTIENT/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationDirectSetoid4D`.
+- Résultat : la compatibilité directe définit un `Setoid`; une induction sur
+  `Relation.EqvGen` prouve que sa clôture engendrée lui est exactement égale.
+  Aucun zigzag supplémentaire n'est donc identifié.
+- Limite : ce gate seul ne construit encore aucun bundle lisse ni section globale lisse.
+- Porte terminale : aucune ; quotient ponctuel exact de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-SECOND-ORDER-POINTWISE-QUOTIENT` — Descente ponctuelle
+
+- État : `DONE` (2026-08-26). Portée : `PONCTUELLE/QUOTIENT/ORDRE-DEUX/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPointwiseQuotientDescent4D`.
+- Résultat : le quotient ponctuel engendré, la présentation réelle canonique et
+  sa classe sont définis. Toute présentation réelle valide représente cette
+  même classe canonique.
+- Limite : ce gate seul ne fournit qu'une famille dépendante ; la chaîne
+  suivante réalise le bundle et la section lisses.
+- Porte terminale : aucune ; descente ponctuelle réelle de `T02`.
+
+### `P-T02-ACTUAL-THROAT-GAUGE-SMOOTH-SECOND-JET-BUNDLE` — Bundle et section lisses
+
+- État : `DONE` (2026-08-26). Portée : `GLOBALE/BUNDLE-LISSE/ORDRE-DEUX/NONTERMINALE`.
+- Gates intégrées, liste complète de la chaîne ajoutée après la descente ponctuelle :
+  1. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetDependentDescent4D` — total
+     dépendant et section ensembliste initiale ;
+  2. `P0EFTJanusProgramPFramedSecondOrderJetNormedSpace4D` — modèle normé,
+     complet et de dimension finie ;
+  3. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetTransitionSmoothRegularity4D` —
+     coefficients de transition `C∞` jusqu'au Hessien ;
+  4. `P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionJacobianEquiv4D` —
+     Jacobienne de carte comme équivalence linéaire continue ;
+  5. `P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransport4D` — transport
+     semi-direct générique à cinq termes ;
+  6. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSemidirectTransport4D` —
+     transport concret repère--carte ;
+  7. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetDirectTargetUniqueness4D` —
+     unicité dans une cible fixée ;
+  8. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSemidirectTransportCompatibility4D` —
+     compatibilité directe du représentant transporté ;
+  9. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPointwiseNormalization4D` —
+     équivalence quotient ponctuel--fibre brute ;
+  10. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSemidirectTransportGroupoid4D` —
+      identité, composition et inverse ;
+  11. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleAtlasData4D` — atlas
+      ouvert couvrant par couples repère--carte ;
+  12. `P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransportContinuity4D` —
+      continuité générique en norme d'opérateur ;
+  13. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChange4D` —
+      changements de coordonnées continus et cocycle ;
+  14. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleCore4D` — vrai
+      `VectorBundleCore` topologique ;
+  15. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleDescent4D` —
+      quotient et section réelle dans le total space du bundle ;
+  16. `P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransportSmoothness4D` —
+      assemblage semi-direct générique `Cⁿ` ;
+  17. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChangeSmoothness4D` —
+      changements de coordonnées concrets `C∞` ;
+  18. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSmoothVectorBundleCore4D` —
+      mixin `VectorBundleCore.IsContMDiff` et bundle vectoriel lisse ;
+  19. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleDescentLocalTrivialization4D` —
+      identification exacte des coordonnées locales descendues ;
+  20. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetLocalSectionSmoothness4D` —
+      représentants locaux et coordonnées de section `C∞` ;
+  21. `P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSmoothVectorBundleSection4D` —
+      section globale réelle `C∞`.
+- Résultat : le quotient exact des présentations de jets gauge de gorge est
+  réalisé par un bundle vectoriel lisse Mathlib ; pour chaque composante de
+  chaque potentiel `U(1)²` lisse, le jet réel descend en une section globale
+  `C∞` dont toute coordonnée locale est le jet effectivement extrait.
+- Limite : ce bundle ne contient que le slot gauge `U(1)²` de gorge. Les trois
+  slots LL et le slot métrique sont désormais recollés dans leurs bundles
+  lisses séparés ; SpinC, géométrie normale et carrier physique complet ne sont
+  pas encore recollés dans un bundle commun.
+- Porte terminale : aucune ; verrou de descente lisse du sous-slot gauge de `T02`.
+
+### `P-T02-ACTUAL-THROAT-LL-SMOOTH-SECOND-JET-BUNDLES` — Huit gates 68--75
+
+- État : `DONE` (2026-08-26). Portée : `GLOBALE/BUNDLES-LISSES/ORDRE-DEUX/NONTERMINALE`.
+- Gates nouvelles :
+  1. `P0EFTJanusProgramPFrameChartPairSecondJetVectorBundleCore4D` ;
+  2. `P0EFTJanusProgramPFramedSecondOrderJetConstantFiberBaseChange4D` ;
+  3. `P0EFTJanusProgramPVectorBundleCoreSmoothSectionCriterion4D` ;
+  4. `P0EFTJanusProgramPVectorBundleCoreCompatibleLocalSection4D` ;
+  5. `P0EFTJanusProgramPActualThroatSmoothFieldSecondOrderJetOverlap4D` ;
+  6. `P0EFTJanusProgramPActualThroatConstantFiberSecondOrderJetSmoothVectorBundleCore4D` ;
+  7. `P0EFTJanusProgramPActualThroatCovariantTwoTensorZeroOrderTransition4D` ;
+  8. `P0EFTJanusProgramPActualLLSecondOrderJetSmoothVectorBundleSections4D`.
+- Résultat : les champs `llAuxMetric`, `llMeasure` et `llField` définissent
+  trois sections globales `C∞` de bundles de seconds jets à fibre fixe, avec
+  wrappers gauge-fixés et valeurs d'ordre zéro exactes. La transition de repère
+  covariante de rang deux est exacte et `C∞`, avec identité et cocycle à l'ordre zéro.
+- Limite : les trois bundles LL restent séparés des bundles gauge et métrique.
+  Les seconds jets SpinC et le produit
+  physique commun avec background/géométrie normale restent à construire.
+- Porte terminale : aucune ; huit supports supplémentaires de `T02`, compteur
+  terminal inchangé à `1/14`.
+
+### `P-T02-ACTUAL-THROAT-METRIC-SMOOTH-SECOND-JET-BUNDLE` — Dix-sept gates 76--92
+
+- État : `DONE` (2026-08-26). Portée : `GLOBALE/BUNDLE-LISSE/ORDRE-DEUX/NONTERMINALE`.
+- Gates nouvelles :
+  1. `P0EFTJanusProgramPActualThroatMetricArbitraryFrameChartSecondOrderJetExtraction4D` ;
+  2. `P0EFTJanusProgramPActualThroatCovariantTwoTensorSecondOrderFrameOverlap4D` ;
+  3. `P0EFTJanusProgramPActualThroatMetricBaseChartSecondOrderJetOverlap4D` ;
+  4. `P0EFTJanusProgramPActualThroatMetricArbitraryFrameBaseChartSecondOrderJetOverlap4D` ;
+  5. `P0EFTJanusProgramPActualThroatMetricArbitraryFrameBaseChartSecondOrderCocycle4D` ;
+  6. `P0EFTJanusProgramPActualThroatMetricCombinedFrameBaseChartSecondOrderGroupoid4D` ;
+  7. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetTransitionSmoothRegularity4D` ;
+  8. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetSemidirectTransport4D` ;
+  9. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetSemidirectTransportCompatibility4D` ;
+  10. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetSemidirectTransportGroupoid4D` ;
+  11. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetBundleAtlasData4D` ;
+  12. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetBundleCoordChange4D` ;
+  13. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetBundleCoordChangeSmoothness4D` ;
+  14. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetVectorBundleCore4D` ;
+  15. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetSmoothVectorBundleCore4D` ;
+  16. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetLocalSectionSmoothness4D` ;
+  17. `P0EFTJanusProgramPActualThroatMetricSecondOrderJetSmoothVectorBundleSection4D`.
+- Résultat : tout tenseur covariant symétrique lisse de gorge possède désormais
+  un vrai second jet dans chaque paire repère--carte. Les overlaps aux ordres
+  zéro, un et deux, les cocycles et inverses, puis le transport semi-direct
+  forment un `VectorBundleCore` lisse. Les deux métriques induites réelles
+  définissent des sections globales `C∞`, exactement égales aux jets historiques
+  dans la présentation diagonale.
+- Limite : le bundle métrique reste séparé des bundles gauge/LL/SpinC. Le
+  produit physique commun avec background et géométrie normale reste à
+  construire.
+- Porte terminale : aucune ; dix-sept supports supplémentaires de `T02`, compteur
+  terminal inchangé à `1/14`.
+
+### `P-T02-ACTUAL-THROAT-SPINC-SMOOTH-SECOND-JET-BUNDLE` — Dix-huit gates 93--110
+
+- État : `DONE` (2026-08-26). Portée : `GLOBALE/BUNDLE-LISSE/ORDRE-DEUX/NONTERMINALE`.
+- Gates nouvelles :
+  1. `P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransportGroupoid4D` ;
+  2. `P0EFTJanusProgramPActualThroatSpinCArbitraryTrivializationChartSecondOrderJetExtraction4D` ;
+  3. `P0EFTJanusProgramPActualThroatSpinCBaseChartSecondOrderJetOverlap4D` ;
+  4. `P0EFTJanusProgramPActualThroatSpinCZeroOrderTransitionGroupoid4D` ;
+  5. `P0EFTJanusProgramPActualThroatSpinCSecondOrderTrivializationOverlap4D` ;
+  6. `P0EFTJanusProgramPActualThroatSpinCArbitraryTrivializationBaseChartSecondOrderJetOverlap4D` ;
+  7. `P0EFTJanusProgramPActualThroatSpinCArbitraryTrivializationBaseChartSecondOrderCocycle4D` ;
+  8. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSemidirectTransport4D` ;
+  9. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSemidirectTransportCompatibility4D` ;
+  10. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSemidirectTransportGroupoid4D` ;
+  11. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetBundleAtlasData4D` ;
+  12. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetTransitionSmoothRegularity4D` ;
+  13. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetBundleCoordChange4D` ;
+  14. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetBundleCoordChangeSmoothness4D` ;
+  15. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetVectorBundleCore4D` ;
+  16. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSmoothVectorBundleCore4D` ;
+  17. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetLocalSectionSmoothness4D` ;
+  18. `P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSmoothVectorBundleSection4D`.
+- Résultat : tout champ SpinC primitif lisse possède des seconds jets dans toute
+  trivialisation et carte. Les overlaps et cocycles exacts aux ordres zéro, un
+  et deux, puis le transport semi-direct en groupoïde, forment un
+  `VectorBundleCore` lisse. Chaque section SpinC lisse, notamment les secteurs
+  physiques, descend en section globale `C∞`, avec jet centré exact.
+- Limite : ce bundle reste séparé des bundles gauge/LL/métrique et du background
+  normal ; leur bundle physique commun reste à construire.
+- Porte terminale : aucune ; dix-huit supports supplémentaires de `T02`, compteur
+  terminal inchangé à `1/14`.
+
+### `P-T02-ACTUAL-THROAT-TANGENTIAL-CONNECTION-QUADRATIC` — Candidat de Koszul ponctuel
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/CONDITIONNELLE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatTangentialConnectionQuadratic4D`.
+- Résultat : sous `HasNoTangentialRadical` sectoriel, la métrique induite réelle
+  est non dégénérée au point choisi. Son jet transporté vers `EuclideanR3`
+  fournit une équivalence de Riesz et un candidat quadratique symétrique qui
+  satisfait l'identité de Koszul pour la dérivée explicitement symétrisée.
+- Limite : résultat ponctuel dans un repère fixé ; ce gate seul n'identifie pas
+  la symétrisation à la dérivée brute et ne construit aucune connexion de
+  Levi--Civita globale, loi de recouvrement ou dépendance lisse en le point.
+- Porte terminale : aucune ; sous-verrou tangentiel réel de `T02`.
+
+### `P-T02-ACTUAL-THROAT-RAW-METRIC-KOSZUL` — Identification au jet métrique brut
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/CONDITIONNELLE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatRawMetricKoszulIdentification4D`.
+- Résultat : la valeur métrique transportée et sa dérivée première brute sont
+  symétriques dans leurs slots métriques. La symétrisation explicite est donc
+  égale à la dérivée brute, et le candidat précédent satisfait directement
+  l'identité de Koszul écrite avec cette dérivée brute.
+- Limite : aucune connexion lisse globale, compatibilité métrique globale,
+  torsion, loi d'overlap ou identification à Levi--Civita globale n'est prouvée.
+- Porte terminale : aucune ; identification métrique ponctuelle de `T02`.
+
+### `P-T02-ACTUAL-THROAT-STRUCTURED-BACKGROUND-CORE` — Cœur réel de background gorge
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/CONDITIONNELLE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatStructuredBackgroundSecondJetCore4D`.
+- Résultat : au même point et pour la même configuration, le candidat
+  tangentiel issu du jet métrique réel est combiné aux jets `U(1)²` réels. Les
+  seuls champs absents du cœur sont `normalQuadratic` et `physicalNormal`, avec
+  la preuve de symétrie de la quadratique normale.
+- Limite : aucune provenance d'immersion ou normale, loi de recouvrement,
+  descente globale ou canonicité de la géométrie normale n'est fournie.
+- Porte terminale : aucune ; cœur background réel de `T02`.
+
+### `P-T02-ACTUAL-THROAT-STRUCTURED-BACKGROUND-COMPLETION` — Complétion normale externe
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/CONDITIONNELLE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualThroatStructuredBackgroundCompletion4D`.
+- Résultat : le cœur réel devient un
+  `StructuredBackgroundSecondJet EuclideanR3` en fournissant exactement
+  `normalQuadratic`, sa symétrie et `physicalNormal`.
+- Limite : ces trois données restent externes, sans extraction depuis une
+  immersion, normalisation, orientation, compatibilité métrique ou unicité.
+- Porte terminale : aucune ; contrat normal explicite de `T02`.
+
+### `P-T02-ACTUAL-THROAT-PHYSICAL-JET-CONDITIONAL-ASSEMBLY` — Carrier gorge conditionnel
+
+- État : `DONE` (2026-08-26). Portée : `LOCAL/CONDITIONNELLE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPConditionalActualThroatPhysicalSecondOrderJetAssembly4D`.
+- Résultat : au même point et dans la même carte étendue de gorge, les jets
+  métriques, SpinC et LL réels sont assemblés dans le vrai
+  `ThroatPhysicalSecondOrderJet`, avec un wrapper du sum-carrier.
+- Limite : le `StructuredBackgroundSecondJet EuclideanR3` entier reste une
+  donnée externe, sans compatibilité prouvée avec le point, la métrique,
+  l'immersion, la normale, le repère ou les changements de carte/SpinC. Ce gate
+  historique est conservé ; l'assemblage raffiné ci-dessous réduit ce contrat.
+- Porte terminale : aucune ; carrier gorge conditionnel historique.
+
+### `P-T02-REFINED-ACTUAL-THROAT-PHYSICAL-JET-CONDITIONAL-ASSEMBLY` — Carrier gorge raffiné
+
+- État : `DONE` (2026-08-26). Portée : `LOCALE/CONDITIONNELLE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPRefinedConditionalActualThroatPhysicalSecondOrderJetAssembly4D`.
+- Résultat : les jets métriques, SpinC, LL, tangentiels et `U(1)²` réels sont
+  assemblés au même point dans le vrai `ThroatPhysicalSecondOrderJet`, avec un
+  wrapper du sum-carrier. Seuls `normalQuadratic`, sa symétrie et
+  `physicalNormal` sont fournis extérieurement.
+- Limite : restent requis la transversalité sectorielle, les données
+  Candidate-A compatibles, la carte SpinC au point et le contrat normal ; aucun
+  overlap aux ordres un/deux ou de carte de base, descente globale ou carrier
+  inconditionnel n'est établi.
+- Porte terminale : aucune ; carrier gorge raffiné, `T02` reste ouvert.
+
+### `P-T02-ACTUAL-METRIC-CHARTWISE-JETS` — Jets métriques réels bulk et gorge
+
+- État : `DONE` (2026-08-26). Portée : `LOCAL/INDEXÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPGlobalMetricChartwiseSecondOrderJetExtraction4D`.
+- Résultat : les deux métriques Candidate-A et leurs traces induites de gorge
+  fournissent leurs jets `C²` dans les types exacts des slots métriques du
+  carrier. Les valeurs et symétries pertinentes sont identifiées aux tenseurs
+  globaux réels.
+- Limite : carte holonome/coordonnée bulk et ancre/trivialisation gorge fixées ;
+  aucune loi de recouvrement, compatibilité jet-level bulk--trace, signature de
+  gorge, action résiduelle ou classification exhaustive.
+- Porte terminale : aucune ; sous-verrou métrique local de `T02`.
+
+### `P-T02-ACTUAL-BULK-PHYSICAL-JET-CONDITIONAL-ASSEMBLY` — Carrier bulk réel conditionnel
+
+- État : `DONE` (2026-08-26). Portée : `LOCAL/CONDITIONNELLE/NONTERMINALE`.
+- Gates : `P0EFTJanusProgramPActualBulkBackgroundChartwiseSecondOrderJetExtraction4D`,
+  `P0EFTJanusProgramPActualBulkAbelianNonminimalChartwiseSecondOrderJetExtraction4D`,
+  `P0EFTJanusProgramPActualBulkDiffeomorphismNonminimalChartwiseSecondOrderJetExtraction4D`,
+  `P0EFTJanusProgramPActualBulkStructuredBackgroundCompletion4D` et
+  `P0EFTJanusProgramPConditionalActualBulkPhysicalSecondOrderJetAssembly4D`.
+- Résultat : sous une réalisation régulière compatible
+  `GlobalCandidateAActionData` et une carte fournies, le cœur
+  Christoffel/`U(1)²`, les métriques et tous les slots nonminimaux typés du
+  carrier (neuf jets après expansion sectorielle) sont assemblés dans un
+  `BulkPhysicalSecondOrderJet`. Les seuls slots du background encore fournis
+  extérieurement sont exactement la forme quadratique normale et la coordonnée
+  normale sectorielles.
+- Limite : la donnée normale externe n'est ni extraite, ni canonique, ni reliée
+  ici à une immersion, une normale unitaire/orientée, la métrique, la gorge ou
+  les changements de carte. Les coefficients fantômes sont les espaces normés
+  ordinaires du modèle Lean, pas un superespace de Grassmann.
+- Porte terminale : aucune ; le carrier bulk est habité conditionnellement,
+  `T02` reste ouvert.
+
+### `P-T02-PHYSICAL-SECOND-ORDER-JET-LOW-ORDER-ORBIT` — Orbite projetée bas ordre
+
+- État : `DONE` (2026-08-26). Portée : `LOCAL/PROJETÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPPhysicalSecondOrderJetLowOrderOrbit4D`.
+- Résultat : chaque secteur et colonne abélienne du fond physique se projette
+  exactement vers le quotient `(II, F)`. L'équivalence d'orbite, l'action
+  résiduelle repère orthogonal--SpinC et l'unicité de la réduction des
+  évaluateurs satisfaisant les invariances requises sont reliées aux objets
+  structurés déjà compilés. Le facteur SpinC agit trivialement sur cette
+  projection sans matière ; seule l'action de repère y est substantielle.
+- Limite : ce gate ne traite ni l'action sur le carrier complet, ni deck et
+  matière, ni l'exhaustion de tous les fonctionnels locaux admissibles.
+- Porte terminale : aucune ; sous-verrou projeté de `T02`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
 théorème concret sur les objets canoniques, pas un champ `Prop` supposé dans
 un `ProgramStatus` arbitraire.
 
-- [ ] `T01` — Revalider toutes les fondations et pairings par un certificat
+- [x] `T01` — Revalider toutes les fondations et pairings par un certificat
   typé et compilé sur les objets globaux communs.
 - [ ] `T02` — `invariantLocalFunctionalBasisClassified`.
 - [ ] `T03` — `fullEulerLagrangeOperatorDerived`.
@@ -3773,13 +4420,13 @@ Cette carte améliore la fiabilité du suivi mais ne ferme aucune porte
 scientifique.
 
 Validation : l'audit lit exclusivement la section fixe `T01–T14`, impose le
-dénominateur `14`, affiche le décompte terminal `0/14` et rejette toute porte
+dénominateur `14`, affiche le décompte terminal `1/14` et rejette toute porte
 cochée sans `TerminalGateEvidence`. Chaque évidence doit fournir module,
 façade, théorème pleinement qualifié, portée et fragment de type ; le module
 doit être importé, sans placeholder, et le théorème ne peut pas être un simple
-contrat `ProgramStatus`. L'audit complet a été revérifié vert le 2026-07-26.
-Aucune porte
-terminale n'est fermée.
+contrat `ProgramStatus`. Le certificat global typé `T01`, sa complétion L2
+intrinsèque et son intégration à la façade ont été revérifiés verts le
+2026-08-26. `T01` est la seule porte terminale fermée.
 
 Mise à jour : `P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` ferme le
 paquetage global lisse, la linéarité réelle et l'intégrabilité de l'onde
@@ -3899,4 +4546,5 @@ variation diagonale en zéro est donc exactement le Hessien symétrique certifi�
 - le paquet spectral exige encore les différences actual/reference, les
   frontières filtrées, les moyennes de slices et leurs identités de
   semi-groupes. Les frontends Bochner fixes ne prouvent pas encore ce pont ; le
-  décompte terminal demeure donc `0/14`.
+  décompte terminal actuel est néanmoins `1/14`, par fermeture indépendante de
+  `T01`.

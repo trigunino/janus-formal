@@ -1,6 +1,6 @@
 # Programme P — bilan du reste à faire après la PR #60
 
-Date de référence : 2026-08-13.
+Date de référence : 2026-08-26.
 
 ## 1. Règle de lecture
 
@@ -11,14 +11,14 @@ Ce document distingue trois niveaux qui ne doivent pas être confondus :
    explicites ;
 3. les quatorze portes terminales du registre canonique.
 
-La PR #60 poursuit volontairement l'architecture avant le nettoyage final de
-l'élaboration Lean. Elle ne revendique donc ni build vert ni fermeture d'une
-porte terminale.
+La PR #60 poursuivait volontairement l'architecture avant le nettoyage final
+de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01` a été
+fermée séparément le 2026-08-26.
 
 Le compteur officiel demeure :
 
 ```text
-0 / 14 portes terminales.
+1 / 14 portes terminales.
 ```
 
 Une porte ne peut être cochée qu'après construction de ses objets concrets,
@@ -281,19 +281,104 @@ Par conséquent, `MICRO-GLOBAL-01`, la fixation de schéma et
 
 ### T01 — fondations communes compilées
 
-**Déjà disponible :** la majorité des objets globaux et pairings.
-
-**Reste :** produire un certificat unique, typé et compilé sur les mêmes objets
-communs après intégration de la branche actuelle, avec façade, audit et axiomes
-contrôlés.
+**Fermé le 2026-08-26 :**
+`program_p_t01_global_foundations_pairings_terminal_gate` assemble sur un même
+cœur global la métrique partagée, l'injectivité tangente, le pairing L2 positif
+non dégénéré et l'inclusion dense injective dans sa complétion intrinsèque. Le
+gate, son `.olean`, son import de façade et l'audit `1/14` sont verts ; les seuls
+axiomes rapportés sont `propext`, `Classical.choice` et `Quot.sound`.
 
 ### T02 — `invariantLocalFunctionalBasisClassified`
 
-**Déjà disponible :** classificateur naturel fini fidèle et troncature EFT à
-six invariants.
+**Déjà disponible :** classificateur naturel fini fidèle, troncature EFT à
+six invariants, carrier local d'ordre deux séparant honnêtement les strates
+physiques bulk et gorge, constructeur générique `C²` en carte fixe, extraction
+réelle des jets SpinC primitifs et des trois champs LL depuis une configuration
+gauge-fixée et paquet combiné de gorge, jets réels des deux métriques bulk et
+induites de gorge, cœur bulk réel Christoffel/`U(1)²`, tous les slots
+nonminimaux typés du carrier (neuf jets après expansion sectorielle), puis
+assemblage du vrai carrier bulk sous une réalisation régulière compatible,
+une carte et une donnée normale externe explicites. Les potentiels `U(1)²`
+sectorisés réels de gorge fournissent le slot gauge exact en `EuclideanR3`.
+Leur expansion finie reconstruit exactement le covecteur intrinsèque sur le
+`baseSet` de la trivialisation tangente centrée et, pour Candidate-A, coïncide
+avec l'expression en coordonnées du repère centré du pullback bulk ambiant en
+tout point de ce domaine, après composition par l'inverse de la trivialisation
+tangente. Deux repères tangents
+centrés vérifient la loi contragrédiente exacte d'ordre zéro sur leur
+intersection. Les transitions tangentes sont l'identité à ancre répétée,
+s'inversent par échange des ancres et vérifient le cocycle exact sur les triples
+intersections ; leurs transports covectoriels vérifient le cocycle dual
+correspondant. La transition et son inverse varient `C∞` sur chaque overlap
+comme applications linéaires continues. Les coefficients et covecteurs
+reconstruits sont `C∞` sur chaque `baseSet` centré entier, et l'action duale est
+`C∞` sur le double overlap. Après transport du premier représentant, celui-ci
+et le second admettent exactement les mêmes certificats
+`HasMFDerivWithinAt` pour toute dérivée première candidate. Cela reste une
+congruence dans l'overlap. Dans la carte étendue centrée au point commun, la
+formule de Leibniz explicite
+`dC₂ = D₁₂ ∘ dC₁ + (dD₁₂) · C₁` est désormais prouvée. Elle reste
+une loi de premier ordre dans une carte de base fixée, sans descente intrinsèque
+des jets entre cartes. Un carrier local à deux paramètres sépare désormais
+l'ancre du repère du centre de carte, coïncide exactement avec l'extracteur
+Candidate-A historique sur la diagonale et porte cette loi dans son vrai champ
+`firstDerivative`. Un lemme générique de Leibniz pour l'application d'une
+famille d'opérateurs linéaires est ensuite différentié deux fois. Le vrai champ
+`secondDerivative` satisfait donc la loi à quatre termes : transport de
+`D²C₁`, deux termes mixtes et `D²D₁₂·C₁`. Cette loi est aussi transportée dans
+le carrier physique exact `EuclideanR3`. À repère tangent fixé, la transition
+réelle entre deux cartes étendues est `C²`, identifie les représentants comme
+germes et donne les règles de chaîne exactes d'ordres un et deux dans un jet à
+trois paramètres, y compris le Hessien de la transition de carte.
+Les jets des transitions de cartes satisfont désormais le cocycle exact des
+Jacobiennes et Hessiennes sur les triples overlaps. Une synthèse à carte source
+centrée combine ensuite changement de repère et changement de carte aux ordres
+un et deux ; la loi à trois paramètres est aussi transportée dans le carrier
+physique `EuclideanR3`.
+Sous `HasNoTangentialRadical` sectoriel, le jet métrique induit réel fournit un
+candidat de Koszul ponctuel. La symétrie de sa dérivée transportée brute dans
+les slots métriques, l'égalité de sa symétrisation explicite avec cette dérivée
+brute et l'identité de Koszul brute sont prouvées. Le cœur gorge combine ces
+slots tangentiel et gauge réels ; l'assemblage raffiné du vrai carrier gorge
+n'externalise plus que `normalQuadratic`, sa symétrie et `physicalNormal`.
+L'ancien assemblage à background entièrement externe reste compilé comme gate
+historique. Le quotient projeté `(II, F)` possède aussi son orbite résiduelle
+repère--SpinC et la réduction unique des évaluateurs invariants. Ces cent dix
+gates de support restent non terminales et ne changent pas le compteur `1/14`.
+
+Les présentations locales repère--carte d'un jet gauge arbitraire possèdent
+maintenant la relation directe exacte valeur/Jacobienne/Hessienne et le `Setoid`
+explicitement engendré par cette relation. Tous les jets gauge réels extraits
+sont directement compatibles et définissent donc une classe canonique
+indépendante de la présentation dans le quotient ponctuel. La relation engendrée
+est maintenant prouvée égale à la relation directe, elle-même réflexive,
+symétrique et transitive aux ordres zéro, un et deux. Le carrier brut est
+désormais normé et de dimension finie ; ses transports semi-directs forment un
+`VectorBundleCore` lisse sur l'atlas ouvert repère--carte. Le quotient ponctuel
+s'identifie aux fibres de ce bundle, et les jets gauge `U(1)²` réels descendent
+en une section globale `C∞`.
+
+Les huit gates 68--75 ajoutent le core de bundle de seconds jets à
+fibre fixe, deux critères génériques de recollement de sections et l'overlap
+exact de tout `SmoothThroatField` de dimension finie. Les trois champs LL
+descendent ainsi en sections globales `C∞` de bundles de seconds jets séparés,
+avec valeurs d'ordre zéro exactes. Les dix-sept gates 76--92 complètent ensuite
+les jets métriques covariants : extraction repère--carte arbitraire, overlaps et
+cocycles aux ordres un/deux, transport semi-direct en groupoïde, bundle
+vectoriel lisse et sections globales `C∞` des deux métriques induites. Les
+dix-huit gates 93--110 (un critère générique et dix-sept gates SpinC) ferment à
+leur tour l'extraction en trivialisation/carte arbitraire, les overlaps et
+cocycles aux ordres zéro, un et deux, le transport semi-direct en groupoïde, le
+`SmoothVectorBundleCore` et les sections globales `C∞` SpinC génériques et
+physiques. Reste le bundle physique commun avec background et géométrie normale.
 
 **Reste :** classification complète de la base fonctionnelle locale admissible,
-sur les jets structurés physiques, avec dépendances de dérivées, stratification
+avec extraction géométrique des formes normales/coordonnées normales au lieu du
+contrat externe, décharge intrinsèque de la transversalité, construction d'une
+connexion de Levi--Civita globale, assemblage des bundles lisses déjà séparés
+avec les slots background et normal du carrier physique commun, action
+deck/SpinC/jauge,
+dépendances de dérivées, stratification
 d'isotropie et preuve d'exhaustion.
 
 ### T03 — `fullEulerLagrangeOperatorDerived`
@@ -512,7 +597,7 @@ dimensionnée.
 ## 8. Conclusion
 
 Programme P n'est pas « presque fini » au sens des quatorze portes : le
-compteur officiel reste `0/14`.
+compteur officiel est désormais `1/14`.
 
 Il est en revanche très avancé au niveau de l'infrastructure : géométrie,
 champs, action régulière, Dirac, Euler/Helmholtz chartwise et une architecture

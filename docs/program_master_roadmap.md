@@ -281,9 +281,10 @@ Current results:
 - **C** the explicit cover-product-to-quotient-tangent coordinate map now
   identifies the canonical latitude normal representative with its genuine
   quotient-trivialization presentation, with an exact equality to
-  `canonicalLatitudeNormalCoordinate` at the throat. This closes that
-  presentation sub-lock only; the terminal typed `T01` foundation/pairing
-  certificate remains open.
+  `canonicalLatitudeNormalCoordinate` at the throat. This presentation
+  sub-lock did not close `T01` by itself; the terminal foundation/pairing
+  certificate is now closed separately by
+  `program_p_t01_global_foundations_pairings_terminal_gate`.
 
 ## D2 — Focused twisted Dirac spectral geometry
 
@@ -429,9 +430,86 @@ remain open.
 
 Canonical closure register:
 [`program_p_operational_todo.md`](program_p_operational_todo.md).
-Global status: **0/14 terminal gates**.
-Validation on 2026-07-26: Program P facade build `9900/9900`, focused scalar
-analytic aggregate build `9317/9317`, integrity audit green.
+Global status: **1/14 terminal gates**.
+Validation on 2026-08-26: the complete Program-P facade and local import
+closure compile as `.olean`; the `T01` terminal certificate and one hundred ten
+nonterminal `T02` support gates are integrated.  Besides the carrier, generic
+`C²` extraction, actual SpinC/LL throat packet and low-order `(II, F)` orbit,
+these include actual bulk/throat metric jets, the realized bulk
+Christoffel/`U(1)²` background core, all typed nonminimal carrier slots (nine
+jets after sector expansion) and the conditional true bulk-carrier assembly
+from a compatible `GlobalCandidateAActionData`, a supplied chart and explicit
+external normal data.
+The actual sectorized `U(1)²` potentials have intrinsic fixed-throat pullbacks,
+centered `C²` covector germs and jets in the exact `EuclideanR3` gauge slot.
+Their coefficient expansion reconstructs the intrinsic covector exactly on
+the centered tangent-trivialization base set and, for Candidate-A, equals the
+centered-frame coordinate expression of the ambient bulk pullback at every
+such point, including the inverse tangent trivialization.  Common centered tangent frames
+satisfy the exact zero-order contragredient transition law.
+The tangent transitions also satisfy identity, inverse and exact triple-overlap
+cocycle laws, with the corresponding dual cocycle on covectors.  These remain
+only zero-order fiber/frame statements.  The transition and its inverse are
+`C∞` on each overlap when read as continuous linear maps.  The coefficient and
+reconstructed-covector representatives are `C∞` on each full centered
+`baseSet`, and the induced dual action is `C∞` on the double overlap.  The
+transported first representative and the second representative have equal
+`HasMFDerivWithinAt` certificates for every candidate first derivative on that
+overlap.  In the extended throat chart centered at the overlap point, the
+explicit first-order law
+`dC₂ = D₁₂ ∘ dC₁ + (dD₁₂) · C₁` is also proved.  It remains a
+fixed-chart statement, not intrinsic jet descent.
+A two-parameter local jet carrier now separates frame anchor from chart center,
+equals the original Candidate-A extractor when both coincide, and realizes
+that law in its genuine `firstDerivative` field.  A generic second-order
+continuous-linear-map Leibniz lemma then proves the four-term transformation
+of its `secondDerivative`: transported `D²C₁`, two mixed terms and
+`D²D₁₂·C₁`.  The same laws now hold in the exact `EuclideanR3` carrier.
+For two different extended base charts and one fixed tangent frame, their
+representatives agree as germs and the resulting three-parameter jet obeys the
+full first- and second-order chain rules, including the transition Hessian.
+The base-chart transition jets satisfy the exact Jacobian/Hessian cocycle on
+triple overlaps.  These laws are combined with the varying frame transition
+from a centered source chart and transported to the exact `EuclideanR3`
+three-parameter gauge carrier.  The frame law is now valid in an arbitrary
+source chart, and composition with a second chart gives the exact transition
+through order two between arbitrary frame--chart pairs.  Base-chart unit and
+inverse laws also hold at the germ, Jacobian and Hessian levels.  The combined
+semidirect transition now obeys its exact triple cocycle, including the
+five-term fiber Hessian, and has unit and inverse laws through order two.
+The arbitrary local frame--chart presentations now carry the exact
+value/Jacobian/Hessian direct relation and its explicitly generated setoid.
+All actual extracted gauge jets are directly related, hence define one
+presentation-independent class in the pointwise quotient.  The direct relation
+is reflexive, symmetric and transitive; its generated closure is proved equal
+to it, so the pointwise quotient has no additional zigzag identifications.
+The framed raw carrier is now normed and finite-dimensional.  Its exact
+semidirect transition operators are continuous linear, satisfy the groupoid
+laws and vary `C∞` on an open cover.  They define a smooth Mathlib vector
+bundle; the quotient classes identify with its fibers, and the actual throat
+`U(1)²` gauge second jets form a global `C∞` section.
+The latest eight gates also build the chart-indexed constant-fiber second-jet
+core and generic smooth-section descent. The three actual LL fields therefore
+give separate global `C∞` second-jet bundle sections with exact zero-jet values.
+Covariant rank-two throat metric jets now have arbitrary frame/chart extraction,
+exact first/second-order overlap and groupoid transport, a smooth vector-bundle
+core and global `C∞` sections, including both induced metric sectors. Eighteen
+further gates (92 + 18 total) complete SpinC second jets through arbitrary
+trivialization/chart extraction, exact overlap and cocycle laws, semidirect
+groupoid transport, a smooth `VectorBundleCore`, and global `C∞` sections for
+every smooth SpinC section and the physical sectors. Only the common
+physical/background/normal bundle remains absent.
+Under sectorwise transversality, the actual induced-metric one-jet produces a
+pointwise Koszul quadratic.  The raw transported derivative is symmetric in
+its metric slots, its explicit symmetrization equals the raw derivative, and
+the Koszul identity is proved directly for that raw derivative.  The refined
+true throat carrier combines these actual background slots with its actual
+metric/SpinC/LL jets and externalizes only `normalQuadratic`, its symmetry and
+`physicalNormal`.  The former whole-background assembly remains historical.
+No smooth global Levi--Civita connection, smooth descent of the remaining
+physical jet slots or canonical normal geometry follows from these separate
+gauge/LL bundle gates.
+The integrity audit is green at `1/14`; `T02` remains open.
 
 ## P0 — Moduli-geometry no-go
 

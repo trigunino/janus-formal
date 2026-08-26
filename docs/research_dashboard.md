@@ -20,7 +20,7 @@ summaries embedded in the tables below are historical snapshots.
 
 | Program | Role | Strongest current result | Terminal blocker |
 | --- | --- | --- | --- |
-| **D0/D8** | global geometry and normal lift | analytic compact mapping-torus quotients, smooth differential normal bundle and joint `C∞` canonical latitude lift; genuine smooth tangent-coordinate normal frames and explicit comparison with the older cover-product presentation; the explicit normal-displacement `arctan` family has injective fixed-parameter descended graphs and is jointly `C∞` in throat point and deformation parameter, without product-map injectivity, with the prescribed scalar normal velocity and, after transport along the zero graph, derivative exactly equal to the global orthogonal normal lift; exact causal strata; continuous ambient `Pin⁻(4)` Čech principal bundle with local sections and half-angle real-normal gauge; twisted `PinC(4)` principal/spinor bundles and determinant line; oriented Spin/SpinC no-go on the nonorientable torus remains exact; these bundles are integrated into the common Program-P field/domain package | construct the induced collar action and its same-action normal Hessian; complete the terminal `T01` typed global foundation/pairing certificate; classify arbitrary general-metric throat restrictions |
+| **D0/D8** | global geometry and normal lift | analytic compact mapping-torus quotients, smooth differential normal bundle and joint `C∞` canonical latitude lift; genuine smooth tangent-coordinate normal frames and explicit comparison with the older cover-product presentation; the explicit normal-displacement `arctan` family has injective fixed-parameter descended graphs and is jointly `C∞` in throat point and deformation parameter, without product-map injectivity, with the prescribed scalar normal velocity and, after transport along the zero graph, derivative exactly equal to the global orthogonal normal lift; exact causal strata; continuous ambient `Pin⁻(4)` Čech principal bundle with local sections and half-angle real-normal gauge; twisted `PinC(4)` principal/spinor bundles and determinant line; oriented Spin/SpinC no-go on the nonorientable torus remains exact; these bundles are integrated into the common Program-P field/domain package; the terminal `T01` shared-core foundation/pairing certificate and intrinsic L2 completion are green | construct the induced collar action and its same-action normal Hessian; classify arbitrary general-metric throat restrictions |
 | **D2** | focused twisted Dirac spectrum | green monopole eigenvalue/multiplicity law, `l2`, self-adjointness, compact resolvent and circle-reduced determinant | extend the circle model to the common-domain global Janus operator family |
 | **D7** | heat kernel/effective action | green convergent heat trace, order-four Euler--Maclaurin remainder control, unconditional spectral/universal `a0/a2/a4` small-time matching, convergent `Z4` determinant, normalized-circle heat generator, nuclear product-throat/D10/temporal-ghost heats, and one compact injective nuclear reference regulator on the exact bulk `L²`--SpinC--D10--LL product | prove D9 high-energy summability and elliptic LL heat only for physical Hessian agreement, then connect that agreement to the global Fredholm family |
 | **D9/D11** | elliptic and natural-operator gates | green D9 symbol/BRST and D11 naturality/jet heads; the signed SpinC synthesis is unitary with faithful first-order eigenmodes and exact multiplicities. Candidate-A matter has its exact Fredholm `2D+m²` graph Hessian. The nonduplicated Abelian and diagonal diffeomorphism BRST graphs have dense cores, exact `sΨ`, `C²` actions and self-adjoint Riesz representatives. Their physical matter/LL product is complete. The full three-slot LL graph has its exact bounded self-adjoint off-shell Riesz operator and radical; closed range plus finite radical now imply the full bounded Fredholm criterion, and on the stationary quotient it is the Fredholm identity of index zero | prove unified Green/closability/domain and arbitrary-general-metric Einstein--Maxwell identifications; add same-action normal/boundary blocks, the two LL estimates (closed range and finite radical), faithful total multiplicities and the Fredholm sum |
@@ -266,15 +266,21 @@ global Sobolev sections is required.
 
 The canonical dependency-aware register is
 [`program_p_operational_todo.md`](program_p_operational_todo.md). Its strict
-terminal audit is currently **0/14**; completed intermediate cards do not alter
-that count.
+terminal audit is currently **1/14**; `T01` is the only closed terminal gate.
+`T02` now has **110 nonterminal support gates** (92 previous + 18 new): the gauge, three LL
+second-jet sectors and covariant rank-two metric jets have global `C∞`
+bundles/sections. Metric and SpinC transport include arbitrary frame/chart or
+trivialization/chart overlaps, second-order cocycles, semidirect groupoids,
+smooth `VectorBundleCore`s and global `C∞` sections, including the physical
+SpinC sectors. Only the common physical/background/normal bundle remains open.
 
 0. Complete the chosen D10-free gauge-fixed model. The physical tangent,
    physical common domain and corrected spectral target now exclude D10, and
    Candidate-A matter is directly primitive SpinC. Typed local D9 gauge
    fermions are constructed. What remains is their global `C²` realization
    together with all omitted physical blocks; the spectator/no-go gates still
-   forbid falling back to the historical D10-extended target.
+   forbid falling back to the historical D10-extended target. This remaining
+   Hessian/Fredholm work does not reopen the closed `T01` foundation gate.
 1. Construct the genuine injective dense map from the global smooth tangent
    into each regular variational chart.
 2. Extend the now exact finite-core SpinC same-action identity to the final

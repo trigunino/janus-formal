@@ -57,6 +57,105 @@ The local worktree contains the later Program-P gates described below. On
 28 July 2026, the complete Program-P façade compiled `10039/10039` jobs and
 `scripts/audit_janus_program_p.py` passed with terminal count `0/14`.
 
+On 26 August 2026, `T01` became the first closed terminal gate. The shared
+global tangent/pairing realization, intrinsic L2 completion and
+`program_p_t01_global_foundations_pairings_terminal_gate` compile directly and
+as `.olean`; the integrity audit is green at `1/14`, with no business axiom.
+The full Program-P façade and its complete local import closure are green.
+One hundred ten nonterminal `T02` support gates are now compiled and integrated.  In
+addition to the stratified carrier, generic `C²` constructor, actual SpinC/LL
+throat packet and low-order `(II, F)` orbit, they extract both actual metric
+jets, the realized bulk Christoffel/`U(1)²` background core and all typed
+nonminimal carrier slots (nine jets after sector expansion).  The two actual
+sectorized `U(1)²` potentials are also pulled back through the fixed-throat
+inclusion, expanded in a centered tangent trivialization and transported to
+the exact `EuclideanR3` gauge-connection jet type.  Their finite coefficient
+expansion now reconstructs the intrinsic covector exactly on the centered
+trivialization base set and, for Candidate-A, is exactly the centered-frame
+coordinate expression of the ambient bulk pullback: bulk potential composed
+with the fixed-throat differential and the inverse tangent trivialization.  At
+common points, two centered tangent frames obey
+the exact contragredient transition law.  This is only a zero-order fiber/frame
+overlap.  The tangent transitions are identity at a repeated anchor, invert
+under anchor exchange and satisfy the exact triple-overlap cocycle; their
+covector transports satisfy the corresponding dual cocycle.  The transition
+and its inverse vary `C∞` on each overlap as continuous linear maps.  The local
+coefficients and reconstructed covectors are `C∞` on the full centered
+`baseSet`, and the induced dual action is `C∞` on the double overlap.  After
+transporting the first representative, equality on the overlap now yields
+the same `HasMFDerivWithinAt` certificate for every candidate first derivative
+there.  In the extended throat chart centered at an overlap point, the exact
+first-order Leibniz law is now proved:
+`dC₂ = D₁₂ ∘ dC₁ + (dD₁₂) · C₁`.  This formula is deliberately
+chartwise and does not assert intrinsic jet descent.  A two-parameter jet
+carrier now separates the tangent-frame anchor from the base-chart center,
+agrees exactly with the original Candidate-A extractor on the diagonal, and
+packages this law in its actual `firstDerivative` slot.  A separate generic
+continuous-linear-map Leibniz gate now differentiates such an application
+twice.  Consequently the actual `secondDerivative` slot obeys the full
+four-term fixed-chart law: transported `D²C₁`, two mixed `dD₁₂·dC₁`
+terms and `D²D₁₂·C₁`.  This law is also transported to the exact
+`EuclideanR3` gauge carrier.  With the tangent frame fixed, a genuine `C²`
+transition between two extended base charts now identifies the representatives
+as germs; a three-parameter jet then satisfies the exact first- and second-order
+chain rules, including the Hessian of the chart transition.
+The base-chart transition itself now forms a genuine second-order jet cocycle
+on triple overlaps.  A centered-source synthesis combines the frame and chart
+changes through order two, and the three-parameter chart law is also available
+in the exact `EuclideanR3` physical gauge carrier.  The frame law now holds in
+an arbitrary source chart and composes with a second chart to give exact
+order-zero, first- and second-order laws between arbitrary frame--chart pairs.
+Unit and inverse identities complete the base-chart transition groupoid through
+order two.  The full semidirect frame--chart transition now satisfies its exact
+triple cocycle: combined germ and value, Jacobian law and five-term fiber
+Hessian law.  Its identity and inverse laws also hold through order two.  An
+arbitrary valid frame--chart pair with a raw second jet now forms a local
+presentation.  The exact value/Jacobian/Hessian compatibility laws generate an
+explicit setoid, and all actual extracted gauge jets are directly compatible.
+Their generated pointwise quotient therefore has a canonical class independent
+of the valid local presentation.  Direct compatibility is now proved reflexive,
+symmetric and transitive through order two; induction on `Relation.EqvGen`
+shows that the generated and direct setoids coincide, so no extra zigzag
+identifications remain.  The raw framed carrier is now a finite-dimensional
+normed space; the exact semidirect transport is continuous linear, satisfies
+the groupoid laws and varies `C∞` on the open frame--chart atlas.  These data
+form a Mathlib `VectorBundleCore` with `IsContMDiff`, hence a genuine smooth
+vector bundle.  The pointwise quotient is identified with its fibers, the
+actual extracted `U(1)²` gauge jets agree with every local trivialization, and
+their descended section is globally `C∞`.
+Eight additional gates provide a chart-indexed constant-fiber second-jet
+`VectorBundleCore`, generic local-to-global smooth-section criteria and exact
+overlap for every finite-dimensional `SmoothThroatField`.  Thus the LL
+auxiliary metric, measure and field now define three separate global `C∞`
+second-jet bundle sections, with gauge-fixed wrappers and exact zero-jet
+values. Seventeen further gates complete covariant rank-two throat metric jets:
+arbitrary frame/chart extraction, exact first/second-order overlaps and
+cocycles, semidirect groupoid transport, a smooth `VectorBundleCore`, and a
+global `C∞` section for every smooth symmetric tensor and both induced metric
+sectors. Eighteen further gates (92 + 18 total) complete SpinC second jets:
+arbitrary trivialization/chart extraction, exact zero-/first-/second-order
+overlaps and cocycles, semidirect groupoid transport, a smooth
+`VectorBundleCore`, and global `C∞` sections for every smooth SpinC section and
+the physical sectors. Only the common physical/background/normal bundle remains
+open.
+Given a
+compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
+external-normal contract assembles the true `BulkPhysicalSecondOrderJet`
+conditionally.  Under sectorwise `HasNoTangentialRadical`, the transported
+actual induced-metric value is invertible and its pointwise Koszul quadratic is
+formed from the actual first derivative.  Symmetry of that raw derivative in
+its metric slots, equality of its explicit symmetrization with the raw tensor,
+and the raw Koszul identity are proved pointwise.  A realized throat-background
+core combines this quadratic with the pulled-back `U(1)²` jets.  The refined
+true `ThroatPhysicalSecondOrderJet` assembly therefore externalizes only
+`normalQuadratic`, its symmetry proof and `physicalNormal`; the earlier
+whole-background assembly remains as a historical gate.  Outside the completed
+throat `U(1)²` gauge-jet bundle and the three separate LL second-jet bundles,
+these gates do not construct a smooth global Levi--Civita connection or a
+smooth descent of the full physical jet carrier, extract canonical normal
+geometry, give an unconditional carrier extraction or exhaust the invariant
+basis.
+
 ## Program M foundation checkpoint — 19 July 2026
 
 Program M's foundational layer is consolidated and paused pending a stable
@@ -388,8 +487,9 @@ The normal-presentation comparison sub-lock is now closed:
 defines the explicit cover-product-to-quotient-tangent coordinate map and
 proves, at the throat, the exact equality
 `canonicalLatitudeNormalCoordinate_eq_sectionPresentation`. This is a `T01`
-Pin⁻/presentation bridge, not a closure of the terminal typed
-foundation/pairing certificate.
+Pin⁻/presentation bridge; it did not close the terminal typed
+foundation/pairing certificate by itself. That certificate was closed
+separately on 26 August 2026.
 
 ## 5. Program P
 
@@ -398,7 +498,7 @@ foundation/pairing certificate.
 - Façade Lean : build vert `10039/10039`.
 - Agrégat analytique scalaire : build focalisé vert `9317/9317`; son théorème
   marque la fermeture des imports, pas l'instanciation des interfaces physiques.
-- Audit d'intégrité : vert, compteur terminal inchangé `0/14`.
+- Audit d'intégrité à ce checkpoint historique : vert, compteur alors `0/14`.
 - Nouveaux résultats : spectre SpinC signé abstrait réalisé sur une base de
   Hilbert complète avec domaine maximal dense, auto-adjonction, gap quart,
   Fredholm et indice nul; jauge Pin⁻ demi-angle explicite et entrelacement de

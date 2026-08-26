@@ -76,9 +76,27 @@ def contains_lean_proof_placeholder(source: str) -> bool:
     return re.search(r"\b(?:sorry|admit|axiom)\b", "".join(code)) is not None
 
 
-# A checked terminal gate must first receive concrete evidence here.  Empty is
-# intentional while T01--T14 are all open.
-TERMINAL_GATE_EVIDENCE: dict[str, TerminalGateEvidence] = {}
+# A checked terminal gate must first receive concrete evidence here.
+TERMINAL_GATE_EVIDENCE: dict[str, TerminalGateEvidence] = {
+    "T01": TerminalGateEvidence(
+        module=Path(
+            "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/"
+            "P0EFTJanusProgramPT01GlobalFoundationsPairingsTerminalCertificate4D.lean"
+        ),
+        facade=Path(
+            "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+        ),
+        theorem=(
+            "JanusFormal."
+            "P0EFTJanusProgramPT01GlobalFoundationsPairingsTerminalCertificate4D."
+            "program_p_t01_global_foundations_pairings_terminal_gate"
+        ),
+        scope="GLOBAL",
+        expected_type_fragment=(
+            "ProgramPT01GlobalFoundationsPairingsCertificate4D"
+        ),
+    ),
+}
 GATE_ROOT = Path(
     "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates"
 )
@@ -302,6 +320,1041 @@ PROGRAM_P_GATES = {
             "def janusNaturalLocalEvaluator",
             "theorem janusSixInvariantEFTPotential_existsUnique_coefficients",
             "theorem global_natural_classification_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPPhysicalSecondOrderJetCarrier4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FramedSecondOrderJet",
+            "structure StructuredBackgroundSecondJet",
+            "def StructuredBackgroundSecondJet.toActualJanusLocalJetData",
+            "def StructuredBackgroundSecondJet.toStructuredJet",
+            "def StructuredBackgroundSecondJet.toReducedJet",
+            "theorem StructuredBackgroundSecondJet.toReducedJet_isGeometric",
+            "structure BulkPhysicalSecondOrderJet",
+            "structure ThroatPhysicalSecondOrderJet",
+            "inductive ProgramPPhysicalSecondOrderJetCarrier",
+        ),
+    ),
+    "P0EFTJanusProgramPFramedSecondOrderJetNormedSpace4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def framedSecondOrderJetSymmetricSubmodule",
+            "def framedSecondOrderJetEquivSymmetricSubmodule",
+            "instance framedSecondOrderJetNormedAddCommGroup",
+            "instance framedSecondOrderJetNormedSpace",
+            "def framedSecondOrderJetLinearIsometryEquivSymmetricSubmodule",
+            "instance framedSecondOrderJetFiniteDimensional",
+            "instance framedSecondOrderJetCompleteSpace",
+            "theorem framedSecondOrderJet_norm_eq",
+        ),
+    ),
+    "P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransport4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FramedSecondOrderJetSemidirectChange",
+            "def transportFirstDerivative",
+            "def transportSecondDerivative",
+            "def transport",
+            "theorem transport_secondDerivative_apply",
+            "def toLinearMap",
+            "def toContinuousLinearMap",
+        ),
+    ),
+    "P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransportContinuity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem continuous_semidirectTransport",
+        ),
+    ),
+    "P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransportSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem contMDiffOn_semidirectTransport",
+            "theorem contDiff_semidirectTransport",
+        ),
+    ),
+    "P0EFTJanusProgramPPhysicalSecondOrderJetChartwiseExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def chartwiseSecondOrderJetAt",
+            "theorem chartwiseSecondOrderJetAt_secondDerivative",
+            "def chartwiseSecondOrderJet",
+            "structure FixedTrivializationThroatFields",
+            "structure FixedTrivializationThroatFieldsContDiffAtTwo",
+            "structure FixedTrivializationThroatSecondOrderJets",
+            "def FixedTrivializationThroatFields.secondOrderJetsAt",
+            "theorem FixedTrivializationThroatFields.secondOrderJetsAt_spinCMatter_value",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalMetricChartwiseSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalGaugeFixedBulkMetricBySector",
+            "theorem globalGaugeFixedBulkMetricMatrixChartGerm_contDiff",
+            "def globalGaugeFixedBulkMetricSecondOrderJetAt",
+            "theorem globalGaugeFixedBulkMetricSecondOrderJetAt_value_apply",
+            "def globalGaugeFixedInducedMetricBySector",
+            "theorem throatTensorChartGerm_contDiffAt_two",
+            "def globalGaugeFixedThroatMetricSecondOrderJetAt",
+            "theorem globalGaugeFixedThroatMetricSecondOrderJetAt_value_symmetric",
+        ),
+    ),
+    "P0EFTJanusProgramPActualBulkBackgroundChartwiseSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateABulkPotentialBySector_frame_coefficient",
+            "def globalCandidateABulkTangentialQuadratic",
+            "theorem globalCandidateABulkTangentialQuadratic_symmetric",
+            "theorem globalCandidateABulkGaugeCovectorChartGerm_contDiff",
+            "def globalCandidateABulkGaugeEuclideanSecondOrderJetAt",
+            "theorem globalCandidateABulkGaugeEuclideanSecondOrderJetAt_secondDerivative_symmetric",
+            "structure ActualBulkStructuredBackgroundSecondJetCore",
+            "def globalCandidateAActualBulkStructuredBackgroundSecondJetCore",
+            "theorem globalCandidateAActualBulkStructuredBackgroundSecondJetCore_gaugeConnection",
+        ),
+    ),
+    "P0EFTJanusProgramPActualBulkStructuredBackgroundCompletion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ExternalBulkStructuredBackgroundCompletionData",
+            "def completeActualBulkStructuredBackgroundSecondJetCore",
+            "theorem completeActualBulkStructuredBackgroundSecondJetCore_gaugeConnection",
+            "theorem completeActualBulkStructuredBackgroundSecondJetCore_normalQuadratic",
+            "def globalCandidateAConditionalBulkStructuredBackgroundSecondJet",
+            "theorem globalCandidateAConditionalBulkStructuredBackgroundSecondJet_gaugeConnection",
+            "theorem globalCandidateAConditionalBulkStructuredBackgroundSecondJet_normalQuadratic",
+        ),
+    ),
+    "P0EFTJanusProgramPActualBulkAbelianNonminimalChartwiseSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalGaugeFixedBulkAbelianGhostChartGerm_contDiff",
+            "def globalGaugeFixedBulkAbelianGhostSecondOrderJetAt",
+            "def globalGaugeFixedBulkAbelianAntighostSecondOrderJetAt",
+            "def globalGaugeFixedBulkAbelianNakanishiLautrupSecondOrderJetAt",
+            "structure GlobalBulkAbelianNonminimalSecondOrderJets",
+            "def globalGaugeFixedBulkAbelianNonminimalSecondOrderJetsAt",
+            "theorem globalGaugeFixedBulkAbelianNonminimalSecondOrderJetsAt_ghost_value",
+            "theorem globalGaugeFixedBulkAbelianNonminimalSecondOrderJetsAt_antighost_value",
+            "theorem globalGaugeFixedBulkAbelianNonminimalSecondOrderJetsAt_nakanishiLautrup_value",
+        ),
+    ),
+    "P0EFTJanusProgramPActualBulkDiffeomorphismNonminimalChartwiseSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def bulkTangentFieldCoordinates",
+            "theorem bulkTangentFieldCoordinates_contMDiffAt",
+            "theorem bulkTangentFieldHolonomicChartGerm_contDiffAt_two",
+            "def bulkTangentFieldHolonomicSecondOrderJetAt",
+            "structure ActualBulkDiffeomorphismNonminimalChartwiseSecondOrderJets",
+            "def globalGaugeFixedActualBulkDiffeomorphismNonminimalSecondOrderJetsAt",
+            "theorem globalGaugeFixedActualBulkDiffeomorphismNonminimalSecondOrderJetsAt_ghost_value",
+            "theorem globalGaugeFixedActualBulkDiffeomorphismNonminimalSecondOrderJetsAt_antighost_value",
+            "theorem globalGaugeFixedActualBulkDiffeomorphismNonminimalSecondOrderJetsAt_nakanishiLautrup_value",
+        ),
+    ),
+    "P0EFTJanusProgramPConditionalActualBulkPhysicalSecondOrderJetAssembly4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateAConditionalActualBulkPhysicalSecondOrderJetAt",
+            "theorem globalCandidateAConditionalActualBulkPhysicalSecondOrderJetAt_point",
+            "theorem globalCandidateAConditionalActualBulkPhysicalSecondOrderJetAt_background_normalQuadratic",
+            "theorem globalCandidateAConditionalActualBulkPhysicalSecondOrderJetAt_metric_value",
+            "theorem globalCandidateAConditionalActualBulkPhysicalSecondOrderJetAt_abelianGhost",
+            "theorem globalCandidateAConditionalActualBulkPhysicalSecondOrderJetAt_diffeomorphismGhost",
+            "theorem globalCandidateAConditionalActualBulkPhysicalSecondOrderJetAt_diffeomorphismNakanishiLautrup",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalSpinCMatterChartwiseJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalGaugeFixedSpinCMatterChartGerm",
+            "theorem globalGaugeFixedSpinCMatterChartGerm_contDiffAt_two",
+            "def globalGaugeFixedSpinCMatterSecondOrderJetsAt",
+            "theorem globalGaugeFixedSpinCMatterSecondOrderJetsAt_value",
+        ),
+    ),
+    "P0EFTJanusProgramPActualLLChartwiseSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def smoothThroatFieldChartRepresentative",
+            "theorem smoothThroatFieldChartRepresentative_contDiffAt_two",
+            "def smoothThroatFieldSecondOrderJetAt",
+            "structure GlobalLLChartwiseSecondOrderJets",
+            "def globalFieldConfigurationLLChartwiseSecondOrderJetsAt",
+            "def globalGaugeFixedFieldConfigurationLLChartwiseSecondOrderJetsAt",
+            "theorem globalGaugeFixedFieldConfigurationLLChartwiseSecondOrderJetsAt_llField_value",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatPacketChartwiseSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def actualThroatPacketSecondOrderJetsAt",
+            "theorem actualThroatPacketSecondOrderJetsAt_spinCMatter_value",
+            "theorem actualThroatPacketSecondOrderJetsAt_llAuxMetric_value",
+            "theorem actualThroatPacketSecondOrderJetsAt_llMeasure_value",
+            "theorem actualThroatPacketSecondOrderJetsAt_llField_value",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatAbelianPotentialChartwiseSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure SmoothThroatAbelianGaugePotential",
+            "def throatGaugePullbackValue",
+            "theorem globalCandidateAThroatPotentialBySector_apply",
+            "theorem throatGaugeCovectorChartGerm_contDiffAt_two",
+            "def globalCandidateAThroatGaugeSecondOrderJetAt",
+            "theorem globalCandidateAThroatGaugeSecondOrderJetAt_value_apply",
+            "def transportThroatGaugeSecondOrderJetToEuclidean",
+            "def globalCandidateAThroatGaugeEuclideanSecondOrderJetAt",
+            "theorem globalCandidateAThroatGaugeEuclideanSecondOrderJetAt_value_apply",
+            "structure ActualThroatGaugeSecondJetCore",
+            "def globalCandidateAActualThroatGaugeSecondJetCore",
+            "theorem globalCandidateAActualThroatGaugeSecondJetCore_gaugeConnection",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeTrivializationReconstruction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeCenteredTangentEquiv",
+            "theorem throatGaugeCovectorCoordinates_eq_trivializedPullback",
+            "theorem globalCandidateAThroatGaugeCovectorCoordinates_eq_bulkPullback",
+            "theorem globalCandidateAThroatGaugeSecondOrderJetAt_value_eq_trivializedPullback",
+            "theorem globalCandidateAThroatGaugeEuclideanSecondOrderJetAt_value_eq_bulkPullback",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatAbelianPotentialZeroOrderTrivializationOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeTangentTrivializationTransitionAt",
+            "theorem throatGaugeCovectorCoordinates_transition_apply",
+            "theorem throatGaugeCovectorCoordinates_eq_dual_transition",
+            "theorem globalCandidateAThroatGaugeCovectorCoordinates_eq_dual_transition",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeZeroOrderTransitionCocycle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeCovectorTrivializationTransitionAt",
+            "theorem throatGaugeTangentTrivializationTransitionAt_self",
+            "theorem throatGaugeTangentTrivializationTransitionAt_symm",
+            "theorem throatGaugeTangentTrivializationTransitionAt_cocycle",
+            "theorem throatGaugeCovectorTrivializationTransitionAt_cocycle",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeZeroOrderTransitionSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeTangentTrivializationTransitionAt_contMDiffOn",
+            "theorem throatGaugeTangentTrivializationTransitionAt_symm_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeZeroOrderOverlapDataSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeLocalCoefficient_contMDiffOn_baseSet",
+            "theorem throatGaugeCovectorCoordinates_contMDiffOn_baseSet",
+            "theorem throatGaugeCovectorTrivializationTransitionAt_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeDifferentiatedOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeCenteredTrivializationOverlap",
+            "def throatGaugeCovectorCoordinatesTransported",
+            "theorem throatGaugeCovectorCoordinatesTransported_eq",
+            "theorem throatGaugeCovectorCoordinatesTransported_eqOn",
+            "theorem throatGaugeCovectorCoordinatesTransported_contMDiffOn",
+            "theorem throatGaugeCovectorCoordinatesTransported_hasMFDerivWithinAt_iff",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeChartwiseFirstOrderOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeCovectorCenteredChart",
+            "def throatGaugeCovectorTransitionCenteredChart",
+            "theorem throatGaugeCovectorCenteredChart_fderiv_transition",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeChartwiseFirstOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeCovectorCenteredChart_contDiffAt_two",
+            "def throatGaugeCovectorSecondOrderJetInFrameAt",
+            "theorem throatGaugeCovectorSecondOrderJetInFrameAt_value",
+            "theorem throatGaugeCovectorSecondOrderJetInFrameAt_firstDerivative",
+            "theorem throatGaugeCovectorSecondOrderJetInFrameAt_secondDerivative",
+            "theorem globalCandidateAThroatGaugeSecondOrderJetAt_eq_inFrameAt",
+            "theorem throatGaugeCovectorSecondOrderJetInFrameAt_firstDerivative_transition",
+        ),
+    ),
+    "P0EFTJanusProgramPContinuousLinearMapSecondOrderLeibniz4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem second_fderiv_clm_apply_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeChartwiseSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeCovectorTransitionCenteredChart_contDiffAt_two",
+            "theorem throatGaugeCovectorCenteredChart_transition_eventuallyEq",
+            "theorem throatGaugeCovectorSecondOrderJetInFrameAt_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeEuclideanSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeEuclideanSecondOrderJetInFrameAt",
+            "theorem globalCandidateAThroatGaugeEuclideanSecondOrderJetAt_eq_inFrameAt",
+            "def throatGaugeEuclideanCovectorTransitionAt",
+            "def throatGaugeEuclideanCovectorTransitionFirstVariationAt",
+            "def throatGaugeEuclideanCovectorTransitionSecondVariationAt",
+            "theorem throatGaugeEuclideanSecondOrderJetInFrameAt_firstDerivative_transition_apply",
+            "theorem throatGaugeEuclideanSecondOrderJetInFrameAt_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionGerm4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeBaseChartTransition",
+            "theorem throatGaugeBaseChartTransition_apply_current",
+            "theorem throatGaugeBaseChartTransition_contDiffAt_two",
+            "theorem throatGaugeCovectorCenteredChart_baseChartTransition_eventuallyEq",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeCovectorCenteredChart_contDiffAt_two_of_mem_source",
+            "def throatGaugeCovectorSecondOrderJetInBaseChartAt",
+            "theorem throatGaugeCovectorSecondOrderJetInBaseChartAt_value",
+            "theorem throatGaugeCovectorSecondOrderJetInBaseChartAt_firstDerivative_transition",
+            "theorem second_fderiv_comp_apply",
+            "theorem throatGaugeCovectorSecondOrderJetInBaseChartAt_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionSecondOrderCocycle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeBaseChartTransition_cocycle_eventuallyEq",
+            "def throatGaugeBaseChartTransitionSecondOrderJetAt",
+            "theorem throatGaugeBaseChartTransitionSecondOrderJetAt_value",
+            "theorem throatGaugeBaseChartTransitionSecondOrderJetAt_firstDerivative_cocycle",
+            "theorem throatGaugeBaseChartTransitionSecondOrderJetAt_secondDerivative_cocycle_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeCombinedFrameBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeCovectorCenteredChart_combinedFrameBaseChartTransition_eventuallyEq",
+            "theorem throatGaugeCovectorSecondOrderJet_combinedFrameBaseChart_value",
+            "theorem throatGaugeCovectorSecondOrderJet_combinedFrameBaseChart_firstDerivative_transition",
+            "theorem throatGaugeCovectorSecondOrderJet_combinedFrameBaseChart_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeEuclideanBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeEuclideanSecondOrderJetInBaseChartAt",
+            "def throatGaugeEuclideanBaseChartTransitionFirstDerivativeAt",
+            "def throatGaugeEuclideanBaseChartTransitionSecondDerivativeAt",
+            "theorem throatGaugeEuclideanSecondOrderJetInBaseChartAt_firstDerivative_transition_apply",
+            "theorem throatGaugeEuclideanSecondOrderJetInBaseChartAt_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeFrameTransitionInBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeCovectorTransitionCenteredChart_contDiffAt_two_of_mem_source",
+            "theorem throatGaugeCovectorCenteredChart_frameTransition_eventuallyEq_of_mem_source",
+            "theorem throatGaugeCovectorSecondOrderJetInBaseChartAt_firstDerivative_frame_transition",
+            "theorem throatGaugeCovectorSecondOrderJetInBaseChartAt_secondDerivative_frame_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeArbitraryFrameBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeCovectorCenteredChart_arbitraryFrameBaseChartTransition_eventuallyEq",
+            "theorem throatGaugeCovectorSecondOrderJet_arbitraryFrameBaseChart_value",
+            "theorem throatGaugeCovectorSecondOrderJet_arbitraryFrameBaseChart_firstDerivative_transition",
+            "theorem throatGaugeCovectorSecondOrderJet_arbitraryFrameBaseChart_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeArbitraryFrameBaseChartSecondOrderCocycle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeFrameBaseChartTransition_cocycle_eventuallyEq",
+            "theorem throatGaugeFrameBaseChartTransition_value_cocycle",
+            "theorem throatGaugeFrameBaseChartTransition_firstDerivative_cocycle",
+            "theorem throatGaugeFrameBaseChartTransition_secondDerivative_cocycle_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionSecondOrderGroupoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeBaseChartTransition_self_eventuallyEq",
+            "theorem throatGaugeBaseChartTransitionSecondOrderJetAt_self_firstDerivative",
+            "theorem throatGaugeBaseChartTransitionSecondOrderJetAt_self_secondDerivative",
+            "theorem throatGaugeBaseChartTransition_inverse_comp_eventuallyEq",
+            "theorem throatGaugeBaseChartTransitionSecondOrderJetAt_firstDerivative_inverse",
+            "theorem throatGaugeBaseChartTransitionSecondOrderJetAt_secondDerivative_inverse_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionJacobianEquiv4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeBaseChartTransitionJacobianEquivAt",
+            "theorem throatGaugeBaseChartTransitionJacobianEquivAt_apply",
+            "theorem throatGaugeBaseChartTransitionJacobianEquivAt_symm_apply",
+            "theorem throatGaugeBaseChartTransitionJacobianEquivAt_coe",
+            "theorem throatGaugeBaseChartTransitionJacobianEquivAt_symm_coe",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeCombinedFrameBaseChartSecondOrderGroupoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeCovectorTransitionCenteredChart_self_eventuallyEq",
+            "theorem throatGaugeCovectorTransitionCenteredChart_self",
+            "theorem throatGaugeCovectorTransitionCenteredChart_self_firstDerivative",
+            "theorem throatGaugeCovectorTransitionCenteredChart_self_secondDerivative",
+            "theorem throatGaugeFrameBaseChartTransition_self_eventuallyEq",
+            "theorem throatGaugeFrameBaseChartTransition_inverse_comp_eventuallyEq",
+            "theorem throatGaugeFrameBaseChartTransition_firstDerivative_inverse",
+            "theorem throatGaugeFrameBaseChartTransition_secondDerivative_inverse_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationSetoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ThroatGaugeSecondOrderJetPresentationAt",
+            "structure DirectTransitionCompatible",
+            "def actualThroatGaugeSecondOrderJetPresentationAt",
+            "def GeneratedTransitionRelation",
+            "def throatGaugeSecondOrderJetPresentationGeneratedSetoid",
+            "theorem actualThroatGaugeSecondOrderJetPresentationAt_directCompatible",
+            "theorem directCompatible_generated",
+            "theorem actualThroatGaugeSecondOrderJetPresentationAt_generatedRelated",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationDirectReflexivity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem directTransitionCompatible_refl",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationDirectSymmetry4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem directTransitionCompatible_symm",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationDirectTransitivity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem directTransitionCompatible_trans",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationDirectSetoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem directTransitionCompatible_equivalence",
+            "def throatGaugeSecondOrderJetPresentationDirectSetoid",
+            "theorem generatedTransitionRelation_directCompatible",
+            "theorem directTransitionCompatible_iff_generatedTransitionRelation",
+            "theorem throatGaugeSecondOrderJetPresentationGeneratedSetoid_eq_directSetoid",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPointwiseQuotientDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ThroatGaugeSecondOrderJetPointwiseQuotient",
+            "def throatGaugeSecondOrderJetPresentationClass",
+            "def canonicalActualThroatGaugeSecondOrderJetPresentationAt",
+            "def actualThroatGaugeSecondOrderJetPointwiseClass",
+            "theorem actualThroatGaugeSecondOrderJetPresentationClass_eq_canonical",
+            "def ThroatGaugeSecondOrderJetPointwiseQuotientFamily",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetDependentDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def ThroatGaugeSecondOrderJetDependentTotalSpace",
+            "def throatGaugeSecondOrderJetDependentProjection",
+            "def throatGaugeSecondOrderJetPointwiseClassInDependentTotalSpace",
+            "def throatGaugeSecondOrderJetPresentationInDependentTotalSpace",
+            "def actualThroatGaugeSecondOrderJetDependentSection",
+            "theorem actualThroatGaugeSecondOrderJetDependentProjection_section",
+            "theorem actualThroatGaugeSecondOrderJetPresentationInDependentTotalSpace_eq_section",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetTransitionSmoothRegularity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeBaseChartTransition_contDiffAt_infty",
+            "theorem throatGaugeBaseChartTransition_fderiv_contDiffAt_infty",
+            "theorem throatGaugeBaseChartTransition_secondFDeriv_contDiffAt_infty",
+            "theorem throatGaugeCovectorTransitionCenteredChart_contDiffAt_infty_of_mem_source",
+            "theorem throatGaugeCovectorTransitionCenteredChart_fderiv_contDiffAt_infty",
+            "theorem throatGaugeCovectorTransitionCenteredChart_secondFDeriv_contDiffAt_infty",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleAtlasData4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev ThroatGaugeSecondOrderJetBundleIndex",
+            "def throatGaugeSecondOrderJetBundleBaseSet",
+            "theorem throatGaugeSecondOrderJetBundleBaseSet_isOpen",
+            "def throatGaugeSecondOrderJetBundleIndexAt",
+            "theorem mem_throatGaugeSecondOrderJetBundleBaseSet_indexAt",
+            "theorem iUnion_throatGaugeSecondOrderJetBundleBaseSet",
+            "def zeroThroatGaugeSecondOrderJetPresentationAt",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSemidirectTransport4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeCovectorTargetTransitionSecondDerivativeAt",
+            "def throatGaugeSecondOrderJetSemidirectChangeAt",
+            "theorem throatGaugeSecondOrderJetSemidirectChangeAt_baseFirst_apply",
+            "def throatGaugeSecondOrderJetSemidirectTransportAt",
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_value",
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_firstDerivative_apply",
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_secondDerivative_apply",
+            "def throatGaugeSecondOrderJetSemidirectTargetPresentationAt",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSemidirectTransportCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeSecondOrderJetSemidirectTargetPresentationAt_directCompatible",
+            "theorem exists_directCompatible_semidirectRepresentativeAt_targetAnchors",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetDirectTargetUniqueness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def targetPresentationAt",
+            "theorem targetPresentationAt_jet",
+            "theorem directTransitionCompatible_target_jet_unique",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSemidirectTransportGroupoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_self_apply",
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_self",
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_comp_apply",
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_comp",
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_inverse_comp",
+            "theorem throatGaugeSecondOrderJetSemidirectTransportAt_comp_inverse",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPointwiseNormalization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeSecondOrderJetNormalizeRepresentativeAt",
+            "theorem throatGaugeSecondOrderJetNormalizeRepresentativeAt_eq_of_directCompatible",
+            "def throatGaugeSecondOrderJetPointwiseNormalizeAt",
+            "def throatGaugeSecondOrderJetPointwiseDenormalizeAt",
+            "theorem throatGaugeSecondOrderJetPointwiseNormalizeAt_denormalize",
+            "theorem throatGaugeSecondOrderJetPointwiseDenormalizeAt_normalize",
+            "def throatGaugeSecondOrderJetPointwiseQuotientEquivAt",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev ThroatGaugeSecondOrderJetBundleOverlap",
+            "def throatGaugeSecondOrderJetBundleChangeOnOverlap",
+            "def throatGaugeSecondOrderJetBundleTransportOnOverlap",
+            "def throatGaugeSecondOrderJetBundleCoordChange",
+            "theorem throatGaugeSecondOrderJetBundleCoordChange_self",
+            "theorem throatGaugeSecondOrderJetBundleCoordChange_comp",
+            "theorem throatGaugeSecondOrderJetBundleCoordChange_inverse_comp",
+            "theorem throatGaugeSecondOrderJetBundleTransportOnOverlap_continuous",
+            "theorem throatGaugeSecondOrderJetBundleCoordChange_continuousOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChangeSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def identityFramedSecondOrderJetSemidirectChange",
+            "def throatGaugeSecondOrderJetBundleTotalChange",
+            "theorem throatGaugeSecondOrderJetBundleTotalTransport_contMDiffOn",
+            "theorem throatGaugeSecondOrderJetBundleCoordChange_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatGaugeSecondOrderJetVectorBundleCore",
+            "theorem throatGaugeSecondOrderJetVectorBundleCore_baseSet",
+            "theorem throatGaugeSecondOrderJetVectorBundleCore_coordChange",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSmoothVectorBundleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev ThroatGaugeSecondOrderJetBundleFiber",
+            "theorem throatGaugeSecondOrderJetVectorBundleCore_isContMDiff",
+            "theorem throatGaugeSecondOrderJetBundleFiber_isContMDiffVectorBundle",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleDescent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev ThroatGaugeSecondOrderJetVectorBundleFiber",
+            "abbrev ThroatGaugeSecondOrderJetVectorBundleTotalSpace",
+            "def throatGaugeSecondOrderJetPointwiseQuotientEquivVectorBundleFiberAt",
+            "def throatGaugeSecondOrderJetPointwiseClassInVectorBundleTotalSpace",
+            "def actualThroatGaugeSecondOrderJetVectorBundleSection",
+            "theorem actualThroatGaugeSecondOrderJetVectorBundleSection_proj",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleDescentLocalTrivialization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeSecondOrderJetPointwiseNormalizeAt_coordChange",
+            "theorem throatGaugeSecondOrderJetPointwiseClass_localTriv_snd",
+            "theorem throatGaugeSecondOrderJetPresentationClass_localTriv_snd",
+            "theorem actualThroatGaugeSecondOrderJetVectorBundleSection_localTriv_snd",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetLocalSectionSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatGaugeCovectorCenteredChart_contDiffAt_infty_of_mem_baseSet",
+            "theorem throatGaugeCovectorLocalFirstDerivative_contMDiffOn",
+            "theorem throatGaugeCovectorLocalSecondDerivative_contMDiffOn",
+            "def actualThroatGaugeSecondOrderJetLocalRepresentative",
+            "theorem actualThroatGaugeSecondOrderJetLocalRepresentative_contMDiffOn",
+            "theorem actualThroatGaugeSecondOrderJetVectorBundleSection_localCoordinate_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSmoothVectorBundleSection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem actualThroatGaugeSecondOrderJetVectorBundleSection_contMDiff",
+        ),
+    ),
+    "P0EFTJanusProgramPFramedSecondOrderJetConstantFiberBaseChange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure FramedSecondOrderJetConstantFiberBaseChange",
+            "theorem transport_comp_of_base_coefficients",
+        ),
+    ),
+    "P0EFTJanusProgramPFrameChartPairSecondJetVectorBundleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def frameChartPairSecondJetVectorBundleCore",
+            "theorem frameChartPairSecondJetVectorBundleCore_isContMDiff",
+        ),
+    ),
+    "P0EFTJanusProgramPVectorBundleCoreSmoothSectionCriterion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem vectorBundleCore_section_contMDiff_of_localCoordinates",
+        ),
+    ),
+    "P0EFTJanusProgramPVectorBundleCoreCompatibleLocalSection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def vectorBundleCoreSectionOfLocalRepresentatives",
+            "theorem vectorBundleCoreSectionOfLocalRepresentatives_contMDiff",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSmoothFieldSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatSmoothFieldSecondOrderJetLocalRepresentative_contMDiffOn",
+            "theorem throatSmoothFieldSecondOrderJetInChartAt_transition",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatConstantFiberSecondOrderJetSmoothVectorBundleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem actualThroatConstantFiberSecondOrderJetCoordChange_comp",
+            "def actualThroatConstantFiberSecondOrderJetSmoothVectorBundleCore",
+            "theorem actualThroatConstantFiberSecondOrderJetSmoothVectorBundleCore_isContMDiff",
+        ),
+    ),
+    "P0EFTJanusProgramPActualLLSecondOrderJetSmoothVectorBundleSections4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem actualThroatSmoothFieldSecondOrderJetVectorBundleSection_contMDiff",
+            "theorem actualThroatSmoothFieldSecondOrderJetVectorBundleSection_centeredJet",
+            "theorem globalFieldConfigurationLLFieldSecondOrderJetVectorBundleSection_jet",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatCovariantTwoTensorZeroOrderTransition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatCovariantTwoTensorTrivializationTransitionAt",
+            "theorem throatCovariantTwoTensorTrivializationTransitionAt_cocycle",
+            "theorem throatTensorCoordinates_eq_tensor_transition",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricArbitraryFrameChartSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatTensorSecondOrderJetInFrameChartAt",
+            "theorem throatTensorFrameChartRepresentative_contDiffAt_infty",
+            "theorem globalGaugeFixedThroatMetricSecondOrderJetInFrameChartAt_diagonal",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatCovariantTwoTensorSecondOrderFrameOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatCovariantTwoTensorFrameTransitionAt",
+            "theorem throatTensorSecondOrderJetInFrameChartAt_firstDerivative_frame_transition",
+            "theorem throatTensorSecondOrderJetInFrameChartAt_secondDerivative_frame_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatTensorFrameChartRepresentative_baseChartTransition_eventuallyEq",
+            "theorem throatTensorSecondOrderJetInFrameChartAt_firstDerivative_transition",
+            "theorem throatTensorSecondOrderJetInFrameChartAt_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricArbitraryFrameBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatTensorSecondOrderJet_arbitraryFrameBaseChart_value",
+            "theorem throatTensorSecondOrderJet_arbitraryFrameBaseChart_firstDerivative_transition",
+            "theorem throatTensorSecondOrderJet_arbitraryFrameBaseChart_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricArbitraryFrameBaseChartSecondOrderCocycle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatMetricFrameBaseChartTransition_value_cocycle",
+            "theorem throatMetricFrameBaseChartTransition_firstDerivative_cocycle",
+            "theorem throatMetricFrameBaseChartTransition_secondDerivative_cocycle_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricCombinedFrameBaseChartSecondOrderGroupoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatMetricFrameBaseChartTransition_self_eventuallyEq",
+            "theorem throatMetricFrameBaseChartTransition_firstDerivative_inverse",
+            "theorem throatMetricFrameBaseChartTransition_secondDerivative_inverse_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetTransitionSmoothRegularity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatCovariantTwoTensorTransitionCenteredChart_contDiffAt_infty_of_mem_source",
+            "theorem throatCovariantTwoTensorTransitionCenteredChart_fderiv_contDiffAt_infty",
+            "theorem throatCovariantTwoTensorTransitionCenteredChart_secondFDeriv_contDiffAt_infty",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetSemidirectTransport4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ThroatMetricSecondOrderJetFrameChartAt",
+            "def throatMetricSecondOrderJetSemidirectChangeAt",
+            "def throatMetricSecondOrderJetSemidirectTransportAt",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetSemidirectTransportCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatMetricSecondOrderJetSemidirectTransportAt_extracted",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetSemidirectTransportGroupoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatMetricSecondOrderJetSemidirectTransportAt_self",
+            "theorem throatMetricSecondOrderJetSemidirectTransportAt_comp",
+            "theorem throatMetricSecondOrderJetSemidirectTransportAt_inverse_comp",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetBundleAtlasData4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatMetricSecondOrderJetBundleBaseSet",
+            "theorem iUnion_throatMetricSecondOrderJetBundleBaseSet",
+            "def throatMetricSecondOrderJetFrameChartAt",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetBundleCoordChange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatMetricSecondOrderJetBundleCoordChange",
+            "theorem throatMetricSecondOrderJetBundleCoordChange_comp",
+            "theorem throatMetricSecondOrderJetBundleCoordChange_continuousOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetBundleCoordChangeSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatMetricSecondOrderJetBundleTotalChange",
+            "theorem throatMetricSecondOrderJetBundleTotalTransport_contMDiffOn",
+            "theorem throatMetricSecondOrderJetBundleCoordChange_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetVectorBundleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatMetricSecondOrderJetVectorBundleCore",
+            "theorem throatMetricSecondOrderJetVectorBundleCore_baseSet",
+            "theorem throatMetricSecondOrderJetVectorBundleCore_coordChange",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetSmoothVectorBundleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatMetricSecondOrderJetVectorBundleCore_isContMDiff",
+            "theorem throatMetricSecondOrderJetBundleFiber_isContMDiffVectorBundle",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetLocalSectionSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def actualThroatMetricSecondOrderJetLocalRepresentative",
+            "theorem actualThroatMetricSecondOrderJetLocalRepresentative_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatMetricSecondOrderJetSmoothVectorBundleSection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def actualThroatMetricSecondOrderJetVectorBundleSection",
+            "theorem actualThroatMetricSecondOrderJetVectorBundleSection_contMDiff",
+            "theorem globalGaugeFixedInducedMetricSecondOrderJetVectorBundleSection_centeredJet",
+        ),
+    ),
+    "P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransportGroupoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem framedSecondOrderJetSemidirectTransport_self_of_coefficients",
+            "theorem framedSecondOrderJetSemidirectTransport_comp_of_coefficients",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCArbitraryTrivializationChartSecondOrderJetExtraction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9PrimitiveSpinCSectionSecondOrderJetInTrivializationChartAt",
+            "theorem d9PrimitiveSpinCSectionTrivializationChartRepresentative_contDiffAt_infty",
+            "theorem globalGaugeFixedSpinCMatterSecondOrderJetInTrivializationChartAt_diagonal",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9PrimitiveSpinCSectionTrivializationChartRepresentative_baseChartTransition_eventuallyEq",
+            "theorem d9PrimitiveSpinCSectionSecondOrderJetInTrivializationChartAt_firstDerivative_transition",
+            "theorem d9PrimitiveSpinCSectionSecondOrderJetInTrivializationChartAt_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCZeroOrderTransitionGroupoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9PrimitiveSpinCCoordChange_self",
+            "theorem d9PrimitiveSpinCCoordChange_comp",
+            "theorem d9PrimitiveSpinCCoordChange_inverse_comp",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderTrivializationOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def d9PrimitiveSpinCTransitionCenteredChart",
+            "theorem d9PrimitiveSpinCSectionSecondOrderJetInTrivializationChartAt_firstDerivative_transition",
+            "theorem d9PrimitiveSpinCSectionSecondOrderJetInTrivializationChartAt_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCArbitraryTrivializationBaseChartSecondOrderJetOverlap4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9PrimitiveSpinCSectionSecondOrderJet_arbitraryTrivializationBaseChart_value",
+            "theorem d9PrimitiveSpinCSectionSecondOrderJet_arbitraryTrivializationBaseChart_firstDerivative_transition",
+            "theorem d9PrimitiveSpinCSectionSecondOrderJet_arbitraryTrivializationBaseChart_secondDerivative_transition_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCArbitraryTrivializationBaseChartSecondOrderCocycle4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatSpinCTrivializationBaseChartTransition_value_cocycle",
+            "theorem throatSpinCTrivializationBaseChartTransition_firstDerivative_cocycle",
+            "theorem throatSpinCTrivializationBaseChartTransition_secondDerivative_cocycle_apply",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSemidirectTransport4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ThroatSpinCSecondOrderJetTrivializationChartAt",
+            "def throatSpinCSecondOrderJetSemidirectChangeAt",
+            "def throatSpinCSecondOrderJetSemidirectTransportAt",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSemidirectTransportCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatSpinCSecondOrderJetSemidirectTransportAt_extracted",
+            "theorem globalGaugeFixedSpinCMatterSecondOrderJetSemidirectTransportAt_extracted",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSemidirectTransportGroupoid4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatSpinCSecondOrderJetSemidirectTransportAt_self",
+            "theorem throatSpinCSecondOrderJetSemidirectTransportAt_comp",
+            "theorem throatSpinCSecondOrderJetSemidirectTransportAt_inverse_comp",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetBundleAtlasData4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatSpinCSecondOrderJetBundleBaseSet",
+            "theorem iUnion_throatSpinCSecondOrderJetBundleBaseSet",
+            "def throatSpinCSecondOrderJetSemidirectTrivializationChartAt",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetTransitionSmoothRegularity4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem d9PrimitiveSpinCTransitionCenteredChart_fderiv_contDiffAt_infty",
+            "theorem throatSpinCSecondOrderJet_fiberValue_contMDiffOn",
+            "theorem throatSpinCSecondOrderJet_fiberSecond_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetBundleCoordChange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatSpinCSecondOrderJetBundleCoordChange",
+            "theorem throatSpinCSecondOrderJetBundleCoordChange_comp",
+            "theorem throatSpinCSecondOrderJetBundleCoordChange_continuousOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetBundleCoordChangeSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatSpinCSecondOrderJetBundleTotalChange",
+            "theorem throatSpinCSecondOrderJetBundleTotalTransport_contMDiffOn",
+            "theorem throatSpinCSecondOrderJetBundleCoordChange_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetVectorBundleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatSpinCSecondOrderJetVectorBundleCore",
+            "theorem throatSpinCSecondOrderJetVectorBundleCore_baseSet",
+            "theorem throatSpinCSecondOrderJetVectorBundleCore_coordChange",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSmoothVectorBundleCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem throatSpinCSecondOrderJetVectorBundleCore_isContMDiff",
+            "theorem throatSpinCSecondOrderJetBundleFiber_isContMDiffVectorBundle",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetLocalSectionSmoothness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def actualThroatSpinCSecondOrderJetLocalRepresentative",
+            "theorem actualThroatSpinCSecondOrderJetLocalRepresentative_contMDiffOn",
+            "theorem globalGaugeFixedSpinCMatterSecondOrderJetLocalRepresentative_contMDiffOn",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatSpinCSecondOrderJetSmoothVectorBundleSection4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def actualThroatSpinCSecondOrderJetVectorBundleSection",
+            "theorem actualThroatSpinCSecondOrderJetVectorBundleSection_contMDiff",
+            "theorem globalGaugeFixedSpinCMatterSecondOrderJetVectorBundleSection_centeredJet",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatTangentialConnectionQuadratic4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalGaugeFixedInducedMetricBySector_injective_at_of_transverse",
+            "def throatMetricTensorToEuclideanEquiv",
+            "def globalGaugeFixedThroatMetricEuclideanRieszEquivAt",
+            "def symmetrizedThroatMetricEuclideanDerivative",
+            "theorem symmetrizedThroatMetricEuclideanDerivative_symmetric",
+            "def globalCandidateAActualThroatTangentialConnectionQuadraticAt",
+            "theorem globalCandidateAActualThroatTangentialConnectionQuadraticAt_symmetric",
+            "theorem globalCandidateAActualThroatTangentialConnectionQuadraticAt_koszul",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatRawMetricKoszulIdentification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalGaugeFixedThroatMetricEuclideanValueAt_symmetric",
+            "theorem globalGaugeFixedThroatMetricEuclideanFirstDerivativeAt_symmetric",
+            "theorem symmetrized_globalGaugeFixedThroatMetricEuclideanFirstDerivativeAt",
+            "theorem globalCandidateAActualThroatTangentialConnectionQuadraticAt_raw_koszul",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatStructuredBackgroundSecondJetCore4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ActualThroatStructuredBackgroundSecondJetCore",
+            "def globalCandidateAActualThroatStructuredBackgroundSecondJetCore",
+            "theorem globalCandidateAActualThroatStructuredBackgroundSecondJetCore_point",
+            "theorem globalCandidateAActualThroatStructuredBackgroundSecondJetCore_tangentialQuadratic",
+            "theorem globalCandidateAActualThroatStructuredBackgroundSecondJetCore_gaugeConnection",
+        ),
+    ),
+    "P0EFTJanusProgramPActualThroatStructuredBackgroundCompletion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ExternalThroatStructuredBackgroundCompletionData",
+            "def completeActualThroatStructuredBackgroundSecondJetCore",
+            "theorem completeActualThroatStructuredBackgroundSecondJetCore_tangentialQuadratic",
+            "theorem completeActualThroatStructuredBackgroundSecondJetCore_gaugeConnection",
+            "theorem completeActualThroatStructuredBackgroundSecondJetCore_normalQuadratic",
+            "def globalCandidateAConditionalThroatStructuredBackgroundSecondJet",
+            "theorem globalCandidateAConditionalThroatStructuredBackgroundSecondJet_gaugeConnection",
+            "theorem globalCandidateAConditionalThroatStructuredBackgroundSecondJet_physicalNormal",
+        ),
+    ),
+    "P0EFTJanusProgramPConditionalActualThroatPhysicalSecondOrderJetAssembly4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateAConditionalActualThroatPhysicalSecondOrderJetAt",
+            "theorem globalCandidateAConditionalActualThroatPhysicalSecondOrderJetAt_point",
+            "theorem globalCandidateAConditionalActualThroatPhysicalSecondOrderJetAt_background",
+            "theorem globalCandidateAConditionalActualThroatPhysicalSecondOrderJetAt_inducedMetric_value",
+            "theorem globalCandidateAConditionalActualThroatPhysicalSecondOrderJetAt_spinCMatter_value",
+            "theorem globalCandidateAConditionalActualThroatPhysicalSecondOrderJetAt_llField_value",
+            "def globalCandidateAConditionalActualThroatPhysicalSecondOrderJetCarrierAt",
+        ),
+    ),
+    "P0EFTJanusProgramPRefinedConditionalActualThroatPhysicalSecondOrderJetAssembly4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt",
+            "theorem globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt_point",
+            "theorem globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt_background",
+            "theorem globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt_background_tangentialQuadratic",
+            "theorem globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt_background_gaugeConnection",
+            "theorem globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt_background_normalQuadratic",
+            "theorem globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt_inducedMetric_value",
+            "theorem globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt_spinCMatter_value",
+            "theorem globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetAt_llField_value",
+            "def globalCandidateARefinedConditionalActualThroatPhysicalSecondOrderJetCarrierAt",
+        ),
+    ),
+    "P0EFTJanusProgramPPhysicalSecondOrderJetLowOrderOrbit4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def StructuredBackgroundSecondJet.toAlgebraicStructuredJet",
+            "def StructuredBackgroundSecondJet.toLowOrderReducedData",
+            "theorem StructuredBackgroundSecondJet.toLowOrderReducedData_eq_actualJetToLowOrderReducedData",
+            "def StructuredBackgroundSecondJet.LowOrderEquivalentAt",
+            "theorem StructuredBackgroundSecondJet.lowOrderEquivalentAt_iff_reduced_eq",
+            "def StructuredBackgroundSecondJet.residualSpinCArrow",
+            "structure ProjectedLowOrderInvariantEvaluator",
+            "theorem ProjectedLowOrderInvariantEvaluator.existsUnique_reduction",
+            "def BulkPhysicalSecondOrderJet.toLowOrderReducedData",
+            "def ThroatPhysicalSecondOrderJet.toLowOrderReducedData",
         ),
     ),
     "P0EFTJanusProgramPD9MatterSpinorDoubledDiracAction4D.lean": (
@@ -6029,11 +7082,133 @@ PROGRAM_P_GATES = {
             "theorem globalCandidateADiagonalExtendedBulkD10Section_injective",
         ),
     ),
+    "P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkD10GlobalTangentBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateADiagonalExtendedBulkD10CoordinateLinearMap_section",
+            "theorem globalCandidateADiagonalExtendedBulkD10ToGlobalFieldTangent_coordinate",
+            "theorem globalCandidateADiagonalExtendedBulkD10ToGlobalFieldTangent_section",
+            "theorem globalCandidateADiagonalExtendedBulkD10ToGlobalFieldTangent_section_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateANonSpinCBulkGlobalTangentBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateANonSpinCBulkCoreInclusion_injective",
+            "theorem globalCandidateANonSpinCBulkGaugeFixedTangent_injective",
+            "theorem globalCandidateANonSpinCPhysicalBulkGlobalFieldTangent_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateASpinCMatterGlobalTangentBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateABulkMatterGlobalFieldTangent_fourierCoordinate",
+            "theorem globalCandidateABulkMatterGlobalFieldTangent_injective",
+            "theorem globalCandidateABulkMatterGlobalFieldTangent_toGraph",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFullBulkSpinCD10GlobalTangentBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateAFullBulkSpinCD10SpineCore_injective",
+            "theorem globalCandidateAFullBulkSpinCD10SpineEmbedding_bulkGraph",
+            "theorem globalCandidateAFullBulkSpinCD10GlobalFieldTangent_toSpinCGraph",
+            "theorem globalCandidateAFullBulkSpinCD10GlobalFieldTangent_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFullGaugeFixedBulkSpinCTangentBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCTangent_metric",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCTangent_spinCMatter",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCTangent_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFullGaugeFixedBulkSpinCL2CorePairingBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateAFullGaugeFixedBulkSpinCToDiagonalExtendedBulkLinearEquiv",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCToDiagonalExtendedBulk_injective",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCL2CoreInner_add_left",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCL2CoreInner_self_eq_zero_iff",
+        ),
+    ),
     "P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaugeFixedTangentDenseRaccord4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
             "theorem candidateANormalBoundarySmoothGaugeFixedTangentLinearMap_injective",
             "theorem global_candidateA_normal_boundary_gauge_fixed_tangent_dense_raccord_gate",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaugeFixedSmoothTangentRange4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem candidateANormalBoundaryGaugeFixedSmoothTangentToFunctionalCore_injective",
+            "theorem candidateANormalBoundaryGaugeFixedSmoothTangentToFunctionalCore_denseRange",
+            "theorem global_candidateA_normal_boundary_gauge_fixed_smooth_tangent_range",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaugeFixedSmoothTangentL2Pairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem candidateANormalBoundaryNormalL2LinearMap_injective",
+            "theorem candidateANormalBoundarySmoothL2Embedding_injective",
+            "theorem candidateANormalBoundarySmoothL2Pairing_self_eq_zero_iff",
+            "theorem candidateANormalBoundaryGaugeFixedSmoothTangentL2Pairing_self_eq_zero_iff",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFullBulkSpinCD10NormalBoundarySharedMetricTangent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem fullBulk_eq_normalBoundary_forces_metric_agreement",
+            "theorem fullBulk_eq_normalBoundary_forces_normal_zero",
+            "theorem globalCandidateAFullBulkSpinCD10NormalBoundarySharedMetric_agreement",
+            "theorem globalCandidateAFullBulkSpinCD10NormalBoundarySharedMetric_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricTangent4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetric_agreement",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetric_spinCMatter",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetric_d10",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetric_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2Pairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2Inner_symm",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2Inner_add_left",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2Inner_smul_left",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2Inner_self_eq_zero_iff",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2Realization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2LinearMap",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2LinearMap_inner",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2LinearMap_injective",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2Completion4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure GlobalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2PreHilbertCore",
+            "abbrev GlobalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2Completion",
+            "def globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricToL2Completion",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricToL2Completion_injective",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricToL2Completion_denseRange",
+            "def globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricL2CompletionCompleteSpace",
+            "theorem globalCandidateAFullGaugeFixedBulkSpinCD10NormalBoundarySharedMetricToL2Completion_inner",
+        ),
+    ),
+    "P0EFTJanusProgramPT01GlobalFoundationsPairingsTerminalCertificate4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT01GlobalFoundationsPairingsCertificate4D",
+            "theorem program_p_t01_global_foundations_pairings_terminal_gate",
         ),
     ),
     "P0EFTJanusProgramPGlobalCandidateAMatterFiniteGraphVariationalChart4D.lean": (
@@ -12262,6 +13437,10 @@ PROGRAM_P_GATES = {
             "def programPPrimitiveSpinCMatterSmoothFiniteSynthesis",
             "def programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap",
             "def programPPrimitiveSpinCMatterSmoothFiniteSynthesisRealLinearMap",
+            "theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesis_injective",
+            "theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap_injective",
+            "theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesisRealLinearMap_injective",
+            "theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesis_fourierCoordinate",
             "def programPPrimitiveSpinCMatterGraphFinite",
             "def programPPrimitiveSpinCMatterGraphFiniteLinearMap",
             "def programPPrimitiveSpinCMatterGraphFiniteRealLinearMap",
