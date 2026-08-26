@@ -1,4 +1,4 @@
-name: Program P T02 physical second-jet core
+name: Program P T02 physical second-jet section
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean"
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.lean"
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothSectionAssembly.lean"
       - ".github/workflows/program-p-t02-common-refined-atlas.yml"
 
 permissions:
@@ -18,14 +19,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  PRODUCT_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetProductVectorBundleCore
-  PRODUCT_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.olean
-  SMOOTH_FILE: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore.lean
   SMOOTH_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore
   SMOOTH_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore.olean
+  SECTION_FILE: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothSectionAssembly.lean
+  SECTION_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetSmoothSectionAssembly
+  SECTION_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothSectionAssembly.olean
 
 jobs:
-  focused-t02-smooth-core:
+  focused-t02-section:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -38,12 +39,12 @@ jobs:
         uses: actions/cache/restore@v5
         with:
           path: .b/l
-          key: t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          key: t02-section-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
           restore-keys: |
+            t02-section-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             t02-core-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             t02-atlas-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
-            lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
 
       - name: Set up Lean 4.31 without a project build
         uses: leanprover/lean-action@v1
@@ -58,28 +59,29 @@ jobs:
       - name: Fetch the pinned Mathlib package cache
         run: lake exe cache get
 
-      - name: Ensure the compiled product-core import exists
+      - name: Ensure the compiled smooth-core import exists
         run: |
-          if [[ ! -f "$PRODUCT_OLEAN" ]]; then
-            lake build +"$PRODUCT_MODULE":olean
+          if [[ ! -f "$SMOOTH_OLEAN" ]]; then
+            lake build +"$SMOOTH_MODULE":olean
           fi
-          test -f "$PRODUCT_OLEAN"
+          test -f "$SMOOTH_OLEAN"
 
-      - name: Elaborate only the smooth physical core with one Lean worker
-        run: lake lean "$SMOOTH_FILE" -- -j 1
+      - name: Elaborate only the physical section gate with one Lean worker
+        run: lake lean "$SECTION_FILE" -- -j 1
 
-      - name: Build only the smooth-core olean artifact
-        run: lake build +"$SMOOTH_MODULE":olean
+      - name: Build only the physical-section olean artifact
+        run: lake build +"$SECTION_MODULE":olean
 
-      - name: Verify the exact smooth-core artifact
-        run: test -f "$SMOOTH_OLEAN"
+      - name: Verify the exact physical-section artifact
+        run: test -f "$SECTION_OLEAN"
 
       - name: Reject proof placeholders and unfinished markers
         run: |
           for file in \
             JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean \
             JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.lean \
-            "$SMOOTH_FILE"; do
+            JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore.lean \
+            "$SECTION_FILE"; do
             if grep -nE '\b(sorry|admit|axiom|TODO|FIXME)\b' "$file"; then
               exit 1
             fi
@@ -96,4 +98,4 @@ jobs:
         uses: actions/cache/save@v5
         with:
           path: .b/l
-          key: t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          key: t02-section-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
