@@ -1,4 +1,4 @@
-name: Program P T02 common refined atlas
+name: Program P T02 physical second-jet core
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - agent/t02-common-refined-atlas
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.lean"
       - ".github/workflows/program-p-t02-common-refined-atlas.yml"
 
 permissions:
@@ -16,12 +17,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  LEAN_FILE: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean
-  LEAN_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetCommonRefinedAtlas
-  OLEAN_FILE: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.olean
+  ATLAS_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetCommonRefinedAtlas
+  ATLAS_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.olean
+  PRODUCT_FILE: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.lean
+  PRODUCT_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetProductVectorBundleCore
+  PRODUCT_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.olean
 
 jobs:
-  focused-t02-atlas:
+  focused-t02-core:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,8 +38,9 @@ jobs:
           path: |
             .b/l
             .lake/packages/mathlib/.lake/build
-          key: t02-atlas-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          key: t02-core-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
           restore-keys: |
+            t02-core-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             t02-atlas-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
 
@@ -58,20 +62,31 @@ jobs:
             lake exe cache get
           fi
 
-      - name: Elaborate only the new gate with one Lean worker
-        run: lake lean "$LEAN_FILE" -- -j 1
+      - name: Ensure the compiled common-atlas import exists
+        run: |
+          if [[ ! -f "$ATLAS_OLEAN" ]]; then
+            lake build +"$ATLAS_MODULE":olean
+          fi
+          test -f "$ATLAS_OLEAN"
 
-      - name: Build only the new olean artifact
-        run: lake build +"$LEAN_MODULE":olean
+      - name: Elaborate only the product core with one Lean worker
+        run: lake lean "$PRODUCT_FILE" -- -j 1
 
-      - name: Verify the exact olean artifact
-        run: test -f "$OLEAN_FILE"
+      - name: Build only the product-core olean artifact
+        run: lake build +"$PRODUCT_MODULE":olean
+
+      - name: Verify the exact product-core artifact
+        run: test -f "$PRODUCT_OLEAN"
 
       - name: Reject proof placeholders and unfinished markers
         run: |
-          if grep -nE '\b(sorry|admit|axiom|TODO|FIXME)\b' "$LEAN_FILE"; then
-            exit 1
-          fi
+          for file in \
+            JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean \
+            "$PRODUCT_FILE"; do
+            if grep -nE '\b(sorry|admit|axiom|TODO|FIXME)\b' "$file"; then
+              exit 1
+            fi
+          done
 
       - name: Run the Program P integrity audit
         run: python scripts/audit_janus_program_p.py
@@ -86,4 +101,4 @@ jobs:
           path: |
             .b/l
             .lake/packages/mathlib/.lake/build
-          key: t02-atlas-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          key: t02-core-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
