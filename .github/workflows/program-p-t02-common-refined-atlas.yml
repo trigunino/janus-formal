@@ -1,7 +1,9 @@
 name: Program P T02 common refined atlas
 
 on:
-  pull_request:
+  push:
+    branches:
+      - agent/t02-common-refined-atlas
     paths:
       - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean"
       - ".github/workflows/program-p-t02-common-refined-atlas.yml"
@@ -10,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
 
 env:
@@ -75,7 +77,7 @@ jobs:
         run: python scripts/audit_janus_program_p.py
 
       - name: Check the branch diff
-        run: git diff --check "origin/${{ github.base_ref }}...HEAD"
+        run: git diff --check origin/dev-branch...HEAD
 
       - name: Save exact Lean caches
         if: ${{ always() && steps.lean-cache.outputs.cache-hit != 'true' }}
