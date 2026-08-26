@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: Program P T02 physical second-jet core-agent/t02-common-refined-atlas
+  group: ${{ github.workflow }}-${{ github.ref_name }}
   cancel-in-progress: true
 
 env:
@@ -27,7 +27,7 @@ jobs:
   drain-stale-atlas-run:
     runs-on: ubuntu-latest
     concurrency:
-      group: Program P T02 common refined atlas-agent/t02-common-refined-atlas
+      group: Program P T02 common refined atlas-${{ github.ref_name }}
       cancel-in-progress: true
     steps:
       - name: Retire the superseded atlas-only run
