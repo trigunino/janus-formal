@@ -103,7 +103,7 @@ theorem mem_physicalCommonBaseSet_at
   exact ⟨⟨⟨gaugeAtlas.mem_baseSet_at base, llAtlas.mem_baseSet_at base⟩,
     metricAtlas.mem_baseSet_at base⟩, spinCAtlas.mem_baseSet_at base⟩
 
-/-- The four source atlases admit a canonical common open refinement. -/
+/-- The four source atlases have a canonical common open refinement. -/
 def physicalCommonRefinedAtlas
     (gaugeAtlas : OpenChartCover Base GaugeChart)
     (llAtlas : OpenChartCover Base LLChart)
