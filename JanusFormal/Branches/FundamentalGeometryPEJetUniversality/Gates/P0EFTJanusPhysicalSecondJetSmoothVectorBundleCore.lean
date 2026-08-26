@@ -89,24 +89,25 @@ theorem physicalSecondJetVectorBundleCore_isContMDiff
     [metricCore.IsContMDiff IB n]
     [spinCCore.IsContMDiff IB n] :
     (physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore).IsContMDiff
-      IB n := by
-  letI gaugeLLSmooth :
-      (vectorBundleCoreProd gaugeCore llCore).IsContMDiff IB n :=
-    vectorBundleCoreProd_isContMDiff IB gaugeCore llCore
-  letI gaugeLLMetricSmooth :
-      (vectorBundleCoreProd
-        (vectorBundleCoreProd gaugeCore llCore) metricCore).IsContMDiff IB n :=
-    vectorBundleCoreProd_isContMDiff IB
-      (vectorBundleCoreProd gaugeCore llCore) metricCore
-  letI nestedSmooth :
-      (physicalSecondJetNestedProductCore gaugeCore llCore metricCore spinCCore).IsContMDiff
-        IB n :=
-    vectorBundleCoreProd_isContMDiff IB
-      (vectorBundleCoreProd
-        (vectorBundleCoreProd gaugeCore llCore) metricCore) spinCCore
-  exact reindexVectorBundleCore_isContMDiff IB
-    (physicalSecondJetNestedProductCore gaugeCore llCore metricCore spinCCore)
-    physicalCommonChartEquiv
+      IB n where
+  contMDiffOn_coordChange first second := by
+    have hGauge :=
+      (gaugeCore.contMDiffOn_coordChange IB first.gauge second.gauge).mono (by
+        intro base hBase
+        exact ⟨hBase.1.1.1.1, hBase.2.1.1.1⟩)
+    have hLL :=
+      (llCore.contMDiffOn_coordChange IB first.ll second.ll).mono (by
+        intro base hBase
+        exact ⟨hBase.1.1.1.2, hBase.2.1.1.2⟩)
+    have hMetric :=
+      (metricCore.contMDiffOn_coordChange IB first.metric second.metric).mono (by
+        intro base hBase
+        exact ⟨hBase.1.1.2, hBase.2.1.2⟩)
+    have hSpinC :=
+      (spinCCore.contMDiffOn_coordChange IB first.spinC second.spinC).mono (by
+        intro base hBase
+        exact ⟨hBase.1.2, hBase.2.2⟩)
+    exact ((hGauge.clm_prodMap hLL).clm_prodMap hMetric).clm_prodMap hSpinC
 
 /-- Concrete package consisting of the unique four-sector physical core and its
 smooth coordinate-change certificate. -/
