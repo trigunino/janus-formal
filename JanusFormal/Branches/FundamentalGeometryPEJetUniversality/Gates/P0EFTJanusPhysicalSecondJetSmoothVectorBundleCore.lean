@@ -9,7 +9,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Set
-open scoped Manifold
+open scoped Manifold ContDiff
 open P0EFTJanusPhysicalSecondJetCommonRefinedAtlas
 open P0EFTJanusPhysicalSecondJetProductVectorBundleCore
 
