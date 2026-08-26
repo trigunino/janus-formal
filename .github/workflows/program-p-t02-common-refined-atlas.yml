@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref_name }}
+  group: Program P T02 physical second-jet core-agent/t02-common-refined-atlas
   cancel-in-progress: true
 
 env:
@@ -24,8 +24,19 @@ env:
   PRODUCT_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.olean
 
 jobs:
-  focused-t02-core:
+  drain-stale-atlas-run:
     runs-on: ubuntu-latest
+    concurrency:
+      group: Program P T02 common refined atlas-agent/t02-common-refined-atlas
+      cancel-in-progress: true
+    steps:
+      - name: Retire the superseded atlas-only run
+        run: echo "The product-core validation supersedes the atlas-only run."
+
+  focused-t02-core:
+    needs: drain-stale-atlas-run
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
