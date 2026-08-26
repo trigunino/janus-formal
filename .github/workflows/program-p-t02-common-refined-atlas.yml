@@ -5,8 +5,7 @@ on:
     branches:
       - agent/t02-common-refined-atlas
     paths:
-      - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean"
-      - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore.lean"
       - ".github/workflows/program-p-t02-common-refined-atlas.yml"
 
 permissions:
@@ -17,24 +16,14 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  ATLAS_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetCommonRefinedAtlas
-  ATLAS_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.olean
-  PRODUCT_FILE: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.lean
   PRODUCT_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetProductVectorBundleCore
   PRODUCT_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.olean
+  SMOOTH_FILE: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore.lean
+  SMOOTH_MODULE: JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore
+  SMOOTH_OLEAN: .b/l/JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore.olean
 
 jobs:
-  drain-stale-atlas-run:
-    runs-on: ubuntu-latest
-    concurrency:
-      group: Program P T02 common refined atlas-${{ github.ref_name }}
-      cancel-in-progress: true
-    steps:
-      - name: Retire the superseded atlas-only run
-        run: echo "The product-core validation supersedes the atlas-only run."
-
-  focused-t02-core:
-    needs: drain-stale-atlas-run
+  focused-t02-smooth-core:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
@@ -49,8 +38,9 @@ jobs:
           path: |
             .b/l
             .lake/packages/mathlib/.lake/build
-          key: t02-core-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          key: t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
           restore-keys: |
+            t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             t02-core-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             t02-atlas-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
             lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-
@@ -73,27 +63,28 @@ jobs:
             lake exe cache get
           fi
 
-      - name: Ensure the compiled common-atlas import exists
+      - name: Ensure the compiled product-core import exists
         run: |
-          if [[ ! -f "$ATLAS_OLEAN" ]]; then
-            lake build +"$ATLAS_MODULE":olean
+          if [[ ! -f "$PRODUCT_OLEAN" ]]; then
+            lake build +"$PRODUCT_MODULE":olean
           fi
-          test -f "$ATLAS_OLEAN"
+          test -f "$PRODUCT_OLEAN"
 
-      - name: Elaborate only the product core with one Lean worker
-        run: lake lean "$PRODUCT_FILE" -- -j 1
+      - name: Elaborate only the smooth physical core with one Lean worker
+        run: lake lean "$SMOOTH_FILE" -- -j 1
 
-      - name: Build only the product-core olean artifact
-        run: lake build +"$PRODUCT_MODULE":olean
+      - name: Build only the smooth-core olean artifact
+        run: lake build +"$SMOOTH_MODULE":olean
 
-      - name: Verify the exact product-core artifact
-        run: test -f "$PRODUCT_OLEAN"
+      - name: Verify the exact smooth-core artifact
+        run: test -f "$SMOOTH_OLEAN"
 
       - name: Reject proof placeholders and unfinished markers
         run: |
           for file in \
             JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetCommonRefinedAtlas.lean \
-            "$PRODUCT_FILE"; do
+            JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusPhysicalSecondJetProductVectorBundleCore.lean \
+            "$SMOOTH_FILE"; do
             if grep -nE '\b(sorry|admit|axiom|TODO|FIXME)\b' "$file"; then
               exit 1
             fi
@@ -112,4 +103,4 @@ jobs:
           path: |
             .b/l
             .lake/packages/mathlib/.lake/build
-          key: t02-core-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
+          key: t02-smooth-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
