@@ -14,9 +14,8 @@ open P0EFTJanusPhysicalSecondJetCommonRefinedAtlas
 open P0EFTJanusPhysicalSecondJetProductVectorBundleCore
 
 universe uBase uField uModel uModelSpace
-universe uFirstFiber uSecondFiber uFirstChart uSecondChart
 universe uGaugeFiber uLLFiber uMetricFiber uSpinCFiber
-universe uGaugeChart uLLChart uMetricChart uSpinCChart uOldChart uNewChart
+universe uGaugeChart uLLChart uMetricChart uSpinCChart
 
 variable {𝕜 : Type uField} [NontriviallyNormedField 𝕜]
 variable {Model : Type uModel} [NormedAddCommGroup Model]
@@ -25,43 +24,6 @@ variable {ModelSpace : Type uModelSpace} [TopologicalSpace ModelSpace]
 variable (IB : ModelWithCorners 𝕜 Model ModelSpace)
 variable {Base : Type uBase} [TopologicalSpace Base]
 variable [ChartedSpace ModelSpace Base]
-variable {n : ℕ∞ω}
-
-variable {FirstFiber : Type uFirstFiber}
-variable {SecondFiber : Type uSecondFiber}
-variable [NormedAddCommGroup FirstFiber] [NormedSpace 𝕜 FirstFiber]
-variable [NormedAddCommGroup SecondFiber] [NormedSpace 𝕜 SecondFiber]
-variable {FirstChart : Type uFirstChart} {SecondChart : Type uSecondChart}
-
-/-- Smooth coordinate changes are preserved by the binary product of two
-vector-bundle cores over the same manifold base. -/
-theorem vectorBundleCoreProd_isContMDiff
-    (firstCore : VectorBundleCore 𝕜 Base FirstFiber FirstChart)
-    (secondCore : VectorBundleCore 𝕜 Base SecondFiber SecondChart)
-    [firstCore.IsContMDiff IB n]
-    [secondCore.IsContMDiff IB n] :
-    (vectorBundleCoreProd firstCore secondCore).IsContMDiff IB n where
-  contMDiffOn_coordChange first second := by
-    exact
-      ((firstCore.contMDiffOn_coordChange IB first.1 second.1).mono (by
-          intro base hBase
-          exact ⟨hBase.1.1, hBase.2.1⟩)).clm_prodMap
-        ((secondCore.contMDiffOn_coordChange IB first.2 second.2).mono (by
-          intro base hBase
-          exact ⟨hBase.1.2, hBase.2.2⟩))
-
-variable {Fiber : Type uFirstFiber}
-variable [NormedAddCommGroup Fiber] [NormedSpace 𝕜 Fiber]
-variable {OldChart : Type uOldChart} {NewChart : Type uNewChart}
-
-/-- Reindexing the chart type preserves smoothness of all coordinate changes. -/
-theorem reindexVectorBundleCore_isContMDiff
-    (core : VectorBundleCore 𝕜 Base Fiber OldChart)
-    (indexEquiv : NewChart ≃ OldChart)
-    [core.IsContMDiff IB n] :
-    (reindexVectorBundleCore core indexEquiv).IsContMDiff IB n where
-  contMDiffOn_coordChange first second :=
-    core.contMDiffOn_coordChange IB (indexEquiv first) (indexEquiv second)
 
 variable {GaugeFiber : Type uGaugeFiber}
 variable {LLFiber : Type uLLFiber}
@@ -84,30 +46,44 @@ theorem physicalSecondJetVectorBundleCore_isContMDiff
     (llCore : VectorBundleCore 𝕜 Base LLFiber LLChart)
     (metricCore : VectorBundleCore 𝕜 Base MetricFiber MetricChart)
     (spinCCore : VectorBundleCore 𝕜 Base SpinCFiber SpinCChart)
-    [gaugeCore.IsContMDiff IB n]
-    [llCore.IsContMDiff IB n]
-    [metricCore.IsContMDiff IB n]
-    [spinCCore.IsContMDiff IB n] :
+    [gaugeCore.IsContMDiff IB ∞]
+    [llCore.IsContMDiff IB ∞]
+    [metricCore.IsContMDiff IB ∞]
+    [spinCCore.IsContMDiff IB ∞] :
     (physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore).IsContMDiff
-      IB n where
-  contMDiffOn_coordChange first second := by
-    have hGauge :=
-      (gaugeCore.contMDiffOn_coordChange IB first.gauge second.gauge).mono (by
-        intro base hBase
-        exact ⟨hBase.1.1.1.1, hBase.2.1.1.1⟩)
-    have hLL :=
-      (llCore.contMDiffOn_coordChange IB first.ll second.ll).mono (by
-        intro base hBase
-        exact ⟨hBase.1.1.1.2, hBase.2.1.1.2⟩)
-    have hMetric :=
-      (metricCore.contMDiffOn_coordChange IB first.metric second.metric).mono (by
-        intro base hBase
-        exact ⟨hBase.1.1.2, hBase.2.1.2⟩)
-    have hSpinC :=
-      (spinCCore.contMDiffOn_coordChange IB first.spinC second.spinC).mono (by
-        intro base hBase
-        exact ⟨hBase.1.2, hBase.2.2⟩)
-    exact ((hGauge.clm_prodMap hLL).clm_prodMap hMetric).clm_prodMap hSpinC
+      IB ∞ := by
+  constructor
+  intro first second
+  have hGauge :=
+    (gaugeCore.contMDiffOn_coordChange IB first.gauge second.gauge).mono (by
+      intro base hBase
+      exact ⟨hBase.1.1.1.1, hBase.2.1.1.1⟩)
+  have hLL :=
+    (llCore.contMDiffOn_coordChange IB first.ll second.ll).mono (by
+      intro base hBase
+      exact ⟨hBase.1.1.1.2, hBase.2.1.1.2⟩)
+  have hMetric :=
+    (metricCore.contMDiffOn_coordChange IB first.metric second.metric).mono (by
+      intro base hBase
+      exact ⟨hBase.1.1.2, hBase.2.1.2⟩)
+  have hSpinC :=
+    (spinCCore.contMDiffOn_coordChange IB first.spinC second.spinC).mono (by
+      intro base hBase
+      exact ⟨hBase.1.2, hBase.2.2⟩)
+  change ContMDiffOn IB
+    𝓘(𝕜,
+      (PhysicalSecondJetFiber (GaugeFiber := GaugeFiber) (LLFiber := LLFiber)
+          (MetricFiber := MetricFiber) (SpinCFiber := SpinCFiber)) →L[𝕜]
+        PhysicalSecondJetFiber (GaugeFiber := GaugeFiber) (LLFiber := LLFiber)
+          (MetricFiber := MetricFiber) (SpinCFiber := SpinCFiber)) ∞
+    (fun base =>
+      (((gaugeCore.coordChange first.gauge second.gauge base).prodMap
+          (llCore.coordChange first.ll second.ll base)).prodMap
+        (metricCore.coordChange first.metric second.metric base)).prodMap
+        (spinCCore.coordChange first.spinC second.spinC base))
+    ((physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore).baseSet first ∩
+      (physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore).baseSet second)
+  exact ((hGauge.clm_prodMap hLL).clm_prodMap hMetric).clm_prodMap hSpinC
 
 /-- Concrete package consisting of the unique four-sector physical core and its
 smooth coordinate-change certificate. -/
@@ -122,7 +98,7 @@ structure PhysicalSecondJetSmoothCore
     (PhysicalCommonChart GaugeChart LLChart MetricChart SpinCChart)
   core_eq_physical :
     core = physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore
-  isContMDiff : core.IsContMDiff IB n
+  isContMDiff : core.IsContMDiff IB ∞
 
 /-- Canonical smooth-core package assembled from the four supplied smooth
 second-jet cores. -/
@@ -131,10 +107,10 @@ def physicalSecondJetSmoothCore
     (llCore : VectorBundleCore 𝕜 Base LLFiber LLChart)
     (metricCore : VectorBundleCore 𝕜 Base MetricFiber MetricChart)
     (spinCCore : VectorBundleCore 𝕜 Base SpinCFiber SpinCChart)
-    [gaugeCore.IsContMDiff IB n]
-    [llCore.IsContMDiff IB n]
-    [metricCore.IsContMDiff IB n]
-    [spinCCore.IsContMDiff IB n] :
+    [gaugeCore.IsContMDiff IB ∞]
+    [llCore.IsContMDiff IB ∞]
+    [metricCore.IsContMDiff IB ∞]
+    [spinCCore.IsContMDiff IB ∞] :
     PhysicalSecondJetSmoothCore IB gaugeCore llCore metricCore spinCCore where
   core := physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore
   core_eq_physical := rfl
