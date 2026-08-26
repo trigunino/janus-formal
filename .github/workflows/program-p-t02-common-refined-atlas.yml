@@ -35,10 +35,22 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Cancel the obsolete wrong-base PR workflow
+      - name: Cancel every obsolete run on the T02 branch
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/actions/runs/33018129473/cancel" || true
+          CURRENT_RUN_ID: ${{ github.run_id }}
+        run: |
+          for status in queued in_progress; do
+            gh api --paginate \
+              "repos/${GITHUB_REPOSITORY}/actions/runs?branch=${GITHUB_REF_NAME}&status=${status}&per_page=100" \
+              --jq '.workflow_runs[].id' |
+            while read -r run_id; do
+              if [[ "$run_id" != "$CURRENT_RUN_ID" ]]; then
+                gh api --method POST \
+                  "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/cancel" || true
+              fi
+            done
+          done
 
       - name: Restore exact project Lean artifacts
         id: lean-cache
