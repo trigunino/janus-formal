@@ -54,19 +54,35 @@ theorem physicalSecondJetVectorBundleCore_isContMDiff
       IB ∞ := by
   constructor
   intro first second
-  have hGauge :=
+  let physicalCore :=
+    physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore
+  let overlap : Set Base :=
+    physicalCore.baseSet first ∩ physicalCore.baseSet second
+  have hGauge :
+      ContMDiffOn IB 𝓘(𝕜, GaugeFiber →L[𝕜] GaugeFiber) ∞
+        (fun base => gaugeCore.coordChange first.gauge second.gauge base)
+        overlap :=
     (gaugeCore.contMDiffOn_coordChange IB first.gauge second.gauge).mono (by
       intro base hBase
       exact ⟨hBase.1.1.1.1, hBase.2.1.1.1⟩)
-  have hLL :=
+  have hLL :
+      ContMDiffOn IB 𝓘(𝕜, LLFiber →L[𝕜] LLFiber) ∞
+        (fun base => llCore.coordChange first.ll second.ll base)
+        overlap :=
     (llCore.contMDiffOn_coordChange IB first.ll second.ll).mono (by
       intro base hBase
       exact ⟨hBase.1.1.1.2, hBase.2.1.1.2⟩)
-  have hMetric :=
+  have hMetric :
+      ContMDiffOn IB 𝓘(𝕜, MetricFiber →L[𝕜] MetricFiber) ∞
+        (fun base => metricCore.coordChange first.metric second.metric base)
+        overlap :=
     (metricCore.contMDiffOn_coordChange IB first.metric second.metric).mono (by
       intro base hBase
       exact ⟨hBase.1.1.2, hBase.2.1.2⟩)
-  have hSpinC :=
+  have hSpinC :
+      ContMDiffOn IB 𝓘(𝕜, SpinCFiber →L[𝕜] SpinCFiber) ∞
+        (fun base => spinCCore.coordChange first.spinC second.spinC base)
+        overlap :=
     (spinCCore.contMDiffOn_coordChange IB first.spinC second.spinC).mono (by
       intro base hBase
       exact ⟨hBase.1.2, hBase.2.2⟩)
@@ -81,8 +97,7 @@ theorem physicalSecondJetVectorBundleCore_isContMDiff
           (llCore.coordChange first.ll second.ll base)).prodMap
         (metricCore.coordChange first.metric second.metric base)).prodMap
         (spinCCore.coordChange first.spinC second.spinC base))
-    ((physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore).baseSet first ∩
-      (physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore).baseSet second)
+    overlap
   exact ((hGauge.clm_prodMap hLL).clm_prodMap hMetric).clm_prodMap hSpinC
 
 /-- Concrete package consisting of the unique four-sector physical core and its
