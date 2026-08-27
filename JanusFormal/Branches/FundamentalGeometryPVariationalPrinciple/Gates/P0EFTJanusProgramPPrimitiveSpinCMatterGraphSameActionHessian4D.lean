@@ -173,6 +173,17 @@ def programPPrimitiveSpinCMatterFiniteHessian
     (programPPrimitiveSpinCMatterHessianWeight
       period hPeriod massSquared)
 
+@[simp]
+theorem programPPrimitiveSpinCMatterFiniteHessian_apply
+    (massSquared : Real)
+    (coefficients : ProgramPPrimitiveSpinCMatterFiniteCoefficients)
+    (mode : ProgramPPrimitiveSpinCMatterMode) :
+    programPPrimitiveSpinCMatterFiniteHessian period hPeriod massSquared
+        coefficients mode =
+      ((programPPrimitiveSpinCMatterHessianWeight period hPeriod massSquared
+        mode : Real) : Complex) * coefficients mode :=
+  finiteDiagonalHessian_apply _ _ _ _
+
 /-- Canonical inclusion of finite coefficients into the ambient two-sector
 coefficient Hilbert space. -/
 def programPPrimitiveSpinCMatterFiniteHilbertEmbedding :
@@ -364,6 +375,78 @@ private theorem primitiveSpinCGeometricSignedFiniteSynthesis_embedding
         primitiveSpinCGeometricSignedDiracModeUnitary_single,
         map_smul]
       rfl
+
+/-- Finite signed coefficients are faithfully realized by genuine smooth
+SpinC eigensections. -/
+theorem primitiveSpinCGeometricSignedDiracFiniteSynthesis_injective :
+    Function.Injective
+      (primitiveSpinCGeometricSignedDiracFiniteSynthesis
+        period hPeriod) := by
+  intro first second hEqual
+  have hEmbedding := congrArg
+    (d9PrimitiveSpinCGeometricL2Embedding
+      period hPeriod .positiveQuarter) hEqual
+  rw [primitiveSpinCGeometricSignedFiniteSynthesis_embedding,
+    primitiveSpinCGeometricSignedFiniteSynthesis_embedding] at hEmbedding
+  have hFinite :=
+    (primitiveSpinCGeometricSignedDiracModeUnitary
+      period hPeriod).injective hEmbedding
+  ext mode
+  have hMode := congrArg
+    (fun coefficients :
+      ComplexDiagonalHilbert PrimitiveSpinCGeometricSignedMode =>
+        coefficients mode) hFinite
+  simpa only [finiteCoefficientEmbedding_apply] using hMode
+
+/-- The two-sector finite synthesis loses no Fourier--monopole coordinate. -/
+theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesis_injective :
+    Function.Injective
+      (programPPrimitiveSpinCMatterSmoothFiniteSynthesis
+        period hPeriod) := by
+  intro first second hEqual
+  apply Finsupp.ext
+  intro mode
+  rcases mode with ⟨sector, signedMode⟩
+  have hSector := congrFun hEqual sector
+  have hCurry :=
+    primitiveSpinCGeometricSignedDiracFiniteSynthesis_injective
+      period hPeriod hSector
+  change first.curry sector signedMode = second.curry sector signedMode
+  exact congrArg (fun coefficients => coefficients signedMode) hCurry
+
+theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap_injective :
+    Function.Injective
+      (programPPrimitiveSpinCMatterSmoothFiniteSynthesisLinearMap
+        period hPeriod) :=
+  programPPrimitiveSpinCMatterSmoothFiniteSynthesis_injective
+    period hPeriod
+
+theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesisRealLinearMap_injective :
+    Function.Injective
+      (programPPrimitiveSpinCMatterSmoothFiniteSynthesisRealLinearMap
+        period hPeriod) :=
+  programPPrimitiveSpinCMatterSmoothFiniteSynthesis_injective
+    period hPeriod
+
+/-- Inverse signed Fourier--monopole synthesis recovers every finite input
+coordinate exactly. -/
+@[simp]
+theorem programPPrimitiveSpinCMatterSmoothFiniteSynthesis_fourierCoordinate
+    (coefficients : ProgramPPrimitiveSpinCMatterFiniteCoefficients)
+    (sector : Sector) (mode : PrimitiveSpinCGeometricSignedMode) :
+    (primitiveSpinCGeometricSignedDiracModeUnitary
+        period hPeriod).symm
+        (d9PrimitiveSpinCGeometricL2Embedding
+          period hPeriod .positiveQuarter
+          (programPPrimitiveSpinCMatterSmoothFiniteSynthesis
+            period hPeriod coefficients sector)) mode =
+      coefficients (sector, mode) := by
+  rw [programPPrimitiveSpinCMatterSmoothFiniteSynthesis_apply,
+    primitiveSpinCGeometricSignedFiniteSynthesis_embedding,
+    (primitiveSpinCGeometricSignedDiracModeUnitary
+      period hPeriod).symm_apply_apply,
+    finiteCoefficientEmbedding_apply]
+  rfl
 
 private theorem primitiveSpinCGeometricSignedSmoothFinitePairing
     (massSquared : Real)
