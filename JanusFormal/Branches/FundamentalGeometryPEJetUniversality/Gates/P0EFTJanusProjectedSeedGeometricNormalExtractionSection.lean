@@ -8,7 +8,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Set
+open Set Module
 open scoped ContDiff InnerProductSpace Manifold
 open P0EFTJanusRieszShapeOperatorSmoothDependence
 open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas

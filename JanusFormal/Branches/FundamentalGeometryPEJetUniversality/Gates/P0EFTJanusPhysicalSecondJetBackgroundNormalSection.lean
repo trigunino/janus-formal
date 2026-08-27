@@ -10,7 +10,7 @@ set_option autoImplicit false
 noncomputable section
 
 open Set Filter Bundle
-open scoped Manifold Bundle
+open scoped Manifold Bundle ContDiff
 open P0EFTJanusPhysicalSecondJetCommonRefinedAtlas
 open P0EFTJanusPhysicalSecondJetProductVectorBundleCore
 open P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore
@@ -150,15 +150,25 @@ theorem physicalSecondJetBackgroundNormalLocalExtractor_contMDiffOn
       ((physicalSecondJetBackgroundNormalCore gaugeCore llCore metricCore spinCCore
         backgroundCore normalCore).baseSet chart) := by
   have hPhysical :=
-    (physicalSection.extractor_contMDiffOn chart.physical).mono (by
+    (physicalSection.extractor_contMDiffOn chart.physical).mono (show
+      (physicalSecondJetBackgroundNormalCore gaugeCore llCore metricCore spinCCore
+          backgroundCore normalCore).baseSet chart ⊆
+        (physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore).baseSet
+          chart.physical from by
       intro base hBase
       exact hBase.1.1)
   have hBackground :=
-    (backgroundSection.extractor_contMDiffOn chart.background).mono (by
+    (backgroundSection.extractor_contMDiffOn chart.background).mono (show
+      (physicalSecondJetBackgroundNormalCore gaugeCore llCore metricCore spinCCore
+          backgroundCore normalCore).baseSet chart ⊆
+        backgroundCore.baseSet chart.background from by
       intro base hBase
       exact hBase.1.2)
   have hNormal :=
-    (normalSection.extractor_contMDiffOn chart.normal).mono (by
+    (normalSection.extractor_contMDiffOn chart.normal).mono (show
+      (physicalSecondJetBackgroundNormalCore gaugeCore llCore metricCore spinCCore
+          backgroundCore normalCore).baseSet chart ⊆
+        normalCore.baseSet chart.normal from by
       intro base hBase
       exact hBase.2)
   exact (hPhysical.prodMk_space hBackground).prodMk_space hNormal
@@ -369,7 +379,9 @@ theorem physicalSecondJetBackgroundNormalBundleSection_contMDiff
       (physicalSecondJetBackgroundNormalLocalExtractor_contMDiffOn IB
         gaugeCore llCore metricCore spinCCore backgroundCore normalCore
         physicalSection backgroundSection normalSection chart).contMDiffAt
-          (extendedCore.isOpen_baseSet chart).mem_nhds hBase
+          (by
+            simpa [extendedCore] using
+              (extendedCore.isOpen_baseSet chart).mem_nhds hBase)
     apply hLocalSmooth.congr_of_eventuallyEq
     filter_upwards [(extendedCore.isOpen_baseSet chart).mem_nhds hBase]
       with nearby hNearby

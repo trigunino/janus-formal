@@ -132,33 +132,9 @@ def smoothCoreSectionCoordinatesProd
     (firstCoordinates : SmoothCoreSectionCoordinates IBase firstCore)
     (secondCoordinates : SmoothCoreSectionCoordinates IBase secondCore) :
     SmoothCoreSectionCoordinates IBase
-      (vectorBundleCoreProd firstCore secondCore) where
-  value base := (firstCoordinates.value base, secondCoordinates.value base)
-  extractor chart base :=
-    (firstCoordinates.extractor chart.1 base,
-      secondCoordinates.extractor chart.2 base)
-  coordinate_eq := by
-    intro chart base hBase
-    change
-      (firstCore.coordChange (firstCore.indexAt base) chart.1 base
-          (firstCoordinates.value base),
-        secondCore.coordChange (secondCore.indexAt base) chart.2 base
-          (secondCoordinates.value base)) =
-      (firstCoordinates.extractor chart.1 base,
-        secondCoordinates.extractor chart.2 base)
-    rw [firstCoordinates.coordinate_eq chart.1 base hBase.1,
-      secondCoordinates.coordinate_eq chart.2 base hBase.2]
-  extractor_contMDiffOn := by
-    intro chart
-    have hFirst :=
-      (firstCoordinates.extractor_contMDiffOn chart.1).mono (by
-        intro base hBase
-        exact hBase.1)
-    have hSecond :=
-      (secondCoordinates.extractor_contMDiffOn chart.2).mono (by
-        intro base hBase
-        exact hBase.2)
-    exact hFirst.prodMk_space hSecond
+      (vectorBundleCoreProd firstCore secondCore) :=
+  P0EFTJanusPhysicalSecondJetSmoothSectionAssembly.smoothCoreSectionCoordinatesProd
+    IBase firstCoordinates secondCoordinates
 
 /-- Product of two carrier traces over the same throat-to-bulk base map. -/
 def smoothCoreCarrierTraceProd
@@ -264,11 +240,14 @@ def reindexSmoothCoreCarrierTrace
   localTrace chart := carrier.localTrace (throatIndexEquiv chart)
   baseSet_compatible := by
     intro chart base hBase
-    exact carrier.baseSet_compatible (throatIndexEquiv chart) base hBase
+    simpa only [reindexVectorBundleCore, Equiv.apply_symm_apply] using
+      carrier.baseSet_compatible (throatIndexEquiv chart) base hBase
   value_compatible := carrier.value_compatible
   extractor_compatible := by
     intro chart base hBase
-    exact carrier.extractor_compatible (throatIndexEquiv chart) base hBase
+    simpa only [reindexSmoothCoreSectionCoordinates,
+      Equiv.apply_symm_apply] using
+      carrier.extractor_compatible (throatIndexEquiv chart) base hBase
 
 end
 

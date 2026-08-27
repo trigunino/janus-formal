@@ -7,9 +7,10 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Set
+open Set Module
 open scoped ContDiff InnerProductSpace Manifold
 open P0EFTJanusRieszShapeOperatorSmoothDependence
+open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
 open P0EFTJanusConnectionCorrectedActualJetBridge
 open P0EFTJanusProjectedSeedNormalSpaceTrivialization
@@ -34,6 +35,34 @@ variable [FiniteDimensional ℝ Ambient]
 variable {ι κ : Type uIndex}
 variable [Fintype ι] [Fintype κ]
 variable [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ]
+
+/- Nested continuous-linear-map spaces need coherent inherited structures for
+their endomorphism space. -/
+local instance continuousSecondFundamentalFormNormedAddCommGroup :
+    NormedAddCommGroup
+      (ContinuousSecondFundamentalForm (Tangent := Tangent) (Normal := Normal)) :=
+  inferInstance
+
+local instance continuousSecondFundamentalFormNormedSpace :
+    NormedSpace ℝ
+      (ContinuousSecondFundamentalForm (Tangent := Tangent) (Normal := Normal)) :=
+  inferInstance
+
+local instance continuousSecondFundamentalFormTopologicalSpace :
+    TopologicalSpace
+      (ContinuousSecondFundamentalForm (Tangent := Tangent) (Normal := Normal)) :=
+  continuousSecondFundamentalFormNormedAddCommGroup.toPseudoMetricSpace
+    |>.toUniformSpace.toTopologicalSpace
+
+local instance continuousSecondFundamentalFormAddCommMonoid :
+    AddCommMonoid
+      (ContinuousSecondFundamentalForm (Tangent := Tangent) (Normal := Normal)) :=
+  continuousSecondFundamentalFormNormedAddCommGroup.toAddCommMonoid
+
+local instance continuousSecondFundamentalFormModule :
+    Module ℝ
+      (ContinuousSecondFundamentalForm (Tangent := Tangent) (Normal := Normal)) :=
+  continuousSecondFundamentalFormNormedSpace.toModule
 
 /-- Postcomposition of both layers of a continuous second fundamental form by
 one normal-coordinate linear map. -/
@@ -140,7 +169,8 @@ theorem projectedSeedGeometricNormalQuadraticCore_isContMDiff
         (Tangent := Tangent) (Normal := Normal)
         (normalCore.coordChange first second base))
       (normalCore.baseSet first ∩ normalCore.baseSet second) :=
-    continuousSecondFundamentalFormTransportOperator.contDiff.comp_contDiffOn hNormal
+    (continuousSecondFundamentalFormTransportOperator
+      (Tangent := Tangent) (Normal := Normal)).contDiff.comp_contDiffOn hNormal
   exact hTransport.contMDiffOn
 
 /-- Exact overlap law for the real geometrically extracted normal quadratic. -/
@@ -168,12 +198,16 @@ theorem projectedSeedNormalQuadratic_coordinate_eq
         normalBasis hNormalBasis basisData hDimension correctedJet base) =
       projectedSeedLocalNormalQuadratic tangentBasis hTangentBasis normalBasis
         hNormalBasis basisData hDimension correctedJet center base := by
+  change base ∈ projectedSeedGeometricNormalDomain basisData center at hValid
   have hCenter : projectedSeedChartValid basisData.tangentFrame
       (pointwiseNormalSeedCharts basisData) center base := hValid
   have hPoint : projectedSeedChartValid basisData.tangentFrame
       (pointwiseNormalSeedCharts basisData) base base :=
     pointwiseNormalSeedChart_valid_at_center basisData base
-  rw [projectedSeedLocalNormalQuadratic, dif_pos hValid]
+  have hValidCall : projectedSeedGeometricNormalDomain basisData center base := by
+    change base ∈ projectedSeedGeometricNormalDomain basisData center
+    exact hValid
+  rw [projectedSeedLocalNormalQuadratic, dif_pos hValidCall]
   apply ContinuousLinearMap.ext
   intro first
   apply ContinuousLinearMap.ext

@@ -8,7 +8,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Set
+open Set Module
 open scoped ContDiff InnerProductSpace
 open P0EFTJanusActualStructuredJetExtraction
 open P0EFTJanusConnectionCorrectedActualJetBridge
@@ -77,16 +77,26 @@ def ProjectedSeedAmbientJetRealization.toExtractionRegularity
   physicalNormal_contDiffOn center := by
     apply (realization.ambientJet center).physicalNormal_contDiffOn.congr
     intro base hValid
+    have hGeometric : base ∈ projectedSeedGeometricNormalDomain basisData center := by
+      simpa only [projectedSeedCoefficientDomain,
+        projectedSeedGeometricNormalDomain] using hValid
     rw [projectedSeedLocalPhysicalNormal_eq_extraction tangentBasis hTangentBasis
-      normalBasis hNormalBasis basisData hDimension correctedJet center base hValid]
-    exact congrArg ActualJanusLocalJetData.physicalNormal
-      (realization.localJet_eq center base hValid)
+      normalBasis hNormalBasis basisData hDimension correctedJet center base hGeometric]
+    exact (congrArg ActualJanusLocalJetData.physicalNormal
+      (realization.localJet_eq center base hGeometric)).symm
   normalQuadratic_contDiffOn center := by
     apply (realization.ambientJet center).normalQuadratic_contDiffOn.congr
     intro base hValid
-    rw [projectedSeedLocalNormalQuadratic, dif_pos hValid]
-    exact congrArg ActualJanusLocalJetData.normalQuadratic
-      (realization.localJet_eq center base hValid)
+    have hGeometric : base ∈ projectedSeedGeometricNormalDomain basisData center := by
+      simpa only [projectedSeedCoefficientDomain,
+        projectedSeedGeometricNormalDomain] using hValid
+    have hGeometricCall :
+        projectedSeedGeometricNormalDomain basisData center base := by
+      change base ∈ projectedSeedGeometricNormalDomain basisData center
+      exact hGeometric
+    rw [projectedSeedLocalNormalQuadratic, dif_pos hGeometricCall]
+    exact (congrArg ActualJanusLocalJetData.normalQuadratic
+      (realization.localJet_eq center base hGeometric)).symm
 
 /-- The physical-normal smooth coordinate package obtained with no independent
 normal regularity premise. -/

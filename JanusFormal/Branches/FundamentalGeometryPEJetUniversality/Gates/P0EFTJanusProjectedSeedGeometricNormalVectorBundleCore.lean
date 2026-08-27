@@ -8,7 +8,7 @@ set_option autoImplicit false
 
 noncomputable section
 
-open Set
+open Set Module
 open scoped ContDiff InnerProductSpace Manifold
 open P0EFTJanusRieszShapeOperatorProjectedSeedAtlas
 open P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover
@@ -71,16 +71,27 @@ def projectedSeedGeometricNormalCore
   coordChange_self chart base hBase vector := by
     apply (projectedSeedNormalEmbedding normalBasis hNormalBasis
       basisData chart base).injective
-    simpa only [projectedSeedGeometricNormalCoordChange] using
-      projectedSeedNormalTransitionOnOverlap_spec normalBasis hNormalBasis
-        basisData hDimension chart chart base ⟨hBase, hBase⟩ vector
+    change
+      projectedSeedNormalEmbedding normalBasis hNormalBasis basisData chart base
+          ((projectedSeedNormalTransitionOnOverlap normalBasis hNormalBasis
+            basisData hDimension chart chart).frame base vector) =
+        projectedSeedNormalEmbedding normalBasis hNormalBasis basisData chart base
+          vector
+    exact projectedSeedNormalTransitionOnOverlap_spec normalBasis hNormalBasis
+      basisData hDimension chart chart base ⟨hBase, hBase⟩ vector
   continuousOn_coordChange first second := by
+    rw [show
+      projectedSeedGeometricNormalDomain basisData first ∩
+          projectedSeedGeometricNormalDomain basisData second =
+        pointwiseBasisOverlapDomain basisData second first by
+      simp only [projectedSeedGeometricNormalDomain,
+        pointwiseBasisOverlapDomain, inter_comm]]
     have hContinuous :=
       (projectedSeedNormalTransitionOnOverlap normalBasis hNormalBasis
         basisData hDimension second first).forward_contDiffOn.continuousOn
-    simpa only [projectedSeedGeometricNormalCoordChange,
-      projectedSeedGeometricNormalDomain, pointwiseBasisOverlapDomain,
-      inter_comm] using hContinuous
+    apply hContinuous.congr
+    intro base hBase
+    rfl
   coordChange_comp first second third base hBase vector := by
     apply (projectedSeedNormalEmbedding normalBasis hNormalBasis
       basisData third base).injective
@@ -125,13 +136,23 @@ theorem projectedSeedGeometricNormalCore_isContMDiff
       basisData hDimension).IsContMDiff 𝓘(ℝ, Base) ∞ := by
   constructor
   intro first second
+  change ContMDiffOn 𝓘(ℝ, Base) 𝓘(ℝ, Normal →L[ℝ] Normal) ∞
+    (projectedSeedGeometricNormalCoordChange normalBasis hNormalBasis
+      basisData hDimension first second)
+    (projectedSeedGeometricNormalDomain basisData first ∩
+      projectedSeedGeometricNormalDomain basisData second)
+  rw [show
+    projectedSeedGeometricNormalDomain basisData first ∩
+        projectedSeedGeometricNormalDomain basisData second =
+      pointwiseBasisOverlapDomain basisData second first by
+    simp only [projectedSeedGeometricNormalDomain,
+      pointwiseBasisOverlapDomain, inter_comm]]
   have hSmooth :=
     (projectedSeedNormalTransitionOnOverlap normalBasis hNormalBasis
       basisData hDimension second first).forward_contDiffOn.contMDiffOn
-  simpa only [projectedSeedGeometricNormalCore,
-    projectedSeedGeometricNormalCoordChange,
-    projectedSeedGeometricNormalDomain, pointwiseBasisOverlapDomain,
-    inter_comm] using hSmooth
+  apply hSmooth.congr
+  intro base hBase
+  rfl
 
 /-- The preferred chart at each base point is the point-centred geometric
 normal chart. -/
