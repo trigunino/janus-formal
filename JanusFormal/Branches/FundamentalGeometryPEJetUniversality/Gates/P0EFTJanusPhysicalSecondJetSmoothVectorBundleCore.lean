@@ -14,6 +14,7 @@ open P0EFTJanusPhysicalSecondJetCommonRefinedAtlas
 open P0EFTJanusPhysicalSecondJetProductVectorBundleCore
 
 universe uBase uField uModel uModelSpace
+universe uFirstFiber uSecondFiber uFirstChart uSecondChart
 universe uGaugeFiber uLLFiber uMetricFiber uSpinCFiber
 universe uGaugeChart uLLChart uMetricChart uSpinCChart
 
@@ -24,6 +25,46 @@ variable {ModelSpace : Type uModelSpace} [TopologicalSpace ModelSpace]
 variable (IB : ModelWithCorners 𝕜 Model ModelSpace)
 variable {Base : Type uBase} [TopologicalSpace Base]
 variable [ChartedSpace ModelSpace Base]
+
+variable {FirstFiber : Type uFirstFiber}
+variable {SecondFiber : Type uSecondFiber}
+variable [NormedAddCommGroup FirstFiber] [NormedSpace 𝕜 FirstFiber]
+variable [NormedAddCommGroup SecondFiber] [NormedSpace 𝕜 SecondFiber]
+variable {FirstChart : Type uFirstChart}
+variable {SecondChart : Type uSecondChart}
+
+theorem vectorBundleCoreProd_isContMDiff
+    (firstCore : VectorBundleCore 𝕜 Base FirstFiber FirstChart)
+    (secondCore : VectorBundleCore 𝕜 Base SecondFiber SecondChart)
+    [firstCore.IsContMDiff IB ∞]
+    [secondCore.IsContMDiff IB ∞] :
+    (vectorBundleCoreProd firstCore secondCore).IsContMDiff IB ∞ := by
+  constructor
+  intro first second
+  let productCore := vectorBundleCoreProd firstCore secondCore
+  let overlap : Set Base :=
+    productCore.baseSet first ∩ productCore.baseSet second
+  have hFirst :
+      ContMDiffOn IB
+        (modelWithCornersSelf 𝕜 (FirstFiber →L[𝕜] FirstFiber)) ∞
+        (fun base ↦ firstCore.coordChange first.1 second.1 base) overlap :=
+    (firstCore.contMDiffOn_coordChange IB first.1 second.1).mono (by
+      intro base hBase
+      exact ⟨hBase.1.1, hBase.2.1⟩)
+  have hSecond :
+      ContMDiffOn IB
+        (modelWithCornersSelf 𝕜 (SecondFiber →L[𝕜] SecondFiber)) ∞
+        (fun base ↦ secondCore.coordChange first.2 second.2 base) overlap :=
+    (secondCore.contMDiffOn_coordChange IB first.2 second.2).mono (by
+      intro base hBase
+      exact ⟨hBase.1.2, hBase.2.2⟩)
+  change ContMDiffOn IB
+    (modelWithCornersSelf 𝕜
+      ((FirstFiber × SecondFiber) →L[𝕜] (FirstFiber × SecondFiber))) ∞
+    (fun base ↦
+      (firstCore.coordChange first.1 second.1 base).prodMap
+        (secondCore.coordChange first.2 second.2 base)) overlap
+  exact hFirst.clm_prodMap hSecond
 
 variable {GaugeFiber : Type uGaugeFiber}
 variable {LLFiber : Type uLLFiber}

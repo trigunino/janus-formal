@@ -62,7 +62,7 @@ global tangent/pairing realization, intrinsic L2 completion and
 `program_p_t01_global_foundations_pairings_terminal_gate` compile directly and
 as `.olean`; the integrity audit is green at `1/14`, with no business axiom.
 The full Program-P façade and its complete local import closure are green.
-One hundred ten nonterminal `T02` support gates are now compiled and integrated.  In
+One hundred seventeen nonterminal `T02` support gates are now compiled and integrated.  In
 addition to the stratified carrier, generic `C²` constructor, actual SpinC/LL
 throat packet and low-order `(II, F)` orbit, they extract both actual metric
 jets, the realized bulk Christoffel/`U(1)²` background core and all typed
@@ -136,8 +136,12 @@ sectors. Eighteen further gates (92 + 18 total) complete SpinC second jets:
 arbitrary trivialization/chart extraction, exact zero-/first-/second-order
 overlaps and cocycles, semidirect groupoid transport, a smooth
 `VectorBundleCore`, and global `C∞` sections for every smooth SpinC section and
-the physical sectors. Only the common physical/background/normal bundle remains
-open.
+the physical sectors. Seven further gates provide the generic common product
+atlas/core, smooth product cores and smooth product-section assembly, then
+instantiate them for the four gauge jets, three heterogeneous LL jets, two
+metric jets and two SpinC jets. The resulting common physical second-jet core
+and Candidate-A section are globally `C∞`. The normal/background bridge and
+the invariant classification remain open.
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`
@@ -149,12 +153,10 @@ and the raw Koszul identity are proved pointwise.  A realized throat-background
 core combines this quadratic with the pulled-back `U(1)²` jets.  The refined
 true `ThroatPhysicalSecondOrderJet` assembly therefore externalizes only
 `normalQuadratic`, its symmetry proof and `physicalNormal`; the earlier
-whole-background assembly remains as a historical gate.  Outside the completed
-throat `U(1)²` gauge-jet bundle and the three separate LL second-jet bundles,
-these gates do not construct a smooth global Levi--Civita connection or a
-smooth descent of the full physical jet carrier, extract canonical normal
-geometry, give an unconditional carrier extraction or exhaust the invariant
-basis.
+whole-background assembly remains as a historical gate. These gates do not
+construct a smooth global Levi--Civita connection, extract canonical normal
+geometry, give an unconditional structured-background extraction or exhaust
+the invariant basis.
 
 ## Program M foundation checkpoint — 19 July 2026
 

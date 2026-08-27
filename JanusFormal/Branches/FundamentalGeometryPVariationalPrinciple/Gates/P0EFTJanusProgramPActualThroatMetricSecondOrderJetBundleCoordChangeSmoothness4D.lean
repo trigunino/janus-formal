@@ -336,4 +336,3 @@ theorem throatMetricSecondOrderJetBundleCoordChange_contMDiffOn
 end
 end P0EFTJanusProgramPActualThroatMetricSecondOrderJetBundleCoordChangeSmoothness4D
 end JanusFormal
-

@@ -36,6 +36,8 @@ open P0EFTJanusProgramPActualThroatGaugeBaseChartSecondOrderJetOverlap4D
 open P0EFTJanusProgramPActualThroatGaugeZeroOrderOverlapDataSmoothness4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleAtlasData4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleCore4D
+open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPointwiseQuotientDescent4D
+open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPointwiseNormalization4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleDescent4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetVectorBundleDescentLocalTrivialization4D
 
@@ -257,6 +259,71 @@ def actualThroatGaugeSecondOrderJetLocalRepresentative
     throatGaugeCovectorSecondOrderJetInBaseChartAt period hPeriod
       potential component index.1 index.2 current hCurrent.1 hCurrent.2
   else 0
+
+/-- Actual local representatives agree under the gauge second-jet coordinate
+change on every overlap. -/
+theorem actualThroatGaugeSecondOrderJetLocalRepresentative_coordChange
+    (potential : SmoothThroatAbelianGaugePotential period hPeriod)
+    (component : Fin 2) (first second : BundleIndex period hPeriod)
+    (current : EffectiveThroat period hPeriod)
+    (hCurrent : current ∈
+      throatGaugeSecondOrderJetBundleBaseSet period hPeriod first ∩
+        throatGaugeSecondOrderJetBundleBaseSet period hPeriod second) :
+    (throatGaugeSecondOrderJetVectorBundleCore period hPeriod).coordChange
+        first second current
+        (actualThroatGaugeSecondOrderJetLocalRepresentative period hPeriod
+          potential component first current) =
+      actualThroatGaugeSecondOrderJetLocalRepresentative period hPeriod
+        potential component second current := by
+  let jetClass :=
+    actualThroatGaugeSecondOrderJetPointwiseClass period hPeriod potential
+      component current
+  have hFirstNormalization :
+      throatGaugeSecondOrderJetPointwiseNormalizeAt period hPeriod
+          first.1 first.2 current hCurrent.1.1 hCurrent.1.2 jetClass =
+        throatGaugeCovectorSecondOrderJetInBaseChartAt period hPeriod
+          potential component first.1 first.2 current
+            hCurrent.1.1 hCurrent.1.2 := by
+    calc
+      throatGaugeSecondOrderJetPointwiseNormalizeAt period hPeriod
+          first.1 first.2 current hCurrent.1.1 hCurrent.1.2 jetClass =
+          ((throatGaugeSecondOrderJetVectorBundleCore period hPeriod).localTriv
+            first
+            (actualThroatGaugeSecondOrderJetVectorBundleSection period hPeriod
+              potential component current)).2 := by
+        exact (throatGaugeSecondOrderJetPointwiseClass_localTriv_snd
+          period hPeriod first current hCurrent.1 jetClass).symm
+      _ = throatGaugeCovectorSecondOrderJetInBaseChartAt period hPeriod
+            potential component first.1 first.2 current
+              hCurrent.1.1 hCurrent.1.2 :=
+        actualThroatGaugeSecondOrderJetVectorBundleSection_localTriv_snd
+          period hPeriod potential component first current hCurrent.1
+  have hSecondNormalization :
+      throatGaugeSecondOrderJetPointwiseNormalizeAt period hPeriod
+          second.1 second.2 current hCurrent.2.1 hCurrent.2.2 jetClass =
+        throatGaugeCovectorSecondOrderJetInBaseChartAt period hPeriod
+          potential component second.1 second.2 current
+            hCurrent.2.1 hCurrent.2.2 := by
+    calc
+      throatGaugeSecondOrderJetPointwiseNormalizeAt period hPeriod
+          second.1 second.2 current hCurrent.2.1 hCurrent.2.2 jetClass =
+          ((throatGaugeSecondOrderJetVectorBundleCore period hPeriod).localTriv
+            second
+            (actualThroatGaugeSecondOrderJetVectorBundleSection period hPeriod
+              potential component current)).2 := by
+        exact (throatGaugeSecondOrderJetPointwiseClass_localTriv_snd
+          period hPeriod second current hCurrent.2 jetClass).symm
+      _ = throatGaugeCovectorSecondOrderJetInBaseChartAt period hPeriod
+            potential component second.1 second.2 current
+              hCurrent.2.1 hCurrent.2.2 :=
+        actualThroatGaugeSecondOrderJetVectorBundleSection_localTriv_snd
+          period hPeriod potential component second current hCurrent.2
+  simp only [actualThroatGaugeSecondOrderJetLocalRepresentative,
+    dif_pos hCurrent.1, dif_pos hCurrent.2,
+    throatGaugeSecondOrderJetVectorBundleCore_coordChange]
+  rw [← hFirstNormalization, ← hSecondNormalization]
+  exact throatGaugeSecondOrderJetPointwiseNormalizeAt_coordChange
+    period hPeriod first second current hCurrent.1 hCurrent.2 jetClass
 
 private theorem actualThroatGaugeSecondOrderJetLocalRepresentative_value_contMDiffOn
     (potential : SmoothThroatAbelianGaugePotential period hPeriod)

@@ -3734,7 +3734,7 @@ seulement leur fermeture fonctionnelle chartwise.
 `BLOQUÉ-PHYSIQUE`. Aucun LLM ne doit les rendre vrais par définition ou par
 choix arbitraire de constantes.
 
-Cent dix gates de support non terminales `T02` sont désormais compilées et
+Cent dix-sept gates de support non terminales `T02` sont désormais compilées et
 importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 
 ### `P-T02-PHYSICAL-SECOND-ORDER-JET-CARRIER` — Carrier local physique stratifié
@@ -4375,6 +4375,26 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : ce gate ne traite ni l'action sur le carrier complet, ni deck et
   matière, ni l'exhaustion de tous les fonctionnels locaux admissibles.
 - Porte terminale : aucune ; sous-verrou projeté de `T02`.
+
+### `P-T02-ACTUAL-PHYSICAL-SMOOTH-SECOND-JET-PRODUCT` — Sept gates 111--117
+
+- État : `DONE` (2026-08-27). Portée : `GLOBALE/BUNDLE-LISSE/PRODUIT/NONTERMINALE`.
+- Gates nouvelles :
+  1. `P0EFTJanusPhysicalSecondJetCommonRefinedAtlas` ;
+  2. `P0EFTJanusPhysicalSecondJetProductVectorBundleCore` ;
+  3. `P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore` ;
+  4. `P0EFTJanusPhysicalSecondJetSmoothSectionAssembly` ;
+  5. `P0EFTJanusProgramPActualSecondOrderJetSmoothCoreSectionCoordinates4D` ;
+  6. `P0EFTJanusProgramPActualLLSecondOrderJetProductVectorBundleCore4D` ;
+  7. `P0EFTJanusProgramPActualPhysicalSecondOrderJetProductVectorBundleCore4D`.
+- Résultat : les produits explicites regroupent quatre jets gauge sectorisés,
+  les trois fibres LL hétérogènes, deux jets métriques et deux jets SpinC. Le
+  cœur physique commun est lisse et les données Candidate-A définissent une
+  section coordonnée globale `C∞`.
+- Limite : ce produit ne fournit ni fond normal canonique, ni connexion de
+  Levi--Civita globale, ni classification exhaustive des fonctionnels locaux.
+- Porte terminale : aucune ; `T02` reste ouvert et le compteur terminal reste
+  `1/14`.
 
 ## 7. Les 14 portes terminales fixes
 
