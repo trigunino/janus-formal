@@ -15,6 +15,7 @@ open P0EFTJanusPhysicalSecondJetProductVectorBundleCore
 open P0EFTJanusPhysicalSecondJetSmoothVectorBundleCore
 
 universe uBase uField uModel uModelSpace uFiber uChart
+universe uFirstFiber uSecondFiber uFirstChart uSecondChart
 universe uGaugeFiber uLLFiber uMetricFiber uSpinCFiber
 universe uGaugeChart uLLChart uMetricChart uSpinCChart
 
@@ -44,6 +45,61 @@ structure SmoothCoreSectionCoordinates
   extractor_contMDiffOn :
     ∀ chart,
       ContMDiffOn IB 𝓘(𝕜, Fiber) ∞ (extractor chart) (core.baseSet chart)
+
+/-- Compatible smooth local representatives packaged as the coordinate data of
+a global section selected with the preferred core index. -/
+def smoothCoreSectionCoordinatesOfLocalRepresentatives
+    (core : VectorBundleCore 𝕜 Base Fiber Chart)
+    (localRep : Chart → Base → Fiber)
+    (hCompatible : ∀ first second base,
+      base ∈ core.baseSet first ∩ core.baseSet second →
+        core.coordChange first second base (localRep first base) =
+          localRep second base)
+    (hSmooth : ∀ chart,
+      ContMDiffOn IB 𝓘(𝕜, Fiber) ∞
+        (localRep chart) (core.baseSet chart)) :
+    SmoothCoreSectionCoordinates IB core where
+  value base := localRep (core.indexAt base) base
+  extractor := localRep
+  coordinate_eq chart base hBase :=
+    hCompatible (core.indexAt base) chart base
+      ⟨core.mem_baseSet_at base, hBase⟩
+  extractor_contMDiffOn := hSmooth
+
+variable {FirstFiber : Type uFirstFiber}
+variable {SecondFiber : Type uSecondFiber}
+variable [NormedAddCommGroup FirstFiber] [NormedSpace 𝕜 FirstFiber]
+variable [NormedAddCommGroup SecondFiber] [NormedSpace 𝕜 SecondFiber]
+variable {FirstChart : Type uFirstChart}
+variable {SecondChart : Type uSecondChart}
+
+def smoothCoreSectionCoordinatesProd
+    {firstCore : VectorBundleCore 𝕜 Base FirstFiber FirstChart}
+    {secondCore : VectorBundleCore 𝕜 Base SecondFiber SecondChart}
+    (firstSection : SmoothCoreSectionCoordinates IB firstCore)
+    (secondSection : SmoothCoreSectionCoordinates IB secondCore) :
+    SmoothCoreSectionCoordinates IB
+      (vectorBundleCoreProd firstCore secondCore) where
+  value base := (firstSection.value base, secondSection.value base)
+  extractor chart base :=
+    (firstSection.extractor chart.1 base,
+      secondSection.extractor chart.2 base)
+  coordinate_eq chart base hBase := by
+    change
+      (firstCore.coordChange (firstCore.indexAt base) chart.1 base
+          (firstSection.value base),
+        secondCore.coordChange (secondCore.indexAt base) chart.2 base
+          (secondSection.value base)) = _
+    rw [firstSection.coordinate_eq chart.1 base hBase.1,
+      secondSection.coordinate_eq chart.2 base hBase.2]
+  extractor_contMDiffOn chart := by
+    exact
+      ((firstSection.extractor_contMDiffOn chart.1).mono (by
+          intro base hBase
+          exact hBase.1)).prodMk_space
+        ((secondSection.extractor_contMDiffOn chart.2).mono (by
+          intro base hBase
+          exact hBase.2))
 
 variable {GaugeFiber : Type uGaugeFiber}
 variable {LLFiber : Type uLLFiber}
@@ -174,6 +230,34 @@ theorem physicalSecondJetSection_coordinate_eq
     llSection.coordinate_eq chart.ll base hBase.1.1.2,
     metricSection.coordinate_eq chart.metric base hBase.1.2,
     spinCSection.coordinate_eq chart.spinC base hBase.2]
+
+/-- The four source coordinate packages assembled as one coordinate package
+on the common physical product core. -/
+def physicalSecondJetSmoothCoreSectionCoordinates
+    (gaugeCore : VectorBundleCore 𝕜 Base GaugeFiber GaugeChart)
+    (llCore : VectorBundleCore 𝕜 Base LLFiber LLChart)
+    (metricCore : VectorBundleCore 𝕜 Base MetricFiber MetricChart)
+    (spinCCore : VectorBundleCore 𝕜 Base SpinCFiber SpinCChart)
+    (gaugeSection : SmoothCoreSectionCoordinates IB gaugeCore)
+    (llSection : SmoothCoreSectionCoordinates IB llCore)
+    (metricSection : SmoothCoreSectionCoordinates IB metricCore)
+    (spinCSection : SmoothCoreSectionCoordinates IB spinCCore) :
+    SmoothCoreSectionCoordinates IB
+      (physicalSecondJetVectorBundleCore gaugeCore llCore metricCore spinCCore) where
+  value :=
+    physicalSecondJetSectionValue IB
+      gaugeSection llSection metricSection spinCSection
+  extractor :=
+    physicalSecondJetLocalExtractor IB
+      gaugeSection llSection metricSection spinCSection
+  coordinate_eq :=
+    physicalSecondJetSection_coordinate_eq IB
+      gaugeCore llCore metricCore spinCCore
+      gaugeSection llSection metricSection spinCSection
+  extractor_contMDiffOn :=
+    physicalSecondJetLocalExtractor_contMDiffOn IB
+      gaugeCore llCore metricCore spinCCore
+      gaugeSection llSection metricSection spinCSection
 
 /-- The common pointwise value as a section of the physical core bundle. -/
 def physicalSecondJetBundleSection
