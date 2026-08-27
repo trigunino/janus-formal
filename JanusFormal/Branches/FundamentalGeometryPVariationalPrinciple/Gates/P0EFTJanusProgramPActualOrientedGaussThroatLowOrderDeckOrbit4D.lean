@@ -171,6 +171,16 @@ def actualOrientedGaussThroatDeckSpinCFrame :
     (actualOrientedGaussThroatDeckSpinCFrame).1.2 normal = -normal :=
   rfl
 
+@[simp] theorem actualOrientedGaussThroatDeckSpinCFrame_mul_self :
+    actualOrientedGaussThroatDeckSpinCFrame *
+        actualOrientedGaussThroatDeckSpinCFrame = 1 := by
+  apply Prod.ext
+  · apply Prod.ext
+    · rfl
+    · ext normal
+      simp [actualOrientedGaussThroatDeckSpinCFrame]
+  · simp [actualOrientedGaussThroatDeckSpinCFrame]
+
 /-- The actual reduced jet is equivariant for the deck reversal and the
 residual normal-frame reflection. -/
 theorem globalCandidateARefinedActualOrientedGaussThroatLowOrderReducedData_deck_equivariant
