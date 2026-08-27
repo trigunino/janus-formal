@@ -121,6 +121,67 @@ def globalCandidateARefinedActualOrientedGaussThroatPhysicalSecondOrderJetAt
         sector = 1 :=
   rfl
 
+/-- Canonical available SpinC chart selected by its vector-bundle core at the
+underlying throat point. -/
+def actualOrientedGaussThroatSpinCIndexAt
+    (boundary : CutThroatBoundary period hPeriod) :
+    D9PrimitiveSpinCIndex period hPeriod :=
+  (d9PrimitiveSpinCVectorBundleCore period hPeriod .positiveQuarter).indexAt
+    (orientationDoubleToThroat period hPeriod boundary)
+
+theorem actualOrientedGaussThroatSpinCIndexAt_mem
+    (boundary : CutThroatBoundary period hPeriod) :
+    orientationDoubleToThroat period hPeriod boundary ∈
+      d9PrimitiveSpinCBaseSet period hPeriod
+        (actualOrientedGaussThroatSpinCIndexAt period hPeriod boundary) :=
+  (d9PrimitiveSpinCVectorBundleCore period hPeriod
+    .positiveQuarter).mem_baseSet_at
+      (orientationDoubleToThroat period hPeriod boundary)
+
+/-- The actual oriented Gauss throat jet with its SpinC chart witness selected
+internally from the bundle atlas. -/
+def globalCandidateARefinedActualOrientedGaussThroatPhysicalSecondOrderJet
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (boundary : CutThroatBoundary period hPeriod)
+    (hTransverse : ∀ sector,
+      HasNoTangentialRadical period hPeriod
+        (globalGaugeFixedBulkMetricBySector period hPeriod configuration sector)) :
+    ThroatPhysicalSecondOrderJet period hPeriod configuration :=
+  globalCandidateARefinedActualOrientedGaussThroatPhysicalSecondOrderJetAt
+    period hPeriod configuration data
+      (actualOrientedGaussThroatSpinCIndexAt period hPeriod boundary) boundary
+      (actualOrientedGaussThroatSpinCIndexAt_mem period hPeriod boundary)
+      hTransverse
+
+@[simp] theorem globalCandidateARefinedActualOrientedGaussThroatPhysicalSecondOrderJet_point
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (boundary : CutThroatBoundary period hPeriod)
+    (hTransverse : ∀ sector,
+      HasNoTangentialRadical period hPeriod
+        (globalGaugeFixedBulkMetricBySector period hPeriod configuration sector)) :
+    (globalCandidateARefinedActualOrientedGaussThroatPhysicalSecondOrderJet
+      period hPeriod configuration data boundary hTransverse).point =
+      orientationDoubleToThroat period hPeriod boundary :=
+  rfl
+
+/-- Sum-carrier presentation of the witness-free actual throat jet. -/
+def globalCandidateARefinedActualOrientedGaussThroatPhysicalSecondOrderJetCarrier
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (boundary : CutThroatBoundary period hPeriod)
+    (hTransverse : ∀ sector,
+      HasNoTangentialRadical period hPeriod
+        (globalGaugeFixedBulkMetricBySector period hPeriod configuration sector)) :
+    ProgramPPhysicalSecondOrderJetCarrier period hPeriod configuration :=
+  ProgramPPhysicalSecondOrderJetCarrier.throat
+    (globalCandidateARefinedActualOrientedGaussThroatPhysicalSecondOrderJet
+      period hPeriod configuration data boundary hTransverse)
+
 end
 end P0EFTJanusProgramPRefinedActualThroatOrientedGaussPhysicalSecondOrderJetAssembly4D
 end JanusFormal
