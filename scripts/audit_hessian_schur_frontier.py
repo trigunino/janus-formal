@@ -112,7 +112,7 @@ DOC = ROOT / "docs" / "hessian_global_01_schur_frontier.md"
 def has_decl(text: str, name: str) -> bool:
     short_name = name.rsplit(".", 1)[-1]
     return bool(re.search(
-        rf"(?m)^\s*(?:private\s+)?(?:structure|def|abbrev|theorem|lemma)\s+"
+        rf"(?m)^\s*(?:private\s+)?(?:noncomputable\s+)?(?:structure|def|abbrev|theorem|lemma)\s+"
         rf"(?:[A-Za-z0-9_']+\.)?{re.escape(short_name)}\b",
         text,
     ))

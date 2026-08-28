@@ -65,7 +65,7 @@ DOC = ROOT / "docs" / "hessian_global_01_basis_coercivity.md"
 def has_decl(text: str, name: str) -> bool:
     short = name.rsplit(".", 1)[-1]
     return bool(re.search(
-        rf"(?m)^\s*(?:private\s+)?(?:structure|inductive|def|abbrev|theorem|lemma)\s+"
+        rf"(?m)^\s*(?:private\s+)?(?:noncomputable\s+)?(?:structure|inductive|def|abbrev|theorem|lemma)\s+"
         rf"(?:[A-Za-z0-9_']+\.)?{re.escape(short)}\b",
         text,
     ))

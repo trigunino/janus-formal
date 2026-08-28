@@ -106,6 +106,13 @@ REQUIRED = {
     ),
 }
 
+PREFERRED_WORKFLOW_ONLY = {
+    "P0EFTJanusProgramPGlobalCandidateASectorActionTranslationCanonicalSmallness4D.lean",
+    "P0EFTJanusProgramPGlobalCandidateAProfileActionTranslationCanonicalSmallness4D.lean",
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixSectorActionSymmetryExplicitSmallnessFrontier4D.lean",
+    "P0EFTJanusProgramPGlobalHessianCanonicalSixProfileActionSymmetryExplicitSmallnessFrontier4D.lean",
+}
+
 FORBIDDEN = (
     re.compile(r"\bsorry\b"),
     re.compile(r"\badmit\b"),
@@ -147,7 +154,7 @@ def main() -> int:
         errors.append(f"missing workflow: {WORKFLOW.relative_to(ROOT)}")
     else:
         workflow = WORKFLOW.read_text(encoding="utf-8")
-        for filename in REQUIRED:
+        for filename in REQUIRED.keys() - PREFERRED_WORKFLOW_ONLY:
             if filename.removesuffix(".lean") not in workflow:
                 errors.append(f"workflow does not build {filename}")
 

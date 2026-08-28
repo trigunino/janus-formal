@@ -152,8 +152,8 @@ def audit_closure() -> list[str]:
     required = (
         "globalCandidateABoundaryProjectionChart",
         "globalCandidateABoundaryProjectionSameAction",
-        "globalCandidateASevenPhysicalCanonicalContinuousAgreements4D",
-        "globalCandidateAAugmentedOrthogonalCoerciveShift4D",
+        "GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D",
+        "GlobalCandidateAAugmentedOrthogonalCoerciveShift4D",
         "global_candidateA_hessian_boundaryProjection_closure_gate",
     )
     return [f"concrete closure does not reference {name}"
