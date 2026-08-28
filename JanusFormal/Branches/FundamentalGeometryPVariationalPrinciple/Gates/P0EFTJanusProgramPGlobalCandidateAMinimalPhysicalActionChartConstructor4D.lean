@@ -28,8 +28,12 @@ open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
+open P0EFTJanusProgramPGlobalFullLLGraphRiesz4D
+open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
 
@@ -73,10 +77,14 @@ structure ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared) where
-  normedAddCommGroup : NormedAddCommGroup
-    (ConstructorModel period hPeriod configuration)
-  normedSpace : NormedSpace Real
-    (ConstructorModel period hPeriod configuration)
+  [normedAddCommGroup : NormedAddCommGroup
+    (ConstructorModel period hPeriod configuration)]
+  [normedSpace : NormedSpace Real
+    (ConstructorModel period hPeriod configuration)]
+  toAddCommGroup_eq : normedAddCommGroup.toAddCommGroup =
+    Submodule.addCommGroup (ConstructorModel period hPeriod configuration)
+  toSMul_eq : normedSpace.toModule.toSMul =
+    Submodule.smul (ConstructorModel period hPeriod configuration)
   bounds : @GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
     couplings NonNullFace NullFace _ _ configuration data analysis realization
       normedAddCommGroup normedSpace
@@ -146,11 +154,13 @@ def globalCandidateAMinimalPhysicalActionChartData_of_family
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
-      configuration data analysis realization) :
+      (measure := measure) configuration data analysis realization) :
     ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod configuration
-      data analysis where
+      (measure := measure) data analysis where
   normedAddCommGroup := family.normedAddCommGroup
   normedSpace := family.normedSpace
+  toAddCommGroup_eq := family.toAddCommGroup_eq
+  toSMul_eq := family.toSMul_eq
   domain := family.domain
   isOpen_domain := family.isOpen_domain
   zero_mem_domain := family.zero_mem_domain
@@ -188,7 +198,17 @@ theorem global_candidateA_h13_minimalPhysical_family_gate
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
-      configuration data analysis realization) :=
+      (measure := measure) configuration data analysis realization) :
+    GlobalCandidateAH13MatterLLSameActionCertificate period hPeriod
+      configuration data analysis
+        (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+          configuration data analysis
+            (globalCandidateAMinimalPhysicalActionChartData_of_family period
+              hPeriod configuration data analysis realization family))
+        (globalCandidateAMinimalPhysicalMatterLLSameActionBridge period hPeriod
+          configuration data analysis
+            (globalCandidateAMinimalPhysicalActionChartData_of_family period
+              hPeriod configuration data analysis realization family)) :=
   global_candidateA_h13_minimalPhysical_actionChart_gate period hPeriod
     configuration data analysis
       (globalCandidateAMinimalPhysicalActionChartData_of_family period hPeriod

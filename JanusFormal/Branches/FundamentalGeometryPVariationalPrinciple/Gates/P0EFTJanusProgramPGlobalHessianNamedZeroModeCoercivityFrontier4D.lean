@@ -1,5 +1,4 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualNamedZeroModeCoercivity4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D
 
 /-!
 # Named-zero-mode coercivity façade for the Candidate-A Hessian
@@ -8,7 +7,7 @@ This façade records the preferred PDE input before the existing classified
 zero-mode frontier is invoked.  A finite physical label type, explicit kernel
 vectors and one quadratic coercivity estimate are converted to the exact
 actual-kernel gap packet.  The unchanged zero-mode-model frontier then returns
-H10--H14, the zero-mode count, Green operator, resolvent and stability data.
+the H12 Fredholm certificate, reduced Green data and exact zero-mode count.
 -/
 
 namespace JanusFormal
@@ -20,21 +19,21 @@ noncomputable section
 open P0EFTJanusProgramPFiniteKernelNamedModes4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementCoercivity4D
 open P0EFTJanusProgramPGlobalCandidateAActualNamedZeroModeCoercivity4D
-open P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D
 
 /-- Preferred named physical zero-mode PDE input. -/
 def GlobalHessianNamedZeroModeCoercivityInput :=
-  SelfAdjointKernelComplementCoercivityWithNamedModes
+  @GlobalCandidateAActualNamedZeroModeCoercivity4D
 
 /-- Canonical conversion to the actual-kernel gap consumed by the terminal
 Candidate-A frontier. -/
 def global_hessian_namedZeroMode_coercivity_to_gap :=
-  @SelfAdjointKernelComplementCoercivityWithNamedModes.toGapWithModel
+  @globalCandidateAActualNamedZeroModeCoercivity_toGap
 
-/-- Existing terminal gate, now intended to be called with the canonical gap
+/-- Existing actual-zero-mode gate, called with the canonical modeled gap
 constructed by `global_hessian_namedZeroMode_coercivity_to_gap`. -/
 def global_candidateA_hessian_namedZeroModeCoercivity_frontier_gate :=
-  @global_candidateA_hessian_zeroModeModel_frontier_gate
+  @global_candidateA_actual_zeroMode_model_gate
 
 /-- The preferred PDE route has exactly three substantive ingredients: named
 kernel coordinates, their ambient realization, and quadratic coercivity on the

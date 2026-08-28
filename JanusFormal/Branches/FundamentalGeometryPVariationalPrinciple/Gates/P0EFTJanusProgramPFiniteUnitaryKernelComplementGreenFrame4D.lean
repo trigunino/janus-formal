@@ -79,6 +79,20 @@ theorem green_reducedOperator
 
 end FiniteKernelComplementBasepointGreenData
 
+end
+end P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenFrame4D
+
+namespace P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
+
+set_option autoImplicit false
+noncomputable section
+
+open P0EFTJanusProgramPFiniteUnitaryIntertwiningKernelComplementTransport4D
+open P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenFrame4D
+
+variable {E : Type*}
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
+
 namespace FiniteUnitaryIntertwiningOperatorFrameData
 
 /-- Reduced operator at one parameter obtained by unitary conjugation from the
@@ -114,7 +128,11 @@ theorem kernelComplementFrame_symm_apply_val
     (vector : (operator parameter).kerᗮ) :
     ((frame.kernelComplementFrame parameter).symm vector).1 =
       (frame.frame parameter).symm vector.1 :=
-  rfl
+  by
+    apply (frame.frame parameter).injective
+    rw [(frame.frame parameter).apply_symm_apply]
+    rw [← frame.kernelComplementFrame_apply_val]
+    rw [(frame.kernelComplementFrame parameter).apply_symm_apply]
 
 /-- The conjugated reduced operator is the genuine ambient operator restricted
 to the current canonical reduced fibre. -/
@@ -124,11 +142,12 @@ theorem transportedReducedOperator_apply_val
     (basepoint : FiniteKernelComplementBasepointGreenData operator)
     (parameter : Real)
     (vector : (operator parameter).kerᗮ) :
-    (frame.transportedReducedOperator basepoint parameter vector).1 =
+    (transportedReducedOperator frame basepoint parameter vector).1 =
       operator parameter vector.1 := by
-  change frame.frame parameter
-      (operator 0 ((frame.frame parameter).symm vector.1)) =
-    operator parameter vector.1
+  unfold transportedReducedOperator
+  rw [frame.kernelComplementFrame_apply_val]
+  rw [basepoint.reducedOperator_apply_val]
+  rw [kernelComplementFrame_symm_apply_val]
   rw [← frame.intertwines_basepoint parameter
     ((frame.frame parameter).symm vector.1)]
   rw [(frame.frame parameter).apply_symm_apply]
@@ -141,17 +160,15 @@ theorem transportedReducedOperator_green
     (basepoint : FiniteKernelComplementBasepointGreenData operator)
     (parameter : Real)
     (vector : (operator parameter).kerᗮ) :
-    frame.transportedReducedOperator basepoint parameter
-        (frame.transportedGreen basepoint parameter vector) =
+    transportedReducedOperator frame basepoint parameter
+        (transportedGreen frame basepoint parameter vector) =
       vector := by
   apply Subtype.ext
-  change frame.frame parameter
-      (operator 0
-        (basepoint.green
-          ((frame.kernelComplementFrame parameter).symm vector)).1) =
-    vector.1
-  rw [basepoint.operator_green]
-  exact (frame.frame parameter).apply_symm_apply vector.1
+  unfold transportedReducedOperator transportedGreen
+  rw [(frame.kernelComplementFrame parameter).symm_apply_apply]
+  rw [basepoint.reducedOperator_green]
+  exact congrArg Subtype.val
+    ((frame.kernelComplementFrame parameter).apply_symm_apply vector)
 
 /-- The transported Green operator is a left inverse of the transported reduced
 operator. -/
@@ -161,17 +178,15 @@ theorem transportedGreen_reducedOperator
     (basepoint : FiniteKernelComplementBasepointGreenData operator)
     (parameter : Real)
     (vector : (operator parameter).kerᗮ) :
-    frame.transportedGreen basepoint parameter
-        (frame.transportedReducedOperator basepoint parameter vector) =
+    transportedGreen frame basepoint parameter
+        (transportedReducedOperator frame basepoint parameter vector) =
       vector := by
   apply Subtype.ext
-  change frame.frame parameter
-      (basepoint.green
-        (basepoint.reducedOperator
-          ((frame.kernelComplementFrame parameter).symm vector))).1 =
-    vector.1
+  unfold transportedGreen transportedReducedOperator
+  rw [(frame.kernelComplementFrame parameter).symm_apply_apply]
   rw [basepoint.green_reducedOperator]
-  exact (frame.frame parameter).apply_symm_apply vector.1
+  exact congrArg Subtype.val
+    ((frame.kernelComplementFrame parameter).apply_symm_apply vector)
 
 /-- The pointwise Green bound is transported without loss. -/
 theorem transportedGreen_norm_le
@@ -180,7 +195,7 @@ theorem transportedGreen_norm_le
     (basepoint : FiniteKernelComplementBasepointGreenData operator)
     (parameter : Real)
     (vector : (operator parameter).kerᗮ) :
-    ‖frame.transportedGreen basepoint parameter vector‖ ≤
+    ‖transportedGreen frame basepoint parameter vector‖ ≤
       ‖basepoint.green‖ * ‖vector‖ := by
   change
     ‖frame.kernelComplementFrame parameter
@@ -203,24 +218,24 @@ theorem finite_unitary_kernel_complement_green_frame_gate
     (frame : FiniteUnitaryIntertwiningOperatorFrameData operator)
     (basepoint : FiniteKernelComplementBasepointGreenData operator) :
     (∀ parameter vector,
-      (frame.transportedReducedOperator basepoint parameter vector).1 =
+      (transportedReducedOperator frame basepoint parameter vector).1 =
         operator parameter vector.1) ∧
     (∀ parameter vector,
-      frame.transportedReducedOperator basepoint parameter
-          (frame.transportedGreen basepoint parameter vector) = vector) ∧
+      transportedReducedOperator frame basepoint parameter
+          (transportedGreen frame basepoint parameter vector) = vector) ∧
     (∀ parameter vector,
-      frame.transportedGreen basepoint parameter
-          (frame.transportedReducedOperator basepoint parameter vector) = vector) ∧
+      transportedGreen frame basepoint parameter
+          (transportedReducedOperator frame basepoint parameter vector) = vector) ∧
     (∀ parameter vector,
-      ‖frame.transportedGreen basepoint parameter vector‖ ≤
+      ‖transportedGreen frame basepoint parameter vector‖ ≤
         ‖basepoint.green‖ * ‖vector‖) :=
-  ⟨frame.transportedReducedOperator_apply_val basepoint,
-    frame.transportedReducedOperator_green basepoint,
-    frame.transportedGreen_reducedOperator basepoint,
-    frame.transportedGreen_norm_le basepoint⟩
+  ⟨transportedReducedOperator_apply_val frame basepoint,
+    transportedReducedOperator_green frame basepoint,
+    transportedGreen_reducedOperator frame basepoint,
+    transportedGreen_norm_le frame basepoint⟩
 
 end FiniteUnitaryIntertwiningOperatorFrameData
 
 end
-end P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenFrame4D
+end P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
 end JanusFormal

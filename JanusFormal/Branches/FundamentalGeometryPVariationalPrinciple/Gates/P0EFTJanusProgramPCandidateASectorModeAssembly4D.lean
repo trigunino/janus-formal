@@ -24,6 +24,7 @@ noncomputable section
 
 open Set
 open scoped InnerProductSpace
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 
 /-- One finite mode type for each of the five corrected physical sectors. -/

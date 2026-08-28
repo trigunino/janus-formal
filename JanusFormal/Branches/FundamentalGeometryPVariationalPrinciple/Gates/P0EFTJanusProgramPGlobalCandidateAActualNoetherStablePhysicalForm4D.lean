@@ -166,7 +166,7 @@ structure GlobalCandidateAActualNoetherStablePhysicalFormData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   modes : GlobalCandidateAActualNoetherModeFamily4D period hPeriod configuration
     data analysis chart sameAction physical ZeroMode
   nonzero : ∀ mode, modes.vector mode ≠ 0
@@ -259,7 +259,7 @@ def GlobalCandidateAActualNoetherStablePhysicalFormData4D.toOrthogonalGarding
   ll_stationary := input.ll_stationary
 
 /-- Public stable Noether/H11-form checkpoint. -/
-theorem global_candidateA_actual_noether_stable_physical_form_gate
+def global_candidateA_actual_noether_stable_physical_form_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -277,8 +277,8 @@ theorem global_candidateA_actual_noether_stable_physical_form_gate
     {ZeroMode : Type*} [Fintype ZeroMode]
     (input : GlobalCandidateAActualNoetherStablePhysicalFormData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    PSigma fun _ : GlobalCandidateAActualKernelGap4D period hPeriod configuration
+        data analysis chart sameAction physical =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =

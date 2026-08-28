@@ -40,6 +40,20 @@ structure FiniteKernelComplementBasepointNormGapData
     vector ∈ (operator 0).kerᗮ →
       gap * ‖vector‖ ≤ ‖operator 0 vector‖
 
+end
+end P0EFTJanusProgramPFiniteUnitaryKernelComplementGapTransport4D
+
+namespace P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
+
+set_option autoImplicit false
+noncomputable section
+
+open P0EFTJanusProgramPFiniteUnitaryIntertwiningKernelComplementTransport4D
+open P0EFTJanusProgramPFiniteUnitaryKernelComplementGapTransport4D
+
+variable {E : Type*}
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
+
 namespace FiniteUnitaryIntertwiningOperatorFrameData
 
 /-- The basepoint norm gap persists at every parameter with the same constant. -/
@@ -78,7 +92,7 @@ theorem kernelComplement_subtype_norm_gap
     (parameter : Real)
     (vector : (operator parameter).kerᗮ) :
     gapData.gap * ‖vector‖ ≤ ‖operator parameter vector.1‖ :=
-  frame.kernelComplement_norm_gap gapData parameter vector.1 vector.2
+  kernelComplement_norm_gap frame gapData parameter vector.1 vector.2
 
 /-- The transported gap gives injectivity of every operator on its orthogonal
 kernel complement. -/
@@ -93,11 +107,12 @@ theorem kernelComplement_operator_injective
   apply Subtype.ext
   have hDifference :
       operator parameter (first.1 - second.1) = 0 := by
+    change operator parameter first.1 = operator parameter second.1 at hEqual
     rw [map_sub, hEqual, sub_self]
   have hDifferenceMem :
       first.1 - second.1 ∈ (operator parameter).kerᗮ :=
     sub_mem first.2 second.2
-  have hGap := frame.kernelComplement_norm_gap gapData parameter
+  have hGap := kernelComplement_norm_gap frame gapData parameter
     (first.1 - second.1) hDifferenceMem
   rw [hDifference, norm_zero] at hGap
   have hNormZero : ‖first.1 - second.1‖ = 0 := by
@@ -121,11 +136,11 @@ theorem finite_unitary_kernel_complement_gap_transport_gate
       Function.Injective
         (fun vector : (operator parameter).kerᗮ =>
           operator parameter vector.1)) :=
-  ⟨frame.kernelComplement_norm_gap gapData,
-    frame.kernelComplement_operator_injective gapData⟩
+  ⟨kernelComplement_norm_gap frame gapData,
+    kernelComplement_operator_injective frame gapData⟩
 
 end FiniteUnitaryIntertwiningOperatorFrameData
 
 end
-end P0EFTJanusProgramPFiniteUnitaryKernelComplementGapTransport4D
+end P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
 end JanusFormal

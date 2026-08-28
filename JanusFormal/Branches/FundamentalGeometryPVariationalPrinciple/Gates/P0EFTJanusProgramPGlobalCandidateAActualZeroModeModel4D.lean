@@ -34,10 +34,20 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPFiniteKernelModel4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -138,6 +148,7 @@ local instance (priority := 30000) zeroModeCompleteSpace
       (ZeroModeHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Candidate-A zero modes and the gap off their exact span. -/
 structure GlobalCandidateAActualZeroModeGap4D
@@ -154,7 +165,7 @@ structure GlobalCandidateAActualZeroModeGap4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
+      hPeriod configuration data analysis chart sameAction) where
   modeledGap : SelfAdjointKernelComplementGapWithModel
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -208,7 +219,8 @@ theorem GlobalCandidateAActualZeroModeGap4D.kernel_finrank_eq_card
     let operator := globalCandidateAActualKernelOperator period hPeriod
       configuration data analysis chart sameAction physical
     Module.finrank Real operator.ker =
-      Fintype.card zeroModes.modeledGap.model.ZeroMode := by
+      @Fintype.card zeroModes.modeledGap.model.ZeroMode
+        zeroModes.modeledGap.model.zeroModeFintype := by
   dsimp only
   letI : Fintype zeroModes.modeledGap.model.ZeroMode :=
     zeroModes.modeledGap.model.zeroModeFintype
@@ -237,13 +249,26 @@ theorem global_candidateA_actual_zeroMode_model_gate
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
     (zeroModes : GlobalCandidateAActualZeroModeGap4D period hPeriod configuration
-      data analysis chart sameAction physical) :=
+      data analysis chart sameAction physical) :
+    let gap := zeroModes.toActualKernelGap period hPeriod
+    GlobalCandidateAFaithfulAugmentedFredholmCertificate4D period hPeriod
+        configuration data analysis chart sameAction physical
+          (globalCandidateAActualKernelFredholmEstimates period hPeriod
+            configuration data analysis chart sameAction physical gap) ∧
+      GlobalCandidateAActualKernelComplementCertificate4D period hPeriod
+        configuration data analysis chart sameAction physical gap ∧
+      Module.finrank Real
+          (globalCandidateAActualKernelOperator period hPeriod configuration data
+            analysis chart sameAction physical).ker =
+        @Fintype.card zeroModes.modeledGap.model.ZeroMode
+          zeroModes.modeledGap.model.zeroModeFintype := by
+  dsimp only
   let gap := zeroModes.toActualKernelGap period hPeriod
-  (global_candidateA_h12_fredholm_gate_of_actualKernelGap period hPeriod
+  exact ⟨global_candidateA_h12_fredholm_gate_of_actualKernelGap period hPeriod
       configuration data analysis chart sameAction physical gap,
     global_candidateA_actual_kernel_complement_gate period hPeriod
       configuration data analysis chart sameAction physical gap,
-    zeroModes.kernel_finrank_eq_card period hPeriod)
+    zeroModes.kernel_finrank_eq_card period hPeriod⟩
 
 end
 end P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D

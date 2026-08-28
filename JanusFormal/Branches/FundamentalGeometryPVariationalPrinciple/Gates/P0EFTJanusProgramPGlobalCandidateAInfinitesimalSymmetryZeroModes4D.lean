@@ -35,15 +35,24 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
 open P0EFTJanusProgramPFiniteKernelNamedModeNoHidden4D
 open P0EFTJanusProgramPFiniteKernelNamedModeAutomaticSplit4D
 open P0EFTJanusProgramPSymmetryOrbitHessianKernel4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -144,6 +153,7 @@ local instance (priority := 30000) symmetryCompleteSpace
       (SymmetryHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- The gradient of the genuine quadratic augmented action is differentiable
 at the origin. -/
@@ -197,7 +207,7 @@ structure GlobalCandidateAInfinitesimalSymmetryModes4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode →
     SymmetryHilbert period hPeriod configuration data analysis
   gradient_orbit_invariant : ∀ mode,
@@ -238,9 +248,17 @@ theorem GlobalCandidateAInfinitesimalSymmetryModes4D.hessian_apply_eq_zero
       (globalCandidateACommonAugmentedGradient_differentiableAt_zero period
         hPeriod configuration data analysis chart sameAction physical)
       (modes.gradient_orbit_invariant mode)
-  rw [globalCandidateACommonAugmentedAction_second_fderiv period hPeriod
-    configuration data analysis chart sameAction physical 0] at hNoether
-  exact hNoether
+  have hGradient :
+      (fun state => fderiv Real
+        (globalCandidateACommonAugmentedAction period hPeriod configuration data
+          analysis chart sameAction physical) state) =
+      fun state => globalCandidateACommonAugmentedHessian period hPeriod
+        configuration data analysis chart sameAction physical state := by
+    funext state
+    exact globalCandidateACommonAugmentedAction_fderiv period hPeriod
+      configuration data analysis chart sameAction physical state
+  rw [hGradient] at hNoether
+  simpa only [ContinuousLinearMap.fderiv] using hNoether
 
 /-- The preceding form-level Noether identity places every symmetry vector in
 the kernel of the genuine displayed Riesz operator. -/
@@ -265,7 +283,10 @@ theorem GlobalCandidateAInfinitesimalSymmetryModes4D.vector_annihilated
     (mode : ZeroMode) :
     globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical (modes.vector mode) = 0 := by
-  let operator := globalCandidateAActualKernelOperator period hPeriod
+  change globalCandidateACommonAugmentedRieszOperator period hPeriod
+    configuration data analysis chart sameAction physical
+      (modes.vector mode) = 0
+  let operator := globalCandidateACommonAugmentedRieszOperator period hPeriod
     configuration data analysis chart sameAction physical
   have hForm := modes.hessian_apply_eq_zero period hPeriod mode
   have hPair :
@@ -277,8 +298,7 @@ theorem GlobalCandidateAInfinitesimalSymmetryModes4D.vector_annihilated
         globalCandidateACommonAugmentedHessian period hPeriod configuration data
           analysis chart sameAction physical (modes.vector mode)
             (operator (modes.vector mode)) := by
-          simpa [operator, globalCandidateAActualKernelOperator,
-            globalCandidateAFaithfulAugmentedRieszOperator] using
+          simpa only [operator] using
             globalCandidateACommonAugmentedRieszOperator_pairing period hPeriod
               configuration data analysis chart sameAction physical
                 (modes.vector mode) (operator (modes.vector mode))
@@ -307,7 +327,7 @@ structure GlobalCandidateAInfinitesimalSymmetryAutomaticSplit4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   symmetries : GlobalCandidateAInfinitesimalSymmetryModes4D period hPeriod
     configuration data analysis chart sameAction physical ZeroMode
   linearIndependent : LinearIndependent Real
@@ -324,10 +344,10 @@ structure GlobalCandidateAInfinitesimalSymmetryAutomaticSplit4D
     constant * ‖current‖ ^ 2 ≤
       ⟪current,
         globalCandidateAActualKernelOperator period hPeriod configuration data
-          analysis chart sameAction physical current, Real⟫ +
+          analysis chart sameAction physical current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, symmetries.vector mode, Real⟫ ^ 2
+            ⟪current, symmetries.vector mode⟫_Real ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -393,7 +413,7 @@ def GlobalCandidateAInfinitesimalSymmetryAutomaticSplit4D.toActualKernelGap
   ll_stationary := input.ll_stationary
 
 /-- Public Candidate-A Noether/no-hidden-mode checkpoint. -/
-theorem global_candidateA_infinitesimal_symmetry_zero_mode_gate
+def global_candidateA_infinitesimal_symmetry_zero_mode_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -411,8 +431,8 @@ theorem global_candidateA_infinitesimal_symmetry_zero_mode_gate
     {ZeroMode : Type*} [Fintype ZeroMode]
     (input : GlobalCandidateAInfinitesimalSymmetryAutomaticSplit4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    PSigma fun _ : GlobalCandidateAActualKernelGap4D period hPeriod
+        configuration data analysis chart sameAction physical =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =

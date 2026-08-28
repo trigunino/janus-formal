@@ -89,7 +89,7 @@ theorem GlobalCandidateASectorActionTranslationStablePhysicalFormData4D.kernel_f
   exact candidateASectorMultiplicity_eq_card types sector
 
 /-- Public concrete five-sector count checkpoint. -/
-theorem global_candidateA_sector_stable_explicit_multiplicity_gate
+def global_candidateA_sector_stable_explicit_multiplicity_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -108,8 +108,9 @@ theorem global_candidateA_sector_stable_explicit_multiplicity_gate
     (input : GlobalCandidateASectorActionTranslationStablePhysicalFormData4D
       period hPeriod configuration data analysis chart sameAction physical
         types) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    PSigma fun _ :
+      GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
+        chart sameAction physical =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =

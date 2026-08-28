@@ -226,7 +226,7 @@ def GlobalCandidateAOrthogonalCoordinateFiniteMarginActualKernelGap4D.toActualKe
     period hPeriod
 
 /-- Public Candidate-A orthogonal-coordinate actual-gap checkpoint. -/
-theorem global_candidateA_orthogonal_coordinate_actual_kernel_gap_gate
+def global_candidateA_orthogonal_coordinate_actual_kernel_gap_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

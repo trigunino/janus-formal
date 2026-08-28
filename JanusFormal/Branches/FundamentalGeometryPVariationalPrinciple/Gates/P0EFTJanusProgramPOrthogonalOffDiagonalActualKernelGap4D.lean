@@ -20,17 +20,16 @@ set_option synthInstance.maxHeartbeats 2600000
 noncomputable section
 
 open scoped InnerProductSpace
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalOffDiagonalOperatorGarding4D
 open P0EFTJanusProgramPQuadraticGardingActualKernelGap4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- Finite actual kernel and one-form sector control on the orthogonal
@@ -66,7 +65,7 @@ def toGapData
   data.toQuadraticActualKernelGap Component |>.toGapData
 
 /-- Public one-form actual-kernel checkpoint. -/
-theorem orthogonal_offDiagonal_actual_kernel_gap_gate
+def orthogonal_offDiagonal_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : OrthogonalOffDiagonalActualKernelGapData

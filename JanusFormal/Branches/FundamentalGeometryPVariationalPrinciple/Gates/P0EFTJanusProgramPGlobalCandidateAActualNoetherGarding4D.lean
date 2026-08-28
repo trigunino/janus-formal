@@ -163,7 +163,7 @@ structure GlobalCandidateAActualNoetherGardingData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] : Type where
   modes : GlobalCandidateAActualNoetherModeFamily4D period hPeriod configuration
     data analysis chart sameAction physical ZeroMode
   linearIndependent : LinearIndependent Real
@@ -205,7 +205,7 @@ def GlobalCandidateAActualNoetherGardingData4D.toAutomaticSplit
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActualNoetherGardingData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
     FiniteKernelNamedModeAutomaticSplitData
@@ -237,7 +237,7 @@ def GlobalCandidateAActualNoetherGardingData4D.toNamedGarding
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActualNoetherGardingData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
     GlobalCandidateAActualKernelNamedGarding4D period hPeriod configuration data
@@ -246,7 +246,7 @@ def GlobalCandidateAActualNoetherGardingData4D.toNamedGarding
   ll_stationary := input.ll_stationary
 
 /-- Public Noether/Gårding zero-mode checkpoint. -/
-theorem global_candidateA_actual_noether_garding_gate
+def global_candidateA_actual_noether_garding_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -261,17 +261,18 @@ theorem global_candidateA_actual_noether_garding_gate
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActualNoetherGardingData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    PSigma fun _ : GlobalCandidateAActualKernelGap4D period hPeriod configuration
+        data analysis chart sameAction physical =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =
-        Fintype.card ZeroMode :=
-  global_candidateA_actual_kernel_named_garding_gate period hPeriod
-    (input.toNamedGarding period hPeriod)
+        Fintype.card ZeroMode := by
+  let named := input.toNamedGarding period hPeriod
+  exact ⟨named.toGap period hPeriod,
+    named.kernel_finrank_eq_card period hPeriod⟩
 
 end
 end P0EFTJanusProgramPGlobalCandidateAActualNoetherGarding4D

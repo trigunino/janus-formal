@@ -45,14 +45,14 @@ theorem finiteCoordinateUnit_of_ne
     {Index : Type*} [DecidableEq Index]
     {first second : Index} (hne : first ≠ second) :
     finiteCoordinateUnit first second = 0 := by
-  simp [finiteCoordinateUnit, hne]
+  simp [finiteCoordinateUnit, Ne.symm hne]
 
 /-- A finite physical classification of the actual kernel.  The labels may be
 sectors, residual gauge generators, moduli, or any later physically meaningful
 finite type. -/
 structure FiniteKernelNamedModeFamily
     (operator : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   vector : ZeroMode → E
   vector_mem_kernel : ∀ index, operator (vector index) = 0
   coordinates : (ZeroMode → Real) ≃ₗ[Real] operator.ker
@@ -62,7 +62,7 @@ structure FiniteKernelNamedModeFamily
 namespace FiniteKernelNamedModeFamily
 
 variable {operator : E →L[Real] E}
-variable {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+variable {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
 
 /-- Forget the physical names while retaining the exact finite kernel model. -/
 def toFiniteKernelModel
@@ -137,14 +137,17 @@ end FiniteKernelNamedModeFamily
 
 section Gap
 
-variable [InnerProductSpace Real E] [CompleteSpace E]
+variable
+  {Hilbert : Type*}
+  [NormedAddCommGroup Hilbert] [InnerProductSpace Real Hilbert]
+  [CompleteSpace Hilbert]
 
 /-- Actual-kernel gap data whose finite obstruction is represented by named
 physical zero modes. -/
 structure SelfAdjointKernelComplementGapWithNamedModes
-    (operator : E →L[Real] E)
+    (operator : Hilbert →L[Real] Hilbert)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   family : FiniteKernelNamedModeFamily operator ZeroMode
   gap : Real
   gap_pos : 0 < gap
@@ -155,9 +158,9 @@ structure SelfAdjointKernelComplementGapWithNamedModes
 /-- Forget the labels and recover the already installed actual-kernel gap
 packet. -/
 def SelfAdjointKernelComplementGapWithNamedModes.toGapWithModel
-    {operator : E →L[Real] E}
+    {operator : Hilbert →L[Real] Hilbert}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : SelfAdjointKernelComplementGapWithNamedModes operator hSelfAdjoint
       ZeroMode) :
     SelfAdjointKernelComplementGapWithModel operator hSelfAdjoint where
@@ -169,15 +172,15 @@ def SelfAdjointKernelComplementGapWithNamedModes.toGapWithModel
 /-- Named zero modes feed the existing actual-kernel Green and Fredholm
 machinery without any new analytic hypothesis. -/
 theorem finite_kernel_named_modes_actual_gap_gate
-    (operator : E →L[Real] E)
+    (operator : Hilbert →L[Real] Hilbert)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : SelfAdjointKernelComplementGapWithNamedModes operator hSelfAdjoint
       ZeroMode) :
-    SelfAdjointKernelComplementGapWithModel operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapWithModel operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode ∧
       (∀ index, operator (data.family.vector index) = 0) := by
-  exact ⟨data.toGapWithModel,
+  exact ⟨⟨data.toGapWithModel⟩,
     data.family.kernel_finrank_eq_card,
     data.family.vector_mem_kernel⟩
 

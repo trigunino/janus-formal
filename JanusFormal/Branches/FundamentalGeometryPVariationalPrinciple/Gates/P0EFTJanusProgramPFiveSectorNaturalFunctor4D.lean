@@ -64,8 +64,8 @@ theorem fiveSectorNaturalOperator_apply
     (boundary : NaturalOperator immersionCategory BoundaryS BoundaryT)
     (object : immersionCategory.category.Obj)
     (sectionValue :
-      (fiveSectorNaturalSectionFunctor MetricS AbelianS MatterS LongitudinalS BoundaryS).
-        Section object) :
+      (fiveSectorNaturalSectionFunctor MetricS AbelianS MatterS LongitudinalS
+        BoundaryS).Section object) :
     (fiveSectorNaturalOperator metric abelian matter longitudinal boundary).apply
         object sectionValue =
       (metric.apply object sectionValue.1,
@@ -88,16 +88,16 @@ theorem five_sector_natural_operator_gate
     ∀ {source target : immersionCategory.category.Obj}
       (morphism : AdmissibleMorphism immersionCategory source target)
       (sectionValue :
-        (fiveSectorNaturalSectionFunctor MetricS AbelianS MatterS LongitudinalS BoundaryS).
-          Section target),
-      (fiveSectorNaturalSectionFunctor MetricT AbelianT MatterT LongitudinalT BoundaryT).
-          pullback morphism
-            ((fiveSectorNaturalOperator metric abelian matter longitudinal boundary).
-              apply target sectionValue) =
-        (fiveSectorNaturalOperator metric abelian matter longitudinal boundary).
-          apply source
-            ((fiveSectorNaturalSectionFunctor MetricS AbelianS MatterS LongitudinalS BoundaryS).
-              pullback morphism sectionValue) :=
+        (fiveSectorNaturalSectionFunctor MetricS AbelianS MatterS LongitudinalS
+          BoundaryS).Section target),
+      (fiveSectorNaturalSectionFunctor MetricT AbelianT MatterT LongitudinalT
+          BoundaryT).pullback morphism
+            ((fiveSectorNaturalOperator metric abelian matter longitudinal
+              boundary).apply target sectionValue) =
+        (fiveSectorNaturalOperator metric abelian matter longitudinal
+          boundary).apply source
+            ((fiveSectorNaturalSectionFunctor MetricS AbelianS MatterS LongitudinalS
+              BoundaryS).pullback morphism sectionValue) :=
   (fiveSectorNaturalOperator metric abelian matter longitudinal boundary).naturality
 
 end

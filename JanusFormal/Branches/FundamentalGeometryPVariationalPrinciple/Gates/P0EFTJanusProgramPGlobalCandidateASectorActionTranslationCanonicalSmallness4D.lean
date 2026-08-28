@@ -177,7 +177,7 @@ structure GlobalCandidateASectorActionTranslationCanonicalSmallnessData4D
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family)))
-    (types : CandidateASectorModeTypes) : Prop where
+    (types : CandidateASectorModeTypes) : Type where
   modes : CandidateASectorOrthogonalModeFamily
     (E := SectorCanonicalSmallnessHilbert period hPeriod configuration data
       analysis) types
@@ -323,7 +323,7 @@ theorem GlobalCandidateASectorActionTranslationCanonicalSmallnessData4D.kernel_f
       types.classification.sum_multiplicity.symm
 
 /-- Public sector-explicit smallness checkpoint. -/
-theorem global_candidateA_sector_action_translation_canonical_smallness_gate
+def global_candidateA_sector_action_translation_canonical_smallness_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -352,14 +352,15 @@ theorem global_candidateA_sector_action_translation_canonical_smallness_gate
     (input : GlobalCandidateASectorActionTranslationCanonicalSmallnessData4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound types) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
+    PSigma fun _ :
+      GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
           hPeriod configuration data analysis einsteinScale hTransverse family
-            chartBound) ∧
+            chartBound) =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis

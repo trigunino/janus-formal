@@ -29,6 +29,8 @@ set_option synthInstance.maxHeartbeats 5800000
 
 noncomputable section
 
+universe u
+
 open Set Topology MeasureTheory
 open scoped BigOperators Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
@@ -39,8 +41,10 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
 open P0EFTJanusProgramPGlobalCandidateAInfinitesimalSymmetryZeroModes4D
@@ -49,7 +53,15 @@ open P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalFormStablePerturbation4D
 open P0EFTJanusProgramPFiniteKernelOrthogonalNamedModeGarding4D
 open P0EFTJanusProgramPNamedModeGardingPerturbation4D
+open P0EFTJanusProgramPNamedModeKernelStablePerturbation4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -150,6 +162,7 @@ local instance (priority := 30000) actionStableCompleteSpace
       (ActionStableHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Action-level symmetry and principal-coercivity packet. -/
 structure GlobalCandidateAActionTranslationStablePhysicalFormData4D
@@ -167,12 +180,12 @@ structure GlobalCandidateAActionTranslationStablePhysicalFormData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type u) [Fintype ZeroMode] [DecidableEq ZeroMode] : Type u where
   translations : GlobalCandidateAActionTranslationSymmetryModes4D period hPeriod
     configuration data analysis chart sameAction physical ZeroMode
   nonzero : ∀ mode, translations.vector mode ≠ 0
   orthogonal : Pairwise fun first second =>
-    ⟪translations.vector first, translations.vector second, Real⟫ = 0
+    ⟪translations.vector first, translations.vector second⟫_Real = 0
   referenceConstant : Real
   physical_form_small : ‖physical.form‖ < referenceConstant
   defectConstant : Real
@@ -182,10 +195,10 @@ structure GlobalCandidateAActionTranslationStablePhysicalFormData4D
     referenceConstant * ‖current‖ ^ 2 ≤
       ⟪current,
         globalCandidateACanonicalStableReferenceOperator period hPeriod
-          configuration data analysis current, Real⟫ +
+          configuration data analysis current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, translations.vector mode, Real⟫ ^ 2
+            ⟪current, translations.vector mode⟫_Real ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -206,7 +219,7 @@ theorem GlobalCandidateAActionTranslationStablePhysicalFormData4D.physical_opera
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type u} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActionTranslationStablePhysicalFormData4D period
       hPeriod configuration data analysis chart sameAction physical ZeroMode) :
     ‖globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
@@ -233,7 +246,7 @@ def GlobalCandidateAActionTranslationStablePhysicalFormData4D.toOrthogonalGardin
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type u} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActionTranslationStablePhysicalFormData4D period
       hPeriod configuration data analysis chart sameAction physical ZeroMode) :
     FiniteKernelOrthogonalNamedModeGardingData
@@ -258,9 +271,30 @@ def GlobalCandidateAActionTranslationStablePhysicalFormData4D.toOrthogonalGardin
       (globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
         configuration data analysis chart sameAction physical) current
     rw [globalCandidateAActualKernelOperator_eq_canonicalStableSum period hPeriod
-      configuration data analysis chart sameAction physical,
-      ContinuousLinearMap.add_apply, inner_add_right]
-    linarith
+      configuration data analysis chart sameAction physical]
+    unfold finiteKernelStablePerturbedOperator
+    rw [add_apply, inner_add_right]
+    calc
+      (input.referenceConstant -
+          ‖globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
+            configuration data analysis chart sameAction physical‖) *
+          ‖current‖ ^ 2 =
+        input.referenceConstant * ‖current‖ ^ 2 +
+          -(‖globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
+              configuration data analysis chart sameAction physical‖ *
+            ‖current‖ ^ 2) := by ring
+      _ ≤
+          (⟪current,
+              globalCandidateACanonicalStableReferenceOperator period hPeriod
+                configuration data analysis current⟫_Real +
+            input.defectConstant *
+              ∑ mode : ZeroMode,
+                ⟪current, input.translations.vector mode⟫_Real ^ 2) +
+          ⟪current,
+            globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
+              configuration data analysis chart sameAction physical current⟫_Real :=
+        add_le_add hReference hPerturbation
+      _ = _ := by ring
 
 /-- Convert to the established Candidate-A named Gårding packet. -/
 def GlobalCandidateAActionTranslationStablePhysicalFormData4D.toNamedGarding
@@ -278,7 +312,7 @@ def GlobalCandidateAActionTranslationStablePhysicalFormData4D.toNamedGarding
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type u} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActionTranslationStablePhysicalFormData4D period
       hPeriod configuration data analysis chart sameAction physical ZeroMode) :
     GlobalCandidateAActualKernelNamedGarding4D period hPeriod configuration data
@@ -302,11 +336,11 @@ theorem global_candidateA_action_translation_stable_physical_form_gate
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type u} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActionTranslationStablePhysicalFormData4D period
       hPeriod configuration data analysis chart sameAction physical ZeroMode) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    Nonempty (GlobalCandidateAActualKernelGap4D period hPeriod configuration data
+        analysis chart sameAction physical) ∧
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =

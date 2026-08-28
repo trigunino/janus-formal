@@ -20,6 +20,12 @@ set_option synthInstance.maxHeartbeats 6800000
 
 noncomputable section
 
+universe u
+
+private def proofData {P : Prop} (proof : P) {Data : Sort u} (data : Data) :
+    PSigma (fun _ : P => Data) :=
+  ⟨proof, data⟩
+
 open Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
@@ -27,6 +33,7 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
@@ -36,11 +43,21 @@ open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10RobinProjectionCore4D
 open P0EFTJanusProgramPGlobalCandidateASymmetryCurveZeroModes4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixDenseCoreFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixProjectionCoreFrontier4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -76,7 +93,7 @@ def global_candidateA_hessian_canonicalSix_symmetryCurve_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (projection : GlobalCandidateAH10RobinProjectionCoreData4D period hPeriod
@@ -114,7 +131,7 @@ def global_candidateA_hessian_canonicalSix_symmetryCurve_frontier_gate
         projection chartBound gap
   let zeroModes := global_candidateA_symmetry_curve_zero_mode_gate period hPeriod
     curves
-  (closure, zeroModes)
+  proofData closure zeroModes
 
 /-- The nonlinear-orbit route still has three analytic packets. -/
 theorem global_candidateA_hessian_canonicalSix_symmetryCurve_three_inputs :

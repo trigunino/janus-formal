@@ -15,7 +15,7 @@ different family parameters.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPFiniteCommutingProjectionKernelResolution4D
+namespace P0EFTJanusProgramPFiniteCommutingProjectionKernelComplement4D
 
 set_option autoImplicit false
 noncomputable section
@@ -27,8 +27,7 @@ open P0EFTJanusProgramPFiniteCommutingProjectionKernelComplement4D
 
 variable {Sector E : Type*}
   [Fintype Sector] [DecidableEq Sector]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 namespace FiniteCommutingProjectionResolutionData
 
@@ -63,7 +62,7 @@ theorem kernelProjection_apply_val
     (data : FiniteCommutingProjectionResolutionData
       (Sector := Sector) operator)
     (sector : Sector) (vector : operator.ker) :
-    (data.kernelProjection sector vector).1 =
+    (kernelProjection data sector vector).1 =
       data.resolution.projection sector vector.1 :=
   rfl
 
@@ -73,9 +72,10 @@ theorem sum_kernelProjection
     (data : FiniteCommutingProjectionResolutionData
       (Sector := Sector) operator)
     (vector : operator.ker) :
-    (∑ sector : Sector, data.kernelProjection sector vector) = vector := by
+    (∑ sector : Sector, kernelProjection data sector vector) = vector := by
   apply Subtype.ext
-  simp only [map_sum, kernelProjection_apply_val]
+  rw [Submodule.coe_sum]
+  simp only [kernelProjection_apply_val]
   exact data.resolution.sum_projection vector.1
 
 /-- Idempotence descends to the actual kernel. -/
@@ -84,9 +84,9 @@ theorem kernelProjection_idempotent
     (data : FiniteCommutingProjectionResolutionData
       (Sector := Sector) operator)
     (sector : Sector) (vector : operator.ker) :
-    data.kernelProjection sector
-        (data.kernelProjection sector vector) =
-      data.kernelProjection sector vector := by
+    kernelProjection data sector
+        (kernelProjection data sector vector) =
+      kernelProjection data sector vector := by
   apply Subtype.ext
   simp only [kernelProjection_apply_val]
   exact data.resolution.projection_idempotent sector vector.1
@@ -97,8 +97,8 @@ theorem kernelProjection_symmetric
     (data : FiniteCommutingProjectionResolutionData
       (Sector := Sector) operator)
     (sector : Sector) (first second : operator.ker) :
-    inner Real (data.kernelProjection sector first) second =
-      inner Real first (data.kernelProjection sector second) := by
+    inner Real (kernelProjection data sector first) second =
+      inner Real first (kernelProjection data sector second) := by
   change inner Real (data.resolution.projection sector first.1) second.1 =
     inner Real first.1 (data.resolution.projection sector second.1)
   exact data.resolution.projection_symmetric sector first.1 second.1
@@ -111,10 +111,10 @@ def toKernelResolution
       (Sector := Sector) operator) :
     FiniteSelfAdjointProjectionResolutionData
       (Sector := Sector) (E := operator.ker) where
-  projection := data.kernelProjection
-  sum_projection := data.sum_kernelProjection
-  projection_idempotent := data.kernelProjection_idempotent
-  projection_symmetric := data.kernelProjection_symmetric
+  projection := kernelProjection data
+  sum_projection := sum_kernelProjection data
+  projection_idempotent := kernelProjection_idempotent data
+  projection_symmetric := kernelProjection_symmetric data
 
 /-- Pythagorean decomposition of every actual zero mode into its physical
 kernel sectors. -/
@@ -124,15 +124,15 @@ theorem kernel_norm_sq_decomposition
       (Sector := Sector) operator)
     (vector : operator.ker) :
     ‖vector‖ ^ 2 =
-      ∑ sector : Sector, ‖data.kernelProjection sector vector‖ ^ 2 :=
-  data.toKernelResolution.norm_sq_decomposition vector
+      ∑ sector : Sector, ‖kernelProjection data sector vector‖ ^ 2 :=
+  (toKernelResolution data).norm_sq_decomposition vector
 
 /-- Public actual-kernel sector-resolution checkpoint. -/
 theorem finite_commuting_projection_kernel_gate
     (operator : E →L[Real] E)
     (data : FiniteCommutingProjectionResolutionData
       (Sector := Sector) operator) :
-    let kernelResolution := data.toKernelResolution
+    let kernelResolution := toKernelResolution data
     (∀ vector,
       (∑ sector : Sector, kernelResolution.projection sector vector) = vector) ∧
     (∀ sector vector,
@@ -147,7 +147,7 @@ theorem finite_commuting_projection_kernel_gate
         ∑ sector : Sector,
           ‖kernelResolution.projection sector vector‖ ^ 2) := by
   dsimp only
-  let kernelResolution := data.toKernelResolution
+  let kernelResolution := toKernelResolution data
   exact
     ⟨kernelResolution.sum_projection,
       kernelResolution.projection_idempotent,
@@ -157,5 +157,5 @@ theorem finite_commuting_projection_kernel_gate
 end FiniteCommutingProjectionResolutionData
 
 end
-end P0EFTJanusProgramPFiniteCommutingProjectionKernelResolution4D
+end P0EFTJanusProgramPFiniteCommutingProjectionKernelComplement4D
 end JanusFormal

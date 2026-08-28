@@ -30,9 +30,10 @@ open P0EFTJanusProgramPRelativeHeatMellinAnalyticDifference4D
 open P0EFTJanusProgramPRelativeHeatMellinAnalyticDifferenceFamily4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeNuclearTraceFamily4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Identify the scalar heat traces stored by three Mellin families with those
 coming from one actual/reference/relative nuclear operator family. -/
@@ -128,12 +129,9 @@ theorem connectionCoefficient_eq_difference
     (data : RelativeNuclearMellinAnalyticDifferenceFamilyData nuclear relative
       actual reference)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient relative.toZetaFamily parameter =
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient actual.toZetaFamily parameter -
-        P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient reference.toZetaFamily parameter :=
+    relativeZetaConnectionCoefficient relative.toZetaFamily parameter =
+      relativeZetaConnectionCoefficient actual.toZetaFamily parameter -
+        relativeZetaConnectionCoefficient reference.toZetaFamily parameter :=
   data.toAnalyticDifferenceFamily.connectionCoefficient_eq_difference parameter
 
 /-- Public nuclear-to-Mellin comparison checkpoint. -/
@@ -152,12 +150,9 @@ theorem relative_nuclear_mellin_difference_family_gate
       relative.zetaPrimeAtZero parameter =
         actual.zetaPrimeAtZero parameter - reference.zetaPrimeAtZero parameter) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient relative.toZetaFamily parameter =
-        P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-            relativeZetaConnectionCoefficient actual.toZetaFamily parameter -
-          P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-            relativeZetaConnectionCoefficient reference.toZetaFamily parameter) :=
+      relativeZetaConnectionCoefficient relative.toZetaFamily parameter =
+        relativeZetaConnectionCoefficient actual.toZetaFamily parameter -
+          relativeZetaConnectionCoefficient reference.toZetaFamily parameter) :=
   ⟨data.traceIdentification.heatTrace_eq_difference,
     data.zetaPrimeAtZero_eq_difference,
     data.connectionCoefficient_eq_difference⟩

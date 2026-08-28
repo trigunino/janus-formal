@@ -144,7 +144,7 @@ theorem GlobalCandidateAProfileActionTranslationCanonicalSmallnessData4D.kernel_
   exact profile.classification_multiplicity sector
 
 /-- Public numerical-profile checkpoint for the explicit-smallness route. -/
-theorem global_candidateA_profile_action_translation_canonical_smallness_gate
+def global_candidateA_profile_action_translation_canonical_smallness_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -173,14 +173,14 @@ theorem global_candidateA_profile_action_translation_canonical_smallness_gate
     (input : GlobalCandidateAProfileActionTranslationCanonicalSmallnessData4D
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound profile) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
+    PSigma fun _ : GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
           hPeriod configuration data analysis einsteinScale hTransverse family
-            chartBound) ∧
+            chartBound) =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis

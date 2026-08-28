@@ -153,7 +153,7 @@ structure GlobalCandidateAFiveSectorProductActualKernelGapData4D
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
-    [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary] : Prop where
+    [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary] where
   analytic : CandidateAFiveSectorProductActualKernelGapData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -225,7 +225,7 @@ theorem global_candidateA_h12_gate_of_fiveSectorProductActualKernelGap
       (input.toActualKernelGap period hPeriod)
 
 /-- Public operator-specific five-factor checkpoint. -/
-theorem global_candidateA_five_sector_product_actual_kernel_gap_gate
+def global_candidateA_five_sector_product_actual_kernel_gap_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

@@ -31,7 +31,7 @@ open scoped InnerProductSpace
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 local instance closedRangeKernelComplementCompleteSpace
@@ -50,7 +50,7 @@ theorem selfAdjoint_closedRange_range_eq_kernelComplement
     rw [ContinuousLinearMap.orthogonal_range, hSelfAdjoint.adjoint_eq]
   calc
     operator.range = operator.range.topologicalClosure :=
-      hClosed.closure_eq.symm
+      hClosed.submodule_topologicalClosure_eq.symm
     _ = operator.rangeᗮᗮ :=
       (Submodule.orthogonal_orthogonal_eq_closure operator.range).symm
     _ = operator.kerᗮ := by rw [hOrthogonal]
@@ -70,8 +70,8 @@ theorem selfAdjointKernelComplementOperator_injective_of_selfAdjoint
     exact congrArg Subtype.val hEqual |> sub_eq_zero.mpr
   have hOrthogonal :
       inner Real (first.1 - second.1) (first.1 - second.1) = 0 := by
-    exact first.2 (first.1 - second.1) hKernel |>.sub
-      (second.2 (first.1 - second.1) hKernel)
+    rw [inner_sub_right, first.2 (first.1 - second.1) hKernel,
+      second.2 (first.1 - second.1) hKernel, sub_self]
   have hNorm : ‖first.1 - second.1‖ = 0 := by
     rw [← sq_eq_zero_iff, ← real_inner_self_eq_norm_sq]
     exact hOrthogonal
@@ -97,11 +97,12 @@ theorem selfAdjointKernelComplementOperator_surjective_of_closedRange
   refine ⟨orthogonalSource, ?_⟩
   apply Subtype.ext
   change operator (source - operator.ker.starProjection source) = target.1
-  rw [map_sub, hSource]
+  have hSource' : operator source = target.1 := hSource
+  rw [map_sub, hSource']
   have hProjectionKernel :
       operator (operator.ker.starProjection source) = 0 := by
     apply LinearMap.mem_ker.mp
-    exact operator.ker.starProjection_mem source
+    exact operator.ker.starProjection_apply_mem source
   rw [hProjectionKernel, sub_zero]
 
 /-- Continuous equivalence supplied by closed range. -/
@@ -113,10 +114,12 @@ noncomputable def selfAdjointClosedRangeKernelComplementEquiv
       SelfAdjointKernelComplement operator :=
   ContinuousLinearEquiv.ofBijective
     (selfAdjointKernelComplementOperator operator hSelfAdjoint)
-    ⟨selfAdjointKernelComplementOperator_injective_of_selfAdjoint operator
-        hSelfAdjoint,
-      selfAdjointKernelComplementOperator_surjective_of_closedRange operator
-        hSelfAdjoint hClosed⟩
+    (LinearMap.ker_eq_bot.mpr
+      (selfAdjointKernelComplementOperator_injective_of_selfAdjoint operator
+        hSelfAdjoint))
+    (LinearMap.range_eq_top.mpr
+      (selfAdjointKernelComplementOperator_surjective_of_closedRange operator
+        hSelfAdjoint hClosed))
 
 /-- Bounded inverse obtained from the classical closed-range hypothesis. -/
 noncomputable def selfAdjointClosedRangeKernelComplementInverse
@@ -183,11 +186,11 @@ theorem selfAdjointClosedRangeKernelComplement_lowerBound
       hClosed).symm_apply_apply vector
   have hNorm : ‖vector‖ ≤ control *
       ‖selfAdjointKernelComplementOperator operator hSelfAdjoint vector‖ := by
-    rw [← hInverse]
     calc
-      ‖inverse
-          (selfAdjointKernelComplementOperator operator hSelfAdjoint vector)‖ ≤
-          ‖inverse‖ *
+      ‖vector‖ = ‖inverse
+          (selfAdjointKernelComplementOperator operator hSelfAdjoint vector)‖ :=
+        congrArg norm hInverse.symm
+      _ ≤ ‖inverse‖ *
             ‖selfAdjointKernelComplementOperator operator hSelfAdjoint vector‖ :=
         inverse.le_opNorm _
       _ ≤ control *
@@ -225,7 +228,7 @@ def selfAdjointKernelComplementGapData_of_closedRange
     hSelfAdjoint hClosed
 
 /-- Public bridge from the old H12 pair to the canonical actual-kernel gap. -/
-theorem self_adjoint_closedRange_to_actualKernelGap_gate
+def self_adjoint_closedRange_to_actualKernelGap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (hClosed : IsClosed (operator.range : Set E))

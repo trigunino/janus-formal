@@ -130,7 +130,7 @@ def GlobalCandidateAProjectionFiniteMarginActualKernelGap4D.toActualKernelGap
   projection.toFiniteMargin period hPeriod |>.toActualKernelGap period hPeriod
 
 /-- Public strongest Candidate-A actual-gap checkpoint. -/
-theorem global_candidateA_projection_finite_margin_actual_kernel_gap_gate
+def global_candidateA_projection_finite_margin_actual_kernel_gap_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

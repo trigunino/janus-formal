@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAExtendedBulkCoreCoordinates4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 
 /-!
 # Five-sector coordinates on the actual Candidate-A completion
@@ -31,10 +32,12 @@ open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAExtendedBulkCoreCoordinates4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -48,7 +51,8 @@ private abbrev CommonCore
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
   GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod data analysis
 
-private abbrev CommonHilbert
+/-- The completed Candidate-A Hilbert state carrying the five-sector coordinates. -/
+abbrev GlobalCandidateAFiveSectorCompletionHilbert4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -56,9 +60,7 @@ private abbrev CommonHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 local instance (priority := 30000) commonHilbertNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
@@ -69,7 +71,8 @@ local instance (priority := 30000) commonHilbertNormedAddCommGroup
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     NormedAddCommGroup
-      (CommonHilbert period hPeriod configuration data analysis) :=
+      (GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod
+        configuration data analysis) :=
   diagonalL2ExtendedBulkNormedAddCommGroup period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
@@ -83,7 +86,8 @@ local instance (priority := 30000) commonHilbertInnerProductSpace
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     InnerProductSpace Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
+      (GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod
+        configuration data analysis) :=
   diagonalL2ExtendedBulkInnerProductSpace period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
@@ -97,7 +101,8 @@ local instance (priority := 30000) commonHilbertNormedSpace
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     NormedSpace Real
-      (CommonHilbert period hPeriod configuration data analysis) :=
+      (GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod
+        configuration data analysis) :=
   diagonalL2ExtendedBulkNormedSpace period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
@@ -110,7 +115,8 @@ local instance (priority := 30000) commonHilbertModule
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real (CommonHilbert period hPeriod configuration data analysis) :=
+    Module Real (GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod
+      configuration data analysis) :=
   diagonalL2ExtendedBulkModule period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
@@ -123,7 +129,8 @@ local instance (priority := 30000) commonHilbertCompleteSpace
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace (CommonHilbert period hPeriod configuration data analysis) :=
+    CompleteSpace (GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod
+      configuration data analysis) :=
   diagonalL2ExtendedBulkCompleteSpace period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
@@ -144,10 +151,26 @@ structure GlobalCandidateAFiveSectorCompletionCoordinates4D
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary] where
-  coordinates : FiveSectorHilbertCoordinates
-    (E := CommonHilbert period hPeriod configuration data analysis)
-    (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
-    (Longitudinal := Longitudinal) (Boundary := Boundary)
+  coordinates : @FiveSectorHilbertCoordinates
+    (GlobalCandidateAFiveSectorCompletionHilbert4D period hPeriod
+      configuration data analysis)
+    Metric Abelian Matter Longitudinal Boundary
+    (commonHilbertNormedAddCommGroup period hPeriod configuration data analysis)
+    (commonHilbertInnerProductSpace period hPeriod configuration data analysis)
+    inferInstance inferInstance inferInstance inferInstance inferInstance
+    inferInstance inferInstance inferInstance inferInstance inferInstance
+  inner_map : ∀ first second,
+    inner Real (coordinates.decomposition first).1
+          (coordinates.decomposition second).1 +
+        inner Real (coordinates.decomposition first).2.1
+          (coordinates.decomposition second).2.1 +
+        inner Real (coordinates.decomposition first).2.2.1
+          (coordinates.decomposition second).2.2.1 +
+        inner Real (coordinates.decomposition first).2.2.2.1
+          (coordinates.decomposition second).2.2.2.1 +
+        inner Real (coordinates.decomposition first).2.2.2.2
+          (coordinates.decomposition second).2.2.2.2 =
+      inner Real first second
   bulk_refinement_agreement : ∀ core :
       CommonCore period hPeriod configuration data analysis,
     coordinates.metricProjector

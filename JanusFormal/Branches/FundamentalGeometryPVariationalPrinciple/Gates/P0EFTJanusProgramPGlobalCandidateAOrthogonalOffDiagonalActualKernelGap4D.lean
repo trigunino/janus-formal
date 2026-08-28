@@ -195,7 +195,7 @@ def GlobalCandidateAOrthogonalOffDiagonalActualKernelGap4D.toActualKernelGap
   ll_stationary := input.ll_stationary
 
 /-- Public one-form Candidate-A gap checkpoint. -/
-theorem global_candidateA_orthogonal_offDiagonal_actual_kernel_gap_gate
+def global_candidateA_orthogonal_offDiagonal_actual_kernel_gap_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
