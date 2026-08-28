@@ -37,7 +37,7 @@ theorem continuousLinearMapOfBilin_opNorm_le
     ‖@InnerProductSpace.continuousLinearMapOfBilin Real E inferInstance
         inferInstance inferInstance inferInstance form‖ ≤
       ‖form‖ := by
-  apply ContinuousLinearMap.opNorm_le_bound (norm_nonneg form)
+  apply ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg form)
   intro vector
   rw [continuousLinearMapOfBilin_apply_norm_eq form vector]
   exact form.le_opNorm vector

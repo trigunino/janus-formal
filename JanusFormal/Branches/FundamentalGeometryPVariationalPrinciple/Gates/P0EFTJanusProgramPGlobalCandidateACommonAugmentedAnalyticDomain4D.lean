@@ -70,7 +70,7 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private def CommonAugmentedHilbert
+def CommonAugmentedHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -82,7 +82,7 @@ private def CommonAugmentedHilbert
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) commonAugmentedNormedAddCommGroup
+instance (priority := 30000) commonAugmentedNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -96,7 +96,7 @@ local instance (priority := 30000) commonAugmentedNormedAddCommGroup
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) commonAugmentedInnerProductSpace
+instance (priority := 30000) commonAugmentedInnerProductSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -110,7 +110,7 @@ local instance (priority := 30000) commonAugmentedInnerProductSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) commonAugmentedNormedSpace
+instance (priority := 30000) commonAugmentedNormedSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -123,7 +123,7 @@ local instance (priority := 30000) commonAugmentedNormedSpace
   (commonAugmentedInnerProductSpace period hPeriod configuration data
     analysis).toNormedSpace
 
-local instance (priority := 30000) commonAugmentedModule
+instance (priority := 30000) commonAugmentedModule
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -136,7 +136,7 @@ local instance (priority := 30000) commonAugmentedModule
   (commonAugmentedNormedSpace period hPeriod configuration data
     analysis).toModule
 
-local instance (priority := 30000) commonAugmentedCompleteSpace
+instance (priority := 30000) commonAugmentedCompleteSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

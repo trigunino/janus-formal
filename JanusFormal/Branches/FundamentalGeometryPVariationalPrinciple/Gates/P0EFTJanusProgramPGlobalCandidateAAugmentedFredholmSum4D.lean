@@ -37,6 +37,7 @@ open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
@@ -326,7 +327,13 @@ theorem globalCandidateAFaithfulAugmentedRieszOperator_fredholm
             data analysis) ⧸
           (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
             configuration data analysis chart sameAction physical).range) :=
-  boundedSelfAdjoint_fredholm_of_closedRange_finiteKernel
+by
+  exact @boundedSelfAdjoint_fredholm_of_closedRange_finiteKernel
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedAddCommGroup period hPeriod configuration data analysis)
+    (augmentedFredholmInnerProductSpace period hPeriod configuration data analysis)
+    (augmentedFredholmCompleteSpace period hPeriod configuration data analysis)
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
       data analysis chart sameAction physical)
     (globalCandidateAFaithfulAugmentedRieszOperator_isSelfAdjoint period hPeriod
@@ -354,7 +361,13 @@ theorem globalCandidateAFaithfulAugmentedRieszOperator_index_zero
       hPeriod configuration data analysis chart sameAction physical) :
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
       data analysis chart sameAction physical).toLinearMap.index = 0 :=
-  boundedSelfAdjoint_index_zero
+by
+  exact @boundedSelfAdjoint_index_zero
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedAddCommGroup period hPeriod configuration data analysis)
+    (augmentedFredholmInnerProductSpace period hPeriod configuration data analysis)
+    (augmentedFredholmCompleteSpace period hPeriod configuration data analysis)
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
       data analysis chart sameAction physical)
     (globalCandidateAFaithfulAugmentedRieszOperator_isSelfAdjoint period hPeriod

@@ -21,40 +21,42 @@ open P0EFTJanusCircleDiracHeatTraceCancellation
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 open P0EFTJanusProgramPIntrinsicNuclearTrace4D
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
+open P0EFTJanusProgramPNuclearHeatDuhamelWeightedIntegral4D.NuclearHeatDuhamelTraceVariationData
 open P0EFTJanusProgramPNuclearDuhamelDominatedCollapsedRankOneIntegral4D
 open P0EFTJanusProgramPNuclearDuhamelSemigroupProbabilityFamily4D
 open P0EFTJanusProgramPNuclearHeatDuhamelLongTimeExponentialDominatedWeightedIntegral4D
+open P0EFTJanusProgramPLongTimeExponentialDominatingFunction4D
 
-universe u
+universe e i s
 
-variable {Slice E : Type*}
+variable {Slice : Type s} {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 structure NuclearDuhamelLongTimeExponentialDominatedCollapsedRankOneIntegralData
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (start : Real) where
   semigroup :
     NuclearDuhamelSemigroupProbabilityFamilyData sliceMeasure nuclear
   weighted :
     NuclearHeatDuhamelLongTimeExponentialDominatedWeightedIntegralData nuclear
       start
-  Index : Type u
+  Index : Type i
   coefficient : Real → Real → Index → Real
   leftVector : Real → Index → E
   rightVector : Real → Index → E
-  pointwise_nuclearNorm_summable : ∀ parameter time : HeatTime,
+  pointwise_nuclearNorm_summable : ∀ parameter : Real, ∀ time : HeatTime,
     Summable (fun index =>
       |coefficient parameter time.1 index| *
         ‖leftVector parameter index‖ * ‖rightVector parameter index‖)
-  pointwise_trace_summable : ∀ parameter time : HeatTime,
+  pointwise_trace_summable : ∀ parameter : Real, ∀ time : HeatTime,
     Summable (fun index =>
       coefficient parameter time.1 index *
         inner Real (leftVector parameter index)
           (rightVector parameter index))
-  collapsed_operator_eq_tsum : ∀ parameter time : HeatTime,
+  collapsed_operator_eq_tsum : ∀ parameter : Real, ∀ time : HeatTime,
     (semigroup.insertion parameter time).comp
         (semigroup.fullHeat parameter time) = ∑' index,
       coefficient parameter time.1 index •
@@ -81,7 +83,7 @@ structure NuclearDuhamelLongTimeExponentialDominatedCollapsedRankOneIntegralData
         InnerProductSpace.rankOne Real
           (leftVector parameter index) (rightVector parameter index)
   integratedTraceClass : ∀ parameter,
-    IntrinsicNuclearTraceData (integratedOperator parameter)
+    IntrinsicNuclearTraceData.{e, i} (integratedOperator parameter)
   trace_integral_interchange : ∀ parameter,
     (∫ time in Set.Ioi start,
       ∑' index,
@@ -97,7 +99,7 @@ namespace NuclearDuhamelLongTimeExponentialDominatedCollapsedRankOneIntegralData
 
 def toDominatedCollapsedRankOneIntegral
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {start : Real}
     (data :
       NuclearDuhamelLongTimeExponentialDominatedCollapsedRankOneIntegralData
@@ -126,31 +128,29 @@ def toDominatedCollapsedRankOneIntegral
 majorant. -/
 theorem weightedIntegral_hasDerivAt
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {start : Real}
     (data :
       NuclearDuhamelLongTimeExponentialDominatedCollapsedRankOneIntegralData
         sliceMeasure nuclear start)
     (parameter : Real) :
     HasDerivAt
-      data.toDominatedCollapsedRankOneIntegral.toCollapsedRankOneIntegral.
-        weighted.toWeightedHeatTraceVariation.contribution
+      data.toDominatedCollapsedRankOneIntegral.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
       (-(∫ time in Set.Ioi start,
-        nuclear.extendedDuhamelTrace parameter time)) parameter :=
+        extendedDuhamelTrace nuclear parameter time)) parameter :=
   data.toDominatedCollapsedRankOneIntegral.weightedIntegral_hasDerivAt parameter
 
 /-- The exponential majorant is integrable. -/
 theorem bound_integrable
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {start : Real}
     (data :
       NuclearDuhamelLongTimeExponentialDominatedCollapsedRankOneIntegralData
         sliceMeasure nuclear start)
     (parameter : Real) :
     Integrable
-      (P0EFTJanusProgramPLongTimeExponentialDominatingFunction4D.
-        longTimeExponentialBound (data.weighted.scale parameter)
+      (longTimeExponentialBound (data.weighted.scale parameter)
           (data.weighted.rate parameter))
       (volume.restrict (Set.Ioi start)) :=
   data.weighted.bound_integrable parameter
@@ -159,35 +159,34 @@ theorem bound_integrable
 operator. -/
 theorem scalarIntegral_eq_intrinsicTrace
     {sliceMeasure : Measure Slice} [IsProbabilityMeasure sliceMeasure]
-    {nuclear : NuclearHeatDuhamelTraceVariationData (E := E)}
+    {nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)}
     {start : Real}
     (data :
       NuclearDuhamelLongTimeExponentialDominatedCollapsedRankOneIntegralData
         sliceMeasure nuclear start)
     (parameter : Real) :
     (∫ time in Set.Ioi start,
-      nuclear.extendedDuhamelTrace parameter time) =
+      extendedDuhamelTrace nuclear parameter time) =
         intrinsicNuclearTrace (data.integratedTraceClass parameter) :=
-  data.toDominatedCollapsedRankOneIntegral.
-    scalarIntegral_eq_intrinsicTrace parameter
+  data.toDominatedCollapsedRankOneIntegral.scalarIntegral_eq_intrinsicTrace
+    parameter
 
 /-- Public long-time collapsed spectral checkpoint. -/
 theorem nuclear_duhamel_long_time_exponential_dominated_collapsed_rank_one_integral_gate
     (sliceMeasure : Measure Slice) [IsProbabilityMeasure sliceMeasure]
-    (nuclear : NuclearHeatDuhamelTraceVariationData (E := E))
+    (nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E))
     (start : Real)
     (data :
       NuclearDuhamelLongTimeExponentialDominatedCollapsedRankOneIntegralData
         sliceMeasure nuclear start) :
     (∀ parameter,
       HasDerivAt
-        data.toDominatedCollapsedRankOneIntegral.toCollapsedRankOneIntegral.
-          weighted.toWeightedHeatTraceVariation.contribution
+        data.toDominatedCollapsedRankOneIntegral.toCollapsedRankOneIntegral.weighted.toWeightedHeatTraceVariation.contribution
         (-(∫ time in Set.Ioi start,
-          nuclear.extendedDuhamelTrace parameter time)) parameter) ∧
+          extendedDuhamelTrace nuclear parameter time)) parameter) ∧
     (∀ parameter,
       (∫ time in Set.Ioi start,
-        nuclear.extendedDuhamelTrace parameter time) =
+        extendedDuhamelTrace nuclear parameter time) =
           intrinsicNuclearTrace (data.integratedTraceClass parameter)) :=
   ⟨data.weightedIntegral_hasDerivAt,
     data.scalarIntegral_eq_intrinsicTrace⟩

@@ -22,6 +22,7 @@ open P0EFTJanusSpinCImmersionCategory
 open P0EFTJanusNaturalBundleFunctor
 open P0EFTJanusNaturalOperatorJets
 open P0EFTJanusNaturalEllipticFamilyExistence
+open P0EFTJanusNaturalSymbolCalculus
 
 variable {State : Type*}
 
@@ -85,6 +86,43 @@ def representedSourcePullback
     (family.sourceFunctor.pullback morphism
       ((data.sourceEquiv second).symm state))
 
+/-- Represented source pullback preserves identities. -/
+@[simp]
+theorem representedSourcePullback_identity
+    {immersionCategory : SpinCImmersionCategory}
+    {family : NaturalEllipticOperatorFamily immersionCategory}
+    {representedOperator : Real → State → State}
+    (data : NaturalEllipticOperatorRepresentationData
+      immersionCategory family representedOperator)
+    (parameter : Real) (state : State) :
+    data.representedSourcePullback
+        (admissibleIdentity immersionCategory (data.objectAt parameter)) state =
+      state := by
+  unfold representedSourcePullback
+  rw [family.sourceFunctor.pullbackIdentity]
+  exact Equiv.apply_symm_apply (data.sourceEquiv parameter) state
+
+/-- Represented source pullback reverses admissible composition. -/
+theorem representedSourcePullback_compose
+    {immersionCategory : SpinCImmersionCategory}
+    {family : NaturalEllipticOperatorFamily immersionCategory}
+    {representedOperator : Real → State → State}
+    (data : NaturalEllipticOperatorRepresentationData
+      immersionCategory family representedOperator)
+    {first second third : Real}
+    (secondMorphism : AdmissibleMorphism immersionCategory
+      (data.objectAt second) (data.objectAt third))
+    (firstMorphism : AdmissibleMorphism immersionCategory
+      (data.objectAt first) (data.objectAt second))
+    (state : State) :
+    data.representedSourcePullback
+        (admissibleCompose immersionCategory secondMorphism firstMorphism) state =
+      data.representedSourcePullback firstMorphism
+        (data.representedSourcePullback secondMorphism state) := by
+  unfold representedSourcePullback
+  rw [family.sourceFunctor.pullbackComposition]
+  simp only [Equiv.symm_apply_apply]
+
 /-- Target pullback transported to the fixed representation type. -/
 def representedTargetPullback
     {immersionCategory : SpinCImmersionCategory}
@@ -120,9 +158,8 @@ theorem representedOperator_naturality
   rw [← data.representedNaturalOperator_eq second]
   rw [← data.representedNaturalOperator_eq first]
   unfold representedNaturalOperator
-  simp only [Equiv.apply_symm_apply]
+  simp only [Equiv.symm_apply_apply]
   rw [family.operator.naturality morphism]
-  simp
 
 /-- Same-jet relation transported from the D11 source jet functor. -/
 def RepresentedSameJetThrough

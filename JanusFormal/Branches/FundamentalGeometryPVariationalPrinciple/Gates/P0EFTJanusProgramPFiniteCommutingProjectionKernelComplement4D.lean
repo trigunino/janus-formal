@@ -28,8 +28,7 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {Sector E : Type*}
   [Fintype Sector] [DecidableEq Sector]
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- A self-adjoint finite sector resolution on the full Hilbert space, with
 each projector commuting with the actual Hessian. -/
@@ -51,8 +50,12 @@ theorem projection_mem_kernel
     (sector : Sector) {vector : E} (hVector : vector ∈ operator.ker) :
     data.resolution.projection sector vector ∈ operator.ker := by
   rw [LinearMap.mem_ker]
+  change operator (data.resolution.projection sector vector) = 0
   rw [data.commute sector vector]
-  rw [LinearMap.mem_ker.mp hVector, map_zero]
+  have hOperator : operator vector = 0 := by
+    change (operator : E →ₗ[Real] E) vector = 0
+    exact LinearMap.mem_ker.mp hVector
+  rw [hOperator, map_zero]
 
 /-- Self-adjointness of a sector projector and commutation with `H` imply that
 it preserves the orthogonal complement of the actual kernel. -/
@@ -66,7 +69,7 @@ theorem projection_mem_kernelComplement
   rw [Submodule.mem_orthogonal']
   intro zeroMode hZeroMode
   rw [data.resolution.projection_symmetric sector]
-  exact vector.2
+  simpa [real_inner_comm] using vector.2
     (data.resolution.projection sector zeroMode)
     (data.projection_mem_kernel sector hZeroMode)
 
@@ -116,7 +119,8 @@ theorem sum_complementProjection
     (vector : SelfAdjointKernelComplement operator) :
     (∑ sector : Sector, data.complementProjection sector vector) = vector := by
   apply Subtype.ext
-  simp only [map_sum, complementProjection_apply_val]
+  rw [Submodule.coe_sum]
+  simp only [complementProjection_apply_val]
   exact data.resolution.sum_projection vector.1
 
 /-- Idempotence descends to the actual kernel complement. -/

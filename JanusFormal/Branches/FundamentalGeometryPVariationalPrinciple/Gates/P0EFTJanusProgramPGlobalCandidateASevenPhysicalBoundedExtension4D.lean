@@ -27,6 +27,7 @@ noncomputable section
 
 open Filter Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace
+open P0EFTJanusConvexHelmholtzReconstruction
 open P0EFTJanusD9D10ExactFieldContentBridge4D
 open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusQuotient
@@ -35,6 +36,8 @@ open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
@@ -83,9 +86,7 @@ private abbrev PhysicalHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
+  CommonAugmentedHilbert period hPeriod configuration data analysis
 
 local instance (priority := 30000) physicalHilbertNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
@@ -167,8 +168,23 @@ private def physicalCoreEmbedding
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     PhysicalCore period hPeriod analysis →ₗ[Real]
-      PhysicalHilbert period hPeriod configuration data analysis :=
-  diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+      PhysicalHilbert period hPeriod configuration data analysis := by
+  unfold PhysicalHilbert CommonAugmentedHilbert
+  exact diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+    (globalCandidateAMetricBySector period hPeriod data)
+    couplings.matterMassSquared data analysis
+
+private theorem physicalCoreEmbedding_denseRange
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    DenseRange (physicalCoreEmbedding period hPeriod configuration data analysis) := by
+  unfold physicalCoreEmbedding PhysicalHilbert CommonAugmentedHilbert
+  exact diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
 
@@ -223,11 +239,14 @@ def globalCandidateASevenPhysicalCoreLinearForm
         rw [map_smul, map_smul]
         rfl }
   map_add' first second := by
-    ext test
-    simp only [map_add]
+    apply LinearMap.ext
+    intro test
+    simp only [map_add, LinearMap.add_apply]
+    rfl
   map_smul' scalar first := by
-    ext test
-    simp only [map_smul]
+    apply LinearMap.ext
+    intro test
+    simp only [map_smul, LinearMap.smul_apply]
     rfl
 
 @[simp]
@@ -319,9 +338,8 @@ private theorem sevenPhysicalSecondExtension_eq
       globalCandidateASevenPhysicalCoreLinearForm period hPeriod configuration
         data analysis chart sameAction first second := by
   apply LinearMap.extendOfNorm_eq
-  · exact diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
-      (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  · exact physicalCoreEmbedding_denseRange period hPeriod configuration data
+      analysis
   · refine ⟨bound.constant *
         ‖physicalCoreEmbedding period hPeriod configuration data analysis first‖,
       ?_⟩
@@ -349,44 +367,60 @@ private def sevenPhysicalCoreToDualLinearMap
   toFun := sevenPhysicalSecondExtension period hPeriod configuration data analysis
     chart sameAction bound
   map_add' first second := by
-    apply diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
-      (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis |>.equalizer
-    · exact
-        (sevenPhysicalSecondExtension period hPeriod configuration data analysis
-          chart sameAction bound (first + second)).continuous
-    · exact
-        ((sevenPhysicalSecondExtension period hPeriod configuration data analysis
-          chart sameAction bound first) +
+    have hFunctions :
+        (fun test => sevenPhysicalSecondExtension period hPeriod configuration data
+          analysis chart sameAction bound (first + second) test) =
+          fun test =>
+            ((sevenPhysicalSecondExtension period hPeriod configuration data
+              analysis chart sameAction bound first) +
+              (sevenPhysicalSecondExtension period hPeriod configuration data
+                analysis chart sameAction bound second)) test := by
+      apply (physicalCoreEmbedding_denseRange period hPeriod configuration data
+        analysis).equalizer
+      · exact
           (sevenPhysicalSecondExtension period hPeriod configuration data analysis
-            chart sameAction bound second)).continuous
-    · funext test
-      rw [sevenPhysicalSecondExtension_eq period hPeriod configuration data
-          analysis chart sameAction bound (first + second) test,
-        ContinuousLinearMap.add_apply,
-        sevenPhysicalSecondExtension_eq period hPeriod configuration data
-          analysis chart sameAction bound first test,
-        sevenPhysicalSecondExtension_eq period hPeriod configuration data
-          analysis chart sameAction bound second test,
-        map_add]
+            chart sameAction bound (first + second)).continuous
+      · exact
+          ((sevenPhysicalSecondExtension period hPeriod configuration data analysis
+            chart sameAction bound first) +
+            (sevenPhysicalSecondExtension period hPeriod configuration data analysis
+              chart sameAction bound second)).continuous
+      · funext test
+        simp only [Function.comp_apply]
+        rw [sevenPhysicalSecondExtension_eq period hPeriod configuration data
+            analysis chart sameAction bound (first + second) test,
+          ContinuousLinearMap.add_apply,
+          sevenPhysicalSecondExtension_eq period hPeriod configuration data
+            analysis chart sameAction bound first test,
+          sevenPhysicalSecondExtension_eq period hPeriod configuration data
+            analysis chart sameAction bound second test,
+          map_add, LinearMap.add_apply]
+    exact ContinuousLinearMap.ext (congrFun hFunctions)
   map_smul' scalar first := by
-    apply diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
-      (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis |>.equalizer
-    · exact
-        (sevenPhysicalSecondExtension period hPeriod configuration data analysis
-          chart sameAction bound (scalar • first)).continuous
-    · exact
-        (scalar • sevenPhysicalSecondExtension period hPeriod configuration data
-          analysis chart sameAction bound first).continuous
-    · funext test
-      rw [sevenPhysicalSecondExtension_eq period hPeriod configuration data
-          analysis chart sameAction bound (scalar • first) test,
-        ContinuousLinearMap.smul_apply,
-        sevenPhysicalSecondExtension_eq period hPeriod configuration data
-          analysis chart sameAction bound first test,
-        map_smul]
-      rfl
+    have hFunctions :
+        (fun test => sevenPhysicalSecondExtension period hPeriod configuration data
+          analysis chart sameAction bound (scalar • first) test) =
+          fun test =>
+            (scalar • sevenPhysicalSecondExtension period hPeriod configuration
+              data analysis chart sameAction bound first) test := by
+      apply (physicalCoreEmbedding_denseRange period hPeriod configuration data
+        analysis).equalizer
+      · exact
+          (sevenPhysicalSecondExtension period hPeriod configuration data analysis
+            chart sameAction bound (scalar • first)).continuous
+      · exact
+          (scalar • sevenPhysicalSecondExtension period hPeriod configuration data
+            analysis chart sameAction bound first).continuous
+      · funext test
+        simp only [Function.comp_apply]
+        rw [sevenPhysicalSecondExtension_eq period hPeriod configuration data
+            analysis chart sameAction bound (scalar • first) test,
+          ContinuousLinearMap.smul_apply,
+          sevenPhysicalSecondExtension_eq period hPeriod configuration data
+            analysis chart sameAction bound first test,
+          map_smul]
+        rfl
+    exact ContinuousLinearMap.ext (congrFun hFunctions)
 
 private theorem sevenPhysicalCoreToDual_bound
     {couplings : GlobalCandidateAActionCouplings}
@@ -409,9 +443,8 @@ private theorem sevenPhysicalCoreToDual_bound
       bound.constant *
         ‖physicalCoreEmbedding period hPeriod configuration data analysis first‖ := by
   apply LinearMap.opNorm_extendOfNorm_le
-  · exact diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
-      (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  · exact physicalCoreEmbedding_denseRange period hPeriod configuration data
+      analysis
   · exact mul_nonneg bound.constant_nonneg (norm_nonneg _)
   · intro test
     simpa [mul_assoc] using bound.estimate first test
@@ -450,47 +483,89 @@ def globalCandidateASevenPhysicalCommonDomainExtension_of_bound
           globalCandidateASevenPhysicalCoreLinearForm period hPeriod configuration
             data analysis chart sameAction x y := by
       intro x y
+      change ((sevenPhysicalCoreToDualLinearMap period hPeriod configuration data
+          analysis chart sameAction bound).extendOfNorm
+            (physicalCoreEmbedding period hPeriod configuration data analysis))
+          (physicalCoreEmbedding period hPeriod configuration data analysis x)
+          (physicalCoreEmbedding period hPeriod configuration data analysis y) = _
       rw [LinearMap.extendOfNorm_eq
-          (diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
-            (globalCandidateAMetricBySector period hPeriod data)
-            couplings.matterMassSquared data analysis)
+          (physicalCoreEmbedding_denseRange period hPeriod configuration data
+            analysis)
           ⟨bound.constant, fun z =>
             sevenPhysicalCoreToDual_bound period hPeriod configuration data
-              analysis chart sameAction bound z⟩,
-        sevenPhysicalSecondExtension_eq period hPeriod configuration data
-          analysis chart sameAction bound x y]
-    have hDense := diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
-      (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-    apply hDense.equalizer
-    · exact (form.flip second).continuous
-    · exact (form second).continuous
-    · funext core
-      apply hDense.equalizer
-      · exact (form (physicalCoreEmbedding period hPeriod configuration data
-          analysis core)).continuous
-      · exact (form.flip
-          (physicalCoreEmbedding period hPeriod configuration data analysis core)
-          ).continuous
-      · funext test
-        rw [hCore core test, hCore test core]
-        exact globalCandidateALocalPhysicalHessian_symmetric period hPeriod chart
-          sameAction.chartBridge.basePoint sameAction.chartBridge.basePoint_mem
-          (physicalCoreToChart period hPeriod configuration data analysis chart
-            sameAction core)
-          (physicalCoreToChart period hPeriod configuration data analysis chart
-            sameAction test)
+              analysis chart sameAction bound z⟩]
+      change sevenPhysicalSecondExtension period hPeriod configuration data
+          analysis chart sameAction bound x
+          (physicalCoreEmbedding period hPeriod configuration data analysis y) = _
+      rw [sevenPhysicalSecondExtension_eq period hPeriod configuration data
+        analysis chart sameAction bound x y]
+    have hDense := physicalCoreEmbedding_denseRange period hPeriod configuration
+      data analysis
+    have hOuter : form.flip second = form second := by
+      have hFunctions : (fun first => form.flip second first) =
+          fun first => form second first := by
+        apply hDense.equalizer
+        · exact (form.flip second).continuous
+        · exact (form second).continuous
+        · funext core
+          simp only [Function.comp_apply]
+          have hInnerFunctions :
+              (fun test => form
+                (physicalCoreEmbedding period hPeriod configuration data analysis
+                  core) test) =
+                fun test => form.flip
+                  (physicalCoreEmbedding period hPeriod configuration data analysis
+                    core) test := by
+            apply hDense.equalizer
+            · exact (form (physicalCoreEmbedding period hPeriod configuration data
+                analysis core)).continuous
+            · exact (form.flip (physicalCoreEmbedding period hPeriod configuration
+                data analysis core)).continuous
+            · funext test
+              simp only [Function.comp_apply]
+              rw [hCore core test, ContinuousLinearMap.flip_apply,
+                hCore test core]
+              let blocks := globalCandidateAActionBlocks period hPeriod
+                (chart.family.toActionFamily period hPeriod 0
+                  chart.zero_mem_domain) measure
+              have hC2 : FullCoupledC2At blocks
+                  sameAction.chartBridge.basePoint :=
+                fullCoupledC2WithinAt_toAt
+                  (chart.blocksC2Within sameAction.chartBridge.basePoint
+                    sameAction.chartBridge.basePoint_mem)
+                  chart.isOpen_domain sameAction.chartBridge.basePoint_mem
+              unfold globalCandidateASevenPhysicalCoreLinearForm
+              unfold globalCandidateALocalPhysicalHessian
+              exact action_gradient_helmholtz_at
+                (fullCoupledPhysicalAction blocks)
+                sameAction.chartBridge.basePoint
+                (fullCoupledPhysicalAction_contDiffAt blocks
+                  sameAction.chartBridge.basePoint hC2)
+                (physicalCoreToChart period hPeriod configuration data analysis
+                  chart sameAction core)
+                (physicalCoreToChart period hPeriod configuration data analysis
+                  chart sameAction test)
+          exact congrFun hInnerFunctions second
+      exact ContinuousLinearMap.ext (congrFun hFunctions)
+    exact congrArg (fun functional => functional first) hOuter
   smooth_agreement := by
     intro first second
+    change ((sevenPhysicalCoreToDualLinearMap period hPeriod configuration data
+        analysis chart sameAction bound).extendOfNorm
+          (physicalCoreEmbedding period hPeriod configuration data analysis))
+        (physicalCoreEmbedding period hPeriod configuration data analysis first)
+        (physicalCoreEmbedding period hPeriod configuration data analysis second) = _
     rw [LinearMap.extendOfNorm_eq
-        (diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
-          (globalCandidateAMetricBySector period hPeriod data)
-          couplings.matterMassSquared data analysis)
+        (physicalCoreEmbedding_denseRange period hPeriod configuration data
+          analysis)
         ⟨bound.constant, fun z =>
           sevenPhysicalCoreToDual_bound period hPeriod configuration data
-            analysis chart sameAction bound z⟩,
-      sevenPhysicalSecondExtension_eq period hPeriod configuration data analysis
-        chart sameAction bound first second]
+            analysis chart sameAction bound z⟩]
+    change sevenPhysicalSecondExtension period hPeriod configuration data analysis
+        chart sameAction bound first
+        (physicalCoreEmbedding period hPeriod configuration data analysis second) = _
+    rw [sevenPhysicalSecondExtension_eq period hPeriod configuration data analysis
+      chart sameAction bound first second]
     rfl
 
 /-- H11 closes from the single dense-core product estimate. -/

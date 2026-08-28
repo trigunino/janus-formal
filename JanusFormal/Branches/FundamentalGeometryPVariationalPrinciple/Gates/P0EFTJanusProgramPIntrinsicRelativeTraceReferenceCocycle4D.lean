@@ -26,17 +26,18 @@ noncomputable section
 
 open P0EFTJanusProgramPIntrinsicLogarithmicDerivativeTrace4D
 
-variable {E Index : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v w
+
+variable {E : Type u} {Index : Type w}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- One actual logarithmic trace and a family of reference logarithmic traces. -/
 structure IntrinsicRelativeTraceReferenceCocycleData
     (actual : Real → E →L[Real] E)
     (reference : Index → Real → E →L[Real] E) where
-  actualTrace : IntrinsicLogarithmicDerivativeTraceData actual
+  actualTrace : IntrinsicLogarithmicDerivativeTraceData.{u, v} actual
   referenceTrace : ∀ index,
-    IntrinsicLogarithmicDerivativeTraceData (reference index)
+    IntrinsicLogarithmicDerivativeTraceData.{u, v} (reference index)
 
 namespace IntrinsicRelativeTraceReferenceCocycleData
 

@@ -33,11 +33,16 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D
+open P0EFTJanusMappingTorusD8NonabelianGhostThroatBRST4D
+open P0EFTJanusProgramPD9MatterSpinorLeviCivitaConnection4D
 open P0EFTJanusProgramPD9MatterSpinorDoubledIntrinsicDiracOperator4D
 open P0EFTJanusProgramPD9PrimitiveMonopoleCartesianConnection4D
+open P0EFTJanusProgramPD9PrimitiveMonopolePullbackBundle4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D
 open P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameDecomposition4D
+open P0EFTJanusProgramPPrimitiveMonopoleZeroModeSection4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -68,7 +73,7 @@ theorem d9EuclideanTimeGenerator_intrinsic_decomposition
   funext coordinate
   fin_cases coordinate <;>
     simp [Fin.sum_univ_succ, throatCoverRadialMap_apply,
-      d9UnitRadialCoordinate]
+      d9UnitRadialCoordinate, mul_comm]
 
 /-- Every Euclidean rotation velocity expands in the intrinsic orthonormal
 frame with coefficients `(n × eᵢ)ₐ`. -/
@@ -152,8 +157,13 @@ theorem d9BaseUnitRadialCoordinate_mvfderiv_time
           direction base) = 0
   simp_rw [d9PrimitiveMonopoleCoordinateFrameDerivative_eq_projector]
   have hSphere := d9BaseUnitRadialCoordinate_sq_sum period hPeriod base
+  have hScaled := congrArg
+    (fun value : Real =>
+      d9PrimitiveSpinCBaseUnitRadialCoordinate period hPeriod coordinate base *
+        value) hSphere
   fin_cases coordinate <;>
-    simp [Fin.sum_univ_succ, d9KroneckerDelta] at hSphere ⊢ <;>
+    simp [Fin.sum_univ_succ, d9KroneckerDelta] at hScaled ⊢ <;>
+    ring_nf at hScaled ⊢ <;>
     nlinarith
 
 /-- Rotation about axis `a` differentiates coordinate `j` by
@@ -189,16 +199,17 @@ theorem d9IntrinsicRotationCoefficient_rotationDerivative_sum
         base (throatSpatialRotationGhost period hPeriod axis base)) =
       -2 * d9PrimitiveSpinCBaseUnitRadialCoordinate
         period hPeriod direction base := by
-  have hSmooth (coordinate : Fin 3) :
-      MDifferentiableAt throatCoverModelWithCorners 𝓘(Real, Real)
-        (d9PrimitiveSpinCBaseUnitRadialCoordinate period hPeriod coordinate)
-        base :=
-    (d9PrimitiveMonopoleBaseCoordinate_contMDiff period hPeriod coordinate)
-      |>.mdifferentiableAt (by simp)
+  have hNeg (coordinate : Fin 3) :
+      (fun point =>
+        -d9PrimitiveSpinCBaseUnitRadialCoordinate period hPeriod coordinate point) =
+        -(d9PrimitiveSpinCBaseUnitRadialCoordinate period hPeriod coordinate) :=
+    rfl
   fin_cases direction <;>
-    simp [Fin.sum_univ_succ, d9IntrinsicRotationCoefficient,
-      mfderiv_const, mfderiv_neg, hSmooth,
-      d9BaseUnitRadialCoordinate_mvfderiv_rotation] <;>
+    simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero] <;>
+    unfold d9IntrinsicRotationCoefficient <;>
+    simp [hNeg, mvfderiv_const, mvfderiv_neg,
+      d9BaseUnitRadialCoordinate_mvfderiv_rotation,
+      d9IntrinsicRotationCoefficient] <;>
     ring
 
 /-- The complete coefficient divergence in the decomposition of `eᵢ` is

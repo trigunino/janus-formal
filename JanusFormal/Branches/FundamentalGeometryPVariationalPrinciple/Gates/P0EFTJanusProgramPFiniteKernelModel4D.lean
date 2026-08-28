@@ -37,10 +37,10 @@ namespace FiniteKernelModel
 
 variable {operator : E →L[Real] E}
 
-local instance zeroModeFintype (model : FiniteKernelModel operator) :
+local instance instZeroModeFintype (model : FiniteKernelModel operator) :
     Fintype model.ZeroMode := model.zeroModeFintype
 
-local instance zeroModeDecidableEq (model : FiniteKernelModel operator) :
+local instance instZeroModeDecidableEq (model : FiniteKernelModel operator) :
     DecidableEq model.ZeroMode := model.zeroModeDecidableEq
 
 /-- The explicit model installs finite-dimensionality of the actual kernel. -/
@@ -102,12 +102,15 @@ end FiniteKernelModel
 
 section Gap
 
-variable [InnerProductSpace Real E] [CompleteSpace E]
+variable
+  {Hilbert : Type*}
+  [NormedAddCommGroup Hilbert] [InnerProductSpace Real Hilbert]
+  [CompleteSpace Hilbert]
 
 /-- Actual-kernel analytic data with an explicit finite zero-mode model. -/
 structure SelfAdjointKernelComplementGapWithModel
-    (operator : E →L[Real] E)
-    (hSelfAdjoint : IsSelfAdjoint operator) : Prop where
+    (operator : Hilbert →L[Real] Hilbert)
+    (hSelfAdjoint : IsSelfAdjoint operator) where
   model : FiniteKernelModel operator
   gap : Real
   gap_pos : 0 < gap
@@ -117,7 +120,7 @@ structure SelfAdjointKernelComplementGapWithModel
 
 /-- Forget the zero-mode names and obtain the analytic gap packet. -/
 def SelfAdjointKernelComplementGapWithModel.toGapData
-    {operator : E →L[Real] E}
+    {operator : Hilbert →L[Real] Hilbert}
     {hSelfAdjoint : IsSelfAdjoint operator}
     (data : SelfAdjointKernelComplementGapWithModel operator hSelfAdjoint) :
     SelfAdjointKernelComplementGapData operator hSelfAdjoint where
@@ -128,16 +131,17 @@ def SelfAdjointKernelComplementGapWithModel.toGapData
 
 /-- Public finite-zero-mode checkpoint. -/
 theorem finite_kernel_model_actual_gap_gate
-    (operator : E →L[Real] E)
+    (operator : Hilbert →L[Real] Hilbert)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : SelfAdjointKernelComplementGapWithModel operator hSelfAdjoint) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
-      Module.finrank Real operator.ker = Fintype.card data.model.ZeroMode := by
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
+      Module.finrank Real operator.ker =
+        @Fintype.card data.model.ZeroMode data.model.zeroModeFintype := by
   letI : Fintype data.model.ZeroMode := data.model.zeroModeFintype
   letI : DecidableEq data.model.ZeroMode := data.model.zeroModeDecidableEq
   letI : FiniteDimensional Real operator.ker :=
     data.model.kernelFiniteDimensional
-  exact ⟨data.toGapData, data.model.kernel_finrank_eq_card⟩
+  exact ⟨⟨data.toGapData⟩, data.model.kernel_finrank_eq_card⟩
 
 end Gap
 
