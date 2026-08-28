@@ -34,10 +34,14 @@ open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
@@ -77,9 +81,7 @@ private abbrev SevenBlockHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
+  CommonAugmentedHilbert period hPeriod configuration data analysis
 
 /-! ## A reusable Hessian-addition lemma -/
 
@@ -103,9 +105,9 @@ private theorem actionHessian_add
       (hFirstState.differentiableAt (by norm_num))
       (hSecondState.differentiableAt (by norm_num))
   have hFirstGradient : DifferentiableAt Real (actionGradient first) point :=
-    (hFirst.fderiv_right (by norm_num)).differentiableAt (by norm_num)
+    (hFirst.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
   have hSecondGradient : DifferentiableAt Real (actionGradient second) point :=
-    (hSecond.fderiv_right (by norm_num)).differentiableAt (by norm_num)
+    (hSecond.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
   rw [hGradient.fderiv_eq]
   exact fderiv_add hFirstGradient hSecondGradient
 
@@ -211,7 +213,7 @@ theorem globalCandidateAH11LocalPhysicalHessian_eq_seven
           point) +
         globalCandidateAH11LocalMaxwellPlusHessian period hPeriod chart point) +
         globalCandidateAH11LocalMaxwellMinusHessian period hPeriod chart point) +
-        globalCandidateAH11LocalFiniteBVHessian period hPeriod chart point := by
+        globalCandidateAH11LocalFiniteBVHessian period hPeriod chart point) := by
   let blocks := h11LocalBlocks period hPeriod chart
   have hC2 : FullCoupledC2At blocks point :=
     fullCoupledC2WithinAt_toAt
@@ -232,7 +234,7 @@ theorem globalCandidateAH11LocalPhysicalHessian_eq_seven
               blocks.einsteinHilbertPlus state) +
               blocks.einsteinHilbertMinus state) +
               blocks.maxwellPlus state) + blocks.maxwellMinus state) +
-              blocks.finiteBV state)) point = _
+              blocks.finiteBV state))) point = _
   rw [actionHessian_add
       (fun state => (((((blocks.candidateA state + blocks.robin state) +
         blocks.einsteinHilbertPlus state) + blocks.einsteinHilbertMinus state) +
@@ -475,7 +477,7 @@ theorem diagonalExtendedBulkH11PhysicalHessian_eq_seven
         diagonalExtendedBulkH11MaxwellMinusHessianOnCore period hPeriod
           configuration data analysis chart sameAction first second) +
         diagonalExtendedBulkH11FiniteBVHessianOnCore period hPeriod
-          configuration data analysis chart sameAction first second := by
+          configuration data analysis chart sameAction first second) := by
   unfold diagonalExtendedBulkMinimalPhysicalLocalActionHessianOnCore
     diagonalExtendedBulkH11InteractionHessianOnCore
     diagonalExtendedBulkH11GHYHessianOnCore
@@ -575,7 +577,7 @@ private def GlobalCandidateASevenPhysicalBlockExtensions4D.sumForm
     {sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart}
     (blocks : GlobalCandidateASevenPhysicalBlockExtensions4D period hPeriod
-      configuration data analysis chart sameAction) :=
+      (measure := measure) configuration data analysis chart sameAction) :=
   ((((((blocks.interaction.form + blocks.ghy.form) +
     blocks.einsteinHilbertPlus.form) + blocks.einsteinHilbertMinus.form) +
     blocks.maxwellPlus.form) + blocks.maxwellMinus.form) + blocks.finiteBV.form)
@@ -596,10 +598,10 @@ def globalCandidateASevenPhysicalCommonDomainExtension_of_blocks
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (blocks : GlobalCandidateASevenPhysicalBlockExtensions4D period hPeriod
-      configuration data analysis chart sameAction) :
+      (measure := measure) configuration data analysis chart sameAction) :
     GlobalCandidateASevenPhysicalCommonDomainExtension4D period hPeriod
       configuration data analysis chart sameAction where
-  form := blocks.sumForm period hPeriod
+  form := blocks.sumForm period hPeriod (measure := measure)
   symmetric := by
     intro first second
     unfold GlobalCandidateASevenPhysicalBlockExtensions4D.sumForm
@@ -640,7 +642,7 @@ theorem global_candidateA_h11_common_augmented_domain_gate_of_blocks
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (blocks : GlobalCandidateASevenPhysicalBlockExtensions4D period hPeriod
-      configuration data analysis chart sameAction) :
+      (measure := measure) configuration data analysis chart sameAction) :
     GlobalCandidateACommonAugmentedAnalyticDomainCertificate4D period hPeriod
       configuration data analysis chart sameAction
         (globalCandidateASevenPhysicalCommonDomainExtension_of_blocks period

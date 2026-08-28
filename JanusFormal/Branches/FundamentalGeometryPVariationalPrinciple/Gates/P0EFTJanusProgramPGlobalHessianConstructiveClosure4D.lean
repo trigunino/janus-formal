@@ -31,15 +31,21 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLQuadraticChartBridge4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockExtensions4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedParametrix4D
 open P0EFTJanusProgramPGlobalHessianClosure4D
@@ -64,6 +70,20 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
+
+local instance (priority := 30000) constructiveHessianInnerProductSpace
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
+    InnerProductSpace Real
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis) :=
+  P0EFTJanusProgramPGlobalHessianClosure4D.terminalHessianInnerProductSpace
+    period hPeriod configuration data analysis
 
 /-- The H13 same-action witness canonically extracted from action-level chart
 identities. -/
@@ -212,10 +232,27 @@ theorem global_candidateA_hessian_constructive_sameAction_on_typed_core
     (inputs : GlobalCandidateAHessianConstructiveClosureInputs4D period hPeriod
       configuration data analysis chart)
     (first second : GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod
-      analysis) :=
+      analysis) :
+    inner Real
+        (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+          configuration data analysis chart
+            (constructiveH13SameAction period hPeriod configuration data analysis
+              chart inputs.quadraticChart)
+            (constructiveH11PhysicalExtension period hPeriod configuration data
+              analysis chart inputs.quadraticChart inputs.physicalBlocks)
+            (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+              (globalCandidateAMetricBySector period hPeriod data)
+              couplings.matterMassSquared data analysis first))
+        (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+          (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis second) =
+      diagonalExtendedBulkMinimalPhysicalLocalGaugeFixedHessianOnCore period
+        hPeriod configuration data analysis chart
+          (constructiveH13SameAction period hPeriod configuration data analysis
+            chart inputs.quadraticChart).chartBridge first second :=
   (global_candidateA_hessian_constructive_closure_gate period hPeriod
     configuration data analysis chart einsteinScale hBoundaryTransverse inputs
-    ).sameAction_on_typed_core first second
+    ).sameAction_on_typed_core period hPeriod first second
 
 /-- The same packet exposes index zero for the faithful total augmented
 operator. -/
@@ -234,10 +271,17 @@ theorem global_candidateA_hessian_constructive_index_zero
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (inputs : GlobalCandidateAHessianConstructiveClosureInputs4D period hPeriod
-      configuration data analysis chart) :=
+      configuration data analysis chart) :
+    (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
+      data analysis chart
+        (constructiveH13SameAction period hPeriod configuration data analysis
+          chart inputs.quadraticChart)
+        (constructiveH11PhysicalExtension period hPeriod configuration data
+          analysis chart inputs.quadraticChart inputs.physicalBlocks)
+      ).toLinearMap.index = 0 :=
   (global_candidateA_hessian_constructive_closure_gate period hPeriod
     configuration data analysis chart einsteinScale hBoundaryTransverse inputs
-    ).index_zero
+    ).index_zero period hPeriod
 
 end
 end P0EFTJanusProgramPGlobalHessianConstructiveClosure4D

@@ -32,11 +32,22 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
 open P0EFTJanusProgramPGlobalCandidateACommonHilbertChartTransport4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalCandidateACommonHilbertChartTransport4D.commonHilbertChartNormedAddCommGroup
+  P0EFTJanusProgramPGlobalCandidateACommonHilbertChartTransport4D.commonHilbertChartInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateACommonHilbertChartTransport4D.commonHilbertChartNormedSpace
+  P0EFTJanusProgramPGlobalCandidateACommonHilbertChartTransport4D.commonHilbertChartModule
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -59,10 +70,6 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev MinimalHilbertModel
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod) :=
-  GlobalMinimalPhysicalFieldTangent period hPeriod configuration.physical
-
 private abbrev ExistingCommonHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -82,21 +89,24 @@ structure ProgramPGlobalMinimalPhysicalHilbertModel4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
-    [NormedAddCommGroup (MinimalHilbertModel period hPeriod configuration)]
-    [NormedSpace Real (MinimalHilbertModel period hPeriod configuration)] where
-  toCommonHilbert :
-    MinimalHilbertModel period hPeriod configuration ≃L[Real]
-      ExistingCommonHilbert period hPeriod configuration data analysis
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart) where
+  toCommonHilbert : chart.Model ≃L[Real]
+    ExistingCommonHilbert period hPeriod configuration data analysis
   diagonal_core :
     ∀ core : GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod
         analysis,
       toCommonHilbert
-          (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
-            configuration data analysis core) =
+          (sameAction.chartBridge.tangentAnalysis
+            (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
+              configuration data analysis core)) =
         diagonalExtendedBulkL2SmoothEmbedding period hPeriod
           (globalCandidateAMetricBySector period hPeriod data)
           couplings.matterMassSquared data analysis core
@@ -113,18 +123,21 @@ def programPGlobalMinimalPhysicalCommonHilbertChart
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis)
+      (measure := measure) configuration data analysis)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-          configuration data analysis chartData))
-    (hilbert : @ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
-      couplings NonNullFace NullFace _ _ configuration data analysis
-      chartData.normedAddCommGroup chartData.normedSpace) :
+          (measure := measure) configuration data analysis chartData))
+    (hilbert : ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
+      (measure := measure) configuration data analysis
+        (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+          (measure := measure) configuration data analysis chartData)
+        sameAction) :
     ProgramPGlobalMinimalPhysicalCommonHilbertChart4D period hPeriod
+      (measure := measure)
       configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-          configuration data analysis chartData)
+          (measure := measure) configuration data analysis chartData)
         sameAction where
   toChart := hilbert.toCommonHilbert.symm
   smooth_core_compatibility := by
@@ -144,21 +157,24 @@ def globalCandidateAMinimalPhysicalSevenBlockExtension
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis)
+      (measure := measure) configuration data analysis)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-          configuration data analysis chartData))
-    (hilbert : @ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
-      couplings NonNullFace NullFace _ _ configuration data analysis
-      chartData.normedAddCommGroup chartData.normedSpace) :=
+          (measure := measure) configuration data analysis chartData))
+    (hilbert : ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
+      (measure := measure) configuration data analysis
+        (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+          (measure := measure) configuration data analysis chartData)
+        sameAction) :=
   globalCandidateASevenPhysicalCommonDomainExtension_of_hilbertChart period
-    hPeriod configuration data analysis
+    hPeriod (measure := measure) configuration data analysis
       (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-        configuration data analysis chartData)
+        (measure := measure) configuration data analysis chartData)
       sameAction
       (programPGlobalMinimalPhysicalCommonHilbertChart period hPeriod
-        configuration data analysis chartData sameAction hilbert)
+        (measure := measure) configuration data analysis chartData sameAction
+          hilbert)
 
 /-- Direct H11 gate on the concrete minimal physical chart. -/
 theorem global_candidateA_h11_minimalPhysical_hilbertChart_gate
@@ -171,21 +187,32 @@ theorem global_candidateA_h11_minimalPhysical_hilbertChart_gate
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis)
+      (measure := measure) configuration data analysis)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-          configuration data analysis chartData))
-    (hilbert : @ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
-      couplings NonNullFace NullFace _ _ configuration data analysis
-      chartData.normedAddCommGroup chartData.normedSpace) :=
+          (measure := measure) configuration data analysis chartData))
+    (hilbert : ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
+      (measure := measure) configuration data analysis
+        (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+          (measure := measure) configuration data analysis chartData)
+        sameAction) :
+    GlobalCandidateACommonAugmentedAnalyticDomainCertificate4D period hPeriod
+      configuration data analysis
+        (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+          (measure := measure) configuration data analysis chartData)
+        sameAction
+        (globalCandidateAMinimalPhysicalSevenBlockExtension period hPeriod
+          (measure := measure) configuration data analysis chartData sameAction
+            hilbert) :=
   global_candidateA_h11_common_augmented_domain_gate period hPeriod
-    configuration data analysis
+    (measure := measure) configuration data analysis
       (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-        configuration data analysis chartData)
+        (measure := measure) configuration data analysis chartData)
       sameAction
       (globalCandidateAMinimalPhysicalSevenBlockExtension period hPeriod
-        configuration data analysis chartData sameAction hilbert)
+        (measure := measure) configuration data analysis chartData sameAction
+          hilbert)
 
 end
 end P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalHilbertChart4D

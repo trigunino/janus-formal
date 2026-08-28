@@ -39,6 +39,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -98,11 +99,11 @@ def minimalPhysicalClosureChartData
     (spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
       hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
-      configuration data analysis
+      (measure := measure) configuration data analysis
         (minimalPhysicalClosureMatterRealization period hPeriod
           couplings.matterMassSquared spectral)) :=
   globalCandidateAMinimalPhysicalActionChartData_of_family period hPeriod
-    configuration data analysis
+    (measure := measure) configuration data analysis
       (minimalPhysicalClosureMatterRealization period hPeriod
         couplings.matterMassSquared spectral)
       family
@@ -120,7 +121,7 @@ def minimalPhysicalClosureChart
     (spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
       hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
-      configuration data analysis
+      (measure := measure) configuration data analysis
         (minimalPhysicalClosureMatterRealization period hPeriod
           couplings.matterMassSquared spectral)) :=
   globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
@@ -141,7 +142,7 @@ def minimalPhysicalClosureSameAction
     (spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
       hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
-      configuration data analysis
+      (measure := measure) configuration data analysis
         (minimalPhysicalClosureMatterRealization period hPeriod
           couplings.matterMassSquared spectral)) :=
   globalCandidateAMinimalPhysicalMatterLLSameActionBridge period hPeriod
@@ -162,12 +163,15 @@ structure GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D
   spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
     hPeriod couplings.matterMassSquared
   family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
-    configuration data analysis
+    (measure := measure) configuration data analysis
       (minimalPhysicalClosureMatterRealization period hPeriod
         couplings.matterMassSquared spectral)
-  hilbert : @ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
-    couplings NonNullFace NullFace _ _ configuration data analysis
-      family.normedAddCommGroup family.normedSpace
+  hilbert : ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
+    (measure := measure) configuration data analysis
+      (minimalPhysicalClosureChart period hPeriod configuration data analysis
+        spectral family)
+      (minimalPhysicalClosureSameAction period hPeriod configuration data
+        analysis spectral family)
   parametrix :
     GlobalCandidateAFaithfulAugmentedFiniteDefectParametrix4D period hPeriod
       configuration data analysis
@@ -194,7 +198,7 @@ def GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D.physical
       couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     (inputs : GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D period
-      hPeriod configuration data analysis) :=
+      hPeriod (measure := measure) configuration data analysis) :=
   globalCandidateAMinimalPhysicalSevenBlockExtension period hPeriod
     configuration data analysis
       (minimalPhysicalClosureChartData period hPeriod configuration data analysis
@@ -214,7 +218,7 @@ def GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D.estimates
       couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     (inputs : GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D period
-      hPeriod configuration data analysis) :=
+      hPeriod (measure := measure) configuration data analysis) :=
   globalCandidateAFaithfulAugmentedFredholmEstimates_of_parametrix period hPeriod
     configuration data analysis
       (minimalPhysicalClosureChart period hPeriod configuration data analysis
@@ -238,7 +242,7 @@ theorem global_candidateA_hessian_minimalPhysical_constructive_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (inputs : GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D period
-      hPeriod configuration data analysis) :
+      hPeriod (measure := measure) configuration data analysis) :
     GlobalCandidateAHessianClosureCertificate4D period hPeriod configuration
       data analysis
         (minimalPhysicalClosureChart period hPeriod configuration data analysis
