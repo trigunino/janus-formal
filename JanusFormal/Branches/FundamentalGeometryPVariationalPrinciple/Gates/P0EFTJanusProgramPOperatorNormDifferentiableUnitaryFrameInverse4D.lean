@@ -28,14 +28,13 @@ standard inverse formula
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameInverse4D
+namespace P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 
 set_option autoImplicit false
 noncomputable section
 
 open scoped InnerProductSpace
 open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
-open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameConnection4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -212,5 +211,5 @@ theorem operator_norm_differentiable_unitary_frame_inverse_gate
 end OperatorNormDifferentiableUnitaryFrameData
 
 end
-end P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameInverse4D
+end P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 end JanusFormal

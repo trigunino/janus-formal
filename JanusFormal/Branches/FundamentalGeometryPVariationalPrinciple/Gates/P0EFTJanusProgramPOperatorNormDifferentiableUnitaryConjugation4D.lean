@@ -33,14 +33,12 @@ C'_a = A_a C_a - C_a A_a.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPOperatorNormDifferentiableUnitaryConjugation4D
+namespace P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 
 set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
-open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameConnection4D
-open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameInverse4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -117,7 +115,8 @@ theorem conjugatedDerivative_eq_commutator
         (conjugatedConstantOperator frame baseOperator parameter) := by
   ext vector
   simp [conjugatedDerivative, continuousLinearMapCommutator,
-    conjugatedConstantOperator, rightLogDerivative, inverseDerivative]
+    conjugatedConstantOperator, rightLogDerivative, inverseDerivative,
+    sub_eq_add_neg]
 
 /-- Direct commutator-valued derivative statement. -/
 theorem hasDerivAt_conjugatedConstantOperator_commutator
@@ -157,5 +156,5 @@ theorem operator_norm_differentiable_unitary_conjugation_gate
 end OperatorNormDifferentiableUnitaryFrameData
 
 end
-end P0EFTJanusProgramPOperatorNormDifferentiableUnitaryConjugation4D
+end P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 end JanusFormal

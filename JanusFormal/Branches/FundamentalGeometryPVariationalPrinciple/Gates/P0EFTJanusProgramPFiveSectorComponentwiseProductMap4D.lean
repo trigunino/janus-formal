@@ -19,7 +19,8 @@ variable
   {Metric Abelian Matter Longitudinal Boundary : Type*}
   [Zero Metric] [Zero Abelian] [Zero Matter] [Zero Longitudinal] [Zero Boundary]
 
-private abbrev ProductSpace :=
+private abbrev ProductSpace
+    (Metric Abelian Matter Longitudinal Boundary : Type*) :=
   FiveSectorProduct Metric Abelian Matter Longitudinal Boundary
 
 /-- Coordinatewise five-sector map. -/
@@ -28,7 +29,9 @@ def fiveSectorComponentwiseMap
     (abelian : Abelian → Abelian)
     (matter : Matter → Matter)
     (longitudinal : Longitudinal → Longitudinal)
-    (boundary : Boundary → Boundary) : ProductSpace → ProductSpace :=
+    (boundary : Boundary → Boundary) :
+    ProductSpace Metric Abelian Matter Longitudinal Boundary →
+      ProductSpace Metric Abelian Matter Longitudinal Boundary :=
   fun value =>
     (metric value.1,
       (abelian value.2.1,
@@ -37,7 +40,9 @@ def fiveSectorComponentwiseMap
             boundary value.2.2.2.2))))
 
 /-- Coordinate projector on the raw five-sector product. -/
-def fiveSectorProductProjector : FivePhysicalSector → ProductSpace → ProductSpace
+def fiveSectorProductProjector : FivePhysicalSector →
+    ProductSpace Metric Abelian Matter Longitudinal Boundary →
+      ProductSpace Metric Abelian Matter Longitudinal Boundary
   | .metricDiffeomorphism => fun value =>
       (value.1, (0, (0, (0, 0))))
   | .abelianGauge => fun value =>
@@ -62,7 +67,8 @@ theorem fiveSectorComponentwiseMap_commutes_projector
     (hMatter : matter 0 = 0)
     (hLongitudinal : longitudinal 0 = 0)
     (hBoundary : boundary 0 = 0)
-    (sector : FivePhysicalSector) (value : ProductSpace) :
+    (sector : FivePhysicalSector)
+    (value : ProductSpace Metric Abelian Matter Longitudinal Boundary) :
     fiveSectorComponentwiseMap metric abelian matter longitudinal boundary
         (fiveSectorProductProjector sector value) =
       fiveSectorProductProjector sector
@@ -73,6 +79,5 @@ theorem fiveSectorComponentwiseMap_commutes_projector
     simp [fiveSectorComponentwiseMap, fiveSectorProductProjector,
       hMetric, hAbelian, hMatter, hLongitudinal, hBoundary]
 
-end
 end P0EFTJanusProgramPFiveSectorComponentwiseProductMap4D
 end JanusFormal

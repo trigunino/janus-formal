@@ -29,7 +29,7 @@ connection convention in the geometric layers of JanusFormal.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameConnection4D
+namespace P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 
 set_option autoImplicit false
 noncomputable section
@@ -59,15 +59,9 @@ theorem frameDerivative_metric
   have hInner :=
     (data.hasDerivAt_apply parameter first).inner Real
       (data.hasDerivAt_apply parameter second)
-  have hTransported :
-      HasDerivAt
-        (fun _ : Real => inner Real first second)
-        (inner Real (frame parameter first) (data.derivative parameter second) +
-          inner Real (data.derivative parameter first) (frame parameter second))
-        parameter := by
-    convert hInner using 1
-    funext current
-    exact (frame current).inner_map_map first second
+  have hTransported := hInner.congr_of_eventuallyEq
+    (Filter.Eventually.of_forall fun current =>
+      ((frame current).inner_map_map first second).symm)
   have hConstant :
       HasDerivAt (fun _ : Real => inner Real first second) 0 parameter :=
     hasDerivAt_const parameter (inner Real first second)
@@ -146,7 +140,16 @@ theorem rightLogDerivative_skew
   intro first second
   have hMetric := data.frameDerivative_metric parameter
     ((frame parameter).symm first) ((frame parameter).symm second)
-  simpa [rightLogDerivative] using hMetric
+  have hSimplified :
+      inner Real (data.derivative parameter ((frame parameter).symm first)) second +
+        inner Real first
+          (data.derivative parameter ((frame parameter).symm second)) = 0 := by
+    simpa [rightLogDerivative] using hMetric
+  change
+    inner Real (data.derivative parameter ((frame parameter).symm first)) second =
+      -inner Real first
+        (data.derivative parameter ((frame parameter).symm second))
+  linarith
 
 /-- The two coefficients are conjugate by the unitary frame. -/
 theorem rightLogDerivative_eq_conjugate_left
@@ -184,5 +187,5 @@ theorem operator_norm_differentiable_unitary_frame_connection_gate
 end OperatorNormDifferentiableUnitaryFrameData
 
 end
-end P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameConnection4D
+end P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 end JanusFormal

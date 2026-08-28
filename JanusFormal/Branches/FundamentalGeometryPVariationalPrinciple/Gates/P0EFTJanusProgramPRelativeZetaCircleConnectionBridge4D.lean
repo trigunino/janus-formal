@@ -20,6 +20,7 @@ set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusCircleDiracHeatTraceCancellation
+open P0EFTJanusCircleDeterminantTopologicalBundle
 open P0EFTJanusCircleQuillenMetricFlatConnection
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 
@@ -71,7 +72,7 @@ theorem RelativeZetaCircleConnectionBridgeData.metricFirstVariation_zero
         (relativeZetaDeterminantCoordinate family parameter)
         (relativeZetaDeterminantCoordinateDerivative family parameter) = 0 := by
   rw [circleQuillenConnection_metric_compatible]
-  rw [bridge.circle_parallel parameter, bridge.circle_parallel parameter]
+  rw [bridge.circle_parallel parameter]
   simp [circleQuillenCoordinateMetric]
 
 /-- Public family-level circle-connection checkpoint. -/

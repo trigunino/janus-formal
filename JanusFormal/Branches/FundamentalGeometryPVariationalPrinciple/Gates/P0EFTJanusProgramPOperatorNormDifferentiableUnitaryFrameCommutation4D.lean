@@ -35,8 +35,7 @@ set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
-open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameConnection4D
-open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameInverse4D
+open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D.OperatorNormDifferentiableUnitaryFrameData
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -82,7 +81,7 @@ theorem derivative_commutes_fixedOperator
         (fixedOperator.comp (data.derivative parameter)) parameter := by
     convert hRight using 1
     funext current
-    exact (commutation.commute current).symm
+    exact commutation.commute current
   exact hLeft.unique hRightOnLeft
 
 /-- The inverse frame commutes with every fixed operator commuting with the
@@ -97,6 +96,8 @@ theorem inverseFrame_commutes_fixedOperator
       fixedOperator.comp (inverseUnitaryFrameOperator frame parameter) := by
   ext vector
   apply (frame parameter).injective
+  simp only [ContinuousLinearMap.comp_apply,
+    inverseUnitaryFrameOperator_apply]
   rw [(frame parameter).apply_symm_apply]
   have hCommute := congrArg
     (fun operator : E →L[Real] E =>
@@ -115,17 +116,18 @@ theorem leftLogDerivative_commutes_fixedOperator
     (parameter : Real) :
     (data.leftLogDerivative parameter).comp fixedOperator =
       fixedOperator.comp (data.leftLogDerivative parameter) := by
-  have hDerivative :=
-    data.derivative_commutes_fixedOperator fixedOperator commutation parameter
-  have hInverse :=
-    data.inverseFrame_commutes_fixedOperator fixedOperator commutation parameter
+  have hDerivative := derivative_commutes_fixedOperator
+    data fixedOperator commutation parameter
+  have hInverse := inverseFrame_commutes_fixedOperator
+    data fixedOperator commutation parameter
   ext vector
   have hDerivativeApply := congrArg
     (fun operator : E →L[Real] E => operator vector) hDerivative
   have hInverseApply := congrArg
     (fun operator : E →L[Real] E =>
       operator (data.derivative parameter vector)) hInverse
-  simp only [ContinuousLinearMap.comp_apply] at hDerivativeApply hInverseApply ⊢
+  simp only [ContinuousLinearMap.comp_apply, leftLogDerivative_apply,
+    inverseUnitaryFrameOperator_apply] at hDerivativeApply hInverseApply ⊢
   rw [hDerivativeApply]
   exact hInverseApply
 
@@ -138,18 +140,19 @@ theorem rightLogDerivative_commutes_fixedOperator
     (parameter : Real) :
     (data.rightLogDerivative parameter).comp fixedOperator =
       fixedOperator.comp (data.rightLogDerivative parameter) := by
-  have hDerivative :=
-    data.derivative_commutes_fixedOperator fixedOperator commutation parameter
-  have hInverse :=
-    data.inverseFrame_commutes_fixedOperator fixedOperator commutation parameter
+  have hDerivative := derivative_commutes_fixedOperator
+    data fixedOperator commutation parameter
+  have hInverse := inverseFrame_commutes_fixedOperator
+    data fixedOperator commutation parameter
   ext vector
   have hInverseApply := congrArg
     (fun operator : E →L[Real] E => operator vector) hInverse
   have hDerivativeApply := congrArg
     (fun operator : E →L[Real] E =>
       operator (inverseUnitaryFrameOperator frame parameter vector)) hDerivative
-  simp only [ContinuousLinearMap.comp_apply] at hInverseApply hDerivativeApply ⊢
-  rw [← hInverseApply]
+  simp only [ContinuousLinearMap.comp_apply, rightLogDerivative_apply,
+    inverseUnitaryFrameOperator_apply] at hInverseApply hDerivativeApply ⊢
+  rw [hInverseApply]
   exact hDerivativeApply
 
 /-- Public fixed-operator commutation checkpoint. -/
@@ -170,10 +173,10 @@ theorem operator_norm_differentiable_unitary_frame_commutation_gate
     (∀ parameter,
       (data.rightLogDerivative parameter).comp fixedOperator =
         fixedOperator.comp (data.rightLogDerivative parameter)) :=
-  ⟨data.derivative_commutes_fixedOperator fixedOperator commutation,
-    data.inverseFrame_commutes_fixedOperator fixedOperator commutation,
-    data.leftLogDerivative_commutes_fixedOperator fixedOperator commutation,
-    data.rightLogDerivative_commutes_fixedOperator fixedOperator commutation⟩
+  ⟨derivative_commutes_fixedOperator data fixedOperator commutation,
+    inverseFrame_commutes_fixedOperator data fixedOperator commutation,
+    leftLogDerivative_commutes_fixedOperator data fixedOperator commutation,
+    rightLogDerivative_commutes_fixedOperator data fixedOperator commutation⟩
 
 end OperatorNormDifferentiableUnitaryFrameData
 

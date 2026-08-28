@@ -21,16 +21,22 @@ namespace P0EFTJanusProgramPReferenceNuclearHeatFinitePartCanonicalSchwarzAssemb
 set_option autoImplicit false
 noncomputable section
 
-open Filter Set
+open Filter Set MeasureTheory
 open P0EFTJanusProgramPNuclearHeatDuhamelTraceVariation4D
+open P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaCanonicalSchwarzReflection4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
+open P0EFTJanusProgramPRelativeHeatMellinZetaSchwarzReflection4D
+open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPReferenceNuclearDuhamelGreenFullySpectralBoundaryLimits4D
 open P0EFTJanusProgramPReferenceNuclearHeatFinitePartRealAxisSpectralAssembly4D
 
-variable {Slice ShortCutoff LongCutoff E : Type*}
+universe e i s a b
+
+variable {Slice : Type s} {ShortCutoff : Type a} {LongCutoff : Type b}
+  {E : Type e}
   [MeasurableSpace Slice]
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Fully spectral standalone reference data with canonical Mellin Schwarz
@@ -41,21 +47,20 @@ structure ReferenceNuclearHeatFinitePartCanonicalSchwarzAssemblyData
     (longCutoffFilter : Filter LongCutoff) [NeBot longCutoffFilter]
     (family : RelativeHeatMellinZetaFamilyData)
     (shortTimeRegion longTimeRegion : Set Real) where
-  nuclear : NuclearHeatDuhamelTraceVariationData (E := E)
+  nuclear : NuclearHeatDuhamelTraceVariationData.{e, i} (E := E)
   countertermContribution : Real → Real
   spectralBoundary :
-    ReferenceNuclearDuhamelGreenFullySpectralBoundaryLimitsData
+    ReferenceNuclearDuhamelGreenFullySpectralBoundaryLimitsData.{e, i, s, a, b}
       sliceMeasure shortCutoffFilter longCutoffFilter nuclear
         countertermContribution shortTimeRegion longTimeRegion
   logDeterminant_eq : ∀ parameter,
-    P0EFTJanusProgramPRelativeHeatFinitePartDeterminant4D.
-        relativeHeatFinitePartLogDeterminant
+    relativeHeatFinitePartLogDeterminant
           (family.finitePartFamily.finitePart parameter) =
       countertermContribution parameter +
-        spectralBoundary.shortTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter +
-          spectralBoundary.longTime.weighted.toWeightedHeatTraceVariation.
-            contribution parameter
+        spectralBoundary.shortTime.weighted.toWeightedHeatTraceVariation.contribution
+            parameter +
+          spectralBoundary.longTime.weighted.toWeightedHeatTraceVariation.contribution
+            parameter
   zetaCanonicalSchwarz : ∀ parameter,
     RelativeHeatMellinZetaCanonicalSchwarzReflectionData
       (family.continuation parameter)
@@ -108,13 +113,12 @@ theorem connectionCoefficient_eq_neg_logarithmicTrace
       (E := E) sliceMeasure shortCutoffFilter longCutoffFilter family
         shortTimeRegion longTimeRegion)
     (parameter : Real) :
-    P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-        relativeZetaConnectionCoefficient family.toZetaFamily parameter =
-      -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-          toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
+    relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+      -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+          parameter :
         Complex) :=
-  data.toRealAxisSpectralAssembly.
-    connectionCoefficient_eq_neg_logarithmicTrace parameter
+  data.toRealAxisSpectralAssembly.connectionCoefficient_eq_neg_logarithmicTrace
+    parameter
 
 /-- Public canonical-Schwarz reference assembly checkpoint. -/
 theorem reference_nuclear_heat_finite_part_canonical_schwarz_assembly_gate
@@ -128,16 +132,14 @@ theorem reference_nuclear_heat_finite_part_canonical_schwarz_assembly_gate
         shortTimeRegion longTimeRegion) :
     (∀ parameter,
       Set.EqOn (family.continuation parameter).zeta
-        (P0EFTJanusProgramPRelativeHeatMellinZetaSchwarzReflection4D.
-          schwarzReflect (family.continuation parameter).zeta)
+        (schwarzReflect (family.continuation parameter).zeta)
         (data.zetaCanonicalSchwarz parameter).domain) ∧
     (∀ parameter,
       (family.zetaPrimeAtZero parameter).im = 0) ∧
     (∀ parameter,
-      P0EFTJanusProgramPRelativeZetaDeterminantConnection4D.
-          relativeZetaConnectionCoefficient family.toZetaFamily parameter =
-        -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.
-            toBoundaryMatching.toOperatorIdentity.logarithmicTrace parameter :
+      relativeZetaConnectionCoefficient family.toZetaFamily parameter =
+        -(data.spectralBoundary.toCollapsedBoundaryLimits.toCollapsedBoundary.toBoundaryMatching.toOperatorIdentity.logarithmicTrace
+            parameter :
           Complex)) :=
   ⟨fun parameter =>
       (data.zetaCanonicalSchwarz parameter).zeta_eqOn_schwarz_domain,

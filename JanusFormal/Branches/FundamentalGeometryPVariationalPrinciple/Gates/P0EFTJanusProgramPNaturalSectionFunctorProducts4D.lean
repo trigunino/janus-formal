@@ -36,9 +36,9 @@ def naturalSectionFunctorProd
   pullbackComposition := by
     intro firstObject secondObject thirdObject secondMorphism firstMorphism sectionValue
     ext
-    · exact first.pullbackComposition firstObject secondObject thirdObject
+    · exact first.pullbackComposition
         secondMorphism firstMorphism sectionValue.1
-    · exact second.pullbackComposition firstObject secondObject thirdObject
+    · exact second.pullbackComposition
         secondMorphism firstMorphism sectionValue.2
 
 @[simp]
@@ -75,7 +75,7 @@ def naturalOperatorProd
       second.apply object sectionValue.2)
   naturality := by
     intro source target morphism sectionValue
-    ext
+    apply Prod.ext
     · exact first.naturality morphism sectionValue.1
     · exact second.naturality morphism sectionValue.2
 
@@ -88,7 +88,7 @@ theorem naturalOperatorProd_apply_fst
     (object : immersionCategory.category.Obj)
     (sectionValue :
       (naturalSectionFunctorProd sourceFirst sourceSecond).Section object) :
-    (naturalOperatorProd first second).apply object sectionValue |>.1 =
+    ((naturalOperatorProd first second).apply object sectionValue).1 =
       first.apply object sectionValue.1 :=
   rfl
 
@@ -101,7 +101,7 @@ theorem naturalOperatorProd_apply_snd
     (object : immersionCategory.category.Obj)
     (sectionValue :
       (naturalSectionFunctorProd sourceFirst sourceSecond).Section object) :
-    (naturalOperatorProd first second).apply object sectionValue |>.2 =
+    ((naturalOperatorProd first second).apply object sectionValue).2 =
       second.apply object sectionValue.2 :=
   rfl
 

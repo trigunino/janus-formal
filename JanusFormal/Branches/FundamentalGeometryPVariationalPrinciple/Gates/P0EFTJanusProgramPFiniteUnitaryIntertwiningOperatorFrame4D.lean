@@ -33,9 +33,9 @@ variable {E : Type*}
 /-- Unitary trivializing frame of an operator family based at parameter zero. -/
 structure FiniteUnitaryIntertwiningOperatorFrameData
     (operator : Real → E →L[Real] E) where
-  frame : ∀ parameter, E ≃ₗᵢ[Real] E
+  frame : ∀ parameter : Real, E ≃ₗᵢ[Real] E
   frame_zero : frame 0 = LinearIsometryEquiv.refl Real E
-  intertwines_basepoint : ∀ parameter vector,
+  intertwines_basepoint : ∀ (parameter : Real) (vector : E),
     operator parameter (frame parameter vector) =
       frame parameter (operator 0 vector)
 
@@ -129,7 +129,9 @@ theorem transport_zero
     (parameter : Real) :
     data.transport 0 parameter = data.frame parameter := by
   ext vector
-  simp [transport, data.frame_zero]
+  unfold transport
+  rw [data.frame_zero]
+  rfl
 
 /-- Canonical unitary frame of the true kernel bundle. -/
 def kernelFrame
@@ -145,8 +147,8 @@ def kernelComplementFrame
     (data : FiniteUnitaryIntertwiningOperatorFrameData operator)
     (parameter : Real) :
     (operator 0).kerᗮ ≃ₗᵢ[Real] (operator parameter).kerᗮ :=
-  data.toFiniteUnitaryIntertwiningOperatorTransport.
-    kernelComplementTransport 0 parameter
+  FiniteUnitaryIntertwiningOperatorTransportData.kernelComplementTransport
+    data.toFiniteUnitaryIntertwiningOperatorTransport 0 parameter
 
 @[simp]
 theorem kernelFrame_apply_val
@@ -166,6 +168,8 @@ theorem kernelComplementFrame_apply_val
     (parameter : Real) (vector : (operator 0).kerᗮ) :
     (data.kernelComplementFrame parameter vector).1 =
       data.frame parameter vector.1 := by
+  unfold kernelComplementFrame
+  unfold FiniteUnitaryIntertwiningOperatorTransportData.kernelComplementTransport
   change data.transport 0 parameter vector.1 = data.frame parameter vector.1
   have hTransport := congrArg (fun equivalence => equivalence vector.1)
     (data.transport_zero parameter)

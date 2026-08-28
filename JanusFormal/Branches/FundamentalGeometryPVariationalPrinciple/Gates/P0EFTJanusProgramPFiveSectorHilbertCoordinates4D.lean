@@ -261,6 +261,36 @@ def sectorProjector : FivePhysicalSector → E →L[Real] E
   | .longitudinalLL => coordinates.longitudinalProjector
   | .boundaryFiniteBV => coordinates.boundaryProjector
 
+@[simp] theorem decomposition_metricProjector (x : E) :
+    coordinates.decomposition (coordinates.metricProjector x) =
+      fiveSectorMetricAxis
+        (fiveSectorMetricCoordinate (coordinates.decomposition x)) := by
+  simp [metricProjector, forward, backward]
+
+@[simp] theorem decomposition_abelianProjector (x : E) :
+    coordinates.decomposition (coordinates.abelianProjector x) =
+      fiveSectorAbelianAxis
+        (fiveSectorAbelianCoordinate (coordinates.decomposition x)) := by
+  simp [abelianProjector, forward, backward]
+
+@[simp] theorem decomposition_matterProjector (x : E) :
+    coordinates.decomposition (coordinates.matterProjector x) =
+      fiveSectorMatterAxis
+        (fiveSectorMatterCoordinate (coordinates.decomposition x)) := by
+  simp [matterProjector, forward, backward]
+
+@[simp] theorem decomposition_longitudinalProjector (x : E) :
+    coordinates.decomposition (coordinates.longitudinalProjector x) =
+      fiveSectorLongitudinalAxis
+        (fiveSectorLongitudinalCoordinate (coordinates.decomposition x)) := by
+  simp [longitudinalProjector, forward, backward]
+
+@[simp] theorem decomposition_boundaryProjector (x : E) :
+    coordinates.decomposition (coordinates.boundaryProjector x) =
+      fiveSectorBoundaryAxis
+        (fiveSectorBoundaryCoordinate (coordinates.decomposition x)) := by
+  simp [boundaryProjector, forward, backward]
+
 /-- Every canonical sector projector is idempotent. -/
 theorem sectorProjector_idempotent
     (sector : FivePhysicalSector) (x : E) :

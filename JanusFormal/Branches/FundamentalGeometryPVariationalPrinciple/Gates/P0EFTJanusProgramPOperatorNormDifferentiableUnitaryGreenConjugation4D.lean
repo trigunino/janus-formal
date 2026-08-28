@@ -30,14 +30,12 @@ G'_a = -G_a H'_a G_a.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPOperatorNormDifferentiableUnitaryGreenConjugation4D
+namespace P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 
 set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
-open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameConnection4D
-open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryConjugation4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -74,14 +72,15 @@ theorem conjugatedOperator_green
         (pair.conjugatedGreen frame parameter) =
       ContinuousLinearMap.id Real E := by
   ext vector
-  change frame parameter
-      (pair.operator
-        (pair.green ((frame parameter).symm vector))) = vector
+  simp only [conjugatedOperator, conjugatedGreen,
+    ContinuousLinearMap.comp_apply, ContinuousLinearMap.id_apply,
+    conjugatedConstantOperator_apply]
   have hInverse := congrArg
     (fun map : E →L[Real] E => map ((frame parameter).symm vector))
     pair.operator_green
   simp only [ContinuousLinearMap.comp_apply,
     ContinuousLinearMap.id_apply] at hInverse
+  rw [(frame parameter).symm_apply_apply]
   rw [hInverse]
   exact (frame parameter).apply_symm_apply vector
 
@@ -94,14 +93,15 @@ theorem conjugatedGreen_operator
         (pair.conjugatedOperator frame parameter) =
       ContinuousLinearMap.id Real E := by
   ext vector
-  change frame parameter
-      (pair.green
-        (pair.operator ((frame parameter).symm vector))) = vector
+  simp only [conjugatedOperator, conjugatedGreen,
+    ContinuousLinearMap.comp_apply, ContinuousLinearMap.id_apply,
+    conjugatedConstantOperator_apply]
   have hInverse := congrArg
     (fun map : E →L[Real] E => map ((frame parameter).symm vector))
     pair.green_operator
   simp only [ContinuousLinearMap.comp_apply,
     ContinuousLinearMap.id_apply] at hInverse
+  rw [(frame parameter).symm_apply_apply]
   rw [hInverse]
   exact (frame parameter).apply_symm_apply vector
 
@@ -225,5 +225,5 @@ theorem operator_norm_differentiable_unitary_green_conjugation_gate
 end BoundedTwoSidedInversePair
 
 end
-end P0EFTJanusProgramPOperatorNormDifferentiableUnitaryGreenConjugation4D
+end P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 end JanusFormal

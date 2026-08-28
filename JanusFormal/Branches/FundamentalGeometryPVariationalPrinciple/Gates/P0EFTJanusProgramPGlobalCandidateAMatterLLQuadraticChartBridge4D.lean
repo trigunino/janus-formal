@@ -71,18 +71,6 @@ attribute [local instance]
   GlobalCandidateALocalVariationalChart.normedAddCommGroup
   GlobalCandidateALocalVariationalChart.normedSpace
 
-local instance (priority := 30000) quadraticBridgeFullLLGraphNormedSpace
-    {configuration : GlobalFieldConfiguration period hPeriod}
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (data : GlobalCandidateAActionData period hPeriod configuration couplings
-      NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration) :
-    NormedSpace Real
-      (GlobalFullLLGraphHilbert period hPeriod data analysis) :=
-  (globalFullLLGraphInnerProductSpace period hPeriod data analysis).toNormedSpace
-
 /-! ## Generic quadratic pullback calculus -/
 
 private theorem symmetricQuadratic_hasFDerivAt
@@ -253,6 +241,9 @@ theorem quadraticChart_localMatterHessian_eq_pullback
         couplings.matterMassSquared).bilinearComp bridge.matterProjection
           bridge.matterProjection := by
   unfold globalCandidateAH13LocalMatterHessian
+  change fderiv Real
+      (actionGradient (quadraticBridgeLocalBlocks period hPeriod chart).matter)
+      bridge.chartBridge.basePoint = _
   rw [bridge.matterAction_eq]
   exact symmetricQuadraticPullback_second_fderiv
     (programPPrimitiveSpinCMatterGraphForm period hPeriod
@@ -278,14 +269,23 @@ theorem quadraticChart_localLLHessian_eq_pullback
       period hPeriod configuration data analysis chart) :
     globalCandidateAH13LocalLLHessian period hPeriod chart
         bridge.chartBridge.basePoint =
-      (globalCandidateAFullLLGraphForm period hPeriod data analysis).bilinearComp
-        bridge.llProjection bridge.llProjection := by
+      globalCandidateAFullLLGraphFormPullback period hPeriod data analysis
+        bridge.llProjection := by
   unfold globalCandidateAH13LocalLLHessian
+  change fderiv Real
+      (actionGradient (quadraticBridgeLocalBlocks period hPeriod chart).ll)
+      bridge.chartBridge.basePoint = _
   rw [bridge.llAction_eq]
-  exact symmetricQuadraticPullback_second_fderiv
-    (globalCandidateAFullLLGraphForm period hPeriod data analysis)
-    (globalCandidateAFullLLGraphForm_comm period hPeriod data analysis)
-    bridge.llProjection bridge.llConstant bridge.chartBridge.basePoint
+  simpa only [globalCandidateAFullLLGraphAction,
+    globalCandidateAFullLLGraphFormPullback] using
+    (@symmetricQuadraticPullback_second_fderiv
+      chart.Model (GlobalFullLLGraphHilbert period hPeriod data analysis)
+      inferInstance inferInstance
+      (GlobalFullLLGraphHilbert period hPeriod data analysis).normedAddCommGroup
+      (globalFullLLC2GraphNormedSpace period hPeriod data analysis)
+      (globalCandidateAFullLLGraphForm period hPeriod data analysis)
+      (globalCandidateAFullLLGraphForm_comm period hPeriod data analysis)
+      bridge.llProjection bridge.llConstant bridge.chartBridge.basePoint)
 
 /-- The quadratic chart identifies the local matter block with the completed
 matter graph form on the diagonal smooth core. -/

@@ -33,8 +33,10 @@ open P0EFTJanusProgramPIntrinsicNuclearTraceSubtraction4D
 open P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D
 open P0EFTJanusProgramPRelativeHeatMellinAnalyticDifference4D
 
-variable {Parameter Time E : Type*}
-  [NormedAddCommGroup E] [InnerProductSpace Real E]
+universe u v w x
+
+variable {Parameter : Type u} {Time : Type v} {E : Type w}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Actual/reference/relative nuclear operator family with the exact operator
 subtraction law. -/
@@ -46,11 +48,11 @@ structure RelativeNuclearTraceFamilyData where
     relativeOperator parameter time =
       actualOperator parameter time - referenceOperator parameter time
   actualTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData (actualOperator parameter time)
+    IntrinsicNuclearTraceData.{w, x} (actualOperator parameter time)
   referenceTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData (referenceOperator parameter time)
+    IntrinsicNuclearTraceData.{w, x} (referenceOperator parameter time)
   relativeTraceClass : ∀ parameter time,
-    IntrinsicNuclearTraceData (relativeOperator parameter time)
+    IntrinsicNuclearTraceData.{w, x} (relativeOperator parameter time)
 
 namespace RelativeNuclearTraceFamilyData
 
@@ -84,14 +86,15 @@ theorem relativeTrace_eq_difference
       data.actualTrace parameter time - data.referenceTrace parameter time := by
   let transported : IntrinsicNuclearTraceData
       (data.actualOperator parameter time - data.referenceOperator parameter time) :=
-    (data.relativeTraceClass parameter time).transportOperator
-      (data.operator_eq_sub parameter time)
+    P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator
+      (data.relativeTraceClass parameter time) (data.operator_eq_sub parameter time)
   calc
     data.relativeTrace parameter time = intrinsicNuclearTrace transported := by
       unfold relativeTrace transported
       symm
-      exact (data.relativeTraceClass parameter time).
-        transportOperator_intrinsicNuclearTrace
+      exact
+        P0EFTJanusProgramPIntrinsicNuclearTraceTransport4D.IntrinsicNuclearTraceData.transportOperator_intrinsicNuclearTrace
+          (data.relativeTraceClass parameter time)
           (data.operator_eq_sub parameter time)
     _ = intrinsicNuclearTrace (data.actualTraceClass parameter time) -
         intrinsicNuclearTrace (data.referenceTraceClass parameter time) :=
@@ -107,8 +110,8 @@ theorem relativeTrace_eq_difference_function
       (Parameter := Parameter) (Time := Time) (E := E))
     (parameter : Parameter) :
     data.relativeTrace parameter =
-      heatTraceDifference (data.actualTrace parameter)
-        (data.referenceTrace parameter) := by
+      fun time => data.actualTrace parameter time -
+        data.referenceTrace parameter time := by
   funext time
   exact data.relativeTrace_eq_difference parameter time
 
@@ -121,8 +124,8 @@ theorem relative_nuclear_trace_family_gate
         data.actualTrace parameter time - data.referenceTrace parameter time) ∧
     (∀ parameter,
       data.relativeTrace parameter =
-        heatTraceDifference (data.actualTrace parameter)
-          (data.referenceTrace parameter)) :=
+        fun time => data.actualTrace parameter time -
+          data.referenceTrace parameter time) :=
   ⟨data.relativeTrace_eq_difference,
     data.relativeTrace_eq_difference_function⟩
 
