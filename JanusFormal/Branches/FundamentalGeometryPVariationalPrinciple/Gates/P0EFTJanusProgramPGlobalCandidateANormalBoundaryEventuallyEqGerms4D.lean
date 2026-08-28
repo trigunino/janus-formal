@@ -59,8 +59,13 @@ theorem OpenGermDomain.ofEventuallyEq_apply
     (hEq : completed =ᶠ[𝓝 base] historical)
     {variation : Variation}
     (hVariation : variation ∈ (OpenGermDomain.ofEventuallyEq hEq).carrier) :
-    completed variation = historical variation :=
-  interior_subset hVariation
+    completed variation = historical variation := by
+  have hVariation' :
+      variation ∈ interior {point | completed point = historical point} :=
+    hVariation
+  exact (interior_subset :
+    interior {point : Variation | completed point = historical point} ⊆
+      {point : Variation | completed point = historical point}) hVariation'
 
 /-- Direct action-germ constructor from eventual equality. -/
 def SameRealActionGermAt.ofEventuallyEq
@@ -213,7 +218,7 @@ def NormalBoundaryEventuallyEqGermData.toSeparated
     exact congrArg (fun field => field boundary) hWhole
 
 /-- Eventual component identities close the two-sheet action germ directly. -/
-theorem candidate_a_normal_boundary_eventuallyEq_terminal_gate
+def candidate_a_normal_boundary_eventuallyEq_terminal_gate
     {completedTangent historicalTangent :
       Variation → Boundary → TangentIndex → AmbientIndex → Real}
     {completedTangentDerivative historicalTangentDerivative :

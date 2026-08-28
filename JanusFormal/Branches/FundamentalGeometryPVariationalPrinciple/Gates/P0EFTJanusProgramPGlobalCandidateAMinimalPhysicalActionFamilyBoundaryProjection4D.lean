@@ -36,6 +36,9 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundaryActionGermCalculus4D
@@ -85,25 +88,46 @@ private theorem boundaryProjectedRobin_contDiffWithinAt
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis realization einsteinScale)
-    (point : BoundaryProjectionModel period hPeriod configuration) :
+      period hPeriod (measure := measure) configuration data analysis realization
+        einsteinScale)
+    (point : BoundaryProjectionModel period hPeriod configuration)
+    (hPoint : point ∈ family.domain) :
+    letI : NormedAddCommGroup
+        (BoundaryProjectionModel period hPeriod configuration) :=
+      family.normedAddCommGroup
+    letI : NormedSpace Real
+        (BoundaryProjectionModel period hPeriod configuration) :=
+      family.normedSpace
     ContDiffWithinAt Real 2
       (fun state =>
         candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation period hPeriod
           einsteinScale data.plusGravity.metric
             (family.boundaryProjection state))
       family.domain point := by
-  have hOn : ContDiffOn Real 2
-      (fun state =>
-        candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation period hPeriod
-          einsteinScale data.plusGravity.metric
-            (family.boundaryProjection state))
-      family.domain :=
-    (candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_contDiffOn_two
-      period hPeriod einsteinScale data.plusGravity.metric hTransverse).comp
-      family.boundaryProjection.contDiff.contDiffOn
-      family.boundaryProjection_mem
-  exact hOn.contDiffWithinAt
+  letI : NormedAddCommGroup
+      (BoundaryProjectionModel period hPeriod configuration) :=
+    family.normedAddCommGroup
+  letI : NormedSpace Real
+      (BoundaryProjectionModel period hPeriod configuration) :=
+    family.normedSpace
+  let localFamily : GlobalCandidateALocalActionFamily period hPeriod
+      (BoundaryProjectionModel period hPeriod configuration) couplings
+      NonNullFace NullFace :=
+    { domain := family.domain
+      datumAt := family.datumAt }
+  let blocks := globalCandidateAActionBlocks period hPeriod
+    (localFamily.toActionFamily period hPeriod 0 family.zero_mem_domain) measure
+  let physical := family.toPhysicalC2 period hPeriod hTransverse
+  letI := physical.normedAddCommGroup
+  letI := physical.normedSpace
+  have hRobin : ContDiffWithinAt Real 2 blocks.robin family.domain point :=
+    (physical.physicalBlocksC2Within point hPoint).robin
+  rw [show (fun state =>
+      candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation period hPeriod
+        einsteinScale data.plusGravity.metric (family.boundaryProjection state)) =
+      blocks.robin by
+    simpa [localFamily, blocks] using family.robinAction_eq.symm]
+  exact hRobin
 
 /-- The concrete boundary-projection packet determines the generic H10 Robin
 same-action family without an additional germ witness. -/
@@ -120,50 +144,50 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D.toH10Robin
       period hPeriod couplings.matterMassSquared}
     {einsteinScale : Real}
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis realization einsteinScale)
+      period hPeriod (measure := measure) configuration data analysis realization
+        einsteinScale)
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric) :
     ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D period hPeriod
-      configuration data analysis realization where
+      (measure := measure) configuration data analysis realization where
   normedAddCommGroup := family.normedAddCommGroup
   normedSpace := family.normedSpace
+  toAddCommGroup_eq := family.toAddCommGroup_eq
+  toSMul_eq := family.toSMul_eq
   bounds := family.bounds
   domain := family.domain
   isOpen_domain := family.isOpen_domain
   zero_mem_domain := family.zero_mem_domain
   datumAt := family.datumAt
   datumAt_zero_configuration := family.datumAt_zero_configuration
-  sixPhysicalBlocksC2Within := family.sixPhysicalBlocksC2Within
+  nonRobinBlocksC2Within := by
+    letI : NormedAddCommGroup
+        (BoundaryProjectionModel period hPeriod configuration) :=
+      family.normedAddCommGroup
+    letI : NormedSpace Real
+        (BoundaryProjectionModel period hPeriod configuration) :=
+      family.normedSpace
+    intro point hPoint
+    have hSix := family.sixPhysicalBlocksC2Within point hPoint
+    exact
+      { candidateA := hSix.candidateA
+        einsteinHilbertPlus := hSix.einsteinHilbertPlus
+        einsteinHilbertMinus := hSix.einsteinHilbertMinus
+        maxwellPlus := hSix.maxwellPlus
+        maxwellMinus := hSix.maxwellMinus
+        finiteBV := hSix.finiteBV }
   completedRobinAction := fun state =>
     candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation period hPeriod
       einsteinScale data.plusGravity.metric (family.boundaryProjection state)
-  completedRobinAction_contDiffWithin := by
-    intro point
+  completedRobin_contDiffWithin_two := by
+    intro point hPoint
     exact boundaryProjectedRobin_contDiffWithinAt period hPeriod configuration
-      data analysis realization einsteinScale hTransverse family point
-  robinAction := by
-    let localFamily : GlobalCandidateALocalActionFamily period hPeriod
-        (BoundaryProjectionModel period hPeriod configuration) couplings
-        NonNullFace NullFace :=
-      { domain := family.domain
-        datumAt := family.datumAt }
-    exact (globalCandidateAActionBlocks period hPeriod
-      (localFamily.toActionFamily period hPeriod 0 family.zero_mem_domain)
-        measure).robin
-  sameAction := by
-    let localFamily : GlobalCandidateALocalActionFamily period hPeriod
-        (BoundaryProjectionModel period hPeriod configuration) couplings
-        NonNullFace NullFace :=
-      { domain := family.domain
-        datumAt := family.datumAt }
-    refine
-      { domain := family.domain
-        isOpen_domain := family.isOpen_domain
-        base_mem_domain := family.zero_mem_domain
-        eqOn_domain := ?_ }
+      data analysis realization einsteinScale hTransverse family point hPoint
+  completedRobin_sameAction := by
+    dsimp only
     intro state hState
     have hEquality := congrFun family.robinAction_eq state
-    simpa [localFamily] using hEquality.symm
+    simpa using hEquality.symm
   matterConstant := family.matterConstant
   llConstant := family.llConstant
   matterAction_eq := family.matterAction_eq
@@ -171,7 +195,7 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D.toH10Robin
 
 /-- H13 directly from the actual bounded boundary projection and the six
 independent local regularity statements. -/
-theorem global_candidateA_h13_minimalPhysical_boundaryProjection_gate
+def global_candidateA_h13_minimalPhysical_boundaryProjection_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -186,10 +210,12 @@ theorem global_candidateA_h13_minimalPhysical_boundaryProjection_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis realization einsteinScale) :=
+      period hPeriod (measure := measure) configuration data analysis realization
+        einsteinScale) :=
   global_candidateA_h13_minimalPhysical_h10RobinFamily_gate period hPeriod
-    configuration data analysis realization
-      (family.toH10Robin period hPeriod hTransverse)
+    (measure := measure) configuration data analysis realization
+      (ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D.toH10Robin
+        period hPeriod (measure := measure) family hTransverse)
 
 end
 end P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyBoundaryProjection4D

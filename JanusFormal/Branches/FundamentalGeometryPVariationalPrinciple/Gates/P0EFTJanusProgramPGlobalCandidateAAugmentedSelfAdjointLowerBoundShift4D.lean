@@ -1,19 +1,16 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveParametrix4D
 
 /-!
 # H12 from a self-adjoint finite-defect shift with a norm lower bound
 
-The anti-Lipschitz H12 packet is already sufficient to derive the range of the
-shifted augmented Hessian.  For elliptic estimates, however, the natural datum
-is the unbundled estimate
+For elliptic estimates, the natural datum is the unbundled estimate
 
 `‖x‖ ≤ C ‖(H + P) x‖`.
 
-This file converts that estimate into the previous anti-Lipschitz packet and
-therefore constructs shifted surjectivity, the canonical inverse, the
-generalized inverse, finite defects, Fredholmness and index zero.  No explicit
-range or inverse witness remains in the input.
+This file derives shifted surjectivity directly from that estimate and then
+constructs the generalized inverse, finite defects, Fredholmness and index
+zero.  No explicit range or inverse witness remains in the input.
 -/
 
 namespace JanusFormal
@@ -37,8 +34,13 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveShift4D
-open P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveParametrix4D
+open P0EFTJanusProgramPFiniteDefectCoerciveShift4D
 open P0EFTJanusProgramPSelfAdjointLowerBoundSurjective4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
@@ -62,18 +64,24 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev LowerBoundHilbert
+attribute [local instance 30000]
+  augmentedFredholmNormedAddCommGroup
+  augmentedFredholmInnerProductSpace
+  augmentedFredholmCompleteSpace
+
+/-- Local opaque name for the canonical faithful augmented Hilbert space. -/
+def LowerBoundHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) : Type :=
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 
-local instance (priority := 30000) lowerBoundNormedAddCommGroup
+abbrev lowerBoundNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -83,9 +91,9 @@ local instance (priority := 30000) lowerBoundNormedAddCommGroup
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     NormedAddCommGroup
       (LowerBoundHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  augmentedFredholmNormedAddCommGroup period hPeriod configuration data analysis
+
+attribute [local instance 30000] lowerBoundNormedAddCommGroup
 
 local instance (priority := 30000) lowerBoundInnerProductSpace
     {couplings : GlobalCandidateAActionCouplings}
@@ -97,37 +105,7 @@ local instance (priority := 30000) lowerBoundInnerProductSpace
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     InnerProductSpace Real
       (LowerBoundHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) lowerBoundNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (LowerBoundHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) lowerBoundModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (LowerBoundHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  augmentedFredholmInnerProductSpace period hPeriod configuration data analysis
 
 local instance (priority := 30000) lowerBoundCompleteSpace
     {couplings : GlobalCandidateAActionCouplings}
@@ -139,9 +117,93 @@ local instance (priority := 30000) lowerBoundCompleteSpace
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
     CompleteSpace
       (LowerBoundHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+  augmentedFredholmCompleteSpace period hPeriod configuration data analysis
+
+/-- The finite-defect shifted augmented Hessian on the canonical faithful
+Hilbert space. -/
+def augmentedLowerBoundShiftedOperator
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart)
+    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
+      hPeriod configuration data analysis chart sameAction)
+    (shift : GlobalCandidateAAugmentedCoerciveShiftData4D period hPeriod
+      configuration data analysis chart sameAction physical) :
+    LowerBoundHilbert period hPeriod configuration data analysis →L[Real]
+      LowerBoundHilbert period hPeriod configuration data analysis :=
+  @finiteDefectShiftedOperator
+    (LowerBoundHilbert period hPeriod configuration data analysis)
+    (lowerBoundNormedAddCommGroup period hPeriod configuration data analysis)
+    inferInstance
+    (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+      configuration data analysis chart sameAction physical)
+    shift
+
+/-- Pointwise shifted augmented Hessian, avoiding any comparison of bundled
+continuous-linear-map instance parameters. -/
+def augmentedLowerBoundShiftedApply
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart)
+    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
+      hPeriod configuration data analysis chart sameAction)
+    (shift : GlobalCandidateAAugmentedCoerciveShiftData4D period hPeriod
+      configuration data analysis chart sameAction physical)
+    (vector : LowerBoundHilbert period hPeriod configuration data analysis) :
+    LowerBoundHilbert period hPeriod configuration data analysis :=
+  globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
+      data analysis chart sameAction physical vector +
+    (@FiniteDefectCoerciveShiftData.projection
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis)
+      (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+        analysis)
+      (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
+      (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+        configuration data analysis chart sameAction physical)
+      shift) vector
+
+theorem augmentedLowerBoundShiftedOperator_apply
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart)
+    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
+      hPeriod configuration data analysis chart sameAction)
+    (shift : GlobalCandidateAAugmentedCoerciveShiftData4D period hPeriod
+      configuration data analysis chart sameAction physical)
+    (vector : LowerBoundHilbert period hPeriod configuration data analysis) :
+    augmentedLowerBoundShiftedOperator period hPeriod configuration data
+        analysis chart sameAction physical shift vector =
+      augmentedLowerBoundShiftedApply period hPeriod configuration data analysis
+        chart sameAction physical shift vector := by
+  rfl
 
 /-- PDE-facing H12 packet: one finite-defect coercive shift, self-adjointness,
 and one global norm estimate. -/
@@ -159,51 +221,21 @@ structure GlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
+      hPeriod configuration data analysis chart sameAction) : Type where
   coerciveShift : GlobalCandidateAAugmentedCoerciveShiftData4D period hPeriod
     configuration data analysis chart sameAction physical
   shifted_selfAdjoint : IsSelfAdjoint
-    (augmentedShiftedOperator period hPeriod configuration data analysis chart
-      sameAction physical coerciveShift)
+    (augmentedLowerBoundShiftedOperator period hPeriod configuration data
+      analysis chart sameAction physical coerciveShift)
   lowerBoundConstant : NNReal
   shifted_lowerBound : ∀ vector :
       LowerBoundHilbert period hPeriod configuration data analysis,
     ‖vector‖ ≤ (lowerBoundConstant : Real) *
-      ‖augmentedShiftedOperator period hPeriod configuration data analysis chart
-        sameAction physical coerciveShift vector‖
+      ‖augmentedLowerBoundShiftedApply period hPeriod configuration data
+        analysis chart sameAction physical coerciveShift vector‖
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
-
-/-- Bundle the norm estimate as the preceding anti-Lipschitz packet. -/
-def GlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D.toAntilipschitz
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    {measure : Measure (EffectiveQuotient period hPeriod)}
-    {configuration : GlobalGaugeFixedFieldConfiguration period hPeriod}
-    {data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace}
-    {analysis : GlobalAnalysisData period hPeriod configuration.physical}
-    {chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
-      NonNullFace NullFace measure}
-    {sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis chart}
-    {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction}
-    (shift : GlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D period
-      hPeriod configuration data analysis chart sameAction physical) :
-    GlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D period hPeriod
-      configuration data analysis chart sameAction physical where
-  coerciveShift := shift.coerciveShift
-  shifted_selfAdjoint := shift.shifted_selfAdjoint
-  antilipschitzConstant := shift.lowerBoundConstant
-  shifted_antilipschitz :=
-    continuousLinearMap_antilipschitz_of_globalLowerBound
-      (augmentedShiftedOperator period hPeriod configuration data analysis chart
-        sameAction physical shift.coerciveShift)
-      shift.lowerBoundConstant shift.shifted_lowerBound
-  ll_stationary := shift.ll_stationary
 
 /-- Surjectivity of the shifted augmented Hessian from the explicit norm
 estimate. -/
@@ -225,11 +257,25 @@ theorem globalCandidateAAugmentedShiftedOperator_surjective_of_lowerBound
     (shift : GlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D period
       hPeriod configuration data analysis chart sameAction physical) :
     Function.Surjective
-      (augmentedShiftedOperator period hPeriod configuration data analysis chart
-        sameAction physical shift.coerciveShift) :=
-  globalCandidateAAugmentedShiftedOperator_surjective_of_antilipschitz
-    period hPeriod configuration data analysis chart sameAction physical
-      (shift.toAntilipschitz period hPeriod)
+      (augmentedLowerBoundShiftedOperator period hPeriod configuration data
+        analysis chart sameAction physical shift.coerciveShift) := by
+  rcases shift with ⟨coerciveShift, hSelf, constant, hBound, _⟩
+  have hOperatorBound : ∀ vector :
+      LowerBoundHilbert period hPeriod configuration data analysis,
+      ‖vector‖ ≤ (constant : Real) *
+        ‖augmentedLowerBoundShiftedOperator period hPeriod configuration data
+          analysis chart sameAction physical coerciveShift vector‖ := by
+    intro vector
+    rw [augmentedLowerBoundShiftedOperator_apply]
+    exact hBound vector
+  exact @selfAdjoint_surjective_of_globalLowerBound
+    (LowerBoundHilbert period hPeriod configuration data analysis)
+    (lowerBoundNormedAddCommGroup period hPeriod configuration data analysis)
+    (lowerBoundInnerProductSpace period hPeriod configuration data analysis)
+    (lowerBoundCompleteSpace period hPeriod configuration data analysis)
+    (augmentedLowerBoundShiftedOperator period hPeriod configuration data
+      analysis chart sameAction physical coerciveShift)
+    hSelf constant hOperatorBound
 
 /-- Construct the generalized inverse directly from the PDE-facing lower-bound
 packet. -/
@@ -253,12 +299,15 @@ noncomputable def
       hPeriod configuration data analysis chart sameAction physical) :
     GlobalCandidateAFaithfulAugmentedGeneralizedInverse4D period hPeriod
       configuration data analysis chart sameAction physical :=
-  globalCandidateAFaithfulAugmentedGeneralizedInverse_of_selfAdjointAntilipschitzShift
+  globalCandidateAFaithfulAugmentedGeneralizedInverse_of_coerciveShift
     period hPeriod configuration data analysis chart sameAction physical
-      (shift.toAntilipschitz period hPeriod)
+      shift.coerciveShift
+      (globalCandidateAAugmentedShiftedOperator_surjective_of_lowerBound period
+        hPeriod configuration data analysis chart sameAction physical shift)
+      shift.ll_stationary
 
 /-- Full H12 Fredholm/index-zero gate from the shifted global norm estimate. -/
-theorem global_candidateA_h12_fredholm_gate_of_selfAdjointLowerBoundShift
+def global_candidateA_h12_fredholm_gate_of_selfAdjointLowerBoundShift
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -275,9 +324,11 @@ theorem global_candidateA_h12_fredholm_gate_of_selfAdjointLowerBoundShift
       hPeriod configuration data analysis chart sameAction)
     (shift : GlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D period
       hPeriod configuration data analysis chart sameAction physical) :=
-  global_candidateA_h12_fredholm_gate_of_selfAdjointAntilipschitzShift
+  global_candidateA_h12_faithful_augmented_fredholm_gate_of_generalizedInverse
     period hPeriod configuration data analysis chart sameAction physical
-      (shift.toAntilipschitz period hPeriod)
+      (globalCandidateAFaithfulAugmentedGeneralizedInverse_of_selfAdjointLowerBoundShift
+        period hPeriod configuration data analysis chart sameAction physical
+          shift)
 
 end
 end P0EFTJanusProgramPGlobalCandidateAAugmentedSelfAdjointLowerBoundShift4D

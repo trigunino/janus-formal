@@ -36,6 +36,7 @@ open P0EFTJanusMappingTorusGeneralHolonomicScalarDensity4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricLocalLeviCivitaPatch4D
 open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPRegularFrameMaxwellCurvatureBridge4D
+open P0EFTJanusProgramPRegularFrameMaxwellPairingBridge4D
 open P0EFTJanusProgramPGlobalNormalDisplacementCollarGraph4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
 
@@ -83,7 +84,7 @@ local instance (priority := 30000)
   reflectedSphereQuotient_isManifold period hPeriod
 
 private theorem finiteBasisConnectionReconstruction
-    (basis : Basis (Fin 4) Real CoordinateVector)
+    (basis : Module.Basis (Fin 4) Real CoordinateVector)
     (tangent normal : Fin 4 → Real)
     (connection : Fin 4 → Fin 4 → CoordinateVector) :
     (∑ row : Fin 4,
@@ -96,7 +97,11 @@ private theorem finiteBasisConnectionReconstruction
   apply basis.repr.injective
   ext row
   simp only [map_sum, map_smul, Finsupp.smul_apply]
-  simp
+  simp [Finsupp.single_apply]
+  apply Finset.sum_congr rfl
+  intro regular _
+  apply Finset.sum_congr rfl
+  intro upper _
   ring
 
 set_option backward.isDefEq.respectTransparency false in

@@ -28,15 +28,19 @@ open scoped Manifold ContDiff InnerProductSpace BigOperators
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensions4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -80,7 +84,7 @@ private abbrev AgreementHilbert
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) agreementHilbertNormedAddCommGroup
+private abbrev agreementHilbertNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -94,6 +98,8 @@ local instance (priority := 30000) agreementHilbertNormedAddCommGroup
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
+attribute [local instance 30000] agreementHilbertNormedAddCommGroup
+
 local instance (priority := 30000) agreementHilbertInnerProductSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -105,34 +111,6 @@ local instance (priority := 30000) agreementHilbertInnerProductSpace
     InnerProductSpace Real
       (AgreementHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) agreementHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (AgreementHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) agreementHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (AgreementHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
@@ -158,16 +136,17 @@ theorem globalCandidateAPhysicalBlockAction_contDiffAt_two
     {measure : Measure (EffectiveQuotient period hPeriod)}
     (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
+    (point : chart.Model) (hPoint : point ∈ chart.family.domain)
     (block : GlobalCandidateAPhysicalBlock) :
     ContDiffAt Real 2
-      (globalCandidateAPhysicalBlockAction period hPeriod block chart)
-      0 := by
-  let blocks := globalCandidateAActionBlocks period hPeriod
-    (chart.family.toActionFamily period hPeriod 0 chart.zero_mem_domain) measure
-  have hAll : FullCoupledC2At blocks 0 :=
+      (globalCandidateAPhysicalBlockAction
+        (globalCandidateASevenPhysicalLocalBlocks period hPeriod chart) block)
+      point := by
+  let blocks := globalCandidateASevenPhysicalLocalBlocks period hPeriod chart
+  have hAll : FullCoupledC2At blocks point :=
     fullCoupledC2WithinAt_toAt
-      (chart.blocksC2Within 0 chart.zero_mem_domain)
-      chart.isOpen_domain chart.zero_mem_domain
+      (chart.blocksC2Within point hPoint)
+      chart.isOpen_domain hPoint
   cases block with
   | candidateA =>
       simpa [globalCandidateAPhysicalBlockAction, blocks] using hAll.candidateA
@@ -211,6 +190,7 @@ theorem globalCandidateAPhysicalBlockCanonicalCoreForm_symmetric
     simp [minSmoothness_of_isRCLikeNormedField]
   have hSymmetric :=
     (globalCandidateAPhysicalBlockAction_contDiffAt_two period hPeriod chart
+      sameAction.chartBridge.basePoint sameAction.chartBridge.basePoint_mem
       block).isSymmSndFDerivAt hSmooth
   unfold globalCandidateAPhysicalBlockCanonicalCoreForm
   exact hSymmetric _ _
@@ -228,7 +208,7 @@ structure GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D
     (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis chart) : Prop where
+      period hPeriod configuration data analysis chart) : Type where
   form : GlobalCandidateAPhysicalBlock →
     AgreementHilbert period hPeriod configuration data analysis →L[Real]
       AgreementHilbert period hPeriod configuration data analysis →L[Real] Real
@@ -240,6 +220,12 @@ structure GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D
           data analysis second) =
       globalCandidateAPhysicalBlockCanonicalCoreForm period hPeriod
         configuration data analysis chart sameAction block first second
+  reconstruct : ∀ first second : AgreementCore period hPeriod analysis,
+    globalCandidateASevenPhysicalCoreLinearForm period hPeriod configuration
+        data analysis chart sameAction first second =
+      ∑ block : GlobalCandidateAPhysicalBlock,
+        globalCandidateAPhysicalBlockCanonicalCoreForm period hPeriod
+          configuration data analysis chart sameAction block first second
 
 /-- Dense-core symmetry and continuity force symmetry of every supplied
 extension. -/
@@ -262,23 +248,54 @@ theorem canonicalContinuousAgreement_symmetric
     (first second : AgreementHilbert period hPeriod configuration data analysis) :
     extensions.form block first second =
       extensions.form block second first := by
+  let form : AgreementHilbert period hPeriod configuration data analysis →L[Real]
+      AgreementHilbert period hPeriod configuration data analysis →L[Real] Real :=
+    extensions.form block
+  change form first second = form second first
   let embedding := globalCandidateASevenPhysicalCoreEmbedding period hPeriod
     configuration data analysis
+  let flipped : AgreementHilbert period hPeriod configuration data analysis →L[Real]
+      AgreementHilbert period hPeriod configuration data analysis →L[Real] Real :=
+    ContinuousLinearMap.flip
+      (𝕜 := Real) (𝕜₂ := Real) (𝕜₃ := Real)
+      (E := AgreementHilbert period hPeriod configuration data analysis)
+      (F := AgreementHilbert period hPeriod configuration data analysis)
+      (G := Real) (σ₁₃ := RingHom.id Real) (σ₂₃ := RingHom.id Real) form
+  have hSwapContinuous
+      (fixed : AgreementHilbert period hPeriod configuration data analysis) :
+      Continuous (fun x => form x fixed) := by
+    change Continuous ⇑(flipped fixed)
+    exact (flipped fixed).continuous
   have hDense := diagonalExtendedBulkL2SmoothEmbedding_denseRange period hPeriod
     (globalCandidateAMetricBySector period hPeriod data)
     couplings.matterMassSquared data analysis
-  apply hDense.equalizer
-  · exact (extensions.form block).flip second |>.continuous
-  · exact (extensions.form block second).continuous
-  · funext core
+  have hFirst :
+      (fun x => form x second) = fun x => form second x := by
     apply hDense.equalizer
-    · exact (extensions.form block (embedding core)).continuous
-    · exact (extensions.form block).flip (embedding core) |>.continuous
-    · funext test
-      rw [extensions.core_agreement block core test,
-        extensions.core_agreement block test core]
-      exact globalCandidateAPhysicalBlockCanonicalCoreForm_symmetric period
-        hPeriod configuration data analysis chart sameAction block core test
+    · exact hSwapContinuous second
+    · exact (form second).continuous
+    · funext core
+      have hCore :
+          (fun x => form (embedding core) x) =
+            fun x => form x (embedding core) := by
+        apply hDense.equalizer
+        · exact (form (embedding core)).continuous
+        · exact hSwapContinuous (embedding core)
+        · funext test
+          calc
+            form (embedding core) (embedding test) =
+                globalCandidateAPhysicalBlockCanonicalCoreForm period hPeriod
+                  configuration data analysis chart sameAction block core test :=
+              extensions.core_agreement block core test
+            _ = globalCandidateAPhysicalBlockCanonicalCoreForm period hPeriod
+                  configuration data analysis chart sameAction block test core :=
+              globalCandidateAPhysicalBlockCanonicalCoreForm_symmetric period
+                hPeriod (measure := measure) configuration data analysis chart
+                  sameAction block core test
+            _ = form (embedding test) (embedding core) :=
+              (extensions.core_agreement block test core).symm
+      exact congrFun hCore second
+  exact congrFun hFirst first
 
 /-- Reconstruct the earlier canonical-extension packet. -/
 def GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D.toCanonical
@@ -298,15 +315,17 @@ def GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D.toCanonical
       period hPeriod configuration data analysis chart sameAction) :
     GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D period hPeriod
       configuration data analysis chart sameAction where
-  form := extensions.form
-  core_agreement := extensions.core_agreement
+  extension := extensions.form
+  extension_agrees := extensions.core_agreement
   symmetric := by
     intro block first second
-    exact canonicalContinuousAgreement_symmetric period hPeriod configuration
-      data analysis chart sameAction extensions block first second
+    exact canonicalContinuousAgreement_symmetric period hPeriod
+      (measure := measure) configuration data analysis chart sameAction
+        extensions block first second
+  reconstruct := extensions.reconstruct
 
 /-- H11 canonical extensions from agreement alone. -/
-theorem candidate_a_seven_physical_canonical_agreement_gate
+def candidate_a_seven_physical_canonical_agreement_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -322,8 +341,8 @@ theorem candidate_a_seven_physical_canonical_agreement_gate
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D
       period hPeriod configuration data analysis chart sameAction) :=
   candidate_a_seven_physical_canonical_extensions_gate period hPeriod
-    configuration data analysis chart sameAction
-      (extensions.toCanonical period hPeriod)
+    (measure := measure) configuration data analysis chart sameAction
+      (extensions.toCanonical period hPeriod (measure := measure))
 
 end
 end P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalAgreement4D

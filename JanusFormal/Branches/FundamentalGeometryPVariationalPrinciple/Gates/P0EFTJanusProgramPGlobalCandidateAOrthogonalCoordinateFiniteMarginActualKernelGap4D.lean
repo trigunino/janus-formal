@@ -30,11 +30,20 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateASelfAdjointProjectionFiniteMarginActualKernelGap4D
 open P0EFTJanusProgramPOrthogonalCoordinateFiniteMarginActualKernelGap4D
-open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -156,7 +165,6 @@ structure GlobalCandidateAOrthogonalCoordinateFiniteMarginActualKernelGap4D
       hPeriod configuration data analysis chart sameAction)
     (Component : CandidateAZeroModeSector → Type*)
     [∀ sector, NormedAddCommGroup (Component sector)]
-    [∀ sector, NormedSpace Real (Component sector)]
     [∀ sector, InnerProductSpace Real (Component sector)] where
   orthogonalMargin : OrthogonalCoordinateFiniteMarginActualKernelGapData
     (Component := Component)
@@ -186,7 +194,6 @@ def GlobalCandidateAOrthogonalCoordinateFiniteMarginActualKernelGap4D.toSelfAdjo
       hPeriod configuration data analysis chart sameAction}
     {Component : CandidateAZeroModeSector → Type*}
     [∀ sector, NormedAddCommGroup (Component sector)]
-    [∀ sector, NormedSpace Real (Component sector)]
     [∀ sector, InnerProductSpace Real (Component sector)]
     (orthogonal :
       GlobalCandidateAOrthogonalCoordinateFiniteMarginActualKernelGap4D period
@@ -215,7 +222,6 @@ def GlobalCandidateAOrthogonalCoordinateFiniteMarginActualKernelGap4D.toActualKe
       hPeriod configuration data analysis chart sameAction}
     {Component : CandidateAZeroModeSector → Type*}
     [∀ sector, NormedAddCommGroup (Component sector)]
-    [∀ sector, NormedSpace Real (Component sector)]
     [∀ sector, InnerProductSpace Real (Component sector)]
     (orthogonal :
       GlobalCandidateAOrthogonalCoordinateFiniteMarginActualKernelGap4D period
@@ -243,7 +249,6 @@ def global_candidateA_orthogonal_coordinate_actual_kernel_gap_gate
       hPeriod configuration data analysis chart sameAction)
     (Component : CandidateAZeroModeSector → Type*)
     [∀ sector, NormedAddCommGroup (Component sector)]
-    [∀ sector, NormedSpace Real (Component sector)]
     [∀ sector, InnerProductSpace Real (Component sector)]
     (orthogonal :
       GlobalCandidateAOrthogonalCoordinateFiniteMarginActualKernelGap4D period

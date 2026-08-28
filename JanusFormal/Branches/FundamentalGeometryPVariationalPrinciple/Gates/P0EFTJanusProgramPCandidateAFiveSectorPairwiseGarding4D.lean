@@ -19,6 +19,7 @@ noncomputable section
 open scoped BigOperators
 open P0EFTJanusProgramPFiniteSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [NormedSpace Real E]
@@ -161,7 +162,7 @@ theorem candidateA_five_sector_pairwise_garding_gate
     0 < data.margin ∧
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.principalEnergy vector := by
-  simpa [margin, couplingConstant,
+  simpa [toFiniteSectorPairwiseData, margin, couplingConstant,
     FiniteSectorPairwiseGardingData.margin,
     FiniteSectorPairwiseGardingData.couplingConstant] using
       data.toFiniteSectorPairwiseData.finite_sector_pairwise_garding_gate

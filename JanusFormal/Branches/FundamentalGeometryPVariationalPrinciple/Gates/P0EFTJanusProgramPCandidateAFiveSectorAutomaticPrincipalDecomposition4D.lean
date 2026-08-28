@@ -32,10 +32,12 @@ open P0EFTJanusProgramPFiniteSelfAdjointProjectionResolution4D
 open P0EFTJanusProgramPCandidateAFiveSectorPrincipalBlockDecomposition4D
 open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointPrincipalResolution4D
 open P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D
+open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 /-- Principal Candidate-A data before storing any block-expansion identity. -/
@@ -72,6 +74,24 @@ private theorem crossPair_univ :
         .spinCLL, .spinCBoundary, .llBoundary } := by
   decide
 
+private theorem sum_sector (f : CandidateAZeroModeSector → Real) :
+    (∑ sector, f sector) =
+      f .metricDiffeomorphism + (f .abelianGauge +
+        (f .primitiveSpinCMatter + (f .longitudinalLL +
+          f .boundaryFiniteBV))) := by
+  rw [sector_univ]
+  simp
+
+private theorem sum_crossPair (f : CandidateACrossSectorPair → Real) :
+    (∑ pair, f pair) =
+      f .metricAbelian + (f .metricSpinC + (f .metricLL +
+        (f .metricBoundary + (f .abelianSpinC + (f .abelianLL +
+          (f .abelianBoundary + (f .spinCLL + (f .spinCBoundary +
+            f .llBoundary)))))))) := by
+  rw [crossPair_univ]
+  simp
+
+set_option maxRecDepth 4000 in
 /-- Bilinearity and the five-sector resolution of the identity give the full
 five-diagonal/ten-cross decomposition automatically. -/
 theorem principal_decomposition
@@ -92,15 +112,16 @@ theorem principal_decomposition
   let l := data.resolution.projection .longitudinalLL vector
   let b := data.resolution.projection .boundaryFiniteBV vector
   have hsum : m + a + s + l + b = vector := by
-    simpa [m, a, s, l, b, sector_univ] using
+    simpa [m, a, s, l, b, sector_univ, add_assoc] using
       data.resolution.sum_projection vector
-  rw [← hsum]
+  conv_lhs => rw [← hsum]
   simp only [map_add, ContinuousLinearMap.add_apply]
-  rw [sector_univ, crossPair_univ]
-  simp only [Finset.sum_insert, Finset.sum_singleton,
+  rw [sum_sector, sum_crossPair]
+  simp only [m, a, s, l, b,
     CandidateACrossSectorPair.first, CandidateACrossSectorPair.second,
     candidateASectorSymmetricCrossForm,
-    ContinuousLinearMap.add_apply, ContinuousLinearMap.bilinearComp_apply]
+    ContinuousLinearMap.add_apply,
+    ContinuousLinearMap.bilinearComp_apply]
   ring
 
 /-- Recover the previous principal-resolution packet, now with the block

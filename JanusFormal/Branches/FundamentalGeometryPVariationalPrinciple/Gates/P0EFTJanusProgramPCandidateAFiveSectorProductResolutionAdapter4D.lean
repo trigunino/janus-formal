@@ -23,6 +23,7 @@ set_option autoImplicit false
 noncomputable section
 
 open scoped BigOperators InnerProductSpace
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPFiveSectorOrthogonalProductResolution4D
 open P0EFTJanusProgramPFiniteSelfAdjointProjectionResolution4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D

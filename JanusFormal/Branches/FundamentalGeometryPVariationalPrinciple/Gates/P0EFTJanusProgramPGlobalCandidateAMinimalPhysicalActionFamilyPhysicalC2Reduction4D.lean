@@ -33,6 +33,7 @@ open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
@@ -41,6 +42,7 @@ open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChartConstructor4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPGlobalFullLLGraphRiesz4D
+open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -97,10 +99,14 @@ structure ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared) where
-  normedAddCommGroup : NormedAddCommGroup
-    (ReducedFamilyModel period hPeriod configuration)
-  normedSpace : NormedSpace Real
-    (ReducedFamilyModel period hPeriod configuration)
+  [normedAddCommGroup : NormedAddCommGroup
+    (ReducedFamilyModel period hPeriod configuration)]
+  [normedSpace : NormedSpace Real
+    (ReducedFamilyModel period hPeriod configuration)]
+  toAddCommGroup_eq : normedAddCommGroup.toAddCommGroup =
+    Submodule.addCommGroup (ReducedFamilyModel period hPeriod configuration)
+  toSMul_eq : normedSpace.toModule.toSMul =
+    Submodule.smul (ReducedFamilyModel period hPeriod configuration)
   bounds : @GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
     couplings NonNullFace NullFace _ _ configuration data analysis realization
       normedAddCommGroup normedSpace
@@ -167,8 +173,10 @@ private theorem matterGraphPullback_contDiffWithinAt
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
-    [NormedAddCommGroup (ReducedFamilyModel period hPeriod configuration)]
-    [NormedSpace Real (ReducedFamilyModel period hPeriod configuration)]
+    [normedAddCommGroup :
+      NormedAddCommGroup (ReducedFamilyModel period hPeriod configuration)]
+    [normedSpace :
+      NormedSpace Real (ReducedFamilyModel period hPeriod configuration)]
     (bounds : GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
       configuration data analysis realization)
     (constant : Real)
@@ -181,12 +189,81 @@ private theorem matterGraphPullback_contDiffWithinAt
           (globalMinimalPhysicalMatterGraphCLM period hPeriod configuration data
             analysis realization bounds state))
       domain point := by
-  exact
-    (contDiff_const.add
-      ((programPPrimitiveSpinCMatterGraphAction_contDiff_two period hPeriod
-          couplings.matterMassSquared).comp
-        (globalMinimalPhysicalMatterGraphCLM period hPeriod configuration data
-          analysis realization bounds).contDiff)).contDiffWithinAt
+  let projection := @globalMinimalPhysicalMatterGraphCLM period hPeriod
+    couplings NonNullFace NullFace _ _ configuration data analysis realization
+      normedAddCommGroup normedSpace bounds
+  let adaptedLinear :
+      @LinearMap Real Real _ _ (RingHom.id Real)
+        (ReducedFamilyModel period hPeriod configuration)
+        (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+          couplings.matterMassSquared)
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+        normedSpace.toModule inferInstance :=
+    @LinearMap.mk Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+        couplings.matterMassSquared)
+      normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+      normedSpace.toModule inferInstance
+      (@AddHom.mk
+        (ReducedFamilyModel period hPeriod configuration)
+        (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+          couplings.matterMassSquared)
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd inferInstance
+        (fun direction => projection direction)
+        (by
+        intro first second
+        change projection
+            (@Add.add _
+              normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+              first second) =
+          projection first + projection second
+        rw [bounds.toAddCommGroup_eq]
+        exact projection.map_add first second))
+      (by
+        intro scalar direction
+        change projection
+            (@SMul.smul Real _ normedSpace.toModule.toSMul scalar direction) =
+          (RingHom.id Real) scalar • projection direction
+        rw [bounds.toSMul_eq]
+        have hMap := projection.map_smul scalar direction
+        change projection
+            (@SMul.smul Real _
+              (Submodule.smul
+                (ReducedFamilyModel period hPeriod configuration))
+              scalar direction) =
+          scalar • projection direction at hMap
+        simpa only [RingHom.id_apply] using hMap)
+  let adapted :
+      @ContinuousLinearMap Real Real _ _ (RingHom.id Real)
+        (ReducedFamilyModel period hPeriod configuration)
+        normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid
+        (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+          couplings.matterMassSquared)
+        inferInstance inferInstance normedSpace.toModule inferInstance :=
+    @ContinuousLinearMap.mk Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      normedAddCommGroup.toAddCommGroup.toAddCommMonoid
+      (ProgramPPrimitiveSpinCMatterGraphDomain period hPeriod
+        couplings.matterMassSquared)
+      inferInstance inferInstance normedSpace.toModule inferInstance
+      adaptedLinear
+      (by
+        change Continuous (fun direction => projection direction)
+        exact projection.cont)
+  have hProjection : ContDiff Real ∞ adapted := adapted.contDiff
+  have hProjectionTwo : ContDiff Real 2 adapted :=
+    hProjection.of_le (by
+      change ((2 : ℕ∞) : ℕ∞ω) ≤ ((⊤ : ℕ∞) : ℕ∞ω)
+      exact WithTop.coe_le_coe.mpr le_top)
+  have hAction : ContDiff Real 2
+      (programPPrimitiveSpinCMatterGraphAction period hPeriod
+        couplings.matterMassSquared) :=
+    programPPrimitiveSpinCMatterGraphAction_contDiff_two period hPeriod
+      couplings.matterMassSquared
+  exact (contDiff_const.add (hAction.comp hProjectionTwo)).contDiffWithinAt
 
 /-- The full three-slot LL block is automatically `C²` after pullback by its
 bounded graph projection. -/
@@ -201,8 +278,10 @@ private theorem llGraphPullback_contDiffWithinAt
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
-    [NormedAddCommGroup (ReducedFamilyModel period hPeriod configuration)]
-    [NormedSpace Real (ReducedFamilyModel period hPeriod configuration)]
+    [normedAddCommGroup :
+      NormedAddCommGroup (ReducedFamilyModel period hPeriod configuration)]
+    [normedSpace :
+      NormedSpace Real (ReducedFamilyModel period hPeriod configuration)]
     (bounds : GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
       configuration data analysis realization)
     (constant : Real)
@@ -214,12 +293,83 @@ private theorem llGraphPullback_contDiffWithinAt
           (globalMinimalPhysicalLLGraphCLM period hPeriod configuration data
             analysis realization bounds state))
       domain point := by
-  exact
-    (contDiff_const.add
-      ((globalCandidateAFullLLGraphAction_contDiff_two period hPeriod
-          data analysis).comp
-        (globalMinimalPhysicalLLGraphCLM period hPeriod configuration data
-          analysis realization bounds).contDiff)).contDiffWithinAt
+  letI llNormedSpace : NormedSpace Real
+      (GlobalFullLLGraphHilbert period hPeriod data analysis) :=
+    (globalFullLLGraphInnerProductSpace period hPeriod data analysis).toNormedSpace
+  let projection := @globalMinimalPhysicalLLGraphCLM period hPeriod
+    couplings NonNullFace NullFace _ _ configuration data analysis realization
+      normedAddCommGroup normedSpace bounds
+  let adaptedLinear :
+      @LinearMap Real Real _ _ (RingHom.id Real)
+        (ReducedFamilyModel period hPeriod configuration)
+        (GlobalFullLLGraphHilbert period hPeriod data analysis)
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+        normedSpace.toModule inferInstance :=
+    @LinearMap.mk Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      (GlobalFullLLGraphHilbert period hPeriod data analysis)
+      normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+      normedSpace.toModule inferInstance
+      (@AddHom.mk
+        (ReducedFamilyModel period hPeriod configuration)
+        (GlobalFullLLGraphHilbert period hPeriod data analysis)
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd inferInstance
+        (fun direction => projection direction)
+        (by
+          intro first second
+          change projection
+              (@Add.add _
+                normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+                first second) =
+            projection first + projection second
+          rw [bounds.toAddCommGroup_eq]
+          exact projection.map_add first second))
+      (by
+        intro scalar direction
+        change projection
+            (@SMul.smul Real _ normedSpace.toModule.toSMul scalar direction) =
+          (RingHom.id Real) scalar • projection direction
+        rw [bounds.toSMul_eq]
+        have hMap := projection.map_smul scalar direction
+        change projection
+            (@SMul.smul Real _
+              (Submodule.smul
+                (ReducedFamilyModel period hPeriod configuration))
+              scalar direction) =
+          scalar • projection direction at hMap
+        simpa only [RingHom.id_apply] using hMap)
+  let adapted :
+      @ContinuousLinearMap Real Real _ _ (RingHom.id Real)
+        (ReducedFamilyModel period hPeriod configuration)
+        normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+        normedAddCommGroup.toAddCommGroup.toAddCommMonoid
+        (GlobalFullLLGraphHilbert period hPeriod data analysis)
+        inferInstance inferInstance normedSpace.toModule inferInstance :=
+    @ContinuousLinearMap.mk Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      normedAddCommGroup.toAddCommGroup.toAddCommMonoid
+      (GlobalFullLLGraphHilbert period hPeriod data analysis)
+      inferInstance inferInstance normedSpace.toModule inferInstance
+      adaptedLinear
+      (by
+        change Continuous (fun direction => projection direction)
+        exact projection.cont)
+  have hProjection : ContDiff Real ∞ adapted :=
+    @ContinuousLinearMap.contDiff Real
+      (ReducedFamilyModel period hPeriod configuration)
+      (GlobalFullLLGraphHilbert period hPeriod data analysis)
+      inferInstance normedAddCommGroup normedSpace
+      (GlobalFullLLGraphHilbert period hPeriod data analysis).normedAddCommGroup
+      llNormedSpace ∞ adapted
+  have hProjectionTwo : ContDiff Real 2 adapted :=
+    hProjection.of_le (by
+      change ((2 : ℕ∞) : ℕ∞ω) ≤ ((⊤ : ℕ∞) : ℕ∞ω)
+      exact WithTop.coe_le_coe.mpr le_top)
+  have hAction : ContDiff Real 2
+      (globalCandidateAFullLLGraphAction period hPeriod data analysis) :=
+    globalCandidateAFullLLGraphAction_contDiff_two period hPeriod data analysis
+  exact (contDiff_const.add (hAction.comp hProjectionTwo)).contDiffWithinAt
 
 /-- Reconstruct the previous reduced family packet. The two missing `C²`
 fields are discharged by the graph-action smoothness theorems. -/
@@ -236,11 +386,15 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D.toReduced
       period hPeriod couplings.matterMassSquared}
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis realization) :
+        period hPeriod (measure := measure) configuration data analysis
+          realization) :
     ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D
-      period hPeriod configuration data analysis realization where
+      period hPeriod (measure := measure) configuration data analysis
+        realization where
   normedAddCommGroup := family.normedAddCommGroup
   normedSpace := family.normedSpace
+  toAddCommGroup_eq := family.toAddCommGroup_eq
+  toSMul_eq := family.toSMul_eq
   bounds := family.bounds
   domain := family.domain
   isOpen_domain := family.isOpen_domain
@@ -248,6 +402,12 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D.toReduced
   datumAt := family.datumAt
   datumAt_zero_configuration := family.datumAt_zero_configuration
   blocksC2Within := by
+    letI : NormedAddCommGroup
+        (ReducedFamilyModel period hPeriod configuration) :=
+      family.normedAddCommGroup
+    letI : NormedSpace Real
+        (ReducedFamilyModel period hPeriod configuration) :=
+      family.normedSpace
     intro point hPoint
     let localFamily : GlobalCandidateALocalActionFamily period hPeriod
         (ReducedFamilyModel period hPeriod configuration) couplings
@@ -319,7 +479,20 @@ theorem global_candidateA_h13_minimalPhysical_physicalC2Family_gate
       period hPeriod couplings.matterMassSquared)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis realization) :=
+        period hPeriod (measure := measure) configuration data analysis
+          realization) :
+    GlobalCandidateAH13MatterLLSameActionCertificate period hPeriod
+      configuration data analysis
+        (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+          configuration data analysis
+            (globalCandidateAMinimalPhysicalActionChartData_of_reducedFamily
+              period hPeriod configuration data analysis realization
+                (family.toReduced period hPeriod)))
+        (globalCandidateAMinimalPhysicalMatterLLSameActionBridge period hPeriod
+          configuration data analysis
+            (globalCandidateAMinimalPhysicalActionChartData_of_reducedFamily
+              period hPeriod configuration data analysis realization
+                (family.toReduced period hPeriod))) :=
   global_candidateA_h13_minimalPhysical_reducedFamily_gate period hPeriod
     configuration data analysis realization (family.toReduced period hPeriod)
 

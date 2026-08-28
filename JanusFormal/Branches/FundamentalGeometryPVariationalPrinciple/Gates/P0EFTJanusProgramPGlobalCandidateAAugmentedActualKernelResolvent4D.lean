@@ -31,9 +31,18 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementResolvent4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -134,6 +143,7 @@ local instance (priority := 30000) resolventCompleteSpace
       (ResolventHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Open real interval certified by the actual-kernel gap. -/
 def globalCandidateAActualKernelResolventInterval
@@ -208,11 +218,11 @@ structure GlobalCandidateAActualKernelResolventCertificate4D
   zero_mem_interval : 0 ∈
     globalCandidateAActualKernelResolventInterval period hPeriod configuration
       data analysis chart sameAction physical gap
-  resolvent : ∀ spectralParameter,
-    |spectralParameter| < gap.gapData.gap →
+  resolvent : ∀ (spectralParameter : Real)
+      (hSpectral : |spectralParameter| < gap.gapData.gap),
       Function.LeftInverse
         (globalCandidateAActualKernelResolvent period hPeriod configuration data
-          analysis chart sameAction physical gap spectralParameter ‹_›)
+          analysis chart sameAction physical gap spectralParameter hSpectral)
         (selfAdjointKernelComplementShiftedOperator
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical)
@@ -221,7 +231,7 @@ structure GlobalCandidateAActualKernelResolventCertificate4D
           spectralParameter) ∧
       Function.RightInverse
         (globalCandidateAActualKernelResolvent period hPeriod configuration data
-          analysis chart sameAction physical gap spectralParameter ‹_›)
+          analysis chart sameAction physical gap spectralParameter hSpectral)
         (selfAdjointKernelComplementShiftedOperator
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical)
@@ -229,7 +239,7 @@ structure GlobalCandidateAActualKernelResolventCertificate4D
             configuration data analysis chart sameAction physical)
           spectralParameter) ∧
       ‖globalCandidateAActualKernelResolvent period hPeriod configuration data
-          analysis chart sameAction physical gap spectralParameter ‹_›‖ ≤
+          analysis chart sameAction physical gap spectralParameter hSpectral‖ ≤
         (gap.gapData.gap - |spectralParameter|)⁻¹
 
 /-- Construction of the Candidate-A actual-kernel resolvent certificate. -/

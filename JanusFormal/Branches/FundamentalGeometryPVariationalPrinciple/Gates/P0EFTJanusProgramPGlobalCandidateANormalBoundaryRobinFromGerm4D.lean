@@ -36,7 +36,7 @@ def NormalBoundaryRobinC2TransferData.ofSameActionGerm
     {completed historical : Variation → Real}
     {base : Variation}
     (germ : SameRealActionGermAt completed historical base)
-    (hCompleted : ContDiffWithin Real 2 completed germ.domain) :
+    (hCompleted : ContDiffOn Real 2 completed germ.domain) :
     NormalBoundaryRobinC2TransferData completed historical where
   domain := germ.domain
   isOpen_domain := germ.isOpen_domain
@@ -49,8 +49,8 @@ theorem sameActionGerm_robin_c2_and_hessian
     {completed historical : Variation → Real}
     {base : Variation}
     (germ : SameRealActionGermAt completed historical base)
-    (hCompleted : ContDiffWithin Real 2 completed germ.domain) :
-    ContDiffWithin Real 2 historical germ.domain ∧
+    (hCompleted : ContDiffOn Real 2 completed germ.domain) :
+    ContDiffOn Real 2 historical germ.domain ∧
       fderiv Real (fun state => fderiv Real completed state) base =
         fderiv Real (fun state => fderiv Real historical state) base := by
   let transfer := NormalBoundaryRobinC2TransferData.ofSameActionGerm germ
@@ -59,11 +59,11 @@ theorem sameActionGerm_robin_c2_and_hessian
     transfer.second_fderiv_eq germ.base_mem_domain⟩
 
 /-- Public H10-to-family Robin gate. -/
-theorem candidate_a_normal_boundary_robin_from_germ_gate
+def candidate_a_normal_boundary_robin_from_germ_gate
     {completed historical : Variation → Real}
     {base : Variation}
     (germ : SameRealActionGermAt completed historical base)
-    (hCompleted : ContDiffWithin Real 2 completed germ.domain) :
+    (hCompleted : ContDiffOn Real 2 completed germ.domain) :
     NormalBoundaryRobinC2TransferData completed historical :=
   NormalBoundaryRobinC2TransferData.ofSameActionGerm germ hCompleted
 

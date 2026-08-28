@@ -65,6 +65,72 @@ local instance (priority := 30000)
       (MappingTorus (reflectedSphereData period hPeriod)) :=
   reflectedSphereQuotient_isManifold period hPeriod
 
+local instance (priority := 30000)
+    canonicalSourceMetricFixedThroatChartedSpace :
+    ChartedSpace ThroatCoverModel
+      (MappingTorus (fixedEquatorData period hPeriod)) :=
+  fixedThroatQuotientChartedSpace period hPeriod
+
+local instance (priority := 30000)
+    canonicalSourceMetricFixedThroatIsManifold :
+    IsManifold throatCoverModelWithCorners ω
+      (MappingTorus (fixedEquatorData period hPeriod)) :=
+  fixedThroatQuotient_isManifold period hPeriod
+
+private def canonicalSourceMetricOrientationCoordinateEquiv
+    (boundary : CutThroatBoundary period hPeriod) :
+    ThroatCoverCoordinates ≃L[Real] ThroatCoverCoordinates :=
+  normalBoundaryOrientationTangentEquiv period hPeriod boundary
+
+private theorem canonicalSourceMetricInducedMetricMusical_apply
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (boundary : CutThroatBoundary period hPeriod)
+    (first second : ThroatCoverCoordinates) :
+    normalBoundarySmoothGraphInducedMetricMusical period hPeriod variedMetric
+        displacement parameter boundary first second =
+      normalGraphInducedMetricValue period hPeriod variedMetric displacement
+        parameter (orientationDoubleToThroat period hPeriod boundary)
+        (canonicalSourceMetricOrientationCoordinateEquiv period hPeriod
+          boundary first)
+        (canonicalSourceMetricOrientationCoordinateEquiv period hPeriod
+          boundary second) := by
+  exact normalBoundarySmoothGraphInducedMetricMusical_apply period hPeriod
+    variedMetric displacement parameter boundary first second
+
+private theorem canonicalSourceMetricInducedMetricValue_eq_holonomic
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (base : MappingTorus (fixedEquatorData period hPeriod) × Real)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4)
+    (hGraph : patch.coordinateMap coordinate =
+      normalGraph period hPeriod displacement base.2 base.1)
+    (first second : ThroatCoverCoordinates) :
+    normalGraphInducedMetricValue period hPeriod variedMetric displacement
+        base.2 base.1 first second =
+      normalGraphHolonomicInducedMetricCoordinates period hPeriod variedMetric
+        displacement base patch coordinate base first second := by
+  have hChart : base.1 ∈ (chartAt ThroatCoverModel base.1).source :=
+    mem_chart_source ThroatCoverModel base.1
+  have hTrivialized (vector : ThroatCoverCoordinates) :
+      (trivializationAt ThroatCoverCoordinates
+          (ThroatTangentFiber period hPeriod) base.1).symm base.1 vector =
+        vector := by
+    change
+      (trivializationAt ThroatCoverCoordinates
+        (ThroatTangentFiber period hPeriod) base.1).symmL Real base.1 vector =
+        vector
+    rw [TangentBundle.symmL_trivializationAt hChart,
+      mfderivWithin_range_extChartAt_symm]
+    rfl
+  have hIntrinsic :=
+    (normalGraphHolonomicInducedMetricCoordinates_eq_intrinsic period hPeriod
+      variedMetric displacement base patch coordinate hGraph first second).symm
+  rw [hTrivialized, hTrivialized] at hIntrinsic
+  exact hIntrinsic
+
 set_option backward.isDefEq.respectTransparency false in
 /-- Pairing the source-side canonical shape with the source-side induced
 metric recovers the already installed target local-section second form. -/
@@ -92,69 +158,61 @@ theorem
         period hPeriod variedMetric displacement boundary parameter patch
           coordinate
           (orientationDoubleToThroat period hPeriod boundary, parameter)
-          (normalBoundaryOrientationTangentEquiv period hPeriod boundary first)
-          (normalBoundaryOrientationTangentEquiv period hPeriod boundary second) := by
+          (canonicalSourceMetricOrientationCoordinateEquiv period hPeriod
+            boundary first)
+          (canonicalSourceMetricOrientationCoordinateEquiv period hPeriod
+            boundary second) := by
   let base :=
     (orientationDoubleToThroat period hPeriod boundary, parameter)
-  let tangentEquiv :=
-    normalBoundaryOrientationTangentEquiv period hPeriod boundary
+  let tangentEquiv :
+      ThroatCoverCoordinates ≃L[Real] ThroatCoverCoordinates :=
+    canonicalSourceMetricOrientationCoordinateEquiv period hPeriod boundary
+  let firstCoordinate : ThroatCoverCoordinates := first
+  let secondCoordinate : ThroatCoverCoordinates := second
   let targetShape :=
     normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period hPeriod
       variedMetric displacement parameter boundary patch coordinate
   let sourceShape :=
     normalGraphCanonicalHolonomicGaussShapeEndomorphismAt period hPeriod
       variedMetric displacement parameter hNonNull boundary patch coordinate hAt
+  let transportedFirst : ThroatCoverCoordinates :=
+    tangentEquiv firstCoordinate
+  let transportedSecond : ThroatCoverCoordinates :=
+    tangentEquiv secondCoordinate
+  let targetFirst : ThroatCoverCoordinates :=
+    targetShape transportedFirst
   change normalBoundarySmoothGraphInducedMetricMusical period hPeriod
-      variedMetric displacement parameter boundary (sourceShape first) second =
+      variedMetric displacement parameter boundary
+        (sourceShape firstCoordinate) secondCoordinate =
     normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap period
       hPeriod variedMetric displacement boundary parameter patch coordinate base
-        (tangentEquiv first) (tangentEquiv second)
+        transportedFirst transportedSecond
   have hGraph : patch.coordinateMap coordinate =
       normalGraph period hPeriod displacement base.2 base.1 := by
     simpa [base, normalGraphOrientationDouble] using hAt
   have hShape :
-      tangentEquiv (sourceShape first) =
-        targetShape (tangentEquiv first) := by
+      tangentEquiv (sourceShape firstCoordinate) =
+        targetFirst := by
     change tangentEquiv
-        (tangentEquiv.symm (targetShape (tangentEquiv first))) =
-      targetShape (tangentEquiv first)
+        (tangentEquiv.symm targetFirst) = targetFirst
     exact tangentEquiv.apply_symm_apply _
-  have hChart : base.1 ∈
-      (chartAt ThroatCoverModel base.1).source :=
-    mem_chart_source ThroatCoverModel base.1
-  have hTrivialized
-      (vector : TangentSpace throatCoverModelWithCorners base.1) :
-      (trivializationAt ThroatCoverCoordinates
-          (ThroatTangentFiber period hPeriod) base.1).symm base.1 vector =
-        vector := by
-    change
-      (trivializationAt ThroatCoverCoordinates
-        (ThroatTangentFiber period hPeriod) base.1).symmL Real base.1 vector =
-        vector
-    rw [TangentBundle.symmL_trivializationAt hChart,
-      mfderivWithin_range_extChartAt_symm]
-    rfl
-  rw [normalBoundarySmoothGraphInducedMetricMusical_apply]
+  rw [canonicalSourceMetricInducedMetricMusical_apply]
   rw [hShape]
   calc
     normalGraphInducedMetricValue period hPeriod variedMetric displacement
-        parameter base.1 (targetShape (tangentEquiv first))
-          (tangentEquiv second) =
+        parameter base.1 targetFirst transportedSecond =
       normalGraphHolonomicInducedMetricCoordinates period hPeriod variedMetric
-        displacement base patch coordinate base
-          (targetShape (tangentEquiv first)) (tangentEquiv second) := by
-      simpa only [hTrivialized] using
-        (normalGraphHolonomicInducedMetricCoordinates_eq_intrinsic period hPeriod
-          variedMetric displacement base patch coordinate hGraph
-            (targetShape (tangentEquiv first))
-            (tangentEquiv second)).symm
+        displacement base patch coordinate base targetFirst transportedSecond := by
+      exact canonicalSourceMetricInducedMetricValue_eq_holonomic period hPeriod
+        variedMetric displacement base patch coordinate hGraph targetFirst
+          transportedSecond
     _ = normalGraphCanonicalHolonomicLocalSectionExtrinsicCurvatureLinearMap
         period hPeriod variedMetric displacement boundary parameter patch
-          coordinate base (tangentEquiv first) (tangentEquiv second) := by
+          coordinate base transportedFirst transportedSecond := by
       exact
         normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt_metric_cancel
           period hPeriod variedMetric displacement parameter hNonNull boundary
-            patch coordinate hAt (tangentEquiv first) (tangentEquiv second)
+            patch coordinate hAt transportedFirst transportedSecond
 
 end
 end P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D

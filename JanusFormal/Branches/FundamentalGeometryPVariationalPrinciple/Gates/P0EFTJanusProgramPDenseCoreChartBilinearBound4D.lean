@@ -30,7 +30,7 @@ set_option autoImplicit false
 noncomputable section
 
 variable {Core Hilbert Chart : Type*}
-  [NormedAddCommGroup Core] [NormedSpace Real Core]
+  [AddCommGroup Core] [Module Real Core]
   [NormedAddCommGroup Hilbert] [NormedSpace Real Hilbert]
   [NormedAddCommGroup Chart] [NormedSpace Real Chart]
 

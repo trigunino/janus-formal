@@ -49,7 +49,7 @@ structure SameRealGHYFactorGermAt
     (completedDensity historicalDensity : Variation → Boundary → Real)
     (completedMeanCurvature historicalMeanCurvature :
       Variation → Boundary → Real)
-    (base : Variation) : Prop where
+    (base : Variation) : Type u where
   domain : Set Variation
   isOpen_domain : IsOpen domain
   base_mem_domain : base ∈ domain
@@ -162,7 +162,7 @@ theorem SameRealGHYFactorGermAt.twoSheet_second_fderiv_eq
   (germ.toTwoSheetActionGerm measure).second_fderiv_eq
 
 /-- Public factorwise H10 closure gate. -/
-theorem candidate_a_normal_boundary_ghy_factor_germ_gate
+def candidate_a_normal_boundary_ghy_factor_germ_gate
     {completedOrientation historicalOrientation : Variation → Boundary → Real}
     {completedDensity historicalDensity : Variation → Boundary → Real}
     {completedMeanCurvature historicalMeanCurvature :

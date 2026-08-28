@@ -39,14 +39,20 @@ open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusCompactQuotient
+open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
+open P0EFTJanusMappingTorusSmoothThroatTrace4D
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledIntrinsicDiracOperator4D
+open P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D
 open P0EFTJanusProgramPPrimitiveSpinCDiracGreenCurrent4D
 open P0EFTJanusProgramPPrimitiveSpinCIntrinsicFrameIPP4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -95,7 +101,10 @@ def d9PrimitiveSpinCGreenCurrentIntrinsicDerivative
             second).contMDiff_toFun.contMDiff_tangentMap (by simp)).comp
           (d9IntrinsicThroatFrame period hPeriod direction).contMDiff_toFun)
     convert hDerivative using 1
-    rfl
+    · rfl
+    · funext base
+      simp [mvfderiv, tangentMap_snd, NormedSpace.fromTangentSpace]
+      rfl
 
 @[simp]
 theorem d9PrimitiveSpinCGreenCurrentIntrinsicDerivative_apply
@@ -139,6 +148,11 @@ theorem d9PrimitiveSpinCRadialGreenCurrent_apply
         (d9PrimitiveSpinCBaseUnitRadialClifford period hPeriod base
           (first base)) (second base) := by
   rw [d9PrimitiveSpinCBaseRadialCurrent_eq_sum]
+  change
+    (∑ direction : Fin 3,
+      d9PrimitiveSpinCBaseUnitRadialCoordinate period hPeriod direction base •
+        d9PrimitiveSpinCGreenCurrent period hPeriod choice direction first
+          second base) = _
   apply Finset.sum_congr rfl
   intro direction _
   change
@@ -211,6 +225,13 @@ theorem d9PrimitiveSpinCGeometricDirac_integratedGreenResidual_eq_zero
         ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod) := by
       apply integral_congr_ae
       filter_upwards with base
+      change
+        d9DoubledMatterSpinorHermitianPairing (first base)
+              (d9PrimitiveSpinCGeometricDiracOperator period hPeriod choice
+                second base) -
+            d9DoubledMatterSpinorHermitianPairing
+              (d9PrimitiveSpinCGeometricDiracOperator period hPeriod choice
+                first base) (second base) = _
       rw [d9PrimitiveSpinCGeometricDirac_pointwiseGreen]
       simp only [d9PrimitiveSpinCGreenCurrentIntrinsicDerivative_apply,
         d9PrimitiveSpinCRadialGreenCurrent_apply]
@@ -226,11 +247,23 @@ theorem d9PrimitiveSpinCGeometricDirac_integratedGreenResidual_eq_zero
               d9PrimitiveSpinCRadialGreenCurrent period hPeriod choice first
                 second base
               ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod) := by
-      rw [integral_add hSumIntegrable.neg
-        (hRadialIntegrable.const_smul (2 : Complex)),
+      change
+        (∫ base,
+          ((-(fun point => ∑ direction : Fin 3,
+              d9PrimitiveSpinCGreenCurrentIntrinsicDerivative period hPeriod
+                choice direction first second point)) +
+            (2 : Complex) •
+              (d9PrimitiveSpinCRadialGreenCurrent period hPeriod choice first
+                second).toFun) base
+          ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) = _
+      have hAdd := integral_add hSumIntegrable.neg
+        (MeasureTheory.Integrable.smul (2 : Complex) hRadialIntegrable)
+      simp only [Pi.neg_apply, Pi.smul_apply] at hAdd
+      rw [
         integral_neg, integral_finsetSum Finset.univ
           (fun direction _ => hDerivativeIntegrable direction),
-        integral_const_smul]
+        integral_smul] at hAdd
+      exact hAdd
     _ =
         -(∑ direction : Fin 3,
           (2 : Real) •
@@ -267,10 +300,13 @@ theorem d9PrimitiveSpinCGeometricDirac_integratedGreenResidual_eq_zero
               d9PrimitiveSpinCRadialGreenCurrent period hPeriod choice first
                 second base
               ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod) := by
+      rw [← Finset.smul_sum, neg_smul]
       congr 1
-      rw [Finset.smul_sum, integral_finsetSum]
-      · apply congrArg ((2 : Complex) • ·)
-        apply integral_congr_ae
+      apply congrArg (fun value : Complex => -value)
+      simp only [Complex.real_smul, smul_eq_mul]
+      apply congrArg ((2 : Complex) * ·)
+      rw [← integral_finsetSum]
+      · apply integral_congr_ae
         filter_upwards with base
         rfl
       · intro direction _

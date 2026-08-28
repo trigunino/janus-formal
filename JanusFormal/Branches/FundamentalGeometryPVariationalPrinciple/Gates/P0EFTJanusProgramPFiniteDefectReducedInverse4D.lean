@@ -1,3 +1,4 @@
+import Mathlib.Analysis.Normed.Operator.Banach
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteDefectReducedOperator4D
 
 /-!
@@ -36,8 +37,10 @@ noncomputable def finiteDefectReducedEquiv
     data.projection.ker ≃L[Real] data.projection.ker :=
   ContinuousLinearEquiv.ofBijective
     (finiteDefectReducedOperator operator data)
-    ⟨finiteDefectReducedOperator_injective operator data,
-      finiteDefectReducedOperator_surjective operator data hShiftSurjective⟩
+    (LinearMap.ker_eq_bot.mpr
+      (finiteDefectReducedOperator_injective operator data))
+    (LinearMap.range_eq_top.mpr
+      (finiteDefectReducedOperator_surjective operator data hShiftSurjective))
 
 /-- Canonical reduced Green operator. -/
 noncomputable def finiteDefectReducedInverse
@@ -58,8 +61,10 @@ theorem finiteDefectReducedOperator_inverse
     finiteDefectReducedOperator operator data
         (finiteDefectReducedInverse operator data hShiftSurjective vector) =
       vector :=
-  (finiteDefectReducedEquiv operator data hShiftSurjective).apply_symm_apply
-    vector
+  by
+    simpa [finiteDefectReducedInverse, finiteDefectReducedEquiv] using
+      (finiteDefectReducedEquiv operator data hShiftSurjective).apply_symm_apply
+        vector
 
 @[simp]
 theorem finiteDefectReducedInverse_operator
@@ -71,8 +76,10 @@ theorem finiteDefectReducedInverse_operator
     finiteDefectReducedInverse operator data hShiftSurjective
         (finiteDefectReducedOperator operator data vector) =
       vector :=
-  (finiteDefectReducedEquiv operator data hShiftSurjective).symm_apply_apply
-    vector
+  by
+    simpa [finiteDefectReducedInverse, finiteDefectReducedEquiv] using
+      (finiteDefectReducedEquiv operator data hShiftSurjective).symm_apply_apply
+        vector
 
 /-- Pointwise norm control of the reduced inverse. -/
 theorem finiteDefectReducedInverse_norm_le
@@ -107,6 +114,7 @@ theorem finiteDefectReducedInverse_opNorm_le
     ‖finiteDefectReducedInverse operator data hShiftSurjective‖ ≤
       data.coercivityConstant⁻¹ := by
   apply ContinuousLinearMap.opNorm_le_bound
+    (finiteDefectReducedInverse operator data hShiftSurjective)
     (inv_nonneg.mpr (le_of_lt data.coercivityConstant_pos))
   intro vector
   simpa using finiteDefectReducedInverse_norm_le operator data

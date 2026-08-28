@@ -37,6 +37,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -88,11 +89,11 @@ def globalCandidateAH10ContinuousReducedFamily
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :
     ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period hPeriod
-      configuration data analysis
+      (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) :=
   (family.toPhysicalC2 period hPeriod hTransverse).toReduced period hPeriod
@@ -111,11 +112,11 @@ def globalCandidateAH10ContinuousChart
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  diracGreenClosureChart period hPeriod configuration data analysis
-    (globalCandidateAH10ContinuousReducedFamily period hPeriod configuration
+  diracGreenClosureChart period hPeriod (measure := measure) configuration data analysis
+    (globalCandidateAH10ContinuousReducedFamily period hPeriod (measure := measure) configuration
       data analysis einsteinScale hTransverse family)
 
 /-- H13 matter--LL bridge generated from the same H10-reduced family. -/
@@ -132,11 +133,11 @@ def globalCandidateAH10ContinuousSameAction
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  diracGreenClosureMatterLLSameAction period hPeriod configuration data analysis
-    (globalCandidateAH10ContinuousReducedFamily period hPeriod configuration
+  diracGreenClosureMatterLLSameAction period hPeriod (measure := measure) configuration data analysis
+    (globalCandidateAH10ContinuousReducedFamily period hPeriod (measure := measure) configuration
       data analysis einsteinScale hTransverse family)
 
 /-- H11 extension generated from the H10 Robin Hessian and six continuous
@@ -154,7 +155,7 @@ def globalCandidateAH10ContinuousPhysicalExtension
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASixPhysicalContinuousExtensions4D period
@@ -186,7 +187,7 @@ def globalCandidateAH10ContinuousParametrix
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASixPhysicalContinuousExtensions4D period
@@ -229,7 +230,7 @@ def globalCandidateAH10ContinuousFredholmEstimates
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASixPhysicalContinuousExtensions4D period
@@ -274,7 +275,7 @@ theorem global_candidateA_hessian_h10_continuous_closure_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASixPhysicalContinuousExtensions4D period
@@ -292,7 +293,19 @@ theorem global_candidateA_hessian_h10_continuous_closure_gate
           data analysis einsteinScale hTransverse family)
         (globalCandidateAH10ContinuousPhysicalExtension period hPeriod
           configuration data analysis einsteinScale hTransverse family
-            extensions)) :=
+            extensions)) :
+    GlobalCandidateAHessianClosureCertificate4D period hPeriod configuration
+      data analysis
+        (globalCandidateAH10ContinuousChart period hPeriod configuration data
+          analysis einsteinScale hTransverse family)
+        einsteinScale
+        (globalCandidateAH10ContinuousSameAction period hPeriod configuration
+          data analysis einsteinScale hTransverse family)
+        (globalCandidateAH10ContinuousPhysicalExtension period hPeriod
+          configuration data analysis einsteinScale hTransverse family extensions)
+        (globalCandidateAH10ContinuousFredholmEstimates period hPeriod
+          configuration data analysis einsteinScale hTransverse family extensions
+            inverse) :=
   global_candidateA_hessian_closure_gate period hPeriod configuration data
     analysis
       (globalCandidateAH10ContinuousChart period hPeriod configuration data

@@ -24,6 +24,8 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusMappingTorusGlobalLLVariation4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -34,8 +36,11 @@ open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyPhysicalC2Redu
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveShift4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveParametrix4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPFiniteDefectCoerciveShift4D
 open P0EFTJanusProgramPGlobalHessianConstructiveAnalyticClosure4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -58,7 +63,7 @@ local instance effectiveQuotientBorelSpace :
   measurable_eq := rfl
 
 /-- Preferred H14 gate with no supplied H12 inverse or defects. -/
-theorem global_candidateA_hessian_coercive_analytic_closure_gate
+def global_candidateA_hessian_coercive_analytic_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -72,46 +77,52 @@ theorem global_candidateA_hessian_coercive_analytic_closure_gate
       data.plusGravity.metric.metric)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        period hPeriod (measure := measure) configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
-      configuration data analysis
-        (globalCandidateAHessianConstructiveChart period hPeriod configuration
-          data analysis family)
+      (measure := measure) configuration data analysis
+        (globalCandidateAHessianConstructiveChart period hPeriod
+          (measure := measure) configuration data analysis family)
         (globalCandidateAHessianConstructiveSameAction period hPeriod
-          configuration data analysis family))
+          (measure := measure) configuration data analysis family))
     (shift : GlobalCandidateAAugmentedCoerciveShiftData4D period hPeriod
-      configuration data analysis
-        (globalCandidateAHessianConstructiveChart period hPeriod configuration
-          data analysis family)
+      (measure := measure) configuration data analysis
+        (globalCandidateAHessianConstructiveChart period hPeriod
+          (measure := measure) configuration data analysis family)
         (globalCandidateAHessianConstructiveSameAction period hPeriod
-          configuration data analysis family)
+          (measure := measure) configuration data analysis family)
         (globalCandidateAHessianConstructivePhysicalExtension period hPeriod
-          configuration data analysis family bounds))
+          (measure := measure) configuration data analysis family bounds))
     (hShiftSurjective : Function.Surjective
-      (finiteDefectShiftedOperator
+      (@finiteDefectShiftedOperator
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis)
+        (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+          analysis)
+        (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
         (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-          configuration data analysis
+          (measure := measure) configuration data analysis
             (globalCandidateAHessianConstructiveChart period hPeriod
-              configuration data analysis family)
+              (measure := measure) configuration data analysis family)
             (globalCandidateAHessianConstructiveSameAction period hPeriod
-              configuration data analysis family)
+              (measure := measure) configuration data analysis family)
             (globalCandidateAHessianConstructivePhysicalExtension period hPeriod
-              configuration data analysis family bounds)) shift))
+              (measure := measure) configuration data analysis family bounds)) shift))
     (hLLStationary : ∀ point,
       LLStationaryAt period hPeriod
         (data.boundary.llFields period hPeriod) point) :=
   global_candidateA_hessian_constructive_analytic_closure_gate period hPeriod
-    configuration data analysis einsteinScale hBoundaryTransverse family bounds
+    (measure := measure) configuration data analysis einsteinScale
+      hBoundaryTransverse family bounds
       (globalCandidateAFaithfulAugmentedGeneralizedInverse_of_coerciveShift
-        period hPeriod configuration data analysis
-          (globalCandidateAHessianConstructiveChart period hPeriod configuration
-            data analysis family)
+        period hPeriod (measure := measure) configuration data analysis
+          (globalCandidateAHessianConstructiveChart period hPeriod
+            (measure := measure) configuration data analysis family)
           (globalCandidateAHessianConstructiveSameAction period hPeriod
-            configuration data analysis family)
+            (measure := measure) configuration data analysis family)
           (globalCandidateAHessianConstructivePhysicalExtension period hPeriod
-            configuration data analysis family bounds)
+            (measure := measure) configuration data analysis family bounds)
           shift hShiftSurjective hLLStationary)
 
 /-- Public marker for the reduced H12/H14 interface. -/

@@ -29,11 +29,16 @@ open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousExtensions4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousSum4D
 
@@ -194,14 +199,20 @@ def globalCandidateAPhysicalBlockCanonicalCoreForm
     (block : GlobalCandidateAPhysicalBlock) :
     PhysicalCore period hPeriod analysis →ₗ[Real]
       PhysicalCore period hPeriod analysis →ₗ[Real] Real :=
-  (globalCandidateAPhysicalBlockLocalHessian period hPeriod chart
-      sameAction.chartBridge.basePoint block).bilinearComp
-    (sameAction.chartBridge.tangentAnalysis.comp
-      (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
-        configuration data analysis))
-    (sameAction.chartBridge.tangentAnalysis.comp
-      (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
-        configuration data analysis))
+  LinearMap.mk₂ Real
+    (fun first second =>
+      globalCandidateAPhysicalBlockLocalHessian period hPeriod chart
+        sameAction.chartBridge.basePoint block
+        (sameAction.chartBridge.tangentAnalysis
+          (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
+            configuration data analysis first))
+        (sameAction.chartBridge.tangentAnalysis
+          (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
+            configuration data analysis second)))
+    (by intros; simp)
+    (by intros; simp)
+    (by intros; simp)
+    (by intros; simp)
 
 /-- Canonical extension packet: only the completed forms and their exact core
 restrictions are supplied. -/
@@ -217,7 +228,7 @@ structure GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
     (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis chart) : Prop where
+      period hPeriod configuration data analysis chart) : Type where
   extension : GlobalCandidateAPhysicalBlock →
     PhysicalHilbert period hPeriod configuration data analysis →L[Real]
       PhysicalHilbert period hPeriod configuration data analysis →L[Real] Real
@@ -285,7 +296,7 @@ def GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D.toSymmetric
   symmetric := extensions.symmetric
 
 /-- Public canonical H11 extension gate. -/
-theorem candidate_a_seven_physical_canonical_extensions_gate
+def candidate_a_seven_physical_canonical_extensions_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

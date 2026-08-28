@@ -20,6 +20,7 @@ noncomputable section
 open Set
 open scoped InnerProductSpace
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPCandidateASectorModeAssembly4D
 
 variable {E : Type*}

@@ -52,6 +52,7 @@ def toCrossFormPhysicalSmallnessData
   physical_small := by
     simpa [CandidateAFiveSectorPrincipalBlockData.margin,
       CandidateAFiveSectorPrincipalBlockData.crossForm,
+      CandidateAFiveSectorPrincipalBlockData.toCrossFormGardingData,
       P0EFTJanusProgramPCandidateAFiveSectorCrossFormGarding4D.CandidateAFiveSectorCrossFormGardingData.margin,
       P0EFTJanusProgramPCandidateAFiveSectorCrossFormGarding4D.CandidateAFiveSectorCrossFormGardingData.couplingConstant]
       using data.physical_small
@@ -71,8 +72,10 @@ theorem candidateA_five_sector_principal_physical_smallness_gate
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.totalEnergy vector := by
   simpa [margin,
+    toCrossFormPhysicalSmallnessData,
     CandidateAFiveSectorPrincipalBlockData.margin,
     CandidateAFiveSectorPrincipalBlockData.crossForm,
+    CandidateAFiveSectorPrincipalBlockData.toCrossFormGardingData,
     CandidateAFiveSectorCrossFormPhysicalSmallnessData.margin,
     P0EFTJanusProgramPCandidateAFiveSectorCrossFormGarding4D.CandidateAFiveSectorCrossFormGardingData.margin,
     P0EFTJanusProgramPCandidateAFiveSectorCrossFormGarding4D.CandidateAFiveSectorCrossFormGardingData.couplingConstant]

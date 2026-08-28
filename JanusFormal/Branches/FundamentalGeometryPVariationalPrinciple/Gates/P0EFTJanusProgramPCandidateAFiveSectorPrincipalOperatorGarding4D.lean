@@ -37,13 +37,11 @@ def toQuadraticGardingOperatorData
     QuadraticGardingOperatorData operator where
   margin := data.finiteMargin.margin
   margin_pos :=
-    (CandidateAFiveSectorPrincipalPhysicalSmallnessData.
-      candidateA_five_sector_principal_physical_smallness_gate
+    (CandidateAFiveSectorPrincipalPhysicalSmallnessData.candidateA_five_sector_principal_physical_smallness_gate
         data.finiteMargin).1
   energy := data.finiteMargin.totalEnergy
   energy_lower :=
-    (CandidateAFiveSectorPrincipalPhysicalSmallnessData.
-      candidateA_five_sector_principal_physical_smallness_gate
+    (CandidateAFiveSectorPrincipalPhysicalSmallnessData.candidateA_five_sector_principal_physical_smallness_gate
         data.finiteMargin).2
   energy_upper := data.energy_upper
 

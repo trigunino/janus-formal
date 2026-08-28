@@ -31,30 +31,21 @@ private theorem operator_projection_apply
     (data : FiniteDefectCoerciveShiftData operator)
     (vector : E) :
     operator (data.projection vector) = 0 := by
-  have h := congrArg
-    (fun map : E →L[Real] E => map vector)
-    data.operator_annihilates_projection
-  simpa [ContinuousLinearMap.comp_apply] using h
+  exact data.operator_annihilates_projection vector
 
 private theorem projection_operator_apply
     (operator : E →L[Real] E)
     (data : FiniteDefectCoerciveShiftData operator)
     (vector : E) :
     data.projection (operator vector) = 0 := by
-  have h := congrArg
-    (fun map : E →L[Real] E => map vector)
-    data.projection_annihilates_operator
-  simpa [ContinuousLinearMap.comp_apply] using h
+  exact data.projection_annihilates_operator vector
 
 private theorem projection_projection_apply
     (operator : E →L[Real] E)
     (data : FiniteDefectCoerciveShiftData operator)
     (vector : E) :
     data.projection (data.projection vector) = data.projection vector := by
-  have h := congrArg
-    (fun map : E →L[Real] E => map vector)
-    data.projection_idempotent
-  simpa [ContinuousLinearMap.comp_apply] using h
+  exact data.projection_idempotent vector
 
 /-- The complement `x - Px` lies in the kernel of the projection. -/
 theorem finiteDefect_complement_mem_projection_ker
@@ -63,8 +54,8 @@ theorem finiteDefect_complement_mem_projection_ker
     (vector : E) :
     vector - data.projection vector ∈ data.projection.ker := by
   apply LinearMap.mem_ker.mpr
-  rw [map_sub, projection_projection_apply operator data]
-  exact sub_self _
+  rw [map_sub]
+  exact sub_eq_zero.mpr (data.projection_idempotent vector).symm
 
 /-- The operator ignores the projected zero-mode component. -/
 theorem finiteDefect_operator_complement

@@ -25,6 +25,7 @@ namespace P0EFTJanusProgramPPrimitiveSpinCDiracGreenCurrent4D
 
 set_option autoImplicit false
 set_option maxHeartbeats 2400000
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 open Filter Set Topology
@@ -34,12 +35,22 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusSmoothFieldLinearSpace4D
+open P0EFTJanusMappingTorusSmoothThroatTrace4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledSmoothVectorBundle4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledGlobalDeckCliffordAction4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledCliffordConnectionCompatibility4D
+open P0EFTJanusProgramPD9MatterSpinorDoubledIntrinsicDiracOperator4D
+open P0EFTJanusProgramPD9MatterSpinorLeviCivitaConnection4D
 open P0EFTJanusProgramPD9MatterSpinorHermitianPairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCBundle4D
 open P0EFTJanusProgramPD9PrimitiveSpinCConnection4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCLocalGeometricDirac4D
+open P0EFTJanusProgramPD9PrimitiveSpinCLocalDiracGaugeCovariance4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionDescent4D
 open P0EFTJanusProgramPPrimitiveSpinCCliffordHermitianSkew4D
 open P0EFTJanusProgramPPrimitiveSpinCCliffordSection4D
 open P0EFTJanusProgramPPrimitiveSpinCConnectionHermitian4D
@@ -74,6 +85,13 @@ private def d9DoubledMatterPairingRightCLM
           d9DoubledMatterSpinorHermitianPairing_real_smul_right
             scalar first second }
 
+@[simp]
+private theorem d9DoubledMatterPairingRightCLM_apply
+    (first second : D9DoubledMatterFiber) :
+    d9DoubledMatterPairingRightCLM first second =
+      d9DoubledMatterSpinorHermitianPairing first second :=
+  rfl
+
 private def d9DoubledMatterPairingCLM :
     D9DoubledMatterFiber →L[Real]
       D9DoubledMatterFiber →L[Real] Complex :=
@@ -81,19 +99,34 @@ private def d9DoubledMatterPairingCLM :
     { toFun := d9DoubledMatterPairingRightCLM
       map_add' := by
         intro first second
-        ext third
+        apply ContinuousLinearMap.ext
+        intro third
         exact d9DoubledMatterSpinorHermitianPairing_add_left
           first second third
       map_smul' := by
         intro scalar first
-        ext second
+        apply ContinuousLinearMap.ext
+        intro second
         exact d9DoubledMatterSpinorHermitianPairing_real_smul_left
           scalar first second }
+
+private def d9DoubledMatterPairingLeftCLM
+    (second : D9DoubledMatterFiber) :
+    D9DoubledMatterFiber →L[Real] Complex :=
+  (ContinuousLinearMap.apply Real Complex second).comp
+    d9DoubledMatterPairingCLM
 
 @[simp]
 private theorem d9DoubledMatterPairingCLM_apply
     (first second : D9DoubledMatterFiber) :
     d9DoubledMatterPairingCLM first second =
+      d9DoubledMatterSpinorHermitianPairing first second :=
+  rfl
+
+@[simp]
+private theorem d9DoubledMatterPairingLeftCLM_apply
+    (first second : D9DoubledMatterFiber) :
+    d9DoubledMatterPairingLeftCLM second first =
       d9DoubledMatterSpinorHermitianPairing first second :=
   rfl
 
@@ -125,10 +158,19 @@ theorem d9DoubledMatterSpinorHermitianPairing_mfderiv
           𝓘(Real, D9DoubledMatterFiber) first base)) := by
     convert d9DoubledMatterPairingCLM.hasFDerivAt.hasMFDerivAt.comp
       base hFirst.hasMFDerivAt using 1 <;> rfl
-  have hApply := hFirstPairing.clm_apply hSecond.hasMFDerivAt
+  have hApply :=
+    (isBoundedBilinearMap_apply.hasFDerivAt
+      (d9DoubledMatterPairingCLM (first base), second base)).hasMFDerivAt.comp
+        base (hFirstPairing.prodMk hSecond.hasMFDerivAt)
   have hDerivative := hApply.mfderiv
   have hAt := congrArg (fun derivative => derivative tangent) hDerivative
-  simpa [d9DoubledMatterPairingCLM_apply] using hAt
+  change (mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
+      ((fun p : (D9DoubledMatterFiber →L[Real] Complex) ×
+          D9DoubledMatterFiber => p.1 p.2) ∘
+        fun y => (d9DoubledMatterPairingCLM (first y), second y)) base)
+      tangent = _
+  rw [hAt]
+  rfl
 
 /-! ## Clifford transforms and the global current -/
 
@@ -191,8 +233,10 @@ theorem d9PrimitiveSpinCGreenCurrent_apply
       d9DoubledMatterSpinorHermitianPairing
         (d9DoubledMatterFiberCliffordGamma direction (first base))
         (second base) := by
-  unfold d9PrimitiveSpinCGreenCurrent
-    d9PrimitiveSpinCPointwiseHermitianPairing
+  change d9PrimitiveSpinCPointwiseHermitianPairing period hPeriod choice
+    (d9PrimitiveSpinCCliffordSection period hPeriod choice direction first)
+      second base = _
+  unfold d9PrimitiveSpinCPointwiseHermitianPairing
   rw [d9PrimitiveSpinCCliffordSection_apply]
 
 /-- The derivative of the global current is computed by the two local flat
@@ -205,7 +249,7 @@ theorem d9PrimitiveSpinCGreenCurrent_mvfderiv
     (hBase : base ∈ d9PrimitiveSpinCBaseSet period hPeriod index) :
     mvfderiv throatCoverModelWithCorners
         (d9PrimitiveSpinCGreenCurrent period hPeriod choice direction first
-          second).toFun base
+          second) base
         (d9IntrinsicThroatFrame period hPeriod derivativeDirection base) =
       d9DoubledMatterSpinorHermitianPairing
           (d9DoubledMatterFiberCliffordGamma direction
@@ -236,28 +280,33 @@ theorem d9PrimitiveSpinCGreenCurrent_mvfderiv
       (secondFamily.localValue index current)
   have hEventually :
       (d9PrimitiveSpinCGreenCurrent period hPeriod choice direction first second)
-          .toFun =ᶠ[𝓝 base] localCurrent := by
+          =ᶠ[𝓝 base] localCurrent := by
     filter_upwards
       [(d9PrimitiveSpinCBaseSet_isOpen period hPeriod index).mem_nhds hBase]
       with current hCurrent
-    rw [d9PrimitiveSpinCGreenCurrent_apply]
-    have hFirstLocal :=
-      d9PrimitiveSpinCCliffordSection_localValue period hPeriod choice direction
-        first index current hCurrent
-    have hSecondLocal :
-        d9PrimitiveSpinCSmoothSectionLocalValue period hPeriod choice second
-            index current =
-          secondFamily.localValue index current :=
-      rfl
-    have hPairing :=
-      d9PrimitiveSpinCPointwiseHermitianPairing_eq_coordChange period hPeriod
-        choice index
+    change d9PrimitiveSpinCPointwiseHermitianPairing period hPeriod choice
         (d9PrimitiveSpinCCliffordSection period hPeriod choice direction first)
-        second current
-    simpa [localCurrent, cliffordFamily, firstFamily, secondFamily,
-      hFirstLocal, hSecondLocal] using hPairing
-  have hDerivativeEq := Filter.EventuallyEq.mfderiv_eq hEventually
-  rw [hDerivativeEq]
+          second current = localCurrent current
+    rw [d9PrimitiveSpinCPointwiseHermitianPairing_eq_coordChange period hPeriod
+      choice index]
+    change d9DoubledMatterSpinorHermitianPairing
+        (d9PrimitiveSpinCSmoothSectionLocalValue period hPeriod choice
+          (d9PrimitiveSpinCCliffordSection period hPeriod choice direction first)
+            index current)
+        (d9PrimitiveSpinCSmoothSectionLocalValue period hPeriod choice second
+          index current) = localCurrent current
+    rw [d9PrimitiveSpinCCliffordSection_localValue period hPeriod choice
+      direction first index current hCurrent]
+    rfl
+  have hDerivativeEq := Filter.EventuallyEq.mfderiv_eq
+    (I := throatCoverModelWithCorners) (I' := 𝓘(Real, Complex)) hEventually
+  have hMvDerivativeEq :
+      mvfderiv throatCoverModelWithCorners
+          (d9PrimitiveSpinCGreenCurrent period hPeriod choice direction first
+            second) base =
+        mvfderiv throatCoverModelWithCorners localCurrent base := by
+    exact hDerivativeEq
+  rw [hMvDerivativeEq]
   have hFirstDiff : MDifferentiableAt throatCoverModelWithCorners
       𝓘(Real, D9DoubledMatterFiber) (cliffordFamily.localValue index) base :=
     ((cliffordFamily.contMDiffOn_localValue index).contMDiffAt
@@ -265,12 +314,27 @@ theorem d9PrimitiveSpinCGreenCurrent_mvfderiv
       |>.mdifferentiableAt (by simp)
   have hSecondDiff : MDifferentiableAt throatCoverModelWithCorners
       𝓘(Real, D9DoubledMatterFiber) (secondFamily.localValue index) base :=
-    ((secondFamily.contMDiffOn_localValue index).contMDiffAt
+      ((secondFamily.contMDiffOn_localValue index).contMDiffAt
       ((d9PrimitiveSpinCBaseSet_isOpen period hPeriod index).mem_nhds hBase))
       |>.mdifferentiableAt (by simp)
+  change (mfderiv throatCoverModelWithCorners 𝓘(Real, Complex)
+      (fun current => d9DoubledMatterSpinorHermitianPairing
+        (cliffordFamily.localValue index current)
+        (secondFamily.localValue index current)) base)
+      (d9IntrinsicThroatFrame period hPeriod derivativeDirection base) = _
   rw [d9DoubledMatterSpinorHermitianPairing_mfderiv
     period hPeriod (cliffordFamily.localValue index)
       (secondFamily.localValue index) base hFirstDiff hSecondDiff]
+  change d9DoubledMatterSpinorHermitianPairing
+        ((d9PrimitiveSpinCCliffordLocalGaugeFamily period hPeriod choice
+          direction firstFamily).localValue index base)
+        (d9PrimitiveSpinCLocalFlatFrameDerivative period hPeriod choice
+          secondFamily index derivativeDirection base) +
+      d9DoubledMatterSpinorHermitianPairing
+        (d9PrimitiveSpinCLocalFlatFrameDerivative period hPeriod choice
+          (d9PrimitiveSpinCCliffordLocalGaugeFamily period hPeriod choice
+            direction firstFamily) index derivativeDirection base)
+        (secondFamily.localValue index base) = _
   rw [d9PrimitiveSpinCCliffordLocalGaugeFamily_flatDerivative
     period hPeriod choice direction derivativeDirection firstFamily index base
       hBase]
@@ -300,7 +364,7 @@ theorem d9PrimitiveSpinCBaseLeviCivitaSpinCorrection_contraction
   simpa [d9PrimitiveSpinCBaseLeviCivitaSpinCorrection,
     d9PrimitiveSpinCBaseUnitRadialClifford,
     d9PrimitiveSpinCBaseUnitRadialCoordinate_mk,
-    d9LeviCivitaSpinCorrection] using
+    d9LeviCivitaSpinCorrection, d9UnitRadialClifford] using
       d9LeviCivitaSpinCorrection_contraction period hPeriod point matter
 
 /-- Unit-radial Clifford multiplication is skew-Hermitian. -/
@@ -313,14 +377,21 @@ theorem d9PrimitiveSpinCBaseUnitRadialClifford_pairing_skew
       -d9DoubledMatterSpinorHermitianPairing first
         (d9PrimitiveSpinCBaseUnitRadialClifford period hPeriod base second) := by
   unfold d9PrimitiveSpinCBaseUnitRadialClifford
-  rw [map_sum]
-  simp_rw [d9DoubledMatterSpinorHermitianPairing_add_left,
+  change d9DoubledMatterPairingLeftCLM second
+      (∑ direction : Fin 3,
+        d9PrimitiveSpinCBaseUnitRadialCoordinate period hPeriod direction base •
+          d9DoubledMatterFiberCliffordGamma direction first) =
+    -d9DoubledMatterPairingRightCLM first
+      (∑ direction : Fin 3,
+        d9PrimitiveSpinCBaseUnitRadialCoordinate period hPeriod direction base •
+          d9DoubledMatterFiberCliffordGamma direction second)
+  rw [map_sum, map_sum]
+  simp_rw [d9DoubledMatterPairingLeftCLM_apply,
+    d9DoubledMatterPairingRightCLM_apply,
     d9DoubledMatterSpinorHermitianPairing_real_smul_left,
-    d9DoubledMatterSpinorHermitianPairing_gamma]
-  rw [← Finset.mul_sum]
-  simp_rw [← d9DoubledMatterSpinorHermitianPairing_real_smul_right,
-    ← d9DoubledMatterSpinorHermitianPairing_add_right]
-  rfl
+    d9DoubledMatterSpinorHermitianPairing_gamma,
+    d9DoubledMatterSpinorHermitianPairing_real_smul_right, mul_neg]
+  rw [Finset.sum_neg_distrib]
 
 /-- The commuting product `γᵢ I` is Hermitian, hence every real `U(1)`
 connection coefficient cancels from the Green residual. -/
@@ -348,7 +419,6 @@ theorem d9PrimitiveSpinCGaugeCorrection_pairing_symmetric
     d9DoubledMatterSpinorHermitianPairing_gamma_right,
     hCommute,
     d9DoubledMatterSpinorHermitianPairing_imaginaryAction]
-  ring
 
 /-! ## Pointwise Green residual -/
 
@@ -423,16 +493,32 @@ theorem d9PrimitiveSpinCLocalFlatGreenResidual
       -∑ direction : Fin 3,
         mvfderiv throatCoverModelWithCorners
           (d9PrimitiveSpinCGreenCurrent period hPeriod choice direction first
-            second).toFun base
+            second) base
           (d9IntrinsicThroatFrame period hPeriod direction base) := by
   unfold d9PrimitiveSpinCLocalFlatDirac
+  change d9DoubledMatterPairingRightCLM
+        (d9PrimitiveSpinCSmoothSectionLocalValue period hPeriod choice first
+          index base)
+        (∑ direction : Fin 3,
+          d9DoubledMatterFiberCliffordGamma direction
+            (d9PrimitiveSpinCLocalFlatFrameDerivative period hPeriod choice
+              (d9PrimitiveSpinCSmoothSectionLocalGaugeFamily period hPeriod
+                choice second) index direction base)) -
+      d9DoubledMatterPairingLeftCLM
+        (d9PrimitiveSpinCSmoothSectionLocalValue period hPeriod choice second
+          index base)
+        (∑ direction : Fin 3,
+          d9DoubledMatterFiberCliffordGamma direction
+            (d9PrimitiveSpinCLocalFlatFrameDerivative period hPeriod choice
+              (d9PrimitiveSpinCSmoothSectionLocalGaugeFamily period hPeriod
+                choice first) index direction base)) = _
   rw [map_sum, map_sum]
-  simp only [d9DoubledMatterSpinorHermitianPairing_add_right,
-    d9DoubledMatterSpinorHermitianPairing_add_left,
-    Finset.sum_sub_distrib]
+  rw [← Finset.sum_sub_distrib]
   rw [← Finset.sum_neg_distrib]
   apply Finset.sum_congr rfl
   intro direction _
+  simp only [d9DoubledMatterPairingRightCLM_apply,
+    d9DoubledMatterPairingLeftCLM_apply]
   rw [d9DoubledMatterSpinorHermitianPairing_gamma_right]
   rw [d9PrimitiveSpinCGreenCurrent_mvfderiv period hPeriod choice direction
     direction first second index base hBase]
@@ -454,6 +540,16 @@ theorem d9PrimitiveSpinCLocalSpinGreenResidual
   rw [d9PrimitiveSpinCBaseLeviCivitaSpinCorrection_contraction,
     d9PrimitiveSpinCBaseLeviCivitaSpinCorrection_contraction,
     d9PrimitiveSpinCBaseUnitRadialClifford_pairing_skew]
+  rw [show -d9PrimitiveSpinCBaseUnitRadialClifford period hPeriod base second =
+        (-1 : Real) • d9PrimitiveSpinCBaseUnitRadialClifford period hPeriod
+          base second by simp,
+    show -d9PrimitiveSpinCBaseUnitRadialClifford period hPeriod base first =
+        (-1 : Real) • d9PrimitiveSpinCBaseUnitRadialClifford period hPeriod
+          base first by simp,
+    d9DoubledMatterSpinorHermitianPairing_real_smul_right,
+    d9DoubledMatterSpinorHermitianPairing_real_smul_left]
+  norm_num
+  rw [d9PrimitiveSpinCBaseUnitRadialClifford_pairing_skew]
   ring
 
 /-- The complete `U(1)` correction has zero Green residual pointwise. -/
@@ -465,15 +561,25 @@ theorem d9PrimitiveSpinCLocalGaugeGreenResidual
         (d9PrimitiveSpinCLocalGaugeCorrectionDirac period hPeriod index base
           second) -
       d9DoubledMatterSpinorHermitianPairing
-        (d9PrimitiveSpinCLocalGaugeCorrectionDirac period hPeriod index base
-          first) second = 0 := by
+          (d9PrimitiveSpinCLocalGaugeCorrectionDirac period hPeriod index base
+           first) second = 0 := by
   unfold d9PrimitiveSpinCLocalGaugeCorrectionDirac
+  change d9DoubledMatterPairingRightCLM first
+        (∑ direction : Fin 3,
+          d9DoubledMatterFiberCliffordGamma direction
+            (d9PrimitiveSpinCTotalConnectionFrameCoefficient period hPeriod
+              index.2 direction base • d9PrimitiveSpinCImaginaryAction second)) -
+      d9DoubledMatterPairingLeftCLM second
+        (∑ direction : Fin 3,
+          d9DoubledMatterFiberCliffordGamma direction
+            (d9PrimitiveSpinCTotalConnectionFrameCoefficient period hPeriod
+              index.2 direction base • d9PrimitiveSpinCImaginaryAction first)) = 0
   rw [map_sum, map_sum]
-  simp only [d9DoubledMatterSpinorHermitianPairing_add_right,
-    d9DoubledMatterSpinorHermitianPairing_add_left,
-    Finset.sum_sub_distrib]
+  rw [← Finset.sum_sub_distrib]
   apply Finset.sum_eq_zero
   intro direction _
+  simp only [d9DoubledMatterPairingRightCLM_apply,
+    d9DoubledMatterPairingLeftCLM_apply]
   rw [d9PrimitiveSpinCGaugeCorrection_pairing_symmetric]
   exact sub_self _
 
@@ -491,7 +597,7 @@ theorem d9PrimitiveSpinCGeometricDirac_pointwiseGreen
       -∑ direction : Fin 3,
         mvfderiv throatCoverModelWithCorners
           (d9PrimitiveSpinCGreenCurrent period hPeriod choice direction first
-            second).toFun base
+            second) base
           (d9IntrinsicThroatFrame period hPeriod direction base) +
         2 * d9DoubledMatterSpinorHermitianPairing
           (d9PrimitiveSpinCBaseUnitRadialClifford period hPeriod base
@@ -511,7 +617,9 @@ theorem d9PrimitiveSpinCGeometricDirac_pointwiseGreen
   have hSecondValue : secondFamily.localValue index base = second base := by
     exact d9PrimitiveSpinCSmoothSectionLocalGaugeFamily_indexAt
       period hPeriod choice second base
+  dsimp [firstFamily, secondFamily, index] at hFirstValue hSecondValue ⊢
   rw [d9PrimitiveSpinCGeometricDiracOperator,
+    d9PrimitiveSpinCGeometricDiracOperator,
     d9PrimitiveSpinCGeometricDiracSection_apply,
     d9PrimitiveSpinCGeometricDiracSection_apply,
     d9PrimitiveSpinCLocalGeometricDirac_eq_three_blocks,
@@ -520,12 +628,22 @@ theorem d9PrimitiveSpinCGeometricDirac_pointwiseGreen
     d9DoubledMatterSpinorHermitianPairing_add_right,
     d9DoubledMatterSpinorHermitianPairing_add_left,
     d9DoubledMatterSpinorHermitianPairing_add_left,
-    d9PrimitiveSpinCLocalFlatGreenResidual period hPeriod choice first second
-      index base hBase,
-    d9PrimitiveSpinCLocalSpinGreenResidual,
-    d9PrimitiveSpinCLocalGaugeGreenResidual,
-    hFirstValue, hSecondValue]
-  ring
+    ← hFirstValue, ← hSecondValue]
+  have hFlat := d9PrimitiveSpinCLocalFlatGreenResidual period hPeriod choice
+    first second index base hBase
+  have hSpin := d9PrimitiveSpinCLocalSpinGreenResidual period hPeriod base
+    ((d9PrimitiveSpinCSmoothSectionLocalGaugeFamily period hPeriod choice first).localValue
+      index base)
+    ((d9PrimitiveSpinCSmoothSectionLocalGaugeFamily period hPeriod choice second).localValue
+      index base)
+  have hGauge := d9PrimitiveSpinCLocalGaugeGreenResidual period hPeriod index base
+    ((d9PrimitiveSpinCSmoothSectionLocalGaugeFamily period hPeriod choice first).localValue
+      index base)
+    ((d9PrimitiveSpinCSmoothSectionLocalGaugeFamily period hPeriod choice second).localValue
+      index base)
+  dsimp [index, d9PrimitiveSpinCSmoothSectionLocalGaugeFamily]
+    at hFlat hSpin hGauge ⊢
+  linear_combination hFlat + hSpin + hGauge
 
 /-- Radial current is exactly the coefficient contraction of the three Green
 currents. -/
@@ -542,7 +660,14 @@ theorem d9PrimitiveSpinCBaseRadialCurrent_eq_sum
           d9PrimitiveSpinCGreenCurrent period hPeriod choice direction first
             second base := by
   unfold d9PrimitiveSpinCBaseUnitRadialClifford
+  change d9DoubledMatterPairingLeftCLM
+      (show D9DoubledMatterFiber from second base)
+      (∑ direction : Fin 3,
+        d9PrimitiveSpinCBaseUnitRadialCoordinate period hPeriod direction base •
+          d9DoubledMatterFiberCliffordGamma direction
+            (show D9DoubledMatterFiber from first base)) = _
   rw [map_sum]
+  simp only [d9DoubledMatterPairingLeftCLM_apply]
   apply Finset.sum_congr rfl
   intro direction _
   rw [d9DoubledMatterSpinorHermitianPairing_real_smul_left,
@@ -560,7 +685,7 @@ structure ProgramPPrimitiveSpinCDiracPointwiseGreenCertificate4D : Prop where
       -∑ direction : Fin 3,
         mvfderiv throatCoverModelWithCorners
           (d9PrimitiveSpinCGreenCurrent period hPeriod choice direction first
-            second).toFun base
+            second) base
           (d9IntrinsicThroatFrame period hPeriod direction base) +
         2 * d9DoubledMatterSpinorHermitianPairing
           (d9PrimitiveSpinCBaseUnitRadialClifford period hPeriod base

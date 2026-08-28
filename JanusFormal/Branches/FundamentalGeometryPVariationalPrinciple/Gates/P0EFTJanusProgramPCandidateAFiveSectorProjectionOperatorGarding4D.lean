@@ -16,10 +16,11 @@ noncomputable section
 
 open P0EFTJanusProgramPCandidateAFiveSectorProjectionPhysicalSmallness4D
 open P0EFTJanusProgramPCandidateAFiveSectorPrincipalOperatorGarding4D
+open P0EFTJanusProgramPCandidateAFiveSectorPrincipalPhysicalSmallness4D
+open P0EFTJanusProgramPCandidateAFiveSectorPrincipalProjectionResolution4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- Positive projection resolution identified with one displayed operator
 energy. -/
@@ -46,6 +47,9 @@ theorem lowerBound
     (vector : E) :
     data.finiteMargin.margin * ‖vector‖ ≤ ‖operator vector‖ := by
   simpa [CandidateAFiveSectorProjectionPhysicalSmallnessData.margin,
+    toPrincipalOperatorGardingData,
+    CandidateAFiveSectorProjectionPhysicalSmallnessData.toPrincipalPhysicalSmallnessData,
+    CandidateAFiveSectorPrincipalProjectionResolutionData.margin,
     CandidateAFiveSectorPrincipalPhysicalSmallnessData.margin] using
       data.toPrincipalOperatorGardingData.lowerBound vector
 

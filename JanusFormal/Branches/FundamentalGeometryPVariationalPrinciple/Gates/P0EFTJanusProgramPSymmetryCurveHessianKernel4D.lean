@@ -1,4 +1,7 @@
 import Mathlib.Analysis.Calculus.FDeriv.Comp
+import Mathlib.Analysis.Calculus.FDeriv.Congr
+import Mathlib.Analysis.Calculus.FDeriv.Const
+import Mathlib.Analysis.Normed.Operator.NormedSpace
 
 /-!
 # Hessian zero modes from general symmetry curves
@@ -31,6 +34,14 @@ variable {E F : Type*}
   [NormedAddCommGroup E] [NormedSpace Real E]
   [NormedAddCommGroup F] [NormedSpace Real F]
 
+local instance continuousLinearMapNormedAddCommGroup :
+    NormedAddCommGroup (E →L[Real] Real) :=
+  ContinuousLinearMap.toNormedAddCommGroup
+
+local instance continuousLinearMapNormedSpace :
+    NormedSpace Real (E →L[Real] Real) :=
+  ContinuousLinearMap.toNormedSpace
+
 /-- Differentiable one-parameter curve through `point`, with the ambient vector
 `generator` as its derivative at zero. -/
 structure SymmetryCurveAt (point generator : E) where
@@ -61,14 +72,15 @@ theorem fderiv_apply_eq_zero_of_curveEventuallyInvariant
         (fderiv Real map point).comp orbit.derivative := by
     have hRaw := fderiv_comp (𝕜 := Real) (x := (0 : Real))
       hMapAtCurve orbit.hasFDerivAt_zero.differentiableAt
+    rw [orbit.hasFDerivAt_zero.fderiv] at hRaw
     simpa [Function.comp_def, orbit.curve_zero] using hRaw
   have hCurveDerivativeZero :
       fderiv Real (fun parameter : Real => map (orbit.curve parameter)) 0 = 0 := by
     calc
       fderiv Real (fun parameter : Real => map (orbit.curve parameter)) 0 =
           fderiv Real (fun _ : Real => map point) 0 :=
-        hInvariant.fderiv_eq
-      _ = 0 := by simp
+        Filter.EventuallyEq.fderiv_eq hInvariant
+      _ = 0 := fderiv_const_apply (𝕜 := Real) (x := (0 : Real)) (map point)
   have hCompositeZero :
       (fderiv Real map point).comp orbit.derivative = 0 := by
     rw [← hChain]

@@ -21,14 +21,16 @@ noncomputable section
 open scoped InnerProductSpace
 open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalPrincipal4D
 open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointPhysicalSmallness4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
+open P0EFTJanusProgramPCandidateAFiveSectorAutomaticPrincipalDecomposition4D
+open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointPrincipalResolution4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- Orthogonal principal decomposition plus the genuine H11 physical energy. -/
@@ -75,7 +77,13 @@ theorem candidateA_five_sector_orthogonal_physical_smallness_gate
       ∀ vector : E,
         data.margin Component * ‖vector‖ ^ 2 ≤ data.totalEnergy vector := by
   simpa [margin,
-    CandidateAFiveSectorSelfAdjointPhysicalSmallnessData.margin] using
+    toSelfAdjointPhysicalSmallness,
+    CandidateAFiveSectorSelfAdjointPhysicalSmallnessData.margin,
+    CandidateAFiveSectorOrthogonalPrincipalData.margin,
+    CandidateAFiveSectorOrthogonalPrincipalData.toAutomaticPrincipal,
+    CandidateAFiveSectorAutomaticPrincipalData.margin,
+    CandidateAFiveSectorAutomaticPrincipalData.toSelfAdjointPrincipalResolution,
+    CandidateAFiveSectorSelfAdjointPrincipalResolutionData.margin] using
       data.toSelfAdjointPhysicalSmallness Component
         |>.candidateA_five_sector_selfAdjoint_physical_smallness_gate
 

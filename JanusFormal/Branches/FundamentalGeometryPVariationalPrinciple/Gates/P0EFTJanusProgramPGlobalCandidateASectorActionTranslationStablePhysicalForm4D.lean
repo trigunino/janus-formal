@@ -34,17 +34,33 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActionTranslationZeroModes4D
 open P0EFTJanusProgramPGlobalCandidateAActionTranslationStablePhysicalForm4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelNamedGarding4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPCandidateASectorModeAssembly4D
+open P0EFTJanusProgramPActionTranslationSymmetryHessianKernel4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
+
+noncomputable local instance candidateASectorGlobalModeDecidableEq
+    (types : CandidateASectorModeTypes) : DecidableEq types.GlobalMode :=
+  Classical.decEq _
 
 private abbrev EffectiveQuotient :=
   MappingTorus (reflectedSphereData period hPeriod)
@@ -64,14 +80,14 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev SectorStableHilbert
+private def SectorStableHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) : Type :=
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 
@@ -143,6 +159,7 @@ local instance (priority := 30000) sectorStableCompleteSpace
       (SectorStableHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Five-sector action invariance and stable principal-coercivity packet. -/
 structure GlobalCandidateASectorActionTranslationStablePhysicalFormData4D
@@ -177,10 +194,10 @@ structure GlobalCandidateASectorActionTranslationStablePhysicalFormData4D
     referenceConstant * ‖current‖ ^ 2 ≤
       ⟪current,
         globalCandidateACanonicalStableReferenceOperator period hPeriod
-          configuration data analysis current, Real⟫ +
+          configuration data analysis current⟫_Real +
         defectConstant *
           ∑ mode : types.GlobalMode,
-            ⟪current, modes.vectors.globalVector mode, Real⟫ ^ 2
+            ⟪current, modes.vectors.globalVector mode⟫_Real ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point

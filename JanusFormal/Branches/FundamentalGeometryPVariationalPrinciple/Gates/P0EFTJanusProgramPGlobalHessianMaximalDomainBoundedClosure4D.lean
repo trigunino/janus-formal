@@ -33,6 +33,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -101,11 +102,11 @@ def maximalDomainClosureChartData
     (domain : ProgramPPrimitiveSpinCSmoothMaximalDomainData4D period hPeriod
       couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period
-      hPeriod configuration data analysis
+      hPeriod (measure := measure) configuration data analysis
         (maximalDomainClosureMatterRealization period hPeriod
           couplings.matterMassSquared domain)) :=
   globalCandidateAMinimalPhysicalActionChartData_of_reducedFamily period hPeriod
-    configuration data analysis
+    (measure := measure) configuration data analysis
       (maximalDomainClosureMatterRealization period hPeriod
         couplings.matterMassSquared domain) family
 
@@ -122,7 +123,7 @@ def maximalDomainClosureChart
     (domain : ProgramPPrimitiveSpinCSmoothMaximalDomainData4D period hPeriod
       couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period
-      hPeriod configuration data analysis
+      hPeriod (measure := measure) configuration data analysis
         (maximalDomainClosureMatterRealization period hPeriod
           couplings.matterMassSquared domain)) :=
   globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
@@ -143,7 +144,7 @@ def maximalDomainClosureMatterLLSameAction
     (domain : ProgramPPrimitiveSpinCSmoothMaximalDomainData4D period hPeriod
       couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period
-      hPeriod configuration data analysis
+      hPeriod (measure := measure) configuration data analysis
         (maximalDomainClosureMatterRealization period hPeriod
           couplings.matterMassSquared domain)) :=
   globalCandidateAMinimalPhysicalMatterLLSameActionBridge period hPeriod
@@ -166,7 +167,7 @@ structure GlobalCandidateAHessianMaximalDomainBoundedInputs4D
   spinCDiracSymmetry :
     ProgramPPrimitiveSpinCSmoothDiracFormalSymmetryData4D period hPeriod
   family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D period
-    hPeriod configuration data analysis
+    hPeriod (measure := measure) configuration data analysis
       (maximalDomainClosureMatterRealization period hPeriod
         couplings.matterMassSquared
         (maximalDomainClosureSpinCDomain period hPeriod
@@ -214,7 +215,7 @@ def GlobalCandidateAHessianMaximalDomainBoundedInputs4D.spinCDomain
       couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     (inputs : GlobalCandidateAHessianMaximalDomainBoundedInputs4D period hPeriod
-      configuration data analysis) :=
+      (measure := measure) configuration data analysis) :=
   maximalDomainClosureSpinCDomain period hPeriod couplings.matterMassSquared
     inputs.spinCDiracSymmetry
 
@@ -229,7 +230,7 @@ def GlobalCandidateAHessianMaximalDomainBoundedInputs4D.physical
       couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     (inputs : GlobalCandidateAHessianMaximalDomainBoundedInputs4D period hPeriod
-      configuration data analysis) :=
+      (measure := measure) configuration data analysis) :=
   globalCandidateASevenPhysicalCommonDomainExtension_of_bound period hPeriod
     configuration data analysis
       (maximalDomainClosureChart period hPeriod configuration data analysis
@@ -249,7 +250,7 @@ def GlobalCandidateAHessianMaximalDomainBoundedInputs4D.estimates
       couplings NonNullFace NullFace}
     {analysis : GlobalAnalysisData period hPeriod configuration.physical}
     (inputs : GlobalCandidateAHessianMaximalDomainBoundedInputs4D period hPeriod
-      configuration data analysis) :=
+      (measure := measure) configuration data analysis) :=
   globalCandidateAFaithfulAugmentedFredholmEstimates_of_parametrix period hPeriod
     configuration data analysis
       (maximalDomainClosureChart period hPeriod configuration data analysis
@@ -272,7 +273,7 @@ theorem global_candidateA_hessian_maximalDomain_bounded_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (inputs : GlobalCandidateAHessianMaximalDomainBoundedInputs4D period hPeriod
-      configuration data analysis) :
+      (measure := measure) configuration data analysis) :
     GlobalCandidateAHessianClosureCertificate4D period hPeriod configuration
       data analysis
         (maximalDomainClosureChart period hPeriod configuration data analysis

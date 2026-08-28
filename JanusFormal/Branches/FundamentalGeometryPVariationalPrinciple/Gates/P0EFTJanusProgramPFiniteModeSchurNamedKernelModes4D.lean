@@ -36,17 +36,17 @@ operator kernel is reconstructed from it by the already proved Schur-kernel
 equivalence. -/
 structure FiniteModeSchurNamedKernelBasisData
     (operator : E →L[Real] E)
-    (Mode Complement ZeroMode : Type*)
+    (Mode Complement : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
     [AddCommGroup Complement] [Module Real Complement]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     (schurData : FiniteModeSchurKernelData operator Mode Complement) where
-  basis : Basis ZeroMode Real schurData.schur.ker
+  basis : Module.Basis ZeroMode Real schurData.schur.ker
 
 namespace FiniteModeSchurNamedKernelBasisData
 
 variable {operator : E →L[Real] E}
-variable {Mode Complement ZeroMode : Type*}
+variable {Mode Complement : Type*} {ZeroMode : Type}
 variable [Fintype Mode] [DecidableEq Mode]
 variable [AddCommGroup Complement] [Module Real Complement]
 variable [Fintype ZeroMode] [DecidableEq ZeroMode]

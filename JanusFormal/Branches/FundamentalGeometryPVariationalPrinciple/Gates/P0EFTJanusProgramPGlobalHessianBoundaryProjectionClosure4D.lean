@@ -28,6 +28,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -42,7 +43,7 @@ open P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensions4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedOrthogonalCoerciveShift4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPGlobalHessianH10RobinAnalyticClosure4D
-open P0EFTJanusProgramPGlobalHessianH10RobinCanonicalClosure4D
+open P0EFTJanusProgramPGlobalHessianH10RobinContinuousClosure4D
 open P0EFTJanusProgramPGlobalHessianH10RobinOrthogonalCoerciveClosure4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -79,10 +80,11 @@ def globalCandidateABoundaryProjectionH10RobinFamily
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  family.toH10Robin period hPeriod hTransverse
+  ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D.toH10Robin
+    period hPeriod (measure := measure) family hTransverse
 
 /-- Actual D10-free chart generated from the concrete boundary-projection
 family. -/
@@ -99,10 +101,11 @@ def globalCandidateABoundaryProjectionChart
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAH10RobinChart period hPeriod configuration data analysis
+  globalCandidateAH10RobinChart period hPeriod (measure := measure)
+    configuration data analysis
     (globalCandidateABoundaryProjectionH10RobinFamily period hPeriod
       configuration data analysis einsteinScale hTransverse family)
 
@@ -120,10 +123,11 @@ def globalCandidateABoundaryProjectionSameAction
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAH10RobinSameAction period hPeriod configuration data analysis
+  globalCandidateAH10RobinSameAction period hPeriod (measure := measure)
+    configuration data analysis
     (globalCandidateABoundaryProjectionH10RobinFamily period hPeriod
       configuration data analysis einsteinScale hTransverse family)
 
@@ -141,24 +145,24 @@ def globalCandidateABoundaryProjectionPhysicalExtension
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (globalCandidateABoundaryProjectionChart period hPeriod configuration
           data analysis einsteinScale hTransverse family)
         (globalCandidateABoundaryProjectionSameAction period hPeriod
           configuration data analysis einsteinScale hTransverse family)) :=
-  globalCandidateAH10RobinCanonicalPhysicalExtension period hPeriod
-    configuration data analysis
+  globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod
+    (measure := measure) configuration data analysis
       (globalCandidateABoundaryProjectionH10RobinFamily period hPeriod
         configuration data analysis einsteinScale hTransverse family)
-      extensions
+      (extensions.toContinuous period hPeriod)
 
 /-- Terminal H14 gate with the local Robin germ generated directly from the
 bounded boundary projection. -/
-theorem global_candidateA_hessian_boundaryProjection_closure_gate
+def global_candidateA_hessian_boundaryProjection_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -171,17 +175,17 @@ theorem global_candidateA_hessian_boundaryProjection_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (globalCandidateABoundaryProjectionChart period hPeriod configuration
           data analysis einsteinScale hBoundaryTransverse family)
         (globalCandidateABoundaryProjectionSameAction period hPeriod
           configuration data analysis einsteinScale hBoundaryTransverse family))
     (shift : GlobalCandidateAAugmentedOrthogonalCoerciveShift4D period hPeriod
-      configuration data analysis
+      (measure := measure) configuration data analysis
         (globalCandidateABoundaryProjectionChart period hPeriod configuration
           data analysis einsteinScale hBoundaryTransverse family)
         (globalCandidateABoundaryProjectionSameAction period hPeriod
@@ -190,7 +194,8 @@ theorem global_candidateA_hessian_boundaryProjection_closure_gate
           configuration data analysis einsteinScale hBoundaryTransverse family
             extensions)) :=
   global_candidateA_hessian_h10Robin_orthogonalCoercive_closure_gate period
-    hPeriod configuration data analysis einsteinScale hBoundaryTransverse
+    hPeriod (measure := measure) configuration data analysis einsteinScale
+      hBoundaryTransverse
       (globalCandidateABoundaryProjectionH10RobinFamily period hPeriod
         configuration data analysis einsteinScale hBoundaryTransverse family)
       extensions shift

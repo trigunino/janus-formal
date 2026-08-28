@@ -22,14 +22,18 @@ noncomputable section
 open scoped InnerProductSpace
 open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalPhysicalSmallness4D
 open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointOperatorGarding4D
+open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointPhysicalSmallness4D
+open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalPrincipal4D
+open P0EFTJanusProgramPCandidateAFiveSectorAutomaticPrincipalDecomposition4D
+open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointPrincipalResolution4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- Orthogonal-coordinate finite margin identified with one operator. -/
@@ -59,8 +63,16 @@ theorem lowerBound
     (vector : E) :
     data.finiteMargin.margin Component * ‖vector‖ ≤ ‖operator vector‖ := by
   simpa [CandidateAFiveSectorOrthogonalPhysicalSmallnessData.margin,
-    CandidateAFiveSectorSelfAdjointPhysicalSmallnessData.margin] using
-      data.toSelfAdjointOperatorGarding Component |>.lowerBound vector
+    toSelfAdjointOperatorGarding,
+    CandidateAFiveSectorOrthogonalPhysicalSmallnessData.toSelfAdjointPhysicalSmallness,
+    CandidateAFiveSectorSelfAdjointPhysicalSmallnessData.margin,
+    CandidateAFiveSectorOrthogonalPrincipalData.margin,
+    CandidateAFiveSectorOrthogonalPrincipalData.toAutomaticPrincipal,
+    CandidateAFiveSectorAutomaticPrincipalData.margin,
+    CandidateAFiveSectorAutomaticPrincipalData.toSelfAdjointPrincipalResolution,
+    CandidateAFiveSectorSelfAdjointPrincipalResolutionData.margin] using
+      CandidateAFiveSectorSelfAdjointOperatorGardingData.lowerBound
+        (toSelfAdjointOperatorGarding Component data) vector
 
 /-- Injectivity follows from the positive generated margin. -/
 theorem injective
@@ -68,7 +80,8 @@ theorem injective
     (data : CandidateAFiveSectorOrthogonalOperatorGardingData
       (Component := Component) operator) :
     Function.Injective operator :=
-  data.toSelfAdjointOperatorGarding Component |>.injective
+  CandidateAFiveSectorSelfAdjointOperatorGardingData.injective
+    (toSelfAdjointOperatorGarding Component data)
 
 /-- Public orthogonal-coordinate operator checkpoint. -/
 theorem candidateA_five_sector_orthogonal_operator_garding_gate

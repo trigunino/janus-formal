@@ -37,8 +37,12 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyPhysicalC2Reduction4D
+open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
@@ -65,7 +69,7 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev ReducedFamilyModel
+abbrev ReducedFamilyModel
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod) :=
   GlobalMinimalPhysicalFieldTangent period hPeriod configuration.physical
 
@@ -101,10 +105,14 @@ structure ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
     (einsteinScale : Real) where
-  normedAddCommGroup : NormedAddCommGroup
-    (ReducedFamilyModel period hPeriod configuration)
-  normedSpace : NormedSpace Real
-    (ReducedFamilyModel period hPeriod configuration)
+  [normedAddCommGroup : NormedAddCommGroup
+    (ReducedFamilyModel period hPeriod configuration)]
+  [normedSpace : NormedSpace Real
+    (ReducedFamilyModel period hPeriod configuration)]
+  toAddCommGroup_eq : normedAddCommGroup.toAddCommGroup =
+    Submodule.addCommGroup (ReducedFamilyModel period hPeriod configuration)
+  toSMul_eq : normedSpace.toModule.toSMul =
+    Submodule.smul (ReducedFamilyModel period hPeriod configuration)
   bounds : @GlobalMinimalPhysicalMatterLLGraphBounds4D period hPeriod
     couplings NonNullFace NullFace _ _ configuration data analysis realization
       normedAddCommGroup normedSpace
@@ -194,14 +202,111 @@ private theorem h10RobinPullback_contDiffWithinAt
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis realization einsteinScale)
-    (point : ReducedFamilyModel period hPeriod configuration) :
+      period hPeriod (measure := measure) configuration data analysis realization
+        einsteinScale)
+    (point : ReducedFamilyModel period hPeriod configuration)
+    (hPoint : point ∈ family.domain) :
+    letI : NormedAddCommGroup
+        (ReducedFamilyModel period hPeriod configuration) :=
+      family.normedAddCommGroup
+    letI : NormedSpace Real
+        (ReducedFamilyModel period hPeriod configuration) :=
+      family.normedSpace
     ContDiffWithinAt Real 2
       (fun state =>
         candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation period hPeriod
           einsteinScale data.plusGravity.metric
             (family.boundaryProjection state))
       family.domain point := by
+  letI : NormedAddCommGroup
+      (ReducedFamilyModel period hPeriod configuration) :=
+    family.normedAddCommGroup
+  letI : NormedSpace Real
+      (ReducedFamilyModel period hPeriod configuration) :=
+    family.normedSpace
+  letI : NormedAddCommGroup
+      (CandidateANormalBoundaryFunctionalCore period hPeriod
+        data.plusGravity.metric) :=
+    candidateANormalBoundaryFunctionalCoreNormedAddCommGroup period hPeriod
+      data.plusGravity.metric
+  letI : NormedSpace Real
+      (CandidateANormalBoundaryFunctionalCore period hPeriod
+        data.plusGravity.metric) :=
+    candidateANormalBoundaryFunctionalCoreNormedSpace period hPeriod
+      data.plusGravity.metric
+  let projection := family.boundaryProjection
+  let adaptedLinear :
+      @LinearMap Real Real _ _ (RingHom.id Real)
+        (ReducedFamilyModel period hPeriod configuration)
+        (Prod
+          (CandidateANormalBoundaryFunctionalCore period hPeriod
+            data.plusGravity.metric) Real)
+        family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+        family.normedSpace.toModule inferInstance :=
+    @LinearMap.mk Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      (Prod
+        (CandidateANormalBoundaryFunctionalCore period hPeriod
+          data.plusGravity.metric) Real)
+      family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid inferInstance
+      family.normedSpace.toModule inferInstance
+      (@AddHom.mk
+        (ReducedFamilyModel period hPeriod configuration)
+        (Prod
+          (CandidateANormalBoundaryFunctionalCore period hPeriod
+            data.plusGravity.metric) Real)
+        family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+        inferInstance
+        (fun direction => projection direction)
+        (by
+          intro first second
+          change projection
+              (@Add.add _
+                family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid.toAdd
+                first second) =
+            projection first + projection second
+          rw [family.toAddCommGroup_eq]
+          exact projection.map_add first second))
+      (by
+        intro scalar direction
+        change projection
+            (@SMul.smul Real _ family.normedSpace.toModule.toSMul scalar
+              direction) =
+          (RingHom.id Real) scalar • projection direction
+        rw [family.toSMul_eq]
+        have hMap := projection.map_smul scalar direction
+        change projection
+            (@SMul.smul Real _
+              (Submodule.smul
+                (ReducedFamilyModel period hPeriod configuration))
+              scalar direction) =
+          scalar • projection direction at hMap
+        simpa only [RingHom.id_apply] using hMap)
+  let adapted :
+      @ContinuousLinearMap Real Real _ _ (RingHom.id Real)
+        (ReducedFamilyModel period hPeriod configuration)
+        family.normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+        family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid
+        (Prod
+          (CandidateANormalBoundaryFunctionalCore period hPeriod
+            data.plusGravity.metric) Real)
+        inferInstance inferInstance family.normedSpace.toModule inferInstance :=
+    @ContinuousLinearMap.mk Real Real _ _ (RingHom.id Real)
+      (ReducedFamilyModel period hPeriod configuration)
+      family.normedAddCommGroup.toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+      family.normedAddCommGroup.toAddCommGroup.toAddCommMonoid
+      (Prod
+        (CandidateANormalBoundaryFunctionalCore period hPeriod
+          data.plusGravity.metric) Real)
+      inferInstance inferInstance family.normedSpace.toModule inferInstance
+      adaptedLinear
+      (by
+        change Continuous (fun direction => projection direction)
+        exact projection.cont)
+  have hProjection : ContDiff Real 2
+      (fun state => family.boundaryProjection state) := by
+    change ContDiff Real 2 adapted
+    exact adapted.contDiff
   have hOn : ContDiffOn Real 2
       (fun state =>
         candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation period hPeriod
@@ -210,9 +315,9 @@ private theorem h10RobinPullback_contDiffWithinAt
       family.domain :=
     (candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_contDiffOn_two
       period hPeriod einsteinScale data.plusGravity.metric hTransverse).comp
-      family.boundaryProjection.contDiff.contDiffOn
+      hProjection.contDiffOn
       family.boundaryProjection_mem
-  exact hOn.contDiffWithinAt
+  exact hOn.contDiffWithinAt hPoint
 
 /-- Reconstruct the seven-physical-block packet.  Robin is discharged by H10;
 no independent Robin regularity field is retained. -/
@@ -231,11 +336,14 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D.toPhysicalC2
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis realization einsteinScale) :
+      period hPeriod (measure := measure) configuration data analysis realization
+        einsteinScale) :
     ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D period
-      hPeriod configuration data analysis realization where
+      hPeriod (measure := measure) configuration data analysis realization where
   normedAddCommGroup := family.normedAddCommGroup
   normedSpace := family.normedSpace
+  toAddCommGroup_eq := family.toAddCommGroup_eq
+  toSMul_eq := family.toSMul_eq
   bounds := family.bounds
   domain := family.domain
   isOpen_domain := family.isOpen_domain
@@ -243,6 +351,12 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D.toPhysicalC2
   datumAt := family.datumAt
   datumAt_zero_configuration := family.datumAt_zero_configuration
   physicalBlocksC2Within := by
+    letI : NormedAddCommGroup
+        (ReducedFamilyModel period hPeriod configuration) :=
+      family.normedAddCommGroup
+    letI : NormedSpace Real
+        (ReducedFamilyModel period hPeriod configuration) :=
+      family.normedSpace
     intro point hPoint
     let localFamily : GlobalCandidateALocalActionFamily period hPeriod
         (ReducedFamilyModel period hPeriod configuration) couplings
@@ -263,7 +377,7 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D.toPhysicalC2
               (family.boundaryProjection state) by
         simpa [localFamily, blocks] using family.robinAction_eq]
       exact h10RobinPullback_contDiffWithinAt period hPeriod configuration data
-        analysis realization einsteinScale hTransverse family point
+        analysis realization einsteinScale hTransverse family point hPoint
     exact
       { candidateA := hSix.candidateA
         robin := hRobin
@@ -294,7 +408,22 @@ theorem global_candidateA_h13_minimalPhysical_h10ReducedFamily_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis realization einsteinScale) :=
+      period hPeriod (measure := measure) configuration data analysis realization
+        einsteinScale) :
+    GlobalCandidateAH13MatterLLSameActionCertificate period hPeriod
+      configuration data analysis
+        (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+          configuration data analysis
+            (globalCandidateAMinimalPhysicalActionChartData_of_reducedFamily
+              period hPeriod configuration data analysis realization
+                ((family.toPhysicalC2 period hPeriod hTransverse).toReduced
+                  period hPeriod)))
+        (globalCandidateAMinimalPhysicalMatterLLSameActionBridge period hPeriod
+          configuration data analysis
+            (globalCandidateAMinimalPhysicalActionChartData_of_reducedFamily
+              period hPeriod configuration data analysis realization
+                ((family.toPhysicalC2 period hPeriod hTransverse).toReduced
+                  period hPeriod))) :=
   global_candidateA_h13_minimalPhysical_physicalC2Family_gate period hPeriod
     configuration data analysis realization
       (family.toPhysicalC2 period hPeriod hTransverse)

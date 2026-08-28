@@ -22,6 +22,7 @@ noncomputable section
 open Set
 open scoped BigOperators InnerProductSpace
 open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
@@ -30,7 +31,7 @@ variable {E : Type*}
 of every genuine kernel vector. -/
 structure FiniteKernelNamedDecompositionData
     (operator : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   vector : ZeroMode → E
   annihilated : ∀ mode, operator (vector mode) = 0
   linearIndependent : LinearIndependent Real
@@ -56,18 +57,16 @@ def FiniteKernelNamedDecompositionData.toSpanning
     intro zeroMode _
     obtain ⟨coefficients, hDecompose⟩ := data.decompose zeroMode
     rw [hDecompose]
-    exact Finset.sum_mem fun mode _ =>
+    exact Submodule.sum_mem _ fun mode _ =>
       Submodule.smul_mem _ _
         (Submodule.subset_span
-          (Set.mem_range_self
-            (finiteKernelNamedVector operator data.vector data.annihilated
-              mode)))
+          (Set.mem_range_self mode))
 
 /-- A global Gårding packet whose kernel-spanning part is given by explicit
 coefficient decompositions. -/
 structure FiniteKernelNamedDecompositionGardingData
     (operator : E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   decomposition : FiniteKernelNamedDecompositionData operator ZeroMode
   constant : Real
   constant_pos : 0 < constant
@@ -75,10 +74,10 @@ structure FiniteKernelNamedDecompositionGardingData
   defectConstant_nonneg : 0 ≤ defectConstant
   garding : ∀ vector : E,
     constant * ‖vector‖ ^ 2 ≤
-      ⟪vector, operator vector, Real⟫ +
+      ⟪vector, operator vector⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪vector, decomposition.vector mode, Real⟫ ^ 2
+            ⟪vector, decomposition.vector mode⟫_Real ^ 2
 
 /-- Convert the explicit-decomposition form to the named spanning Gårding
 packet. -/
@@ -100,7 +99,7 @@ theorem finite_kernel_named_decomposition_garding_gate
     {hSelfAdjoint : IsSelfAdjoint operator}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : FiniteKernelNamedDecompositionGardingData operator ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode :=
   finite_kernel_named_mode_garding_gate
     (hSelfAdjoint := hSelfAdjoint) data.toNamedGarding

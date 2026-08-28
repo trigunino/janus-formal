@@ -28,10 +28,15 @@ set_option maxHeartbeats 2400000
 noncomputable section
 
 open scoped ENNReal lp LinearPMap
+open P0EFTJanusComplexDiagonalMaximalOperator4D
+open P0EFTJanusD9D10ExactFieldContentBridge4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
+open P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterSmoothSpectralGraph4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -42,6 +47,12 @@ private abbrev MatterSmooth :=
   ProgramPPrimitiveSpinCMatterSmoothField period hPeriod
 private abbrev MatterCoefficients :=
   ProgramPPrimitiveSpinCMatterHilbert
+
+local instance signedModeDecidableEq : DecidableEq SignedMode := Classical.decEq _
+
+local instance matterCoefficientsRealInnerProductSpace :
+    InnerProductSpace Real MatterCoefficients :=
+  programPPrimitiveSpinCMatterHilbertRealInnerProductSpace
 
 /-- Product labels as the sigma type required by `piLpCurry`. -/
 def sectorSignedModeSigmaEquiv :
@@ -63,40 +74,45 @@ def primitiveSpinCOneSectorCanonicalFourierCoefficients :
 /-- Isometric reindexing from sigma labels to the exact product labels used by
 `ProgramPPrimitiveSpinCMatterMode`. -/
 def primitiveSpinCMatterSectorModeReindex :
-    (PiLp (2 : ENNReal) fun _ : (Σ _ : Sector, SignedMode) => Complex) ≃ₗᵢ[Complex]
+    ComplexDiagonalHilbert (Σ _ : Sector, SignedMode) ≃ₗᵢ[Complex]
       MatterCoefficients :=
-  LinearIsometryEquiv.piLpCongrLeft (2 : ENNReal) Complex Complex
+  complexDiagonalHilbertCongr (Σ _ : Sector, SignedMode)
     sectorSignedModeSigmaEquiv
 
 /-- Assemble the two one-sector coefficient towers before uncurrying. -/
 def primitiveSpinCMatterCanonicalSectorCoefficients :
-    MatterSmooth period hPeriod →ₗ[Complex]
-      PiLp (2 : ENNReal) fun _ : Sector =>
-        ComplexDiagonalHilbert SignedMode where
-  toFun field :=
-    WithLp.toLp 2 fun sector =>
+    MatterSmooth period hPeriod →ₗ[Complex] MatterCoefficients where
+  toFun field := ⟨fun mode =>
       primitiveSpinCOneSectorCanonicalFourierCoefficients period hPeriod
-        (field sector)
+        (field mode.1) mode.2, by
+    change Memℓp (fun mode : Sector × SignedMode =>
+      primitiveSpinCOneSectorCanonicalFourierCoefficients period hPeriod
+        (field mode.1) mode.2) 2
+    rw [memℓp_gen_iff (by norm_num)]
+    apply (summable_prod_of_nonneg (fun _ => by positivity)).2
+    constructor
+    · intro sector
+      exact (memℓp_gen_iff (by norm_num)).1
+        (primitiveSpinCOneSectorCanonicalFourierCoefficients period hPeriod
+          (field sector)).2
+    · exact summable_of_hasFiniteSupport (Set.toFinite _)⟩
   map_add' first second := by
-    apply WithLp.ofLp_injective 2
-    funext sector
-    exact map_add
+    apply Subtype.ext
+    funext mode
+    exact congrArg (fun coefficients => coefficients mode.2) (map_add
       (primitiveSpinCOneSectorCanonicalFourierCoefficients period hPeriod)
-      (first sector) (second sector)
+      (first mode.1) (second mode.1))
   map_smul' scalar field := by
-    apply WithLp.ofLp_injective 2
-    funext sector
-    exact map_smul
+    apply Subtype.ext
+    funext mode
+    exact congrArg (fun coefficients => coefficients mode.2) (map_smul
       (primitiveSpinCOneSectorCanonicalFourierCoefficients period hPeriod)
-      scalar (field sector)
+      scalar (field mode.1))
 
 /-- Canonical two-sector signed Fourier coefficient map. -/
 def programPPrimitiveSpinCMatterCanonicalFourierCoefficients :
     MatterSmooth period hPeriod →ₗ[Complex] MatterCoefficients :=
-  primitiveSpinCMatterSectorModeReindex.toLinearMap.comp
-    ((LinearIsometryEquiv.piLpCurry Complex (2 : ENNReal)
-      (fun _ : Sector => fun _ : SignedMode => Complex)).symm.toLinearMap.comp
-      (primitiveSpinCMatterCanonicalSectorCoefficients period hPeriod))
+  primitiveSpinCMatterCanonicalSectorCoefficients period hPeriod
 
 @[simp]
 theorem programPPrimitiveSpinCMatterCanonicalFourierCoefficients_apply
@@ -115,12 +131,14 @@ theorem programPPrimitiveSpinCMatterCanonicalFourierCoefficients_injective :
       (programPPrimitiveSpinCMatterCanonicalFourierCoefficients period hPeriod) := by
   intro first second hEqual
   funext sector
-  apply d9PrimitiveSpinCGeometricL2Embedding_injective
+  apply UniformSpace.Completion.coe_injective
   apply (primitiveSpinCGeometricSignedDiracModeUnitary period hPeriod).symm.injective
   ext mode
   have hMode := congrArg
     (fun coefficients : MatterCoefficients => coefficients (sector, mode)) hEqual
-  simpa using hMode
+  simpa [primitiveSpinCOneSectorCanonicalFourierCoefficients,
+    d9PrimitiveSpinCGeometricL2Embedding,
+    ContinuousLinearMap.comp_apply] using hMode
 
 /-- Only the weighted Fourier vector remains analytic input.  Its pointwise
 relation fixes it uniquely whenever the multiplier image is square summable. -/

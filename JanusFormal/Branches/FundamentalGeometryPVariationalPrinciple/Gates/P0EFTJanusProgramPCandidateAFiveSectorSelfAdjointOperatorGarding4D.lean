@@ -16,9 +16,11 @@ noncomputable section
 
 open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointPhysicalSmallness4D
 open P0EFTJanusProgramPCandidateAFiveSectorProjectionOperatorGarding4D
+open P0EFTJanusProgramPCandidateAFiveSectorProjectionPhysicalSmallness4D
+open P0EFTJanusProgramPCandidateAFiveSectorSelfAdjointPrincipalResolution4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 /-- Symmetric idempotent resolution identified with one operator energy. -/
@@ -45,15 +47,20 @@ theorem lowerBound
     (vector : E) :
     data.finiteMargin.margin * ‖vector‖ ≤ ‖operator vector‖ := by
   simpa [CandidateAFiveSectorSelfAdjointPhysicalSmallnessData.margin,
+    toProjectionOperatorGardingData,
+    CandidateAFiveSectorSelfAdjointPhysicalSmallnessData.toProjectionPhysicalSmallnessData,
+    CandidateAFiveSectorSelfAdjointPrincipalResolutionData.margin,
     CandidateAFiveSectorProjectionPhysicalSmallnessData.margin] using
-      data.toProjectionOperatorGardingData.lowerBound vector
+      CandidateAFiveSectorProjectionOperatorGardingData.lowerBound
+        (toProjectionOperatorGardingData data) vector
 
 /-- Injectivity on the actual zero-mode complement. -/
 theorem injective
     {operator : E →L[Real] E}
     (data : CandidateAFiveSectorSelfAdjointOperatorGardingData operator) :
     Function.Injective operator :=
-  data.toProjectionOperatorGardingData.injective
+  CandidateAFiveSectorProjectionOperatorGardingData.injective
+    (toProjectionOperatorGardingData data)
 
 /-- Public operator checkpoint. -/
 theorem candidateA_five_sector_selfAdjoint_operator_garding_gate

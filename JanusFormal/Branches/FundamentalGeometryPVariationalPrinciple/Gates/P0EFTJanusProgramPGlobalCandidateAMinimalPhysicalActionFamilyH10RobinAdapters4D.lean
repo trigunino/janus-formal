@@ -27,8 +27,10 @@ open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D
 
@@ -82,13 +84,25 @@ def programPGlobalMinimalPhysicalLocalActionFamilyH10Robin_of_reduced
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D
-      period hPeriod configuration data analysis realization)
+      period hPeriod (measure := measure) configuration data analysis realization)
     (completedRobinAction :
       GlobalMinimalPhysicalFieldTangent period hPeriod configuration.physical →
         Real)
     (completedRobin_contDiffWithin_two :
-      ContDiffWithin Real 2 completedRobinAction family.domain)
+      letI : NormedAddCommGroup (GlobalMinimalPhysicalFieldTangent period hPeriod
+          configuration.physical) :=
+        family.normedAddCommGroup
+      letI : NormedSpace Real (GlobalMinimalPhysicalFieldTangent period hPeriod
+          configuration.physical) :=
+        family.normedSpace
+      ContDiffOn Real 2 completedRobinAction family.domain)
     (completedRobin_sameAction :
+      letI : NormedAddCommGroup (GlobalMinimalPhysicalFieldTangent period hPeriod
+          configuration.physical) :=
+        family.normedAddCommGroup
+      letI : NormedSpace Real (GlobalMinimalPhysicalFieldTangent period hPeriod
+          configuration.physical) :=
+        family.normedSpace
       let localFamily : GlobalCandidateALocalActionFamily period hPeriod
           (GlobalMinimalPhysicalFieldTangent period hPeriod
             configuration.physical)
@@ -100,26 +114,34 @@ def programPGlobalMinimalPhysicalLocalActionFamilyH10Robin_of_reduced
         measure
       Set.EqOn completedRobinAction blocks.robin family.domain) :
     ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D period hPeriod
-      configuration data analysis realization where
-  normedAddCommGroup := family.normedAddCommGroup
-  normedSpace := family.normedSpace
-  bounds := family.bounds
-  domain := family.domain
-  isOpen_domain := family.isOpen_domain
-  zero_mem_domain := family.zero_mem_domain
-  datumAt := family.datumAt
-  datumAt_zero_configuration := family.datumAt_zero_configuration
-  nonRobinBlocksC2Within := by
-    intro point hPoint
-    exact GlobalCandidateASixNonRobinPhysicalC2WithinAt.ofFullCoupled
-      (family.blocksC2Within point hPoint)
-  completedRobinAction := completedRobinAction
-  completedRobin_contDiffWithin_two := completedRobin_contDiffWithin_two
-  completedRobin_sameAction := completedRobin_sameAction
-  matterConstant := family.matterConstant
-  llConstant := family.llConstant
-  matterAction_eq := family.matterAction_eq
-  llAction_eq := family.llAction_eq
+      (measure := measure) configuration data analysis realization :=
+  letI : NormedAddCommGroup (GlobalMinimalPhysicalFieldTangent period hPeriod
+      configuration.physical) :=
+    family.normedAddCommGroup
+  letI : NormedSpace Real (GlobalMinimalPhysicalFieldTangent period hPeriod
+      configuration.physical) :=
+    family.normedSpace
+  { normedAddCommGroup := family.normedAddCommGroup
+    normedSpace := family.normedSpace
+    toAddCommGroup_eq := family.toAddCommGroup_eq
+    toSMul_eq := family.toSMul_eq
+    bounds := family.bounds
+    domain := family.domain
+    isOpen_domain := family.isOpen_domain
+    zero_mem_domain := family.zero_mem_domain
+    datumAt := family.datumAt
+    datumAt_zero_configuration := family.datumAt_zero_configuration
+    nonRobinBlocksC2Within := by
+      intro point hPoint
+      exact GlobalCandidateASixNonRobinPhysicalC2WithinAt.ofFullCoupled
+        (family.blocksC2Within point hPoint)
+    completedRobinAction := completedRobinAction
+    completedRobin_contDiffWithin_two := completedRobin_contDiffWithin_two
+    completedRobin_sameAction := completedRobin_sameAction
+    matterConstant := family.matterConstant
+    llConstant := family.llConstant
+    matterAction_eq := family.matterAction_eq
+    llAction_eq := family.llAction_eq }
 
 /-- The adapter round-trip preserves the original reduced family fields. -/
 theorem programPGlobalMinimalPhysicalLocalActionFamilyH10Robin_of_reduced_toReduced
@@ -134,13 +156,25 @@ theorem programPGlobalMinimalPhysicalLocalActionFamilyH10Robin_of_reduced_toRedu
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D
-      period hPeriod configuration data analysis realization)
+      period hPeriod (measure := measure) configuration data analysis realization)
     (completedRobinAction :
       GlobalMinimalPhysicalFieldTangent period hPeriod configuration.physical →
         Real)
     (completedRobin_contDiffWithin_two :
-      ContDiffWithin Real 2 completedRobinAction family.domain)
+      letI : NormedAddCommGroup (GlobalMinimalPhysicalFieldTangent period hPeriod
+          configuration.physical) :=
+        family.normedAddCommGroup
+      letI : NormedSpace Real (GlobalMinimalPhysicalFieldTangent period hPeriod
+          configuration.physical) :=
+        family.normedSpace
+      ContDiffOn Real 2 completedRobinAction family.domain)
     (completedRobin_sameAction :
+      letI : NormedAddCommGroup (GlobalMinimalPhysicalFieldTangent period hPeriod
+          configuration.physical) :=
+        family.normedAddCommGroup
+      letI : NormedSpace Real (GlobalMinimalPhysicalFieldTangent period hPeriod
+          configuration.physical) :=
+        family.normedSpace
       let localFamily : GlobalCandidateALocalActionFamily period hPeriod
           (GlobalMinimalPhysicalFieldTangent period hPeriod
             configuration.physical)
@@ -152,9 +186,16 @@ theorem programPGlobalMinimalPhysicalLocalActionFamilyH10Robin_of_reduced_toRedu
         measure
       Set.EqOn completedRobinAction blocks.robin family.domain) :
     (programPGlobalMinimalPhysicalLocalActionFamilyH10Robin_of_reduced period
-      hPeriod configuration data analysis realization family
+      hPeriod (measure := measure) configuration data analysis realization family
       completedRobinAction completedRobin_contDiffWithin_two
-      completedRobin_sameAction).toReduced period hPeriod = family := by
+      completedRobin_sameAction).toReduced period hPeriod
+        (measure := measure) = family := by
+  letI : NormedAddCommGroup (GlobalMinimalPhysicalFieldTangent period hPeriod
+      configuration.physical) :=
+    family.normedAddCommGroup
+  letI : NormedSpace Real (GlobalMinimalPhysicalFieldTangent period hPeriod
+      configuration.physical) :=
+    family.normedSpace
   cases family
   rfl
 

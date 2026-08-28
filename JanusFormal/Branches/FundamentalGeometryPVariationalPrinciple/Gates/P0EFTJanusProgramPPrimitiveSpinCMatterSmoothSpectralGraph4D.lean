@@ -27,6 +27,8 @@ noncomputable section
 open Set
 open scoped ENNReal lp LinearPMap InnerProductSpace
 open P0EFTJanusComplexDiagonalMaximalOperator4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGlobalComplexScalarAction4D
+open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
 
@@ -37,6 +39,10 @@ private abbrev MatterSmooth :=
 
 private abbrev MatterHilbert :=
   ProgramPPrimitiveSpinCMatterHilbert
+
+local instance matterHilbertRealInnerProductSpace :
+    InnerProductSpace Real MatterHilbert :=
+  programPPrimitiveSpinCMatterHilbertRealInnerProductSpace
 
 /-- Spectral data of every smooth two-sector primitive SpinC field.  The
 weighted map is required to be the exact multiplier `2D + m²`, not an
@@ -150,7 +156,10 @@ def programPPrimitiveSpinCMatterSmoothSpectralGraphRealLinearMap
   map_smul' scalar field := by
     have hScalar :
         scalar • field = (scalar : Complex) • field := by
-      rfl
+      funext sector
+      change scalar • field sector = (scalar : Complex) • field sector
+      rw [d9PrimitiveSpinCGeometricL2_complex_smul,
+        d9PrimitiveSpinCComplexScalarSection_ofReal]
     rw [hScalar, map_smul]
     exact (RCLike.real_smul_eq_coe_smul
       (K := Complex) scalar
@@ -203,7 +212,14 @@ theorem programPPrimitiveSpinCMatterSmoothSpectralGraph_injective
   intro first second hEqual
   apply spectral.coefficients_injective
   have hFirst := congrArg (fun state => state.1.1) hEqual
-  simpa using hFirst
+  change
+    (programPPrimitiveSpinCMatterSmoothSpectralGraph period hPeriod massSquared
+      spectral first).1.1 =
+    (programPPrimitiveSpinCMatterSmoothSpectralGraph period hPeriod massSquared
+      spectral second).1.1 at hFirst
+  rw [programPPrimitiveSpinCMatterSmoothSpectralGraph_fst,
+    programPPrimitiveSpinCMatterSmoothSpectralGraph_fst] at hFirst
+  exact hFirst
 
 /-- The spectral-decay datum constructs the smooth graph realization expected
 by the minimal physical chart. -/

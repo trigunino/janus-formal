@@ -25,6 +25,8 @@ set_option synthInstance.maxHeartbeats 5600000
 
 noncomputable section
 
+universe u
+
 open Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace BigOperators
 open P0EFTJanusMappingTorusQuotient
@@ -35,14 +37,23 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
 open P0EFTJanusProgramPNamedModeKernelStablePerturbationBound4D
 open P0EFTJanusProgramPRieszBilinearNorm4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -143,6 +154,7 @@ local instance (priority := 30000) physicalFormCompleteSpace
       (PhysicalFormHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- The canonical physical Riesz representative is controlled by the H11 form
 norm. -/
@@ -185,7 +197,7 @@ structure GlobalCandidateACanonicalPhysicalFormStablePerturbation4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Prop where
+    (ZeroMode : Type u) [Fintype ZeroMode] [DecidableEq ZeroMode] : Type u where
   vector : ZeroMode → PhysicalFormHilbert period hPeriod configuration data
     analysis
   reference_annihilated : ∀ mode,
@@ -196,7 +208,7 @@ structure GlobalCandidateACanonicalPhysicalFormStablePerturbation4D
       configuration data analysis chart sameAction physical (vector mode) = 0
   nonzero : ∀ mode, vector mode ≠ 0
   orthogonal : Pairwise fun first second =>
-    ⟪vector first, vector second, Real⟫ = 0
+    ⟪vector first, vector second⟫_Real = 0
   referenceConstant : Real
   physical_form_small : ‖physical.form‖ < referenceConstant
   defectConstant : Real
@@ -205,10 +217,10 @@ structure GlobalCandidateACanonicalPhysicalFormStablePerturbation4D
     referenceConstant * ‖current‖ ^ 2 ≤
       ⟪current,
         globalCandidateACanonicalStableReferenceOperator period hPeriod
-          configuration data analysis current, Real⟫ +
+          configuration data analysis current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, vector mode, Real⟫ ^ 2
+            ⟪current, vector mode⟫_Real ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -230,7 +242,7 @@ def GlobalCandidateACanonicalPhysicalFormStablePerturbation4D.toCanonicalStable
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type u} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateACanonicalPhysicalFormStablePerturbation4D period
       hPeriod configuration data analysis chart sameAction physical ZeroMode) :
     GlobalCandidateACanonicalStableNamedPerturbation4D period hPeriod
@@ -260,7 +272,7 @@ def GlobalCandidateACanonicalPhysicalFormStablePerturbation4D.toCanonicalStable
   ll_stationary := input.ll_stationary
 
 /-- Public form-norm perturbation checkpoint. -/
-theorem global_candidateA_canonical_physical_form_stable_perturbation_gate
+def global_candidateA_canonical_physical_form_stable_perturbation_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -275,7 +287,7 @@ theorem global_candidateA_canonical_physical_form_stable_perturbation_gate
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type u} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateACanonicalPhysicalFormStablePerturbation4D period
       hPeriod configuration data analysis chart sameAction physical ZeroMode) :
     GlobalCandidateACanonicalStableNamedPerturbation4D period hPeriod

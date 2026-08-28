@@ -38,12 +38,21 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
 open P0EFTJanusProgramPFiniteKernelNamedModes4D
 open P0EFTJanusProgramPFiniteModeSchurNamedKernelModes4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -144,6 +153,7 @@ local instance (priority := 30000) namedSchurCompleteSpace
       (NamedSchurHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Closed-range Schur data together with a physically named basis of its
 finite kernel. -/
@@ -165,7 +175,7 @@ structure GlobalCandidateAActualSchurNamedZeroModeData4D
     (Mode Complement : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
     [NormedAddCommGroup Complement] [NormedSpace Real Complement]
-    [Fintype ZeroMode] [DecidableEq ZeroMode] : Type where
+    [Fintype ZeroMode] [DecidableEq ZeroMode] where
   schurData : GlobalCandidateAActualSchurZeroModeData4D period hPeriod
     configuration data analysis chart sameAction physical Mode Complement
   namedBasis : FiniteModeSchurNamedKernelBasisData
@@ -299,7 +309,7 @@ theorem kernel_finrank_eq_card
 
 /-- Public Candidate-A checkpoint retaining the actual mode vectors and the
 closed-range-derived gap. -/
-theorem global_candidateA_actual_schur_named_zeroMode_gate
+def global_candidateA_actual_schur_named_zeroMode_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -320,11 +330,21 @@ theorem global_candidateA_actual_schur_named_zeroMode_gate
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     (named : GlobalCandidateAActualSchurNamedZeroModeData4D period hPeriod
       configuration data analysis chart sameAction physical Mode Complement
-        ZeroMode) :=
-  (named.namedFamily period hPeriod,
-    named.toActualZeroModeGap period hPeriod,
+        ZeroMode) :
+    Nonempty (FiniteKernelNamedModeFamily
+      (globalCandidateAActualKernelOperator period hPeriod configuration data
+        analysis chart sameAction physical) ZeroMode) ∧
+      Nonempty (GlobalCandidateAActualZeroModeGap4D period hPeriod configuration
+        data analysis chart sameAction physical) ∧
+      Module.finrank Real
+          (globalCandidateAActualKernelOperator period hPeriod configuration data
+            analysis chart sameAction physical).ker =
+        Fintype.card ZeroMode ∧
+      Fintype.card ZeroMode ≤ Fintype.card Mode :=
+  ⟨⟨named.namedFamily period hPeriod⟩,
+    ⟨named.toActualZeroModeGap period hPeriod⟩,
     named.kernel_finrank_eq_card period hPeriod,
-    named.namedBasis.zeroMode_card_le_referenceMode_card)
+    named.namedBasis.zeroMode_card_le_referenceMode_card⟩
 
 end GlobalCandidateAActualSchurNamedZeroModeData4D
 

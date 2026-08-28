@@ -25,6 +25,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -69,10 +70,10 @@ def globalCandidateAH10RobinPhysicalC2Family
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared)) :=
-  family.toPhysicalC2 period hPeriod
+  family.toPhysicalC2 period hPeriod (measure := measure)
 
 /-- Canonical chart produced after the H10 Robin transfer. -/
 def globalCandidateAH10RobinChart
@@ -85,13 +86,13 @@ def globalCandidateAH10RobinChart
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared)) :=
   globalCandidateAHessianConstructiveChart period hPeriod configuration data
     analysis
-      (globalCandidateAH10RobinPhysicalC2Family period hPeriod configuration
-        data analysis family)
+      (globalCandidateAH10RobinPhysicalC2Family period hPeriod
+        (measure := measure) configuration data analysis family)
 
 /-- Canonical matter--LL same-action bridge produced from the same family. -/
 def globalCandidateAH10RobinSameAction
@@ -104,13 +105,13 @@ def globalCandidateAH10RobinSameAction
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared)) :=
   globalCandidateAHessianConstructiveSameAction period hPeriod configuration
     data analysis
-      (globalCandidateAH10RobinPhysicalC2Family period hPeriod configuration
-        data analysis family)
+      (globalCandidateAH10RobinPhysicalC2Family period hPeriod
+        (measure := measure) configuration data analysis family)
 
 /-- Seven-block H11 extension for an H10-supplied family. -/
 def globalCandidateAH10RobinPhysicalExtension
@@ -123,19 +124,19 @@ def globalCandidateAH10RobinPhysicalExtension
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
       configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
-          analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
-          analysis family)) :=
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure)
+          configuration data analysis family)) :=
   globalCandidateAHessianConstructivePhysicalExtension period hPeriod
     configuration data analysis
-      (globalCandidateAH10RobinPhysicalC2Family period hPeriod configuration
-        data analysis family)
+      (globalCandidateAH10RobinPhysicalC2Family period hPeriod
+        (measure := measure) configuration data analysis family)
       bounds
 
 /-- Repackage H10 Robin data, seven block bounds and the generalized inverse
@@ -150,34 +151,36 @@ def globalCandidateAH10RobinAnalyticInputs
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
       configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
-          analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
-          analysis family))
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure)
+          configuration data analysis family))
     (inverse : GlobalCandidateAFaithfulAugmentedGeneralizedInverse4D period
       hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
-          analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
-          analysis family)
-        (globalCandidateAH10RobinPhysicalExtension period hPeriod configuration
-          data analysis family bounds)) :
-    GlobalCandidateAHessianDiracGreenBoundedInputs4D period hPeriod
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinPhysicalExtension period hPeriod
+          (measure := measure) configuration data analysis family bounds)) :
+    GlobalCandidateAHessianDiracGreenBoundedInputs4D (measure := measure)
+      period hPeriod
       configuration data analysis :=
   globalCandidateAHessianConstructiveAnalyticInputs period hPeriod
+    (measure := measure)
     configuration data analysis
-      (globalCandidateAH10RobinPhysicalC2Family period hPeriod configuration
-        data analysis family)
+      (globalCandidateAH10RobinPhysicalC2Family period hPeriod
+        (measure := measure) configuration data analysis family)
       bounds inverse
 
 /-- Terminal H14 gate in which the Robin regularity and Hessian identity are
 not independent inputs but consequences of the H10 same-action action germ. -/
-theorem global_candidateA_hessian_h10Robin_analytic_closure_gate
+def global_candidateA_hessian_h10Robin_analytic_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -190,27 +193,27 @@ theorem global_candidateA_hessian_h10Robin_analytic_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
       configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
-          analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
-          analysis family))
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure)
+          configuration data analysis family))
     (inverse : GlobalCandidateAFaithfulAugmentedGeneralizedInverse4D period
       hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
-          analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
-          analysis family)
-        (globalCandidateAH10RobinPhysicalExtension period hPeriod configuration
-          data analysis family bounds)) :=
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinPhysicalExtension period hPeriod
+          (measure := measure) configuration data analysis family bounds)) :=
   global_candidateA_hessian_diracGreen_bounded_closure_gate period hPeriod
     configuration data analysis einsteinScale hBoundaryTransverse
-      (globalCandidateAH10RobinAnalyticInputs period hPeriod configuration data
-        analysis family bounds inverse)
+      (globalCandidateAH10RobinAnalyticInputs period hPeriod
+        (measure := measure) configuration data analysis family bounds inverse)
 
 end
 end P0EFTJanusProgramPGlobalHessianH10RobinAnalyticClosure4D

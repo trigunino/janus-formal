@@ -31,7 +31,7 @@ variable {E : Type*}
 /-- A finite-dimensional defect projector and a coercive estimate for the
 operator on its complement. -/
 structure FiniteDefectCoerciveShiftData
-    (operator : E →L[Real] E) : Prop where
+    (operator : E →L[Real] E) where
   projection : E →L[Real] E
   projection_idempotent : ∀ vector,
     projection (projection vector) = projection vector
@@ -64,15 +64,19 @@ theorem operator_ker_le_projection_range
     exact sub_self _
   have hComplementOperator :
       operator (vector - data.projection vector) = 0 := by
-    rw [map_sub, hKernel, data.operator_annihilates_projection]
-    exact sub_self _
+    rw [map_sub, data.operator_annihilates_projection, sub_zero]
+    exact hKernel
   have hBound := data.coercive_off_defect
     (vector - data.projection vector) hComplementProjection
   rw [hComplementOperator, norm_zero] at hBound
   have hNorm : ‖vector - data.projection vector‖ = 0 := by
     by_contra hNonzero
+    have hVectorNonzero : vector - data.projection vector ≠ 0 := by
+      intro hVector
+      apply hNonzero
+      rw [hVector, norm_zero]
     have hNormPos : 0 < ‖vector - data.projection vector‖ :=
-      norm_pos_iff.mpr hNonzero
+      norm_pos_iff.mpr hVectorNonzero
     have hProductPos :
         0 < data.coercivityConstant *
           ‖vector - data.projection vector‖ :=
@@ -93,11 +97,7 @@ theorem finiteDefectShiftedOperator_injective
   let difference := first - second
   have hShiftDifference :
       finiteDefectShiftedOperator operator data difference = 0 := by
-    change
-      finiteDefectShiftedOperator operator data first -
-        finiteDefectShiftedOperator operator data second = 0
-    rw [hEqual]
-    exact sub_self _
+    simp only [difference, map_sub, hEqual, sub_self]
   have hProjected : data.projection difference = 0 := by
     have hProjectedShift := congrArg data.projection hShiftDifference
     simp only [map_zero] at hProjectedShift
@@ -115,7 +115,11 @@ theorem finiteDefectShiftedOperator_injective
   rw [hOperator, norm_zero] at hBound
   have hDifferenceNorm : ‖difference‖ = 0 := by
     by_contra hNonzero
-    have hNormPos : 0 < ‖difference‖ := norm_pos_iff.mpr hNonzero
+    have hDifferenceNonzero : difference ≠ 0 := by
+      intro hDifference
+      apply hNonzero
+      rw [hDifference, norm_zero]
+    have hNormPos : 0 < ‖difference‖ := norm_pos_iff.mpr hDifferenceNonzero
     have hProductPos : 0 < data.coercivityConstant * ‖difference‖ :=
       mul_pos data.coercivityConstant_pos hNormPos
     exact (not_lt_of_ge hBound) hProductPos

@@ -24,10 +24,10 @@ open Set
 open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
 open P0EFTJanusProgramPFiniteKernelNamedModeNoHidden4D
 open P0EFTJanusProgramPFiniteNamedModeComplementGap4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Mapping the span of the named kernel-subtype vectors to the ambient space
 recovers the ambient named span. -/
@@ -86,7 +86,8 @@ theorem FiniteNamedModeComplementGapData.kernel_finrank_eq_card
     (hIndependent : LinearIndependent Real
       (finiteKernelNamedVector operator data.vector data.annihilated)) :
     Module.finrank Real operator.ker = Fintype.card ZeroMode :=
-  (data.toNamedSpanning hIndependent).kernel_finrank_eq_card
+  (P0EFTJanusProgramPFiniteNamedModeComplementExactCount4D.FiniteNamedModeComplementGapData.toNamedSpanning
+    data hIndependent).kernel_finrank_eq_card
 
 /-- Public exact-count checkpoint. -/
 theorem finite_named_mode_complement_exact_count_gate
@@ -98,10 +99,11 @@ theorem finite_named_mode_complement_exact_count_gate
       (finiteKernelNamedVector operator data.vector data.annihilated)) :
     operator.ker = finiteNamedModeAmbientSpan data.vector ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode ∧
-      SelfAdjointKernelComplementGapData operator hSelfAdjoint :=
+      Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) :=
   ⟨data.kernel_eq_namedSpan,
-    data.kernel_finrank_eq_card hIndependent,
-    data.toActualKernelGap⟩
+    P0EFTJanusProgramPFiniteNamedModeComplementExactCount4D.FiniteNamedModeComplementGapData.kernel_finrank_eq_card
+      data hIndependent,
+    ⟨data.toActualKernelGap⟩⟩
 
 end
 end P0EFTJanusProgramPFiniteNamedModeComplementExactCount4D

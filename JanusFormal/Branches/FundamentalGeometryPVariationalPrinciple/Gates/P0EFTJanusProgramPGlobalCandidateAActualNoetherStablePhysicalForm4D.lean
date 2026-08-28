@@ -39,15 +39,26 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualNoetherModes4D
 open P0EFTJanusProgramPGlobalCandidateAActualNoetherOrthogonalGarding4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalPhysicalFormStablePerturbation4D
 open P0EFTJanusProgramPNamedModeGardingPerturbation4D
+open P0EFTJanusProgramPNamedModeKernelStablePerturbation4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -77,77 +88,7 @@ private abbrev StableNoetherHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) stableNoetherNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (StableNoetherHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) stableNoetherInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (StableNoetherHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) stableNoetherNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (StableNoetherHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) stableNoetherModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (StableNoetherHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) stableNoetherCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (StableNoetherHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 /-- PDE-facing packet: Noether modes, reference Gårding and small H11 physical
 form. No Gårding estimate for the full operator is stored. -/
@@ -166,12 +107,12 @@ structure GlobalCandidateAActualNoetherStablePhysicalFormData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   modes : GlobalCandidateAActualNoetherModeFamily4D period hPeriod configuration
     data analysis chart sameAction physical ZeroMode
   nonzero : ∀ mode, modes.vector mode ≠ 0
   orthogonal : Pairwise fun first second =>
-    ⟪modes.vector first, modes.vector second, Real⟫ = 0
+    ⟪modes.vector first, modes.vector second⟫_Real = 0
   referenceConstant : Real
   physical_form_small : ‖physical.form‖ < referenceConstant
   defectConstant : Real
@@ -181,10 +122,10 @@ structure GlobalCandidateAActualNoetherStablePhysicalFormData4D
     referenceConstant * ‖current‖ ^ 2 ≤
       ⟪current,
         globalCandidateACanonicalStableReferenceOperator period hPeriod
-          configuration data analysis current, Real⟫ +
+          configuration data analysis current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, modes.vector mode, Real⟫ ^ 2
+            ⟪current, modes.vector mode⟫_Real ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -205,7 +146,7 @@ theorem GlobalCandidateAActualNoetherStablePhysicalFormData4D.physical_operator_
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActualNoetherStablePhysicalFormData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
     ‖globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
@@ -232,7 +173,7 @@ def GlobalCandidateAActualNoetherStablePhysicalFormData4D.toOrthogonalGarding
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActualNoetherStablePhysicalFormData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
     GlobalCandidateAActualNoetherOrthogonalGardingData4D period hPeriod
@@ -253,9 +194,30 @@ def GlobalCandidateAActualNoetherStablePhysicalFormData4D.toOrthogonalGarding
       (globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
         configuration data analysis chart sameAction physical) current
     rw [globalCandidateAActualKernelOperator_eq_canonicalStableSum period hPeriod
-      configuration data analysis chart sameAction physical,
-      ContinuousLinearMap.add_apply, inner_add_right]
-    linarith
+      configuration data analysis chart sameAction physical]
+    unfold finiteKernelStablePerturbedOperator
+    rw [add_apply, inner_add_right]
+    calc
+      (input.referenceConstant -
+          ‖globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
+            configuration data analysis chart sameAction physical‖) *
+          ‖current‖ ^ 2 =
+        input.referenceConstant * ‖current‖ ^ 2 +
+          -(‖globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
+              configuration data analysis chart sameAction physical‖ *
+            ‖current‖ ^ 2) := by ring
+      _ ≤
+          (⟪current,
+              globalCandidateACanonicalStableReferenceOperator period hPeriod
+                configuration data analysis current⟫_Real +
+            input.defectConstant *
+              ∑ mode : ZeroMode,
+                ⟪current, input.modes.vector mode⟫_Real ^ 2) +
+          ⟪current,
+            globalCandidateACanonicalStablePhysicalPerturbation period hPeriod
+              configuration data analysis chart sameAction physical current⟫_Real :=
+        add_le_add hReference hPerturbation
+      _ = _ := by ring
   ll_stationary := input.ll_stationary
 
 /-- Public stable Noether/H11-form checkpoint. -/
@@ -274,7 +236,7 @@ def global_candidateA_actual_noether_stable_physical_form_gate
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (input : GlobalCandidateAActualNoetherStablePhysicalFormData4D period hPeriod
       configuration data analysis chart sameAction physical ZeroMode) :
     PSigma fun _ : GlobalCandidateAActualKernelGap4D period hPeriod configuration

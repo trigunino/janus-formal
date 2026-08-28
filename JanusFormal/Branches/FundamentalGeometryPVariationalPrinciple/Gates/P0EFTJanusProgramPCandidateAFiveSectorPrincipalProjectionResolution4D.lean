@@ -22,9 +22,10 @@ open P0EFTJanusProgramPCandidateAFiveSectorCrossFormGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 /-- One principal Hessian and a positive five-sector resolution of the identity.

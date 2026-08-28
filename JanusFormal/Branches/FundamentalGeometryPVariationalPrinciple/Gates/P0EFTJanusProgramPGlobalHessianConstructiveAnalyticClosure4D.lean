@@ -33,6 +33,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -43,6 +44,7 @@ open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalHessianClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyPhysicalC2Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 
@@ -79,7 +81,7 @@ def globalCandidateAHessianConstructiveReducedFamily
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        (measure := measure) period hPeriod configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared)) :=
   family.toReduced period hPeriod
@@ -96,7 +98,7 @@ def globalCandidateAHessianConstructiveChart
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        (measure := measure) period hPeriod configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared)) :=
   diracGreenClosureChart period hPeriod configuration data analysis
@@ -115,7 +117,7 @@ def globalCandidateAHessianConstructiveSameAction
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        (measure := measure) period hPeriod configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared)) :=
   diracGreenClosureMatterLLSameAction period hPeriod configuration data analysis
@@ -134,7 +136,7 @@ def globalCandidateAHessianConstructivePhysicalBound
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        (measure := measure) period hPeriod configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
@@ -163,7 +165,7 @@ def globalCandidateAHessianConstructivePhysicalExtension
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        (measure := measure) period hPeriod configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
@@ -194,7 +196,7 @@ def globalCandidateAHessianConstructiveParametrix
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        (measure := measure) period hPeriod configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
@@ -234,7 +236,7 @@ def globalCandidateAHessianConstructiveAnalyticInputs
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        (measure := measure) period hPeriod configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod
@@ -251,7 +253,7 @@ def globalCandidateAHessianConstructiveAnalyticInputs
           configuration data analysis family)
         (globalCandidateAHessianConstructivePhysicalExtension period hPeriod
           configuration data analysis family bounds)) :
-    GlobalCandidateAHessianDiracGreenBoundedInputs4D period hPeriod
+    GlobalCandidateAHessianDiracGreenBoundedInputs4D (measure := measure) period hPeriod
       configuration data analysis where
   family := globalCandidateAHessianConstructiveReducedFamily period hPeriod
     configuration data analysis family
@@ -261,7 +263,7 @@ def globalCandidateAHessianConstructiveAnalyticInputs
     configuration data analysis family bounds inverse
 
 /-- Preferred H14 gate from the three decomposed analytic work packets. -/
-theorem global_candidateA_hessian_constructive_analytic_closure_gate
+def global_candidateA_hessian_constructive_analytic_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -275,7 +277,7 @@ theorem global_candidateA_hessian_constructive_analytic_closure_gate
       data.plusGravity.metric.metric)
     (family :
       ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-        period hPeriod configuration data analysis
+        (measure := measure) period hPeriod configuration data analysis
           (diracGreenClosureMatterRealization period hPeriod
             couplings.matterMassSquared))
     (bounds : GlobalCandidateASevenPhysicalBlockCoreBounds4D period hPeriod

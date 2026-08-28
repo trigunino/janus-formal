@@ -55,7 +55,7 @@ def OpenGermDomain.finiteInter
     {Component : Type*} [Fintype Component]
     (domains : Component → OpenGermDomain base) : OpenGermDomain base where
   carrier := ⋂ component, (domains component).carrier
-  isOpen_carrier := isOpen_iInter fun component =>
+  isOpen_carrier := isOpen_iInter_of_finite fun component =>
     (domains component).isOpen_carrier
   base_mem_carrier := Set.mem_iInter.mpr fun component =>
     (domains component).base_mem_carrier
@@ -90,7 +90,7 @@ structure NormalBoundarySeparatedGermData
       Variation → Boundary → Real)
     (completedDensity historicalDensity :
       Variation → Boundary → Real)
-    (base : Variation) : Prop where
+    (base : Variation) : Type u where
   domain : NormalBoundaryGermComponent → OpenGermDomain base
   tangent_eq : ∀ variation,
     variation ∈ (domain .tangent).carrier → ∀ boundary tangent ambient,
@@ -192,15 +192,15 @@ def NormalBoundarySeparatedGermData.accelerationGerm
   tangent_eq := by
     intro variation hVariation
     exact data.tangent_eq variation
-      (data.domain.finiteInter_mem hVariation .tangent)
+      (OpenGermDomain.finiteInter_mem data.domain hVariation .tangent)
   tangentDerivative_eq := by
     intro variation hVariation
     exact data.tangentDerivative_eq variation
-      (data.domain.finiteInter_mem hVariation .tangentDerivative)
+      (OpenGermDomain.finiteInter_mem data.domain hVariation .tangentDerivative)
   christoffel_eq := by
     intro variation hVariation
     exact data.christoffel_eq variation
-      (data.domain.finiteInter_mem hVariation .christoffel)
+      (OpenGermDomain.finiteInter_mem data.domain hVariation .christoffel)
 
 /-- Assemble all eight separate germs into the terminal componentwise packet. -/
 def NormalBoundarySeparatedGermData.toComponentwise
@@ -240,26 +240,26 @@ def NormalBoundarySeparatedGermData.toComponentwise
   normal_eq := by
     intro variation hVariation
     exact data.normal_eq variation
-      (data.domain.finiteInter_mem hVariation .normal)
+      (OpenGermDomain.finiteInter_mem data.domain hVariation .normal)
   metric_eq := by
     intro variation hVariation
     exact data.metric_eq variation
-      (data.domain.finiteInter_mem hVariation .metric)
+      (OpenGermDomain.finiteInter_mem data.domain hVariation .metric)
   inverse_eq := by
     intro variation hVariation
     exact data.inverse_eq variation
-      (data.domain.finiteInter_mem hVariation .inverse)
+      (OpenGermDomain.finiteInter_mem data.domain hVariation .inverse)
   orientation_eq := by
     intro variation hVariation
     exact data.orientation_eq variation
-      (data.domain.finiteInter_mem hVariation .orientation)
+      (OpenGermDomain.finiteInter_mem data.domain hVariation .orientation)
   density_eq := by
     intro variation hVariation
     exact data.density_eq variation
-      (data.domain.finiteInter_mem hVariation .density)
+      (OpenGermDomain.finiteInter_mem data.domain hVariation .density)
 
 /-- Eight independently local comparisons close the same two-sheet action germ. -/
-theorem candidate_a_normal_boundary_separated_germs_terminal_gate
+def candidate_a_normal_boundary_separated_germs_terminal_gate
     {completedTangent historicalTangent :
       Variation → Boundary → TangentIndex → AmbientIndex → Real}
     {completedTangentDerivative historicalTangentDerivative :

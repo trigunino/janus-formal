@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixNamedModeFrontier4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 /-!
 # D10-free sector classification of actual Candidate-A zero modes
@@ -28,16 +29,8 @@ noncomputable section
 open scoped BigOperators
 open P0EFTJanusProgramPFiniteKernelNamedModeCoercivity4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixNamedModeFrontier4D
-
-/-- Physical sectors of the corrected Candidate-A tangent.  There is no D10
-field direction. -/
-inductive CandidateAZeroModeSector
-  | metricDiffeomorphism
-  | abelianGauge
-  | primitiveSpinCMatter
-  | longitudinalLL
-  | boundaryFiniteBV
-  deriving DecidableEq, Fintype
+open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 /-- A sector assignment for a finite family of genuine named zero modes. -/
 structure CandidateAZeroModeSectorClassification
@@ -58,8 +51,13 @@ theorem CandidateAZeroModeSectorClassification.sum_multiplicity
     ∑ sector : CandidateAZeroModeSector,
         classification.multiplicity sector =
       Fintype.card ZeroMode := by
-  simpa [CandidateAZeroModeSectorClassification.multiplicity] using
-    Fintype.sum_card_fiberwise classification.sectorOf
+  rw [show (∑ sector : CandidateAZeroModeSector,
+      classification.multiplicity sector) =
+      Fintype.card (Σ sector : CandidateAZeroModeSector,
+        {mode : ZeroMode // classification.sectorOf mode = sector}) by
+    simp [CandidateAZeroModeSectorClassification.multiplicity,
+      Fintype.card_sigma]]
+  exact Fintype.card_congr (Equiv.sigmaFiberEquiv classification.sectorOf)
 
 /-- Named-kernel coercivity together with a physical sector assignment. -/
 structure CandidateASectorClassifiedNamedKernelCoercivity
@@ -67,7 +65,7 @@ structure CandidateASectorClassifiedNamedKernelCoercivity
     [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   named : SelfAdjointNamedKernelCoercivityData operator hSelfAdjoint ZeroMode
   classification : CandidateAZeroModeSectorClassification ZeroMode
 
@@ -77,7 +75,7 @@ theorem CandidateASectorClassifiedNamedKernelCoercivity.kernel_finrank_eq_sum
     [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : CandidateASectorClassifiedNamedKernelCoercivity operator
       hSelfAdjoint ZeroMode) :
     Module.finrank Real operator.ker =
@@ -92,14 +90,14 @@ theorem global_candidateA_named_zero_mode_sector_gate
     [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : CandidateASectorClassifiedNamedKernelCoercivity operator
       hSelfAdjoint ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker =
         ∑ sector : CandidateAZeroModeSector,
           data.classification.multiplicity sector :=
-  ⟨data.named.toBasisCoercivity.toGapData,
+  ⟨⟨data.named.toBasisCoercivity.toGapData⟩,
     data.kernel_finrank_eq_sum⟩
 
 end

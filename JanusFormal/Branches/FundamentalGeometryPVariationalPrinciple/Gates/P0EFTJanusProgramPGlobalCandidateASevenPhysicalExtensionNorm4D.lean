@@ -35,6 +35,7 @@ open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPDenseBilinearOpNorm4D
@@ -176,6 +177,21 @@ theorem globalCandidateASevenPhysicalExtension_form_opNorm_le
       couplings.matterMassSquared data analysis)
     extension.form bound.constant bound.constant_nonneg
   intro first second
+  change
+    ‖extension.form
+        (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+          (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis first)
+        (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+          (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis second)‖ ≤
+      bound.constant *
+        ‖diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+          (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis first‖ *
+        ‖diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+          (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis second‖
   rw [extension.smooth_agreement first second]
   rw [← globalCandidateASevenPhysicalCoreLinearForm_apply period hPeriod
     configuration data analysis chart sameAction first second]

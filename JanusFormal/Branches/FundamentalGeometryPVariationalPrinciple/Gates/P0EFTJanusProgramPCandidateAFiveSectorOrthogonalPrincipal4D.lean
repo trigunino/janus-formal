@@ -31,15 +31,16 @@ open P0EFTJanusProgramPFiniteOrthogonalCoordinateResolution4D
 open P0EFTJanusProgramPCandidateAFiveSectorAutomaticPrincipalDecomposition4D
 open P0EFTJanusProgramPCandidateAFiveSectorPrincipalBlockDecomposition4D
 open P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D
+open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- Principal Candidate-A data in genuine orthogonal sector coordinates. -/

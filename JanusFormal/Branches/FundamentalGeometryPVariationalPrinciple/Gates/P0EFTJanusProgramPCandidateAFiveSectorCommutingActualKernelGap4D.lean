@@ -42,11 +42,17 @@ open P0EFTJanusProgramPFiniteSectorPhysicalSmallnessGarding4D
 open P0EFTJanusProgramPQuadraticGardingOperatorLowerBound4D
 open P0EFTJanusProgramPQuadraticGardingActualKernelGap4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
+
+local instance selfAdjointKernelComplementNormedSpace
+    (operator : E →L[Real] E) :
+    NormedSpace Real (SelfAdjointKernelComplement operator) :=
+  (inferInstance : InnerProductSpace Real
+    (SelfAdjointKernelComplement operator)).toNormedSpace
 
 /-- One full-space sector decomposition, commuting with `H`, plus the irreducible
 coercive estimates on the automatically generated kernel-complement sectors. -/
@@ -77,41 +83,26 @@ structure CandidateAFiveSectorCommutingActualKernelGapData
   diagonalConstants : CandidateAFiveSectorDiagonalConstants
   diagonal_lower : ∀ sector vector,
     diagonalConstants.sectorConstant sector *
-        ‖((({ resolution :=
-              candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates
-            commute := commute } :
-            FiniteCommutingProjectionResolutionData
-              (Sector := CandidateAZeroModeSector) operator)
-          ).toKernelComplementResolution).projection sector vector‖ ^ 2 ≤
+        ‖(FiniteCommutingProjectionResolutionData.mk
+          (candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates)
+          commute).toKernelComplementResolution.projection sector vector‖ ^ 2 ≤
       principalForm
-        (((({ resolution :=
-              candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates
-            commute := commute } :
-            FiniteCommutingProjectionResolutionData
-              (Sector := CandidateAZeroModeSector) operator)
-          ).toKernelComplementResolution).projection sector vector)
-        ((({ resolution :=
-              candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates
-            commute := commute } :
-            FiniteCommutingProjectionResolutionData
-              (Sector := CandidateAZeroModeSector) operator)
-          ).toKernelComplementResolution).projection sector vector)
+        ((FiniteCommutingProjectionResolutionData.mk
+          (candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates)
+          commute).toKernelComplementResolution.projection sector vector)
+        ((FiniteCommutingProjectionResolutionData.mk
+          (candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates)
+          commute).toKernelComplementResolution.projection sector vector)
   offDiagonal_small :
     ‖principalForm -
       ∑ sector : CandidateAZeroModeSector,
         principalForm.bilinearComp
-          ((({ resolution :=
-              candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates
-            commute := commute } :
-            FiniteCommutingProjectionResolutionData
-              (Sector := CandidateAZeroModeSector) operator)
-          ).toKernelComplementResolution).projection sector)
-          ((({ resolution :=
-              candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates
-            commute := commute } :
-            FiniteCommutingProjectionResolutionData
-              (Sector := CandidateAZeroModeSector) operator)
-          ).toKernelComplementResolution).projection sector)‖ <
+          ((FiniteCommutingProjectionResolutionData.mk
+            (candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates)
+            commute).toKernelComplementResolution.projection sector)
+          ((FiniteCommutingProjectionResolutionData.mk
+            (candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates)
+            commute).toKernelComplementResolution.projection sector)‖ <
       diagonalConstants.sectorFloor
   physicalEnergy : SelfAdjointKernelComplement operator → Real
   physicalConstant : Real
@@ -123,18 +114,12 @@ structure CandidateAFiveSectorCommutingActualKernelGapData
       ‖principalForm -
         ∑ sector : CandidateAZeroModeSector,
           principalForm.bilinearComp
-            ((({ resolution :=
-                candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates
-              commute := commute } :
-              FiniteCommutingProjectionResolutionData
-                (Sector := CandidateAZeroModeSector) operator)
-            ).toKernelComplementResolution).projection sector)
-            ((({ resolution :=
-                candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates
-              commute := commute } :
-              FiniteCommutingProjectionResolutionData
-                (Sector := CandidateAZeroModeSector) operator)
-            ).toKernelComplementResolution).projection sector)‖
+            ((FiniteCommutingProjectionResolutionData.mk
+              (candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates)
+              commute).toKernelComplementResolution.projection sector)
+            ((FiniteCommutingProjectionResolutionData.mk
+              (candidateAFiveSectorSelfAdjointResolutionOfProduct coordinates)
+              commute).toKernelComplementResolution.projection sector)‖
   totalEnergy : SelfAdjointKernelComplement operator → Real
   total_eq : ∀ vector,
     totalEnergy vector = principalForm vector vector + physicalEnergy vector
@@ -254,7 +239,7 @@ def principalGarding
     exact data.diagonal_lower sector vector
   couplingEnergy := fun vector => data.offDiagonalForm vector vector
   couplingConstant := ‖data.offDiagonalForm‖
-  couplingConstant_nonneg := norm_nonneg _
+  couplingConstant_nonneg := norm_nonneg data.offDiagonalForm
   coupling_bound := by
     intro vector
     calc
@@ -301,7 +286,9 @@ def totalGarding
       offDiagonalForm, diagonalForm, reducedResolution, commutingResolution,
       fullResolution] using data.physical_small
   totalEnergy := data.totalEnergy
-  total_eq := data.total_eq
+  total_eq := by
+    intro vector
+    simpa only [principalGarding] using data.total_eq vector
 
 /-- Operator lower bound and actual H12 gap. -/
 def toGapData
@@ -329,7 +316,7 @@ def toGapData
 
 /-- Public checkpoint: one commuting five-sector decomposition on the full
 Hilbert space suffices for the H12 complement calculation. -/
-theorem candidateA_five_sector_commuting_actual_kernel_gap_gate
+def candidateA_five_sector_commuting_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     {Metric Abelian Matter Longitudinal Boundary : Type*}

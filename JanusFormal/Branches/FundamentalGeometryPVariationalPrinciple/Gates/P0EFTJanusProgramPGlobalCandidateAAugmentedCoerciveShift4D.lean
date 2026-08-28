@@ -1,4 +1,4 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteDefectCoerciveShift4D
 
 /-!
@@ -28,7 +28,8 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
-open P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPFiniteDefectCoerciveShift4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -51,45 +52,6 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev AugmentedHilbert
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) augmentedHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup (AugmentedHilbert period hPeriod configuration data
-      analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) augmentedHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real (AugmentedHilbert period hPeriod configuration data
-      analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
 /-- Candidate-A specialization of the generic coercive finite-defect packet. -/
 def GlobalCandidateAAugmentedCoerciveShiftData4D
     {couplings : GlobalCandidateAActionCouplings}
@@ -105,8 +67,14 @@ def GlobalCandidateAAugmentedCoerciveShiftData4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop :=
-  FiniteDefectCoerciveShiftData
+      hPeriod configuration data analysis chart sameAction) :=
+  @FiniteDefectCoerciveShiftData
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis)
+    (P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D.augmentedFredholmNormedAddCommGroup
+      period hPeriod configuration data analysis)
+    (P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D.augmentedFredholmNormedSpace
+      period hPeriod configuration data analysis)
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
       configuration data analysis chart sameAction physical)
 
@@ -131,10 +99,37 @@ theorem globalCandidateAAugmentedRieszOperator_kernel_finite_of_coerciveShift
       configuration data analysis chart sameAction physical) :
     FiniteDimensional Real
       (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-        configuration data analysis chart sameAction physical).ker :=
-  operator_ker_finiteDimensional
+        configuration data analysis chart sameAction physical).ker := by
+  letI := augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+    analysis
+  letI := augmentedFredholmNormedSpace period hPeriod configuration data analysis
+  letI := augmentedFredholmModule period hPeriod configuration data analysis
+  letI hFinite :=
+    @FiniteDefectCoerciveShiftData.projection_range_finite
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis)
+      (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+        analysis)
+      (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
+      (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+        configuration data analysis chart sameAction physical) shift
+  exact @Submodule.finiteDimensional_of_le
+    Real
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis)
+    inferInstance inferInstance
+    (augmentedFredholmModule period hPeriod configuration data analysis)
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-      configuration data analysis chart sameAction physical) shift
+      configuration data analysis chart sameAction physical).ker
+    _ hFinite
+    (@operator_ker_le_projection_range
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis)
+      (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+        analysis)
+      (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
+      (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+        configuration data analysis chart sameAction physical) shift)
 
 /-- The shifted augmented Candidate-A operator is automatically injective. -/
 theorem globalCandidateAAugmentedShiftedOperator_injective_of_coerciveShift
@@ -155,10 +150,20 @@ theorem globalCandidateAAugmentedShiftedOperator_injective_of_coerciveShift
     (shift : GlobalCandidateAAugmentedCoerciveShiftData4D period hPeriod
       configuration data analysis chart sameAction physical) :
     Function.Injective
-      (finiteDefectShiftedOperator
+      (@finiteDefectShiftedOperator
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis)
+        (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+          analysis)
+        (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
         (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
           configuration data analysis chart sameAction physical) shift) :=
-  finiteDefectShiftedOperator_injective
+  @finiteDefectShiftedOperator_injective
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
       configuration data analysis chart sameAction physical) shift
 
@@ -185,7 +190,12 @@ theorem globalCandidateA_augmented_coercive_shift_gate
       (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
         configuration data analysis chart sameAction physical).ker ∧
     Function.Injective
-      (finiteDefectShiftedOperator
+      (@finiteDefectShiftedOperator
+        (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+          data analysis)
+        (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+          analysis)
+        (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
         (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
           configuration data analysis chart sameAction physical) shift) :=
   ⟨globalCandidateAAugmentedRieszOperator_kernel_finite_of_coerciveShift

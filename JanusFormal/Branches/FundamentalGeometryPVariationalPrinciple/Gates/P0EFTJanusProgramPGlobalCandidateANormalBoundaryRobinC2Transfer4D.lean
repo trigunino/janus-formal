@@ -55,8 +55,8 @@ theorem contDiffWithin_two_of_eqOn_open
     {domain : Set Variation}
     (hOpen : IsOpen domain)
     (hEq : Set.EqOn completed historical domain)
-    (hCompleted : ContDiffWithin Real 2 completed domain) :
-    ContDiffWithin Real 2 historical domain := by
+    (hCompleted : ContDiffOn Real 2 completed domain) :
+    ContDiffOn Real 2 historical domain := by
   intro point hPoint
   exact contDiffWithinAt_two_of_eqOn_open hOpen hPoint hEq
     (hCompleted point hPoint)
@@ -64,10 +64,10 @@ theorem contDiffWithin_two_of_eqOn_open
 /-- Data produced by the completed H10 action together with its historical
 same-action germ. -/
 structure NormalBoundaryRobinC2TransferData
-    (completed historical : Variation → Real) : Prop where
+    (completed historical : Variation → Real) : Type u where
   domain : Set Variation
   isOpen_domain : IsOpen domain
-  completed_contDiffWithin_two : ContDiffWithin Real 2 completed domain
+  completed_contDiffWithin_two : ContDiffOn Real 2 completed domain
   sameAction : Set.EqOn completed historical domain
 
 /-- The historical/mobile Robin action is `C²` on exactly the completed H10
@@ -75,7 +75,7 @@ domain. -/
 theorem NormalBoundaryRobinC2TransferData.historical_contDiffWithin_two
     {completed historical : Variation → Real}
     (data : NormalBoundaryRobinC2TransferData completed historical) :
-    ContDiffWithin Real 2 historical data.domain :=
+    ContDiffOn Real 2 historical data.domain :=
   contDiffWithin_two_of_eqOn_open data.isOpen_domain data.sameAction
     data.completed_contDiffWithin_two
 
@@ -108,7 +108,7 @@ theorem NormalBoundaryRobinC2TransferData.second_fderiv_eq
 theorem candidate_a_normal_boundary_robin_c2_transfer_gate
     {completed historical : Variation → Real}
     (data : NormalBoundaryRobinC2TransferData completed historical) :
-    ContDiffWithin Real 2 historical data.domain ∧
+    ContDiffOn Real 2 historical data.domain ∧
       ∀ base, base ∈ data.domain →
         fderiv Real (fun state => fderiv Real completed state) base =
           fderiv Real (fun state => fderiv Real historical state) base :=

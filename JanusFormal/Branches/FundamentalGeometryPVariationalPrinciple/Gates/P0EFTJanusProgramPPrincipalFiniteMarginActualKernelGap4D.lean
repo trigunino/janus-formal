@@ -22,8 +22,7 @@ open P0EFTJanusProgramPFiniteMarginActualKernelGap4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Actual finite kernel and one projected-principal finite-margin certificate
 on its orthogonal complement. -/
@@ -43,7 +42,9 @@ def toFiniteMarginActualKernelGapData
     (data : PrincipalFiniteMarginActualKernelGapData operator hSelfAdjoint) :
     FiniteMarginActualKernelGapData operator hSelfAdjoint where
   kernel_finite := data.kernel_finite
-  complementGarding := data.principalGarding.toCrossFormOperatorGardingData
+  complementGarding :=
+    P0EFTJanusProgramPCandidateAFiveSectorPrincipalOperatorAdapter4D.CandidateAFiveSectorPrincipalOperatorGardingData.toCrossFormOperatorGardingData
+      data.principalGarding
 
 /-- Established actual-kernel gap. -/
 def toGapData
@@ -54,7 +55,7 @@ def toGapData
   data.toFiniteMarginActualKernelGapData.toGapData
 
 /-- Public direct checkpoint. -/
-theorem principal_finite_margin_actual_kernel_gap_gate
+def principal_finite_margin_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : PrincipalFiniteMarginActualKernelGapData operator hSelfAdjoint) :

@@ -39,6 +39,11 @@ structure CandidateAFiveSectorCrossFormPhysicalSmallnessData where
 
 namespace CandidateAFiveSectorCrossFormPhysicalSmallnessData
 
+private theorem crossForm_toSymmetric_margin
+    (data : CandidateAFiveSectorCrossFormGardingData (E := E)) :
+    data.toSymmetricGardingData.margin = data.margin := by
+  rfl
+
 /-- Convert to the existing total finite-margin packet. -/
 def toPhysicalSmallnessGardingData
     (data : CandidateAFiveSectorCrossFormPhysicalSmallnessData (E := E)) :
@@ -49,11 +54,8 @@ def toPhysicalSmallnessGardingData
   physicalConstant_nonneg := data.physicalConstant_nonneg
   physical_bound := data.physical_bound
   physical_small := by
-    simpa [CandidateAFiveSectorCrossFormGardingData.margin,
-      CandidateAFiveSectorCrossFormGardingData.couplingConstant,
-      P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D.CandidateAFiveSectorSymmetricGardingData.margin,
-      P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D.CandidateAFiveSectorSymmetricGardingData.couplingConstant]
-      using data.physical_small
+    rw [crossForm_toSymmetric_margin]
+    exact data.physical_small
   totalEnergy := data.totalEnergy
   total_eq := data.total_eq
 
@@ -65,6 +67,11 @@ def margin
       ‖data.principal.crossForm pair‖) -
     data.physicalConstant
 
+private theorem toPhysicalSmallnessGardingData_margin
+    (data : CandidateAFiveSectorCrossFormPhysicalSmallnessData (E := E)) :
+    data.toPhysicalSmallnessGardingData.margin = data.margin := by
+  rfl
+
 /-- Full Candidate-A Gårding directly from continuous cross blocks and the H11
 physical constant. -/
 theorem candidateA_five_sector_cross_form_physical_smallness_gate
@@ -72,14 +79,9 @@ theorem candidateA_five_sector_cross_form_physical_smallness_gate
     0 < data.margin ∧
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.totalEnergy vector := by
-  simpa [margin,
-    CandidateAFiveSectorPhysicalSmallnessGardingData.margin,
-    CandidateAFiveSectorCrossFormGardingData.margin,
-    CandidateAFiveSectorCrossFormGardingData.couplingConstant,
-    P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D.CandidateAFiveSectorSymmetricGardingData.margin,
-    P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D.CandidateAFiveSectorSymmetricGardingData.couplingConstant]
-    using data.toPhysicalSmallnessGardingData
-      |>.candidateA_five_sector_physical_smallness_garding_gate
+  rw [← toPhysicalSmallnessGardingData_margin data]
+  exact data.toPhysicalSmallnessGardingData
+    |>.candidateA_five_sector_physical_smallness_garding_gate
 
 end CandidateAFiveSectorCrossFormPhysicalSmallnessData
 

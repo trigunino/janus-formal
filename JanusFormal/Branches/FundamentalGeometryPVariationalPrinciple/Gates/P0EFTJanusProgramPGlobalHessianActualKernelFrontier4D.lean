@@ -34,6 +34,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -82,10 +83,10 @@ def globalCandidateAActualKernelReducedFamily
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAH10ContinuousReducedFamily period hPeriod configuration data
+  globalCandidateAH10ContinuousReducedFamily period hPeriod (measure := measure) configuration data
     analysis einsteinScale hTransverse family
 
 /-- Actual D10-free local chart. -/
@@ -102,10 +103,10 @@ def globalCandidateAActualKernelChart
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAH10ContinuousChart period hPeriod configuration data analysis
+  globalCandidateAH10ContinuousChart period hPeriod (measure := measure) configuration data analysis
     einsteinScale hTransverse family
 
 /-- Matter--LL same-action bridge generated from the same family. -/
@@ -122,10 +123,10 @@ def globalCandidateAActualKernelSameAction
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale) :=
-  globalCandidateAH10ContinuousSameAction period hPeriod configuration data
+  globalCandidateAH10ContinuousSameAction period hPeriod (measure := measure) configuration data
     analysis einsteinScale hTransverse family
 
 /-- H11 extension from H10 Robin plus one non-Robin aggregate. -/
@@ -142,7 +143,7 @@ def globalCandidateAActualKernelPhysicalExtension
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extension : GlobalCandidateASixPhysicalAggregateContinuousExtension4D
@@ -176,7 +177,7 @@ def global_candidateA_hessian_actualKernel_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extension : GlobalCandidateASixPhysicalAggregateContinuousExtension4D
@@ -215,7 +216,7 @@ def global_candidateA_hessian_actualKernel_frontier_gate
     hPeriod configuration data analysis chart sameAction physical gap
   let reduced := global_candidateA_actual_kernel_complement_gate period hPeriod
     configuration data analysis chart sameAction physical gap
-  (h10, h13, h11, h12, reduced)
+  And.intro h10 (And.intro h13 (And.intro h11 (And.intro h12 reduced)))
 
 /-- The actual-kernel frontier has exactly three analytic packets after the
 fixed geometry and SpinC Green theorem: family, aggregate extension and actual

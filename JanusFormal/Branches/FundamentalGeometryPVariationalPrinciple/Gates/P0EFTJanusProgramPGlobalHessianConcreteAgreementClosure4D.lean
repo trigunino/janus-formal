@@ -34,6 +34,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -84,11 +85,11 @@ def globalCandidateAConcreteCanonicalExtensions
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (globalCandidateABoundaryProjectionChart period hPeriod configuration
           data analysis einsteinScale hTransverse family)
         (globalCandidateABoundaryProjectionSameAction period hPeriod
@@ -109,11 +110,11 @@ def globalCandidateAConcretePhysicalExtension
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (globalCandidateABoundaryProjectionChart period hPeriod configuration
           data analysis einsteinScale hTransverse family)
         (globalCandidateABoundaryProjectionSameAction period hPeriod
@@ -125,7 +126,7 @@ def globalCandidateAConcretePhysicalExtension
 
 /-- Strongest current H14 gate: concrete H10 boundary projection, H11 agreement
 only, and orthogonal finite-defect coercivity. -/
-theorem global_candidateA_hessian_concreteAgreement_closure_gate
+def global_candidateA_hessian_concreteAgreement_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -138,17 +139,17 @@ theorem global_candidateA_hessian_concreteAgreement_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousAgreements4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (globalCandidateABoundaryProjectionChart period hPeriod configuration
           data analysis einsteinScale hBoundaryTransverse family)
         (globalCandidateABoundaryProjectionSameAction period hPeriod
           configuration data analysis einsteinScale hBoundaryTransverse family))
     (shift : GlobalCandidateAAugmentedOrthogonalCoerciveShift4D period hPeriod
-      configuration data analysis
+      (measure := measure) configuration data analysis
         (globalCandidateABoundaryProjectionChart period hPeriod configuration
           data analysis einsteinScale hBoundaryTransverse family)
         (globalCandidateABoundaryProjectionSameAction period hPeriod
@@ -156,7 +157,8 @@ theorem global_candidateA_hessian_concreteAgreement_closure_gate
         (globalCandidateAConcretePhysicalExtension period hPeriod configuration
           data analysis einsteinScale hBoundaryTransverse family extensions)) :=
   global_candidateA_hessian_boundaryProjection_closure_gate period hPeriod
-    configuration data analysis einsteinScale hBoundaryTransverse family
+    (measure := measure) configuration data analysis einsteinScale
+      hBoundaryTransverse family
       (globalCandidateAConcreteCanonicalExtensions period hPeriod configuration
         data analysis einsteinScale hBoundaryTransverse family extensions)
       shift

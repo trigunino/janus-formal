@@ -18,8 +18,7 @@ open P0EFTJanusProgramPCandidateAFiveSectorPrincipalProjectionResolution4D
 open P0EFTJanusProgramPCandidateAFiveSectorPrincipalPhysicalSmallness4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
 
 /-- Positive five-sector resolution plus the retained H11 physical energy. -/
 structure CandidateAFiveSectorProjectionPhysicalSmallnessData where
@@ -45,7 +44,9 @@ def toPrincipalPhysicalSmallnessData
   physicalConstant := data.physicalConstant
   physicalConstant_nonneg := data.physicalConstant_nonneg
   physical_bound := data.physical_bound
-  physical_small := data.physical_small
+  physical_small := by
+    simpa [CandidateAFiveSectorPrincipalProjectionResolutionData.margin] using
+      data.physical_small
   totalEnergy := data.totalEnergy
   total_eq := data.total_eq
 
@@ -61,6 +62,8 @@ theorem candidateA_five_sector_projection_physical_smallness_gate
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.totalEnergy vector := by
   simpa [margin,
+    toPrincipalPhysicalSmallnessData,
+    CandidateAFiveSectorPrincipalProjectionResolutionData.margin,
     CandidateAFiveSectorPrincipalPhysicalSmallnessData.margin] using
       data.toPrincipalPhysicalSmallnessData
         |>.candidateA_five_sector_principal_physical_smallness_gate

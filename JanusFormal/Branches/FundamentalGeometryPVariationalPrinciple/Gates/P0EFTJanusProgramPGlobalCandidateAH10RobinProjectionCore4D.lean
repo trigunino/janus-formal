@@ -35,14 +35,19 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousExtension4D
 open P0EFTJanusProgramPGlobalCandidateASixPhysicalAggregateBound4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusProgramPSecondFrechetLinearPullback4D
 open P0EFTJanusConvexHelmholtzReconstruction
 
@@ -83,9 +88,7 @@ private abbrev CommonHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
+  CommonAugmentedHilbert period hPeriod configuration data analysis
 
 local instance h10ProjectionBoundaryCoreNormedAddCommGroup
     (metric : RegularGeneralLorentzMetric period hPeriod) :
@@ -187,7 +190,10 @@ theorem globalCandidateALocalRobinHessian_eq_h10Pullback
       einsteinScale data.plusGravity.metric)
     projection.localProjection sameAction.chartBridge.basePoint
     projection.robinAction_eq hCompletedAtProjection
-  simpa [candidateANormalBoundaryTwoSheetGHYActionHessian] using hPullback
+  rw [projection.localProjection_base_zero] at hPullback
+  unfold P0EFTJanusConvexHelmholtzReconstruction.actionGradient at hPullback
+  unfold P0EFTJanusConvexHelmholtzReconstruction.actionGradient
+  simpa only [candidateANormalBoundaryTwoSheetGHYActionHessian] using hPullback
 
 /-- Action-level projection data constructs the previous dense-core Robin
 Hessian agreement packet. -/
@@ -213,9 +219,12 @@ def GlobalCandidateAH10RobinProjectionCoreData4D.toDenseCoreAgreement
       data analysis chart sameAction einsteinScale where
   boundaryProjection := projection.completedProjection
   robinCore_eq_chart := by
-    ext first second
-    unfold globalCandidateAH10RobinCoreLinearForm
-      globalCandidateAH10RobinCommonDomainForm
+    apply LinearMap.ext
+    intro first
+    apply LinearMap.ext
+    intro second
+    rw [globalCandidateAH10RobinCoreLinearForm_apply]
+    unfold globalCandidateAH10RobinCommonDomainForm
     simp only [denseCoreChartBilinearPullback_apply,
       ContinuousLinearMap.bilinearComp_apply]
     rw [projection.smoothCoreProjectionAgreement first,
@@ -226,7 +235,7 @@ def GlobalCandidateAH10RobinProjectionCoreData4D.toDenseCoreAgreement
     rfl
 
 /-- Direct public checkpoint eliminating a supplied Robin Hessian equality. -/
-theorem global_candidateA_h10_robin_projection_core_gate
+def global_candidateA_h10_robin_projection_core_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

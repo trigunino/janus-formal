@@ -22,14 +22,13 @@ open scoped InnerProductSpace
 open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalOperatorGarding4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 open P0EFTJanusProgramPSelfAdjointProjectionFiniteMarginActualKernelGap4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- Finite actual kernel and orthogonal-coordinate control on its complement. -/
@@ -53,7 +52,8 @@ def toSelfAdjointProjectionGap
       operator hSelfAdjoint where
   kernel_finite := data.kernel_finite
   projectionGarding :=
-    data.orthogonalGarding.toSelfAdjointOperatorGarding Component
+    CandidateAFiveSectorOrthogonalOperatorGardingData.toSelfAdjointOperatorGarding
+      Component data.orthogonalGarding
 
 /-- Established actual-kernel gap. -/
 def toGapData
@@ -62,16 +62,17 @@ def toGapData
     (data : OrthogonalCoordinateFiniteMarginActualKernelGapData
       (Component := Component) operator hSelfAdjoint) :
     SelfAdjointKernelComplementGapData operator hSelfAdjoint :=
-  data.toSelfAdjointProjectionGap Component |>.toGapData
+  SelfAdjointProjectionFiniteMarginActualKernelGapData.toGapData
+    (toSelfAdjointProjectionGap Component data)
 
 /-- Public orthogonal-coordinate actual-kernel checkpoint. -/
-theorem orthogonal_coordinate_finite_margin_actual_kernel_gap_gate
+def orthogonal_coordinate_finite_margin_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : OrthogonalCoordinateFiniteMarginActualKernelGapData
       (Component := Component) operator hSelfAdjoint) :
     SelfAdjointKernelComplementGapData operator hSelfAdjoint :=
-  data.toGapData Component
+  toGapData Component data
 
 end OrthogonalCoordinateFiniteMarginActualKernelGapData
 

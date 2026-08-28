@@ -32,10 +32,10 @@ open P0EFTJanusProgramPFiniteDefectCoerciveShift4D
 open P0EFTJanusProgramPFiniteDefectReducedOperator4D
 open P0EFTJanusProgramPFiniteDefectReducedInverse4D
 open P0EFTJanusProgramPSelfAdjointSmallPerturbation4D
+open scoped InnerProductSpace
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 local instance finiteDefectReducedResolventCompleteSpace
     (operator : E →L[Real] E)
@@ -85,7 +85,7 @@ theorem finiteDefectReducedScalarPerturbation_isSelfAdjoint
   intro first second
   change inner Real ((-spectralParameter) • first) second =
     inner Real first ((-spectralParameter) • second)
-  simp
+  simp only [real_inner_smul_left, real_inner_smul_right]
 
 /-- The reduced spectral shift `H_red - lambda I`. -/
 def finiteDefectReducedShiftedOperator
@@ -164,10 +164,12 @@ noncomputable def finiteDefectReducedRealResolventEquiv
     data.projection.ker ≃L[Real] data.projection.ker :=
   ContinuousLinearEquiv.ofBijective
     (finiteDefectReducedShiftedOperator operator data spectralParameter)
-    ⟨(finiteDefectReducedRealShiftCertificate operator hSelfAdjoint data
-        spectralParameter hSpectral).injective,
+    (LinearMap.ker_eq_bot.mpr
       (finiteDefectReducedRealShiftCertificate operator hSelfAdjoint data
-        spectralParameter hSpectral).surjective⟩
+        spectralParameter hSpectral).injective)
+    (LinearMap.range_eq_top.mpr
+      (finiteDefectReducedRealShiftCertificate operator hSelfAdjoint data
+        spectralParameter hSpectral).surjective)
 
 /-- Real reduced resolvent `(H_red - lambda I)⁻¹`. -/
 noncomputable def finiteDefectReducedRealResolvent
@@ -191,9 +193,11 @@ theorem finiteDefectReducedShiftedOperator_resolvent
     finiteDefectReducedShiftedOperator operator data spectralParameter
         (finiteDefectReducedRealResolvent operator hSelfAdjoint data
           spectralParameter hSpectral vector) =
-      vector :=
-  (finiteDefectReducedRealResolventEquiv operator hSelfAdjoint data
-    spectralParameter hSpectral).apply_symm_apply vector
+      vector := by
+  simpa [finiteDefectReducedRealResolvent,
+    finiteDefectReducedRealResolventEquiv] using
+    (finiteDefectReducedRealResolventEquiv operator hSelfAdjoint data
+      spectralParameter hSpectral).apply_symm_apply vector
 
 @[simp]
 theorem finiteDefectReducedResolvent_shiftedOperator
@@ -207,9 +211,11 @@ theorem finiteDefectReducedResolvent_shiftedOperator
         spectralParameter hSpectral
         (finiteDefectReducedShiftedOperator operator data spectralParameter
           vector) =
-      vector :=
-  (finiteDefectReducedRealResolventEquiv operator hSelfAdjoint data
-    spectralParameter hSpectral).symm_apply_apply vector
+      vector := by
+  simpa [finiteDefectReducedRealResolvent,
+    finiteDefectReducedRealResolventEquiv] using
+    (finiteDefectReducedRealResolventEquiv operator hSelfAdjoint data
+      spectralParameter hSpectral).symm_apply_apply vector
 
 /-- Pointwise resolvent estimate inside the real gap. -/
 theorem finiteDefectReducedRealResolvent_norm_le
@@ -230,6 +236,9 @@ theorem finiteDefectReducedRealResolvent_norm_le
     (finiteDefectReducedOperator operator data)
     (finiteDefectReducedScalarPerturbation operator data spectralParameter)
     shiftData preimage
+  change shiftData.remainingGap * ‖preimage‖ ≤
+    ‖finiteDefectReducedShiftedOperator operator data spectralParameter
+      preimage‖ at hLower
   rw [finiteDefectReducedShiftedOperator_resolvent operator hSelfAdjoint data
       spectralParameter hSpectral vector] at hLower
   have hGapPos : 0 < data.coercivityConstant - |spectralParameter| := by
@@ -258,10 +267,11 @@ theorem finiteDefectReducedRealResolvent_opNorm_le
       (data.coercivityConstant - |spectralParameter|)⁻¹ := by
   have hGapPos : 0 < data.coercivityConstant - |spectralParameter| := by
     linarith
-  apply ContinuousLinearMap.opNorm_le_bound
+  apply (finiteDefectReducedRealResolvent operator hSelfAdjoint data
+    spectralParameter hSpectral).opNorm_le_bound
     (inv_nonneg.mpr (le_of_lt hGapPos))
   intro vector
-  simpa using finiteDefectReducedRealResolvent_norm_le operator hSelfAdjoint
+  exact finiteDefectReducedRealResolvent_norm_le operator hSelfAdjoint
     data spectralParameter hSpectral vector
 
 /-- At spectral parameter zero the real resolvent is the reduced Green

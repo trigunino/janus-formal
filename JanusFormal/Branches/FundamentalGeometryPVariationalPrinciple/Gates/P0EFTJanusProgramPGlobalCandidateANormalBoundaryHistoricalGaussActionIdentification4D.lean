@@ -28,6 +28,8 @@ open scoped ContDiff Manifold Matrix.Norms.Frobenius Topology
 open Bundle MeasureTheory
 
 open P0EFTJanusMappingTorusCutThroatBoundaryDoubleCover4D
+open P0EFTJanusMappingTorusCanonicalPhysicalH1TraceBound4D
+open P0EFTJanusMappingTorusCutBoundaryFirstSheetCurrentBridge4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusOrientationDoubleCover
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
@@ -362,7 +364,7 @@ theorem candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_gauss
           (tensor, displacement), parameter) =
       normalGraphCanonicalTwoSheetGaussGHYAction period hPeriod einsteinScale
         variedMetric displacement parameter hNonNull := by
-  rw [candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_historical
+  rw [candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_historicalWeingarten
     period hPeriod einsteinScale metric hTransverse tensor variedMetric hVaried
       displacement parameter hNonNull hCurrent.1 hNormalRootNonneg]
   exact

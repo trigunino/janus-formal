@@ -21,8 +21,7 @@ open P0EFTJanusProgramPPrincipalFiniteMarginActualKernelGap4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Finite actual kernel and positive projected-sector control of its true
 orthogonal complement. -/
@@ -42,7 +41,9 @@ def toPrincipalFiniteMarginActualKernelGapData
     (data : ProjectionFiniteMarginActualKernelGapData operator hSelfAdjoint) :
     PrincipalFiniteMarginActualKernelGapData operator hSelfAdjoint where
   kernel_finite := data.kernel_finite
-  principalGarding := data.projectionGarding.toPrincipalOperatorGardingData
+  principalGarding :=
+    CandidateAFiveSectorProjectionOperatorGardingData.toPrincipalOperatorGardingData
+      data.projectionGarding
 
 /-- Established H12 actual-kernel gap. -/
 def toGapData
@@ -50,15 +51,16 @@ def toGapData
     {hSelfAdjoint : IsSelfAdjoint operator}
     (data : ProjectionFiniteMarginActualKernelGapData operator hSelfAdjoint) :
     SelfAdjointKernelComplementGapData operator hSelfAdjoint :=
-  data.toPrincipalFiniteMarginActualKernelGapData.toGapData
+  PrincipalFiniteMarginActualKernelGapData.toGapData
+    (toPrincipalFiniteMarginActualKernelGapData data)
 
 /-- Public direct checkpoint. -/
-theorem projection_finite_margin_actual_kernel_gap_gate
+def projection_finite_margin_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : ProjectionFiniteMarginActualKernelGapData operator hSelfAdjoint) :
     SelfAdjointKernelComplementGapData operator hSelfAdjoint :=
-  data.toGapData
+  toGapData data
 
 end ProjectionFiniteMarginActualKernelGapData
 

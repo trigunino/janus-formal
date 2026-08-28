@@ -32,20 +32,14 @@ private theorem projection_operator_apply
     (data : FiniteDefectCoerciveShiftData operator)
     (vector : E) :
     data.projection (operator vector) = 0 := by
-  have h := congrArg
-    (fun map : E →L[Real] E => map vector)
-    data.projection_annihilates_operator
-  simpa [ContinuousLinearMap.comp_apply] using h
+  exact data.projection_annihilates_operator vector
 
 private theorem projection_projection_apply
     (operator : E →L[Real] E)
     (data : FiniteDefectCoerciveShiftData operator)
     (vector : E) :
     data.projection (data.projection vector) = data.projection vector := by
-  have h := congrArg
-    (fun map : E →L[Real] E => map vector)
-    data.projection_idempotent
-  simpa [ContinuousLinearMap.comp_apply] using h
+  exact data.projection_idempotent vector
 
 /-- Every value of `H` lies in the kernel of the defect projection. -/
 theorem finiteDefect_operator_range_le_projection_ker

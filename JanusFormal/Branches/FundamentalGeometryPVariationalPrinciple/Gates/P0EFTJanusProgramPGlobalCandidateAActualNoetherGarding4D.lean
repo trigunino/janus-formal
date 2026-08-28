@@ -38,6 +38,8 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualNoetherModes4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelNamedGarding4D
@@ -45,6 +47,13 @@ open P0EFTJanusProgramPFiniteKernelNamedModeGarding4D
 open P0EFTJanusProgramPFiniteKernelNamedModeNoHidden4D
 open P0EFTJanusProgramPFiniteKernelNamedModeAutomaticSplit4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -145,6 +154,7 @@ local instance (priority := 30000) noetherGardingCompleteSpace
       (NoetherGardingHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Irreducible Candidate-A zero-mode packet after Noether has supplied the
 operator equations and finite-dimensionality supplies the orthogonal split. -/
@@ -163,7 +173,7 @@ structure GlobalCandidateAActualNoetherGardingData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (ZeroMode : Type*) [Fintype ZeroMode] : Type where
+    (ZeroMode : Type*) [Fintype ZeroMode] where
   modes : GlobalCandidateAActualNoetherModeFamily4D period hPeriod configuration
     data analysis chart sameAction physical ZeroMode
   linearIndependent : LinearIndependent Real
@@ -180,10 +190,10 @@ structure GlobalCandidateAActualNoetherGardingData4D
     constant * ‖current‖ ^ 2 ≤
       ⟪current,
         globalCandidateAActualKernelOperator period hPeriod configuration data
-          analysis chart sameAction physical current, Real⟫ +
+          analysis chart sameAction physical current⟫_Real +
         defectConstant *
           ∑ mode : ZeroMode,
-            ⟪current, modes.vector mode, Real⟫ ^ 2
+            ⟪current, modes.vector mode⟫_Real ^ 2
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point

@@ -32,6 +32,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -43,6 +44,7 @@ open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASixPhysicalAggregateBound4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelResolvent4D
+open P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 
@@ -80,7 +82,7 @@ def globalCandidateAActualKernelBoundedPhysicalExtension
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (bound : GlobalCandidateASixPhysicalAggregateCoreBound4D period hPeriod
@@ -113,7 +115,7 @@ def global_candidateA_hessian_actualKernel_bounded_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (bound : GlobalCandidateASixPhysicalAggregateCoreBound4D period hPeriod
@@ -152,7 +154,9 @@ def global_candidateA_hessian_actualKernel_bounded_frontier_gate
     configuration data analysis chart sameAction physical gap
   let resolvent := global_candidateA_actual_kernel_resolvent_gate period hPeriod
     configuration data analysis chart sameAction physical gap
-  (h10, h13, h11, h12, reduced, resolvent)
+  And.intro h10
+    (And.intro h13 (And.intro h11
+      (And.intro h12 (And.intro reduced resolvent))))
 
 /-- The frontier remains a three-packet problem, but the second packet is now
 one scalar estimate rather than a chosen extension. -/

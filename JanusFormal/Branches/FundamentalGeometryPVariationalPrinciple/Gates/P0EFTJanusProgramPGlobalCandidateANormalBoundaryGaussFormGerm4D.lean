@@ -70,7 +70,7 @@ structure SameCovariantAccelerationGermAt
       Variation → Boundary → TangentIndex → TangentIndex → AmbientIndex → Real)
     (completedChristoffel historicalChristoffel :
       Variation → Boundary → AmbientIndex → AmbientIndex → AmbientIndex → Real)
-    (base : Variation) : Prop where
+    (base : Variation) : Type u where
   domain : Set Variation
   isOpen_domain : IsOpen domain
   base_mem_domain : base ∈ domain
@@ -158,7 +158,7 @@ structure SameGaussSecondFormGermAt
       Variation → Boundary → AmbientIndex → AmbientIndex → Real)
     (completedAcceleration historicalAcceleration :
       Variation → Boundary → TangentIndex → TangentIndex → AmbientIndex → Real)
-    (base : Variation) : Prop where
+    (base : Variation) : Type u where
   domain : Set Variation
   isOpen_domain : IsOpen domain
   base_mem_domain : base ∈ domain

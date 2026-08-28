@@ -22,6 +22,7 @@ open scoped BigOperators
 open P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [NormedSpace Real E]
@@ -86,7 +87,7 @@ def toSymmetricGardingData
   diagonal_lower := data.diagonal_lower
   crossEnergy := fun pair vector => data.crossForm pair vector vector
   crossConstant := fun pair => ‖data.crossForm pair‖
-  crossConstant_nonneg := fun pair => norm_nonneg _
+  crossConstant_nonneg := fun pair => norm_nonneg (data.crossForm pair)
   cross_bound := data.crossForm_quadratic_bound
   cross_sum_small := data.cross_sum_small
   principalEnergy := data.principalEnergy
@@ -109,7 +110,7 @@ theorem candidateA_five_sector_cross_form_garding_gate
     0 < data.margin ∧
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.principalEnergy vector := by
-  simpa [margin, couplingConstant,
+  simpa [toSymmetricGardingData, margin, couplingConstant,
     CandidateAFiveSectorSymmetricGardingData.margin,
     CandidateAFiveSectorSymmetricGardingData.couplingConstant] using
       data.toSymmetricGardingData.candidateA_five_sector_symmetric_garding_gate

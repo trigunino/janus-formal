@@ -30,8 +30,7 @@ open P0EFTJanusProgramPSelfAdjointKernelComplementRelativeTrace4D
 open P0EFTJanusProgramPSummableRankOneOperatorExpansion4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 local instance actualKernelIntrinsicRelativeTraceCompleteSpace
     (operator : E →L[Real] E) :
@@ -50,7 +49,7 @@ structure SelfAdjointKernelComplementIntrinsicRelativeTraceData
   reference_lowerBound : ∀ vector,
     referenceGap * ‖vector‖ ≤ ‖referenceOperator vector‖
   relativeTraceClass : ∀ time : HeatTime,
-    IntrinsicNuclearTraceData
+    IntrinsicNuclearTraceData.{_, 0}
       (selfAdjointKernelComplementRelativeHeatDifference operator hSelfAdjoint
         referenceOperator time)
 
@@ -101,7 +100,7 @@ theorem SelfAdjointKernelComplementIntrinsicRelativeTraceData.expansionTrace_eq
     (relative : SelfAdjointKernelComplementIntrinsicRelativeTraceData operator
       hSelfAdjoint)
     (time : HeatTime)
-    (expansion : SummableRankOneOperatorExpansion
+    (expansion : SummableRankOneOperatorExpansion.{0, _}
       (selfAdjointKernelComplementRelativeHeatDifference operator hSelfAdjoint
         relative.referenceOperator time)) :
     expansion.expansionTrace =
@@ -145,7 +144,7 @@ theorem self_adjoint_kernel_complement_intrinsic_relative_trace_gate
         (selfAdjointKernelComplementRelativeHeatDifference operator hSelfAdjoint
           relative.referenceOperator time)) ∧
       (∀ time : HeatTime,
-        ∀ expansion : SummableRankOneOperatorExpansion
+        ∀ expansion : SummableRankOneOperatorExpansion.{0, _}
           (selfAdjointKernelComplementRelativeHeatDifference operator hSelfAdjoint
             relative.referenceOperator time),
           expansion.expansionTrace =

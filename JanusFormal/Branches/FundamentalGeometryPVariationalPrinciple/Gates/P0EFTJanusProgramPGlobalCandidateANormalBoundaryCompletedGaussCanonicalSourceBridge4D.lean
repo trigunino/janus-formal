@@ -78,7 +78,7 @@ theorem candidateANormalBoundaryTwoSheetGHYActionFiberEvaluation_eq_globalCandid
           hVolumeRootNonneg
           (candidateANormalBoundaryHistoricalGaussPulledBackSecondFormAgreement_of_completedGaussCanonical
             period hPeriod metric hTransverse tensor variedMetric hVaried
-              displacement parameter hNonNull hCurrent.1.1
+              displacement parameter hNonNull hCurrent.1
                 hNormalRootNonneg hCanonical)
           hSource
 

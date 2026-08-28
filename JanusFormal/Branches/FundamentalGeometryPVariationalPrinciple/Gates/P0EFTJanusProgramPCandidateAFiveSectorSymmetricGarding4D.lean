@@ -23,6 +23,7 @@ open scoped BigOperators
 open P0EFTJanusProgramPFiniteSectorQuadraticGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorPairwiseGarding4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
   [NormedAddCommGroup E] [NormedSpace Real E]
@@ -176,7 +177,7 @@ theorem candidateA_five_sector_symmetric_garding_gate
     0 < data.margin ∧
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.principalEnergy vector := by
-  simpa [margin, couplingConstant,
+  simpa [toQuadraticGardingData, margin, couplingConstant,
     FiniteSectorQuadraticGardingData.margin] using
       data.toQuadraticGardingData.finite_sector_quadratic_garding_gate
 

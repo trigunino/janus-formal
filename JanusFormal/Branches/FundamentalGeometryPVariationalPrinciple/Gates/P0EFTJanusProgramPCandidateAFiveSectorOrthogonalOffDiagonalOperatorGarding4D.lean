@@ -24,14 +24,14 @@ noncomputable section
 open scoped InnerProductSpace
 open P0EFTJanusProgramPCandidateAFiveSectorOrthogonalOffDiagonalPhysicalSmallness4D
 open P0EFTJanusProgramPQuadraticGardingOperatorLowerBound4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+  [NormedAddCommGroup E]
   [InnerProductSpace Real E]
 
 variable (Component : CandidateAZeroModeSector → Type*)
   [∀ sector, NormedAddCommGroup (Component sector)]
-  [∀ sector, NormedSpace Real (Component sector)]
   [∀ sector, InnerProductSpace Real (Component sector)]
 
 /-- One-form finite margin identified with one bounded operator. -/

@@ -20,6 +20,7 @@ set_option autoImplicit false
 noncomputable section
 
 open P0EFTJanusCircleDiracHeatTraceCancellation
+open P0EFTJanusCircleDeterminantTopologicalBundle
 open P0EFTJanusCircleQuillenMetricFlatConnection
 open P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
@@ -101,7 +102,12 @@ theorem relativeZetaFinitePartPhase_endpoint
       _ = ‖determinant1‖ * ‖clutching‖ := norm_mul _ _
       _ = magnitude1 * clutchingNorm := by
         dsimp [magnitude1, determinant1, clutchingNorm]
-        rw [norm_relativeHeatMellinZetaFamilyDeterminant family 1]
+        rw [show
+          ‖relativeZetaDeterminantCoordinate family.toZetaFamily 1‖ =
+              relativeHeatFinitePartDeterminantFamily
+                family.finitePartFamily 1 by
+          simpa [relativeHeatMellinZetaFamilyDeterminant] using
+            norm_relativeHeatMellinZetaFamilyDeterminant family 1]
   have hMagnitude1Real : magnitude1 ≠ 0 := by
     exact ne_of_gt
       (relativeHeatFinitePartDeterminantFamily_pos
@@ -118,6 +124,7 @@ theorem relativeZetaFinitePartPhase_endpoint
       (determinant1 / (magnitude1 : Complex))
   rw [hEndpoint, hMagnitude]
   field_simp [hMagnitude1, hClutchingNorm]
+  push_cast
   ring
 
 /-- Equivalently, the closed circle holonomy is the endpoint ratio of the
@@ -129,13 +136,15 @@ theorem circleQuillenClosedHolonomy_eq_zetaPhase_ratio
     circleQuillenClosedHolonomy fold =
       relativeZetaFinitePartPhase family.toFinitePartComparison 0 /
         relativeZetaFinitePartPhase family.toFinitePartComparison 1 := by
+  have hPhaseOne :
+      relativeZetaFinitePartPhase family.toFinitePartComparison 1 ≠ 0 := by
+    intro hZero
+    have hNorm := congrArg norm hZero
+    rw [relativeZetaFinitePartPhase_norm_one] at hNorm
+    simp at hNorm
   symm
-  apply (div_eq_iff ?_).2
-  · exact fun hZero => by
-      have hNorm := congrArg norm hZero
-      rw [relativeZetaFinitePartPhase_norm_one] at hNorm
-      simp at hNorm
-  · exact relativeZetaFinitePartPhase_endpoint fold family bridge
+  exact (div_eq_iff hPhaseOne).2
+    (relativeZetaFinitePartPhase_endpoint fold family bridge)
 
 /-- Public zeta-phase holonomy checkpoint. -/
 theorem relative_zeta_circle_holonomy_phase_gate

@@ -37,6 +37,9 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveShift4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedCoerciveParametrix4D
@@ -64,14 +67,14 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev ShiftHilbert
+def ShiftHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical) : Type :=
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 
@@ -145,7 +148,7 @@ local instance (priority := 30000) shiftHilbertCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-private def augmentedShiftedOperator
+def augmentedShiftedOperator
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -184,7 +187,7 @@ structure GlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
+      hPeriod configuration data analysis chart sameAction) : Type where
   coerciveShift : GlobalCandidateAAugmentedCoerciveShiftData4D period hPeriod
     configuration data analysis chart sameAction physical
   shifted_selfAdjoint : IsSelfAdjoint
@@ -254,7 +257,7 @@ noncomputable def
     shift.ll_stationary
 
 /-- H12 Fredholm and index-zero closure with no explicit surjectivity input. -/
-theorem global_candidateA_h12_fredholm_gate_of_selfAdjointAntilipschitzShift
+def global_candidateA_h12_fredholm_gate_of_selfAdjointAntilipschitzShift
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

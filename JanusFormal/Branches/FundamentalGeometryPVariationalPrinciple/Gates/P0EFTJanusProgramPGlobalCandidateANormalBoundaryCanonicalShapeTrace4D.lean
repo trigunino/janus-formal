@@ -50,6 +50,9 @@ open P0EFTJanusProgramPThroatFiniteFrameReconstruction4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
+private abbrev EffectiveThroat :=
+  MappingTorus (fixedEquatorData period hPeriod)
+
 local instance canonicalShapeTraceCandidateANormalBoundaryFunctionalCoreNormedAddCommGroup
     (metric : RegularGeneralLorentzMetric period hPeriod) :
     NormedAddCommGroup
@@ -119,6 +122,12 @@ def normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt
 
 /-- Source-side canonical shape operator.  It is the target operator pulled
 back through the already proved orientation-double tangent equivalence. -/
+private def normalBoundaryOrientationCoordinateEquiv
+    (boundary : CutThroatBoundary period hPeriod) :
+    ThroatCoverCoordinates ≃ₗ[Real] ThroatCoverCoordinates :=
+  (normalBoundaryOrientationTangentEquiv period hPeriod
+    boundary).symm.toLinearEquiv
+
 def normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
     (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
     (displacement : SmoothNormalDisplacement period hPeriod)
@@ -132,10 +141,84 @@ def normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
       normalGraphOrientationDouble period hPeriod displacement
         (boundary, parameter)) :
     TangentSpace throatCoverModelWithCorners boundary →ₗ[Real]
-      TangentSpace throatCoverModelWithCorners boundary :=
-  (normalBoundaryOrientationTangentEquiv period hPeriod boundary).symm.toLinearEquiv.conj
+      TangentSpace throatCoverModelWithCorners boundary := by
+  change ThroatCoverCoordinates →ₗ[Real] ThroatCoverCoordinates
+  let transport :=
+    normalBoundaryOrientationCoordinateEquiv period hPeriod boundary
+  exact (transport.toLinearMap.comp
+      (normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period
+        hPeriod variedMetric displacement parameter boundary patch coordinate)).comp
+    transport.symm.toLinearMap
+
+private theorem throatCoverCoordinates_trace_conj
+    (targetShape : ThroatCoverCoordinates →ₗ[Real] ThroatCoverCoordinates)
+    (e : ThroatCoverCoordinates ≃ₗ[Real] ThroatCoverCoordinates) :
+    LinearMap.trace Real ThroatCoverCoordinates (e.conj targetShape) =
+      LinearMap.trace Real ThroatCoverCoordinates targetShape := by
+  exact LinearMap.trace_conj' targetShape e
+
+set_option backward.isDefEq.respectTransparency false in
+private theorem normalGraphCanonicalHolonomicGaussShape_trace_eq_target
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (hNonNull : NormalGraphNonNullAt period hPeriod variedMetric displacement
+      parameter)
+    (boundary : CutThroatBoundary period hPeriod)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4)
+    (hAt : patch.coordinateMap coordinate =
+      normalGraphOrientationDouble period hPeriod displacement
+        (boundary, parameter)) :
+    LinearMap.trace Real
+        (TangentSpace throatCoverModelWithCorners boundary)
+        (normalGraphCanonicalHolonomicGaussShapeEndomorphismAt period hPeriod
+          variedMetric displacement parameter hNonNull boundary patch
+            coordinate hAt) =
+      LinearMap.trace Real
+        (TangentSpace throatCoverModelWithCorners
+          (orientationDoubleToThroat period hPeriod boundary))
+        (normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period
+          hPeriod variedMetric displacement parameter boundary patch
+            coordinate) := by
+  unfold normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
+  change LinearMap.trace Real ThroatCoverCoordinates
+      ((normalBoundaryOrientationCoordinateEquiv period hPeriod
+        boundary).conj
+          (normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period
+            hPeriod variedMetric displacement parameter boundary patch
+              coordinate)) =
+    LinearMap.trace Real ThroatCoverCoordinates
     (normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period hPeriod
       variedMetric displacement parameter boundary patch coordinate)
+  exact throatCoverCoordinates_trace_conj
+    (normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period hPeriod
+      variedMetric displacement parameter boundary patch coordinate)
+    (normalBoundaryOrientationCoordinateEquiv period hPeriod boundary)
+
+set_option backward.isDefEq.respectTransparency false in
+private theorem normalGraphCanonicalHolonomicGaussTargetShape_trace
+    (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
+    (displacement : SmoothNormalDisplacement period hPeriod)
+    (parameter : Real)
+    (boundary : CutThroatBoundary period hPeriod)
+    (patch : SmoothHolonomicFrameChart4 period hPeriod)
+    (coordinate : P0EFTJanusMetricCoupledScalarMatterJetVariation.Vector4) :
+    LinearMap.trace Real
+        (TangentSpace throatCoverModelWithCorners
+          (orientationDoubleToThroat period hPeriod boundary))
+        (normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period
+          hPeriod variedMetric displacement parameter boundary patch
+            coordinate) =
+      normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily period
+        hPeriod variedMetric displacement boundary parameter patch coordinate
+          (orientationDoubleToThroat period hPeriod boundary, parameter) := by
+  unfold normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt
+  exact
+    (normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily_eq_trace
+      period hPeriod variedMetric displacement boundary parameter patch
+        coordinate
+          (orientationDoubleToThroat period hPeriod boundary, parameter)).symm
 
 set_option backward.isDefEq.respectTransparency false in
 /-- The intrinsic trace of the canonical source shape is exactly the
@@ -171,9 +254,6 @@ theorem normalGraphCanonicalHolonomicGaussShapeEndomorphismAt_trace
   let ambient :=
     normalGraphCanonicalHolonomicMetricUnitNormalCoordinatesAt period hPeriod
       variedMetric displacement parameter hNonNull boundary patch coordinate hAt
-  let targetShape :=
-    normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period hPeriod
-      variedMetric displacement parameter boundary patch coordinate
   calc
     LinearMap.trace Real
         (TangentSpace throatCoverModelWithCorners boundary)
@@ -183,20 +263,17 @@ theorem normalGraphCanonicalHolonomicGaussShapeEndomorphismAt_trace
       LinearMap.trace Real
         (TangentSpace throatCoverModelWithCorners
           (orientationDoubleToThroat period hPeriod boundary))
-        targetShape := by
-      unfold normalGraphCanonicalHolonomicGaussShapeEndomorphismAt
-      simpa [targetShape] using
-        (LinearMap.trace_conj' targetShape
-          (normalBoundaryOrientationTangentEquiv period hPeriod
-            boundary).symm.toLinearEquiv)
+        (normalGraphCanonicalHolonomicGaussTargetShapeEndomorphismAt period
+          hPeriod variedMetric displacement parameter boundary patch
+            coordinate) :=
+      normalGraphCanonicalHolonomicGaussShape_trace_eq_target period hPeriod
+        variedMetric displacement parameter hNonNull boundary patch coordinate
+          hAt
     _ = normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily period
         hPeriod variedMetric displacement boundary parameter patch coordinate
-          base := by
-      unfold targetShape
-      exact
-        (normalGraphCanonicalHolonomicLocalSectionMeanCurvatureFamily_eq_trace
-          period hPeriod variedMetric displacement boundary parameter patch
-            coordinate base).symm
+          base :=
+      normalGraphCanonicalHolonomicGaussTargetShape_trace period hPeriod
+        variedMetric displacement parameter boundary patch coordinate
     _ = normalGraphCanonicalGaussMeanCurvature period hPeriod variedMetric
         displacement parameter hNonNull boundary := by
       exact

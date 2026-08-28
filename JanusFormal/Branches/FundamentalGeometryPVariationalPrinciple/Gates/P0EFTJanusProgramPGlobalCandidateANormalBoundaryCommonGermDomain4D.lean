@@ -231,7 +231,8 @@ def NormalBoundaryComponentwiseGermData.restrict
       completedInverse historicalInverse
       completedOrientation historicalOrientation
       completedDensity historicalDensity base where
-  acceleration := data.acceleration.restrict domain hSubset
+  acceleration := SameCovariantAccelerationGermAt.restrict
+    data.acceleration domain hSubset
   normal_eq := fun variation hVariation =>
     data.normal_eq variation (hSubset hVariation)
   metric_eq := fun variation hVariation =>

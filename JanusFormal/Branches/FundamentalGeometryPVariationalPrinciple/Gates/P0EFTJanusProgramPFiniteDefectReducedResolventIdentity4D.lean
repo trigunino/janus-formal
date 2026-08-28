@@ -27,10 +27,10 @@ noncomputable section
 open P0EFTJanusProgramPFiniteDefectCoerciveShift4D
 open P0EFTJanusProgramPFiniteDefectReducedOperator4D
 open P0EFTJanusProgramPFiniteDefectReducedResolvent4D
+open scoped InnerProductSpace
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 local instance finiteDefectReducedResolventIdentityCompleteSpace
     (operator : E →L[Real] E)
@@ -186,7 +186,10 @@ theorem finiteDefectReducedRealResolvent_sub_opNorm_le
         (data.coercivityConstant - |firstParameter|)⁻¹ *
         (data.coercivityConstant - |secondParameter|)⁻¹ := by
     positivity
-  apply ContinuousLinearMap.opNorm_le_bound hNonneg
+  apply (finiteDefectReducedRealResolvent operator hSelfAdjoint data
+      firstParameter hFirst -
+    finiteDefectReducedRealResolvent operator hSelfAdjoint data
+      secondParameter hSecond).opNorm_le_bound hNonneg
   intro vector
   simpa [mul_assoc] using
     finiteDefectReducedRealResolvent_sub_norm_le operator hSelfAdjoint data
