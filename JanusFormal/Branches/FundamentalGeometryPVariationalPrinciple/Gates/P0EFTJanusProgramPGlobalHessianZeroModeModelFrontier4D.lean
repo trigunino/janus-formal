@@ -34,6 +34,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -85,7 +86,7 @@ def global_candidateA_hessian_zeroModeModel_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -93,7 +94,7 @@ def global_candidateA_hessian_zeroModeModel_frontier_gate
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          analysis einsteinScale hTransverse family) einsteinScale family)
     (zeroModes : GlobalCandidateAActualZeroModeGap4D period hPeriod configuration
       data analysis
         (globalCandidateAActualKernelChart period hPeriod configuration data
@@ -118,7 +119,7 @@ def global_candidateA_hessian_zeroModeModel_frontier_gate
     configuration data analysis chart sameAction physical zeroModes
   let resolvent := global_candidateA_actual_kernel_resolvent_gate period hPeriod
     configuration data analysis chart sameAction physical gap
-  (closure, classified, resolvent)
+  And.intro closure (And.intro classified resolvent)
 
 /-- Quantitative stability for a classified-zero-mode Hessian. -/
 def global_candidateA_hessian_zeroModeModel_stability_gate
@@ -134,7 +135,7 @@ def global_candidateA_hessian_zeroModeModel_stability_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -142,7 +143,7 @@ def global_candidateA_hessian_zeroModeModel_stability_gate
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          analysis einsteinScale hTransverse family) einsteinScale family)
     (zeroModes : GlobalCandidateAActualZeroModeGap4D period hPeriod configuration
       data analysis
         (globalCandidateAActualKernelChart period hPeriod configuration data

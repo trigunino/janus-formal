@@ -32,10 +32,19 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
 open P0EFTJanusProgramPFiniteModeSchurBlockElimination4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -68,7 +77,7 @@ private abbrev BlockHilbert
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 
-local instance (priority := 30000) blockNormedAddCommGroup
+@[implicit_reducible] private def blockNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -81,7 +90,7 @@ local instance (priority := 30000) blockNormedAddCommGroup
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) blockInnerProductSpace
+@[implicit_reducible] private def blockInnerProductSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -95,7 +104,7 @@ local instance (priority := 30000) blockInnerProductSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) blockNormedSpace
+@[implicit_reducible] private def blockNormedSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -108,7 +117,7 @@ local instance (priority := 30000) blockNormedSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) blockModule
+@[implicit_reducible] private def blockModule
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -121,7 +130,7 @@ local instance (priority := 30000) blockModule
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) blockCompleteSpace
+@[implicit_reducible] private def blockCompleteSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -132,6 +141,7 @@ local instance (priority := 30000) blockCompleteSpace
     CompleteSpace (BlockHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Four-block Schur presentation plus the closed-range and LL conditions used
 by the actual-kernel H12 route. -/
@@ -152,7 +162,7 @@ structure GlobalCandidateAActualSchurBlockData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [AddCommGroup Complement] [Module Real Complement] : Prop where
+    [AddCommGroup Complement] [Module Real Complement] where
   blocks : FiniteModeSchurBlockData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -160,7 +170,7 @@ structure GlobalCandidateAActualSchurBlockData4D
   range_closed : IsClosed
     ((globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical).range :
-        Set (BlockHilbert period hPeriod configuration data analysis))
+        Set (ActualKernelHilbert period hPeriod configuration data analysis))
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -194,7 +204,7 @@ def GlobalCandidateAActualSchurBlockData4D.toSchurZeroModeData
   ll_stationary := blockData.ll_stationary
 
 /-- Candidate-A zero-mode and resolvent data generated from the four blocks. -/
-theorem global_candidateA_actual_schur_block_gate
+def global_candidateA_actual_schur_block_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

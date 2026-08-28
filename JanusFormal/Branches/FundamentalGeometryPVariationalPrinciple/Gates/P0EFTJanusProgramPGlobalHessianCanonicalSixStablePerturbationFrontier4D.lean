@@ -43,6 +43,7 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelStablePerturbation4D
@@ -51,6 +52,18 @@ open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixNamedGardingFrontier4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
+open P0EFTJanusMappingTorusGlobalLLVariation4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+
+attribute [local instance]
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -87,37 +100,38 @@ def global_candidateA_hessian_canonicalSix_stablePerturbation_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (stable : GlobalCandidateAActualKernelStablePerturbation4D period hPeriod
-      configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
+      (measure := measure) configuration data analysis
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
+        (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-          hPeriod configuration data analysis einsteinScale hTransverse family
+          hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
             chartBound)
         ZeroMode) :=
   global_candidateA_hessian_canonicalSix_namedGarding_frontier_gate period
-    hPeriod configuration data analysis einsteinScale hTransverse family
-      chartBound ZeroMode (stable.toCandidateNamedGarding period hPeriod)
+    hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
+      chartBound ZeroMode
+        (stable.toCandidateNamedGarding period hPeriod (measure := measure))
 
 /-- Exact decomposition of the actual kernel count among the five D10-free
 physical sectors.  The classification is attached only after exact kernel
 spanning has been derived. -/
-def global_candidateA_hessian_canonicalSix_stablePerturbation_sector_gate
+theorem global_candidateA_hessian_canonicalSix_stablePerturbation_sector_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -130,50 +144,44 @@ def global_candidateA_hessian_canonicalSix_stablePerturbation_sector_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (stable : GlobalCandidateAActualKernelStablePerturbation4D period hPeriod
-      configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
+      (measure := measure) configuration data analysis
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
+        (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-          hPeriod configuration data analysis einsteinScale hTransverse family
+          hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
             chartBound)
         ZeroMode)
-    (classification : CandidateAZeroModeSectorClassification ZeroMode) :=
-  let terminal :=
-    global_candidateA_hessian_canonicalSix_stablePerturbation_frontier_gate
-      period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound ZeroMode stable
-  let sectorCount :
-      Module.finrank Real
-          (globalCandidateAActualKernelOperator period hPeriod configuration data
-            analysis
-              (globalCandidateAActualKernelChart period hPeriod configuration
-                data analysis einsteinScale hTransverse family)
-              (globalCandidateAActualKernelSameAction period hPeriod
-                configuration data analysis einsteinScale hTransverse family)
-              (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-                hPeriod configuration data analysis einsteinScale hTransverse
-                  family chartBound)).ker =
-        ∑ sector : CandidateAZeroModeSector,
-          classification.multiplicity sector :=
-    (stable.kernel_finrank_eq_card period hPeriod).trans
-      classification.sum_multiplicity.symm
-  (terminal, sectorCount)
+    (classification : CandidateAZeroModeSectorClassification ZeroMode) :
+    Module.finrank Real
+        (globalCandidateAActualKernelOperator period hPeriod (measure := measure) configuration data
+          analysis
+            (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration
+              data analysis einsteinScale hTransverse family)
+            (globalCandidateAActualKernelSameAction period hPeriod (measure := measure)
+              configuration data analysis einsteinScale hTransverse family)
+            (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
+              hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse
+                family chartBound)).ker =
+      ∑ sector : CandidateAZeroModeSector,
+        classification.multiplicity sector :=
+  (stable.kernel_finrank_eq_card period hPeriod (measure := measure)).trans
+    classification.sum_multiplicity.symm
 
 /-- The new perturbative route has only two analytic packets after the local
 family: the dense-core chart bound and the stable named-mode decomposition. -/

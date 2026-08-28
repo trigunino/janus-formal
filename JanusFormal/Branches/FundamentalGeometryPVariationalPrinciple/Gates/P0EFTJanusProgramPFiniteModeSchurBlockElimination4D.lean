@@ -84,7 +84,9 @@ def finiteModeSchurRightReduction
     intro scalar state
     apply Prod.ext
     · rfl
-    · simp [map_smul]
+    · simpa [map_smul] using
+        (smul_sub scalar state.2
+          (data.complementEquiv.symm (data.lowerLeft state.1))).symm
   left_inv := by
     intro state
     apply Prod.ext
@@ -120,7 +122,9 @@ def finiteModeSchurLeftReduction
   map_smul' := by
     intro scalar state
     apply Prod.ext
-    · simp [map_smul]
+    · simpa [map_smul] using
+        (smul_sub scalar state.1
+          (data.upperRight (data.complementEquiv.symm state.2))).symm
     · rfl
   left_inv := by
     intro state
@@ -151,9 +155,9 @@ theorem finiteModeSchurBlock_factorization
   rw [data.operator_block]
   apply Prod.ext
   · simp [finiteModeSchurLeftReduction, finiteModeSchurRightReduction,
-      finiteModeSchurBlockOperator, map_sub, map_add]
+      finiteModeSchurBlockOperator, map_sub]
     abel
-  · simp [finiteModeSchurRightReduction, map_sub, map_add]
+  · simp [finiteModeSchurLeftReduction, finiteModeSchurRightReduction, map_sub]
 
 /-- Construct the abstract kernel-reduction packet from the four blocks. -/
 def FiniteModeSchurBlockData.toKernelData

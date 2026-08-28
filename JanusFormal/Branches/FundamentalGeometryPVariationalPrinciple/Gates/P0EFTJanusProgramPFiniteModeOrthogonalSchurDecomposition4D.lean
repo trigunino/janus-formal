@@ -38,15 +38,15 @@ variable {E Mode : Type*}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
   [Fintype Mode] [DecidableEq Mode]
 
-private abbrev FinitePart := Mode → Real
+private abbrev FinitePart (Mode : Type*) := Mode → Real
 
 /-- Canonical Hilbert decomposition associated with one finite-dimensional
 physical mode subspace.  Finite-dimensionality of the subspace is derived from
 the coordinate equivalence rather than supplied separately. -/
 noncomputable def finiteModeOrthogonalDecomposition
     (modeSubspace : Submodule Real E)
-    (modeEquiv : FinitePart ≃L[Real] modeSubspace) :
-    E ≃L[Real] (FinitePart × modeSubspaceᗮ) := by
+    (modeEquiv : FinitePart Mode ≃L[Real] modeSubspace) :
+    E ≃L[Real] (FinitePart Mode × modeSubspaceᗮ) := by
   letI : FiniteDimensional Real modeSubspace :=
     FiniteDimensional.of_surjective modeEquiv.toLinearMap
       modeEquiv.surjective
@@ -94,7 +94,7 @@ noncomputable def finiteModeOrthogonalDecomposition
 /-- The finite and complementary coordinates reconstruct every vector exactly. -/
 theorem finiteModeOrthogonalDecomposition_symm_apply_apply
     (modeSubspace : Submodule Real E)
-    (modeEquiv : FinitePart ≃L[Real] modeSubspace)
+    (modeEquiv : FinitePart Mode ≃L[Real] modeSubspace)
     (vector : E) :
     (finiteModeOrthogonalDecomposition modeSubspace modeEquiv).symm
         (finiteModeOrthogonalDecomposition modeSubspace modeEquiv vector) =
@@ -107,7 +107,8 @@ subspace, expressed in the supplied physical coordinates. -/
 @[simp]
 theorem finiteModeOrthogonalDecomposition_fst
     (modeSubspace : Submodule Real E)
-    (modeEquiv : FinitePart ≃L[Real] modeSubspace)
+    [FiniteDimensional Real modeSubspace]
+    (modeEquiv : FinitePart Mode ≃L[Real] modeSubspace)
     (vector : E) :
     (finiteModeOrthogonalDecomposition modeSubspace modeEquiv vector).1 =
       modeEquiv.symm (modeSubspace.orthogonalProjectionOnto vector) :=
@@ -118,7 +119,7 @@ orthogonal complement. -/
 @[simp]
 theorem finiteModeOrthogonalDecomposition_snd
     (modeSubspace : Submodule Real E)
-    (modeEquiv : FinitePart ≃L[Real] modeSubspace)
+    (modeEquiv : FinitePart Mode ≃L[Real] modeSubspace)
     (vector : E) :
     (finiteModeOrthogonalDecomposition modeSubspace modeEquiv vector).2 =
       modeSubspaceᗮ.orthogonalProjectionOnto vector :=
@@ -129,7 +130,7 @@ canonical; only the inverse of the extracted complementary block remains. -/
 structure FiniteModeOrthogonalSchurDecompositionData
     (operator : E →L[Real] E) where
   modeSubspace : Submodule Real E
-  modeEquiv : FinitePart ≃L[Real] modeSubspace
+  modeEquiv : FinitePart Mode ≃L[Real] modeSubspace
   complementEquiv : modeSubspaceᗮ ≃L[Real] modeSubspaceᗮ
   complementEquiv_eq :
     complementEquiv.toContinuousLinearMap =
@@ -142,7 +143,8 @@ def FiniteModeOrthogonalSchurDecompositionData.toCanonical
     {operator : E →L[Real] E}
     (data : FiniteModeOrthogonalSchurDecompositionData
       (Mode := Mode) operator) :
-    FiniteModeCanonicalSchurDecompositionData operator where
+    FiniteModeCanonicalSchurDecompositionData
+      (Mode := Mode) (Complement := data.modeSubspaceᗮ) operator where
   decomposition :=
     finiteModeOrthogonalDecomposition data.modeSubspace data.modeEquiv
   complementEquiv := data.complementEquiv

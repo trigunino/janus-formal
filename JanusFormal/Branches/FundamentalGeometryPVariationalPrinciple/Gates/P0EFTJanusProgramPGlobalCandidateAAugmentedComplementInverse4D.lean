@@ -35,9 +35,12 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
@@ -61,6 +64,13 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+attribute [local instance]
+  augmentedFredholmNormedAddCommGroup
+  augmentedFredholmInnerProductSpace
+  augmentedFredholmNormedSpace
+  augmentedFredholmModule
+  augmentedFredholmCompleteSpace
+
 private abbrev ComplementHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -71,74 +81,6 @@ private abbrev ComplementHilbert
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
-
-local instance (priority := 30000) complementNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup (ComplementHilbert period hPeriod configuration data
-      analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) complementInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real (ComplementHilbert period hPeriod configuration data
-      analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) complementNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real (ComplementHilbert period hPeriod configuration data
-      analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) complementModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real (ComplementHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) complementCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace (ComplementHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
 
 private abbrev ComplementEndomorphism
     {couplings : GlobalCandidateAActionCouplings}
@@ -166,7 +108,7 @@ structure GlobalCandidateAFaithfulAugmentedComplementInverse4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
+      hPeriod configuration data analysis chart sameAction) where
   inverseOnComplement :
     ComplementEndomorphism period hPeriod configuration data analysis
   kernelProjection :
@@ -174,19 +116,13 @@ structure GlobalCandidateAFaithfulAugmentedComplementInverse4D
   cokernelProjection :
     ComplementEndomorphism period hPeriod configuration data analysis
   inverse_comp_operator :
-    inverseOnComplement.comp
-        (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-          configuration data analysis chart sameAction physical) =
-      ContinuousLinearMap.id Real
-          (ComplementHilbert period hPeriod configuration data analysis) -
-        kernelProjection
+    globalCandidateAAugmentedKernelDefect period hPeriod configuration data
+        analysis chart sameAction physical inverseOnComplement =
+      kernelProjection
   operator_comp_inverse :
-    (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-        configuration data analysis chart sameAction physical).comp
-        inverseOnComplement =
-      ContinuousLinearMap.id Real
-          (ComplementHilbert period hPeriod configuration data analysis) -
-        cokernelProjection
+    globalCandidateAAugmentedCokernelDefect period hPeriod configuration data
+        analysis chart sameAction physical inverseOnComplement =
+      cokernelProjection
   cokernelProjection_annihilates_operator :
     cokernelProjection.comp
         (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
@@ -235,10 +171,13 @@ theorem GlobalCandidateAFaithfulAugmentedComplementInverse4D.generalized_inverse
       map vector) inverse.cokernelProjection_annihilates_operator
   change operator (inverse.inverseOnComplement (operator vector)) =
     operator vector
-  change operator (inverse.inverseOnComplement (operator vector)) =
-    operator vector - inverse.cokernelProjection (operator vector) at hRight
+  have hDefect :
+      operator vector - operator (inverse.inverseOnComplement (operator vector)) =
+        inverse.cokernelProjection (operator vector) := by
+    simpa [globalCandidateAAugmentedCokernelDefect,
+      ContinuousLinearMap.comp_apply] using hRight
   change inverse.cokernelProjection (operator vector) = 0 at hAnnihilates
-  simpa [hAnnihilates] using hRight
+  exact (sub_eq_zero.mp (hDefect.trans hAnnihilates)).symm
 
 /-- The canonical generalized-inverse packet generated by complement data. -/
 def globalCandidateAFaithfulAugmentedGeneralizedInverse_of_complement
@@ -263,29 +202,15 @@ def globalCandidateAFaithfulAugmentedGeneralizedInverse_of_complement
   parametrix := inverse.inverseOnComplement
   generalized_inverse := inverse.generalized_inverse
   kernelDefect_range_finite := by
-    have hDefect :
-        globalCandidateAAugmentedKernelDefect period hPeriod configuration data
-            analysis chart sameAction physical inverse.inverseOnComplement =
-          inverse.kernelProjection := by
-      unfold globalCandidateAAugmentedKernelDefect
-      rw [inverse.inverse_comp_operator]
-      abel
-    rw [hDefect]
+    rw [inverse.inverse_comp_operator]
     exact inverse.kernelProjection_range_finite
   cokernelDefect_range_finite := by
-    have hDefect :
-        globalCandidateAAugmentedCokernelDefect period hPeriod configuration data
-            analysis chart sameAction physical inverse.inverseOnComplement =
-          inverse.cokernelProjection := by
-      unfold globalCandidateAAugmentedCokernelDefect
-      rw [inverse.operator_comp_inverse]
-      abel
-    rw [hDefect]
+    rw [inverse.operator_comp_inverse]
     exact inverse.cokernelProjection_range_finite
   ll_stationary := inverse.ll_stationary
 
 /-- H12 directly from finite kernel/cokernel complements. -/
-theorem global_candidateA_h12_faithful_augmented_fredholm_gate_of_complement
+def global_candidateA_h12_faithful_augmented_fredholm_gate_of_complement
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

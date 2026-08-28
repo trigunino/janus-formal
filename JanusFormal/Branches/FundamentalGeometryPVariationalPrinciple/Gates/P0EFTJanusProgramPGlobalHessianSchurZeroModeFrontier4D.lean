@@ -34,6 +34,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -45,6 +46,7 @@ open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelStability4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D
 open P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
@@ -84,7 +86,7 @@ def global_candidateA_hessian_schur_zeroMode_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -92,7 +94,7 @@ def global_candidateA_hessian_schur_zeroMode_frontier_gate
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          analysis einsteinScale hTransverse family) einsteinScale family)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
     [AddCommGroup Complement] [Module Real Complement]
@@ -110,9 +112,9 @@ def global_candidateA_hessian_schur_zeroMode_frontier_gate
   let terminal := global_candidateA_hessian_zeroModeModel_frontier_gate
     period hPeriod configuration data analysis einsteinScale hTransverse family
       realization zeroModes
-  (terminal,
-    schurData.kernel_finrank_eq_schur period hPeriod,
-    schurData.kernel_finrank_le_mode_card period hPeriod)
+  And.intro terminal
+    (And.intro (schurData.kernel_finrank_eq_schur period hPeriod)
+      (schurData.kernel_finrank_le_mode_card period hPeriod))
 
 /-- Perturbative stability of the same Schur-classified Hessian. -/
 def global_candidateA_hessian_schur_zeroMode_stability_gate
@@ -128,7 +130,7 @@ def global_candidateA_hessian_schur_zeroMode_stability_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -136,7 +138,7 @@ def global_candidateA_hessian_schur_zeroMode_stability_gate
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          analysis einsteinScale hTransverse family) einsteinScale family)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
     [AddCommGroup Complement] [Module Real Complement]

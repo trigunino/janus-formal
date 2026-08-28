@@ -78,7 +78,7 @@ structure FiniteModeOrthogonalSchurCoercivityData
     constant * ‖vector‖ ^ 2 ≤
       ⟪vector,
         finiteModeOrthogonalComplementBlock operator modeSubspace modeEquiv
-          vector, Real⟫
+          vector⟫_Real
 
 namespace FiniteModeOrthogonalSchurCoercivityData
 
@@ -100,7 +100,7 @@ theorem complement_lowerBound
     have hInnerUpper :
         ⟪vector,
           finiteModeOrthogonalComplementBlock operator data.modeSubspace
-            data.modeEquiv vector, Real⟫ ≤
+            data.modeEquiv vector⟫_Real ≤
           ‖vector‖ *
             ‖finiteModeOrthogonalComplementBlock operator data.modeSubspace
               data.modeEquiv vector‖ :=
@@ -115,12 +115,12 @@ theorem complement_lowerBound
             data.constant * ‖vector‖ ^ 2 := by ring
         _ ≤ ⟪vector,
               finiteModeOrthogonalComplementBlock operator data.modeSubspace
-                data.modeEquiv vector, Real⟫ :=
+                data.modeEquiv vector⟫_Real :=
           data.coercive vector
         _ ≤ ‖vector‖ *
               ‖finiteModeOrthogonalComplementBlock operator data.modeSubspace
                 data.modeEquiv vector‖ := hInnerUpper
-    exact (mul_le_mul_left hNormPos).mp hMul
+    exact le_of_mul_le_mul_left hMul hNormPos
 
 /-- Reciprocal coercivity constant in the form used by the global lower-bound
 theorem. -/
@@ -173,13 +173,14 @@ noncomputable def complementEquiv
   ContinuousLinearEquiv.ofBijective
     (finiteModeOrthogonalComplementBlock operator data.modeSubspace
       data.modeEquiv)
-    data.complement_bijective
+    (LinearMap.ker_eq_bot.mpr data.complement_bijective.1)
+    (LinearMap.range_eq_top.mpr data.complement_bijective.2)
 
 /-- Coercivity constructs the complete canonical orthogonal Schur packet. -/
 noncomputable def toOrthogonalSchurData
     (data : FiniteModeOrthogonalSchurCoercivityData
       (Mode := Mode) operator hSelfAdjoint) :
-    FiniteModeOrthogonalSchurDecompositionData operator Mode where
+    FiniteModeOrthogonalSchurDecompositionData (Mode := Mode) operator where
   modeSubspace := data.modeSubspace
   modeEquiv := data.modeEquiv
   complementEquiv := data.complementEquiv
@@ -192,7 +193,8 @@ theorem finite_mode_orthogonal_schur_coercivity_gate
     Function.Bijective
         (finiteModeOrthogonalComplementBlock operator data.modeSubspace
           data.modeEquiv) ∧
-      Nonempty (FiniteModeOrthogonalSchurDecompositionData operator Mode) :=
+      Nonempty
+        (FiniteModeOrthogonalSchurDecompositionData (Mode := Mode) operator) :=
   ⟨data.complement_bijective, ⟨data.toOrthogonalSchurData⟩⟩
 
 end FiniteModeOrthogonalSchurCoercivityData
@@ -212,8 +214,7 @@ structure FiniteModeOrthogonalSchurNamedCoercivityData
       ⟪state,
         finiteModeOrthogonalComplementBlock operator
           (finiteModeNamedSubspace vector)
-          (finiteModeNamedContinuousEquiv vector linearIndependent) state,
-        Real⟫
+          (finiteModeNamedContinuousEquiv vector linearIndependent) state⟫_Real
 
 namespace FiniteModeOrthogonalSchurNamedCoercivityData
 
@@ -239,7 +240,7 @@ coercivity estimate. -/
 noncomputable def toOrthogonalSchurData
     (data : FiniteModeOrthogonalSchurNamedCoercivityData
       (Mode := Mode) operator hSelfAdjoint) :
-    FiniteModeOrthogonalSchurDecompositionData operator Mode :=
+    FiniteModeOrthogonalSchurDecompositionData (Mode := Mode) operator :=
   data.toCoercivityData.toOrthogonalSchurData
 
 /-- Public named-vector coercivity checkpoint. -/
@@ -252,7 +253,8 @@ theorem finite_mode_orthogonal_schur_named_coercivity_gate
           (finiteModeNamedSubspace data.vector)
           (finiteModeNamedContinuousEquiv data.vector
             data.linearIndependent)) ∧
-      Nonempty (FiniteModeOrthogonalSchurDecompositionData operator Mode) :=
+      Nonempty
+        (FiniteModeOrthogonalSchurDecompositionData (Mode := Mode) operator) :=
   ⟨data.linearIndependent,
     data.toCoercivityData.complement_bijective,
     ⟨data.toOrthogonalSchurData⟩⟩

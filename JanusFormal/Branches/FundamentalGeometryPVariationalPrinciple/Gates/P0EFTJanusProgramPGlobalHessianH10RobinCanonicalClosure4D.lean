@@ -24,6 +24,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -70,21 +71,21 @@ def globalCandidateAH10RobinCanonicalPhysicalExtension
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared))
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
-      period hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
+      period hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
           analysis family)) :=
   globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod
-    configuration data analysis family
-      (extensions.toContinuous period hPeriod)
+    (measure := measure) configuration data analysis family
+      (extensions.toContinuous period hPeriod (measure := measure))
 
 /-- Preferred canonical H14 gate. -/
-theorem global_candidateA_hessian_h10Robin_canonical_closure_gate
+def global_candidateA_hessian_h10Robin_canonical_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -97,26 +98,26 @@ theorem global_candidateA_hessian_h10Robin_canonical_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared))
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
-      period hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
+      period hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
           analysis family))
     (inverse : GlobalCandidateAFaithfulAugmentedComplementInverse4D period
-      hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
+      hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
           analysis family)
         (globalCandidateAH10RobinCanonicalPhysicalExtension period hPeriod
-          configuration data analysis family extensions)) :=
+          (measure := measure) configuration data analysis family extensions)) :=
   global_candidateA_hessian_h10Robin_complement_closure_gate period hPeriod
-    configuration data analysis einsteinScale hBoundaryTransverse family
-      (extensions.toContinuous period hPeriod)
+    (measure := measure) configuration data analysis einsteinScale hBoundaryTransverse family
+      (extensions.toContinuous period hPeriod (measure := measure))
       inverse
 
 end

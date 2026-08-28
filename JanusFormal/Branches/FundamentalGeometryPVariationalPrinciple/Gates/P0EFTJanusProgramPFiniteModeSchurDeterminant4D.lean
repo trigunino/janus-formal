@@ -57,7 +57,7 @@ structure FiniteModeSchurDeterminantData
     (operator : E →L[Real] E)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [AddCommGroup Complement] [Module Real Complement] : Prop where
+    [AddCommGroup Complement] [Module Real Complement] : Type _ where
   blockData : FiniteModeSchurBlockData operator Mode Complement
   determinant_ne_zero : (finiteModeSchurMatrix blockData).det ≠ 0
 

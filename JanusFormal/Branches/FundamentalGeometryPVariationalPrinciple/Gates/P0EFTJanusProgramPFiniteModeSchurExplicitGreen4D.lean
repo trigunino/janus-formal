@@ -35,7 +35,7 @@ structure FiniteModeSchurExplicitGreenData
     (operator : E →L[Real] E)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement] : Prop where
+    [NormedAddCommGroup Complement] [NormedSpace Real Complement] where
   blocks : FiniteModeContinuousSchurBlockData operator Mode Complement
   determinant_ne_zero :
     (finiteModeSchurMatrix blocks.toLinearBlockData).det ≠ 0
@@ -78,6 +78,8 @@ theorem finiteModeSchurFiniteInverse_schur
   let matrix := finiteModeSchurMatrix data.blocks.toLinearBlockData
   have hUnit : IsUnit matrix.det :=
     isUnit_iff_ne_zero.mpr data.determinant_ne_zero
+  rw [finiteModeSchurFiniteInverse_apply,
+    ← finiteModeSchurMatrix_mulVec]
   change matrix⁻¹ *ᵥ (matrix *ᵥ vector) = vector
   rw [Matrix.mulVec_mulVec, Matrix.nonsing_inv_mul matrix hUnit,
     Matrix.one_mulVec]
@@ -95,6 +97,8 @@ theorem finiteModeSchur_schurFiniteInverse
   let matrix := finiteModeSchurMatrix data.blocks.toLinearBlockData
   have hUnit : IsUnit matrix.det :=
     isUnit_iff_ne_zero.mpr data.determinant_ne_zero
+  rw [finiteModeSchurFiniteInverse_apply,
+    ← finiteModeSchurMatrix_mulVec]
   change matrix *ᵥ (matrix⁻¹ *ᵥ vector) = vector
   rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv matrix hUnit,
     Matrix.one_mulVec]
@@ -193,9 +197,29 @@ theorem finiteModeSchurExplicitGreen_operator
     (data : FiniteModeSchurExplicitGreenData operator Mode Complement)
     (state : E) :
     finiteModeSchurExplicitGreen data (operator state) = state := by
-  let reduced := data.blocks.toLinearBlockData.rightReduction.symm
+  let reduced := (finiteModeSchurRightReduction
+      data.blocks.toLinearBlockData).symm
     (data.blocks.toLinearBlockData.decomposition state)
-  have hFactor := data.blocks.toLinearBlockData.factorization reduced
+  have hFactor := finiteModeSchurBlock_factorization
+    data.blocks.toLinearBlockData reduced
+  have hFactorContinuous :
+      finiteModeContinuousSchurLeftReduction data.blocks
+          (data.blocks.decomposition
+            (operator
+              (data.blocks.decomposition.symm
+                (finiteModeSchurRightReduction
+                  data.blocks.toLinearBlockData reduced)))) =
+        (finiteModeSchurBlockOperator data.blocks.toLinearBlockData reduced.1,
+          data.blocks.complementEquiv reduced.2) := by
+    calc
+      _ = finiteModeSchurLeftReduction data.blocks.toLinearBlockData
+          (data.blocks.toLinearBlockData.decomposition
+            (operator
+              (data.blocks.toLinearBlockData.decomposition.symm
+                (finiteModeSchurRightReduction
+                  data.blocks.toLinearBlockData reduced)))) := by
+            apply Prod.ext <;> rfl
+      _ = _ := hFactor
   change data.blocks.decomposition.symm
       (finiteModeContinuousSchurRightReduction data
         (finiteModeSchurDiagonalInverse data
@@ -203,19 +227,25 @@ theorem finiteModeSchurExplicitGreen_operator
             (data.blocks.decomposition (operator state))))) = state
   have hSource :
       data.blocks.decomposition.symm
-        (data.blocks.toLinearBlockData.rightReduction reduced) = state := by
-    simp [reduced]
+        (finiteModeSchurRightReduction data.blocks.toLinearBlockData
+          reduced) = state := by
+    simp only [reduced, LinearEquiv.apply_symm_apply]
+    change data.blocks.decomposition.symm
+      (data.blocks.decomposition state) = state
+    exact data.blocks.decomposition.symm_apply_apply state
   rw [← hSource]
-  apply data.blocks.decomposition.symm.injective
+  apply data.blocks.decomposition.injective
+  simp only [ContinuousLinearEquiv.apply_symm_apply]
   change finiteModeContinuousSchurRightReduction data
       (finiteModeSchurDiagonalInverse data
         (finiteModeContinuousSchurLeftReduction data.blocks
           (data.blocks.decomposition
             (operator
               (data.blocks.decomposition.symm
-                (data.blocks.toLinearBlockData.rightReduction reduced)))))) =
-    data.blocks.toLinearBlockData.rightReduction reduced
-  rw [hFactor]
+                (finiteModeSchurRightReduction
+                  data.blocks.toLinearBlockData reduced)))))) =
+    finiteModeSchurRightReduction data.blocks.toLinearBlockData reduced
+  rw [hFactorContinuous]
   rw [finiteModeSchurDiagonalInverse_diagonal]
   rfl
 
@@ -231,16 +261,19 @@ theorem finiteModeSchur_operator_explicitGreen
   let reducedTarget := finiteModeContinuousSchurLeftReduction data.blocks
     (data.blocks.decomposition state)
   let reducedSource := finiteModeSchurDiagonalInverse data reducedTarget
-  have hFactor := data.blocks.toLinearBlockData.factorization reducedSource
+  have hFactor := finiteModeSchurBlock_factorization
+    data.blocks.toLinearBlockData reducedSource
   apply data.blocks.decomposition.injective
-  apply data.blocks.toLinearBlockData.leftReduction.injective
-  change data.blocks.toLinearBlockData.leftReduction
-      (data.blocks.decomposition
+  apply (finiteModeSchurLeftReduction
+    data.blocks.toLinearBlockData).injective
+  change finiteModeSchurLeftReduction data.blocks.toLinearBlockData
+      (data.blocks.toLinearBlockData.decomposition
         (operator
-          (data.blocks.decomposition.symm
-            (data.blocks.toLinearBlockData.rightReduction reducedSource)))) =
-    data.blocks.toLinearBlockData.leftReduction
-      (data.blocks.decomposition state)
+          (data.blocks.toLinearBlockData.decomposition.symm
+            (finiteModeSchurRightReduction data.blocks.toLinearBlockData
+              reducedSource)))) =
+    finiteModeSchurLeftReduction data.blocks.toLinearBlockData
+      (data.blocks.toLinearBlockData.decomposition state)
   rw [hFactor]
   change
     (finiteModeSchurBlockOperator data.blocks.toLinearBlockData reducedSource.1,

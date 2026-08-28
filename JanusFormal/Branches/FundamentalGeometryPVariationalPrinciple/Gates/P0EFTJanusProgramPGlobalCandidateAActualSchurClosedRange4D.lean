@@ -36,6 +36,13 @@ open P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
 open P0EFTJanusProgramPFiniteModeSchurClosedRange4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
 
 private abbrev EffectiveQuotient :=
@@ -74,7 +81,7 @@ structure GlobalCandidateAActualSchurClosedRangeData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement] : Prop where
+    [NormedAddCommGroup Complement] [NormedSpace Real Complement] where
   schur : FiniteModeSchurClosedRangeData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -112,7 +119,7 @@ def GlobalCandidateAActualSchurClosedRangeData4D.toSchurZeroModeData
   ll_stationary := dataSchur.ll_stationary
 
 /-- Public Candidate-A closed-range and finite-zero-mode checkpoint. -/
-theorem global_candidateA_actual_schur_closedRange_gate
+def global_candidateA_actual_schur_closedRange_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

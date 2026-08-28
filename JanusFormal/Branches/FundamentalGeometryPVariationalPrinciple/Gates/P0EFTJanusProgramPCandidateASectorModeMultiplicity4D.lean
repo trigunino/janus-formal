@@ -16,8 +16,14 @@ set_option autoImplicit false
 noncomputable section
 
 open scoped BigOperators
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 open P0EFTJanusProgramPCandidateASectorModeAssembly4D
+
+local instance candidateASectorModeFintype
+    (types : CandidateASectorModeTypes)
+    (sector : CandidateAZeroModeSector) : Fintype (types.Mode sector) :=
+  types.modeFintype sector
 
 /-- The classification fiber over one sector is its original mode type. -/
 def candidateASectorClassificationFiberEquiv

@@ -21,6 +21,7 @@ noncomputable section
 
 open scoped BigOperators
 open P0EFTJanusProgramPFiniteSectorQuadraticGarding4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 
 variable {E : Type*}
@@ -167,7 +168,7 @@ theorem candidateA_five_sector_garding_gate
   let data := constants.toFiniteSectorData sectorWeight sectorWeight_nonneg
     sectorWeight_sum diagonalEnergy diagonal_lower couplingEnergy coupling_bound
       principalEnergy principal_eq
-  simpa [FiniteSectorQuadraticGardingData.margin, data] using
+  simpa [FiniteSectorQuadraticGardingData.margin, data, toFiniteSectorData] using
     data.finite_sector_quadratic_garding_gate
 
 end CandidateAFiveSectorGardingConstants

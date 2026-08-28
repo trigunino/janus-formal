@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeOrthogonalSchurCoercivity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurNamedVectors4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 
 /-!
 # Candidate-A orthogonal Schur data from complementary coercivity
@@ -40,6 +41,13 @@ open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurNamedVectors4D
 open P0EFTJanusProgramPFiniteModeOrthogonalSchurCoercivity4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
 
 private abbrev EffectiveQuotient :=
@@ -68,77 +76,7 @@ private abbrev CoerciveSchurHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) coerciveSchurNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CoerciveSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) coerciveSchurInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CoerciveSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) coerciveSchurNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CoerciveSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) coerciveSchurModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CoerciveSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) coerciveSchurCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (CoerciveSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 /-- Candidate-A reference vectors, coercivity on their canonical orthogonal
 complement, and LL stationarity. -/
@@ -157,7 +95,7 @@ structure GlobalCandidateAActualOrthogonalSchurNamedCoercivityData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] : Prop where
+    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] where
   namedCoercivity : FiniteModeOrthogonalSchurNamedCoercivityData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -194,7 +132,8 @@ def GlobalCandidateAActualOrthogonalSchurNamedCoercivityData4D.toNamedVectorsDat
     { vector := coercive.namedCoercivity.vector
       linearIndependent := coercive.namedCoercivity.linearIndependent
       complementEquiv := coercive.namedCoercivity.toCoercivityData.complementEquiv
-      complementEquiv_eq := rfl }
+      complementEquiv_eq :=
+        (coercive.namedCoercivity.toCoercivityData.toOrthogonalSchurData).complementEquiv_eq }
   ll_stationary := coercive.ll_stationary
 
 /-- Recover the direct orthogonal Schur packet. -/
@@ -223,7 +162,7 @@ def GlobalCandidateAActualOrthogonalSchurNamedCoercivityData4D.toOrthogonalData
 
 /-- Public Candidate-A checkpoint: the inverse complementary block and all
 Schur conclusions are generated from one orthogonal coercivity estimate. -/
-theorem global_candidateA_actual_orthogonal_schur_named_coercivity_gate
+def global_candidateA_actual_orthogonal_schur_named_coercivity_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -241,9 +180,10 @@ theorem global_candidateA_actual_orthogonal_schur_named_coercivity_gate
     (Mode : Type*) [Fintype Mode] [DecidableEq Mode]
     (coercive : GlobalCandidateAActualOrthogonalSchurNamedCoercivityData4D period
       hPeriod configuration data analysis chart sameAction physical Mode) :=
-  (finite_mode_orthogonal_schur_named_coercivity_gate
-      coercive.namedCoercivity,
-    global_candidateA_actual_orthogonal_schur_named_vectors_gate period hPeriod
+  And.intro
+    (FiniteModeOrthogonalSchurNamedCoercivityData.finite_mode_orthogonal_schur_named_coercivity_gate
+      coercive.namedCoercivity)
+    (global_candidateA_actual_orthogonal_schur_named_vectors_gate period hPeriod
       configuration data analysis chart sameAction physical Mode
       (coercive.toNamedVectorsData period hPeriod))
 

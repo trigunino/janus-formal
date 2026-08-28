@@ -44,11 +44,17 @@ theorem finiteModeOrthogonalComplementBlock_inner_eq_ambient
     (vector : modeSubspaceᗮ) :
     ⟪vector,
       finiteModeOrthogonalComplementBlock operator modeSubspace modeEquiv
-        vector, Real⟫ =
-      ⟪(vector : E), operator (vector : E), Real⟫ := by
+        vector⟫_Real =
+      ⟪(vector : E), operator (vector : E)⟫_Real := by
+  have hReconstruct :
+      (finiteModeOrthogonalDecomposition modeSubspace modeEquiv).symm
+          (0, vector) = (vector : E) := by
+    change ((modeEquiv (0 : Mode → Real) : modeSubspace) : E) +
+      (vector : E) = (vector : E)
+    simp
   simpa [finiteModeOrthogonalComplementBlock,
     finiteModeCanonicalBlockD, finiteModeConjugatedOperator,
-    finiteModeOrthogonalDecomposition, real_inner_comm]
+    hReconstruct, real_inner_comm]
 
 /-- Ambient PDE input: coercivity of `H` on the canonical orthogonal complement
 of a finite subspace. -/
@@ -61,7 +67,7 @@ structure FiniteModeOrthogonalSchurAmbientCoercivityData
   constant_pos : 0 < constant
   coercive : ∀ vector : modeSubspaceᗮ,
     constant * ‖vector‖ ^ 2 ≤
-      ⟪(vector : E), operator (vector : E), Real⟫
+      ⟪(vector : E), operator (vector : E)⟫_Real
 
 namespace FiniteModeOrthogonalSchurAmbientCoercivityData
 
@@ -88,7 +94,7 @@ def toComplementCoercivity
 noncomputable def toOrthogonalSchurData
     (data : FiniteModeOrthogonalSchurAmbientCoercivityData
       (Mode := Mode) operator hSelfAdjoint) :
-    FiniteModeOrthogonalSchurDecompositionData operator Mode :=
+    FiniteModeOrthogonalSchurDecompositionData (Mode := Mode) operator :=
   data.toComplementCoercivity.toOrthogonalSchurData
 
 /-- Public ambient-coercivity checkpoint. -/
@@ -98,7 +104,8 @@ theorem finite_mode_orthogonal_schur_ambient_coercivity_gate
     Function.Bijective
         (finiteModeOrthogonalComplementBlock operator data.modeSubspace
           data.modeEquiv) ∧
-      Nonempty (FiniteModeOrthogonalSchurDecompositionData operator Mode) :=
+      Nonempty
+        (FiniteModeOrthogonalSchurDecompositionData (Mode := Mode) operator) :=
   data.toComplementCoercivity.finite_mode_orthogonal_schur_coercivity_gate
 
 end FiniteModeOrthogonalSchurAmbientCoercivityData
@@ -114,7 +121,7 @@ structure FiniteModeOrthogonalSchurNamedAmbientCoercivityData
   constant_pos : 0 < constant
   coercive : ∀ state : (finiteModeNamedSubspace vector)ᗮ,
     constant * ‖state‖ ^ 2 ≤
-      ⟪(state : E), operator (state : E), Real⟫
+      ⟪(state : E), operator (state : E)⟫_Real
 
 namespace FiniteModeOrthogonalSchurNamedAmbientCoercivityData
 
@@ -162,7 +169,8 @@ theorem finite_mode_orthogonal_schur_named_ambient_coercivity_gate
           (finiteModeNamedSubspace data.vector)
           (finiteModeNamedContinuousEquiv data.vector
             data.linearIndependent)) ∧
-      Nonempty (FiniteModeOrthogonalSchurDecompositionData operator Mode) :=
+      Nonempty
+        (FiniteModeOrthogonalSchurDecompositionData (Mode := Mode) operator) :=
   data.toNamedComplementCoercivity.finite_mode_orthogonal_schur_named_coercivity_gate
 
 end FiniteModeOrthogonalSchurNamedAmbientCoercivityData

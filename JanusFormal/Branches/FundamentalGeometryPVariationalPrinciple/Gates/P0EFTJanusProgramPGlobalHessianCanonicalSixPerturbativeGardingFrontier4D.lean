@@ -32,6 +32,9 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelNamedGarding4D
@@ -41,6 +44,16 @@ open P0EFTJanusProgramPGlobalHessianCanonicalSixNamedGardingFrontier4D
 open P0EFTJanusProgramPNamedModeGardingPerturbation4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+
+attribute [local instance]
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -73,7 +86,7 @@ private abbrev PerturbativeHilbert
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 
-local instance (priority := 30000) perturbativeNormedAddCommGroup
+@[implicit_reducible] private def perturbativeNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -87,7 +100,7 @@ local instance (priority := 30000) perturbativeNormedAddCommGroup
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) perturbativeInnerProductSpace
+@[implicit_reducible] private def perturbativeInnerProductSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -101,7 +114,7 @@ local instance (priority := 30000) perturbativeInnerProductSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) perturbativeNormedSpace
+@[implicit_reducible] private def perturbativeNormedSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -115,7 +128,7 @@ local instance (priority := 30000) perturbativeNormedSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) perturbativeModule
+@[implicit_reducible] private def perturbativeModule
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -129,7 +142,7 @@ local instance (priority := 30000) perturbativeModule
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) perturbativeCompleteSpace
+@[implicit_reducible] private def perturbativeCompleteSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -158,50 +171,50 @@ def global_candidateA_hessian_canonicalSix_perturbativeGarding_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (reference perturbation :
       PerturbativeHilbert period hPeriod configuration data analysis →L[Real]
         PerturbativeHilbert period hPeriod configuration data analysis)
     (perturbative : FiniteKernelNamedReferenceGardingPerturbationData
-      (globalCandidateAActualKernelOperator period hPeriod configuration data
+      (globalCandidateAActualKernelOperator period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)
           (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-            hPeriod configuration data analysis einsteinScale hTransverse family
+            hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
               chartBound))
       reference perturbation ZeroMode)
     (ll_stationary : ∀ point,
       LLStationaryAt period hPeriod
         (data.boundary.llFields period hPeriod) point) :=
   let namedGarding : GlobalCandidateAActualKernelNamedGarding4D period hPeriod
-      configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
+      (measure := measure) configuration data analysis
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
+        (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-          hPeriod configuration data analysis einsteinScale hTransverse family
+          hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
             chartBound)
         ZeroMode :=
     { garding := perturbative.toNamedGarding
       ll_stationary := ll_stationary }
   global_candidateA_hessian_canonicalSix_namedGarding_frontier_gate period
-    hPeriod configuration data analysis einsteinScale hTransverse family
+    hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
       chartBound ZeroMode namedGarding
 
 /-- The perturbative terminal still has two analytic packets after the local

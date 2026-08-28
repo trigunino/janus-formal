@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeOrthogonalSchurBasis4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBlock4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 
 /-!
 # Candidate-A orthogonal Schur reduction from named reference modes
@@ -36,6 +37,13 @@ open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBlock4D
 open P0EFTJanusProgramPFiniteModeOrthogonalSchurBasis4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
 
 private abbrev EffectiveQuotient :=
@@ -64,77 +72,7 @@ private abbrev BasisSchurHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) basisSchurNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (BasisSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) basisSchurInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (BasisSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) basisSchurNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (BasisSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) basisSchurModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (BasisSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) basisSchurCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (BasisSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 /-- Candidate-A packet based on a genuine finite basis of the reference mode
 subspace. -/
@@ -153,8 +91,8 @@ structure GlobalCandidateAActualOrthogonalSchurBasisData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] : Prop where
-  basisData : FiniteModeOrthogonalSchurBasisData
+    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] where
+  basisData : FiniteModeOrthogonalSchurBasisData (Mode := Mode)
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
   ll_stationary : ∀ point,
@@ -235,7 +173,7 @@ theorem GlobalCandidateAActualOrthogonalSchurBasisData4D.modeVector_linearIndepe
   schur.basisData.modeVector_linearIndependent
 
 /-- Public Candidate-A basis checkpoint. -/
-theorem global_candidateA_actual_orthogonal_schur_basis_gate
+def global_candidateA_actual_orthogonal_schur_basis_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

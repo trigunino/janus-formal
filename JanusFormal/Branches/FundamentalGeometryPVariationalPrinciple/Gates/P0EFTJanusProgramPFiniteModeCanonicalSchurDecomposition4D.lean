@@ -31,58 +31,58 @@ variable {E Mode Complement : Type*}
   [Fintype Mode] [DecidableEq Mode]
   [NormedAddCommGroup Complement] [NormedSpace Real Complement]
 
-private abbrev FinitePart := Mode → Real
-private abbrev SchurProduct := (Mode → Real) × Complement
+private abbrev FinitePart (Mode : Type*) := Mode → Real
+private abbrev SchurProduct (Mode Complement : Type*) := (Mode → Real) × Complement
 
 /-- The full operator in finite/complement coordinates. -/
 def finiteModeConjugatedOperator
     (operator : E →L[Real] E)
-    (decomposition : E ≃L[Real] SchurProduct) :
-    SchurProduct →L[Real] SchurProduct :=
+    (decomposition : E ≃L[Real] SchurProduct Mode Complement) :
+    SchurProduct Mode Complement →L[Real] SchurProduct Mode Complement :=
   decomposition.toContinuousLinearMap.comp
     (operator.comp decomposition.symm.toContinuousLinearMap)
 
 /-- Canonical finite-to-finite block `A`. -/
 def finiteModeCanonicalBlockA
     (operator : E →L[Real] E)
-    (decomposition : E ≃L[Real] SchurProduct) :
-    FinitePart →L[Real] FinitePart :=
-  (ContinuousLinearMap.fst Real FinitePart Complement).comp
+    (decomposition : E ≃L[Real] SchurProduct Mode Complement) :
+    FinitePart Mode →L[Real] FinitePart Mode :=
+  (ContinuousLinearMap.fst Real (FinitePart Mode) Complement).comp
     ((finiteModeConjugatedOperator operator decomposition).comp
-      (ContinuousLinearMap.inl Real FinitePart Complement))
+      (ContinuousLinearMap.inl Real (FinitePart Mode) Complement))
 
 /-- Canonical complement-to-finite block `B`. -/
 def finiteModeCanonicalBlockB
     (operator : E →L[Real] E)
-    (decomposition : E ≃L[Real] SchurProduct) :
-    Complement →L[Real] FinitePart :=
-  (ContinuousLinearMap.fst Real FinitePart Complement).comp
+    (decomposition : E ≃L[Real] SchurProduct Mode Complement) :
+    Complement →L[Real] FinitePart Mode :=
+  (ContinuousLinearMap.fst Real (FinitePart Mode) Complement).comp
     ((finiteModeConjugatedOperator operator decomposition).comp
-      (ContinuousLinearMap.inr Real FinitePart Complement))
+      (ContinuousLinearMap.inr Real (FinitePart Mode) Complement))
 
 /-- Canonical finite-to-complement block `C`. -/
 def finiteModeCanonicalBlockC
     (operator : E →L[Real] E)
-    (decomposition : E ≃L[Real] SchurProduct) :
-    FinitePart →L[Real] Complement :=
-  (ContinuousLinearMap.snd Real FinitePart Complement).comp
+    (decomposition : E ≃L[Real] SchurProduct Mode Complement) :
+    FinitePart Mode →L[Real] Complement :=
+  (ContinuousLinearMap.snd Real (FinitePart Mode) Complement).comp
     ((finiteModeConjugatedOperator operator decomposition).comp
-      (ContinuousLinearMap.inl Real FinitePart Complement))
+      (ContinuousLinearMap.inl Real (FinitePart Mode) Complement))
 
 /-- Canonical complementary block `D`. -/
 def finiteModeCanonicalBlockD
     (operator : E →L[Real] E)
-    (decomposition : E ≃L[Real] SchurProduct) :
+    (decomposition : E ≃L[Real] SchurProduct Mode Complement) :
     Complement →L[Real] Complement :=
-  (ContinuousLinearMap.snd Real FinitePart Complement).comp
+  (ContinuousLinearMap.snd Real (FinitePart Mode) Complement).comp
     ((finiteModeConjugatedOperator operator decomposition).comp
-      (ContinuousLinearMap.inr Real FinitePart Complement))
+      (ContinuousLinearMap.inr Real (FinitePart Mode) Complement))
 
 /-- A continuous finite/complement decomposition for which the automatically
 extracted complementary block is invertible. -/
 structure FiniteModeCanonicalSchurDecompositionData
     (operator : E →L[Real] E) where
-  decomposition : E ≃L[Real] SchurProduct
+  decomposition : E ≃L[Real] SchurProduct Mode Complement
   complementEquiv : Complement ≃L[Real] Complement
   complementEquiv_eq :
     complementEquiv.toContinuousLinearMap =
@@ -102,13 +102,17 @@ def FiniteModeCanonicalSchurDecompositionData.toContinuousSchurBlockData
   complementEquiv := data.complementEquiv
   operator_block := by
     intro state
-    rw [data.complementEquiv_eq]
+    have hComplement : data.complementEquiv state.2 =
+        finiteModeCanonicalBlockD operator data.decomposition state.2 := by
+      change data.complementEquiv.toContinuousLinearMap state.2 = _
+      rw [data.complementEquiv_eq]
+    rw [hComplement]
     change finiteModeConjugatedOperator operator data.decomposition state = _
     have hSplit : state =
-        ContinuousLinearMap.inl Real FinitePart Complement state.1 +
-          ContinuousLinearMap.inr Real FinitePart Complement state.2 := by
+        ContinuousLinearMap.inl Real (FinitePart Mode) Complement state.1 +
+          ContinuousLinearMap.inr Real (FinitePart Mode) Complement state.2 := by
       apply Prod.ext <;> simp
-    rw [hSplit, map_add]
+    conv_lhs => rw [hSplit, map_add]
     rfl
 
 /-- Exact block formula, now a theorem rather than an input field. -/
@@ -116,7 +120,7 @@ theorem finiteModeCanonicalSchur_operator_block
     {operator : E →L[Real] E}
     (data : FiniteModeCanonicalSchurDecompositionData
       (Mode := Mode) (Complement := Complement) operator)
-    (state : SchurProduct) :
+    (state : SchurProduct Mode Complement) :
     data.decomposition (operator (data.decomposition.symm state)) =
       (finiteModeCanonicalBlockA operator data.decomposition state.1 +
           finiteModeCanonicalBlockB operator data.decomposition state.2,

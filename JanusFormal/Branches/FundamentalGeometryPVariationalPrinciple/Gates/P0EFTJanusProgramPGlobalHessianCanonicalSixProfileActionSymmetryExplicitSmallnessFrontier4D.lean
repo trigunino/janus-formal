@@ -37,13 +37,35 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAProfileActionTranslationCanonicalSmallness4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 open P0EFTJanusProgramPCandidateASectorMultiplicityProfile4D
+open P0EFTJanusProgramPCandidateASectorModeAssembly4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixActionSymmetryExplicitSmallnessFrontier4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusMappingTorusGlobalLLVariation4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+
+attribute [local instance]
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
+
+noncomputable local instance candidateASectorGlobalModeDecidableEq
+    (types : CandidateASectorModeTypes) : DecidableEq types.GlobalMode :=
+  Classical.decEq _
 
 private abbrev EffectiveQuotient :=
   MappingTorus (reflectedSphereData period hPeriod)
@@ -78,30 +100,27 @@ def global_candidateA_hessian_canonicalSix_profileActionSymmetryExplicitSmallnes
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
     (profile : CandidateASectorMultiplicityProfile)
     (smallness :
       GlobalCandidateAProfileActionTranslationCanonicalSmallnessData4D period
-        hPeriod configuration data analysis einsteinScale hTransverse family
+        hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
           chartBound profile) :=
-  let terminal :=
-    global_candidateA_hessian_canonicalSix_actionSymmetryExplicitSmallness_frontier_gate
-      period hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound profile.modeTypes.GlobalMode
-          (smallness.toGlobal period hPeriod)
-  let multiplicity := smallness.kernel_finrank_eq_profile_sum period hPeriod
-  (terminal, multiplicity)
+  global_candidateA_hessian_canonicalSix_actionSymmetryExplicitSmallness_frontier_gate
+    period hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
+      chartBound profile.modeTypes.GlobalMode
+        (smallness.toGlobal period hPeriod (measure := measure))
 
 /-- Exact actual-kernel count given by the five numerical profile entries. -/
 theorem global_candidateA_hessian_canonicalSix_profileActionSymmetryExplicitSmallness_exact_count
@@ -117,37 +136,37 @@ theorem global_candidateA_hessian_canonicalSix_profileActionSymmetryExplicitSmal
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
     (profile : CandidateASectorMultiplicityProfile)
     (smallness :
       GlobalCandidateAProfileActionTranslationCanonicalSmallnessData4D period
-        hPeriod configuration data analysis einsteinScale hTransverse family
+        hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
           chartBound profile) :
-    let chart := globalCandidateAActualKernelChart period hPeriod configuration
+    let chart := globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration
       data analysis einsteinScale hTransverse family
-    let sameAction := globalCandidateAActualKernelSameAction period hPeriod
+    let sameAction := globalCandidateAActualKernelSameAction period hPeriod (measure := measure)
       configuration data analysis einsteinScale hTransverse family
     let physical := globalCandidateACanonicalSixPhysicalExtension_of_chartBound
-      period hPeriod configuration data analysis einsteinScale hTransverse family
+      period hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
         chartBound
     Module.finrank Real
-        (globalCandidateAActualKernelOperator period hPeriod configuration data
+        (globalCandidateAActualKernelOperator period hPeriod (measure := measure) configuration data
           analysis chart sameAction physical).ker =
       ∑ sector : CandidateAZeroModeSector,
         profile.multiplicity sector := by
   dsimp only
-  exact smallness.kernel_finrank_eq_profile_sum period hPeriod
+  exact smallness.kernel_finrank_eq_profile_sum period hPeriod (measure := measure)
 
 /-- The numerical profile is a type-level specialization, not an additional
 analytic packet.  After the fixed local family, only the chart bound and the

@@ -29,6 +29,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -66,7 +67,7 @@ local instance effectiveQuotientBorelSpace :
 
 /-- Preferred H14 gate after deriving shifted surjectivity from
 self-adjointness and the anti-Lipschitz estimate. -/
-theorem global_candidateA_hessian_h10Robin_antilipschitz_closure_gate
+def global_candidateA_hessian_h10Robin_antilipschitz_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -79,36 +80,37 @@ theorem global_candidateA_hessian_h10Robin_antilipschitz_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared))
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
-      period hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
+      period hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
           analysis family))
     (shift : GlobalCandidateAAugmentedSelfAdjointAntilipschitzShift4D period
-      hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
+      hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
           analysis family)
         (globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod
-          configuration data analysis family
-            (extensions.toContinuous period hPeriod))) :=
+          (measure := measure) configuration data analysis family
+            (extensions.toContinuous period hPeriod (measure := measure)))) :=
   global_candidateA_hessian_h10Robin_continuous_closure_gate period hPeriod
-    configuration data analysis einsteinScale hBoundaryTransverse family
-      (extensions.toContinuous period hPeriod)
+    (measure := measure) configuration data analysis einsteinScale hBoundaryTransverse family
+      (extensions.toContinuous period hPeriod (measure := measure))
       (globalCandidateAFaithfulAugmentedGeneralizedInverse_of_selfAdjointAntilipschitzShift
         period hPeriod configuration data analysis
-          (globalCandidateAH10RobinChart period hPeriod configuration data
+          (measure := measure)
+          (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
             analysis family)
-          (globalCandidateAH10RobinSameAction period hPeriod configuration data
+          (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
             analysis family)
           (globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod
-            configuration data analysis family
-              (extensions.toContinuous period hPeriod))
+            (measure := measure) configuration data analysis family
+              (extensions.toContinuous period hPeriod (measure := measure)))
           shift)
 
 end

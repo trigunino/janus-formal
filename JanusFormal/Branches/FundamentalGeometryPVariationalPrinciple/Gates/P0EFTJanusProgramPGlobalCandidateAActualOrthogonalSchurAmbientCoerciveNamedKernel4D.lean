@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurAmbientCoercivity4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurCoerciveNamedKernel4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 
 /-!
 # Actual Candidate-A zero modes from ambient coercivity and `ker S`
@@ -34,7 +35,15 @@ open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurAmbientCoercivity4D
 open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurCoerciveNamedKernel4D
+open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurNamedKernel4D
 open P0EFTJanusProgramPFiniteModeSchurNamedKernelModes4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -64,77 +73,7 @@ private abbrev AmbientNamedHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) ambientNamedNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (AmbientNamedHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) ambientNamedInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (AmbientNamedHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) ambientNamedNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (AmbientNamedHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) ambientNamedModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (AmbientNamedHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) ambientNamedCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (AmbientNamedHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 /-- Ambient Hessian coercivity plus a finite named basis of the Schur kernel. -/
 structure GlobalCandidateAActualOrthogonalSchurAmbientCoerciveNamedKernelData4D
@@ -152,9 +91,9 @@ structure GlobalCandidateAActualOrthogonalSchurAmbientCoerciveNamedKernelData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode ZeroMode : Type*)
+    (Mode : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
-    [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    [Fintype ZeroMode] [DecidableEq ZeroMode] where
   ambient : GlobalCandidateAActualOrthogonalSchurNamedAmbientCoercivityData4D
     period hPeriod configuration data analysis chart sameAction physical Mode
   zeroModeBasis : FiniteModeSchurNamedKernelBasisData
@@ -183,7 +122,7 @@ def GlobalCandidateAActualOrthogonalSchurAmbientCoerciveNamedKernelData4D.toCoer
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {Mode ZeroMode : Type*}
+    {Mode : Type*} {ZeroMode : Type}
     [Fintype Mode] [DecidableEq Mode]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     (named : GlobalCandidateAActualOrthogonalSchurAmbientCoerciveNamedKernelData4D
@@ -195,7 +134,7 @@ def GlobalCandidateAActualOrthogonalSchurAmbientCoerciveNamedKernelData4D.toCoer
   zeroModeBasis := named.zeroModeBasis
 
 /-- Public ambient-coercivity named-kernel checkpoint. -/
-theorem global_candidateA_actual_orthogonal_schur_ambient_coercive_named_kernel_gate
+def global_candidateA_actual_orthogonal_schur_ambient_coercive_named_kernel_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -210,16 +149,17 @@ theorem global_candidateA_actual_orthogonal_schur_ambient_coercive_named_kernel_
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode ZeroMode : Type*)
+    (Mode : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     (named : GlobalCandidateAActualOrthogonalSchurAmbientCoerciveNamedKernelData4D
       period hPeriod configuration data analysis chart sameAction physical Mode
         ZeroMode) :=
-  (global_candidateA_actual_orthogonal_schur_named_ambient_coercivity_gate
+  And.intro
+    (global_candidateA_actual_orthogonal_schur_named_ambient_coercivity_gate
       period hPeriod configuration data analysis chart sameAction physical Mode
-      named.ambient,
-    global_candidateA_actual_orthogonal_schur_coercive_named_kernel_gate period
+      named.ambient)
+    (global_candidateA_actual_orthogonal_schur_coercive_named_kernel_gate period
       hPeriod configuration data analysis chart sameAction physical Mode ZeroMode
       (named.toCoerciveNamedKernelData period hPeriod))
 

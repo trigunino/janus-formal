@@ -32,6 +32,8 @@ open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPAugmentedFiniteProjectionGarding4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
@@ -67,7 +69,7 @@ private abbrev GardingHilbert
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 
-local instance (priority := 30000) gardingNormedAddCommGroup
+@[implicit_reducible] private def gardingNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -81,7 +83,7 @@ local instance (priority := 30000) gardingNormedAddCommGroup
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) gardingInnerProductSpace
+@[implicit_reducible] private def gardingInnerProductSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -95,7 +97,7 @@ local instance (priority := 30000) gardingInnerProductSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) gardingNormedSpace
+@[implicit_reducible] private def gardingNormedSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -108,7 +110,7 @@ local instance (priority := 30000) gardingNormedSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) gardingModule
+@[implicit_reducible] private def gardingModule
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -120,6 +122,13 @@ local instance (priority := 30000) gardingModule
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
+
+attribute [local instance]
+  augmentedFredholmNormedAddCommGroup
+  augmentedFredholmInnerProductSpace
+  augmentedFredholmNormedSpace
+  augmentedFredholmModule
+  augmentedFredholmCompleteSpace
 
 /-- Closed range plus a Gårding estimate modulo finite rank. -/
 structure GlobalCandidateAFaithfulAugmentedGardingClosedRange4D
@@ -136,13 +145,18 @@ structure GlobalCandidateAFaithfulAugmentedGardingClosedRange4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
-  garding : FiniteProjectionGardingData
+      hPeriod configuration data analysis chart sameAction) : Type _ where
+  garding : @FiniteProjectionGardingData
+    (GardingHilbert period hPeriod configuration data analysis)
+    (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
       data analysis chart sameAction physical)
   range_closed : IsClosed
-    (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
-      data analysis chart sameAction physical).range
+    ((globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
+      data analysis chart sameAction physical).range : Set (GardingHilbert period
+        hPeriod configuration data analysis))
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
@@ -170,7 +184,13 @@ def GlobalCandidateAFaithfulAugmentedGardingClosedRange4D.toFredholmEstimates
       configuration data analysis chart sameAction physical where
   ll_stationary := estimates.ll_stationary
   range_closed := estimates.range_closed
-  kernel_finite := estimates.garding.kernel_finite
+  kernel_finite :=
+    @FiniteProjectionGardingData.kernel_finite
+      (GardingHilbert period hPeriod configuration data analysis)
+      (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+        analysis)
+      (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
+      _ estimates.garding
 
 /-- Public H12 estimate reduction. -/
 theorem global_candidateA_h12_estimates_of_garding_closedRange

@@ -104,7 +104,9 @@ theorem finite_schur_determinant_family_gate
           family.determinant nearby ≠ 0) :=
   ⟨family.isOpen_nondegenerateSet,
     family.isClosed_degenerateSet,
-    family.eventually_determinant_ne_zero⟩
+    fun parameter hNondegenerate =>
+      family.eventually_determinant_ne_zero
+        (parameter := parameter) hNondegenerate⟩
 
 end
 end P0EFTJanusProgramPFiniteSchurDeterminantFamily4D

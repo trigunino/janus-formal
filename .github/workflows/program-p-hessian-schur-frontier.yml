@@ -6,7 +6,7 @@ on:
       - dev-branch
       - agent/hessian-spinc-maximal-domain
     paths:
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteMode*Schur*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFinite*Schur*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActual*Schur*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*Schur*Frontier4D.lean"
       - "scripts/audit_hessian_schur_frontier.py"
@@ -17,7 +17,7 @@ on:
       - "lake-manifest.json"
   pull_request:
     paths:
-      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteMode*Schur*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFinite*Schur*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActual*Schur*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessian*Schur*Frontier4D.lean"
       - "scripts/audit_hessian_schur_frontier.py"
@@ -75,6 +75,7 @@ jobs:
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeContinuousSchurBlock4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeSchurNondegenerate4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeSchurDeterminant4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteSchurDeterminantFamily4D
 
   candidate-schur:
     name: Lean — Candidate-A Schur zero modes

@@ -34,7 +34,7 @@ variable {Hilbert : Type u}
 /-- A product estimate modulo a finite-dimensional projection.  Idempotence is
 not needed for the kernel argument; only finite range and the estimate matter. -/
 structure FiniteProjectionGardingData
-    (operator : Hilbert →L[Real] Hilbert) : Prop where
+    (operator : Hilbert →L[Real] Hilbert) : Type u where
   projection : Hilbert →L[Real] Hilbert
   projection_range_finite : FiniteDimensional Real projection.range
   constant : Real
@@ -84,7 +84,7 @@ theorem FiniteProjectionGardingData.kernel_finite
   have hInjective : Function.Injective inclusion := by
     intro first second hEq
     apply Subtype.ext
-    exact congrArg Subtype.val hEq
+    exact congrArg (fun vector : data.projection.range => (vector : Hilbert)) hEq
   exact FiniteDimensional.of_injective inclusion hInjective
 
 /-- Public finite-kernel Gårding gate. -/

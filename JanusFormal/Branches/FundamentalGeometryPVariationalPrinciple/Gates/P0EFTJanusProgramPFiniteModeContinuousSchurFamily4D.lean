@@ -174,7 +174,9 @@ theorem finite_mode_continuous_schur_family_gate
           Function.Bijective (family.operator nearby)) :=
   ⟨family.isOpen_nondegenerateSet,
     family.operator_bijective,
-    family.eventually_operator_bijective⟩
+    fun parameter hNondegenerate =>
+      family.eventually_operator_bijective
+        (parameter := parameter) hNondegenerate⟩
 
 end
 end P0EFTJanusProgramPFiniteModeContinuousSchurFamily4D

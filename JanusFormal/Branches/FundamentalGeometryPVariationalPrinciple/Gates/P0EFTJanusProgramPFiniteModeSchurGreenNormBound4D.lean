@@ -61,15 +61,16 @@ theorem FiniteModeSchurGreenFactorization.norm_le_factorNormBound
     {green : E →L[Real] E}
     (factorization : FiniteModeSchurGreenFactorization (F := F) (G := G) green) :
     ‖green‖ ≤ factorization.factorNormBound := by
-  rw [factorization.green_eq]
   unfold FiniteModeSchurGreenFactorization.factorNormBound
   calc
-    ‖factorization.coordinates.symm.toContinuousLinearMap.comp
-        (factorization.rightReduction.comp
-          (factorization.diagonalInverse.comp
-            (factorization.leftReduction.comp
-              factorization.coordinates.toContinuousLinearMap)))‖
-        ≤ ‖factorization.coordinates.symm.toContinuousLinearMap‖ *
+    ‖green‖ =
+        ‖factorization.coordinates.symm.toContinuousLinearMap.comp
+          (factorization.rightReduction.comp
+            (factorization.diagonalInverse.comp
+              (factorization.leftReduction.comp
+                factorization.coordinates.toContinuousLinearMap)))‖ :=
+      congrArg norm factorization.green_eq
+    _ ≤ ‖factorization.coordinates.symm.toContinuousLinearMap‖ *
           ‖factorization.rightReduction.comp
             (factorization.diagonalInverse.comp
               (factorization.leftReduction.comp

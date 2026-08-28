@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteKernelNamedModeBasis4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianNamedZeroModeCoercivityFrontier4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D
 
 /-!
 # Preferred physical zero-mode basis frontier
@@ -26,7 +27,7 @@ open P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D
 /-- Preferred PDE packet: finite basis of `ker H` plus quadratic coercivity on
 `(ker H)ᗮ`. -/
 def GlobalHessianKernelBasisCoercivityInput :=
-  SelfAdjointKernelComplementCoercivityWithBasis
+  @SelfAdjointKernelComplementCoercivityWithBasis
 
 /-- Canonical conversion from that packet to the actual-kernel gap consumed by
 H12 and H14. -/

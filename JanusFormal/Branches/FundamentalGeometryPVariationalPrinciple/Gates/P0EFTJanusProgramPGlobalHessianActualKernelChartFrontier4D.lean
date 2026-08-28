@@ -32,6 +32,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -45,6 +46,7 @@ open P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelResolvent4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelStability4D
+open P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 
@@ -82,7 +84,7 @@ def globalCandidateAActualKernelChartPhysicalExtension
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -90,7 +92,7 @@ def globalCandidateAActualKernelChartPhysicalExtension
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family)) :=
+          analysis einsteinScale hTransverse family) einsteinScale family) :=
   globalCandidateASevenPhysicalCommonDomainExtension_of_sixAggregate period
     hPeriod configuration data analysis
       (globalCandidateAActualKernelChart period hPeriod configuration data
@@ -120,7 +122,7 @@ def global_candidateA_hessian_actualKernel_chart_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -128,7 +130,7 @@ def global_candidateA_hessian_actualKernel_chart_frontier_gate
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          analysis einsteinScale hTransverse family) einsteinScale family)
     (gap : GlobalCandidateAActualKernelGap4D period hPeriod configuration data
       analysis
         (globalCandidateAActualKernelChart period hPeriod configuration data
@@ -161,7 +163,9 @@ def global_candidateA_hessian_actualKernel_chart_frontier_gate
     configuration data analysis chart sameAction physical gap
   let resolvent := global_candidateA_actual_kernel_resolvent_gate period hPeriod
     configuration data analysis chart sameAction physical gap
-  (h10, h13, h11, h12, reduced, resolvent)
+  And.intro h10
+    (And.intro h13 (And.intro h11
+      (And.intro h12 (And.intro reduced resolvent))))
 
 /-- Stability is available for every perturbation smaller than the same actual
 gap, with no extra terminal packet. -/
@@ -178,7 +182,7 @@ def global_candidateA_hessian_actualKernel_chart_stability_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -186,7 +190,7 @@ def global_candidateA_hessian_actualKernel_chart_stability_gate
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          analysis einsteinScale hTransverse family) einsteinScale family)
     (gap : GlobalCandidateAActualKernelGap4D period hPeriod configuration data
       analysis
         (globalCandidateAActualKernelChart period hPeriod configuration data

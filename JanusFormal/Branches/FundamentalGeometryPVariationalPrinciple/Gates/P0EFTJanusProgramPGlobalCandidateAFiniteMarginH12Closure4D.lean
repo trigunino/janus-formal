@@ -83,7 +83,7 @@ def global_candidateA_finite_margin_h12_closure_gate
     hPeriod configuration data analysis chart sameAction physical gap
   let resolvent := global_candidateA_actual_kernel_resolvent_gate period hPeriod
     configuration data analysis chart sameAction physical gap
-  (fredholm, complement, resolvent)
+  And.intro fredholm (And.intro complement resolvent)
 
 /-- Quantitative stability generated from the same finite margin. -/
 def global_candidateA_finite_margin_h12_stability_gate

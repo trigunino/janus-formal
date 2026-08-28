@@ -22,7 +22,7 @@ open P0EFTJanusProgramPFiniteKernelNamedModes4D
 variable {E : Type*}
   [NormedAddCommGroup E] [NormedSpace Real E]
 variable {operator : E →L[Real] E}
-variable {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+variable {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
 
 /-- Linear synthesis from finite physical coordinates into the ambient space. -/
 def finiteKernelNamedModeSynthesisLinearMap
@@ -43,7 +43,7 @@ inclusion are both injective. -/
 theorem finiteKernelNamedModeSynthesisLinearMap_injective
     (family : FiniteKernelNamedModeFamily operator ZeroMode) :
     Function.Injective (finiteKernelNamedModeSynthesisLinearMap family) :=
-  (Submodule.subtype operator.ker).injective.comp family.coordinates.injective
+  operator.ker.injective_subtype.comp family.coordinates.injective
 
 /-- The image of physical zero-mode synthesis is exactly the actual operator
 kernel. -/

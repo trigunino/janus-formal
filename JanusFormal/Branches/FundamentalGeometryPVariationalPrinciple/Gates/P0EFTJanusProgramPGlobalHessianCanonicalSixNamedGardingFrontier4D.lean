@@ -39,12 +39,26 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 open P0EFTJanusProgramPGlobalCandidateAActualKernelNamedGarding4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  P0EFTJanusProgramPGlobalLocalVariationalChart4D.GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -66,87 +80,6 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev FrontierHilbert
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) frontierNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (FrontierHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) frontierInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (FrontierHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) frontierNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (FrontierHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) frontierModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (FrontierHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) frontierCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (FrontierHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
 /-- Preferred terminal gate from named ambient modes and a global Gårding
 estimate. -/
 def global_candidateA_hessian_canonicalSix_namedGarding_frontier_gate
@@ -162,35 +95,84 @@ def global_candidateA_hessian_canonicalSix_namedGarding_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
         analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
             analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode]
-    (namedGarding : GlobalCandidateAActualKernelNamedGarding4D period hPeriod
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (namedGarding : GlobalCandidateAActualKernelNamedGarding4D period hPeriod (measure := measure)
       configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
+        (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
-          hPeriod configuration data analysis einsteinScale hTransverse family
+          hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
             chartBound)
         ZeroMode) :=
   let closure :=
     global_candidateA_hessian_canonicalSix_chartBound_frontier_gate period
-      hPeriod configuration data analysis einsteinScale hTransverse family
-        chartBound (namedGarding.toGap period hPeriod)
-  let zeroModeCount := namedGarding.kernel_finrank_eq_card period hPeriod
-  (closure, zeroModeCount)
+      hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
+        chartBound (namedGarding.toGap period hPeriod (measure := measure))
+  closure
+
+/-- The named modes give the exact dimension of the actual kernel. -/
+theorem global_candidateA_hessian_canonicalSix_namedGarding_zeroMode_count
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (einsteinScale : Real)
+    (hTransverse : HasNoTangentialRadical period hPeriod
+      data.plusGravity.metric.metric)
+    (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
+      period hPeriod (measure := measure) configuration data analysis
+        (diracGreenClosureMatterRealization period hPeriod
+          couplings.matterMassSquared) einsteinScale)
+    (chartBound : DenseCoreChartMapBound
+      (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+        data analysis)
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure) configuration data
+        analysis
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
+            analysis einsteinScale hTransverse family)
+          (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
+            data analysis einsteinScale hTransverse family)))
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (namedGarding : GlobalCandidateAActualKernelNamedGarding4D period hPeriod (measure := measure)
+      configuration data analysis
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
+          analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration data
+          analysis einsteinScale hTransverse family)
+        (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
+          hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse family
+            chartBound)
+        ZeroMode) :
+    Module.finrank Real
+        (globalCandidateAActualKernelOperator period hPeriod (measure := measure) configuration data
+          analysis
+            (globalCandidateAActualKernelChart period hPeriod (measure := measure) configuration data
+              analysis einsteinScale hTransverse family)
+            (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
+              data analysis einsteinScale hTransverse family)
+            (globalCandidateACanonicalSixPhysicalExtension_of_chartBound period
+              hPeriod (measure := measure) configuration data analysis einsteinScale hTransverse
+                family chartBound)).ker =
+      Fintype.card ZeroMode :=
+  namedGarding.kernel_finrank_eq_card period hPeriod (measure := measure)
 
 /-- The final PDE frontier contains two analytic packets after the local
 family: one dense-core chart estimate and one named global Gårding estimate. -/

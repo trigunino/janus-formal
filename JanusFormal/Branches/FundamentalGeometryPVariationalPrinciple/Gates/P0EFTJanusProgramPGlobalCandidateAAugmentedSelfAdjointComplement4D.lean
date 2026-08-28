@@ -32,9 +32,13 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedGeneralizedInverse4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedComplementInverse4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
@@ -58,6 +62,13 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+attribute [local instance]
+  augmentedFredholmNormedAddCommGroup
+  augmentedFredholmInnerProductSpace
+  augmentedFredholmNormedSpace
+  augmentedFredholmModule
+  augmentedFredholmCompleteSpace
+
 private abbrev SelfAdjointHilbert
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -68,62 +79,6 @@ private abbrev SelfAdjointHilbert
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
-
-local instance (priority := 30000) selfAdjointNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (SelfAdjointHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) selfAdjointInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (SelfAdjointHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) selfAdjointNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (SelfAdjointHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) selfAdjointModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (SelfAdjointHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
 
 private abbrev SelfAdjointEndomorphism
     {couplings : GlobalCandidateAActionCouplings}
@@ -151,25 +106,19 @@ structure GlobalCandidateAFaithfulAugmentedSelfAdjointComplement4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction) : Prop where
+      hPeriod configuration data analysis chart sameAction) where
   inverseOnComplement :
     SelfAdjointEndomorphism period hPeriod configuration data analysis
   obstructionProjection :
     SelfAdjointEndomorphism period hPeriod configuration data analysis
   inverse_comp_operator :
-    inverseOnComplement.comp
-        (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-          configuration data analysis chart sameAction physical) =
-      ContinuousLinearMap.id Real
-          (SelfAdjointHilbert period hPeriod configuration data analysis) -
-        obstructionProjection
+    globalCandidateAAugmentedKernelDefect period hPeriod configuration data
+        analysis chart sameAction physical inverseOnComplement =
+      obstructionProjection
   operator_comp_inverse :
-    (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-        configuration data analysis chart sameAction physical).comp
-        inverseOnComplement =
-      ContinuousLinearMap.id Real
-          (SelfAdjointHilbert period hPeriod configuration data analysis) -
-        obstructionProjection
+    globalCandidateAAugmentedCokernelDefect period hPeriod configuration data
+        analysis chart sameAction physical inverseOnComplement =
+      obstructionProjection
   obstruction_annihilates_operator :
     obstructionProjection.comp
         (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
@@ -212,7 +161,7 @@ def globalCandidateAFaithfulAugmentedComplementInverse_of_selfAdjoint
   ll_stationary := inverse.ll_stationary
 
 /-- Public self-adjoint H12 complement gate. -/
-theorem global_candidateA_h12_complement_of_selfAdjoint_obstruction
+def global_candidateA_h12_complement_of_selfAdjoint_obstruction
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

@@ -6,6 +6,9 @@ on:
       - dev-branch
       - agent/hessian-spinc-maximal-domain
     paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPCandidateASector*Multiplicity*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAProfileActionTranslation*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSix*Frontier4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteSector*Garding4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPCandidateAFiveSector*Garding*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredSectorGardingFrontier4D.lean"
@@ -17,6 +20,9 @@ on:
       - "lake-manifest.json"
   pull_request:
     paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPCandidateASector*Multiplicity*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAProfileActionTranslation*.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSix*Frontier4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteSector*Garding4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPCandidateAFiveSector*Garding*.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianPreferredSectorGardingFrontier4D.lean"

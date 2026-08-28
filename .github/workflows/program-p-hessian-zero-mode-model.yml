@@ -9,10 +9,12 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteKernelModel4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASixCanonicalChartHessians4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjointKernelComplementStability4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelStability4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixZeroModeFrontier4D.lean"
       - "scripts/audit_hessian_zero_mode_model.py"
       - ".github/workflows/program-p-hessian-zero-mode-model.yml"
       - "lean-toolchain"
@@ -23,10 +25,12 @@ on:
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPFiniteKernelModel4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateASixCanonicalChartHessians4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPSelfAdjointKernelComplementStability4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelStability4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D.lean"
       - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalHessianCanonicalSixZeroModeFrontier4D.lean"
       - "scripts/audit_hessian_zero_mode_model.py"
       - ".github/workflows/program-p-hessian-zero-mode-model.yml"
       - "lean-toolchain"
@@ -101,6 +105,7 @@ jobs:
         run: >-
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASixCanonicalChartHessians4D
 
   candidate-zero-modes:
     name: Lean — Candidate-A zero modes and stability
@@ -151,3 +156,4 @@ jobs:
           lake build
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D
           JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianCanonicalSixZeroModeFrontier4D

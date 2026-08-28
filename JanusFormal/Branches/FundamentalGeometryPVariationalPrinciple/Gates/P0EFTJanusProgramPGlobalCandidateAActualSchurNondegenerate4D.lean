@@ -32,10 +32,19 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualBoundedSchurBlock4D
 open P0EFTJanusProgramPFiniteModeSchurBlockElimination4D
 open P0EFTJanusProgramPFiniteModeSchurNondegenerate4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -68,7 +77,7 @@ private abbrev NondegenerateHilbert
   GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
     analysis
 
-local instance (priority := 30000) nondegenerateNormedAddCommGroup
+@[implicit_reducible] private def nondegenerateNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -82,7 +91,7 @@ local instance (priority := 30000) nondegenerateNormedAddCommGroup
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) nondegenerateInnerProductSpace
+@[implicit_reducible] private def nondegenerateInnerProductSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -96,7 +105,7 @@ local instance (priority := 30000) nondegenerateInnerProductSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) nondegenerateNormedSpace
+@[implicit_reducible] private def nondegenerateNormedSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -110,7 +119,7 @@ local instance (priority := 30000) nondegenerateNormedSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) nondegenerateModule
+@[implicit_reducible] private def nondegenerateModule
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -124,7 +133,7 @@ local instance (priority := 30000) nondegenerateModule
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
       couplings.matterMassSquared data analysis
 
-local instance (priority := 30000) nondegenerateCompleteSpace
+@[implicit_reducible] private def nondegenerateCompleteSpace
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -136,6 +145,7 @@ local instance (priority := 30000) nondegenerateCompleteSpace
       (NondegenerateHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Bounded Schur data whose finite Schur complement is nondegenerate. -/
 structure GlobalCandidateAActualBoundedSchurNondegenerateData4D
@@ -155,7 +165,7 @@ structure GlobalCandidateAActualBoundedSchurNondegenerateData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement] : Prop where
+    [NormedAddCommGroup Complement] [NormedSpace Real Complement] : Type _ where
   blockData : GlobalCandidateAActualBoundedSchurBlockData4D period hPeriod
     configuration data analysis chart sameAction physical Mode Complement
   schur_bijective : Function.Bijective

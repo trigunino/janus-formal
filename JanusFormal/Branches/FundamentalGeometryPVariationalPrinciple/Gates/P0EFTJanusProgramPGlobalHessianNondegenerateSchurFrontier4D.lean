@@ -28,6 +28,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -35,12 +36,24 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurNondegenerate4D
+open P0EFTJanusProgramPFiniteModeSchurNondegenerate4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D
 open P0EFTJanusProgramPGlobalHessianBoundedSchurFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -76,7 +89,7 @@ def global_candidateA_hessian_nondegenerate_schur_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -84,7 +97,7 @@ def global_candidateA_hessian_nondegenerate_schur_frontier_gate
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          analysis einsteinScale hTransverse family) einsteinScale family)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
     [NormedAddCommGroup Complement] [NormedSpace Real Complement]
@@ -112,7 +125,7 @@ def global_candidateA_hessian_nondegenerate_schur_frontier_gate
         configuration data analysis einsteinScale hTransverse family
           realization)
       Mode Complement nondegenerate
-  (terminal, fullInverse)
+  And.intro terminal fullInverse
 
 /-- Exact zero-mode-free conclusion exposed independently of the large terminal
 product. -/

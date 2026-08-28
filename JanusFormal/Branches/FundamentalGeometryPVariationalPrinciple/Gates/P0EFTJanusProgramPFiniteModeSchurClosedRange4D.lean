@@ -61,7 +61,7 @@ theorem finiteModeSchur_operatorRange_eq_preimage
       (data.schurData.decomposition source)
     have hFactor :
         data.schurData.leftReduction
-            (data.schurData.decomposition (operator source)) =
+            (data.schurData.decomposition (operator.toLinearMap source)) =
           (data.schurData.schur reduced.1,
             data.schurData.complementOperator reduced.2) := by
       simpa [reduced] using data.schurData.factorization reduced
@@ -82,7 +82,13 @@ theorem finiteModeSchur_operatorRange_eq_preimage
     refine ⟨source, ?_⟩
     apply data.schurData.decomposition.injective
     apply data.schurData.leftReduction.injective
-    rw [data.schurData.factorization reduced]
+    have hFactor :
+        data.schurData.leftReduction
+            (data.schurData.decomposition (operator.toLinearMap source)) =
+          (data.schurData.schur reduced.1,
+            data.schurData.complementOperator reduced.2) := by
+      simpa [source] using data.schurData.factorization reduced
+    rw [hFactor]
     apply Prod.ext
     · exact hFinite
     · exact hComplement

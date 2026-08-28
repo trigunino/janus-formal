@@ -36,17 +36,17 @@ open P0EFTJanusProgramPGlobalHessianActualKernelBoundedFrontier4D
 /-- H11 input: graph-norm control of the genuine smooth-core map into the local
 physical chart. -/
 def GlobalHessianDenseCoreChartMapBoundInput :=
-  DenseCoreChartMapBound
+  @DenseCoreChartMapBound
 
 /-- H11 input: exact equality between the displayed core Hessian and the finite
 sum of physical chart Hessians. -/
 def GlobalHessianDenseCoreChartAgreementInput :=
-  DenseCoreFiniteChartHessianAgreement
+  @DenseCoreFiniteChartHessianAgreement
 
 /-- H12 input: a finite basis of the actual kernel and quadratic coercivity on
 its orthogonal complement. -/
 def GlobalHessianActualKernelBasisCoercivityInput :=
-  GlobalHessianKernelBasisCoercivityInput
+  @GlobalHessianKernelBasisCoercivityInput
 
 /-- Generic constructor of the single H11 product estimate. -/
 def global_hessian_denseCoreChart_product_bound_gate :=

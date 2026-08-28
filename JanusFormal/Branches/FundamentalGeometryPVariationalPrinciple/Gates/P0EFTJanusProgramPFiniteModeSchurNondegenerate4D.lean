@@ -32,7 +32,7 @@ structure FiniteModeSchurNondegenerateData
     (operator : E →L[Real] E)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [AddCommGroup Complement] [Module Real Complement] : Prop where
+    [AddCommGroup Complement] [Module Real Complement] where
   schurData : FiniteModeSchurKernelData operator Mode Complement
   schur_bijective : Function.Bijective schurData.schur
 
@@ -56,17 +56,22 @@ theorem finiteModeSchur_operator_injective
       (data.schurData.schur secondReduced.1,
         data.schurData.complementOperator secondReduced.2) := by
     rw [← data.schurData.factorization firstReduced,
-      ← data.schurData.factorization secondReduced, hEqual]
+      ← data.schurData.factorization secondReduced]
+    simpa [firstReduced, secondReduced] using congrArg
+      (fun state => data.schurData.leftReduction
+        (data.schurData.decomposition state)) hEqual
   have hFirst : firstReduced.1 = secondReduced.1 :=
     data.schur_bijective.1 (congrArg Prod.fst hReduced)
   have hSecond : firstReduced.2 = secondReduced.2 :=
     data.schurData.complement_bijective.1 (congrArg Prod.snd hReduced)
   have hState : firstReduced = secondReduced := Prod.ext hFirst hSecond
-  change data.schurData.decomposition.symm
-      (data.schurData.rightReduction firstReduced) =
-    data.schurData.decomposition.symm
-      (data.schurData.rightReduction secondReduced)
-  rw [hState]
+  calc
+    first = data.schurData.decomposition.symm
+        (data.schurData.rightReduction firstReduced) := by
+      simp [firstReduced]
+    _ = data.schurData.decomposition.symm
+        (data.schurData.rightReduction secondReduced) := by rw [hState]
+    _ = second := by simp [secondReduced]
 
 /-- Surjectivity is solved independently in the finite Schur and complementary
 coordinates and transported back through the two reductions. -/
@@ -139,7 +144,8 @@ noncomputable def finiteModeSchurOperatorContinuousEquiv
     (data : FiniteModeSchurNondegenerateData operator Mode Complement) :
     E ≃L[Real] E :=
   ContinuousLinearEquiv.ofBijective operator
-    (finiteModeSchur_operator_bijective data)
+    (finiteModeSchur_operator_ker_eq_bot data)
+    (LinearMap.range_eq_top.mpr (finiteModeSchur_operator_surjective data))
 
 /-- Full Green operator on the nondegenerate stratum. -/
 noncomputable def finiteModeSchurFullGreen
@@ -159,8 +165,10 @@ theorem finiteModeSchurFullGreen_operator
     [AddCommGroup Complement] [Module Real Complement]
     (data : FiniteModeSchurNondegenerateData operator Mode Complement)
     (state : E) :
-    finiteModeSchurFullGreen data (operator state) = state :=
-  (finiteModeSchurOperatorContinuousEquiv data).symm_apply_apply state
+    finiteModeSchurFullGreen data (operator state) = state := by
+  change (finiteModeSchurOperatorContinuousEquiv data).symm
+      ((finiteModeSchurOperatorContinuousEquiv data) state) = state
+  exact (finiteModeSchurOperatorContinuousEquiv data).symm_apply_apply state
 
 @[simp]
 theorem finiteModeSchur_operator_fullGreen
@@ -170,8 +178,10 @@ theorem finiteModeSchur_operator_fullGreen
     [AddCommGroup Complement] [Module Real Complement]
     (data : FiniteModeSchurNondegenerateData operator Mode Complement)
     (state : E) :
-    operator (finiteModeSchurFullGreen data state) = state :=
-  (finiteModeSchurOperatorContinuousEquiv data).apply_symm_apply state
+    operator (finiteModeSchurFullGreen data state) = state := by
+  change (finiteModeSchurOperatorContinuousEquiv data)
+      ((finiteModeSchurOperatorContinuousEquiv data).symm state) = state
+  exact (finiteModeSchurOperatorContinuousEquiv data).apply_symm_apply state
 
 /-- Public zero-mode-free Schur checkpoint. -/
 theorem finite_mode_schur_nondegenerate_gate

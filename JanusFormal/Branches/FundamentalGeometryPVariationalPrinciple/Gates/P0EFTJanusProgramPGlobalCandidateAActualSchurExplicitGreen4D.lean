@@ -34,6 +34,13 @@ open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurDeterminant4D
 open P0EFTJanusProgramPFiniteModeSchurExplicitGreen4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
 
 private abbrev EffectiveQuotient :=
@@ -56,7 +63,7 @@ local instance effectiveQuotientBorelSpace :
 
 /-- Generic explicit-Green packet underlying one Candidate-A determinant
 certificate. -/
-def GlobalCandidateAActualSchurDeterminantData4D.toExplicitGreenData
+def _root_.JanusFormal.P0EFTJanusProgramPGlobalCandidateAActualSchurDeterminant4D.GlobalCandidateAActualSchurDeterminantData4D.toExplicitGreenData
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -131,7 +138,7 @@ theorem globalCandidateAActualSchurExplicitGreen_hessian
     (determinantData : GlobalCandidateAActualSchurDeterminantData4D period
       hPeriod configuration data analysis chart sameAction physical Mode
         Complement)
-    (state : GlobalCandidateAFaithfulSameActionHilbert period hPeriod
+    (state : ActualKernelHilbert period hPeriod
       configuration data analysis) :
     globalCandidateAActualSchurExplicitGreen period hPeriod determinantData
         (globalCandidateAActualKernelOperator period hPeriod configuration data
@@ -161,7 +168,7 @@ theorem globalCandidateAActualHessian_schurExplicitGreen
     (determinantData : GlobalCandidateAActualSchurDeterminantData4D period
       hPeriod configuration data analysis chart sameAction physical Mode
         Complement)
-    (state : GlobalCandidateAFaithfulSameActionHilbert period hPeriod
+    (state : ActualKernelHilbert period hPeriod
       configuration data analysis) :
     globalCandidateAActualKernelOperator period hPeriod configuration data
         analysis chart sameAction physical

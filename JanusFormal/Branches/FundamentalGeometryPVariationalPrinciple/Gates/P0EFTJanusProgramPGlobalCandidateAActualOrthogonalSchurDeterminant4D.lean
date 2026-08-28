@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBasis4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualSchurDeterminant4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 
 /-!
 # Candidate-A determinant on the orthogonal finite-mode Schur problem
@@ -40,6 +41,13 @@ open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBasis4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurDeterminant4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurNondegenerate4D
 open P0EFTJanusProgramPFiniteModeSchurDeterminant4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -101,7 +109,7 @@ structure GlobalCandidateAActualOrthogonalSchurDeterminantData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] : Prop where
+    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] where
   schur : GlobalCandidateAActualOrthogonalSchurBasisData4D period hPeriod
     configuration data analysis chart sameAction physical Mode
   determinant_ne_zero :
@@ -128,7 +136,7 @@ def GlobalCandidateAActualOrthogonalSchurDeterminantData4D.toDeterminantData
       hPeriod configuration data analysis chart sameAction physical Mode) :
     GlobalCandidateAActualSchurDeterminantData4D period hPeriod configuration
       data analysis chart sameAction physical Mode
-        determinant.schur.schur.basisData.modeSubspaceᗮ where
+        determinant.schur.basisData.modeSubspaceᗮ where
   blockData :=
     (determinant.schur.toOrthogonalData period hPeriod).toBoundedSchurBlockData
       period hPeriod
@@ -159,7 +167,7 @@ noncomputable def globalCandidateAOrthogonalSchurFullGreen
 
 /-- The finite determinant controls bijectivity of the complete Candidate-A
 Hessian and yields two-sided full-space Green identities. -/
-theorem global_candidateA_actual_orthogonal_schur_determinant_gate
+def global_candidateA_actual_orthogonal_schur_determinant_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -179,7 +187,7 @@ theorem global_candidateA_actual_orthogonal_schur_determinant_gate
       hPeriod configuration data analysis chart sameAction physical Mode) :=
   global_candidateA_actual_schur_determinant_gate period hPeriod configuration
     data analysis chart sameAction physical Mode
-      determinant.schur.schur.basisData.modeSubspaceᗮ
+      determinant.schur.basisData.modeSubspaceᗮ
       (determinant.toDeterminantData period hPeriod)
 
 /-- Stored nonvanishing theorem for the public scalar. -/

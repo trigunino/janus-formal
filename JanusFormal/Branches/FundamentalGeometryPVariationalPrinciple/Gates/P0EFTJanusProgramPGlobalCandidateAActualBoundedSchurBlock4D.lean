@@ -36,6 +36,13 @@ open P0EFTJanusProgramPGlobalCandidateAActualContinuousSchurBlock4D
 open P0EFTJanusProgramPFiniteModeContinuousSchurBlock4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
 
 private abbrev EffectiveQuotient :=
@@ -74,7 +81,7 @@ structure GlobalCandidateAActualBoundedSchurBlockData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement] : Prop where
+    [NormedAddCommGroup Complement] [NormedSpace Real Complement] where
   blocks : FiniteModeContinuousSchurBlockData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -113,7 +120,7 @@ def GlobalCandidateAActualBoundedSchurBlockData4D.toContinuousSchurBlockData
   ll_stationary := blockData.ll_stationary
 
 /-- Public Candidate-A checkpoint from bounded blocks only. -/
-theorem global_candidateA_actual_bounded_schur_block_gate
+def global_candidateA_actual_bounded_schur_block_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

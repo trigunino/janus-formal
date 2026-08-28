@@ -34,6 +34,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -44,6 +45,7 @@ open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASixPhysicalChartPullback4D
 open P0EFTJanusProgramPGlobalCandidateASixCanonicalChartHessians4D
 open P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianActualKernelChartFrontier4D
 open P0EFTJanusProgramPGlobalHessianZeroModeModelFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
@@ -83,7 +85,7 @@ def global_candidateA_hessian_canonicalSix_zeroMode_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (realization : GlobalCandidateACommonHilbertToLocalChart4D period hPeriod
@@ -91,14 +93,14 @@ def global_candidateA_hessian_canonicalSix_zeroMode_frontier_gate
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family))
+          analysis einsteinScale hTransverse family) einsteinScale family)
     (agreement : GlobalCandidateASixCanonicalChartHessianAgreement4D period
       hPeriod configuration data analysis
         (globalCandidateAActualKernelChart period hPeriod configuration data
           analysis einsteinScale hTransverse family)
         (globalCandidateAActualKernelSameAction period hPeriod configuration data
           analysis einsteinScale hTransverse family)
-        einsteinScale family)
+        einsteinScale family realization)
     (zeroModes : GlobalCandidateAActualZeroModeGap4D period hPeriod configuration
       data analysis
         (globalCandidateAActualKernelChart period hPeriod configuration data
@@ -118,7 +120,7 @@ def global_candidateA_hessian_canonicalSix_zeroMode_frontier_gate
   let terminal := global_candidateA_hessian_zeroModeModel_frontier_gate period
     hPeriod configuration data analysis einsteinScale hTransverse family
       realization zeroModes
-  (terminal, canonicalH11)
+  (PLift.up terminal, canonicalH11)
 
 /-- The strengthened endpoint has four concrete analytic packets. -/
 theorem global_candidateA_hessian_canonicalSix_zeroMode_four_inputs :

@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeOrthogonalSchurDecomposition4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualBoundedSchurBlock4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 
 /-!
 # Candidate-A Schur reduction from a physical finite mode subspace
@@ -47,8 +48,16 @@ open P0EFTJanusProgramPGlobalCandidateAActualContinuousSchurBlock4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurClosedRange4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
 open P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D
+open P0EFTJanusProgramPFiniteModeCanonicalSchurDecomposition4D
 open P0EFTJanusProgramPFiniteModeOrthogonalSchurDecomposition4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -78,77 +87,7 @@ private abbrev OrthogonalSchurHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) orthogonalSchurNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (OrthogonalSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) orthogonalSchurInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (OrthogonalSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) orthogonalSchurNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (OrthogonalSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) orthogonalSchurModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (OrthogonalSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) orthogonalSchurCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (OrthogonalSchurHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 /-- Orthogonal finite-mode input for the displayed augmented Candidate-A
 operator. -/
@@ -167,7 +106,7 @@ structure GlobalCandidateAActualOrthogonalSchurData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] : Prop where
+    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] where
   modeSubspace : Submodule Real
     (OrthogonalSchurHilbert period hPeriod configuration data analysis)
   modeEquiv : (Mode → Real) ≃L[Real] modeSubspace
@@ -202,7 +141,7 @@ def GlobalCandidateAActualOrthogonalSchurData4D.toOrthogonalSchurData
     {Mode : Type*} [Fintype Mode] [DecidableEq Mode]
     (schur : GlobalCandidateAActualOrthogonalSchurData4D period hPeriod
       configuration data analysis chart sameAction physical Mode) :
-    FiniteModeOrthogonalSchurDecompositionData
+    FiniteModeOrthogonalSchurDecompositionData (Mode := Mode)
       (globalCandidateAActualKernelOperator period hPeriod configuration data
         analysis chart sameAction physical) where
   modeSubspace := schur.modeSubspace
@@ -282,7 +221,7 @@ noncomputable def GlobalCandidateAActualOrthogonalSchurData4D.toActualKernelGap
 
 /-- Public Candidate-A checkpoint from a finite physical subspace and
 invertibility of the canonical orthogonal-complement block. -/
-theorem global_candidateA_actual_orthogonal_schur_block_gate
+def global_candidateA_actual_orthogonal_schur_block_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
