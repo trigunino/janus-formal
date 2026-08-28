@@ -39,17 +39,39 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
-open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameConnection4D
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
+open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrame4D
 open P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameCommutation4D
 open P0EFTJanusProgramPUnitaryNaturalRepresentationAdmissibleIsomorphismFrame4D
 open P0EFTJanusProgramPFiveSectorHilbertCoordinates4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
+open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorNaturalEllipticSectorOperatorFamily4D
 open P0EFTJanusProgramPGlobalHessianPreferredFiveSectorD11OperatorNormUnitaryFrame4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusCircleDiracHeatTraceCancellation
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelNormedAddCommGroup
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelNormedSpace
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelModule
+  P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D.actualKernelCompleteSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedAddCommGroup
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertInnerProductSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertNormedSpace
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertModule
+  P0EFTJanusProgramPGlobalHessianPreferredFiveSectorBismutFreedFamily4D.candidateAHilbertCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -70,86 +92,7 @@ local instance effectiveQuotientMeasurableSpace :
 local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where measurable_eq := rfl
 
-private abbrev CandidateAHilbert
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
-
-local instance (priority := 30000) candidateAHilbertNormedAddCommGroup
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedAddCommGroup
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertInnerProductSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    InnerProductSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertNormedSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    NormedSpace Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertModule
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    Module Real
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkModule
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
-
-local instance (priority := 30000) candidateAHilbertCompleteSpace
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :
-    CompleteSpace
-      (CandidateAHilbert period hPeriod configuration data analysis) :=
-  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
-    period hPeriod (globalCandidateAMetricBySector period hPeriod data)
-      couplings.matterMassSquared data analysis
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
 
 variable
     {couplings : GlobalCandidateAActionCouplings}
@@ -163,7 +106,7 @@ variable
     {hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric}
     {family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      (measure := measure) period hPeriod configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale}
     {chartBound : DenseCoreChartMapBound
@@ -175,14 +118,14 @@ variable
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family))}
-    {Metric Abelian Matter Longitudinal Boundary : Type*}
+    {Metric Abelian Matter Longitudinal Boundary : Type}
     [NormedAddCommGroup Metric] [InnerProductSpace Real Metric]
     [NormedAddCommGroup Abelian] [InnerProductSpace Real Abelian]
     [NormedAddCommGroup Matter] [InnerProductSpace Real Matter]
     [NormedAddCommGroup Longitudinal] [InnerProductSpace Real Longitudinal]
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary]
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
-    {fold : Fold} {Index : Type*}
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {fold : Fold} {Index : Type}
 
 private abbrev Coordinates
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D
@@ -240,7 +183,8 @@ theorem frameDerivative_commutes_sectorProjector
         ((Coordinates period hPeriod input).sectorProjector sector) =
       ((Coordinates period hPeriod input).sectorProjector sector).comp
         (frame.operatorRegularity.derivative parameter) :=
-  frame.operatorRegularity.derivative_commutes_fixedOperator
+  P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameCommutation4D.OperatorNormDifferentiableUnitaryFrameData.derivative_commutes_fixedOperator
+    frame.operatorRegularity
     ((Coordinates period hPeriod input).sectorProjector sector)
     (sectorFrameCommutation period hPeriod input natural frame sector) parameter
 
@@ -258,7 +202,8 @@ theorem leftConnection_commutes_sectorProjector
         ((Coordinates period hPeriod input).sectorProjector sector) =
       ((Coordinates period hPeriod input).sectorProjector sector).comp
         (frame.operatorRegularity.leftLogDerivative parameter) :=
-  frame.operatorRegularity.leftLogDerivative_commutes_fixedOperator
+  P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameCommutation4D.OperatorNormDifferentiableUnitaryFrameData.leftLogDerivative_commutes_fixedOperator
+    frame.operatorRegularity
     ((Coordinates period hPeriod input).sectorProjector sector)
     (sectorFrameCommutation period hPeriod input natural frame sector) parameter
 
@@ -276,7 +221,8 @@ theorem rightConnection_commutes_sectorProjector
         ((Coordinates period hPeriod input).sectorProjector sector) =
       ((Coordinates period hPeriod input).sectorProjector sector).comp
         (frame.operatorRegularity.rightLogDerivative parameter) :=
-  frame.operatorRegularity.rightLogDerivative_commutes_fixedOperator
+  P0EFTJanusProgramPOperatorNormDifferentiableUnitaryFrameCommutation4D.OperatorNormDifferentiableUnitaryFrameData.rightLogDerivative_commutes_fixedOperator
+    frame.operatorRegularity
     ((Coordinates period hPeriod input).sectorProjector sector)
     (sectorFrameCommutation period hPeriod input natural frame sector) parameter
 
