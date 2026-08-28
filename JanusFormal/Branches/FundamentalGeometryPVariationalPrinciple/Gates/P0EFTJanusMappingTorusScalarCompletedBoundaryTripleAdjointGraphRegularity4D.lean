@@ -65,7 +65,7 @@ def AdjointPairGraphRegularity
         canonicalScalarGreenCoreGraphSubmodule core
 
 /-- Graph membership gives the maximal graph representative. -/
-theorem maximalAdjointRegularity_of_graphRegularity
+def maximalAdjointRegularity_of_graphRegularity
     (triple : CanonicalScalarCompletedBoundaryTripleData core traceBound)
     (condition : CanonicalScalarHilbertLagrangianBoundaryCondition Trace)
     (regularity : triple.AdjointPairGraphRegularity condition) :

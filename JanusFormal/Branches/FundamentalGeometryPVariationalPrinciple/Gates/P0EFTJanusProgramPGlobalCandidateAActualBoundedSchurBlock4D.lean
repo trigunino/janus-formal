@@ -74,7 +74,7 @@ structure GlobalCandidateAActualBoundedSchurBlockData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement] : Prop where
+    [NormedAddCommGroup Complement] [NormedSpace Real Complement] where
   blocks : FiniteModeContinuousSchurBlockData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)

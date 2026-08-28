@@ -162,7 +162,7 @@ def GlobalCandidateAHessianQuillenMellinAtlasFrontierData4D.toMellinFrontier
   atlas_base_family_eq := rfl
 
 /-- Public Candidate-A gate generated from a full atlas of Mellin families. -/
-theorem global_candidateA_hessian_quillen_mellin_atlas_frontier_gate
+def global_candidateA_hessian_quillen_mellin_atlas_frontier_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

@@ -1,21 +1,21 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteModeSchurClosedRange4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPSelfAdjointKernelComplementCoercivity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D
 
 /-!
-# Candidate-A closed range from finite Schur coordinates
+# Candidate-A actual named zero modes from quadratic coercivity
 
-This adapter removes the independent `range H is closed` hypothesis from the
-Candidate-A Schur zero-mode packet.  A continuous reduced-coordinate map
-identifies the full range with `range(S) × G`; the finite Schur range is closed
-automatically.
+This file specializes the generic named-mode coercivity packet to the genuine
+bounded self-adjoint augmented Candidate-A Hessian.  It retains the named
+kernel coordinates while converting the quadratic lower bound on the actual
+kernel complement to the zero-mode gap consumed by the terminal frontier.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPGlobalCandidateAActualSchurClosedRange4D
+namespace P0EFTJanusProgramPGlobalCandidateAActualNamedZeroModeCoercivity4D
 
 set_option autoImplicit false
-set_option maxHeartbeats 5800000
-set_option synthInstance.maxHeartbeats 2900000
+set_option maxHeartbeats 4200000
+set_option synthInstance.maxHeartbeats 2100000
 
 noncomputable section
 
@@ -32,9 +32,16 @@ open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
-open P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
-open P0EFTJanusProgramPFiniteModeSchurClosedRange4D
+open P0EFTJanusProgramPGlobalCandidateAActualZeroModeModel4D
+open P0EFTJanusProgramPSelfAdjointKernelComplementCoercivity4D
 open P0EFTJanusMappingTorusGlobalLLVariation4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -56,8 +63,9 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-/-- Continuous finite-mode Schur coordinates for the actual augmented Hessian. -/
-structure GlobalCandidateAActualSchurClosedRangeData4D
+/-- Named zero modes and quadratic coercivity for the actual augmented
+Candidate-A Hessian, together with the LL stationarity input retained by H12. -/
+structure GlobalCandidateAActualNamedZeroModeCoercivity4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -72,20 +80,20 @@ structure GlobalCandidateAActualSchurClosedRangeData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode Complement : Type*)
-    [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement] where
-  schur : FiniteModeSchurClosedRangeData
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
+  coercivity : SelfAdjointKernelComplementCoercivityWithNamedModes
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
-    Mode Complement
+    (globalCandidateAActualKernelOperator_isSelfAdjoint period hPeriod
+      configuration data analysis chart sameAction physical)
+    ZeroMode
   ll_stationary : ∀ point,
     LLStationaryAt period hPeriod
       (data.boundary.llFields period hPeriod) point
 
-/-- Convert continuous Schur coordinates to the previous Schur zero-mode
-packet; closed range is now a theorem. -/
-def GlobalCandidateAActualSchurClosedRangeData4D.toSchurZeroModeData
+/-- Convert the physical quadratic estimate to the modeled actual-kernel gap
+consumed by the named-zero-mode Hessian frontier. -/
+def globalCandidateAActualNamedZeroModeCoercivity_toGap
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -100,42 +108,14 @@ def GlobalCandidateAActualSchurClosedRangeData4D.toSchurZeroModeData
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {Mode Complement : Type*}
-    [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement]
-    (dataSchur : GlobalCandidateAActualSchurClosedRangeData4D period hPeriod
-      configuration data analysis chart sameAction physical Mode Complement) :
-    GlobalCandidateAActualSchurZeroModeData4D period hPeriod configuration data
-      analysis chart sameAction physical Mode Complement where
-  schur := dataSchur.schur.schurData
-  range_closed := finiteModeSchur_operatorRange_closed dataSchur.schur
-  ll_stationary := dataSchur.ll_stationary
-
-/-- Public Candidate-A closed-range and finite-zero-mode checkpoint. -/
-def global_candidateA_actual_schur_closedRange_gate
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    {measure : Measure (EffectiveQuotient period hPeriod)}
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
-    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
-      NonNullFace NullFace measure)
-    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis chart)
-    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
-      hPeriod configuration data analysis chart sameAction)
-    (Mode Complement : Type*)
-    [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement]
-    (dataSchur : GlobalCandidateAActualSchurClosedRangeData4D period hPeriod
-      configuration data analysis chart sameAction physical Mode Complement) :=
-  global_candidateA_actual_schur_zeroMode_gate period hPeriod configuration data
-    analysis chart sameAction physical Mode Complement
-      (dataSchur.toSchurZeroModeData period hPeriod)
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (input : GlobalCandidateAActualNamedZeroModeCoercivity4D period hPeriod
+      configuration data analysis chart sameAction physical ZeroMode) :
+    GlobalCandidateAActualZeroModeGap4D period hPeriod configuration data
+      analysis chart sameAction physical where
+  modeledGap := input.coercivity.toGapWithModel
+  ll_stationary := input.ll_stationary
 
 end
-end P0EFTJanusProgramPGlobalCandidateAActualSchurClosedRange4D
+end P0EFTJanusProgramPGlobalCandidateAActualNamedZeroModeCoercivity4D
 end JanusFormal

@@ -107,7 +107,7 @@ theorem GlobalCandidateAProfileActionTranslationStablePhysicalFormData4D.kernel_
   exact profile.mode_card sector
 
 /-- Public numerical-profile Candidate-A checkpoint. -/
-theorem global_candidateA_profile_action_translation_stable_gate
+def global_candidateA_profile_action_translation_stable_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -126,8 +126,9 @@ theorem global_candidateA_profile_action_translation_stable_gate
     (input : GlobalCandidateAProfileActionTranslationStablePhysicalFormData4D
       period hPeriod configuration data analysis chart sameAction physical
         profile) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    PSigma fun _ :
+      GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
+        chart sameAction physical =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =

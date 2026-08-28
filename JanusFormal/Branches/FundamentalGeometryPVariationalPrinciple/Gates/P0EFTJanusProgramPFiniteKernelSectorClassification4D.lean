@@ -21,7 +21,7 @@ open P0EFTJanusProgramPFiniteKernelNamedModes4D
 variable {E : Type*}
   [NormedAddCommGroup E] [NormedSpace Real E]
 variable {operator : E →L[Real] E}
-variable {ZeroMode Sector : Type*}
+variable {ZeroMode : Type} {Sector : Type*}
   [Fintype ZeroMode] [DecidableEq ZeroMode]
   [Fintype Sector] [DecidableEq Sector]
 
@@ -29,7 +29,7 @@ variable {ZeroMode Sector : Type*}
 every zero-mode label. -/
 structure FiniteKernelSectorClassification
     (operator : E →L[Real] E)
-    (ZeroMode Sector : Type*)
+    (ZeroMode : Type) (Sector : Type*)
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     [Fintype Sector] [DecidableEq Sector] where
   family : FiniteKernelNamedModeFamily operator ZeroMode

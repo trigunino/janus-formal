@@ -29,8 +29,11 @@ open Filter Topology
 open scoped InnerProductSpace
 open P0EFTJanusConvexHelmholtzReconstruction
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
+variable {E : Type*} [NormedAddCommGroup E]
+
+section
+
+variable [NormedSpace Real E]
 
 /-- Second Fréchet derivative of a scalar action at one base point. -/
 def noetherHessianForm
@@ -55,13 +58,16 @@ theorem noetherMode_hessian_right_zero
     (direction : E) :
     noetherHessianForm action base direction mode = 0 := by
   have hGradient : DifferentiableAt Real (actionGradient action) base :=
-    (hC2.fderiv_right (by norm_num)).differentiableAt (by norm_num)
+    (hC2.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
   have hMode : DifferentiableAt Real (fun _ : E => mode) base :=
     differentiableAt_const mode
+  have hModeFDeriv :
+      fderiv Real (fun _ : E => mode) base = 0 :=
+    (hasFDerivAt_const mode base).fderiv
   have hApply :
       fderiv Real (fun point => actionGradient action point mode) base =
         (fderiv Real (actionGradient action) base).flip mode := by
-    simpa only [fderiv_const, ContinuousLinearMap.comp_zero, zero_add] using
+    simpa only [hModeFDeriv, ContinuousLinearMap.comp_zero, zero_add] using
       (fderiv_clm_apply hGradient hMode)
   have hZero :
       fderiv Real (fun point => actionGradient action point mode) base = 0 := by
@@ -84,6 +90,8 @@ theorem noetherMode_hessian_left_zero
     noetherHessianForm action base mode direction = 0 := by
   rw [hSymmetric mode direction]
   exact noetherMode_hessian_right_zero action base mode hC2 hNoether direction
+
+end
 
 section Riesz
 

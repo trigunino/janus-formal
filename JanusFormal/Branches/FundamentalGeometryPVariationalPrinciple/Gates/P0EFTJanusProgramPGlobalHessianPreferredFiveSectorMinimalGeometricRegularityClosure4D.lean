@@ -86,7 +86,7 @@ variable
 structure GlobalHessianPreferredFiveSectorMinimalGeometricRegularityData4D
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D period hPeriod configuration data analysis
       einsteinScale hTransverse family chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
-    (Base Tangent : Type*) : Prop where
+    (Base Tangent : Type*) where
   regularity : GlobalHessianPreferredFiveSectorDifferentiableFredholmSplitting4D period hPeriod input
   geometry : GlobalHessianPreferredFiveSectorMinimalGeometricBismutFreedData4D period hPeriod input Base Tangent
 

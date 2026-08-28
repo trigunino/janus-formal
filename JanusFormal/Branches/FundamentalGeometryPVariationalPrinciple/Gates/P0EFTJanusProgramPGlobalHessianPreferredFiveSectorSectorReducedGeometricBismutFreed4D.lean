@@ -101,7 +101,7 @@ structure GlobalHessianPreferredFiveSectorSectorReducedGeometricBismutFreedData4
       period hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
           Index)
-    (Base Tangent : Type*) : Prop where
+    (Base Tangent : Type*) where
   sectorRepresentation :
     GlobalHessianPreferredFiveSectorNaturalEllipticSectorRepresentation4D
       period hPeriod input

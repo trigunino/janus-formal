@@ -52,7 +52,7 @@ def toGapData
 
 /-- Public bridge from the finite sector calculation to H12's actual-kernel
 gap, reduced Green and resolvent chain. -/
-theorem finite_margin_actual_kernel_gap_gate
+def finite_margin_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : FiniteMarginActualKernelGapData operator hSelfAdjoint) :

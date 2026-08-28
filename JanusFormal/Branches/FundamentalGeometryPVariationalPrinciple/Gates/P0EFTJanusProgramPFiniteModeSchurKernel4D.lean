@@ -79,6 +79,8 @@ private theorem finiteModeSchur_diagonal_of_kernel
   let coordinate := finiteModeSchurCoordinates data state.1
   have hOperator : operator state.1 = 0 :=
     LinearMap.mem_ker.mp state.2
+  change (data.schur coordinate.1,
+    data.complementOperator coordinate.2) = 0
   rw [← data.factorization coordinate]
   simp [coordinate, finiteModeSchurCoordinates, hOperator]
 
@@ -242,11 +244,11 @@ noncomputable def finiteModeSchurKernelModel
   letI : FiniteDimensional Real data.schur.ker :=
     finiteModeSchurKernelFiniteDimensional data
   exact
-    { ZeroMode := Basis.ofVectorSpaceIndex Real data.schur.ker
-      zeroModeFintype := Fintype.ofFinite _
+    { ZeroMode := Fin (Module.finrank Real data.schur.ker)
+      zeroModeFintype := inferInstance
       zeroModeDecidableEq := Classical.decEq _
       coordinates :=
-        (Basis.ofVectorSpace Real data.schur.ker).equivFun.symm |>.trans
+        (Module.finBasis Real data.schur.ker).equivFun.symm |>.trans
           (finiteModeSchurKernelEquiv data).symm }
 
 /-- Public checkpoint for finite-mode elimination. -/

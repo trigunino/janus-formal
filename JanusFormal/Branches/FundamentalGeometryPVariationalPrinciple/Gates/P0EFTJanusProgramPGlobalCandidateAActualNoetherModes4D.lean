@@ -38,6 +38,8 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPNoetherHessianKernel4D
 
@@ -69,8 +71,7 @@ private abbrev CandidateANoetherHilbert
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
-    analysis
+  ActualKernelHilbert period hPeriod configuration data analysis
 
 local instance (priority := 30000) noetherNormedAddCommGroup
     {couplings : GlobalCandidateAActionCouplings}
@@ -140,6 +141,7 @@ local instance (priority := 30000) noetherCompleteSpace
       (CandidateANoetherHilbert period hPeriod configuration data analysis) :=
   P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
     period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis
 
 /-- Honest augmented Candidate-A action whose Hessian is represented by the
 actual H12 operator. -/
@@ -208,11 +210,17 @@ theorem globalCandidateAActualNoetherHessian_eq
         0 =
       globalCandidateACommonAugmentedHessian period hPeriod configuration data
         analysis chart sameAction physical := by
-  simpa [noetherHessianForm, actionGradient,
-    globalCandidateAActualNoetherAction] using
-    globalCandidateACommonAugmentedAction_second_fderiv period hPeriod
-      configuration data analysis chart sameAction physical
-      (0 : CandidateANoetherHilbert period hPeriod configuration data analysis)
+  change
+    fderiv Real
+        (fun state => fderiv Real
+          (globalCandidateACommonAugmentedAction period hPeriod configuration
+            data analysis chart sameAction physical) state)
+        0 =
+      globalCandidateACommonAugmentedHessian period hPeriod configuration data
+        analysis chart sameAction physical
+  exact globalCandidateACommonAugmentedAction_second_fderiv period hPeriod
+    configuration data analysis chart sameAction physical
+    (0 : CandidateANoetherHilbert period hPeriod configuration data analysis)
 
 /-- A Noether germ kills the actual augmented Hessian in its second slot. -/
 theorem globalCandidateAActualNoetherMode_hessian_right_zero
@@ -245,9 +253,11 @@ theorem globalCandidateAActualNoetherMode_hessian_right_zero
     (globalCandidateACommonAugmentedAction_contDiff_two period hPeriod
       configuration data analysis chart sameAction physical).contDiffAt
     hNoether direction
-  rw [globalCandidateAActualNoetherHessian_eq period hPeriod configuration data
-    analysis chart sameAction physical] at hGeneric
-  exact hGeneric
+  have hForm := congrArg
+    (fun form => form direction mode)
+    (globalCandidateAActualNoetherHessian_eq period hPeriod configuration data
+      analysis chart sameAction physical)
+  exact hForm.symm.trans hGeneric
 
 /-- Symmetry of the Candidate-A Hessian gives the corresponding first-slot
 vanishing. -/

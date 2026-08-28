@@ -102,7 +102,7 @@ structure GlobalHessianPreferredFiveSectorFullFredholmDeterminantCertificate4D
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
-          Index) : Prop where
+          Index) where
   determinantFamily :
     GlobalHessianPreferredFiveSectorFredholmDeterminantFamilyOutput4D period
       hPeriod input
@@ -201,7 +201,7 @@ def globalHessianPreferredFiveSectorFullFredholmDeterminantCertificate
       finitePart_logDerivative_eq_relativeTrace
 
 /-- Public terminal split Fredholm determinant checkpoint. -/
-theorem global_hessian_preferred_five_sector_full_fredholm_determinant_gate
+def global_hessian_preferred_five_sector_full_fredholm_determinant_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

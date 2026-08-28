@@ -55,7 +55,7 @@ def toGapData
   data.toProjectionFiniteMarginActualKernelGapData.toGapData
 
 /-- Public natural-projection actual-kernel checkpoint. -/
-theorem selfAdjoint_projection_finite_margin_actual_kernel_gap_gate
+def selfAdjoint_projection_finite_margin_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : SelfAdjointProjectionFiniteMarginActualKernelGapData

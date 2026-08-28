@@ -80,7 +80,7 @@ concrete Candidate-A metric packet. -/
 structure GlobalHessianPreferredFiveSectorConcreteNaturalPathGeometryData4D
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D period hPeriod configuration data analysis
       einsteinScale hTransverse family chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
-    (bridge : GlobalHessianPreferredFiveSectorNaturalEllipticRepresentation4D period hPeriod input) : Prop where
+    (bridge : GlobalHessianPreferredFiveSectorNaturalEllipticRepresentation4D period hPeriod input) where
   metricData :
     GlobalHessianPreferredFiveSectorConcreteNaturalMetricData4D period hPeriod input bridge
   naturalConnectionsConstructed : Prop

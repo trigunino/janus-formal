@@ -243,7 +243,7 @@ def globalCandidateAHessianFinitePartDeterminant
 
 /-- Construction from the three concrete Hessian packets, one intrinsic trace
 packet and one explicit finite-part renormalization. -/
-theorem global_candidateA_hessian_finitePart_determinant_gate
+def global_candidateA_hessian_finitePart_determinant_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

@@ -81,7 +81,7 @@ structure GlobalCandidateAOrthogonalSchurSectorModesData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode ZeroMode : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    [Fintype ZeroMode] [DecidableEq ZeroMode] where
   named : GlobalCandidateAActualOrthogonalSchurNamedKernelData4D period hPeriod
     configuration data analysis chart sameAction physical Mode ZeroMode
   classification : CandidateAZeroModeSectorClassification ZeroMode

@@ -91,7 +91,7 @@ def global_candidateA_hessian_canonicalSix_actionSymmetryExplicitSmallness_front
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (smallness : GlobalCandidateAActionTranslationCanonicalSmallnessData4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound ZeroMode) :=

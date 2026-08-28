@@ -22,7 +22,7 @@ open P0EFTJanusProgramPFiniteKernelNamedModes4D
 variable {E : Type*}
   [NormedAddCommGroup E] [NormedSpace Real E]
 variable {operator : E →L[Real] E}
-variable {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+variable {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
 
 /-- Linear synthesis from finite physical coordinates into the ambient space. -/
 def finiteKernelNamedModeSynthesisLinearMap

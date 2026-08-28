@@ -254,7 +254,7 @@ def GlobalCandidateAHessianQuillenMellinFrontierData4D.toFinalFrontier
   metric_zetaFamily_eq := rfl
 
 /-- Public terminal gate generated from one honest Mellin family. -/
-theorem global_candidateA_hessian_quillen_mellin_frontier_gate
+def global_candidateA_hessian_quillen_mellin_frontier_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

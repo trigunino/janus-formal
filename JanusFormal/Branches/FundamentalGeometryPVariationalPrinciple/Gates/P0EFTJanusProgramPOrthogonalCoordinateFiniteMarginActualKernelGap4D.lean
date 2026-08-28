@@ -65,7 +65,7 @@ def toGapData
   data.toSelfAdjointProjectionGap Component |>.toGapData
 
 /-- Public orthogonal-coordinate actual-kernel checkpoint. -/
-theorem orthogonal_coordinate_finite_margin_actual_kernel_gap_gate
+def orthogonal_coordinate_finite_margin_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : OrthogonalCoordinateFiniteMarginActualKernelGapData

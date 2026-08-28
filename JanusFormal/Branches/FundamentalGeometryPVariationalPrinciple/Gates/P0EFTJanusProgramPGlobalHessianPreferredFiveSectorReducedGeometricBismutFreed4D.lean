@@ -86,7 +86,7 @@ from Candidate-A. -/
 structure GlobalHessianPreferredFiveSectorReducedGeometricBismutFreedData4D
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D period hPeriod configuration data analysis
       einsteinScale hTransverse family chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold Index)
-    (Base Tangent : Type*) : Prop where
+    (Base Tangent : Type*) where
   naturalRepresentation :
     GlobalHessianPreferredFiveSectorNaturalEllipticRepresentation4D period hPeriod input
   geometry : GeometricBismutFreedOneFormData Base Tangent

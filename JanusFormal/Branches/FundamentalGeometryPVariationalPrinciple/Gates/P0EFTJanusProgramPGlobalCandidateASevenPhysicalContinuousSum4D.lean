@@ -144,7 +144,7 @@ structure GlobalCandidateASevenPhysicalSymmetricContinuousExtensions4D
     (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis chart) : Prop where
+      period hPeriod configuration data analysis chart) : Type where
   extensions : GlobalCandidateASevenPhysicalContinuousBlockExtensions4D
     period hPeriod configuration data analysis chart sameAction
   symmetric : ∀ block first second,

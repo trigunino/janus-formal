@@ -153,7 +153,7 @@ structure GlobalCandidateAActualOrthogonalSchurBasisData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] : Prop where
+    (Mode : Type*) [Fintype Mode] [DecidableEq Mode] where
   basisData : FiniteModeOrthogonalSchurBasisData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)

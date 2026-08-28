@@ -100,7 +100,7 @@ theorem finite_kernel_named_decomposition_garding_gate
     {hSelfAdjoint : IsSelfAdjoint operator}
     {ZeroMode : Type*} [Fintype ZeroMode]
     (data : FiniteKernelNamedDecompositionGardingData operator ZeroMode) :
-    SelfAdjointKernelComplementGapData operator hSelfAdjoint ∧
+    Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
       Module.finrank Real operator.ker = Fintype.card ZeroMode :=
   finite_kernel_named_mode_garding_gate
     (hSelfAdjoint := hSelfAdjoint) data.toNamedGarding

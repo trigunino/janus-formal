@@ -241,7 +241,7 @@ structure GlobalCandidateAHessianQuillenFinalFrontierCertificate4D
     {fold : Fold} {Index : Type*}
     (inputs : GlobalCandidateAHessianQuillenFinalFrontierData4D period hPeriod
       configuration data analysis einsteinScale hBoundaryTransverse family
-        extensions shift fold Index) : Prop where
+        extensions shift fold Index) where
   globalClosure : GlobalCandidateAHessianQuillenClosureCertificate4D period
     hPeriod configuration data analysis einsteinScale hBoundaryTransverse family
       extensions shift fold inputs.bridge
@@ -310,7 +310,7 @@ def globalCandidateAHessianQuillenFinalFrontierCertificate
     relativeZetaFinitePartPhase_norm_one inputs.metricComparison
 
 /-- Public final coherent Quillen gate. -/
-theorem global_candidateA_hessian_quillen_final_frontier_gate
+def global_candidateA_hessian_quillen_final_frontier_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

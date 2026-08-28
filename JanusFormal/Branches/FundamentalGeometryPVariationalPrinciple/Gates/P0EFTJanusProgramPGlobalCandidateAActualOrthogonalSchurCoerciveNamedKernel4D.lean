@@ -159,7 +159,7 @@ structure GlobalCandidateAActualOrthogonalSchurCoerciveNamedKernelData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode ZeroMode : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    [Fintype ZeroMode] [DecidableEq ZeroMode] where
   coercive : GlobalCandidateAActualOrthogonalSchurNamedCoercivityData4D period
     hPeriod configuration data analysis chart sameAction physical Mode
   zeroModeBasis : FiniteModeSchurNamedKernelBasisData

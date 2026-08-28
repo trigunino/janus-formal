@@ -212,7 +212,7 @@ structure GlobalHessianPreferredFiveSectorFredholmDeterminantFamilyOutput4D
     (input : GlobalHessianPreferredFiveSectorNamedKernelFamilyClosure4D period
       hPeriod configuration data analysis einsteinScale hTransverse family
         chartBound Metric Abelian Matter Longitudinal Boundary ZeroMode fold
-          Index) : Prop where
+          Index) : Type where
   familyIndex :
     GlobalHessianPreferredFiveSectorFamilyIndexClosureCertificate4D
       input.familyIndex
@@ -296,7 +296,7 @@ def globalHessianPreferredFiveSectorFredholmDeterminantFamilyOutput
   kernel_finrank_by_sector := input.kernel_finrank_eq_sector_sum period hPeriod
 
 /-- Public preferred Candidate-A Fredholm determinant-line checkpoint. -/
-theorem global_hessian_preferred_five_sector_fredholm_determinant_family_gate
+def global_hessian_preferred_five_sector_fredholm_determinant_family_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

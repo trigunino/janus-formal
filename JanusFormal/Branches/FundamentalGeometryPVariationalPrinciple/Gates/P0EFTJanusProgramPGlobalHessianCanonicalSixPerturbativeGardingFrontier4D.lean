@@ -170,7 +170,7 @@ def global_candidateA_hessian_canonicalSix_perturbativeGarding_frontier_gate
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (reference perturbation :
       PerturbativeHilbert period hPeriod configuration data analysis →L[Real]
         PerturbativeHilbert period hPeriod configuration data analysis)

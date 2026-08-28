@@ -38,11 +38,11 @@ open P0EFTJanusProgramPFiniteSectorPhysicalSmallnessGarding4D
 open P0EFTJanusProgramPQuadraticGardingOperatorLowerBound4D
 open P0EFTJanusProgramPQuadraticGardingActualKernelGap4D
 open P0EFTJanusProgramPSelfAdjointKernelComplementReduction4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 
 variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Five-factor Gårding data directly on the actual kernel complement. -/
 structure CandidateAFiveSectorProductActualKernelGapData
@@ -56,16 +56,16 @@ structure CandidateAFiveSectorProductActualKernelGapData
     [NormedAddCommGroup Boundary] [InnerProductSpace Real Boundary] where
   kernel_finite : FiniteDimensional Real operator.ker
   principal : CandidateAFiveSectorProductOffDiagonalGardingData
-    (E := selfAdjointKernelComplement operator hSelfAdjoint)
+    (E := SelfAdjointKernelComplement operator)
     (Metric := Metric) (Abelian := Abelian) (Matter := Matter)
     (Longitudinal := Longitudinal) (Boundary := Boundary)
-  physicalEnergy : selfAdjointKernelComplement operator hSelfAdjoint → Real
+  physicalEnergy : SelfAdjointKernelComplement operator → Real
   physicalConstant : Real
   physicalConstant_nonneg : 0 ≤ physicalConstant
   physical_bound : ∀ vector,
     |physicalEnergy vector| ≤ physicalConstant * ‖vector‖ ^ 2
   physical_small : physicalConstant < principal.margin
-  totalEnergy : selfAdjointKernelComplement operator hSelfAdjoint → Real
+  totalEnergy : SelfAdjointKernelComplement operator → Real
   total_eq : ∀ vector,
     totalEnergy vector = principal.principalForm vector vector + physicalEnergy vector
   energy_upper : ∀ vector,
@@ -88,7 +88,7 @@ def toPhysicalSmallness
       Metric Abelian Matter Longitudinal Boundary) :
     FiniteSectorPhysicalSmallnessGardingData
       (Sector := CandidateAZeroModeSector)
-      (E := selfAdjointKernelComplement operator hSelfAdjoint) where
+      (E := SelfAdjointKernelComplement operator) where
   principal := data.principal.toFiniteSectorGarding
   physicalEnergy := data.physicalEnergy
   physicalConstant := data.physicalConstant
@@ -136,7 +136,7 @@ def toGapData
     QuadraticGardingActualKernelGapData operator hSelfAdjoint).toGapData
 
 /-- Public five-factor actual-kernel gap checkpoint. -/
-theorem candidateA_five_sector_product_actual_kernel_gap_gate
+def candidateA_five_sector_product_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     {Metric Abelian Matter Longitudinal Boundary : Type*}

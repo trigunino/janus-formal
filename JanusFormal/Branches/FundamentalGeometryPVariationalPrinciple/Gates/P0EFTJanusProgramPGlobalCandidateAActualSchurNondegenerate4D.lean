@@ -155,7 +155,7 @@ structure GlobalCandidateAActualBoundedSchurNondegenerateData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement] : Prop where
+    [NormedAddCommGroup Complement] [NormedSpace Real Complement] where
   blockData : GlobalCandidateAActualBoundedSchurBlockData4D period hPeriod
     configuration data analysis chart sameAction physical Mode Complement
   schur_bijective : Function.Bijective

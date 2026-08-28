@@ -90,7 +90,7 @@ structure NormalBoundarySeparatedGermData
       Variation → Boundary → Real)
     (completedDensity historicalDensity :
       Variation → Boundary → Real)
-    (base : Variation) : Prop where
+    (base : Variation) where
   domain : NormalBoundaryGermComponent → OpenGermDomain base
   tangent_eq : ∀ variation,
     variation ∈ (domain .tangent).carrier → ∀ boundary tangent ambient,

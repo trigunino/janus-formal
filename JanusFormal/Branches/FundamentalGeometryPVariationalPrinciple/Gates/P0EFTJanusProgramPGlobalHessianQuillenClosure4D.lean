@@ -101,7 +101,7 @@ structure GlobalCandidateAHessianQuillenClosureCertificate4D
     (fold : Fold)
     (bridge : GlobalCandidateAHessianQuillenFamilyBridgeData4D period hPeriod
       configuration data analysis einsteinScale hBoundaryTransverse family
-        extensions shift fold) : Prop where
+        extensions shift fold) where
   circleGeometry : ProgramPGlobalQuillenFrontierCertificate4D fold
   globalAnalytic : GlobalCandidateAHessianQuillenCertificate4D period hPeriod
     configuration data analysis einsteinScale hBoundaryTransverse family
@@ -149,7 +149,7 @@ def globalCandidateAHessianQuillenClosureCertificate
   globalAnalytic := globalCandidateAHessianQuillenCertificate bridge
 
 /-- Terminal conditional closure gate. -/
-theorem global_candidateA_hessian_quillen_global_closure_gate
+def global_candidateA_hessian_quillen_global_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

@@ -32,7 +32,7 @@ structure FiniteModeSchurNondegenerateData
     (operator : E →L[Real] E)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [AddCommGroup Complement] [Module Real Complement] : Prop where
+    [AddCommGroup Complement] [Module Real Complement] where
   schurData : FiniteModeSchurKernelData operator Mode Complement
   schur_bijective : Function.Bijective schurData.schur
 

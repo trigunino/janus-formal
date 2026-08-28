@@ -35,7 +35,7 @@ structure FiniteModeSchurExplicitGreenData
     (operator : E →L[Real] E)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [NormedAddCommGroup Complement] [NormedSpace Real Complement] : Prop where
+    [NormedAddCommGroup Complement] [NormedSpace Real Complement] where
   blocks : FiniteModeContinuousSchurBlockData operator Mode Complement
   determinant_ne_zero :
     (finiteModeSchurMatrix blocks.toLinearBlockData).det ≠ 0

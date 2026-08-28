@@ -152,7 +152,7 @@ structure GlobalCandidateAActualSchurBlockData4D
       hPeriod configuration data analysis chart sameAction)
     (Mode Complement : Type*)
     [Fintype Mode] [DecidableEq Mode]
-    [AddCommGroup Complement] [Module Real Complement] : Prop where
+    [AddCommGroup Complement] [Module Real Complement] where
   blocks : FiniteModeSchurBlockData
     (globalCandidateAActualKernelOperator period hPeriod configuration data
       analysis chart sameAction physical)
@@ -194,7 +194,7 @@ def GlobalCandidateAActualSchurBlockData4D.toSchurZeroModeData
   ll_stationary := blockData.ll_stationary
 
 /-- Candidate-A zero-mode and resolvent data generated from the four blocks. -/
-theorem global_candidateA_actual_schur_block_gate
+def global_candidateA_actual_schur_block_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]

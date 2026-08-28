@@ -54,7 +54,7 @@ def toGapData
   data.toFiniteMarginActualKernelGapData.toGapData
 
 /-- Public direct checkpoint. -/
-theorem principal_finite_margin_actual_kernel_gap_gate
+def principal_finite_margin_actual_kernel_gap_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : PrincipalFiniteMarginActualKernelGapData operator hSelfAdjoint) :

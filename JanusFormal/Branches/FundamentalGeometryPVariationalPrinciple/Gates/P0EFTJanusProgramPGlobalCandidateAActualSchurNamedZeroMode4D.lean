@@ -162,10 +162,10 @@ structure GlobalCandidateAActualSchurNamedZeroModeData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode Complement ZeroMode : Type*)
+    (Mode Complement : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
     [NormedAddCommGroup Complement] [NormedSpace Real Complement]
-    [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    [Fintype ZeroMode] [DecidableEq ZeroMode] : Type where
   schurData : GlobalCandidateAActualSchurZeroModeData4D period hPeriod
     configuration data analysis chart sameAction physical Mode Complement
   namedBasis : FiniteModeSchurNamedKernelBasisData
@@ -192,7 +192,7 @@ noncomputable def namedFamily
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {Mode Complement ZeroMode : Type*}
+    {Mode Complement : Type*} {ZeroMode : Type}
     [Fintype Mode] [DecidableEq Mode]
     [NormedAddCommGroup Complement] [NormedSpace Real Complement]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
@@ -222,7 +222,7 @@ noncomputable def namedGap
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {Mode Complement ZeroMode : Type*}
+    {Mode Complement : Type*} {ZeroMode : Type}
     [Fintype Mode] [DecidableEq Mode]
     [NormedAddCommGroup Complement] [NormedSpace Real Complement]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
@@ -256,7 +256,7 @@ noncomputable def toActualZeroModeGap
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {Mode Complement ZeroMode : Type*}
+    {Mode Complement : Type*} {ZeroMode : Type}
     [Fintype Mode] [DecidableEq Mode]
     [NormedAddCommGroup Complement] [NormedSpace Real Complement]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
@@ -284,7 +284,7 @@ theorem kernel_finrank_eq_card
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {Mode Complement ZeroMode : Type*}
+    {Mode Complement : Type*} {ZeroMode : Type}
     [Fintype Mode] [DecidableEq Mode]
     [NormedAddCommGroup Complement] [NormedSpace Real Complement]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
@@ -314,7 +314,7 @@ theorem global_candidateA_actual_schur_named_zeroMode_gate
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode Complement ZeroMode : Type*)
+    (Mode Complement : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
     [NormedAddCommGroup Complement] [NormedSpace Real Complement]
     [Fintype ZeroMode] [DecidableEq ZeroMode]

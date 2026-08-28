@@ -204,9 +204,9 @@ structure GlobalCandidateAActualOrthogonalSchurNamedKernelData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode ZeroMode : Type*)
+    (Mode : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
-    [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    [Fintype ZeroMode] [DecidableEq ZeroMode] : Type where
   reference : GlobalCandidateAActualOrthogonalSchurNamedVectorsData4D period
     hPeriod configuration data analysis chart sameAction physical Mode
   zeroModeBasis : FiniteModeSchurNamedKernelBasisData
@@ -232,7 +232,7 @@ def GlobalCandidateAActualOrthogonalSchurNamedKernelData4D.toNamedZeroModeData
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {Mode ZeroMode : Type*}
+    {Mode : Type*} {ZeroMode : Type}
     [Fintype Mode] [DecidableEq Mode]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     (named : GlobalCandidateAActualOrthogonalSchurNamedKernelData4D period
@@ -261,7 +261,7 @@ theorem global_candidateA_actual_orthogonal_schur_named_kernel_gate
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode ZeroMode : Type*)
+    (Mode : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     (named : GlobalCandidateAActualOrthogonalSchurNamedKernelData4D period

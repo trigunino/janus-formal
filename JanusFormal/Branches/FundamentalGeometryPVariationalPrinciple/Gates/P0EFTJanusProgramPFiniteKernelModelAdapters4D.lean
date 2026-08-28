@@ -65,7 +65,7 @@ noncomputable def selfAdjointKernelComplementGapWithChosenModel
 
 /-- Compatibility gate: an anonymous finite kernel plus a gap always yields a
 finite coordinate model, without changing the analytic statement. -/
-theorem actual_kernel_gap_to_chosen_finite_model_gate
+def actual_kernel_gap_to_chosen_finite_model_gate
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
     (data : SelfAdjointKernelComplementGapData operator hSelfAdjoint) :

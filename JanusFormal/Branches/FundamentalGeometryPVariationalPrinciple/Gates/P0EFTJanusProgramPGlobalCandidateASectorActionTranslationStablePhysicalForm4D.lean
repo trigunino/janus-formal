@@ -160,7 +160,7 @@ structure GlobalCandidateASectorActionTranslationStablePhysicalFormData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (types : CandidateASectorModeTypes) : Prop where
+    (types : CandidateASectorModeTypes) : Type where
   modes : CandidateASectorOrthogonalModeFamily
     (E := SectorStableHilbert period hPeriod configuration data analysis) types
   action_translation_invariant : ∀ sector mode,
@@ -284,7 +284,7 @@ theorem GlobalCandidateASectorActionTranslationStablePhysicalFormData4D.kernel_f
       types.classification.sum_multiplicity.symm
 
 /-- Public sector-stable Candidate-A checkpoint. -/
-theorem global_candidateA_sector_action_translation_stable_gate
+def global_candidateA_sector_action_translation_stable_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -303,8 +303,9 @@ theorem global_candidateA_sector_action_translation_stable_gate
     (input : GlobalCandidateASectorActionTranslationStablePhysicalFormData4D
       period hPeriod configuration data analysis chart sameAction physical
         types) :
-    GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
-        chart sameAction physical ∧
+    PSigma fun _ :
+      GlobalCandidateAActualKernelGap4D period hPeriod configuration data analysis
+        chart sameAction physical =>
       Module.finrank Real
           (globalCandidateAActualKernelOperator period hPeriod configuration data
             analysis chart sameAction physical).ker =

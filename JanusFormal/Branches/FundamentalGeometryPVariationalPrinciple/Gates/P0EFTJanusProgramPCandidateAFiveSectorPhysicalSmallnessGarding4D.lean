@@ -18,6 +18,7 @@ noncomputable section
 
 open P0EFTJanusProgramPFiniteSectorPhysicalSmallnessGarding4D
 open P0EFTJanusProgramPCandidateAFiveSectorSymmetricGarding4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 
 variable {E : Type*}
@@ -51,6 +52,7 @@ def toFiniteSectorPhysicalSmallnessData
   physical_small := by
     simpa [CandidateAFiveSectorSymmetricGardingData.margin,
       CandidateAFiveSectorSymmetricGardingData.couplingConstant,
+      CandidateAFiveSectorSymmetricGardingData.toQuadraticGardingData,
       P0EFTJanusProgramPFiniteSectorQuadraticGarding4D.FiniteSectorQuadraticGardingData.margin]
       using data.physical_small
   totalEnergy := data.totalEnergy
@@ -68,9 +70,11 @@ theorem candidateA_five_sector_physical_smallness_garding_gate
       ∀ vector : E,
         data.margin * ‖vector‖ ^ 2 ≤ data.totalEnergy vector := by
   simpa [margin,
+    toFiniteSectorPhysicalSmallnessData,
     FiniteSectorPhysicalSmallnessGardingData.margin,
     CandidateAFiveSectorSymmetricGardingData.margin,
     CandidateAFiveSectorSymmetricGardingData.couplingConstant,
+    CandidateAFiveSectorSymmetricGardingData.toQuadraticGardingData,
     P0EFTJanusProgramPFiniteSectorQuadraticGarding4D.FiniteSectorQuadraticGardingData.margin]
     using data.toFiniteSectorPhysicalSmallnessData
       |>.finite_sector_physical_smallness_garding_gate

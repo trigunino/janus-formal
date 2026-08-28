@@ -30,7 +30,7 @@ def CandidateAFiveSectorPrincipalOperatorGardingData.toCrossFormOperatorGardingD
   energy_upper := data.energy_upper
 
 /-- Public compatibility checkpoint. -/
-theorem candidateA_principal_operator_to_cross_form_gate
+def candidateA_principal_operator_to_cross_form_gate
     (operator : E →L[Real] E)
     (data : CandidateAFiveSectorPrincipalOperatorGardingData operator) :
     CandidateAFiveSectorCrossFormOperatorGardingData operator :=
