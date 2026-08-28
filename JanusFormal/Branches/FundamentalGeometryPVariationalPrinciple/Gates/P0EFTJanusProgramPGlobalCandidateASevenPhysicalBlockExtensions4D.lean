@@ -531,33 +531,33 @@ structure GlobalCandidateASevenPhysicalBlockExtensions4D
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart) where
   interaction : GlobalCandidateAPhysicalBlockCommonDomainExtension4D period
-    hPeriod configuration data analysis
+    hPeriod (measure := measure) configuration data analysis
       (diagonalExtendedBulkH11InteractionHessianOnCore period hPeriod
         configuration data analysis chart sameAction)
   ghy : GlobalCandidateAPhysicalBlockCommonDomainExtension4D period hPeriod
-    configuration data analysis
+    (measure := measure) configuration data analysis
       (diagonalExtendedBulkH11GHYHessianOnCore period hPeriod configuration data
         analysis chart sameAction)
   einsteinHilbertPlus :
     GlobalCandidateAPhysicalBlockCommonDomainExtension4D period hPeriod
-      configuration data analysis
+      (measure := measure) configuration data analysis
       (diagonalExtendedBulkH11EinsteinHilbertPlusHessianOnCore period hPeriod
         configuration data analysis chart sameAction)
   einsteinHilbertMinus :
     GlobalCandidateAPhysicalBlockCommonDomainExtension4D period hPeriod
-      configuration data analysis
+      (measure := measure) configuration data analysis
       (diagonalExtendedBulkH11EinsteinHilbertMinusHessianOnCore period hPeriod
         configuration data analysis chart sameAction)
   maxwellPlus : GlobalCandidateAPhysicalBlockCommonDomainExtension4D period
-    hPeriod configuration data analysis
+    hPeriod (measure := measure) configuration data analysis
       (diagonalExtendedBulkH11MaxwellPlusHessianOnCore period hPeriod
         configuration data analysis chart sameAction)
   maxwellMinus : GlobalCandidateAPhysicalBlockCommonDomainExtension4D period
-    hPeriod configuration data analysis
+    hPeriod (measure := measure) configuration data analysis
       (diagonalExtendedBulkH11MaxwellMinusHessianOnCore period hPeriod
         configuration data analysis chart sameAction)
   finiteBV : GlobalCandidateAPhysicalBlockCommonDomainExtension4D period hPeriod
-    configuration data analysis
+    (measure := measure) configuration data analysis
       (diagonalExtendedBulkH11FiniteBVHessianOnCore period hPeriod configuration
         data analysis chart sameAction)
 
