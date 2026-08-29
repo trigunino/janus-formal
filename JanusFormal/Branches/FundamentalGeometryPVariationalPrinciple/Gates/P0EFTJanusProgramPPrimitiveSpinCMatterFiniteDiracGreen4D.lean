@@ -28,11 +28,15 @@ noncomputable section
 open Filter Set Topology
 open scoped BigOperators ENNReal lp LinearPMap InnerProductSpace
 open P0EFTJanusComplexDiagonalMaximalOperator4D
+open P0EFTJanusD9D10ExactFieldContentBridge4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
+open P0EFTJanusProgramPPrimitiveSpinCGeometricSignedFredholm4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D
+open P0EFTJanusProgramPPrimitiveSpinCMatterSmoothMaximalDomain4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -59,6 +63,7 @@ private theorem finiteCoefficientEmbedding_single
       lp.single 2 mode coefficient := by
   rw [finiteCoefficientEmbedding, Finsupp.linearCombination_single,
     complexDiagonalBasis_eq_single]
+  simp only [← lp.single_smul, smul_eq_mul, mul_one]
 
 @[simp]
 private theorem finiteCoefficientEmbedding_apply
@@ -148,8 +153,15 @@ private theorem operator_finiteCoefficientDomain
         (primitiveSpinCGeometricSignedFiniteActionHessian
           period hPeriod massSquared coefficients) := by
   ext mode
-  rw [complexDiagonalOperator_apply,
-    finiteCoefficientEmbedding_apply,
+  rw [complexDiagonalOperator_apply]
+  change
+    ((primitiveSpinCGeometricSignedKineticHessianWeight
+          period hPeriod mode + massSquared : Real) : Complex) *
+        finiteCoefficientEmbedding coefficients mode =
+      finiteCoefficientEmbedding
+        (primitiveSpinCGeometricSignedFiniteActionHessian
+          period hPeriod massSquared coefficients) mode
+  rw [finiteCoefficientEmbedding_apply,
     finiteCoefficientEmbedding_apply,
     finiteActionHessian_apply]
 
@@ -191,6 +203,7 @@ private theorem finiteCoefficient_formalAdjoint
       inner Complex (firstDomain : ComplexDiagonalHilbert SignedMode)
         (operator secondDomain) := by
           rw [operator_finiteCoefficientDomain]
+          rfl
     _ = inner Complex (operator firstDomain)
         (secondDomain : ComplexDiagonalHilbert SignedMode) := hAdjoint.symm
     _ = inner Complex
@@ -199,6 +212,7 @@ private theorem finiteCoefficient_formalAdjoint
             period hPeriod massSquared first))
         (finiteCoefficientEmbedding second) := by
           rw [operator_finiteCoefficientDomain]
+          rfl
 
 /-- Unconditional Green identity on the complete finite smooth signed core. -/
 theorem primitiveSpinCGeometricSignedFiniteDiracGreen
@@ -224,6 +238,19 @@ theorem primitiveSpinCGeometricSignedFiniteDiracGreen
     primitiveSpinCGeometricSignedDiracFiniteSynthesis_intertwines_hessian]
   change
     inner Complex
+        (primitiveSpinCGeometricSignedDiracFiniteSynthesis
+          period hPeriod first)
+        (primitiveSpinCGeometricSignedDiracFiniteSynthesis period hPeriod
+          (primitiveSpinCGeometricSignedFiniteActionHessian
+            period hPeriod massSquared second)) =
+      inner Complex
+        (primitiveSpinCGeometricSignedDiracFiniteSynthesis period hPeriod
+          (primitiveSpinCGeometricSignedFiniteActionHessian
+            period hPeriod massSquared first))
+        (primitiveSpinCGeometricSignedDiracFiniteSynthesis
+          period hPeriod second)
+  calc
+    _ = inner Complex
         (d9PrimitiveSpinCGeometricL2Embedding
           period hPeriod .positiveQuarter
           (primitiveSpinCGeometricSignedDiracFiniteSynthesis
@@ -232,8 +259,16 @@ theorem primitiveSpinCGeometricSignedFiniteDiracGreen
           period hPeriod .positiveQuarter
           (primitiveSpinCGeometricSignedDiracFiniteSynthesis period hPeriod
             (primitiveSpinCGeometricSignedFiniteActionHessian
-              period hPeriod massSquared second))) =
-      inner Complex
+              period hPeriod massSquared second))) := by
+          simpa only [d9PrimitiveSpinCGeometricL2Embedding,
+            UniformSpace.Completion.coe_toComplL] using
+            (UniformSpace.Completion.inner_coe
+              (primitiveSpinCGeometricSignedDiracFiniteSynthesis
+                period hPeriod first)
+              (primitiveSpinCGeometricSignedDiracFiniteSynthesis period hPeriod
+                (primitiveSpinCGeometricSignedFiniteActionHessian
+                  period hPeriod massSquared second))).symm
+    _ = inner Complex
         (d9PrimitiveSpinCGeometricL2Embedding
           period hPeriod .positiveQuarter
           (primitiveSpinCGeometricSignedDiracFiniteSynthesis period hPeriod
@@ -242,12 +277,20 @@ theorem primitiveSpinCGeometricSignedFiniteDiracGreen
         (d9PrimitiveSpinCGeometricL2Embedding
           period hPeriod .positiveQuarter
           (primitiveSpinCGeometricSignedDiracFiniteSynthesis
-            period hPeriod second))
-  rw [finiteSynthesis_embedding, finiteSynthesis_embedding,
-    finiteSynthesis_embedding, finiteSynthesis_embedding,
-    LinearIsometryEquiv.inner_map_map,
-    LinearIsometryEquiv.inner_map_map]
-  exact finiteCoefficient_formalAdjoint period hPeriod massSquared first second
+            period hPeriod second)) := by
+          simpa only [finiteSynthesis_embedding,
+            LinearIsometryEquiv.inner_map_map] using
+              finiteCoefficient_formalAdjoint period hPeriod massSquared
+                first second
+    _ = _ := by
+          simpa only [d9PrimitiveSpinCGeometricL2Embedding,
+            UniformSpace.Completion.coe_toComplL] using
+            UniformSpace.Completion.inner_coe
+              (primitiveSpinCGeometricSignedDiracFiniteSynthesis period hPeriod
+                (primitiveSpinCGeometricSignedFiniteActionHessian
+                  period hPeriod massSquared first))
+              (primitiveSpinCGeometricSignedDiracFiniteSynthesis
+                period hPeriod second)
 
 /-- The two physical sectors inherit the exact finite Green identity without
 mixing their coefficient towers. -/
@@ -315,9 +358,9 @@ def programPPrimitiveSpinCSmoothDiracGreenData_of_graphCoreDensity
     (massSquared : Real)
     (density : ProgramPPrimitiveSpinCSmoothDiracGraphCoreDensityData4D
       period hPeriod massSquared) :
-    ProgramPPrimitiveSpinCSmoothDiracGreenData4D
-      period hPeriod massSquared where
-  green := by
+    ProgramPPrimitiveSpinCSmoothDiracFormalSymmetryData4D
+      period hPeriod where
+  pairing_symm := by
     intro first second
     obtain ⟨firstSequence, hFirst, hFirstImage⟩ :=
       density.approximate first
@@ -354,9 +397,7 @@ def programPPrimitiveSpinCSmoothDiracGreenData_of_graphCoreDensity
               period hPeriod .positiveQuarter
               (primitiveSpinCGeometricSignedActionHessianSmoothCore
                 period hPeriod massSquared second)))) := by
-      exact
-        (((innerSL Complex).continuous.tendsto).comp hFirst).clm_apply
-          hSecondImage
+      exact hFirst.inner hSecondImage
     have hRight :
         Tendsto
           (fun index => inner Complex (firstImageL2 index) (secondL2 index))
@@ -368,13 +409,15 @@ def programPPrimitiveSpinCSmoothDiracGreenData_of_graphCoreDensity
                 period hPeriod massSquared first))
             (d9PrimitiveSpinCGeometricL2Embedding
               period hPeriod .positiveQuarter second))) := by
-      exact
-        (((innerSL Complex).continuous.tendsto).comp hFirstImage).clm_apply
-          hSecond
+      exact hFirstImage.inner hSecond
     have hFinite : ∀ index,
         inner Complex (firstL2 index) (secondImageL2 index) =
           inner Complex (firstImageL2 index) (secondL2 index) := by
       intro index
+      simp only [firstL2, firstImageL2, secondL2, secondImageL2,
+        d9PrimitiveSpinCGeometricL2Embedding,
+        UniformSpace.Completion.coe_toComplL,
+        UniformSpace.Completion.inner_coe]
       change
         d9PrimitiveSpinCGeometricL2Pairing
             period hPeriod .positiveQuarter
@@ -408,22 +451,44 @@ def programPPrimitiveSpinCSmoothDiracGreenData_of_graphCoreDensity
       hRight.congr' (Filter.Eventually.of_forall fun index =>
         (hFinite index).symm)
     have hLimit := tendsto_nhds_unique hLeft hRightAsLeft
-    change
-      inner Complex
-          (d9PrimitiveSpinCGeometricL2Embedding
-            period hPeriod .positiveQuarter first)
-          (d9PrimitiveSpinCGeometricL2Embedding
+    have hHessianGreen :
+        d9PrimitiveSpinCGeometricL2Pairing
+            period hPeriod .positiveQuarter first
+            (primitiveSpinCGeometricSignedActionHessianSmoothCore
+              period hPeriod massSquared second) =
+          d9PrimitiveSpinCGeometricL2Pairing
             period hPeriod .positiveQuarter
             (primitiveSpinCGeometricSignedActionHessianSmoothCore
-              period hPeriod massSquared second)) =
-        inner Complex
-          (d9PrimitiveSpinCGeometricL2Embedding
-            period hPeriod .positiveQuarter
-            (primitiveSpinCGeometricSignedActionHessianSmoothCore
-              period hPeriod massSquared first))
-          (d9PrimitiveSpinCGeometricL2Embedding
-            period hPeriod .positiveQuarter second)
-    exact hLimit
+              period hPeriod massSquared first) second := by
+      calc
+        _ = inner Complex
+            (d9PrimitiveSpinCGeometricL2Embedding
+              period hPeriod .positiveQuarter first)
+            (d9PrimitiveSpinCGeometricL2Embedding
+              period hPeriod .positiveQuarter
+              (primitiveSpinCGeometricSignedActionHessianSmoothCore
+                period hPeriod massSquared second)) := by
+              symm
+              exact UniformSpace.Completion.inner_coe _ _
+        _ = _ := hLimit
+        _ = _ := UniformSpace.Completion.inner_coe _ _
+    unfold primitiveSpinCGeometricSignedActionHessianSmoothCore at hHessianGreen
+    simp only [LinearMap.add_apply, LinearMap.smul_apply,
+      LinearMap.id_apply] at hHessianGreen
+    simp_rw [d9PrimitiveSpinCGeometricL2_complex_smul] at hHessianGreen
+    rw [d9PrimitiveSpinCGeometricL2Pairing_add_right,
+      d9PrimitiveSpinCGeometricL2Pairing_complexScalar_right,
+      d9PrimitiveSpinCGeometricL2Pairing_complexScalar_right,
+      d9PrimitiveSpinCGeometricL2Pairing_add_left,
+      d9PrimitiveSpinCGeometricL2Pairing_complexScalar_left,
+      d9PrimitiveSpinCGeometricL2Pairing_complexScalar_left] at hHessianGreen
+    have hTwo : (starRingEnd Complex) (2 : Complex) = 2 := by
+      exact map_ofNat (starRingEnd Complex) 2
+    have hMass :
+        (starRingEnd Complex) (massSquared : Complex) = massSquared := by
+      simp
+    rw [hTwo, hMass] at hHessianGreen
+    linear_combination (1 / 2 : Complex) * hHessianGreen
 
 /-- Graph-core density therefore provides the exact formal-symmetry datum used
 by the maximal-domain gate. -/
@@ -432,11 +497,9 @@ def programPPrimitiveSpinCSmoothDiracFormalSymmetryData_of_graphCoreDensity
     (density : ProgramPPrimitiveSpinCSmoothDiracGraphCoreDensityData4D
       period hPeriod massSquared) :
     ProgramPPrimitiveSpinCSmoothDiracFormalSymmetryData4D
-      period hPeriod massSquared :=
-  programPPrimitiveSpinCSmoothDiracFormalSymmetryData_of_green period hPeriod
-    massSquared
-      (programPPrimitiveSpinCSmoothDiracGreenData_of_graphCoreDensity
-        period hPeriod massSquared density)
+      period hPeriod :=
+  programPPrimitiveSpinCSmoothDiracGreenData_of_graphCoreDensity
+    period hPeriod massSquared density
 
 /-- Graph-core density constructs maximal-domain membership and exact operator
 agreement for every smooth primitive section. -/
@@ -446,8 +509,8 @@ def programPPrimitiveSpinCSmoothMaximalDomainData_of_graphCoreDensity
       period hPeriod massSquared) :
     ProgramPPrimitiveSpinCSmoothMaximalDomainData4D
       period hPeriod massSquared :=
-  programPPrimitiveSpinCSmoothMaximalDomainData_of_diracSymmetry period hPeriod
-    massSquared
+  programPPrimitiveSpinCSmoothMaximalDomainData_of_diracFormalSymmetry
+    period hPeriod massSquared
       (programPPrimitiveSpinCSmoothDiracFormalSymmetryData_of_graphCoreDensity
         period hPeriod massSquared density)
 
@@ -457,9 +520,9 @@ def programPPrimitiveSpinCMatterSmoothGraphRealization_of_graphCoreDensity
     (massSquared : Real)
     (density : ProgramPPrimitiveSpinCSmoothDiracGraphCoreDensityData4D
       period hPeriod massSquared) :=
-  programPPrimitiveSpinCMatterSmoothGraphRealization_of_diracGreen period hPeriod
-    massSquared
-      (programPPrimitiveSpinCSmoothDiracGreenData_of_graphCoreDensity
+  programPPrimitiveSpinCMatterSmoothGraphRealization_of_diracFormalSymmetry
+    period hPeriod massSquared
+      (programPPrimitiveSpinCSmoothDiracFormalSymmetryData_of_graphCoreDensity
         period hPeriod massSquared density)
 
 end
