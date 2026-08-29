@@ -23,7 +23,7 @@ noncomputable section
 
 open P0EFTJanusProgramPFiniteKernelBasisFamily4D
 
-variable {E ZeroMode : Type*}
+variable {E : Type*} {ZeroMode : Type}
   [NormedAddCommGroup E] [NormedSpace Real E]
   [Fintype ZeroMode] [DecidableEq ZeroMode]
 
@@ -31,7 +31,7 @@ variable {E ZeroMode : Type*}
 expressed in the common ambient space. -/
 structure DifferentiableFiniteKernelBasisFamilyData
     (operator : Real → E →L[Real] E)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   kernels : FiniteKernelBasisFamilyData operator ZeroMode
   vector_differentiable : ∀ mode,
     Differentiable Real (fun parameter : Real => kernels.vector parameter mode)

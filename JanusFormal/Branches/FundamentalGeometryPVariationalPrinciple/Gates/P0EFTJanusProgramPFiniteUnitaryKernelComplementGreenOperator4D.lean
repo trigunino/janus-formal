@@ -20,7 +20,7 @@ most the basepoint Green norm.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenOperator4D
+namespace P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
 
 set_option autoImplicit false
 noncomputable section
@@ -47,17 +47,32 @@ def transportedReducedOperatorCLM
       map_add' := by
         intro first second
         apply Subtype.ext
-        simp only [frame.transportedReducedOperator_apply_val basepoint]
+        change
+          (frame.transportedReducedOperator basepoint parameter
+              (first + second)).1 =
+            (frame.transportedReducedOperator basepoint parameter first).1 +
+              (frame.transportedReducedOperator basepoint parameter second).1
+        rw [frame.transportedReducedOperator_apply_val,
+          frame.transportedReducedOperator_apply_val,
+          frame.transportedReducedOperator_apply_val]
         exact map_add (operator parameter) first.1 second.1
       map_smul' := by
         intro scalar vector
         apply Subtype.ext
-        simp only [frame.transportedReducedOperator_apply_val basepoint]
+        change
+          (frame.transportedReducedOperator basepoint parameter
+              (scalar • vector)).1 =
+            scalar •
+              (frame.transportedReducedOperator basepoint parameter vector).1
+        rw [frame.transportedReducedOperator_apply_val,
+          frame.transportedReducedOperator_apply_val]
         exact map_smul (operator parameter) scalar vector.1 }
   exact linear.mkContinuous ‖operator parameter‖ (by
     intro vector
-    change ‖operator parameter vector.1‖ ≤
-      ‖operator parameter‖ * ‖vector.1‖
+    change
+      ‖(frame.transportedReducedOperator basepoint parameter vector).1‖ ≤
+        ‖operator parameter‖ * ‖vector.1‖
+    rw [frame.transportedReducedOperator_apply_val]
     exact (operator parameter).le_opNorm vector.1)
 
 /-- Transported Green bundled as a continuous linear endomorphism of the
@@ -125,7 +140,8 @@ theorem transportedReducedOperatorCLM_comp_greenCLM
     (frame.transportedReducedOperatorCLM basepoint parameter).comp
         (frame.transportedGreenCLM basepoint parameter) =
       ContinuousLinearMap.id Real (operator parameter).kerᗮ := by
-  ext vector
+  apply ContinuousLinearMap.ext
+  intro vector
   change frame.transportedReducedOperator basepoint parameter
       (frame.transportedGreen basepoint parameter vector) = vector
   exact frame.transportedReducedOperator_green basepoint parameter vector
@@ -139,7 +155,8 @@ theorem transportedGreenCLM_comp_reducedOperatorCLM
     (frame.transportedGreenCLM basepoint parameter).comp
         (frame.transportedReducedOperatorCLM basepoint parameter) =
       ContinuousLinearMap.id Real (operator parameter).kerᗮ := by
-  ext vector
+  apply ContinuousLinearMap.ext
+  intro vector
   change frame.transportedGreen basepoint parameter
       (frame.transportedReducedOperator basepoint parameter vector) = vector
   exact frame.transportedGreen_reducedOperator basepoint parameter vector
@@ -152,7 +169,7 @@ theorem norm_transportedGreenCLM_le
     (basepoint : FiniteKernelComplementBasepointGreenData operator)
     (parameter : Real) :
     ‖frame.transportedGreenCLM basepoint parameter‖ ≤ ‖basepoint.green‖ := by
-  refine ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg _) ?_
+  refine ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg basepoint.green) ?_
   intro vector
   exact frame.transportedGreen_norm_le basepoint parameter vector
 
@@ -182,5 +199,5 @@ theorem finite_unitary_kernel_complement_green_operator_gate
 end FiniteUnitaryIntertwiningOperatorFrameData
 
 end
-end P0EFTJanusProgramPFiniteUnitaryKernelComplementGreenOperator4D
+end P0EFTJanusProgramPFiniteUnitaryIntertwiningOperatorFrame4D
 end JanusFormal
