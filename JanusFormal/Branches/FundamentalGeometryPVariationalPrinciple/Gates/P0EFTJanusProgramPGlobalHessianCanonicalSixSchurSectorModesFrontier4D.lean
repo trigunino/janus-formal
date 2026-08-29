@@ -24,6 +24,7 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace BigOperators
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
@@ -31,17 +32,31 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurNamedKernel4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurNamedZeroMode4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixSchurNamedZeroModeFrontier4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -79,9 +94,9 @@ structure GlobalCandidateAOrthogonalSchurSectorModesData4D
       period hPeriod configuration data analysis chart)
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
-    (Mode ZeroMode : Type*)
+    (Mode : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
-    [Fintype ZeroMode] [DecidableEq ZeroMode] : Prop where
+    [Fintype ZeroMode] [DecidableEq ZeroMode] where
   named : GlobalCandidateAActualOrthogonalSchurNamedKernelData4D period hPeriod
     configuration data analysis chart sameAction physical Mode ZeroMode
   classification : CandidateAZeroModeSectorClassification ZeroMode
@@ -103,18 +118,20 @@ theorem GlobalCandidateAOrthogonalSchurSectorModesData4D.kernel_finrank_eq_sum
       period hPeriod configuration data analysis chart}
     {physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction}
-    {Mode ZeroMode : Type*}
+    {Mode : Type*} {ZeroMode : Type}
     [Fintype Mode] [DecidableEq Mode]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     (sectorData : GlobalCandidateAOrthogonalSchurSectorModesData4D period hPeriod
-      configuration data analysis chart sameAction physical Mode ZeroMode) :
+      (measure := measure) configuration data analysis chart sameAction physical
+        Mode ZeroMode) :
     Module.finrank Real
         (globalCandidateAActualKernelOperator period hPeriod configuration data
-          analysis chart sameAction physical).ker =
+          (measure := measure) analysis chart sameAction physical).ker =
       ∑ sector : CandidateAZeroModeSector,
         sectorData.classification.multiplicity sector := by
-  rw [(sectorData.named.toNamedZeroModeData period hPeriod).kernel_finrank_eq_card
-      period hPeriod]
+  rw [(sectorData.named.toNamedZeroModeData period hPeriod
+      (measure := measure)).kernel_finrank_eq_card period hPeriod
+        (measure := measure)]
   exact sectorData.classification.sum_multiplicity.symm
 
 /-- Terminal H10--H14 gate with Schur-derived named modes and their sector
@@ -132,39 +149,43 @@ def global_candidateA_hessian_canonicalSix_schurSectorModes_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
-            analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
-            data analysis einsteinScale hTransverse family)))
-    (Mode ZeroMode : Type*)
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure)
+        configuration data analysis
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+            configuration data analysis einsteinScale hTransverse family)
+          (globalCandidateAActualKernelSameAction period hPeriod
+            (measure := measure) configuration data analysis einsteinScale
+              hTransverse family)))
+    (Mode : Type*) (ZeroMode : Type)
     [Fintype Mode] [DecidableEq Mode]
     [Fintype ZeroMode] [DecidableEq ZeroMode]
     (sectorData : GlobalCandidateAOrthogonalSchurSectorModesData4D period hPeriod
-      configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
+      (measure := measure) configuration data analysis
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+          configuration data analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelSameAction period hPeriod
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family)
         (globalCandidateACanonicalSixSchurNamedPhysicalExtension period hPeriod
-          configuration data analysis einsteinScale hTransverse family
-            chartBound)
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family chartBound)
         Mode ZeroMode) :=
   let terminal :=
     global_candidateA_hessian_canonicalSix_schurNamedZeroMode_frontier_gate
-      period hPeriod configuration data analysis einsteinScale hTransverse
-        family chartBound Mode ZeroMode sectorData.named
-  (terminal,
-    sectorData.classification,
-    sectorData.kernel_finrank_eq_sum period hPeriod,
-    fun sector => sectorData.classification.multiplicity sector)
+      period hPeriod (measure := measure) configuration data analysis
+        einsteinScale hTransverse family chartBound Mode ZeroMode
+          sectorData.named
+  show _ ∧ Nonempty _ ∧ _ ∧ Nonempty _ from
+  ⟨terminal,
+    ⟨sectorData.classification⟩,
+    sectorData.kernel_finrank_eq_sum period hPeriod (measure := measure),
+    ⟨fun sector => sectorData.classification.multiplicity sector⟩⟩
 
 end
 end P0EFTJanusProgramPGlobalHessianCanonicalSixSchurSectorModesFrontier4D

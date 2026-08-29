@@ -25,6 +25,7 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
@@ -32,16 +33,29 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurDeterminant4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurFrontier4D
 open P0EFTJanusProgramPGlobalHessianCanonicalSixOrthogonalSchurBasisFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -77,46 +91,51 @@ def global_candidateA_hessian_canonicalSix_orthogonalSchurDeterminant_frontier_g
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
-            analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
-            data analysis einsteinScale hTransverse family)))
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure)
+        configuration data analysis
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+            configuration data analysis einsteinScale hTransverse family)
+          (globalCandidateAActualKernelSameAction period hPeriod
+            (measure := measure) configuration data analysis einsteinScale
+              hTransverse family)))
     (Mode : Type*) [Fintype Mode] [DecidableEq Mode]
     (determinant : GlobalCandidateAActualOrthogonalSchurDeterminantData4D period
-      hPeriod configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
+      hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+          configuration data analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelSameAction period hPeriod
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family)
         (globalCandidateACanonicalSixOrthogonalSchurPhysicalExtension period
-          hPeriod configuration data analysis einsteinScale hTransverse family
-            chartBound)
+          hPeriod (measure := measure) configuration data analysis einsteinScale
+            hTransverse family chartBound)
         Mode) :=
   let closure :=
     global_candidateA_hessian_canonicalSix_orthogonalSchurBasis_frontier_gate
-      period hPeriod configuration data analysis einsteinScale hTransverse
-        family chartBound Mode determinant.schur
+      period hPeriod (measure := measure) configuration data analysis
+        einsteinScale hTransverse family chartBound Mode determinant.schur
   let nondegenerate :=
     global_candidateA_actual_orthogonal_schur_determinant_gate period hPeriod
-      configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
+      (measure := measure) configuration data analysis
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+          configuration data analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelSameAction period hPeriod
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family)
         (globalCandidateACanonicalSixOrthogonalSchurPhysicalExtension period
-          hPeriod configuration data analysis einsteinScale hTransverse family
-            chartBound)
+          hPeriod (measure := measure) configuration data analysis einsteinScale
+            hTransverse family chartBound)
         Mode determinant
-  (closure, nondegenerate,
-    globalCandidateAOrthogonalSchurFullGreen period hPeriod determinant)
+  show _ ∧ _ ∧ Nonempty _ from
+  ⟨closure, nondegenerate,
+    ⟨globalCandidateAOrthogonalSchurFullGreen period hPeriod
+      (measure := measure) determinant⟩⟩
 
 /-- Public finite scalar for the zero-mode-free stratum. -/
 def globalCandidateAHessianCanonicalOrthogonalSchurDeterminant
@@ -158,7 +177,8 @@ theorem globalCandidateAHessianCanonicalOrthogonalSchurDeterminant_ne_zero
     {Mode : Type*} [Fintype Mode] [DecidableEq Mode]
     (determinant : GlobalCandidateAActualOrthogonalSchurDeterminantData4D period
       hPeriod configuration data analysis chart sameAction physical Mode) :
-    globalCandidateAHessianCanonicalOrthogonalSchurDeterminant determinant ≠ 0 :=
+    globalCandidateAHessianCanonicalOrthogonalSchurDeterminant period hPeriod
+      determinant ≠ 0 :=
   determinant.determinant_ne_zero
 
 /-- On the determinant stratum the actual Hessian has no zero modes. -/

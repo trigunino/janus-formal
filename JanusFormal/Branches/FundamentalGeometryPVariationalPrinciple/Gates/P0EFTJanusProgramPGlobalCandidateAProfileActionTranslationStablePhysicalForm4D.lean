@@ -35,8 +35,21 @@ open P0EFTJanusProgramPGlobalCandidateASectorActionTranslationStablePhysicalForm
 open P0EFTJanusProgramPGlobalCandidateASectorStableMultiplicity4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
 open P0EFTJanusProgramPCandidateASectorMultiplicityProfile4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
+open P0EFTJanusProgramPCandidateASectorModeAssembly4D
+
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
+
+noncomputable local instance candidateASectorGlobalModeDecidableEq
+    (types : CandidateASectorModeTypes) : DecidableEq types.GlobalMode :=
+  Classical.decEq _
 
 private abbrev EffectiveQuotient :=
   MappingTorus (reflectedSphereData period hPeriod)
@@ -101,7 +114,8 @@ theorem GlobalCandidateAProfileActionTranslationStablePhysicalFormData4D.kernel_
           analysis chart sameAction physical).ker =
       ∑ sector : CandidateAZeroModeSector,
         profile.multiplicity sector := by
-  rw [input.kernel_finrank_eq_explicit_sector_cards period hPeriod]
+  rw [P0EFTJanusProgramPGlobalCandidateASectorStableMultiplicity4D.GlobalCandidateASectorActionTranslationStablePhysicalFormData4D.kernel_finrank_eq_explicit_sector_cards
+    period hPeriod input]
   apply Finset.sum_congr rfl
   intro sector _
   exact profile.mode_card sector

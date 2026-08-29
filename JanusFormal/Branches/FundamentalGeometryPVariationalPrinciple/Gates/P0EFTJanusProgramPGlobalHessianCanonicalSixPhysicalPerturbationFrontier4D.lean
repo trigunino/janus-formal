@@ -116,7 +116,7 @@ def global_candidateA_hessian_canonicalSix_physicalPerturbation_frontier_gate
           (globalCandidateAActualKernelSameAction period hPeriod
             (measure := measure) configuration data analysis einsteinScale
               hTransverse family)))
-    (ZeroMode : Type) [Fintype ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (canonical : GlobalCandidateACanonicalStableNamedPerturbation4D period hPeriod
       configuration data analysis
         (globalCandidateAActualKernelChart period hPeriod (measure := measure)
@@ -162,7 +162,7 @@ def global_candidateA_hessian_canonicalSix_physicalPerturbation_sector_gate
           (globalCandidateAActualKernelSameAction period hPeriod
             (measure := measure) configuration data analysis einsteinScale
               hTransverse family)))
-    (ZeroMode : Type) [Fintype ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (canonical : GlobalCandidateACanonicalStableNamedPerturbation4D period hPeriod
       configuration data analysis
         (globalCandidateAActualKernelChart period hPeriod (measure := measure)
