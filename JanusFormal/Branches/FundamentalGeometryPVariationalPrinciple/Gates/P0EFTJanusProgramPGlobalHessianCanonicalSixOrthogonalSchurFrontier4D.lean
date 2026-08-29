@@ -1,3 +1,4 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalLocalVariationalChart4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBlock4D
 
@@ -29,6 +30,7 @@ noncomputable section
 
 open Set Topology MeasureTheory
 open scoped Manifold ContDiff InnerProductSpace
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
@@ -36,15 +38,27 @@ open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10Reduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
 open P0EFTJanusProgramPGlobalCandidateAH10BoundaryProjectionFromChartBound4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateAActualOrthogonalSchurBlock4D
 open P0EFTJanusProgramPGlobalCandidateAActualSchurZeroMode4D
 open P0EFTJanusProgramPGlobalHessianActualKernelFrontier4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -81,20 +95,23 @@ def globalCandidateACanonicalSixOrthogonalSchurPhysicalExtension
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
-            analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
-            data analysis einsteinScale hTransverse family))) :=
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure)
+        configuration data analysis
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+            configuration data
+             analysis einsteinScale hTransverse family)
+          (globalCandidateAActualKernelSameAction period hPeriod
+            (measure := measure) configuration data analysis einsteinScale
+              hTransverse family))) :=
   globalCandidateACanonicalSixPhysicalExtension_of_chartBound period hPeriod
-    configuration data analysis einsteinScale hTransverse family chartBound
+    (measure := measure) configuration data analysis einsteinScale hTransverse
+      family chartBound
 
 /-- Narrow orthogonal-Schur terminal.  The finite mode subspace is physical,
 the complement is canonical, and the actual-kernel gap is derived from the
@@ -112,32 +129,36 @@ def global_candidateA_hessian_canonicalSix_orthogonalSchur_frontier_gate
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
-            analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
-            data analysis einsteinScale hTransverse family)))
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure)
+        configuration data analysis
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+            configuration data analysis einsteinScale hTransverse family)
+          (globalCandidateAActualKernelSameAction period hPeriod
+            (measure := measure) configuration data analysis einsteinScale
+              hTransverse family)))
     (Mode : Type*) [Fintype Mode] [DecidableEq Mode]
     (schur : GlobalCandidateAActualOrthogonalSchurData4D period hPeriod
+      (measure := measure)
       configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+          configuration data analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelSameAction period hPeriod
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family)
         (globalCandidateACanonicalSixOrthogonalSchurPhysicalExtension period
-          hPeriod configuration data analysis einsteinScale hTransverse family
-            chartBound)
+          hPeriod (measure := measure) configuration data analysis einsteinScale
+            hTransverse family chartBound)
         Mode) :=
   global_candidateA_hessian_canonicalSix_chartBound_frontier_gate period hPeriod
-    configuration data analysis einsteinScale hTransverse family chartBound
-      (schur.toActualKernelGap period hPeriod)
+    (measure := measure) configuration data analysis einsteinScale hTransverse
+      family chartBound (schur.toActualKernelGap period hPeriod
+        (measure := measure))
 
 /-- Exact actual-kernel dimension computed by the finite Schur complement. -/
 theorem global_candidateA_hessian_orthogonalSchur_kernel_finrank_eq
@@ -153,42 +174,49 @@ theorem global_candidateA_hessian_orthogonalSchur_kernel_finrank_eq
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
-            analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
-            data analysis einsteinScale hTransverse family)))
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure)
+        configuration data analysis
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+            configuration data analysis einsteinScale hTransverse family)
+          (globalCandidateAActualKernelSameAction period hPeriod
+            (measure := measure) configuration data analysis einsteinScale
+              hTransverse family)))
     (Mode : Type*) [Fintype Mode] [DecidableEq Mode]
     (schur : GlobalCandidateAActualOrthogonalSchurData4D period hPeriod
+      (measure := measure)
       configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+          configuration data analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelSameAction period hPeriod
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family)
         (globalCandidateACanonicalSixOrthogonalSchurPhysicalExtension period
-          hPeriod configuration data analysis einsteinScale hTransverse family
-            chartBound)
+          hPeriod (measure := measure) configuration data analysis einsteinScale
+            hTransverse family chartBound)
         Mode) :
     Module.finrank Real
         (globalCandidateAActualKernelOperator period hPeriod configuration data
-          analysis
-            (globalCandidateAActualKernelChart period hPeriod configuration data
-              analysis einsteinScale hTransverse family)
-            (globalCandidateAActualKernelSameAction period hPeriod configuration
-              data analysis einsteinScale hTransverse family)
+          (measure := measure) analysis
+            (globalCandidateAActualKernelChart period hPeriod
+              (measure := measure) configuration data analysis einsteinScale
+                hTransverse family)
+            (globalCandidateAActualKernelSameAction period hPeriod
+              (measure := measure) configuration data analysis einsteinScale
+                hTransverse family)
             (globalCandidateACanonicalSixOrthogonalSchurPhysicalExtension period
-              hPeriod configuration data analysis einsteinScale hTransverse
-                family chartBound)).ker =
+              hPeriod (measure := measure) configuration data analysis
+                einsteinScale hTransverse family chartBound)).ker =
       Module.finrank Real
-        (schur.toSchurZeroModeData period hPeriod).schur.schur.ker :=
-  (schur.toSchurZeroModeData period hPeriod).kernel_finrank_eq_schur
+        (schur.toSchurZeroModeData period hPeriod
+          (measure := measure)).schur.schur.ker :=
+  (schur.toSchurZeroModeData period hPeriod
+    (measure := measure)).kernel_finrank_eq_schur
 
 /-- The number of actual zero modes is bounded by the selected finite reference
 mode count. -/
@@ -205,41 +233,47 @@ theorem global_candidateA_hessian_orthogonalSchur_kernel_finrank_le_card
     (hTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10ReducedData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared) einsteinScale)
     (chartBound : DenseCoreChartMapBound
       (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
         data analysis)
-      (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
-        analysis
-          (globalCandidateAActualKernelChart period hPeriod configuration data
-            analysis einsteinScale hTransverse family)
-          (globalCandidateAActualKernelSameAction period hPeriod configuration
-            data analysis einsteinScale hTransverse family)))
+      (globalCandidateACanonicalSixCoreToChart period hPeriod (measure := measure)
+        configuration data analysis
+          (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+            configuration data analysis einsteinScale hTransverse family)
+          (globalCandidateAActualKernelSameAction period hPeriod
+            (measure := measure) configuration data analysis einsteinScale
+              hTransverse family)))
     (Mode : Type*) [Fintype Mode] [DecidableEq Mode]
     (schur : GlobalCandidateAActualOrthogonalSchurData4D period hPeriod
+      (measure := measure)
       configuration data analysis
-        (globalCandidateAActualKernelChart period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
-        (globalCandidateAActualKernelSameAction period hPeriod configuration data
-          analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelChart period hPeriod (measure := measure)
+          configuration data analysis einsteinScale hTransverse family)
+        (globalCandidateAActualKernelSameAction period hPeriod
+          (measure := measure) configuration data analysis einsteinScale
+            hTransverse family)
         (globalCandidateACanonicalSixOrthogonalSchurPhysicalExtension period
-          hPeriod configuration data analysis einsteinScale hTransverse family
-            chartBound)
+          hPeriod (measure := measure) configuration data analysis einsteinScale
+            hTransverse family chartBound)
         Mode) :
     Module.finrank Real
         (globalCandidateAActualKernelOperator period hPeriod configuration data
-          analysis
-            (globalCandidateAActualKernelChart period hPeriod configuration data
-              analysis einsteinScale hTransverse family)
-            (globalCandidateAActualKernelSameAction period hPeriod configuration
-              data analysis einsteinScale hTransverse family)
+          (measure := measure) analysis
+            (globalCandidateAActualKernelChart period hPeriod
+              (measure := measure) configuration data analysis einsteinScale
+                hTransverse family)
+            (globalCandidateAActualKernelSameAction period hPeriod
+              (measure := measure) configuration data analysis einsteinScale
+                hTransverse family)
             (globalCandidateACanonicalSixOrthogonalSchurPhysicalExtension period
-              hPeriod configuration data analysis einsteinScale hTransverse
-                family chartBound)).ker ≤
+              hPeriod (measure := measure) configuration data analysis
+                einsteinScale hTransverse family chartBound)).ker ≤
       Fintype.card Mode :=
-  (schur.toSchurZeroModeData period hPeriod).kernel_finrank_le_mode_card
+  (schur.toSchurZeroModeData period hPeriod
+    (measure := measure)).kernel_finrank_le_mode_card
 
 /-- After fixed geometry, the terminal Schur route has three work packets:
 local family, one dense-core chart bound, and one finite physical mode subspace

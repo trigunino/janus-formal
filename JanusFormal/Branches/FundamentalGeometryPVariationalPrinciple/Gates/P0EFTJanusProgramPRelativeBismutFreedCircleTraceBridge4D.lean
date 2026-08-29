@@ -29,6 +29,8 @@ set_option synthInstance.maxHeartbeats 2300000
 noncomputable section
 
 open P0EFTJanusCircleQuillenMetricFlatConnection
+open P0EFTJanusCircleDiracHeatTraceCancellation
+open P0EFTJanusCircleDeterminantTopologicalBundle
 open P0EFTJanusProgramPRelativeBismutFreedTraceConnection4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaCircleConnectionBridge4D
@@ -36,16 +38,18 @@ open P0EFTJanusProgramPRelativeZetaCircleHolonomyPhase4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
 
-variable {E : Type*}
-  [NormedAddCommGroup E] [NormedSpace Real E]
-  [InnerProductSpace Real E] [CompleteSpace E]
+universe u v
+
+variable {E : Type u}
+  [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
 /-- Intrinsic operator trace identified with the explicit circle Quillen
 connection coefficient. -/
 structure RelativeBismutFreedCircleTraceBridgeData
     (actual reference : Real → E →L[Real] E)
     (fold : Fold) where
-  bismutFreed : RelativeBismutFreedTraceConnectionData actual reference
+  bismutFreed :
+    RelativeBismutFreedTraceConnectionData.{u, v} actual reference
   coefficient_eq_circle : ∀ parameter,
     bismutFreed.operatorTrace.bismutFreedCoefficient parameter =
       (circleQuillenConnectionCoefficient fold : Complex)
@@ -61,7 +65,8 @@ zeta/circle bridge. -/
 def toZetaCircleBridge
     {actual reference : Real → E →L[Real] E}
     {fold : Fold}
-    (data : RelativeBismutFreedCircleTraceBridgeData actual reference fold) :
+    (data : RelativeBismutFreedCircleTraceBridgeData.{u, v}
+      actual reference fold) :
     RelativeZetaCircleConnectionBridgeData fold
       data.bismutFreed.zetaFamily.toZetaFamily where
   coefficient_agreement := by
@@ -80,7 +85,8 @@ circle connection coefficient. -/
 theorem relativeTrace_eq_neg_circleCoefficient
     {actual reference : Real → E →L[Real] E}
     {fold : Fold}
-    (data : RelativeBismutFreedCircleTraceBridgeData actual reference fold)
+    (data : RelativeBismutFreedCircleTraceBridgeData.{u, v}
+      actual reference fold)
     (parameter : Real) :
     data.bismutFreed.operatorTrace.trace parameter =
       -circleQuillenConnectionCoefficient fold := by
@@ -94,7 +100,8 @@ spelling. -/
 theorem finitePart_logDerivative_eq_neg_circleCoefficient
     {actual reference : Real → E →L[Real] E}
     {fold : Fold}
-    (data : RelativeBismutFreedCircleTraceBridgeData actual reference fold)
+    (data : RelativeBismutFreedCircleTraceBridgeData.{u, v}
+      actual reference fold)
     (parameter : Real) :
     data.bismutFreed.zetaFamily.finitePartFamily.logDerivative parameter =
       -circleQuillenConnectionCoefficient fold := by
@@ -105,7 +112,8 @@ theorem finitePart_logDerivative_eq_neg_circleCoefficient
 theorem circle_parallel
     {actual reference : Real → E →L[Real] E}
     {fold : Fold}
-    (data : RelativeBismutFreedCircleTraceBridgeData actual reference fold)
+    (data : RelativeBismutFreedCircleTraceBridgeData.{u, v}
+      actual reference fold)
     (parameter : Real) :
     circleQuillenConnectionAt fold
         (relativeHeatMellinZetaFamilyDeterminant
@@ -118,7 +126,8 @@ theorem circle_parallel
 theorem circle_metricFirstVariation_zero
     {actual reference : Real → E →L[Real] E}
     {fold : Fold}
-    (data : RelativeBismutFreedCircleTraceBridgeData actual reference fold)
+    (data : RelativeBismutFreedCircleTraceBridgeData.{u, v}
+      actual reference fold)
     (parameter : Real) :
     circleQuillenCoordinateMetricFirstVariation fold parameter
         (relativeHeatMellinZetaFamilyDeterminant
@@ -135,7 +144,8 @@ theorem circle_metricFirstVariation_zero
 theorem closedHolonomy_eq_phase_ratio
     {actual reference : Real → E →L[Real] E}
     {fold : Fold}
-    (data : RelativeBismutFreedCircleTraceBridgeData actual reference fold) :
+    (data : RelativeBismutFreedCircleTraceBridgeData.{u, v}
+      actual reference fold) :
     circleQuillenClosedHolonomy fold =
       relativeZetaFinitePartPhase
           data.bismutFreed.zetaFamily.toFinitePartComparison 0 /
@@ -148,7 +158,8 @@ theorem closedHolonomy_eq_phase_ratio
 theorem relative_bismut_freed_circle_trace_bridge_gate
     (actual reference : Real → E →L[Real] E)
     (fold : Fold)
-    (data : RelativeBismutFreedCircleTraceBridgeData actual reference fold) :
+    (data : RelativeBismutFreedCircleTraceBridgeData.{u, v}
+      actual reference fold) :
     (∀ parameter,
       data.bismutFreed.operatorTrace.trace parameter =
         -circleQuillenConnectionCoefficient fold) ∧
@@ -158,7 +169,11 @@ theorem relative_bismut_freed_circle_trace_bridge_gate
               data.bismutFreed.zetaFamily parameter)
             (relativeZetaDeterminantCoordinateDerivative
               data.bismutFreed.zetaFamily.toZetaFamily parameter) = 0) ∧
-      data.endpoint_clutching ∧
+      circleLargeGaugeFrameCoordinateTransition fold
+          (relativeHeatMellinZetaFamilyDeterminant
+            data.bismutFreed.zetaFamily 1) =
+        relativeHeatMellinZetaFamilyDeterminant
+          data.bismutFreed.zetaFamily 0 ∧
       circleQuillenClosedHolonomy fold =
         relativeZetaFinitePartPhase
             data.bismutFreed.zetaFamily.toFinitePartComparison 0 /

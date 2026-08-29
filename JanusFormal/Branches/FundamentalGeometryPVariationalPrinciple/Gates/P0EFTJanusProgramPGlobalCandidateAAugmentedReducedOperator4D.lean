@@ -35,6 +35,7 @@ open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAFaithfulFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedOrthogonalCoerciveShift4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSplitting4D
@@ -61,6 +62,13 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
+attribute [local instance]
+  augmentedFredholmNormedAddCommGroup
+  augmentedFredholmInnerProductSpace
+  augmentedFredholmNormedSpace
+  augmentedFredholmModule
+  augmentedFredholmCompleteSpace
+
 /-- The actual augmented Riesz representative, restricted to the exact
 finite-defect complement. -/
 def globalCandidateAAugmentedReducedOperator
@@ -79,11 +87,45 @@ def globalCandidateAAugmentedReducedOperator
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
     (shift : GlobalCandidateAAugmentedOrthogonalCoerciveShift4D period hPeriod
-      configuration data analysis chart sameAction physical) :=
-  finiteDefectReducedOperator
+      configuration data analysis chart sameAction physical) := by
+  exact @finiteDefectReducedOperator
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
     (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
       data analysis chart sameAction physical)
     shift.coerciveShift
+
+private def globalCandidateAAugmentedReducedGenericCertificate
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart)
+    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
+      hPeriod configuration data analysis chart sameAction)
+    (shift : GlobalCandidateAAugmentedOrthogonalCoerciveShift4D period hPeriod
+      configuration data analysis chart sameAction physical) :=
+  @finiteDefectReducedOperatorCertificate
+    (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+      analysis)
+    (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
+    (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
+      data analysis chart sameAction physical)
+    shift.coerciveShift
+    (globalCandidateAAugmentedOrthogonalCoerciveShift_surjective period hPeriod
+      configuration data analysis chart sameAction physical shift)
 
 /-- The reduced operator is bijective and keeps the original coercive lower
 bound. -/
@@ -103,25 +145,20 @@ structure GlobalCandidateAAugmentedReducedOperatorCertificate4D
     (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
       hPeriod configuration data analysis chart sameAction)
     (shift : GlobalCandidateAAugmentedOrthogonalCoerciveShift4D period hPeriod
-      configuration data analysis chart sameAction physical) : Prop where
-  injective : Function.Injective
-    (globalCandidateAAugmentedReducedOperator period hPeriod configuration data
-      analysis chart sameAction physical shift)
-  surjective : Function.Surjective
-    (globalCandidateAAugmentedReducedOperator period hPeriod configuration data
-      analysis chart sameAction physical shift)
-  lowerBound : ∀ vector,
-    shift.coerciveShift.coercivityConstant * ‖vector‖ ≤
-      ‖globalCandidateAAugmentedReducedOperator period hPeriod configuration
-        data analysis chart sameAction physical shift vector‖
-  kernel_eq_defect :
-    (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
-      data analysis chart sameAction physical).ker =
-      shift.coerciveShift.projection.range
-  range_eq_complement :
-    (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod configuration
-      data analysis chart sameAction physical).range =
-      shift.coerciveShift.projection.ker
+      configuration data analysis chart sameAction physical) : Prop extends
+    @FiniteDefectReducedOperatorCertificate
+      (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration
+        data analysis)
+      (augmentedFredholmNormedAddCommGroup period hPeriod configuration data
+        analysis)
+      (augmentedFredholmNormedSpace period hPeriod configuration data analysis)
+      (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+        configuration data analysis chart sameAction physical)
+      shift.coerciveShift
+      (globalCandidateAAugmentedOrthogonalCoerciveShift_surjective period hPeriod
+        configuration data analysis chart sameAction physical shift),
+    GlobalCandidateAAugmentedFredholmSplitting4D period hPeriod
+    configuration data analysis chart sameAction physical shift
 
 /-- Construction of the reduced Candidate-A certificate. -/
 def globalCandidateAAugmentedReducedOperatorCertificate
@@ -143,21 +180,11 @@ def globalCandidateAAugmentedReducedOperatorCertificate
       configuration data analysis chart sameAction physical) :
     GlobalCandidateAAugmentedReducedOperatorCertificate4D period hPeriod
       configuration data analysis chart sameAction physical shift := by
-  let operator := globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
-    configuration data analysis chart sameAction physical
-  let hSurjective :=
-    globalCandidateAAugmentedOrthogonalCoerciveShift_surjective period hPeriod
-      configuration data analysis chart sameAction physical shift
-  let reduced := finiteDefectReducedOperatorCertificate operator
-    shift.coerciveShift hSurjective
+  let reduced := globalCandidateAAugmentedReducedGenericCertificate period
+    hPeriod configuration data analysis chart sameAction physical shift
   let splitting := globalCandidateAAugmentedFredholmSplitting period hPeriod
     configuration data analysis chart sameAction physical shift
-  exact
-    { injective := reduced.injective
-      surjective := reduced.surjective
-      lowerBound := reduced.lowerBound
-      kernel_eq_defect := splitting.kernel_eq_defect
-      range_eq_complement := splitting.range_eq_complement }
+  exact ⟨reduced, splitting⟩
 
 /-- Public reduced Candidate-A gate. -/
 theorem global_candidateA_augmented_reduced_operator_gate

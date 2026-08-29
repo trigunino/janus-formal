@@ -34,10 +34,27 @@ open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 open P0EFTJanusProgramPGlobalCandidateASectorActionTranslationStablePhysicalForm4D
 open P0EFTJanusProgramPGlobalCandidateANamedZeroModeSectors4D
+open P0EFTJanusProgramPCandidateAZeroModeSector4D
 open P0EFTJanusProgramPCandidateASectorModeAssembly4D
 open P0EFTJanusProgramPCandidateASectorModeMultiplicity4D
 
+attribute [local instance]
+  actualKernelNormedAddCommGroup
+  actualKernelInnerProductSpace
+  actualKernelNormedSpace
+  actualKernelModule
+  actualKernelCompleteSpace
+
 variable (period : Real) (hPeriod : period ≠ 0)
+
+noncomputable local instance candidateASectorGlobalModeDecidableEq
+    (types : CandidateASectorModeTypes) : DecidableEq types.GlobalMode :=
+  Classical.decEq _
+
+local instance candidateASectorModeFintype
+    (types : CandidateASectorModeTypes)
+    (sector : CandidateAZeroModeSector) : Fintype (types.Mode sector) :=
+  types.modeFintype sector
 
 private abbrev EffectiveQuotient :=
   MappingTorus (reflectedSphereData period hPeriod)
@@ -117,7 +134,8 @@ def global_candidateA_sector_stable_explicit_multiplicity_gate
         ∑ sector : CandidateAZeroModeSector,
           Fintype.card (types.Mode sector) :=
   ⟨(input.toStable period hPeriod).toNamedGarding.toGap period hPeriod,
-    input.kernel_finrank_eq_explicit_sector_cards period hPeriod⟩
+    GlobalCandidateASectorActionTranslationStablePhysicalFormData4D.kernel_finrank_eq_explicit_sector_cards
+      period hPeriod input⟩
 
 end
 end P0EFTJanusProgramPGlobalCandidateASectorStableMultiplicity4D

@@ -26,10 +26,13 @@ noncomputable section
 
 open Filter Set Topology
 open scoped BigOperators ENNReal lp LinearPMap InnerProductSpace
+open P0EFTJanusD9D10ExactFieldContentBridge4D
 open P0EFTJanusNormalPinLiftBoundaryConditions
+open P0EFTJanusProgramPD9PrimitiveSpinCAllLevelNullHarmonicDirac4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracDescent4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D
 open P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D
+open P0EFTJanusProgramPD9PrimitiveSpinCSmoothSectionCore4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterDiracGreenMaximalDomain4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterFiniteDiracGreen4D
@@ -145,7 +148,7 @@ def programPPrimitiveSpinCSmoothDiracGraphCoreDensityData_of_firstOrder
       hDirac.prodMk_nhds hField
     have hMapped :=
       (actionHessianFromDiracPairCLM period hPeriod massSquared).continuous
-        |>.tendsto.comp hPair
+        |>.continuousAt.tendsto.comp hPair
     have hSequence :
         (fun index =>
           actionHessianFromDiracPairCLM period hPeriod massSquared
@@ -171,8 +174,7 @@ def programPPrimitiveSpinCSmoothDiracGraphCoreDensityData_of_firstOrder
           period hPeriod (sequence index))
     have hLimit :=
       actionHessianFromDiracPairCLM_embedding period hPeriod massSquared field
-    rw [hSequence, hLimit] at hMapped
-    exact hMapped
+    simpa only [Function.comp_def, hSequence, hLimit] using hMapped
 
 /-- The existing finite Green and closure gates may therefore be consumed from
 one mass-independent first-order density theorem. -/
