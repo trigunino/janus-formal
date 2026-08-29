@@ -142,10 +142,16 @@ The compact fundamental strips `S³ × [0,|T|]` and `S² × [0,|T|]`
 project continuously and surjectively, proving compactness of both actual
 effective quotients.
 
-The throat inclusion is now a global Mathlib `IsSmoothEmbedding`. The remaining
-normal frontier is explicit: the differential normal family still lacks its
-independent quotient-bundle atlas, so the global algebraic comparison is not
-yet a smooth equivalence. The nonnull/null/joint strata remain open.
+The throat inclusion is now a global Mathlib `IsSmoothEmbedding`.
+
+Current Program-P update (2026-07-30): the intrinsic latitude normal lift and
+its tangent-trivialization coordinates are `C∞`, and the canonical differential
+normal has an unconditional causal stratification. The ambient Pin⁻ projection,
+its Čech principal bundle, the half-angle restriction gauge, and the associated
+PinC/spinor bundles are also constructed. The explicit
+cover-product-to-quotient-tangent coordinate map now compares the two canonical
+normal presentations. This closes that presentation sub-lock; general-metric
+boundary strata and the terminal typed `T01` certificate remain open.
 
 Lean theorems:
 
@@ -185,6 +191,9 @@ fixedThroatNormalFiber_isContMDiffVectorBundle
 fixedThroatNormalFiber_equiv_differentialNormal
 localTransitionWinding_one_loop
 one_loop_coordChange_eq_neg_id
+coverProductToQuotientTangentCoordinates_apply
+canonicalLatitudeNormal_presentations_compare
+canonicalLatitudeNormalCoordinate_eq_sectionPresentation
 ```
 
 ## 3. What the two-to-one ratio means
@@ -353,14 +362,15 @@ and document the Euclidean/Lorentzian dictionary rather than infer a `Pin+` or
 
 ### D8-A — Smooth mapping-torus completion
 
-1. construct the proper free `Z` action;
-2. form the smooth quotient;
-3. prove the `S3 -> J -> S1` fibration;
-4. calculate `pi1(J)=Z`;
-5. construct the one-sided `S2 x S1` throat and its Möbius normal line;
-6. assemble the pointwise normal identifications into a smooth global bundle
-   equivalence;
-7. construct the nonnull/null/joint strata of the smooth throat embedding.
+1. the proper free `Z` action and smooth analytic quotient are constructed;
+2. the compact one-sided `S2 x S1` throat and its twisted normal line are
+   constructed;
+3. the intrinsic normal lift, local coordinates and canonical causal strata are
+   smooth and unconditional;
+4. the `S3 -> J -> S1` fibration and `pi1(J)=Z` still require a direct Lean
+   proof;
+5. the two smooth normal-coordinate presentations now have their explicit
+   change-of-coordinates comparison.
 
 This is the preferred continuation of the current geometry.
 
@@ -384,22 +394,20 @@ group extension whose representations supply the field multiplet.  This route
 must state why the internal group exists and why its rank/representation is
 selected.
 
-## 10. Terminal theorem queue
+## 10. Current theorem queue — 2026-07-30
 
-1. Refine the constructed analytic quotient atlas with the remaining global
-   fibration data.
-2. Prove the mapping-torus fibration and `pi1(J)=Z` in Lean.
-3. Assemble the analytic normal-line bundle and the differential normal
-   quotient into a smooth global bundle equivalence.
-4. Construct the nonnull/null/joint strata for boundary analysis.
-5. Relate the constructed global `Z4` root lines to compatible Pin/SpinC
-   principal bundles.
-6. Fix the remaining physical Pin/PT convention on those bundles.
-7. Formalize the theorem that complex irreducible cyclic representations are
-   one-dimensional.
-8. Derive any rank-five flavor/internal bundle from independent geometry or
-   dynamics.
-9. Rebuild the D7 determinant only after this field-content audit.
+The former Pin/SpinC, smooth-normal and canonical-stratification TODOs are
+retired: Program P now contains their concrete implementations. The remaining
+D8-facing obligations are:
+
+1. prove the mapping-torus fibration and `pi1(J)=Z` directly in Lean;
+2. extend the canonical causal/boundary analysis to arbitrary admitted metrics;
+3. formalize the finite-dimensional complex irreducible cyclic-representation
+   classification;
+4. derive any rank-five flavor/internal bundle from independent geometry or
+   dynamics;
+5. connect the completed geometric Dirac tower and regulator to the full D7/D10
+   determinant problem.
 
 ## Final conclusion
 

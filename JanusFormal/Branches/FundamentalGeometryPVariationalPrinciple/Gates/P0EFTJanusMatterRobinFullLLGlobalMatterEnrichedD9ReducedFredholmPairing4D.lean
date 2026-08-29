@@ -45,7 +45,7 @@ theorem enrichedD9_robinLL_Hessian_eq_reducedJacobi_pairing
     (robinFirst robinSecond : SmoothThroatField period hPeriod Real)
     (llFirst llSecond : LLH1Smooth period hPeriod llData) :
     enrichedD9ActiveHessian period hPeriod matterData kPlus kMinus robinMeasure
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         (globalMatterEnrichedD9Projection period hPeriod llData.fields
           (fullRobinLLDirection period hPeriod robinFirst llFirst.toTest) sector column point)
         (globalMatterEnrichedD9Projection period hPeriod llData.fields
@@ -58,7 +58,7 @@ theorem enrichedD9_robinLL_Hessian_eq_reducedJacobi_pairing
           smoothThroatFieldToL2 period hPeriod robinMeasure robinSecond,
           llH1SmoothEmbedding period hPeriod llData llSecond) := by
   rw [← fullHessian_eq_enrichedD9ActiveHessian period hPeriod matterData kPlus kMinus
-    robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+    robinMeasure llData.frame llData.mu llData.fields
     sector column point]
   exact globalMatterRobinFullLLHessian_eq_reducedNatural_robinLL_block period hPeriod
     matterData scalarData kPlus kMinus robinMeasure llData robinFirst robinSecond llFirst llSecond

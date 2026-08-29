@@ -1,0 +1,192 @@
+name: Program P fast Lean gate
+
+on:
+  push:
+    branches:
+      - dev-branch
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+      - ".github/workflows/program-p-fast.yml"
+  pull_request:
+    paths:
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+      - "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**"
+      - "lean-toolchain"
+      - "lakefile.lean"
+      - "lake-manifest.json"
+      - ".github/workflows/program-p-fast.yml"
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "Build the complete Program P facade instead of the active SpinC frontier"
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: program-p-fast-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  program-p:
+    name: Lean — Program P fast
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Lean and Mathlib cache
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          build: false
+          test: false
+          lint: false
+          use-mathlib-cache: true
+
+      - name: Restore incremental project build cache
+        id: project-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .b
+          key: program-p-build-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean', 'JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/**/*.lean') }}
+          restore-keys: |
+            program-p-build-${{ runner.os }}-
+
+      - name: Build H10–H14 constructive Hessian closure chain
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaussWeingartenFiniteAlgebra4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalGaussPairing4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedMetricCompatibility4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedGaussWeingartenReduction4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryActionSourceBridge4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCanonicalSecondFormSourceBridge4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedGaussCanonicalSourceBridge4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCanonicalMetricCancellation4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCanonicalSourceMetricBridge4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedGaussLocalSectionReduction4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalWeingartenCoordinatePairing4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryCompletedGaussRawLocalSectionReduction4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalCovariantNormalGerm4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalNormalLeibniz4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalCovariantNormalClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalRawLocalSectionClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryHistoricalTerminalActionClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundarySameActionGermHessian4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianClosure4D
+
+      - name: Build reduced minimal-physical analytic frontier
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMatterLLQuadraticChartBridge4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockExtensions4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateACommonHilbertChartTransport4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedParametrix4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphCoreCompatibility4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChartConstructor4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamily4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterSmoothSpectralGraph4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalHilbertChart4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianConstructiveClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianHilbertChartClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianMinimalPhysicalConstructiveClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianMinimalPhysicalBoundedClosure4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianConstructiveFrontier4D
+
+      - name: Build active Program P leaf
+        id: leaf
+        shell: bash
+        run: |
+          set +e
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeGeometricFourier4D"
+          echo "Building active Lean leaf: $target"
+          lake build "$target" > program-p-leaf.log 2>&1
+          status=$?
+          cat program-p-leaf.log
+
+          {
+            echo "## Active Program P leaf diagnostics"
+            echo
+            echo "Target: \`$target\`"
+            echo
+            if [ "$status" -eq 0 ]; then
+              echo "Leaf build succeeded."
+            else
+              echo '```text'
+              grep -n -B 3 -A 12 -E '^error:|^[^ ]+\.lean:[0-9]+:[0-9]+: error:' \
+                program-p-leaf.log | tail -n 240 || \
+                tail -n 240 program-p-leaf.log
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit "$status"
+
+      - name: Build active Program P frontier
+        id: build
+        shell: bash
+        run: |
+          set +e
+
+          target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedBridge4D"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && \
+             [ "${{ inputs.full }}" = "true" ]; then
+            target="JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple"
+          fi
+
+          echo "Building Lean target: $target"
+          lake build "$target" > program-p-fast.log 2>&1
+          status=$?
+
+          cat program-p-fast.log
+
+          {
+            echo "## Program P frontier diagnostics"
+            echo
+            echo "Target: \`$target\`"
+            echo
+            if [ "$status" -eq 0 ]; then
+              echo "Frontier build succeeded."
+            else
+              echo '```text'
+              grep -n -B 3 -A 12 -E '^error:|^[^ ]+\.lean:[0-9]+:[0-9]+: error:' \
+                program-p-fast.log | tail -n 240 || \
+                tail -n 240 program-p-fast.log
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit "$status"
+
+      - name: Build global Program P frontier
+        run: >-
+          lake build
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCompatibilityComplex4D
+          JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCovariantAction4D
+
+      - name: Save incremental project build cache
+        if: always() && steps.project-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .b
+          key: ${{ steps.project-cache.outputs.cache-primary-key }}
+
+      - name: Upload Program P Lean logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: program-p-fast-log
+          path: |
+            program-p-leaf.log
+            program-p-fast.log
+          if-no-files-found: warn

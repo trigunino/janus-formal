@@ -39,6 +39,12 @@ def d9DoubledMatterFiberHalfSpinorLinearEquiv :
   matterFiberHalfSpinorLinearEquiv.prodCongr
     matterFiberHalfSpinorLinearEquiv
 
+@[simp] theorem d9DoubledMatterFiberHalfSpinorLinearEquiv_apply
+    (matter : D9DoubledMatterFiber) :
+    d9DoubledMatterFiberHalfSpinorLinearEquiv matter =
+      (matterFiberHalfSpinorLinearEquiv matter.1,
+        matterFiberHalfSpinorLinearEquiv matter.2) := rfl
+
 def d9DoubledMatterSpinorMonodromy
     (choice : NormalRootChoice) (winding : Int)
     (matter : D9DoubledMatterFiber) : D9DoubledMatterFiber :=

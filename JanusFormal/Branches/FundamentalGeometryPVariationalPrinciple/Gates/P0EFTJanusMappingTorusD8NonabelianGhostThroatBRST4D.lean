@@ -556,12 +556,12 @@ private def throatCoverSpatialRotationSection (axis : Fin 3) :
       (fun point => throatCoverSpatialRotationValue_bundle
         period hPeriod axis point)
 
-private def throatCoverSpatialRotationCurve
+def throatCoverSpatialRotationCurve
     (axis : Fin 3) (point : EffectiveThroatCover period hPeriod)
     (time : Real) : EffectiveThroatCover period hPeriod :=
   throatCoverSpatialRotationFlow period hPeriod axis (time, point)
 
-private theorem throatCoverSpatialRotationCurve_contMDiff
+theorem throatCoverSpatialRotationCurve_contMDiff
     (axis : Fin 3) (point : EffectiveThroatCover period hPeriod) :
     ContMDiff 𝓘(Real, Real) throatCoverModelWithCorners ∞
       (throatCoverSpatialRotationCurve period hPeriod axis point) :=

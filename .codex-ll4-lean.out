@@ -1,0 +1,54 @@
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1512:4: warning: This simp argument is unused:
+  WithLp.toLp_fst
+
+Hint: Omit it from the simp argument list.
+  simp only [globalCandidateAFullLLCrossU,
+  ̵  ̵ ̵ ̵globalCandidateAFullLLCrossV, WithLp.prod_inner_apply,
+      WithLp.toLp_f̵st̵,̵ ̵W̵i̵t̵h̵L̵p̵.̵t̵o̵L̵p̵_̵s̵nd]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1512:21: warning: This simp argument is unused:
+  WithLp.toLp_snd
+
+Hint: Omit it from the simp argument list.
+  simp only [globalCandidateAFullLLCrossU,
+  ̵  ̵ ̵ ̵globalCandidateAFullLLCrossV, WithLp.prod_inner_apply,
+      WithLp.toLp_fst,̵ ̵W̵i̵t̵h̵L̵p̵.̵t̵o̵L̵p̵_̵s̵n̵d̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1969:3: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  InnerProductSpace ℝ ↥(GlobalFullLLGraphHilbert period hPeriod data analysis)
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1969:2: error: failed to synthesize
+  NormedSpace ℝ ↥(GlobalFullLLGraphHilbert period hPeriod data analysis)
+(deterministic) timeout at `typeclass`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option synthInstance.maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1994:2: error: 'change' tactic failed, pattern
+  inner ℝ ((globalCandidateAFullLLC2GraphRieszOperator period hPeriod data analysis) first) second = ?m.46
+is not definitionally equal to target
+  ((globalCandidateAFullLLGraphForm period hPeriod data analysis) first) second =
+    globalCandidateAFullLLContinuousHessian period hPeriod data analysis first second
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:2066:8: error: failed to synthesize
+  NormedSpace ℝ ↥(GlobalFullLLGraphHilbert period hPeriod data analysis)
+(deterministic) timeout at `typeclass`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option synthInstance.maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:2127:5: error: failed to synthesize
+  NormedSpace ℝ ↥(GlobalFullLLGraphHilbert period hPeriod data analysis)
+(deterministic) timeout at `typeclass`, maximum number of heartbeats (200000) has been reached
+
+Note: Use `set_option synthInstance.maxHeartbeats <num>` to set the limit.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.

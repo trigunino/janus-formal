@@ -4,6 +4,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusSmoothPTFieldAction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusGeneralLorentzTensorPTSmoothness4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusScalarStressCovarianceExchangeCertificate4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBoundaryTangentGreenStokes4D
 
 namespace JanusFormal
 namespace P0EFTJanusGWProgramPTechnicalBridge
@@ -30,6 +31,13 @@ theorem scalar_stress_covariance_exchange_certificate_exists
         period hPeriod) :=
   P0EFTJanusScalarStressCovarianceExchangeCertificate4D.scalarStressCovarianceExchange_unconditional
     period hPeriod
+
+/-- Euler components of physical Program-P boundary tangents satisfy the
+metric Green--Stokes identity and have zero cutoff divergence under the stated
+scalar Euler hypotheses. This is the on-shell scalar boundary sector, not the
+spin-2 wave equation. -/
+def boundary_tangent_scalar_metric_green_stokes :=
+  P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBoundaryTangentGreenStokes4D.programPBoundaryTangents_metricGreenStokes_certificate
 
 /-- The smooth two-sector coefficient fields now carry an exact involutive PT
 exchange on the effective D8 quotient. This supplies the global symmetry
@@ -63,6 +71,7 @@ structure GWBridgeBoundary where
   smoothPTSectorExchangeClosed : Prop
   smoothGeneralTensorPTActionClosed : Prop
   scalarStressCovarianceExchangeClosed : Prop
+  boundaryTangentScalarGreenStokesClosed : Prop
   fullCovariantSecondVariationOpen : Prop
   physicalFLRWBackgroundOpen : Prop
   visibleMatterCouplingOpen : Prop

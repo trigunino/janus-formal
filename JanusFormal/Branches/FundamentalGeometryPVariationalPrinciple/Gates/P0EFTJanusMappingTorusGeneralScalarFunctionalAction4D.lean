@@ -103,6 +103,24 @@ structure RegularGeneralLorentzMetric where
     volume point = metricVolumeDensity period hPeriod metric point
       (fun index => frame index point)
 
+/-- The private coefficient vectors used by a regular frame are the standard
+finite-function basis. -/
+theorem RegularGeneralLorentzMetric.frame_eq_basisFun
+    (metric : RegularGeneralLorentzMetric period hPeriod)
+    (point : EffectiveQuotient period hPeriod)
+    (index : Fin 4) :
+    metric.frame index point =
+      metric.frameEquiv point ((Pi.basisFun Real (Fin 4)) index) := by
+  rw [metric.frame_eq]
+  congr 1
+  funext current
+  by_cases h : current = index
+  · subst current
+    simp [coefficientBasis, Pi.basisFun_apply]
+  · have h' : index ≠ current := by
+      exact fun hEqual => h hEqual.symm
+    simp [coefficientBasis, Pi.basisFun_apply, h, h']
+
 /-- A smooth scalar together with a smooth representative of its genuine
 manifold differential. -/
 structure RegularHolonomicScalar where

@@ -225,6 +225,12 @@ theorem finiteTangentGeneratorWeight_continuous
     Continuous (finiteTangentGeneratorWeight period hPeriod patch) :=
   (tangentPartition period hPeriod patch).contMDiff.continuous
 
+theorem finiteTangentGeneratorWeight_contMDiff
+    (patch : FiniteTangentGeneratorPatch period hPeriod) :
+    ContMDiff coverModelWithCorners 𝓘(Real, Real) ∞
+      (finiteTangentGeneratorWeight period hPeriod patch) :=
+  (tangentPartition period hPeriod patch).contMDiff
+
 theorem finiteTangentGeneratorWeight_sum_eq_one
     (point : EffectiveQuotient period hPeriod) :
     ∑ patch : FiniteTangentGeneratorPatch period hPeriod,
@@ -287,6 +293,55 @@ def finiteTangentGeneratorLocalCoefficient
     (vector : TangentFiber period hPeriod point) : Real :=
   (tangentTrivialization period hPeriod patch.1).localFrame_coeff
     coverModelWithCorners tangentModelBasis basisIndex point vector
+
+/-- Local-frame coefficients vary smoothly with an arbitrary tangent-bundle
+vector while its base remains in the corresponding trivialization patch. -/
+theorem finiteTangentGeneratorLocalCoefficient_contMDiffAt
+    (patch : FiniteTangentGeneratorPatch period hPeriod)
+    (basisIndex : FiniteTangentGeneratorBasisIndex)
+    (vector : TangentBundle coverModelWithCorners
+      (EffectiveQuotient period hPeriod))
+    (hPatch :
+      vector.1 ∈ finiteTangentGeneratorOpenPatch period hPeriod patch) :
+    ContMDiffAt coverModelWithCorners.tangent
+      (modelWithCornersSelf Real Real) ∞
+      (fun current =>
+        finiteTangentGeneratorLocalCoefficient period hPeriod patch basisIndex
+          current.1 current.2)
+      vector := by
+  let trivialization := tangentTrivialization period hPeriod patch.1
+  let componentLinear : CoverCoordinates →ₗ[Real] Real :=
+    { toFun := fun coordinates => tangentModelBasis.repr coordinates basisIndex
+      map_add' := fun first second => by simp
+      map_smul' := fun scalar coordinates => by simp }
+  let component : CoverCoordinates →L[Real] Real :=
+    LinearMap.toContinuousLinearMap componentLinear
+  have hSource : vector ∈ trivialization.source :=
+    trivialization.mem_source.mpr hPatch
+  have hCoordinates :
+      ContMDiffAt coverModelWithCorners.tangent
+        (modelWithCornersSelf Real CoverCoordinates) ∞
+        (fun current => (trivialization current).2) vector := by
+    exact
+      ((trivialization.contMDiffAt_iff hSource).mp
+        (contMDiffAt_id :
+          ContMDiffAt coverModelWithCorners.tangent
+            coverModelWithCorners.tangent ∞ id vector)).2
+  have hAux :
+      ContMDiffAt coverModelWithCorners.tangent
+        (modelWithCornersSelf Real Real) ∞
+        (fun current => component (trivialization current).2) vector :=
+    component.contDiff.contMDiff.contMDiffAt.comp vector hCoordinates
+  apply hAux.congr_of_eventuallyEq
+  filter_upwards [trivialization.open_source.mem_nhds hSource] with current hCurrent
+  let localSection : ∀ point : EffectiveQuotient period hPeriod,
+      TangentFiber period hPeriod point := fun _ => current.2
+  have hCoefficient := trivialization.localFrame_coeff_eq_coeff
+    (I := coverModelWithCorners) (b := tangentModelBasis)
+    (s := localSection) (i := basisIndex)
+    (trivialization.mem_source.mp hCurrent)
+  simpa [finiteTangentGeneratorLocalCoefficient, trivialization,
+    component, componentLinear, localSection] using hCoefficient
 
 /-- On its open patch, the public local vectors reconstruct every tangent
 vector with the public local coefficients. -/

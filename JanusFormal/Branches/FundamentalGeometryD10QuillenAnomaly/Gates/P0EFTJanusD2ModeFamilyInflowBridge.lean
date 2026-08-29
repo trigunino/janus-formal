@@ -20,7 +20,7 @@ theorem pt_mode_anomaly_phases_cancel (mode : ProductDiracMode) :
   | mk level circle choice =>
       cases choice <;>
         simp [modeAnomalyPhase, ptMode, normalRootPhase, oppositeRoot] <;>
-        native_decide
+        decide
 
 /-- Relative anomaly class of one explicit D2 boundary mode with opposite inflow. -/
 def modeRelativeAnomaly (mode : ProductDiracMode) :

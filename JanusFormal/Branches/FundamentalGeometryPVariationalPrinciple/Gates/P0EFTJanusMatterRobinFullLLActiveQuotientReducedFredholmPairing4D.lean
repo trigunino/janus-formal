@@ -47,7 +47,7 @@ theorem quotientHessian_robinLL_eq_reducedJacobi_pairing
     (robinFirst robinSecond : SmoothThroatField period hPeriod Real)
     (llFirst llSecond : LLH1Smooth period hPeriod llData) :
     quotientHessian period hPeriod matterData kPlus kMinus robinMeasure
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         (robinLLActiveQuotientDirection period hPeriod robinFirst llFirst.toTest)
         (robinLLActiveQuotientDirection period hPeriod robinSecond llSecond.toTest) =
       reducedBosonicNaturalHessian period hPeriod scalarData kPlus kMinus robinMeasure llData

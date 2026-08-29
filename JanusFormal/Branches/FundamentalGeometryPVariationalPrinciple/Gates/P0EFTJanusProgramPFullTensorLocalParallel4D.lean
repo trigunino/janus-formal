@@ -1,0 +1,9 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFullTensorAtlasConnection4D
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPFullTensorLocalParallel4D
+set_option autoImplicit false
+noncomputable section
+end
+end P0EFTJanusProgramPFullTensorLocalParallel4D
+end JanusFormal

@@ -47,16 +47,15 @@ Program P-E was advanced again and merged into `main` through PR 10 on
 
 ## 2. Validation
 
-The current `main` head is
+The currently checked-out branch is `dev-branch`, at
 
 ```text
-96e60eb4df1db049f8488858c5a6b1fdb717b224.
+9a8b540d01d339c756d69202033a22ed49a38334.
 ```
 
-The theorem commits below the PR 6 merge were validated by its focused Lean
-and Python workflows. The PR 10 theorem head was validated locally before
-merge; this document does not claim an independent post-merge CI run for
-`96e60eb4`.
+The local worktree contains the later Program-P gates described below. On
+28 July 2026, the complete Program-P façade compiled `10039/10039` jobs and
+`scripts/audit_janus_program_p.py` passed with terminal count `0/14`.
 
 ## Program M foundation checkpoint — 19 July 2026
 
@@ -195,8 +194,16 @@ and its positive-time family is `C∞` in operator norm. At every derivative
 order, its explicit degeneracy-resolved diagonal sum equals the nuclear trace
 derivative and obeys PT. These facts close the
 trace-class properties required by Program P despite the absence of a general
-Mathlib trace-class API. The full Fredholm/Quillen family and the
-field/ghost-weighted anomaly problem remain separate and open.
+Mathlib trace-class API. The complete multiplicity-aware D10 Gaussian is now
+also summable at every positive time. Its physical PT permutation preserves
+the squared spectrum, reverses root chirality, makes the infinite chiral trace
+zero and sends the net of arbitrary finite spectral cutoffs to zero. This
+Gaussian is now also realized on the complete D10 Hilbert space as a compact
+operator with a summable rank-one nuclear expansion; finite spectral
+truncations converge to it in operator norm. This closes the physical D10
+continuum block. A separate global nuclear reference regulator now covers all
+completed ambient sectors; its identification with the physical Hessian and
+the full Fredholm/Quillen family remain open.
 
 D10 now also contains a concrete symmetric finite Fourier family: its matrix
 entries depend holomorphically on complex holonomy, every cutoff is
@@ -347,120 +354,500 @@ four lifted loops          +1
 ```
 
 Thus `Z4` remains a lift/holonomy phenomenon: the two root lines are explicit
-additional global choices, not a canonical functor of the real line. The
-ambient Clifford gate now constructs an actual Spin element for every pair of
-unit reflections, proves that its projection is their exact product, and
-extends this construction to every finite list of pairs. Full surjectivity is
-now unconditional: Mathlib's finite-dimensional reflection-generation theorem
-supplies Cartan--Dieudonné and determinant parity, yielding both
-`Spin(4) → SO(4)` surjectivity and a lifting function. The ambient determinant
-descent is now proved empty: the mapping torus is nonorientable, so no honest
-continuous oriented Spin or SpinC Čech realization exists. Purely algebraic
-Spin Čech data remain conditional. The full twisted `Pin⁻(4)` projection,
-central order-four reflection generator and normal character are now
-unconditional; the ambient extension is reduced exactly to one continuous
-normalized normal-compatible Čech choice, whose existence remains open. The
-reference generator is now identified with the explicit `O(4)` flip and its
-orientation character is proved on all four `ZMod 4` phases. A corrected
-overlap-only normal interface now has the canonical ambient Čech winding built
-from the genuine covering local sections, with normalization, cocycle and local
-constancy. On an honest open chart refinement, the throat local section is
-natural under the fixed-throat inclusion, the induced coordinate lies in the
-real ambient transition source, and the ambient winding equals the throat
-`localTransitionWinding`. This closes the winding and local-section naturality
-only. The smooth orthonormal refinement is now closed independently by the
-Whitney/Gram--Schmidt construction. The Jacobian-parity comparison, exact
-`O(4)` reduction law and ambient `Pin⁻` lift remain open. A new exact chart
-gauge no-go shows why the winding cannot determine the raw Jacobian sign by
-itself: reversing one chart leaves the winding fixed and flips the determinant
-and its `ZMod 2` parity. Independently, the central orthonormal-frame gauge
-`-id` preserves the Euclidean form while changing every reduced transition.
-Compatible chart orientations and a local frame gauge are both required. At
-the pointwise level the latter is now solved exactly and uniquely by
-`actual⁻¹ ∘ expected`. Its exact conjugation-twisted Čech law and converse are
-proved algebraically; only a smooth, normal-compatible realization remains.
-For genuine chart-frame gauges, the induced vertex-gauge formula is now exact,
-preserves the strict cocycle automatically, and has unique local propagation
-from a fixed target gauge. Global smooth propagation and normal compatibility
-remain the geometric obstruction.
-On every common-root (star) subatlas, an explicit propagated vertex gauge now
-realizes all target transitions. The unclosed part is global path independence
-across the atlas, together with smoothness and the prescribed normal values.
-The global path-independence obstruction is now exact: a loop closes precisely
-when the root gauge intertwines the actual and target holonomies. This criterion
-still has to be discharged for the genuine mapping-torus atlas.
-For its cyclic fundamental holonomy, one generator equality is now proved to
-propagate to every integer winding and to close every propagated loop. The
-remaining atlas statement is the geometric identification of the actual
-orthogonal generator with the chosen reference generator up to root gauge.
-That last equality is now proved for every orthogonal frame aligning the true
-normal axis with the reference axis, including all integer windings. The
-remaining geometric construction is a smooth aligned frame on the genuine
-atlas with the required throat restriction.
-Pointwise existence is now unconditional: the ambient orthogonal group is
-proved transitive on every quadratic level set, hence every unit normal admits
-an aligning frame and the complete all-winding gauge. Only smooth choice and
-atlas/throat compatibility remain.
-The choice itself is no longer a smoothness obstruction: quaternionic left
-multiplication gives a canonical orthogonal frame for every unit normal, sends
-the reference axis to that normal, and is jointly polynomial (`C∞`) in normal
-and tangent. It remains to feed it the genuine normalized atlas normal and
-prove the required overlap/throat identities.
-The preceding construction now accepts any smooth nonvanishing normal field:
-Euclidean normalization is proved unit and `C∞`, and its quaternionic frame
-application is jointly `C∞`. Supplying the genuine atlas-coordinate normal
-with its deck/overlap laws is the remaining input.
-The unavoidable one-sided sign change is handled exactly: normalization is
-odd and the quaternionic frame changes by the central `-id` gauge under
-`n ↦ -n`. Thus no forbidden global normal trivialization is assumed.
-This is proved for every integer winding with the actual
-`normalSignRepresentation`; the normalized quaternionic frames therefore carry
-the same signed cocycle as the constructed normal line.
-Although the frames themselves differ by `-id`, their conjugated aligned
-reflection is proved identical. Hence the reflection datum descends across the
-nontrivial normal sign cocycle without choosing a forbidden global normal.
-The normalized aligned reflection is now packaged directly from any nonzero
-local normal and proved invariant under the full integer normal-sign cocycle.
-The corresponding Clifford construction is also explicit: every unit normal
-defines a genuine `Pin⁻(4)` generator, normal reversal multiplies it by the
-nontrivial central sign, and after normalization both the lift cocycle and its
-projected all-winding descent are proved. The genuine atlas normal field and
-its equality with the actual reduced transitions remain open.
-The generated integer family `w ↦ g(n)^w` now obeys the strict additive
-cocycle law, and its projection is exactly the corresponding integer power of
-the local orthogonal reflection.
-The Clifford projection is also proved equal, not merely analogous, to the
-independently constructed quaternionic aligned reflection; the equality holds
-for every integer power.
-This construction is now instantiated on the actual canonical latitude normal
-of the throat cover, whose product-coordinate representative is proved
-nonzero. Its cyclic lift and projected aligned reflection are therefore
-unconditional on every genuine cover chart.
-The complete two-winding gauge law is exact: the overlap winding controls the
-local normal sign, the lifted winding controls the cyclic phase, and an odd
-overlap contributes precisely the matching power of the central Pin sign.
-On the genuine throat cover, every integer change of anchor preserves the raw
-product normal, its generator, and every cyclic lift. Thus the unavoidable
-minus sign is correctly assigned to the quotient-chart transition itself.
-Evaluating this normal on the genuine local covering sections now produces an
-actual throat-atlas algebraic `Pin⁻(4)` transition lift. It is normalized,
-satisfies the strict triple-overlap Cech cocycle from the real local winding,
-and projects to the corresponding power of the aligned reflection. Continuity
-and equality with the full ambient reduced transition remain open. Reverse
-overlaps are exact inverses, and the genuine one-loop lift squares to the
-nontrivial central sign.
+global choices, not a canonical functor of the real normal line. The ambient
+Clifford development is now complete at the topological bundle level.
+Cartan--Dieudonné and determinant parity give `Spin(4) → SO(4)` surjectivity,
+while nonorientability proves that an honest oriented Spin/SpinC Čech
+realization on the mapping torus is impossible.
+
+The appropriate twisted construction is no longer open. The concrete
+`Pin⁻(4)` projection has kernel `{±1}`, is a covering with local sections, and
+its continuous canonical Čech cocycle defines the ambient principal bundle.
+The reference order-four generator projects to the explicit `O(4)` reflection.
+The winding, inverse and triple-overlap laws are exact on the genuine chart
+refinement, and the ambient winding equals the throat
+`localTransitionWinding`.
+
+The real-normal restriction is also explicit. The canonical latitude normal
+lift is jointly `C∞`; its coordinates in genuine tangent trivializations are
+`C∞` and nonzero. The normalized half-angle Clifford vector `e+n` supplies a
+zero-cochain that intertwines every integer winding, is pointwise independent
+of chart and path, and is continuous for every continuous nonzero horizontal
+normal field. The one-sided sign is carried by the central `-1`, reverse
+overlaps are exact inverses, and one loop squares to that central sign.
+
+The subsequent `PinC(4)` quotient, determinant character and line, winding
+twist, complex spinor representation, ambient spinor bundle, Hermitian
+pairing, D9 half-spinor bundle and its smooth section/connection interfaces
+are all constructed in the Program-P façade. This does not contradict the
+oriented SpinC no-go: these are twisted `PinC` bundles built from the genuine
+`Pin⁻` cocycle.
+
+The normal-presentation comparison sub-lock is now closed:
+`P0EFTJanusMappingTorusCanonicalLatitudeNormalPresentationComparison4D`
+defines the explicit cover-product-to-quotient-tangent coordinate map and
+proves, at the throat, the exact equality
+`canonicalLatitudeNormalCoordinate_eq_sectionPresentation`. This is a `T01`
+Pin⁻/presentation bridge, not a closure of the terminal typed
+foundation/pairing certificate.
 
 ## 5. Program P
+
+### Checkpoint d'intégration — 28 juillet 2026
+
+- Façade Lean : build vert `10039/10039`.
+- Agrégat analytique scalaire : build focalisé vert `9317/9317`; son théorème
+  marque la fermeture des imports, pas l'instanciation des interfaces physiques.
+- Audit d'intégrité : vert, compteur terminal inchangé `0/14`.
+- Nouveaux résultats : spectre SpinC signé abstrait réalisé sur une base de
+  Hilbert complète avec domaine maximal dense, auto-adjonction, gap quart,
+  Fredholm et indice nul; jauge Pin⁻ demi-angle explicite et entrelacement de
+  tous les windings; courbes LL anisotropes et cisaillements lisses de vrais
+  repères générateurs; assemblages `C²` neuf secteurs et critères concrets pour
+  Candidate A, matière, Robin/LL/BV et Einstein--Maxwell, y compris toute mesure
+  finie sous les hypothèses de continuité jointe affichées. Dans chaque secteur
+  de racine fixé, la synthèse SpinC géométrique du bloc bas-énergie
+  zéro/premier signé est désormais injective pour tout paquet fini de modes
+  du cercle et entrelace le vrai Dirac.
+- Les paquets
+  `GEO/FIELD/ANALYSIS/BOUNDARY/KJ-01/KJ-02/NATURAL/ACTION/EULER/NOETHER/`
+  `HELMHOLTZ/VARCOH-GLOBAL-01` sont
+  fermés : géométrie Candidate A sur le domaine global admissible de la
+  racine, configuration et tangent uniques, produit `H¹`/trace/domaines
+  fermés, bord canonique, complexe covariant physique, cohomologie de jauge
+  `H⁰`, classification naturelle finie, action régulière assemblée, Euler et
+  Helmholtz chartwise, Noether physique `U(1)²` et cohomologie fonctionnelle
+  globale. `DIRAC-GLOBAL-01` et `REGULATOR-GLOBAL-01` sont maintenant `DONE`
+  à leurs portées déclarées : synthèse Dirac géométrique signée, puis
+  régulateur nucléaire de référence compact et injectif sur tous les secteurs
+  ambiants complétés. `BRST/QUILLEN/ANOMALY-GLOBAL-01` conservent leurs
+  certificats de frontier intégrés. `HESSIAN-GLOBAL-01` est maintenant une
+  `FRONTIER` concrète : l’obstacle d’interface pour les domaines ouverts est
+  levé et le paquet Einstein--Hilbert à métrique générale est désormais fermé
+  par une famille locale `C²` exactement égale à l'action intrinsèque au point
+  physique. L’accord du régulateur avec une
+  Hessienne physique compatible et la trivialisation d’anomalie restent à
+  construire. `SCHEME-GLOBAL-01` est
+  formellement bloqué par deux témoins de liberté de schéma et requiert une
+  donnée microscopique.
+- Registre autoritatif : [carte de fermeture `HESSIAN-GLOBAL-01`](hessian_global_01_closure_map.md).
+  Toute liste de résidus ci-dessous est historique et cède devant ce registre.
+- `HESSIAN-GLOBAL-01` reste ouvert comme `FRONTIER`, et non `DONE`. L’API de
+  carte locale sur un domaine admissible ouvert est désormais fermée, et les deux
+  incohérences de modèle les plus nettes sont corrigées. Le tangent, le
+  domaine et la cible physiques sont désormais D10-free; l’ancien agrégat D10
+  reste réservé au régulateur/déterminant.
+  Le paquet `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbert4D` ferme
+  aussi H05/P1 : courbure Riemann/Ricci/scalaire fidèle, densité et intégrale
+  sur la mesure finie commune, `0 ∈ U`, action `C²` sur `U` et accord exact
+  avec `intrinsicEinsteinHilbertAction`, sans ansatz métrique restreint.
+  P2 possède maintenant la famille normale induite, son ouvert uniforme,
+  l'inverse, la densité et la mesure intrinsèques, mais l'action GHY existante
+  reste attachée au bord canonique fixe. P3 a les adaptateurs et cœurs denses,
+  mais attend encore l'unique pont hors-shell divergence produit–cut-bulk. P4
+  ferme le résidu mixte matière–LL et la sous-somme Fredholm SpinC×LL
+  stationnaire ; les blocs typés restants et l'indice total restent ouverts.
+  Les obligations exactes sont maintenues uniquement dans la carte ci-dessus.
+  La matière Candidate-A utilise
+  directement les sections SpinC primitives et possède une action graphe dont
+  le second Fréchet est exactement `2D+m²`, Fredholm, avec accord sur le cœur
+  spectral fini. Les gauge fermions D9 abélienne/difféomorphisme ont de vrais
+  types distincts `c/c̄/B`, un BRST nilpotent, `sΨ`, un Hessien symétrique et
+  les symboles FP attendus. La divergence métrique et le de Donder complet
+  sont maintenant de vraies 1-formes globales lisses, sans postulat nouveau.
+  Le de Donder est en outre une application linéaire. Sa contraction
+  métrique intégrée est une forme bilinéaire symétrique qui polarise exactement
+  la fonctionnelle quadratique associée; le frame tangent fini fournit
+  maintenant la caractéristique relevée qui étend exactement ce pairing à un
+  graphe Hilbert raffiné. Le Hessien borné symétrique ainsi obtenu est le
+  pairing lorentzien original sur le cœur lisse, et l'action quadratique du
+  graphe est `C∞` avec ce second Fréchet constant. Les potentiels intrinsèques
+  Candidate-A s'injectent désormais fidèlement dans le tangent physique
+  minimal. Le Lorenz possède une complétion graphe dense et injective, un
+  Riesz borné symétrique de noyau exact, et son pairing est le vrai Hessien
+  BRST réduit on-shell. Son extension abélienne off-shell ajoute sans dupliquer
+  le potentiel les vrais champs `B/c̄/c` et la caractéristique FP `δ_g d c`.
+  Son cœur BRST lisse s'injecte dans une complétion de caractéristiques définie
+  comme la fermeture de son image. Son Hessien et son représentant de Riesz
+  bornés sont symétriques, et son action quadratique `C∞` a pour second
+  Fréchet constant exactement la polarisation du `sΨ` spécialisé à la mesure
+  lorentzienne canonique. La closabilité de l'opérateur différentiel projeté
+  n'est pas encore affirmée.
+  Le produit bulk abélien étendu remplace désormais, sans le dupliquer, le
+  facteur potentiel/Lorenz par ce graphe off-shell. Avec les deux graphes de
+  Donder, la matière SpinC primitive et LL, son cœur est injectif et dense,
+  son action est `C∞`/`C²`, son second Fréchet est la somme exacte des Hessiennes
+  sectorielles et son application cœur-vers-tangent typé est injective. Cette
+  action reste une somme quadratique de secteurs, pas encore le pullback de
+  l'action covariante non linéaire complète.
+  Pour une métrique fournie, le secteur difféomorphisme possède aussi son
+  graphe off-shell réel linéarisé mono-métrique `h/c/c̄/B`: BRST carré nul,
+  égalité exacte à son `sΨ` linéarisé,
+  complétion de caractéristiques injective et dense, Riesz/Hessien symétrique,
+  action `C∞`/`C²` et inclusion non minimale typée injective. Cette porte ne
+  choisit volontairement pas comment les deux de Donder Candidate-A se
+  couplent à l'unique triplet diagonal. La porte diagonale suivante réalise
+  maintenant le choix dérivé par l'adjoint cinétique : un seul cœur à deux
+  perturbations métriques et un triplet possède BRST carré nul, graphe dense
+  injectif, Hessien/Riesz/action exacts issus du `sΨ` pondéré et raccord typé.
+  Ce facteur remplace les deux de Donder dans le produit abélien/matière/LL ;
+  le nouveau produit bulk a une action `C²`, le Hessien assemblé comme seconde
+  dérivée exacte et une application graphe/tangent typé injective. Son produit
+  imbriqué `WithLp 2` est maintenant un Hilbert réel complet, continûment
+  équivalent au chart à norme max ; le cœur reste dense/injectif et le Hessien
+  possède un représentant de Riesz borné auto-adjoint exact.
+  Le secteur fini des normalisations de faces nulles est aussi fermé sur
+  `EuclideanSpace ℝ NullFace` : l'action exacte GHY + faces/contre-termes/joints
+  y est constante, donc son Hessien et son Riesz auto-adjoint sont nuls. Cela
+  ne couvre pas la géométrie de bord générale.
+  Le raccord central
+  `P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D`
+  est maintenant explicite sur le même cœur lisse. Il
+  projette le tangent typé corrigé vers le tangent physique minimal, l'inclut
+  dans l'ancien tangent avec coordonnée D10 nulle, puis, pour tout habitant du
+  pont de carte variationnelle déjà défini, compare le vrai second Fréchet
+  covariant au Hessien du graphe diagonal. La gate
+  `P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D` corrige
+  l'interprétation de cette identité : l'ancien résidu est la Hessienne
+  physique à conserver, plus le seul défaut d'identification matière--LL.
+  La cible exacte est donc « Hessien covariant gauge-fixé = graphe BRST/
+  matière/LL + Hessienne physique », équivalente uniquement à l'annulation
+  du défaut même-action matière--LL. Annuler tout l'ancien résidu aurait
+  supprimé la dynamique Einstein--Maxwell/bord.
+  `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D`
+  porte maintenant cette comparaison directement sur le tangent physique
+  minimal D10-free. L’ancien pont étendu est conservé seulement comme
+  factorisation démontrée à coordonnée D10 nulle.
+  La gate
+  `P0EFTJanusProgramPGlobalCandidateAMatterFiniteGraphVariationalChart4D`
+  construit toutefois un premier habitant non constant et sans axiome pour le
+  sous-secteur matière : le cœur fini reçoit exactement la norme de graphe,
+  les neuf blocs de l'action covariante sont `C²`, son pullback est le spectateur
+  constant plus l'action quadratique SpinC, et son vrai `globalCandidateAHessian`
+  est exactement le pullback du Hessien `2D+m²`. Cela ferme le raccord de carte
+  matière, mais pas le pont diagonal total ni son résidu métrique/bord.
+  La gate
+  `P0EFTJanusProgramPGlobalCandidateABoundaryReparametrizationVariationalChart4D`
+  raccorde aussi les normalisations des générateurs nuls à l'action covariante
+  réelle : les neuf blocs sont `C²`, le pullback est constant et le vrai
+  `globalCandidateAHessian` est nul. Sa portée reste la reparamétrisation de
+  normalisation; elle ne traite ni déplacement normal ni géométrie de bord générale.
+  Cette gate fournit aussi un prolongement générique de toute carte covariante :
+  le Hessien étendu est exactement le pullback par la première projection et
+  tous les blocs mixtes avec une normalisation sont nuls. L'instanciation avec
+  la carte matière conserve donc exactement `2D+m²`, sans terme croisé de bord.
+  `P0EFTJanusProgramPGlobalLocalVariationalChart4D` retire l’ancien obstacle
+  d’interface : une famille locale ne fournit des données physiques que sur un
+  ouvert `U` du modèle normé, avec `0 ∈ U`, et demande les neuf régularités
+  `ContDiffWithinAt` seulement dans `U`. L’ouverture les convertit en vraies
+  régularités ambiantes au point admissible; l’Euler et le Hessien de Fréchet
+  agissent donc sur tout l’espace tangent du modèle et le Hessien est symétrique.
+  Le fallback hors de `U` n’ajoute aucune donnée physique. Toute ancienne carte
+  globale se replonge par `U = univ`, avec action, Euler et Hessien inchangés.
+  `P0EFTJanusProgramPGlobalCandidateADiagonalLocalCovariantHessianResidualBridge4D`
+  raccorde maintenant ce Hessien local au cœur lisse diagonal déjà construit.
+  À tout point admissible, la Hessienne des neuf blocs se scinde exactement
+  en Hessienne physique et Hessienne matière--LL. Le graphe augmenté conserve
+  la première; son accord avec le Hessien covariant gauge-fixé équivaut à la
+  seule identification même-action matière--LL. Le cas historique `U = univ`
+  reste compatible et aucun bloc n’est dupliqué.
+  La brique racine ponctuelle n’est plus limitée à une dérivée au centre :
+  `P0EFTJanusPositiveRawSplitCharpolyContDiffLocalRootBranch4D` construit,
+  autour de tout target à spectre réel strictement positif scindé, un domaine
+  de perturbations ouvert contenant `0`, une branche `C²` sur tout ce domaine
+  et l’identité carrée exacte. Ce n’est ni diagonal ni Minkowski. Plus
+  généralement, toute racine continue vérifiant l’identité carrée et la
+  bijectivité de Sylvester point par point est automatiquement `C²` dès que sa
+  cible l’est. Le recollement local n’est donc plus manquant.
+  `P0EFTJanusContinuousMatrixFieldContDiffLocalRootBranch4D` ferme désormais
+  l’étape intermédiaire `C⁰` sur toute base compacte : la régularité de
+  Sylvester ponctuelle induit une équivalence bornée sur l’espace de Banach des
+  champs matriciels continus, puis un domaine uniforme ouvert contenant `0`,
+  une branche `C²` et l’identité carrée exacte.
+  `P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0Space4D` réutilise ensuite
+  les inclusions continues déjà prouvées `C⁰ → L²` et `H¹ → L²` pour construire
+  leur égaliseur fermé. Ce véritable espace de Banach scalaire `C⁰ ∩ H¹`
+  contient exactement le cœur lisse, sans plongement de Sobolev ni nouvel
+  axiome. Pour ne pas supposer sa densité simultanée,
+  `P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0CoreClosure4D` prend
+  explicitement la fermeture de ce cœur dans la norme forte; elle est complète,
+  injective dans l’égaliseur et l’image lisse y est dense par construction.
+  `P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0SmoothLeibniz4D` réutilise
+  ensuite le produit scalaire lisse existant et prouve la formule exacte du
+  premier jet `(fg, f·dg + g·df)`, ainsi que sa bilinéarité vers ce cœur.
+  `P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0ProductExtension4D` ferme
+  aussi l’estimation forte par Hölder `L∞·L² → L²` et prolonge canoniquement ce
+  produit en une application bilinéaire continue sur toute la fermeture,
+  avec accord exact sur le cœur lisse et sans hypothèse supplémentaire.
+  `P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0MatrixProduct4D` assemble
+  maintenant cette multiplication sur les `4 × 4` coefficients : le produit
+  matriciel est bilinéaire continu, son représentant `C⁰` est exactement le
+  produit ponctuel, et le carré est `C∞` avec dérivée de Sylvester exacte.
+  `P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0LocalRootBranch4D`
+  réutilise alors l'inverse ponctuel déjà construit : pour toute racine
+  matricielle lisse générale dont le Sylvester est bijectif point par point,
+  ses coefficients inverses sont lisses et définissent une véritable
+  équivalence bornée sur le cœur fort. Le théorème d'inversion fournit ainsi
+  un ouvert `U` du Banach tangent entier, `0 ∈ U`, une branche `C²` et
+  l'identité carrée exacte, sans cas diagonal ni nouvel axiome.
+  La restriction artificielle aux matrices `4 × 4` est maintenant levée.
+  `P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0FiniteMatrixProduct4D`
+  construit le produit fort associatif pour toute taille finie, avec accord
+  lisse/continu et carré `C∞` à dérivée de Sylvester exacte.
+  `P0EFTJanusProgramPGlobalCandidateAFiniteFrameRootBridge4D` encode ensuite la
+  racine Candidate-A intrinsèque dans les générateurs tangents finis déjà
+  disponibles. Comme cette famille est redondante, son identité est le
+  projecteur lisse `P`, pas la matrice ambiante `I`.
+  `P0EFTJanusProgramPGlobalCandidateAStrongFiniteFrameCorner4D` et sa gate
+  `...CornerAlgebra4D` construisent le coin fermé complet `P M_N P`, y placent
+  exactement la racine intrinsèque et internalisent produit, carré et
+  Sylvester. Enfin `...CornerLocalRoot4D` fournit une brique IFT Banach
+  générique et, sous bijectivité du Sylvester fort au centre, une branche de
+  racine sur un ouvert `U`, avec `0 ∈ U`, branche `C²` sur tout `U` et identité
+  carrée exacte sur `U`. Cela n'impose ni repère global ni nouvel axiome physique.
+  `P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0FiniteMatrixLinearEquivLift4D`
+  relève maintenant toute famille lisse d'opérateurs matriciels finis
+  ponctuellement bijectifs en une équivalence bornée sur le cœur fort. Les gates
+  `...StrongFiniteFrameSylvesterRegularity4D`, `...SylvesterLocalRoot4D` et
+  `...SylvesterCornerLocalRoot4D` appliquent cette brique au Sylvester
+  Candidate-A : elles étendent l'opérateur par l'identité hors du coin, prouvent
+  l'accord fort par densité, la commutation au projecteur, puis la bijectivité
+  du Sylvester du coin à partir de la régularité intrinsèque ponctuelle. Le
+  branche locale `C²` sur tout un ouvert `0 ∈ U` en découle donc sans nouvel
+  axiome.
+  La même gate formalise maintenant la restriction honnête : le sous-type
+  `GlobalCandidateASylvesterRegularGeometry` porte exactement la preuve
+  intrinsèque, et une carte locale déclarée régulière transmet cette branche à
+  chacun de ses paramètres admissibles.
+  `P0EFTJanusProgramPGlobalStrongH1C0AnalysisDomain4D` applique cette brique au
+  type fini `GlobalBulkSobolevSlot` déjà existant : toutes les
+  coordonnées bulk métriques, jauge et fantômes ont donc un produit complet,
+  compatible dans `L²`, où le vrai tangent lisse se relève exactement. Le
+  L'encodage covariant général, l'algèbre forte du coin, le transport de
+  régularité et l'interface locale sont donc construits. La portée honnête est
+  la strate ouverte des racines intrinsèquement Sylvester-régulières : le type
+  non qualifié `GlobalCandidateAGeometry` contient aussi des racines singulières.
+  `P0EFTJanusProgramPGlobalCandidateAPositiveSelectedRootSylvester4D` ferme le
+  cas physique sélectionné : l’égalité de la racine stockée au sélecteur
+  spectral positif implique sa régularité Sylvester intrinsèque et active la
+  branche locale forte, sans ajouter cette régularité comme axiome.
+  `P0EFTJanusProgramPGlobalCandidateALocalRootJointRegularity4D` montre en plus
+  qu'une cible forte `C²` tire cette branche en arrière sur un ouvert et donne
+  automatiquement des coefficients de racine conjointement continus en
+  paramètre et point d'espace-temps, avec carré exact.
+  La couche uniforme d'ordre deux est maintenant construite :
+  `P0EFTJanusMappingTorusCanonicalPhysicalScalarC2JetCore4D` ferme le cœur
+  scalaire complet valeur/premier jet/second jet et son Leibniz exact, puis
+  `...ScalarC2ToStrongH1C0Bridge4D` l'envoie continûment vers le cœur fort.
+  Les gates `...C2FiniteMatrix*`, `...C2LocalRootBranch4D` et
+  `...C2LocalRootJointRegularity4D` donnent le produit matriciel fini
+  associatif, le carré `C∞`, l'inverse de Sylvester, une branche locale `C²`
+  sur un ouvert et la continuité jointe de chaque jet complet de coefficient.
+  Enfin les trois gates `...CandidateAC2FiniteFrame*` construisent le coin
+  intrinsèque complet `P M_N P`, y placent la racine sélectionnée et transportent
+  la régularité Sylvester intrinsèque jusqu'à une vraie branche locale C² à
+  carré exact. Aucun repère global ni axiome physique n'est ajouté.
+  L'intégrale contre toute
+  mesure finie est maintenant linéaire continue sur le cœur scalaire fort :
+  des lifts forts `C²` du volume/courbure et du volume/pairing donnent les
+  vraies lignes Einstein--Hilbert/Maxwell `C²`. Le chart local de racine
+  d'ordre deux n'est donc plus manquant. Restent l'application métrique
+  générale vers le cœur C² qui construit effectivement les lifts de
+  volume/courbure et volume/pairing, puis les neuf données d'action `C²`.
+  À la métrique Candidate-A, ce cœur s'injecte conjointement dans le graphe et
+  dans `GlobalGaugeFixedPhysicalFieldTangent`, avec le triplet
+  difféomorphisme maintenu nul. Le cœur LL complet
+  `llAuxMetric × llMeasure × llField` possède lui aussi une complétion graphe
+  dense et injective et un Riesz auto-adjoint égal au Hessien same-action,
+  termes croisés compris. Il porte maintenant une action quadratique `C∞` dont le
+  second Fréchet constant est exactement ce Hessien. À un fond stationnaire,
+  l'équation de mesure force `llField = 0`; les poids auxiliaires et termes
+  croisés s'annulent, et le quotient par le noyau exact de la projection champ
+  est continûment équivalent à `LLH1Space`. Son Riesz quotient est l'identité,
+  donc Fredholm d'indice zéro. Ce résultat est strictement on-shell/flux nul et
+  ne prouve aucune coercivité ou fermeture d'image LL off-shell. Le contrôle
+  opératoriel off-shell (bornitude, auto-adjonction, noyau/radical exact) est
+  donc fermé. La réduction auto-adjointe montre toutefois que portée fermée et
+  radical fini suffisent automatiquement au conoyau fini; seules ces deux
+  estimées LL restent indépendantes.
+  Les deux graphes de Donder métriques et le graphe Lorenz
+  sont aussi assemblés dans un sous-chart physique commun
+  métrique-plus-Abelien : son action est `C∞`, son second Fréchet est la somme
+  exacte des deux pairings de Donder et du Hessien BRST Lorenz, et son cœur
+  lisse s'injecte dans le tangent gauge-fixed typé en gardant les coordonnées
+  non minimales nulles. Avec le graphe matière SpinC et le graphe LL, il forme
+  maintenant un produit bulk dont l'action quadratique est exactement la
+  somme des trois actions de graphe et dont le cœur jauge lisse × coefficients SpinC
+  finis × LL lisse s'insère linéairement, injectivement et densément pour la
+  vraie norme de graphe. À la métrique Candidate-A et à `matterMassSquared`,
+  ce même cœur s'enregistre conjointement dans le graphe et dans les slots
+  exacts de `GlobalPhysicalFieldTangent`, avec application conjointe injective.
+  Aucune application de toute la complétion graphe vers le tangent lisse n'est
+  affirmée. Ce sous-chart n'est pas le chart total. Manquent encore l'adjoint
+  différentiel/Green et l'identification de cette somme quadratique au
+  pullback de l'action covariante non linéaire complète. Le remplacement
+  abélien nondupliquant est maintenant construit; restent son identification
+  avec l'action covariante et la closabilité différentielle. Le bloc
+  difféomorphisme diagonal existe, son couplage est fixé par l'adjoint
+  cinétique pondéré et son insertion bulk est effectuée. Manquent encore les vrais
+  blocs same-action normal et bord géométrique général, les blocs
+  Einstein--Maxwell en directions
+  métriques générales,
+  les deux estimées LL off-shell et l'assemblage Fredholm same-action. Le cœur
+  graphe/typé est déjà fidèle; la cible spectrale historique `ι × Fin 8` ne
+  représente pas la multiplicité totale. Le no-go interdit toujours de
+  réutiliser silencieusement l'ancienne cible D10-étendue et de déduire le
+  Fredholm de `C²` sans strate elliptique non dégénérée explicite.
+- `ADM/STABILITY/VACUUM-GLOBAL-01` ont maintenant des frontières intégrées :
+  chaîne Legendre/contraintes/rang exacte en FLRW, noyau contraint et courbe
+  isoénergétique exacts, minimum proportionnel unique et no-go de rang du vide.
+  Aucun n'est marqué `DONE` : shifts et crochet fonctionnel, exclusion BD,
+  stabilité du quotient et action effective microscopiquement fixée manquent.
+- `MICRO-GLOBAL-01` et `SCALE-GLOBAL-01` ont maintenant des certificats de
+  no-go intégrés :
+  deux parents admissibles produisent des mixages réduits différents, tandis
+  que géométrie, Dirac/LL, chaleur et charges gardent une orbite commune de
+  redimensionnement. Il faut encore une loi microscopique sélectionnante, ses
+  parties finies et un ancrage dimensionné indépendant; aucun rayon observé
+  n'est injecté.
+- Aucune nouvelle hypothèse physique ni axiome métier; axiomes transitifs
+  constatés : `propext`, `Classical.choice`, `Quot.sound`.
+- La liste exhaustive canonique des 24 paquets globaux et 14 portes reste
+  [`program_p_operational_todo.md`](program_p_operational_todo.md).
 
 The explicit nonabelian `so(3)` ghost triple and the corrected Koszul
 differential are now closed for the entire currently implemented field/BV
 package: linear matter/gauge/auxiliary sectors, positive diagonal metrics,
 bulk and throat antifields, master actions, PT covariance, and boundary trace.
+The nonlinear frontier also has one unified square-zero field/ghost/BV/boundary
+packet, functorial intrinsic pullbacks on Maxwell one-forms and covariant
+two-tensors, and a canonical coadjoint antifield representation. The Maxwell
+pullback now has the same genuine fiber derivative, smooth global realization,
+and linear flow-to-ghost contract already available for metric tensors. The
+measured-density convention is now explicit: scalar coefficients form a
+finite pullback representation, their two-ghost BRST square vanishes, and the
+existing integrated scalar action is covariant when its measure is pulled
+back simultaneously. On the fixed throat, the already proved scalar bracket
+identity now also induces a coadjoint action on algebraic scalar antifields,
+with square-zero obstruction and invariant boundary pairing. For
+Maxwell/metric fields the global bracket identity
+`[L_c,L_d]=L_[c,d]` is an automatic consequence of Cartan evaluation. For
+Maxwell one-forms, the global smooth Cartan action is now constructed,
+bilinear in the ghost and potential, and packaged as
+`GaugePotentialCartanActionData`; its `SmoothGhostLieRepresentation` and
+bracket law are therefore closed. The associated field obstruction,
+algebraic coadjoint-antifield obstruction and canonical evaluation pairing
+are BRST closed; no geometric or integrated Maxwell antifield dual is claimed.
+The metric residual is likewise tensorial in both test fields, packaged as a
+symmetric covariant fiber tensor and specialized to smooth Janus tensors.
+Its finite-frame local formulas now reassemble into the global smooth
+bilinear `smoothMetricCartanAction`, packaged as
+`symmetricTensorCartanActionData`; the induced metric Lie representation and
+bracket law are closed. The canonical Maxwell and metric Cartan data are now
+combined concretely by `canonicalTensorialCartanActionData`, and their
+Maxwell/two-metric algebraic coadjoint antifields have square-zero
+obstructions and invariant pairings. Identification of these
+algebraic duals with geometry has advanced: the existing integrated metric
+pairing now defines a genuine linear morphism from smooth two-metric
+antifields to the algebraic dual. Finite-frame positive dualizers now prove
+injectivity/nondegeneracy in both the bulk and throat sectors. Coadjoint
+equivariance remains the precise separate obligation and is now
+reduced exactly to the integrated skew-adjointness identity
+`B(L_c α,h)+B(α,L_c h)=0`; no additional functional-BV assumption is hidden.
+The invariant-measure integration-by-parts theorem for the genuine canonical
+time and three rotation generators is now public, and its coefficient-field
+skew form is recorded in the global BRST certificate. This is an LL
+coefficient result, not the intrinsic tensor-pair identity: with a fixed
+background metric/measure, all-ghost skew is generally false outside a
+Killing, measure-preserving subalgebra (or without transporting the
+metric/measure).
+The existing affine nine-block diffeomorphism-symmetry interface is now
+recorded beside this packet: any inhabitant yields assembled-action invariance
+and the true Euler/Noether identity, while nonlinear nilpotence and boundary
+stability are independent packet theorems. The certificate does not identify
+the packet differential with the chart generator or Candidate-A action.
+The exact conversion between transported and fixed measures is now isolated:
+nine-block covariance with a transported measure becomes the existing
+fixed-measure invariance contract whenever their equality is supplied. For an
+arbitrary measure-preserving smooth self-diffeomorphism this equality, and the
+corresponding fixed-measure general-Lorentz scalar action invariance, are
+theorems.  The five measure-dependent Candidate-A block equalities are now
+reduced to a supplied field-level transport contract: interaction,
+Einstein--Hilbert plus and minus, and Maxwell plus and minus follow from seven
+supplied smooth-field pullback identities. The canonical-throat fixed GHY
+control vanishes at its base parameter, while the mobile sourced Robin block
+must be transported explicitly. Adding supplied equalities for the four
+remaining matter/LL/Robin/finite-BV blocks constructs the complete nine-block
+contract. For the interaction identity itself, pointwise
+determinant/root/spectral naturality reduces the missing geometry exactly to
+pullback of the plus musical metric, conjugation of `rootAt`, and transport of
+the regular basis. The canonical measure specializes this reduction to the
+installed time-translation diffeomorphisms without a new measure assumption.
+A concrete conformal time orbit `ℝ → GlobalFieldConfiguration` is now
+constructed by translating an explicit positive scale and its PT partner; its
+zero and additive action laws are exact. It is not an action-data family or a
+chart lift. Thus no concrete `GlobalCandidateAActionData`, variational chart,
+arbitrary global-field pullback or full chart flow is constructed, and the
+identity flow remains formally possible in the abstract interface.
+In particular, the Candidate-A action-data gravity/Maxwell API still passes
+through the legacy `RegularGeneralLorentzMetric.frameEquiv` global-frame
+requirement on the nonorientable quotient, whereas the newer scalar geometry
+and standalone fixed-potential Maxwell action are frame-free. The static
+frame-free volume and fixed-potential Maxwell components are now closed for
+every `SmoothGeneralLorentzMetric`. The remaining Candidate-A prerequisites
+include general `C²`/Fréchet metric dependence, interaction and gauge-varying
+or mixed Maxwell data, and the variational chart/core. The
+genuine holonomic transition has a public third jet whose
+two outer directions commute. The coordinate-basis components of the
+endomorphism curvature used by the intrinsic Bianchi gate are proved equal to
+the Riemann components used by Einstein--Hilbert. A single fixed holonomic
+transition also satisfies the full Levi--Civita/Christoffel law as a
+neighborhood `EventuallyEq`, after proving that its fixed and re-anchored
+local inverses agree as germs. This law is now extended to arbitrary vectors,
+differentiated with all Jacobian/connection product terms, and
+antisymmetrized. The symmetric second and third transition jets cancel, giving
+the unconditional tensorial law
+`J (R₁(u,v)z) = R₂(Ju,Jv)(Jz)` and its endomorphism-valued corollary.
+Ricci is now the trace of this arbitrary-vector curvature and its matrix obeys
+the same Jacobian congruence as the metric. Inverse-metric contraction proves
+chart independence of the local scalar curvature. The unconditional total
+holonomic cover and local-inverse smoothness then glue it to the genuine
+`globalSmoothScalarCurvature`; every legacy `RegularGeneralLorentzMetric`
+therefore produces a `RegularEinsteinHilbertMetric`. The standalone
+`frameFreeEinsteinHilbertAction` now integrates the computed scalar against
+any supplied finite nonzero action measure. For every
+`SmoothGeneralLorentzMetric`, the positive smooth chart-independent
+`globalMetricVolumeRatio` weights the explicit intrinsic reference measure to
+the finite nonzero `generalLorentzActionMeasure`, recovers the canonical
+measure at the intrinsic metric, and gives
+`generalLorentzFrameFreeEinsteinHilbertAction`. This closes only the static
+relative-volume construction: covariance of the fixed reference under
+arbitrary diffeomorphisms and `C²`/Fréchet dependence on the metric are not
+proved. Candidate-A interaction, gauge-varying or mixed Maxwell regularity and
+the frame-free variational chart/core remain open. No formal emptiness theorem
+for the legacy type is claimed.
+On the Hessian side, every supplied differentiable genuine nonlinear
+diffeomorphism flow now gives, at a critical chart configuration, a
+two-sided kernel equal to the span of its pointwise generators. The genuine
+Hessian descends exactly both by this flow submodule and by its sum with the
+physical `U(1)²` directions. This is conditional on the flow symmetry,
+generator differentiability, criticality and the still-supplied chart; it
+does not construct those data.
+The ninth `finiteBV` functional is now separately closed under its genuine
+finite null-generator reparametrization, reusing the generator/interval data
+already carried by the global boundary package and requiring only the two
+displayed density-integrability hypotheses. This does not inhabit the
+nine-block affine ghost interface: existing finite-covariance results use a
+nonlinear pullback and transported measure, whereas that interface currently
+uses an affine chart orbit with fixed measure.
+The already-proved arbitrary-path diffeomorphism invariance of the historical
+eight-scalar matter action is now imported by the global BRST certificate;
+this scoped result does not yet cover the Candidate-A SpinC matter block.
 Derivative kernels, completed spaces, and arbitrary functionals remain a
 strictly stronger open refinement.
 
-The exhaustive remaining-work checklist is
-[`program_p_exhaustive_todo.md`](program_p_exhaustive_todo.md).
+The canonical remaining-work register is
+[`program_p_operational_todo.md`](program_p_operational_todo.md).
 
 ### P0, P-A, P-B and P-C
 
@@ -479,21 +866,197 @@ The exhaustive remaining-work checklist is
   smooth finite-dimensional coefficient fields invariant under every deck
   iterate. Their descent to the same effective quotient is continuous and
   injective, and a constant two-metric/two-scalar/identity-root coefficient
-configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Joint `C∞` latitude regularity proves `CanonicalLatitudeNormalLiftContinuous`, and the radial--polar Euclidean calculation now proves the coarea inequality. The canonical physical trace bound, continuous operator, smooth agreement and existence theorem are therefore unconditional. Intrinsic Sobolev identification remains open. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General covariant tensors now have an exact involutive analytic-PT pullback preserving symmetry, nondegeneracy and Lorentz inertia. Tangent and nested Hom-bundle coordinates discharge `AnalyticPTTensorPullbackLocalSmoothness` unconditionally, yielding an involutive smooth pullback on the smooth Lorentz domain. The attached musical equivalence now pulls back with the same tensor, giving an involutive PT action and sector exchange on `SmoothGeneralLorentzMetric`; the holonomic scalar density is pointwise PT-covariant with coherently transported field and frame. Integrated spacetime PT invariance, BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
-  A nonempty scoped common-domain package now forces one configuration to feed
-  the induced diagonal metrics/root, `LLH1`, the smooth boundary trace and typed
-  D7/D9/D10 accessors. It does not yet identify the action tangent, Hessian,
-  D10 diagonalization, regulator or Fredholm/boundary domains; these residuals
-  remain one explicit contract. That contract now carries concrete extension,
-  linearity, isometry, modal-density, derivative, spectral-pairing and domain
-  equalities rather than unconstrained `Prop` readiness flags.
-  The integrated-invariance limitation in the preceding snapshot is now
-  superseded: for `SmoothGeneralLorentzMetric`, coherent PT transport of the
+configuration inhabits it. The quotient itself now has the analytic manifold structure, and both the spacetime quotient and fixed throat are compact. Smooth quotient/throat coefficient fields form real vector spaces; smooth fields inject into the genuine completed `L²` space for finite Borel measures, with Hilbert structure under explicit fiber hypotheses and an isometric PT equivalence for PT-preserving measures. Smooth throat trace, PT-equivariance and a nonempty exact Dirichlet condition are proved. A finite global `C∞` tangent-generating family is now constructed from a finite trivialization cover and a subordinate partition of unity. It feeds the completed first-jet graph `H¹`, whose smooth fields are dense and whose forgetting map to `L²` is continuous. For spacetime measure pushed forward from a finite throat measure, the continuous trace has exact norm bound `1`. The canonical spacetime/throat volumes now instantiate this complete graph `H¹`; existence of the physical trace is equivalent exactly to one smooth codimension-one inequality. The exact FTC/Fubini estimate, twisted analytic latitude collar, throat-measure pushforward and `L²` trace identity are proved. The normal derivative is reconstructed exactly by the finite global frame. Joint `C∞` latitude regularity proves `CanonicalLatitudeNormalLiftContinuous`, and the radial--polar Euclidean calculation now proves the coarea inequality. The canonical physical trace bound, continuous operator, smooth agreement and existence theorem are therefore unconditional. `P0EFTJanusProgramPGlobalAnalysisDomain4D` now connects the true tensor/scalar tangent coordinates to a finite product `H¹`, its continuous throat trace, closed Dirichlet kernel and common SpinC/D10/LL domains; the earlier coefficient-only Sobolev TODO is closed. A populated independent-field package includes positive diagonal metrics, matter, gauge-coordinate, ghost, auxiliary and LL/throat coefficients; metric/root/trace fields are uniquely induced. One simultaneous independent-field curve now gives the exact componentwise derivatives of both induced metrics, the principal root and both matter traces, with zero induced cross-response from gauge, ghost, auxiliary and LL directions. The abelian `U(1)^2` sector is upgraded to intrinsic smooth one-forms with `A ↦ A+dλ`, exact diffeomorphism covariance, nilpotent BRST `s(A,c)=(dc,0)` and a bridge to the independent ghosts. General covariant tensors now have an exact involutive analytic-PT pullback preserving symmetry, nondegeneracy and Lorentz inertia. Tangent and nested Hom-bundle coordinates discharge `AnalyticPTTensorPullbackLocalSmoothness` unconditionally, yielding an involutive smooth pullback on the smooth Lorentz domain. The attached musical equivalence now pulls back with the same tensor, giving an involutive PT action and sector exchange on `SmoothGeneralLorentzMetric`; the holonomic scalar density is pointwise PT-covariant with coherently transported field and frame. Integrated spacetime PT invariance, BV ghosts and the curved Euler--flux PDE remain open. Global scalar `p = d phi` is the genuine manifold differential with exact throat/PT chain rules. Its fixed-frame diagonal global action now uses the inverse and volume of the same metric, and its fixed-metric/measure scalar variation is proved pointwise and after integration under an explicit contract. Arbitrary smooth inclusion-preserving diagonal diffeomorphisms now pull back all independent sectors with exact action laws, natural throat trace and a manifold tangent generator for smooth orbits. The LL measure/flux fields define an actual finite-measure worldvolume integral on the compact throat with a nonempty zero branch. The admissible null-variation domain is the open set `Theta ≠ 0`, deliberately excluding the proved singular point.
+  The global field/domain package forces one root-admissible configuration to
+  feed both general Lorentz metrics, primitive SpinC matter, D9, the derived
+  throat trace and a tangent without a duplicate metric or physical D10 slot.
+  Its physical common closed domain contains bulk Dirichlet `H¹`, SpinC graph
+  and LL completion; a separate extended domain adds D10 for regulator and
+  determinant work. The regular Candidate-A action and its
+  complete chartwise Euler map are now assembled on the same configuration.
+  Its actual symmetric Frechet Hessian and complete D10 spectral regulator
+  layers are integrated. `REGULATOR-GLOBAL-01` is now closed separately by one
+  positive-time reference operator on the exact bulk `L²`--SpinC--D10--LL
+  product: it is compact, injective and nuclear. The bulk also has a compact
+  Dirichlet inclusion and Gram regulator, with an adjoint lift of zero trace;
+  SpinC and D10 retain their exact physical nuclear heats. Exact D9 continuum
+  heat is nuclear under its explicit summability hypothesis, while finite
+  packets are unconditional. The exact LL Hessian heat is compact only in
+  finite dimension. No equality between the reference regulator and the
+  global Hessian is asserted: D9 growth, LL elliptic heat, dense geometric
+  synthesis and identification of the remaining action blocks with the
+  gauge-fixed Fredholm family remain under `HESSIAN-GLOBAL-01`.
+  The 30 July closure audit makes this obstruction structural rather than a
+  generic residual TODO. D10 has now been removed from the physical target
+  and the Candidate-A/primitive-SpinC matter mismatch is closed directly.
+  Typed nonminimal BRST gauge fermions are also available, and the paired
+  Abelian one is now global, has an injective off-shell graph-feature map and
+  a canonical-volume Hilbert feature completion with exact `C∞` same-action
+  Hessian; its core is attached to the corrected typed gauge-fixed tangent.
+  The nonduplicating extended bulk now replaces the old Lorenz factor by this
+  off-shell graph and combines it with the de Donder pair, primitive SpinC
+  matter and full LL graph; its core is injective/dense, its quadratic action
+  is `C∞`/`C²` with the exact sector-sum Hessian, and its typed core map is
+  injective. This does not identify the sum with the nonlinear covariant
+  action. The same five factors now have a continuously equivalent nested
+  `WithLp 2` Hilbert chart, including the SpinC graph with its `L²` graph norm.
+  The transported action is `C²`, has the same constant second variation, and
+  its bounded Riesz representative is self-adjoint; the smooth core remains
+  dense and injective. This uses the symmetric paired ghost/antighost Hessian
+  and does not assert standalone scalar-FP self-adjointness. Differential
+  closability is supplied only by the intrinsic
+  conditional Green-core adapter described next. For the intrinsic
+  metric, each Abelian FP component is nevertheless now identified pointwise
+  and in physical `L²` with the canonical mass-zero scalar Euler operator. Its
+  adjunction defect is exactly the scalar skew-density integral, and pairwise
+  smooth-core symmetry is equivalent to that integral vanishing. The new FP
+  Green--Stokes bridge composes the existing unrestricted scalar Green data
+  with this identity: the defect is then exactly the oriented cut-bulk current
+  and vanishes on every existing Green-isotropic domain (in particular
+  Dirichlet, Neumann, real Robin and PT-fixed). It adds no axiom and does not
+  construct that scalar Green datum. Conditional on that datum, the existing
+  mass-zero Green core is exactly each FP component; the established cutoff
+  theorem makes its minimal core dense and its completed graph projection
+  injective. The four `Sector × Fin 2` components now form a completed paired
+  graph with dense actual smooth-ghost core and a single-valued ambient-range
+  realization agreeing with the true paired FP map. Thus intrinsic projected
+  closability is no longer an additional premise once the Green datum is
+  supplied. The existing completed-boundary-triple and analytic-closure bricks
+  are now specialized to that exact FP core: for any supplied Lagrangian
+  boundary condition and analytic package, all four real components have a
+  dense realization domain and componentwise equality between actual-adjoint
+  and realization domains. Their finite paired inclusion is dense/injective
+  and agrees with the true FP map on the admitted smooth core. No inhabitant of
+  the analytic package is constructed, so the result is conditional and is not
+  a total-Hessian domain theorem. The stronger existing graph/direct-coercive
+  endpoint is now connected too: its canonical-normal PDE data, graph estimate,
+  Lagrangian condition and shifted coercivity already imply Rellich, a bounded
+  real resolvent and actual scalar adjoint-domain equality; its admitted smooth
+  realization is exactly the intrinsic FP component. Its local-divergence datum
+  reconstructs the global Green--Stokes datum with definitionally the same
+  scalar core. This removes any separate Green, new
+  adjoint-regularity or Rellich premise, but the endpoint data remain
+  uninhabited. The unconditional full 4D
+  `integral_eq_divergence` theorem is
+  still missing; the total Hessian-domain identification and the
+  general-metric measure-compatible adjoint bridge also remain open. The
+  genuine general-metric diffeomorphism
+  Faddeev--Popov operator is also now constructed, without hypotheses, as the
+  existing de Donder operator composed with the existing global Cartan metric
+  action `c ↦ L_c g`. For one supplied metric this operator now feeds a full
+  mono-metric off-shell `h/c/c̄/B` feature graph with square-zero BRST, exact
+  `sΨ`, symmetric Riesz/Hessian, `C∞`/`C²` action and injective typed
+  nonminimal attachment. By itself it makes no paired Candidate-A choice; the
+  kinetic-adjoint bridge now selects the unique Einstein-weighted condition
+  and global FP composite, and the diagonal off-shell gate realizes that
+  selection on one shared two-metric/one-triplet core before insertion into
+  the Abelian/matter/LL bulk graph.
+  The old
+  D10-extended realization remains excluded by the zero-Hessian no-go.
+  `HESSIAN-GLOBAL-01` is an open analytic `FRONTIER`. The open-domain
+  local-chart interface is available, but the zero-Hessian no-go proves that
+  `C²` regularity alone cannot yield the terminal infinite-dimensional
+  Fredholm realization. Finite-measure integration is now a continuous linear
+  functional on the strong scalar core, so strong `C²` lifts of the actual
+  volume/curvature and volume/pairing imply `C²` for the genuine
+  Einstein--Hilbert and Maxwell action lines. The complete C² jet/root core is
+  now constructed; what is not yet built is the actual general-metric map into
+  it for volume, scalar curvature and Maxwell pairing. The completed
+  diagonal bulk graph still needs identification with the full nonlinear
+  covariant action, the normal and boundary same-action blocks, the
+  arbitrary-general-metric Einstein--Maxwell blocks and the final faithful
+  Fredholm sum on an explicitly constructed nondegenerate elliptic analytic
+  stratum.
+  In particular one typed diffeomorphism triplet cannot reproduce the old sum
+  of two independent de Donder squares. Its replacement projection is now
+  fixed to `F₊/(2κ₊)+F₋/(2κ₋)` and realized by the shared off-shell graph;
+  the remaining tasks concern full-action/domain closure, not a choice of
+  signs or weights.
+  The intrinsic paired potentials now inject into the corrected minimal
+  tangent. The refined de Donder graph now extends the exact Lorentzian pairing
+  and carries a genuine `C∞` quadratic action. Its two metric copies and the
+  Lorenz graph form a common physical gauge `C²` subchart whose smooth core
+  injects into the typed gauge-fixed tangent with nonminimal coordinates fixed
+  at zero. The complete three-slot LL sector separately has a dense injective
+  graph completion and a `C∞` quadratic action with exact constant same-action
+  Riesz Hessian. LL stationarity itself forces `llField = 0`; the Fredholm
+  criterion and index-zero corollary now derive this fact directly, without a
+  separately supplied zero-flux hypothesis. After quotient by the exact
+  field-projection kernel, the Riesz operator is the identity and is Fredholm
+  of index zero. This does
+  not supply off-shell coercivity/closed range or the final coupled Fredholm
+  estimate. The full off-shell Riesz operator is now proved self-adjoint, and
+  a generic reduction plus its LL specialization show that closed range and
+  finite-dimensional radical automatically give finite-dimensional cokernel.
+  These are the two independent LL estimates still missing.
+  The integrated-invariance and canonical scalar Euler--flux limitations in
+  the preceding snapshot are now superseded; nonlinear BV remains open. For
+  `SmoothGeneralLorentzMetric`, coherent PT transport of the
   scalar and tangent family gives exact density covariance, iff transport of
   integrability and invariance of the action against the canonical quotient
-  Lorentz measure. The tangent family remains supplied, and this reference
-  measure is not claimed to be every general metric's own volume. At fixed
-  metric, the affine scalar line now has an exact pointwise/integrated
+  Lorentz measure. The tangent family remains supplied explicitly. Separately,
+  every `SmoothGeneralLorentzMetric` now has a statically constructed finite
+  nonzero relative volume measure. `P0EFTJanusMetricVolumeDensityHessian4D`
+  proves the genuine pointwise mixed second variation of `sqrt |det g|` along
+  affine matrix curves with fixed determinant sign:
+  `sqrt |det g| * (1/4 tr(g⁻¹h) tr(g⁻¹k) -
+  1/2 tr(g⁻¹h g⁻¹k))`, symmetrically in `h,k`.
+  `P0EFTJanusMappingTorusFrameFreeRelativeLorentzVolumeHessian4D` globalizes
+  it, via `globalMetricVolumeRatio` and `generalMetricTensorPairingAt`, to a
+  frame-free continuous and integrable density with symmetric integral.
+  `P0EFTJanusMappingTorusConformalRelativeLorentzVolumeHessian4D` now supplies
+  the genuine positive exponential conformal line
+  `scale(t)=baseScale*exp(t*u)`: its exact relative ratio is `rho=scale²`,
+  with derivatives `2*u*rho` and `4*u²*rho`. The second derivative splits
+  exactly into the frame-free Hessian on the velocity plus the first variation
+  on the acceleration, `2*u²*rho + 2*u²*rho`. For every fixed smooth scalar
+  integrand, the varying-volume action is `C²`; differentiation under the
+  compact finite-measure integral is factored through the shared
+  `P0EFTJanusCompactParametricIntegralC2` helper. This is only a result along
+  that explicit one-parameter conformal line, not `C²`/Fréchet dependence on a
+  metric-section space: no section chart/topology or general metric variation
+  is constructed. The fixed-integrand gate alone is not the general
+  Einstein--Hilbert curvature variation.
+  `P0EFTJanusMappingTorusHomotheticEinsteinHilbertHessian4D` now closes that
+  variation on the positive constant-homothety slice of the intrinsic metric:
+  Christoffel and Ricci are invariant, `R(scale*g0)=scale⁻¹*R0`, and the volume
+  ratio is `scale²`. The genuine Einstein--Hilbert action equals its reduced
+  affine-scale polynomial, with a symmetric Hessian. Along its positive
+  exponential metric curve, the action is `C∞` (hence `C²`), and its second
+  derivative is exactly the affine Hessian on the velocity plus the first
+  variation on the acceleration;
+  at `t=0` it is `u²/(2κ) * (Rtot - 8*Λ*Vol)`. This does not cover a
+  spatially varying conformal factor, a general metric-space Fréchet Hessian,
+  or the nine-block Jacobi operator.
+  `P0EFTJanusMappingTorusConformalFrameFreeMaxwellHessian4D` independently
+  globalizes, for every `SmoothGeneralLorentzMetric`, the Maxwell pairing of
+  two arbitrary smooth abelian potentials, hence its diagonal Lagrangian
+  density and action. The overlap proof uses `F₁=JᵀF₂J` together with
+  `g₁=Jᵀg₂J`; the resulting global fields are smooth and integrable. In four
+  dimensions a positive conformal factor sends the pairing and Lagrangian
+  density to `scale⁻²` times their reference values while the relative volume
+  ratio is `scale²`, so the frame-free action is exactly the reference action.
+  Along `scale(t)=baseScale*exp(t*u)` at fixed potential, it is `C∞` and
+  constant, with zero symmetric conformal Hessian.
+  `P0EFTJanusMappingTorusFrameFreeMaxwellGaugeOrbitHessian4D` now proves
+  global exact-gauge invariance in either pairing slot against an arbitrary
+  second potential and for the action. The action along its exact gauge
+  orbits is `C∞` and constant, so their pulled-back symmetric Hessian is zero.
+  Differentiating
+  first in an exact-gauge direction and then in an arbitrary potential
+  direction certifies the zero exact-gauge--potential kernel; differentiating
+  first in a logarithmic-conformal metric direction and then in an arbitrary
+  potential direction likewise gives a zero mixed block.
+  `P0EFTJanusMappingTorusFrameFreeMaxwellPotentialHessian4D` now polarizes the
+  same global pairing into an integrable symmetric `LinearMap.BilinForm` on
+  arbitrary smooth potential directions at fixed metric. The action has an
+  exact quadratic affine-line expansion, its second line derivative and
+  two-parameter mixed derivative equal that Hessian, and exact gauge
+  directions lie in both kernels. The arbitrary-metric--potential block,
+  general metric/field-space Fréchet dependence, Candidate-A
+  interaction/chart/core/Jacobi/Fredholm identification remain open. At fixed metric,
+  the affine scalar line now has an
+  exact pointwise/integrated
   quadratic expansion and action `HasDerivAt` under the explicit integrability
   contract for its three coefficients. Its first variation is PT-covariant
   pointwise and after integration, with exact iff integrability transport.
@@ -570,11 +1133,12 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   endpoint flux is exactly the proved interval-IPP boundary functional,
   fiberwise and after base integration. Euler fields with endpoint-Dirichlet
   test variations therefore have zero collar first variation. An exact
-  specialization predicate and adapter connect this result to a supplied
-  global interface. Under one explicit four-dimensional Green--Stokes
-  contract, the global boundary functional is now exactly the concrete tangent
-  normal flux and homogeneous Dirichlet data close the weak-Euler and
-  stationarity corollaries. The Green--Stokes contract itself remains open.
+  specialization predicate and adapter connect this result to the global
+  interface. The former four-dimensional Green--Stokes contract is now
+  discharged on the canonical cut bulk: the global boundary functional is the
+  concrete oriented tangent-normal flux. Dirichlet, PT-fixed and PT-projected
+  sectors close it; the general formula retains the possibly nonzero oriented
+  period explicitly.
   On the canonical latitude collar, the antisymmetric scalar
   Green--Wronskian current is now explicit. Its derivative is exactly the
   antisymmetric pairing of the equal-mass Euler residuals; it is pointwise and
@@ -596,8 +1160,10 @@ configuration inhabits it. The quotient itself now has the analytic manifold str
   collar stress-energy identity. The finite box, stratified and null-action
   boundary residuals now assemble into a canonical zero ledger. Under the two
   canonical divergence-free spanning frame, the continuous IPP is now proved
-  directly and its zero boundary flux realizes that ledger; LL weak/strong and
-  stationary/strong equivalences follow for this frame. Extending the collar
+  directly and its zero boundary flux realizes that ledger. The global
+  boundary package derives the required strong regularity from the smooth
+  canonical frame, so LL weak/strong and stationary/strong equivalences carry
+  no extra regularity assumption. Extending the collar
   current to a covariant four-dimensional Noether current remains open.
   The normal-lift continuity cited above is now unconditional: the elementary
 latitude map is jointly `C∞`, the bundled lift is exactly the collar tangent
@@ -621,6 +1187,16 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   orthogonal decomposition; that kernel is continuously linearly equivalent
   to the original graph-Dirichlet space. This does not identify an intrinsic
   Sobolev space.
+  The scalar analytic architecture must be read in two layers. Its aggregate
+  import head validates the abstract closed-graph, Lagrangian-boundary,
+  resolvent, Poisson/DtN, spectral and variational interfaces; its marker
+  theorem does not instantiate their physical hypotheses. On the concrete
+  canonical scalar side, coarea/value trace, smooth density and zero-Cauchy
+  cutoffs, cut-bulk Green--Stokes with Dirichlet/PT closures, positive static
+  coercivity/Fredholm theory, full graph-`H¹` Rellich compactness and the
+  intrinsic coercive elliptic operator/action are unconditional. The general
+  off-shell Lorentzian realization, its operator-specific coercive shift and
+  its physical Poisson uniqueness remain conditional.
   PT/exchange additionally acts on the complete current independent-field
   package and all its componentwise smooth throat boundary data, with exact
   trace equivariance and preservation of the full Dirichlet condition.
@@ -946,22 +1522,42 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   period, exact PT pairing and the existing heat regulator. A genuine
   smooth section of the D8 normal line now fills the D9 normal slot in every
   valid local bundle chart; one-loop transition is `-1` and equals the square
-  of either `Z4` multiplier. No canonical global scalar normal coordinate is
-  claimed. The genuine smooth tangent diffeomorphism ghost now fills its D9
+  of either `Z4` multiplier. The intrinsic latitude normal lift and its local
+  tangent-trivialization coordinates are `C∞`; their explicit comparison with
+  the older cover-product presentation is now integrated through
+  `canonicalLatitudeNormal_presentations_compare`, while a single untwisted
+  global scalar coordinate is excluded by the twisted normal topology. The
+  genuine smooth tangent diffeomorphism ghost now fills its D9
   component in the same local package. A canonical real rank-four coordinate
   equivalence now fills its matter slot in the D11 squared-spinor coordinate
-  specialization, closing that residual record at coefficient level. It does
-  not identify a geometric SpinC bundle. Global SpinC realization, a global
-  action tangent producing the full symmetric metric slot, and
-  action/Hessian/domain agreement remain explicit contracts.
+  specialization, closing that particular residual record at coefficient
+  level. Separately, Program P now constructs the ambient twisted `PinC(4)`
+  principal/spinor bundles, the D9 smooth spinor bundle and section spaces, and
+  the complete primitive SpinC geometric signed tower. Every signed label has
+  a genuine smooth first-order eigensection; Fourier--monopole completeness
+  promotes the orthonormal synthesis to a unitary onto the independent
+  geometric `L²` completion. The orientation-correct zero-mode relabeling makes
+  this unitary intertwine the geometric `2D + m²` Hessian model with its exact
+  self-adjoint Fredholm coefficient multiplier on the finite spectral core.
+  Candidate-A matter now uses this primitive bundle and has the same graph
+  action/Hessian on the finite core. What remains is the global gauge-fixed
+  tangent-to-chart map, its extension beyond that core, common
+  diffeomorphism invariance and action/Hessian/domain agreement for the other
+  blocks. For every supplied differentiable
+  nonlinear diffeomorphism generator, linearized Noether now gives the exact
+  identity `H(v,G)+E(DG·v)=0`; at a critical configuration this makes `G` a
+  left and right Hessian-kernel direction, also after pullback to the genuine
+  smooth global tangent through any supplied dense chart bridge. The span of
+  all such differentiable generators is now itself a two-sided kernel, and
+  the Hessian descends exactly through both its quotient and the quotient by
+  its sum with the physical `U(1)²` directions.
   The global LL action now has an exact simultaneous measure/flux cubic
   expansion and integrated derivative for every finite measure. Its algebraic
   Euler system is equivalent to the zero-flux branch. PT pullback is an exact
   involution and preserves its density, action, variation, Euler coefficients
-  and stationarity for PT-invariant measures. The auxiliary LL metric
-  has identically zero response in this selected action, so a genuine
-  differential LL PDE still requires a richer action.
-  For the differential PT-symmetric LL functional, the canonical throat
+  and stationarity for PT-invariant measures. The auxiliary LL metric has
+  identically zero response in this selected algebraic action. Separately, for
+  the differential PT-symmetric LL functional, the canonical throat
   volume is now unconditionally positive on nonempty opens and therefore has
   full support. A pointwise frame-divergence Euler field, weak/strong
   equivalence and stationary/strong equivalence are proved conditionally on
@@ -1001,7 +1597,7 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   `E_bulk + E_induced ∘ D(induced)`; an exact diagonal counterexample proves
   that imposing both slot equations separately can overconstrain the system.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. The quotient geometry now supplies one concrete nontrivial complete analytic time flow, but not the arbitrary-ghost/full-field gauge group or PDE identity; the nonlinear Janus Euler family, Noether system and variational cohomology remain open.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. The exact Candidate-A action now instantiates this chain on every regular common `C²` variational chart: actual Euler derivative, symmetric Jacobian, normalized radial reconstruction, paired physical `U(1)²` Noether orbit and global functional null-classification. A normed atlas for every raw global tangent, the componentwise local PDE/diffeomorphism system and the full local jet variational bicomplex remain stronger open targets.
   The set quotient by complete-flow orbits is constructed. For any target,
   functions on this quotient are equivalent to configuration-space functions
   invariant under the flow; the real-valued specialization gives the same
@@ -1155,11 +1751,22 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   nonnegative for `m² ≥ 0`. It is exactly twice the general scalar stress
   component `T_nn` evaluated on the normal-projected collar jet, and `T_nn` is
   locally constant under the collar Euler equation. This remains only a local
-  collar stress-energy result. The finite stratified boundary ledger is exactly
-  zero and yields the LL weak/strong equivalence under the explicit continuous
-  IPP plus flux-realization contract. A global manifold Stokes theorem without
-  that contract, extension to a covariant four-dimensional Noether current and
-  a global canonical metric normal remain open;
+  collar stress-energy result. Globally, the canonical cut bulk is now a
+  `C∞` manifold with boundary, with smooth descended Green current, intrinsic
+  Lorentz metric/volume, genuine normal divergence and the exact oriented
+  measured Green--Stokes formula. Under the full Euler equations its only
+  residual is the two-sheet oriented flux period. That period vanishes, and
+  Stokes closes, in the proved Dirichlet, PT-fixed and PT-projected sectors; a
+  universal zero-flux statement outside those sectors is false, as witnessed
+  by the formalized massless Wronskian counterexample. The global boundary
+  package identifies every non-null face with the true Gaussian throat,
+  includes finite explicit null faces/joints and proves the EH, scalar and LL
+  residual sum to zero on the PT-fixed or Dirichlet physical sector. Its
+  canonical divergence-free frame discharges LL regularity, IPP and
+  flux realization, hence weak/strong equivalence. Extension to a
+  covariant four-dimensional Noether current and a global unit normal for every
+  admitted general metric remain open; the intrinsic canonical latitude normal
+  itself is already constructed;
 - **T/C** the finite Gram tensor has actual first/second derivatives, is
   positive definite on the injective immersion domain, and gives a concrete
   compatibility map `K` and Jacobian `J`;
@@ -1182,8 +1789,14 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   Identification with global Sobolev bundle sections, Fourier-series
   differentiation, global PDE and boundary exactness remain open;
 - **T/C/N** typed non-null, null and joint gravitational slots are explicit;
-  the compact-throat LL action and zero branch are actual integrals, while LL
-  PDEs, full stratification and physical bulk-flux cancellation remain open;
+  the compact-throat algebraic and differential LL actions are actual
+  integrals, with canonical-frame weak/strong equations, IPP, Hessian/Jacobi
+  and Fredholm realization. The global boundary completion ties non-null faces
+  to the true Gaussian throat, admits finite explicit null faces/joints and
+  closes EH, scalar and LL residuals on the PT/Dirichlet physical sector.
+  Arbitrary general-metric/null ambient stratification and the gravitational
+  bulk Euler equations remain open; the finite regular covariant action
+  assembly itself is now constructed;
 - **T/C** for every supplied finite null-generator family, one actual action
   now sums the integrated inaffinity density, the continuously extended
   expansion counterterm and the endpoint joints. Finite rescaling of the
@@ -1377,8 +1990,480 @@ either slot; hence it annihilates `im R` when `J ∘ R = 0`. These are abstract
 Fréchet statements. For every source submodule contained in `ker J`, this
 critical Hessian descends uniquely and symmetrically to the algebraic module
 quotient. Continuity of the descended form and any normed, topological or
-smooth quotient structure are not proved. No concrete Janus compatibility map
-or complex is constructed; the global variational primitive remains open.
+smooth quotient structure are not proved by those abstract lemmas alone.
+`KJ-GLOBAL-01/02` are now closed on their stated physical scope. `K_Gram`,
+`DK_Gram`, `R` and abelian `B_Noether` live on the actual quotient;
+`K_SV` is the true Levi--Civita curvature on the total holonomic atlas and
+`B_Bianchi` its covariant cyclic derivative, including curvature/connection
+terms and satisfying `B_Bianchi ∘ K_SV = 0` at every physical point. The
+actual `U(1)²` differential is faithfully embedded in canonical physical
+`L²`; its kernel is exactly the global constants `H⁰ ≃ ℝ²`, its quotient is
+linearly equivalent to the exact range, and the range closure is complete.
+The paired gauge sector used by the common global field package has the same
+result componentwise, with kernel linearly equivalent to
+`GaugeLieAlgebra × GaugeLieAlgebra`.
+The completed `ℤ⁴` Saint--Venant model remains an explicitly separate
+principal-symbol certificate. No global curved Calabi exactness
+`ker B = im K` is claimed; that stronger linearized elliptic/Fredholm question
+belongs to `HESSIAN-GLOBAL-01`.
+
+The global naturality block is closed: the effective-D8 category, descended
+holonomic jets, genuine `Pin⁻`/`PinC` bundles and exact finite six-invariant
+EFT coefficient classifier are assembled without new hypotheses. The regular
+Candidate-A action is also assembled from two Einstein--Hilbert terms,
+interaction, primitive SpinC Dirac-plus-mass matter, two Maxwell sectors, LL,
+GHY, finite null faces/counterterms and joints. Its chartwise actual Euler,
+nonlinear Helmholtz reconstruction, paired physical `U(1)²` Noether identity
+and global functional variational cohomology are now closed. The actual
+chartwise Hessian is symmetric. Its D7/D9 tangent algebra,
+independent-field retraction, local field assembly and boundary pullback are
+now packaged in an unconditional certificate. The genuine physical tangent
+has no D10 coordinate. A legacy extended tangent adds it as a split factor
+(surjective projection with injective zero-D10 section) for spectral regulator
+and determinant work only. For every certified chartwise paired
+`U(1)²` symmetry, differentiating the exact Noether identity now proves that
+the genuine Hessian kills its gauge directions in both arguments without a
+critical-point hypothesis; its algebraic quotient is exact, symmetric and
+unique. A concrete D10-free physical domain is constructed for bulk
+Dirichlet, sectorwise SpinC and LL; the extended analytic product additionally
+contains D10.
+The complete all-level SpinC **coefficient** tower now carries the actual
+period, both normal roots and both signed first-order branches. Its square is
+exactly the previous geometric `D²` spectrum. Its first-order weight is
+proved proper, so every geometric Hessian-model shift `2D + m²` has only finitely many resonant
+zero modes and defines a dense self-adjoint Fredholm maximal operator over
+both `Complex` and its underlying `Real` Hilbert space. The complete squared
+SpinC maximal domain is now unitarily reindexed as the missing zero tower plus
+the positive D10 domain; this conjugates the unbounded operators exactly and
+preserves graph energy. D10 remains bijective Fredholm. The LL Riesz identity
+is now appended on the completed positive
+energy space with the same canonical divergence-free frame as the unchanged
+global LL action; its smooth pairing is exactly that action's mixed Hessian.
+The native real `ℓ²` inner product is proved equal to the real part of the
+complex pairing, so the enlarged operator is densely defined, self-adjoint
+and Fredholm without an instance-coherence assumption. The D9
+gauge–ghost symbol defines its maximal, generally unbounded `ℓ²` multiplier
+with no upper symbol bound. A positive lower gap away from finitely many
+characteristic modes proves density, self-adjointness and closedness; the
+maximal-domain operator itself has closed range and finite kernel and
+cokernel. The corrected D10-free spectral target assembles D9 and two sector
+copies of signed `2D + couplings.matterMassSquared`; its LL enlargement adds
+only `llField`. The older squared SpinC assembly remains only an
+elliptic-control operator, and the historical D10-extended first-order target
+is regulator-only. Density, self-adjointness, closed range and finite
+kernel/cokernel are proved for this reduced target, not for the omitted
+physical blocks. The exact linear-gauge interface
+now combines `U(1)²` with a genuine smooth-diffeomorphism symmetry certificate
+and automatically gives the total quotient and two-sided Hessian degeneracy.
+For the genuine nonlinear-flow interface, the analogous flow-only and
+combined quotients are now exact at critical configurations under explicit
+generator-differentiability assumptions.
+The BRST frontier also contains the exterior scalar graded derivation, its
+two-ghost cancellation, the linearized diffeomorphism differential, the
+corrected full linear/LL complex and the general-metric BV doublet.
+
+The irreducible Hessian frontier is therefore narrower. The D10 mismatch is
+resolved by a D10-free physical tangent/target, and Candidate-A matter now
+uses the primitive SpinC smooth sections directly. Its graph action has exact
+second Fréchet derivative `2D + m²`, is Fredholm, and agrees with the smooth
+action on the finite spectral core. Typed D9 nonminimal gauge fermions add
+distinct ghost/antighost/NL fields and the right FP symbols locally. The nine
+corresponding smooth global species (two sector-indexed `U(1)^2` triples and
+one tangent-vector triple) and their square-zero universal
+nonminimal differential are now installed as real modules, with linear
+physical/nonminimal projections, without changing the physical configuration.
+The corrected gauge-fixed tangent holds the legacy coefficient ghost and
+auxiliary directions fixed, preventing a duplicate nonminimal multiplicity;
+the paired physical rule `sA = -dc` is now global and square-zero. Its
+finite-measure `sΨ` uses the true `δ_g d` and is attached to the actual
+  Candidate-A metrics, Maxwell potentials and typed nonminimal fields. The
+  physical metric-plus-Abelian gauge subchart now consumes the completed de
+  Donder and Lorenz features and embeds in the typed tangent with the
+  nonminimal coordinates fixed. The full typed chart and the diffeomorphism
+  rule `sg` remain separate. The global smooth Abelian Lorenz codifferential is
+now linear and transition-independent for every supplied general metric; its
+actual Faddeev--Popov composite is `δ_g d` and is the chartwise covariant wave.
+The canonical specialization has exact `δ(d c)=+□c`. Componentwise, it is now
+identified pointwise and in physical `L²` with the canonical mass-zero scalar
+Euler operator. Its adjunction defect is exactly the established scalar
+skew-density integral, and symmetry for each pair of smooth ghosts is
+equivalent to that integral vanishing. Given the already isolated unrestricted
+scalar Green--Stokes datum, the FP defect is now identified with the exact
+oriented cut-bulk boundary current and formal symmetry follows on every
+existing Green-isotropic smooth domain, with an explicit Dirichlet
+specialization. This composition introduces no new hypothesis class. Once
+that existing Green datum is supplied, the mass-zero scalar Green core is
+exactly each FP component, its zero-Cauchy minimal core is dense by the
+existing cutoff theorem, and its completed graph projection is injective. The
+finite `Sector × Fin 2` product has a dense actual paired smooth core and a
+single-valued ambient-range realization which agrees there with the true
+paired FP map. The unconditional full 4D
+`integral_eq_divergence`/Stokes theorem remains missing. The existing completed
+boundary triple now gives dense component domains and actual-adjoint-domain
+equality conditionally on its supplied Lagrangian analytic-closure package;
+the existing graph/direct-coercive endpoint further reduces this to its PDE
+data, graph estimate and shifted coercivity, with unconditional Rellich and
+exact smooth-core FP identification. A constructor audit found only implication
+packages from those two analytic inputs, not an inhabitant. Homogeneous
+Dirichlet data close the Green boundary term but do not supply ellipticity or
+coercivity for the full Lorentzian wave: the proved negative time coefficient
+separates it from the existing positive intrinsic `H¹` elliptic regulator.
+No total-Hessian domain identification or general-metric adjoint compatible
+with the intrinsic physical `L²` measure is proved.
+The actual intrinsic potentials inject into the corrected minimal tangent.
+Their Lorenz feature has a dense injective graph completion, and that Hilbert
+graph now carries a displayed `C∞` quadratic action (hence `C²`) whose exact
+second Fréchet derivative is its same-action symmetric Riesz form. On the
+common smooth core this derivative is the reduced on-shell BRST polarization,
+and the core injects simultaneously into the graph chart and the corrected
+minimal tangent. The complete
+`llAuxMetric × llMeasure × llField` Hessian has an analogous dense injective
+graph realization and exact bounded symmetric Riesz representative, including
+the two cross blocks. It is now proved self-adjoint. Its kernel is explicit,
+and the generic self-adjoint Fredholm reduction makes finite cokernel automatic
+once closed range and finite kernel are proved; those two estimates remain.
+On shell, stationarity itself supplies `llField = 0`; the quotient
+Fredholm criterion and index-zero corollary now follow directly from the
+stationarity equations, without a separate zero-flux hypothesis. The
+fixed canonical GHY control has its genuine zero same-action Hessian, whereas
+the mobile sourced GHY summand retains its physical Hessian,
+and the finite null-face action has zero second derivative along exact
+generator reparametrizations.
+For de Donder, `tr_g h`, the induced Levi-Civita derivative and its contracted
+divergence are constructed with the full overlap laws. The divergence glues
+through the canonical atlas to a smooth global one-form, and its sum with
+`-1/2 d(tr_g h)` closes the complete smooth de Donder operator. It is now
+  bundled as a linear map, and its smooth inverse-metric contraction gives an
+  integrable symmetric bilinear form with exact quadratic polarization. Its
+  finite-frame tensor, one-form and raised one-form coordinates define a
+  faithful refined Hilbert graph with dense injective smooth range. The
+  resulting bounded symmetric Hessian equals the original Lorentzian pairing
+  on that core, and its quadratic action is `C∞`. Two metric copies and the
+  closed Lorenz graph now assemble into a common physical gauge `C²` subchart;
+  its exact second Fréchet derivative is their direct sum, and the same core
+  injects into the corrected typed tangent with nonminimal coordinates zero.
+  This gauge chart, the primitive SpinC matter graph and the complete LL graph
+  now also assemble into one physical bulk graph product. Its quadratic action
+  is `C∞` (hence `C²`), is exactly the sum of the three graph actions, and has
+  exact first derivative and constant block-diagonal second Fréchet derivative
+  equal to the three existing same-action forms. It is not yet identified with
+  the pullback of the complete nonlinear covariant action.
+  Its gauge-smooth × finite-SpinC × smooth-LL core embeds injectively and
+  densely for the product graph norm. At the physical Candidate-A metric and
+  mass, one injective linear map records both the graph point and its exact
+  slots in `GlobalPhysicalFieldTangent`. This is a core-level attachment, not
+  a map from the whole graph completion to smooth fields. The Abelian
+  nonminimal core separately has its canonical-volume off-shell feature
+  completion/action and typed attachment. That feature completion alone does
+  not prove differential closability; the intrinsic FP Green-core adapter now
+  does so conditionally on the existing unrestricted scalar Green datum. The
+  extended bulk now performs the required nonduplicating
+  replacement of the shared potential/Lorenz factor, with dense injective
+  core, exact sector-sum second Fréchet and injective typed core map. For each
+  supplied metric the true
+  diffeomorphism FP map
+  `c ↦ B_g(L_c g)` is now global and linear. The typed chart has one diagonal
+  diffeomorphism triplet, while the old gauge Hessian is the sum of two
+  separate de Donder squares; the scalar no-go proves that this sum cannot be
+  preserved by one projection. The kinetic-adjoint bridge now derives instead
+  the unique action-weighted condition
+  `F = F₊/(2κ₊) + F₋/(2κ₋)`, constructs its global FP operator as the same
+  weighted sum of the mono-metric FP maps, and proves spatial-symbol
+  ellipticity when the total kinetic weight is nonzero.
+  The selected condition is now incorporated into one shared two-metric/
+  one-triplet off-shell BRST graph with square-zero differential, dense
+  injective core, exact weighted-`sΨ` Hessian/Riesz/action and typed raccord.
+  Replacing the two old de Donder factors by this graph in the nonduplicated
+  Abelian/matter/LL product yields an injective dense bulk core, an exact `C²`
+  assembled Hessian and an injective total graph/typed-core map. Its nested
+  `WithLp 2` realization is a complete real Hilbert space, continuously
+  equivalent to the maximum-norm chart, with a bounded self-adjoint Riesz
+  representative of that exact Hessian. Normal and boundary factors remain
+  absent from that bulk chart. This dense graph/typed core is already faithful;
+  the historical spectral D9 coordinate `ι × Fin 8` remains a reduced
+  Fredholm model rather than the multiplicity of the complete action fields.
+  The genuine normal displacement generates a deck-equivariant
+  collar family descending from the throat to the bulk quotient. It starts at
+  the canonical inclusion, has the prescribed local normal-coordinate
+  velocity and zero scalar acceleration. Every member is injective, and at
+  every physical throat point its parameter curve is `C∞`. The scalar lift is
+  now `C∞` on the cover and the descended map
+  `(point,parameter) ↦ normalGraph parameter point` is jointly `C∞`. After
+  transport along `normalGraph_zero`, its `mfderiv` at zero is exactly the
+  canonical global orthogonal lift of the corresponding differential-normal
+  class. The induced normal action and its same-action Hessian remain open.
+  A null-boundary chart with an independent `Theta` coordinate and nonzero
+  uncancelled coefficient must in addition be stratified: the unchanged
+  `Theta log |Theta|` factor is not `C¹` at `Theta = 0`. This does not exclude
+  constrained subcharts with a proved cancellation, notably the already
+  closed exact reparametrization curves. On each regular stratum
+  `Theta ≠ 0`, its pointwise same-action Hessian is now proved exactly:
+  `(u,v) ↦ Theta⁻¹ u v`, multiplied by the existing fixed
+  screen/gravitational coefficient. The integrated null chart remains open.
+  Independently rescaling every face normalization is now assembled on the
+  finite Euclidean Hilbert space `EuclideanSpace ℝ NullFace`. The exact
+  `GHY + null-face/counterterm/joint` action is constant there, so its actual
+  first and second Fréchet derivatives vanish and its bounded zero Riesz
+  representative is self-adjoint. General null geometry is still open.
+  What remains is to extend this assembled bulk construction to the full
+  global `C²` covariant chart including normal and boundary directions,
+common diffeomorphism invariance, differential Green/domain and elliptic
+Fredholm identifications, general metric/normal/mixed Maxwell/null-boundary
+Hessians, LL coercivity off-shell, correct modal multiplicities and their same-action
+Fredholm direct sum. The exact Parseval/unitary
+identification between the independent geometric and spectral SpinC
+completions is now closed. Finite multiplicity blocks are isometric and
+distinct circle modes in one sector are orthogonal across all levels, so the
+two opposite sectors are also orthogonal for arbitrary levels and modes.
+The rotation Casimir and invariant round-sphere measure now prove exact
+orthogonality between distinct sphere levels at fixed sector and mode. The
+normalized blocks along all three axes now assemble into one canonical
+Hilbert-sum linear isometry. Its range is proved equal to the closed span of
+the explicit blocks. Fourier--monopole uniform approximation in the signed
+Hopf frame proves that this range contains the dense smooth geometric core;
+hence the synthesis is surjective and gives the global geometric unitary.
+Reindexing only the undoubled zero tower by its orientation-correct PT
+involution gives the unitary in the exact individual labels of the Hessian.
+It maps every coordinate vector to a genuine smooth Dirac eigensection.
+Consequently the true differential expression `2D + m²` intertwines on every
+finite Fourier--monopole packet with the same maximal diagonal multiplier
+already proved self-adjoint and Fredholm. Its maximal domain and unbounded
+operator are explicitly pulled back to geometric `L²`, with exact unitary
+conjugacy. This closes the geometric/coefficient identification of the
+primitive SpinC Hessian model. The Candidate-A matter type/action now uses
+that primitive bundle directly, and its finite spectral core has the same
+graph action and Hessian; only the final global chart identification remains.
+A single
+null-curve construction gives, for every `p`, exactly `2p+1` complex
+homogeneous polynomials, proves their linear independence, ambient
+harmonicity and positive spherical energy `p(p+1)`; no further level-by-level
+construction from `p ≥ 4` is needed. Its null powers are now realized
+directly as genuine smooth sections of the quotient SpinC bundle. The
+uniform Dirac recurrence proves their exact geometric `D²` equation and
+generates both signed first-order branches. These branches are now tied
+directly to every positive/negative coefficient label at every positive
+level, with the exact first-order eigenvalue. The undoubled zero tower is
+also realized at first order for either sign of the period through the
+orientation-correct PT mode reindexing. Thus every complete signed
+coefficient label has a genuine smooth geometric eigensection. At each
+positive block the two branch spans are disjoint and their sum is exactly
+the scalar/Clifford-gradient seed block. Each complex branch span now also
+has a canonical finite-dimensional geometric `L²` orthonormal basis, exact
+Parseval isometry, closed image in the independent completion and exact
+first-order Dirac intertwining. Their algebraic sum has its own orthonormal
+Parseval isometry, closed completed image and exact `D²` intertwining.
+Radial Clifford parity separates the scalar and gradient components of every
+raw signed relation. It proves linear independence of each signed family,
+hence the exact geometric finrank `2p+1` per sign and `2(2p+1)` for the full
+block. Rotation integration by parts, the exact tangential Hopf pairing and
+the null-power Casimir identity additionally prove that the gradient pairing
+is exactly `p(p+1)` times the scalar pairing. The two opposite first-order
+signs are therefore orthogonal in every fixed level/sector/circle block.
+Strict growth of the spherical energy separates the `D²` eigenspaces, so all
+positive levels at fixed
+sector/circle mode are jointly complex-linearly independent. Their
+finite-support synthesis is injective and satisfies the exact diagonal law
+`D² S = S Λ`. Thus smooth restriction, the all-level Lichnerowicz input,
+within-level multiplicity and inter-level linear separation are closed. Both
+normal-root sectors and all circle modes are also jointly separated at
+every arbitrary fixed positive level: doubling cover time reindexes the two
+sectors as the odd/even integer Fourier modes. The two separation axes and
+the Hopf zero tower are now combined: one canonically indexed finite-support
+synthesis simultaneously ranges over every nonnegative sphere level, both
+sectors, every circle mode and every multiplicity; it is injective and
+exactly intertwines geometric `D²` with the complete diagonal coefficient
+operator. Every complete coefficient label therefore has real and
+intrinsic-imaginary smooth geometric representatives. Their actual finite
+smooth span now carries the coefficient-induced Hilbert norm. Its analysis
+is injective and dense in coefficient `L²`; its completion is canonically
+unitary to that `L²`, and the transported maximal `H²` squared Dirac is
+exactly conjugate, coercive and bijective. Thus spectral Hilbert
+orthogonality/completeness and the finite analysis-map identification are
+closed. Independently, the canonical throat volume and the descended doubled
+Hermitian pairing now define a smooth, integrable, positive-definite complex
+`L²` product on the whole primitive SpinC smooth core. This gives its own
+Hilbert completion with dense smooth embedding, without coefficient
+definitions or additional physical axioms. Inside every fixed
+level/sector/circle block, geometric Gram--Schmidt now preserves the raw
+null-power span and exact `D²` eigenvalue while giving a genuine Euclidean
+linear isometry and Parseval identity. Reduction to the canonical
+round-sphere/time fundamental domain and exact Fourier cancellation now prove
+orthogonality between distinct circle modes in either fixed normal-root
+sector, uniformly across sphere levels and multiplicities. The explicit Hopf
+half-spinor planes also give pointwise and integrated orthogonality between
+opposite sectors for arbitrary levels and modes. Rotation integration by
+parts and the exact Casimir eigenvalue additionally prove orthogonality
+between distinct sphere levels, for raw blocks, their spans and normalized
+syntheses. Their completed Hilbert sum is now isometrically embedded with
+closed range exactly equal to their joint closed span. The opposite signed
+blocks at each fixed spectral label are exactly orthogonal by the global
+gradient/Casimir identity. Signed packets carrying distinct
+sector/circle/level labels are now orthogonal as well, including the
+zero-versus-positive separation. The zero tower and every complete two-sign
+positive block therefore assemble into one canonical signed Hilbert-sum
+isometry. Fourier completeness, polynomial monopole approximation and exact
+signed Hopf-frame reconstruction prove that its range is dense in the whole
+independently defined geometric completion. Because that range is already
+closed, the synthesis is surjective and yields an unconditional linear
+isometric equivalence from global signed coefficients onto geometric `L²`.
+The
+`p = 1,2,3` packets remain concrete compatibility checks
+of this generic construction. One must
+also prove invariance of all nine action blocks under the same
+smooth diffeomorphisms and identify the actual
+bulk/metric–Maxwell–matter–ghost–boundary Hessian, excluding the now-closed
+`llField` factor but including the action-degenerate LL measure slot and all
+remaining nonspectral sectors, with the
+constructed global elliptic Fredholm operator.
+The earlier abstract all-smooth realization theorem now transports the
+maximal domain and squared operator through this geometric unitary.
+Arbitrary couplings cannot imply the last statement: the repository now
+proves that a zero Hessian has no such Fredholm realization on an
+infinite-dimensional completion. Nondegenerate elliptic coupling hypotheses
+must be derived or stated explicitly. In the Lorentzian full-field setting,
+this also requires an explicit analytic choice of elliptic gauge/continuation,
+boundary realization and common domain; it cannot be hidden as a new physical
+axiom. The intrinsic/spectral Dirac,
+nonlinear-BRST layers, circle Quillen geometry and PT/inflow anomaly
+cancellation remain explicitly scoped frontiers. The common nuclear reference
+regulator is closed; agreement with the physical Hessian remains a Hessian
+obligation. Scheme independence is separately blocked by a proved
+finite-part/normalization no-go, not by a missing algebraic manipulation.
+The fixed-throat metric tensors are now bundled as a real module, and their
+canonical integrated intrinsic pairing defines a linear morphism from smooth
+geometric antifields to the algebraic BRST dual. Its injectivity is now
+equivalent to separation by the pairing; the concrete finite-frame smooth
+positive dualizer proves this separation without diagonal definiteness. Its
+coadjoint equivariance is equivalent to integrated skew-adjointness for any
+supplied throat representation, which remains open. The unconditional realization and both exact
+criteria are now fields of the nonlinear BRST certificate and of
+`GlobalBRSTFrontier`. The global frontier now also embeds the complete
+nonlinear certificate, the bulk geometric metric dual, the canonical
+algebraic Maxwell coadjoint closure, and the conditional two-metric
+coadjoint closure for every supplied metric Lie action. The separate
+`canonicalTensorialCoadjointAntifieldBRSTCertificate4D` now instantiates that
+algebraic closure with the concrete Maxwell and metric Cartan
+representations. The bulk geometric bridge is instead parameterized by one supplied
+representation and its integrated skew identity.
+The existing finite smooth bulk tangent frame now assembles a genuine smooth
+metric-dependent covariant dualizer. Its pointwise pairing is
+`Σᵢⱼ h(vᵢ,vⱼ)²`; canonical full support promotes this to integrated
+separation, so the bulk geometric antifield realization is injective.
+Bulk coadjoint equivariance still requires integrated skew-adjointness.
+For genuine throat tensors, bilinear separation and integrated
+skew-adjointness now construct the faithful geometric coadjoint bridge
+directly through a `GlobalBRSTFrontier` gate. An explicit nonzero symmetric
+Lorentzian tensor with nilpotent raised endomorphism has zero quadratic trace,
+so diagonal definiteness is formally ruled out as a generic route; it remains
+only a stronger conditional lemma. The same explicit Lorentz model now proves
+that the bilinear trace pairing nevertheless separates every symmetric
+covariant tensor. This algebraic audit is embedded in `GlobalBRSTFrontier`.
+A smooth positive dualizer closes the entire globalization step:
+continuity, compactness and the canonical full-support measure imply
+integrated separation and injectivity of the geometric antifield realization.
+Together with a supplied integrated skew identity it yields the faithful
+coadjoint bridge. Its geometric construction from the smooth inverse metric
+is complete; integrated skew-adjointness remains for the genuine throat. The already constructed finite smooth
+generating frame now supplies an explicit nonnegative energy
+`Σᵢⱼ h(vᵢ,vⱼ)²`; this energy vanishes pointwise iff the tensor pair is zero.
+The covariant finite rank-one sum is now defined abstractly for every
+symmetric musical equivalence, and its trace pairing is proved exactly equal
+to this energy. Bundlewise two-vector contraction proves every coefficient
+`h(vᵢ,vⱼ)` smooth; consequently the one- and two-sector frame energies are
+genuine smooth scalar fields. The following covector/outer-product assembly
+promotes the pointwise formula to the required smooth throat tensor section.
+Each metric contraction with a frame vector is now a genuine smooth covector
+section. Their fiberwise outer and symmetric products are genuine smooth
+tensors, and smooth scalar multiplication is available. The finite weighted
+sum is assembled as a genuine smooth symmetric tensor and specialized
+componentwise to the intrinsic two-sector throat metric pair. A new intrinsic
+rank-one contraction lemma bypasses the local `TangentSpace` wrapper mismatch
+and proves the exact pointwise trace-pairing identity for the assembled
+dualizer. The positive-dualizer input of the global BRST gate is therefore
+unconditional; integrated skew-adjointness is its remaining geometric input.
+The tensor and Maxwell pullback generators are now additive on differentiable
+orbits and homogeneous in their field slots, hence bundle as genuine
+field-linear maps under an explicit all-smooth-field orbit-differentiability
+contract. The canonical intrinsic metric
+is also registered in `GlobalBRSTFrontier` as fixed infinitesimally by the
+genuine complete time-translation subgroup. Smooth two-vector contraction,
+already available in the effective-D8 functor, now proves the metric Cartan
+reduction: as for Maxwell, any globally smooth bilinear action satisfying
+Cartan evaluation automatically satisfies the ghost bracket law. The metric
+Cartan residual is now tensorial in both test fields, packaged by
+`TensorialAt.mkHom₂` as a symmetric covariant fiber tensor and specialized to
+smooth Janus tensors. Its evaluation on any two smooth ghosts is a genuine
+smooth scalar field. The finite local assembly now yields the global smooth
+bilinear metric action, its `SymmetricTensorCartanActionData`, the smooth-ghost
+Lie representation and the exact bracket theorem.
+The generic Maxwell residual
+`X(A(Y))-A([X,Y])` is now tensorial in `Y`, packaged by
+`TensorialAt.mkHom` as a true cotangent-fiber map, and specialized
+componentwise to intrinsic smooth D8 gauge potentials. Its uniform
+Hom-bundle regularity is now proved; the resulting global action is smooth,
+bilinear, packaged as `GaugePotentialCartanActionData`, and upgraded to the
+canonical smooth-ghost Lie representation with its bracket theorem. This
+also closes the field and algebraic coadjoint-antifield BRST obstructions and
+the canonical evaluation-pairing identity, but not a geometric or integrated
+Maxwell antifield dual.
+Together, these concrete Maxwell and metric actions form the canonical
+tensorial action/representation packet and close its algebraic Maxwell and
+two-metric coadjoint BRST certificate. Geometric or integrated duals remain
+separate.
+The bulk time-translation ghost and all three canonical bulk rotation ghosts
+now restrict exactly to their throat ghosts through the derivative of the
+fixed-throat inclusion. No throat-metric skew statement is inferred from this
+alone. The rotation pullback orbit is concrete and its intrinsic raised
+pairing, including the two-sector pairing, is pointwise natural under the
+actual throat pullback. Its canonical-measure integral is also invariant under
+every finite rotation, so the resulting integrated scalar curve has derivative
+zero at angle zero by constancy. A public generic chain rule also differentiates
+every fixed-fiber `SmoothThroatField` composed with the rotation, giving its
+`mvfderiv` along the throat rotation ghost. It does not differentiate the
+`mfderiv` factors in tensor pullback. Tensor-pullback angle differentiability,
+the corresponding pairing chain rule and the independent generator/action
+identification remain before any tensor skew or coadjoint conclusion; the
+throat tensor orbit for time is not yet bundled.
+Each throat rotation is now also a genuine smooth diffeomorphism with a
+smooth pullback on symmetric throat two-tensors and exact identity at angle
+zero. The corresponding finite ambient rotation preserves the Minkowski form,
+and the induced cover rotation is an exact isometry of the intrinsic cover
+Lorentz tensor. Pointwise quotient/throat pairing naturality and finite
+integrated invariance are now closed, as is the zero derivative of the
+resulting integrated scalar curve. The generic fixed-fiber field chain rule is
+also public, but does not derive tensor pullback. Tensor-pullback angle
+differentiability, the pairing chain rule and the orbit-generator/action bridge
+remain before tensor skew or coadjoint transport follows.
+On the bulk metric pair, the genuine time-flow tensor/background orbits,
+intrinsic-background fixity, canonical-measure integral invariance and the
+zero scalar derivative of the invariant pairing orbit are explicit.
+Simultaneous pullback naturality is proved through the pulled-back musical
+maps, conjugation and trace invariance. A separate pointwise contract now asks
+that the actual pullback generator equal the supplied action; inhabiting it
+and justifying differentiation through the integrated pairing remain before
+skew follows.
+Candidate A also has a nonlinear complete-flow interface: termwise invariance
+of its nine blocks implies exact assembled-action invariance and Euler
+horizontality for the field-dependent generator. Concrete fixed-measure
+nine-block invariance is still the missing inhabitant. Transported covariance
+now converts generically to that fixed-measure contract under exact measure
+preservation. For the five measure-dependent Candidate-A blocks, their exact
+integral covariance follows under seven supplied density-field pullback
+identities; the interaction identity is further reduced to metric/root/basis
+naturality. Only the fixed canonical GHY control vanishes identically; the
+mobile sourced Robin block is retained. The four
+SpinC-matter/LL/Robin/finite-BV ambient covariances and a concrete global-field/chart
+flow remain. One explicit conformal zero-field configuration orbit now has
+exact zero/add laws, but it is not lifted to action data or a chart. The
+abstract flow is still not
+identified with geometric pullback. The earlier affine interface embeds into
+it through the proved constant-translation flow.
+The curvature-based Maxwell pairing is
+gauge-degenerate and is not substituted for a potential-antifield dual.
+Parent-action selection is likewise non-unique in the current admissible
+family, and all available geometric, spectral, heat and charge laws retain a
+common rescaling orbit. Thus neither microscopic selection nor absolute scale
+follows from the current assumptions.
 
 ## 6. Current supported chain
 
@@ -1403,4 +2488,59 @@ actual decorated Janus data
   -> stable vacuum and absolute scale
 ```
 
-The repository does **not** yet contain the full differentiable Janus structured-jet groupoid, a global Janus SpinC principal bundle, the geometric higher-order jet-isomorphism theorem, the concrete nonlinear Janus Euler family, a selected microscopic action, a unique vacuum or an absolute no-fit scale.
+The repository does **not** yet contain the full differentiable Janus
+structured-jet groupoid, the geometric higher-order jet-isomorphism theorem,
+the raw-field normed atlas and componentwise local Euler/diffeomorphism
+system, a selected microscopic action, a unique vacuum or an absolute no-fit
+scale.
+
+### Global smooth scalar wave update
+
+`P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` packages the existing
+canonical intrinsic wave as a global smooth scalar field, proves real
+linearity, and gives finite-measure integrability.
+`P0EFTJanusMappingTorusGlobalSmoothScalarProduct4D` adds the missing global
+smooth pointwise product and its local gradient Leibniz law. The covariant
+product jet and its exact wave-contraction rule are also closed algebraically.
+It is now identified with the actual second derivative of the global product;
+the induced global smooth gradient pairing has the expected local
+inverse-metric representative and gives the pointwise global wave product
+rule. The spatial-conformal Einstein--Hilbert Hessian and the raw
+conformal curvature bridge through scalar curvature are closed. On the
+restricted product of logarithmic spatial-conformal metric directions and
+arbitrary Abelian potential directions, the Einstein--Maxwell Hessian is now a
+genuine symmetric bilinear form. Its cross block is identified with the
+already proved same-action conformal--potential Maxwell Hessian and therefore
+vanishes. This still does not supply an arbitrary metric-section chart.
+`P0EFTJanusMappingTorusSpatialConformalMetricJet4D` reuses the existing
+positive conformal Lorentz metric and proves its local coefficient, matrix,
+and first-derivative product laws. Its inverse and Christoffel laws are closed;
+the companion curvature jet closes the differentiated connection, Riemann, Ricci and scalar contraction.
+### Spatial conformal Einstein--Hilbert Hessian
+
+`P0EFTJanusMappingTorusSpatialConformalEinsteinHilbertHessian4D` closes the
+reduced four-dimensional conformal-density Hessian along
+`g(t) = exp(2 t u) g₀`: the density curve is differentiated twice under the
+canonical compact integral, the polarized Hessian is symmetric, and its
+diagonal equals the integrated second derivative at zero. The conformal
+inverse metric is also explicit.
+`P0EFTJanusMappingTorusSpatialConformalPalatiniLinear4D` and
+`P0EFTJanusMappingTorusSpatialConformalCurvatureClosure4D` now contract the
+raw Ricci correction into its linear Palatini and quadratic pieces and prove
+the standard four-dimensional conformal scalar-curvature law unconditionally.
+`P0EFTJanusMappingTorusSpatialConformalExponentialCurvature4D` specializes it
+locally and globally to
+`R(g_t) = exp(-2tu) (R(g₀) - 6t □u - 6t² ⟨du,du⟩)`.
+Finally,
+`P0EFTJanusMappingTorusSpatialConformalEinsteinHilbertClosure4D` proves that
+the genuine metric-volume frame-free Einstein--Hilbert action along `g_t`
+equals the differentiated conformal action curve, so its second variation at
+zero is exactly the certified symmetric Hessian.
+
+`P0EFTJanusMappingTorusSpatialConformalEinsteinMaxwellCoreHessian4D` packages
+that Einstein--Hilbert block with the existing fixed-metric Maxwell potential
+Hessian. The resulting product-core form is bilinear and symmetric, and its
+metric--potential cross value is exactly
+`conformalPotentialFrameFreeMaxwellMixedHessian`, whose same-action
+two-parameter theorem proves it is zero. No arbitrary Lorentz-metric Hessian
+or total field-space chart is claimed.

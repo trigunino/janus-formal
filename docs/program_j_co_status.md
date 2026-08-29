@@ -27,6 +27,7 @@ Holes: Gravastars and Plugstars*, DOI `10.4236/jmp.2025.1610072`, pages
 - `CO-BP04` fermé (passe 3) : stationnarité de l'action de jonction géométrique implique la balance normale faible sur la gorge effective.
 - `CO-BP05` fermé (passe 4) : la loi normale de Robin géométrique transforme la stationnarité en balance faible de Robin.
 - `CO-BP06` fermé (passe 5) : restriction non dégénérée de la métrique lorentzienne intrinsèque sur la gorge effective.
+- `CO-BP07` fermé (mise à jour P 23/07) : certificat Green--Stokes orienté et métrique du secteur scalaire à Dirichlet canonique.
 - Reprise P : solution compacte bimétrique, tenseur matière et métrique extérieure physique. `CO-P07/CO-P08/CO-P09` restent ouverts.
 
 **T/X** : le noyau algébrique constant-density et le ratio cité sont

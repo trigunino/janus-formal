@@ -184,6 +184,7 @@ theorem weakLLEulerOperator_eq_jacobi_llField
 positive energy inner product.  Open positivity belongs to the measure, while
 strict positivity is required only of the independent zeroth-order LL field. -/
 structure PositiveLLH1Data where
+  frame : SmoothThroatGeneratingFrame period hPeriod
   fields : IndependentFields period hPeriod
   mu : Measure (EffectiveThroat period hPeriod)
   finiteMeasure : IsFiniteMeasure mu
@@ -299,7 +300,7 @@ noncomputable def llH1PreCore
     PreInnerProductSpace.Core Real (LLH1Smooth period hPeriod data) := by
   letI : IsFiniteMeasure data.mu := data.finiteMeasure
   letI : Measure.IsOpenPosMeasure data.mu := data.openPosMeasure
-  let frame := finiteSmoothThroatGeneratingFrame period hPeriod
+  let frame := data.frame
   refine
     { inner := fun first second =>
         weakLLJacobiOperator period hPeriod frame data.fields data.mu
@@ -343,7 +344,7 @@ noncomputable def llH1Core
     InnerProductSpace.Core Real (LLH1Smooth period hPeriod data) := by
   letI : IsFiniteMeasure data.mu := data.finiteMeasure
   letI : Measure.IsOpenPosMeasure data.mu := data.openPosMeasure
-  let frame := finiteSmoothThroatGeneratingFrame period hPeriod
+  let frame := data.frame
   refine
     { __ := llH1PreCore period hPeriod data
       definite := ?_ }
@@ -379,7 +380,7 @@ theorem llH1Smooth_inner
     (first second : LLH1Smooth period hPeriod data) :
     inner Real first second =
       globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod)
+        data.frame
         data.fields first.toTest second.toTest data.mu := by
   rfl
 
@@ -425,7 +426,7 @@ theorem weakLLJacobiH1Extension_apply_smooth
     weakLLJacobiH1Extension period hPeriod data direction
         (llH1SmoothEmbedding period hPeriod data test) =
       globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) data.fields
+        data.frame data.fields
         direction.toTest test.toTest data.mu := by
   change inner Real
     (direction : LLH1Space period hPeriod data)
@@ -476,7 +477,7 @@ theorem strongLLJacobiH1Operator_iff_weak_on_smooth
     inner Real (strongLLJacobiH1Operator period hPeriod data direction)
         (llH1SmoothEmbedding period hPeriod data test) =
       globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) data.fields
+        data.frame data.fields
         direction.toTest test.toTest data.mu := by
   rw [strongLLJacobiH1Operator_represents]
   exact weakLLJacobiH1Extension_apply_smooth period hPeriod data direction test

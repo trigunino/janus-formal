@@ -57,7 +57,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
 env:
@@ -67,6 +67,7 @@ env:
 
 jobs:
   lean:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref != 'dev-branch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -191,6 +192,7 @@ jobs:
           key: lake-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain') }}-${{ hashFiles('lake-manifest.json') }}-${{ github.sha }}
 
   python-audit:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref != 'dev-branch' }}
     needs: lean
     runs-on: ubuntu-latest
     steps:

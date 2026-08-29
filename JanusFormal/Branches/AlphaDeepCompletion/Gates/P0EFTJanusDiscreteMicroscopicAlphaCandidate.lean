@@ -44,11 +44,18 @@ theorem logarithmic_and_rg_exponents_are_opposite
       (s.oneLog.renormalizationMass * s.levelLocked.uvLength) *
           (Real.exp s.oneLog.logRatio *
             Real.exp s.levelLocked.hierarchyExponent) =
+        s.oneLog.renormalizationMass *
+          Real.exp s.oneLog.logRatio *
+          (s.levelLocked.uvLength *
+            Real.exp s.levelLocked.hierarchyExponent) := by ring
+      _ =
+        s.oneLog.renormalizationMass *
+          Real.exp s.oneLog.logRatio *
+          (2 * s.oneLog.alphaSquaredLength) := by rw [← hRG]
+      _ =
         (2 * s.oneLog.renormalizationMass *
           Real.exp s.oneLog.logRatio *
-          s.oneLog.alphaSquaredLength) := by
-            rw [hRG]
-            ring
+          s.oneLog.alphaSquaredLength) := by ring
       _ = 1 := hOneLog
   rw [s.reciprocalUVAnchor] at hCombined
   norm_num at hCombined
@@ -71,7 +78,16 @@ theorem matched_sextic_beta_exponent_equation
       3 * s.oneLog.sexticCoupling + s.oneLog.betaSextic := by
   have hStationary := beta_stationarity_equation s.oneLog
   have hOpposite := logarithmic_and_rg_exponents_are_opposite s
-  nlinarith
+  have hExponent :
+      s.levelLocked.hierarchyExponent = -s.oneLog.logRatio := by
+    linarith
+  calc
+    3 * s.oneLog.betaSextic * s.levelLocked.hierarchyExponent =
+        -(3 * s.oneLog.betaSextic * s.oneLog.logRatio) := by
+          rw [hExponent]
+          ring
+    _ = 3 * s.oneLog.sexticCoupling + s.oneLog.betaSextic := by
+      linarith
 
 /--
 Eliminating the hierarchy exponent yields the discrete microscopic consistency

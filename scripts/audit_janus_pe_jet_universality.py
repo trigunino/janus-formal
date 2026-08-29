@@ -47,6 +47,29 @@ PROGRAMME_PE_GATES = {
     ),
 }
 
+PROGRAMME_PE_LEMMA_AUDIT_GATES = {
+    "P0EFTJanusFiniteJetOperatorConstruction.lean": (
+        "theorem induced_operator_natural_iff_evaluator_equivariant",
+        "theorem exists_unique_natural_operator_from_equivariant_evaluator",
+    ),
+    "P0EFTJanusQuadraticJetInvariantClassification.lean": (
+        "theorem invariant_quadratic_is_radial",
+        "theorem invariant_quadratic_evaluation",
+        "def quadraticInvariantPhysicalClosure",
+    ),
+    "P0EFTJanusCoreInvariantPairingClassification.lean": (
+        "theorem core_pairing_classification_matrix",
+        "def corePairingGlobalizationClosed",
+    ),
+    "P0EFTJanusCorrectedFiveLemmaChain.lean": (
+        "theorem lemma_two_constructive_equivalence",
+        "theorem strong_polynomial_lemma_three_is_false",
+        "theorem lemma_three_quadratic_vector_fragment",
+        "theorem lemma_five_corrected_local_universality",
+        "def fullJanusFiveLemmaClosure",
+    ),
+}
+
 
 def assert_programme_pe_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
     """Require the new constructive gates and reject proof placeholders."""
@@ -89,6 +112,30 @@ def assert_programme_pe_gate_integrity(repo_root: Path = REPO_ROOT) -> None:
             raise AssertionError(
                 f"Programme P-E facade omits D8 structured-jet status: {status}"
             )
+
+    lemma_gate_root = repo_root / (
+        "JanusFormal/Branches/FundamentalGeometryPELemmaAudit/Gates"
+    )
+    lemma_facade = (
+        repo_root / "JanusFormal/Branches/FundamentalGeometryPELemmaAudit.lean"
+    ).read_text(encoding="utf-8")
+    for filename, declarations in PROGRAMME_PE_LEMMA_AUDIT_GATES.items():
+        source = (lemma_gate_root / filename).read_text(encoding="utf-8")
+        for declaration in declarations:
+            if declaration not in source:
+                raise AssertionError(
+                    f"missing Programme P-E lemma declaration: {declaration}"
+                )
+        if re.search(r"\b(?:sorry|admit|axiom)\b", source):
+            raise AssertionError(f"proof placeholder found in {filename}")
+        if f"Gates.{filename.removesuffix('.lean')}" not in lemma_facade:
+            raise AssertionError(f"Programme P-E lemma facade omits {filename}")
+
+    lemma_one = (
+        repo_root / "docs/program_pe_lemma1_locality_finite_jet.md"
+    ).read_text(encoding="utf-8")
+    if "Lean-kernel proof of Whitney/Peetre--Slovak | open" not in lemma_one:
+        raise AssertionError("Lemma 1 document obscures its analytic boundary")
 
 
 def forward_difference(function: Callable[[float], float], x: float) -> float:

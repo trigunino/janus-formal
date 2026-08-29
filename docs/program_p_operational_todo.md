@@ -1,17 +1,13 @@
-# Programme P — TODO opérationnelle distribuable aux LLM
+# Programme P — registre opérationnel canonique
 
-Date de référence : 2026-07-19.
+Date de référence : 2026-07-26.
 
 ## 1. Rôle de ce document
 
-Ce fichier est la file de travail courte de Programme P. Le registre détaillé
-`docs/program_p_exhaustive_todo.md` reste le journal historique des preuves et
-des sous-résultats.
-
-État vérifié du registre historique : **1132/1238**, soit **91,44 %**, avec
-**106 cases ouvertes**. Ce pourcentage n'est plus utilisé comme mesure de
-fermeture globale : le nombre de cases ouvertes n'a pas diminué pendant
-l'ajout de centaines de microlemmes.
+Ce fichier est l'unique file de travail active de Programme P. L'ancien
+registre exhaustif à cases a été supprimé : ses compteurs étaient obsolètes et
+mesuraient surtout l'accumulation de microlemmes. Son historique reste
+consultable dans Git.
 
 La fermeture globale est mesurée uniquement par les **14 portes terminales**
 de la section 7. État actuel : **0/14**. Une preuve locale, pointwise,
@@ -20,7 +16,13 @@ finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 En cas de contradiction entre prose et code, le type exact du théorème Lean
 compilé fait autorité.
 
-## 2. Consigne à donner à chaque LLM
+Les champs `Limite` des cartes `DONE` décrivent la frontière historique au
+jour de leur validation. Ils ne constituent plus une tâche active lorsqu'une
+carte ultérieure les ferme. L'arriéré actif est formé uniquement des cartes
+dont l'état n'est pas `DONE`, des verrous globaux de la section 6 et des portes
+terminales de la section 7.
+
+## 2. Protocole de travail
 
 Copier ce bloc avec l'identifiant d'une seule carte :
 
@@ -37,19 +39,9 @@ Copier ce bloc avec l'identifiant d'une seule carte :
 > prouvé, portée, fichiers modifiés, commandes/tests, et porte terminale fermée
 > — ou écris explicitement « aucune ».
 
-Coordination dans un workspace partagé :
-
-- plusieurs agents peuvent travailler en parallèle sur des gates distincts ;
-- un seul intégrateur à la fois modifie la façade, l'audit et les deux TODO ;
-- un agent ne coche jamais une carte qu'il n'a pas lui-même compilée ;
-- les lemmes intermédiaires sont inscrits comme preuves d'appui sous la carte,
-  sans créer de nouvelle unité de progression.
-
-Première vague possible pour dix LLM : attribuer les dix cartes de la section
-4, une par agent. Chaque agent construit et compile uniquement son gate ; un
-coordinateur intègre ensuite les gates verts, un par un, dans la façade et
-l'audit. Les cartes de la section 5 viennent seulement après cette vague ou
-après satisfaction de leur dépendance explicite.
+Dans un workspace partagé, un seul intégrateur modifie la façade, l'audit et
+ce registre. Une carte n'est déclarée fermée qu'après compilation directe de
+son gate et de la façade.
 
 ## 3. Portées et validation
 
@@ -78,7 +70,7 @@ lake env lean JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean
 C:\Users\alzie\AppData\Local\Programs\Python\Python314\python.exe scripts/audit_janus_program_p.py
 ```
 
-## 4. Cartes petites et parallélisables
+## 4. Registre des cartes intermédiaires
 
 Ces cartes produisent des ponts utiles, mais ne ferment une porte terminale
 que si leur critère le dit explicitement.
@@ -1393,8 +1385,10 @@ que si leur critère le dit explicitement.
   canonique, PT, le throat lisse et le bundle principal ambiant `Pin⁻(4)`.
 - Gate : `P0EFTJanusCanonicalEffectiveDecoratedMappingTorus4D`.
 - Acceptation : objets réellement typés sur la même base, sans champs de statut.
-- Limite : matière, `U(1)^2`, `PinC`, seconde métrique Candidate A générale et
-  action complète non incluses ; `GEO-GLOBAL-01` reste ouvert.
+- Limite historique : matière, `U(1)^2`, `PinC`, seconde métrique Candidate A
+  et action complète n'étaient pas incluses. La géométrie globale est désormais
+  portée par le domaine de racine admissible et l'action régulière est
+  désormais fermée par `ACTION-GLOBAL-01`.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1406,7 +1400,9 @@ que si leur critère le dit explicitement.
   racine intrinsèque et la densité Candidate A sur le même tangent.
 - Gate : `P0EFTJanusCanonicalDecoratedConformalCandidateA4D`.
 - Acceptation : carré exact et accord matriciel isotrope dans toute frame.
-- Limite : aucune paire générale non conforme ; `GEO-GLOBAL-01` reste ouvert.
+- Limite : cette gate ne construit que le sous-domaine conforme. La gate
+  globale accepte toute paire munie d'une racine réelle lisse; elle n'affirme
+  pas la fausse existence universelle hors de ce domaine admissible.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1469,8 +1465,10 @@ que si leur critère le dit explicitement.
 - Gate : `P0EFTJanusCanonicalDecoratedProgramPFieldDomain4D`.
 - Acceptation : configuration réelle PT-fixe, carré de racine, trace de bord
   et inclusion linéaire injective des variations, sans statut supposé.
-- Limite : l'accord avec action, Hessien et domaine Fredholm reste ouvert ;
-  `FIELD-GLOBAL-01` n'est pas fermé.
+- Limite historique : l'espace global unique, l'action, l'Euler et la
+  Hessienne chartwise sont maintenant fermés. L'identification de cette
+  Hessienne au domaine Fredholm géométrique reste séparée sous
+  `HESSIAN-GLOBAL-01`; la composante DIRAC géométrique est fermée.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1483,8 +1481,9 @@ que si leur critère le dit explicitement.
 - Gate : `P0EFTJanusCanonicalDecoratedGeneralLorentzFieldPacket4D`.
 - Acceptation : mêmes champs matière/jauge/ghosts/auxiliaires/LL, métriques du
   noyau décoré, paquet et trace de bord PT-fixes.
-- Limite : les deux métriques canoniques sont égales ; paire générale distincte,
-  racine et accord opératoriel encore ouverts. `FIELD-GLOBAL-01` reste ouvert.
+- Limite historique : les deux métriques de cette ancienne gate sont égales.
+  Elle est désormais subsumée par la configuration globale à paire générale
+  racine-admissible.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1497,8 +1496,9 @@ que si leur critère le dit explicitement.
 - Gate : `P0EFTJanusCanonicalPTPairedConformalGeneralLorentzFieldPacket4D`.
 - Acceptation : naturalité PT de la métrique conforme, racine opératorielle,
   mêmes champs non métriques, paquet et trace de bord PT-fixes.
-- Limite : paire conforme seulement ; la paire non conforme générale et sa
-  racine restent ouvertes. `GEO-GLOBAL-01` et `FIELD-GLOBAL-01` restent ouverts.
+- Limite : paire conforme seulement; elle fournit un constructeur concret du
+  domaine global racine-admissible, sans prétendre couvrir les paires frappées
+  par l'obstruction spectrale réelle.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1512,8 +1512,8 @@ que si leur critère le dit explicitement.
 - Acceptation : mode sinus lisse descendu au quotient, facteur `2 + sin`
   strictement positif et non PT-fixe, injectivité du redimensionnement conforme,
   puis inégalité des deux métriques du paquet canonique explicite.
-- Limite : le secteur non conforme général reste ouvert ; `GEO-GLOBAL-01` et
-  `FIELD-GLOBAL-01` restent ouverts.
+- Limite : témoin conforme explicite seulement; le domaine global autorise les
+  autres paires exactement lorsqu'une racine réelle lisse est fournie.
 - Porte terminale : aucune.
 - Validation : gate compilé en priorité `AboveNormal`; façade, audit, usages et
   axiomes vérifiés après intégration le 2026-07-19.
@@ -1546,13 +1546,12 @@ que si leur critère le dit explicitement.
 
 - État : `DONE` (2026-07-21). Portée : `POINTWISE/GLOBAL-TYPED`.
 - Gate : `P0EFTJanusProgramPCommonGhostPairingBridge4D`.
-- Résultat : les labels P-D ghost/antighost sont reliés aux deux vraies
-  coordonnées U(1) D9 ; la neutralité supprime exactement les deux blocs
-  diagonaux et conserve les deux coefficients dirigés sur les variations
-  globales communes.
-- Limite : la relation entre ces deux coefficients exige encore la structure
-  Grassmann/BRST complète ; le pairing spinor et la globalisation naturelle
-  restent ouverts, donc `T01` reste ouverte.
+- Résultat : les deux labels historiques sont reliés aux deux coordonnées de
+  l’algèbre de Lie `U(1)²` D9 ; la classification du pairing dirigé est exacte.
+  Ces labels ne sont pas un couple ghost/antighost nonminimal.
+- Limite : les vrais types distincts `c/c̄/B` existent désormais dans les
+  gauge fermions D9, mais leur chart lisse global et leur pairing intégré
+  restent à construire ; `T01` reste ouverte.
 - Porte terminale : aucune ; prérequis direct de `T01`.
 
 ### `P-T01-SPINOR-COORDINATE-NOGO` — Le rang quatre ne choisit pas le pairing
@@ -2070,7 +2069,9 @@ que si leur critère le dit explicitement.
   canonique sur le nouveau tangent spinoriel; les coordonnées normales et gauge
   restent celles du tangent historique sans matière, tandis que le spinor vient
   explicitement de la section équivariante.
-- Limite : la coordonnée modale D10 et l'action/Hessien restent sur l'ancien type.
+- Limite historique : la coordonnée modale D10 et l'action/Hessien restaient
+  sur l'ancien type. L'action globale consomme désormais le doublet SpinC;
+  Hessien et famille D10 restent séparés.
 - Porte terminale : aucune ; migre le point d'entrée central du domaine D9.
 
 ### `P-T01-D9-SPINOR-PAIRING-SMOOTH` — Pairing lisse des sections D9
@@ -2115,38 +2116,1552 @@ que si leur critère le dit explicitement.
 - Porte terminale : aucune ; fournit le premier terme d'action D9 authentiquement
   porté par les sections spinorielles globales.
 
+### `P9-SPINC-GEOMETRIC-ZERO-MODE` — Mode zéro géométrique primitif
+
+- État : `DONE` (2026-07-25). Portée : `GÉOMÉTRIQUE/PARTIELLE`.
+- Gates : `P0EFTJanusProgramPPrimitiveMonopoleZeroModeSection4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSection4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricDiracLeibniz4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeDiracEquation4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCHopfZeroModeSpectralRealization4D`.
+- Résultat : les représentants lisses du mode monopolaire de Hopf et leur
+  section SpinC globale sont construits dans les deux secteurs de racine. Le
+  Dirac géométrique satisfait la règle de Leibniz locale, la section de Hopf
+  satisfait son équation propre, et la synthèse finie du bloc zéro entrelace
+  exactement le Dirac géométrique avec l'opérateur diagonal des fréquences
+  normales corrigées.
+- Limite : ce résultat réalise le bloc géométrique de valeur propre zéro, pas
+  la tour géométrique complète ni son exhaustivité spectrale.
+- Porte terminale : aucune ; avance `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-FIRST-POSITIVE` — Premier niveau positif géométrique signé
+
+- État : `DONE` (2026-07-25). Portée : `GÉOMÉTRIQUE/PARTIELLE`.
+- Gates : `P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereDirac4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereMultiplicity4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCFirstPositiveSphereExhaustion4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedBridge4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedPacket4D`.
+- Résultat : trois sections propres réelles linéairement indépendantes sont
+  construites pour chacun des signes, non nulles, avec dégénérescence construite
+  `3`; leur somme directe épuise exactement le bloc géométrique engendré de
+  dimension `6`, et les équations propres de Dirac et de Dirac carré sont
+  démontrées. Les six sections réalisent exactement les deux branches internes
+  du spectre signé au premier niveau, indépendamment du secteur de racine.
+  Leur synthèse à six coordonnées est injective et entrelace le vrai Dirac
+  différentiel avec la diagonale signée, y compris après mise au carré.
+- Limite : l'exhaustivité de l'espace propre, les niveaux positifs arbitraires et
+  la complétude spectrale restent ouverts.
+- Porte terminale : aucune ; avance `DIRAC-GLOBAL-01` et `REGULATOR-GLOBAL-01`.
+
+### `P9-SPINC-LOW-ENERGY-FINITE-GEOMETRIC-FOURIER` — Pont Fourier géométrique fini
+
+- État : `DONE` (2026-07-26). Portée : `GÉOMÉTRIQUE/MODES-FINIS`.
+- Gates : `P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeCore4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeFourierCoordinates4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeMovingLocal4D`,
+  `P0EFTJanusProgramPD9PrimitiveSpinCLowEnergyFiniteModeGeometricFourier4D`.
+- Résultat : dans chaque secteur de racine fixé, tout paquet à support fini en
+  modes du cercle du bloc zéro plus les deux blocs signés de première sphère
+  possède une synthèse en vraies sections lisses qui est injective. Les deux
+  témoins locaux mobiles et les quatre coordonnées complexes de fibre ramènent
+  la séparation inter-modes au théorème Fourier fini existant; le vrai Dirac et
+  son carré séparent ensuite les trois blocs, puis les témoins locaux existants
+  récupèrent les sept coefficients complexes de chaque mode.
+- Hypothèses : aucune nouvelle hypothèse physique ni aucun axiome métier.
+- Limite : ce pont porte sur le bloc bas-énergie à support fini, pas sur les
+  niveaux sphériques arbitraires, la complétion Hilbert/Sobolev, le domaine
+  non borné commun ni l'exhaustivité spectrale.
+- Porte terminale : aucune ; avance `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-SIGNED-ABSTRACT-SPECTRUM` — Deux branches internes signées
+
+- État : `DONE` (2026-07-26). Portée : `ANALYTIQUE/ABSTRAITE`.
+- Gates : `P0EFTJanusProgramPPrimitiveSpinCSignedSpectrum4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedBridge4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCFirstPositiveSignedPacket4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCSignedSpectralCompletion4D`.
+- Résultat : le signe spectral interne `±` est séparé du fold PT; les carrés
+  coïncident avec le spectre abstrait antérieur et les branches non nulles sont
+  distinctes, sans doubler la tour zéro. Le spectre corrigé possède désormais
+  une base de Hilbert complète, un domaine maximal dense, un opérateur
+  auto-adjoint fermé et, dans le secteur quart-tordu physique, un gap `1/4`,
+  une bijectivité, la propriété de Fredholm et l'indice nul.
+- Limite : l'identification de cette base abstraite avec une famille complète
+  de sections propres géométriques lisses reste le théorème de Fourier
+  géométrique. Le segment à support fini des niveaux zéro et premier signés est
+  maintenant fermé et la diagonalisation SpinC uniforme est traitée par la
+  gate tous niveaux ci-dessous. Les niveaux `p=1`, `p=2` et `p=3` sont
+  concrets; les deux derniers fournissent respectivement cinq quadratiques et
+  sept cubiques sans trace linéairement indépendantes, avec leurs identités
+  `D²` et leurs graines Dirac signées. Le paquet complexe est désormais
+  construit uniformément à tout degré puis réalisé par de vraies sections
+  lisses null-harmoniques. Sa récurrence donne `D²`, les graines signées,
+  l’indépendance complexe exacte et une synthèse finie injective, désormais
+  conjointement sur tous les niveaux positifs à secteur/mode fixé, avec
+  entrelacement diagonal de `D²`. Les synthèses totales ci-dessous ferment
+  aussi simultanément secteurs, modes, multiplicités et tour zéro. La
+  complétion spectrale et l’analyse dense sont depuis fermées par
+  `P9-SPINC-ALL-LEVEL-FINITE-HILBERT-COMPLETION`; reste l’égalité avec le
+  produit géométrique intégral sur tout le cœur lisse.
+- Porte terminale : aucune ; corrige la portée de `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-COEFFICIENT-DOMAIN-UNITARY` — Domaine maximal SpinC/D10 étendu
+
+- État : `DONE` (2026-07-27). Portée : `ANALYTIQUE/COEFFICIENTS`.
+- Gate : `P0EFTJanusProgramPPrimitiveSpinCGeometricDomainUnitary4D`.
+- Résultat : l’isométrie `L²` entre la tour SpinC complète et la somme du
+  secteur sphérique zéro avec les modes D10 positifs transporte exactement le
+  domaine maximal de `D²`. Elle conjugue les deux opérateurs non bornés et
+  conserve leur énergie de graphe. Les poids des deux sommants sont identifiés
+  respectivement au cercle quart-tordu et au spectre D10.
+- Hypothèses : aucune nouvelle hypothèse physique ni aucun axiome métier.
+- Limite : ce résultat ferme le transport unitaire du domaine de
+  **coefficients**. Les eigenspinors géométriques lisses signés de niveau
+  arbitraire sont désormais construits par
+  `P9-SPINC-ALL-LEVEL-SIGNED-GEOMETRIC-REALIZATION`; leur comparaison
+  hilbertienne intégrale reste séparée.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-FOURIER-COMPLETION` — Complétion canonique de l’analyse
+
+- État : `DONE` (2026-07-27). Portée : `ANALYTIQUE/GÉOMÉTRIQUE`.
+- Gate : `P0EFTJanusProgramPD9PrimitiveSpinCGeometricFourierCompletion4D`.
+- Résultat : toute réalisation Fourier géométrique SpinC tous niveaux s’étend
+  canoniquement en une équivalence isométrique réelle entre la complétion de
+  son image lisse et le `L²` complet des coefficients. Le cœur lisse reste
+  dense et injectif; le domaine maximal `H²`, l’opérateur `D²`, son accord sur
+  le cœur et l’énergie de graphe sont transportés exactement. Le carré complété
+  est en outre coercif et bijectif.
+- Hypothèses : aucune au-delà de la réalisation géométrique déjà isolée; aucun
+  axiome métier supplémentaire.
+- Limite : cette gate ne construit pas la réalisation elle-même. Le paquet
+  lisse tous degrés, son identité géométrique `D²`, son indépendance complexe
+  inter-niveaux à secteur/mode fixé et sa synthèse finie diagonale injective
+  sont maintenant construits. La séparation conjointe et la complétion
+  spectrale sont depuis fermées; reste l’identification avec le produit
+  géométrique intégral sur tout le cœur lisse.
+- Porte terminale : aucune ; retire la complétion des résidus de
+  `DIRAC-GLOBAL-01`.
+
+### `P9-SPINC-ALL-LEVEL-HARMONIC-DIAGONALIZATION` — Diagonalisation géométrique uniforme
+
+- État : `DONE` (2026-07-27). Portée : `DIRAC/GÉOMÉTRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelHarmonicDiagonalization4D`.
+- Résultat : pour tout niveau sphérique positif, les sections scalaire et
+  gradient d’un germe harmonique forment un bloc Dirac exact `2×2`. Ses deux
+  combinaisons canoniques sont des eigensections lisses de fréquences opposées;
+  `D²`, le sous-espace engendré et l’accord exact avec le spectre D9/D10 complet
+  sont démontrés. À multiplicité arbitraire, les blocs propres `±` sont
+  disjoints et leur somme épuise exactement le paquet scalaire/gradient. Le
+  bloc entier est en outre reconstruit à partir d’une seule section propre de
+  `D²`; les deux équations du premier ordre ne sont donc pas des obligations
+  indépendantes. L’action complexe intrinsèque fournit automatiquement les
+  compagnons imaginaires et conserve la valeur propre sur toute la ligne
+  complexe (fidèle dès que le générateur est non nul). Le niveau `p=1` redonne
+  littéralement les eigensections déjà construites et habite aussi cette
+  interface réduite. En outre, la multiplication globale d’une vraie section
+  lisse par un scalaire lisse, son reste de Clifford-gradient et la règle de
+  Leibniz sont maintenant construits. Appliqués au mode zéro de Hopf, ils
+  démontrent sans hypothèse la première équation du bloc. Une tour de scalaires
+  munie de la seule identité de Lichnerowicz/`D²` produit automatiquement la
+  tour `D²`, la tour Dirac signée et ses paquets; les coordonnées `p=1`, les
+  cinq quadratiques sans trace indépendantes de `p=2` et les sept cubiques
+  sans trace indépendantes de `p=3` réalisent concrètement cette interface.
+- Hypothèses : aucun axiome métier. La récurrence null-harmonique construit
+  désormais elle-même l’identité géométrique de second ordre et les deux
+  équations du premier ordre.
+- Limite : le paquet complexe homogène est réalisé uniformément, pour tout
+  `p`, par des sections lisses du fibré quotient. La croissance stricte de
+  `p(p+1)` sépare les espaces propres de `D²` : l’indépendance et la synthèse
+  finie diagonale sont donc fermées conjointement sur tous les niveaux
+  positifs à secteur/mode fixé. La séparation conjointe et l’analyse dense
+  complétée sont depuis fermées. Le raccord exact de ces branches aux labels
+  signés complets est fermé par la gate suivante. Parseval et la complétion
+  sont aussi fermés séparément sur chaque branche et chaque bloc signé.
+  Restent leurs multiplicités attendues, leur orthogonalité inter-blocs,
+  l’assemblage hilbertien conjoint et la densité.
+  Les niveaux
+  `p=1`, `p=2` et `p=3` ne sont plus des obligations distinctes.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` à la complétude
+  analytique globale.
+
+### `P9-SPINC-ALL-LEVEL-SIGNED-GEOMETRIC-REALIZATION` — Spectre signé géométrique complet
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/PREMIER-ORDRE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelSignedGeometricRealization4D`.
+- Résultat : pour chaque niveau positif, secteur normal, mode cercle,
+  multiplicité et branche interne `±`, la tour null-harmonique fournit une
+  vraie section lisse du fibré SpinC quotient. Elle vérifie exactement
+  l’équation de Dirac de premier ordre avec la valeur propre du modèle
+  Fredholm signé. Les deux spans de branches d’un bloc sont disjoints et leur
+  somme est exactement le bloc scalaire/Clifford-gradient. La tour sphérique
+  zéro non doublée est également réalisée pour tout `period ≠ 0`; lorsque le
+  period est positif, l’involution PT secteur/mode corrige exactement le signe
+  orienté, et lorsque le period est négatif l’identité convient. Ainsi chaque
+  label signé complet possède un représentant géométrique lisse exact.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier, aucune hypothèse
+  de complétude ni choix d’orientation supplémentaire.
+- Limite : chaque branche et chaque bloc signé possède ses coordonnées de
+  Parseval, sa complétion fermée et son finrank physique exact. Les deux
+  signes d’un label fixé et tous les labels signés distincts sont désormais
+  orthogonaux; la somme jointe globale est construite. Reste seulement sa
+  densité dans toute la complétion géométrique.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-SECOND-POSITIVE-SPHERE` — Paquet quadratique `p=2`
+
+- État : `DONE` (2026-07-27). Portée : `DIRAC/GÉOMÉTRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCSecondPositiveSphereDirac4D`.
+- Résultat : les produits `nᵢnⱼψ` et leurs partenaires tangentiels satisfont
+  un système Dirac exact. L’anticommutation Clifford donne la correction de
+  trace `-2δᵢⱼψ`; elle s’annule sur cinq combinaisons quadratiques sans trace,
+  qui vérifient `D²=(k²+6)`. Les cinq scalaires lisses associés et les cinq
+  véritables sections propres lisses sont linéairement indépendants; le
+  transfert aux sections utilise cinq valeurs locales non nulles du mode de
+  Hopf et la même matrice d’évaluation rationnelle explicite. Leur cardinal
+  vaut la dégénérescence `2p+1=5`, et chacun produit les deux branches propres
+  signées via l’interface Lichnerowicz.
+- Hypothèses : aucun axiome métier ni identité spectrale ajoutée.
+- Limite : ce jalon est conservé comme contrôle réel explicite de `p=2`; la
+  construction null-harmonique générique ferme maintenant tous les degrés
+  géométriquement.
+
+### `P9-SPINC-THIRD-POSITIVE-SPHERE` — Paquet cubique `p=3`
+
+- État : `DONE` (2026-07-27). Portée : `DIRAC/GÉOMÉTRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCThirdPositiveSphereDirac4D`.
+- Résultat : le bloc cubique brut et son partenaire tangentiel satisfont les
+  deux équations de Dirac récursives. La correction de trace s’annule sur sept
+  cubiques harmoniques réels sans trace, donnant sept véritables eigensections
+  lisses avec `D²=(k²+12)`. Les scalaires et les sections sont linéairement
+  indépendants par une matrice d’évaluation rationnelle à sept témoins locaux
+  non nuls. Leur cardinal vaut `2p+1=7` et chacun engendre les deux graines
+  Dirac signées.
+- Hypothèses : aucun axiome métier ni identité spectrale ajoutée.
+- Limite : ce jalon est conservé comme contrôle réel explicite de `p=3`; la
+  construction null-harmonique générique ferme maintenant tous les degrés
+  géométriquement. La complétude inter-niveaux reste globale.
+
+### `P9-SPINC-ALL-LEVEL-SOLID-HARMONIC-PACKET` — Paquet uniforme tout degré
+
+- État : `DONE` (2026-07-27). Portée : `DIRAC/ALGÉBRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelSolidHarmonicPacket4D`.
+- Résultat : la courbe nulle complexe
+  `(1-t², I(1+t²), 2t)` engendre à tout degré `p` un paquet de cardinal
+  physique exact `2p+1`. Chaque membre est homogène, son Laplacien ambiant
+  est nul et l’opérateur sphérique algébrique `E(E+1)-r²Δ` donne exactement
+  l’énergie `p(p+1)`. Une évaluation sur la même courbe réduit
+  l’indépendance linéaire à une matrice de Vandermonde; elle est démontrée
+  uniformément, sans développer `p=4`, `p=5`, etc.
+- Hypothèses : aucun axiome métier ni identité spectrale ajoutée.
+- Limite : la réalisation lisse complexe et son identification à `D²` sont
+  fermées par la gate suivante. Une base réelle canonique n’est pas nécessaire
+  pour la multiplicité complexe physique. La complétude globale reste ouverte.
+- Porte terminale : aucune ; remplace tous les futurs paquets
+  niveau-par-niveau par un unique pont géométrique.
+
+### `P9-SPINC-ALL-LEVEL-NULL-HARMONIC-DIRAC` — Réalisation lisse uniforme
+
+- État : `DONE` (2026-07-28). Portée : `DIRAC/GÉOMÉTRIQUE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelNullHarmonicDirac4D`.
+- Résultat : les puissances de la forme linéaire nulle agissent directement
+  sur le mode de Hopf dans le véritable fibré SpinC quotient. Une unique
+  récurrence en `p` démontre les équations de premier ordre et l’identité
+  géométrique `D²` à tout niveau, puis engendre les deux branches signées.
+  L’évaluation locale et le paquet de Vandermonde prouvent que les `2p+1`
+  sections sont complexes-linéairement indépendantes. La croissance stricte
+  de l’énergie sphérique sépare les espaces propres de `D²`, donc ces paquets
+  sont conjointement indépendants sur tous les niveaux positifs à
+  secteur/mode fixé. Leur synthèse à support fini est injective et vérifie
+  exactement `D² S = S Λ` pour l’opérateur diagonal explicite des
+  coefficients. Avec la tour de Hopf zéro, chaque étiquette du spectre carré
+  complet possède des représentants lisses réel et imaginaire intrinsèque.
+- Hypothèses : aucun axiome métier et aucune hypothèse de Lichnerowicz ou de
+  niveau supplémentaire.
+- Limite : cette carte ferme l’axe inter-niveaux à secteur/mode fixé. La carte
+  suivante ferme l’axe secteurs/modes à niveau fixé, puis la carte
+  `P9-SPINC-ALL-POSITIVE-JOINT-SPECTRAL` combine les deux axes, puis la carte
+  complète suivante ajoute la tour zéro. La carte de complétion finie ferme
+  ensuite l’analyse dense et la complétion spectrale. Le raccord géométrique
+  de premier ordre à tous les labels signés est désormais fermé; restent son
+  orthogonalisation/intégration par blocs et la densité globale.
+
+### `P9-SPINC-FIXED-LEVEL-JOINT-FOURIER` — Séparation conjointe à tout niveau fixé
+
+- État : `DONE` (2026-07-28). Portée : `DIRAC/GÉOMÉTRIQUE/SUPPORT-FINI`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelJointFourierSynthesis4D`.
+- Résultat : le doublement du temps de revêtement identifie les secteurs
+  `positiveQuarter` et `negativeQuarter` aux indices Fourier impairs et pairs.
+  L’index conjoint secteur–mode s’injecte donc dans `ℤ`. Pour tout niveau
+  positif arbitraire `p`, l’évaluation locale mobile sépare simultanément les
+  deux secteurs et tous les modes du cercle; la relation polynomiale
+  null-harmonique annule ensuite les `2p+1` multiplicités. La synthèse complexe
+  à support fini sur
+  `(secteur × mode du cercle) × multiplicité` est injective, et la famille
+  correspondante est complexe-linéairement indépendante.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier, aucune nouvelle
+  condition physique et aucun développement niveau par niveau.
+- Limite : le niveau est arbitraire mais fixé dans cette carte. La synthèse
+  simultanée tous niveaux positifs est fermée par la carte suivante.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-ALL-POSITIVE-JOINT-SPECTRAL` — Synthèse spectrale positive totale
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/SUPPORT-FINI`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelJointSpectralSynthesis4D`.
+- Résultat : une seule famille lisse est indexée simultanément par les deux
+  secteurs, tous les modes du cercle, tous les niveaux sphériques positifs et
+  leurs `2p+1` multiplicités. La séparation par espaces propres de `D²`
+  réduit chaque collision spectrale à un paquet à niveaux assignés, où le
+  réindexage Fourier et le paquet null-harmonique donnent l’indépendance.
+  La famille totale est donc complexe-linéairement indépendante, sa synthèse
+  à support fini est injective et vérifie exactement `D² S = S Λ`.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni choix physique
+  supplémentaire.
+- Limite : cette carte porte seulement les niveaux positifs. La carte
+  suivante ajoute la tour zéro. La carte de complétion finie ferme ensuite
+  l’analyse dense et la complétion spectrale; reste l’égalité avec la norme
+  géométrique intégrale globale.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-ALL-LEVEL-FULL-SPECTRAL` — Synthèse géométrique complète
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/SUPPORT-FINI`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelFullSpectralSynthesis4D`.
+- Résultat : le paquet à niveaux assignés est étendu à tout niveau
+  sphérique non négatif. La séparation des collisions de `D²` donne alors
+  l’indépendance complexe simultanée de la tour de Hopf zéro, de tous les
+  niveaux positifs, des deux secteurs, de tous les modes du cercle et de
+  toutes les multiplicités. Sur l’index canonique
+  `PrimitiveSpinCGeometricFullMode`, la synthèse à support fini est injective
+  et vérifie exactement `D² S = S Λ` pour le diagonal spectral complet déjà
+  utilisé par la complétion.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni choix physique
+  supplémentaire.
+- Limite : l’indépendance algébrique et l’entrelacement sur le cœur fini sont
+  fermés. La carte suivante ferme aussi sa complétion dans la norme spectrale.
+  Le produit `L²` géométrique indépendant, Parseval par bloc et l’isométrie
+  jointe vers son span fermé sont désormais construits pour la famille
+  scalaire. Les branches signées/gradient possèdent aussi leur réalisation
+  hilbertienne finie bloc par bloc, leurs finranks exacts, toute
+  l’orthogonalité inter-labels et leur somme jointe globale. Reste leur
+  densité dans tout le cœur SpinC complété.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-ALL-LEVEL-FINITE-HILBERT-COMPLETION` — Complétion du cœur spectral géométrique
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelFiniteHilbertCompletion4D`.
+- Résultat : la synthèse injective identifie les coefficients à support fini
+  avec leur véritable span de sections SpinC lisses. L’analyse canonique de
+  ce span est injective et dense dans le `L²` complet des coefficients. La
+  norme induite en fait un cœur préhilbertien dont la complétion est
+  canoniquement unitaire au `L²`. Le domaine maximal `H²` et `D²` sont
+  transportés exactement; l’opérateur complété prolonge le vrai `D²`
+  différentiel sur le cœur, est coercif et bijectif.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni choix physique
+  supplémentaire.
+- Limite : la norme utilisée est induite par les coefficients. Le produit
+  géométrique indépendant, sa complétion et Parseval sur chaque bloc de
+  multiplicité sont désormais construits. Les modes cercle distincts d’un
+  même secteur, les secteurs opposés et les niveaux distincts à secteur/mode
+  fixé sont orthogonaux et leur somme hilbertienne est une isométrie à image
+  fermée exactement décrite pour les blocs scalaires. Les finranks, toute
+  l’orthogonalité et l’assemblage signés sont également fermés, avec un
+  unitaire inconditionnel sur leur image spectrale fermée. La gate de
+  complétude Fourier--monopôle ci-dessous ferme ensuite sa densité ambiante.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-PAIRING-COMPLETION` — Produit et complétion `L²` géométriques
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2Pairing4D`.
+- Résultat : le produit hermitien doublé descend à travers toutes les
+  transitions du véritable fibré SpinC primitif. Son évaluation sur deux
+  sections lisses est lisse et intégrable contre le volume canonique de la
+  gorge. L’intégrale est sesquilinéaire, hermitienne et définie positive; elle
+  induit une norme complexe et une complétion hilbertienne dans laquelle le
+  cœur lisse est dense.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni définition par
+  coefficients spectraux.
+- Limite : Parseval est exact dans chaque bloc fini et entre modes cercle
+  distincts d’un même secteur; les secteurs opposés sont également
+  orthogonaux, ainsi que les niveaux distincts à secteur/mode fixé. Restent la
+  densité spectrale dans cette complétion et l’équivalence unitaire globale.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-SIGNED-BRANCH-COMPLETION` — Complétion géométrique des blocs signés
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/PREMIER-ORDRE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedBranchCompletion4D`.
+- Résultat : à niveau positif, secteur et mode fixés, chaque branche signée
+  engendre un sous-espace fini du véritable cœur SpinC. Sa base orthonormale
+  canonique fournit Parseval, une isométrie vers la complétion géométrique,
+  une image fermée et l’entrelacement exact avec le Dirac de premier ordre.
+  Les branches `+` et `-` sont disjointes comme espaces propres de valeurs
+  propres distinctes. Leur bloc total possède à son tour Parseval, une image
+  complétée fermée et l’entrelacement exact avec `D²`.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni orthogonalité
+  postulée.
+- Limite : les bases sont indexées par le `finrank` géométrique démontré; son
+  égalité à la multiplicité physique attendue est établie par la gate suivante.
+  Les gates gradient/Casimir et jointe signée ferment l’orthogonalité dans
+  chaque bloc, entre tous labels distincts et l’assemblage global. Reste la
+  densité de son image fermée dans la complétion géométrique entière.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-SIGNED-MULTIPLICITY` — Multiplicités géométriques signées exactes
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/PREMIER-ORDRE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedMultiplicity4D`.
+- Résultat : l’action radiale de Clifford sépare algébriquement la partie
+  scalaire (`+i`) de la partie gradient (`-i`) dans toute relation signée.
+  Comme le coefficient radial signé ne s’annule jamais et que le paquet
+  scalaire nul est déjà indépendant, chaque famille signée brute est
+  complexe-linéairement indépendante. Chaque signe a donc exactement le
+  finrank physique `2p+1`, et le bloc deux signes exactement `2(2p+1)`.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier.
+- Limite : la séparation radiale et la disjonction des espaces propres sont
+  algébriques; l’orthogonalité intégrale des deux signes dans un bloc fixé est
+  désormais fermée par la gate gradient/Casimir. Restent les labels spectraux
+  distincts, la somme hilbertienne jointe et son exhaustion.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-BLOCK-ORTHONORMALIZATION` — Parseval géométrique par bloc
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2BlockOrthonormalization4D`.
+- Résultat : pour chaque triplet niveau sphérique/secteur racine/mode cercle,
+  Gram–Schmidt est appliqué au paquet nul canonique dans le véritable produit
+  `L²` intégral. La famille obtenue est orthonormale, engendre exactement le
+  même sous-espace lisse et chaque vecteur conserve la même équation
+  géométrique `D²`. Sa synthèse depuis l’espace euclidien fini est une
+  isométrie linéaire avec identité de Parseval et entrelacement exact.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni orthogonalité
+  artificiellement postulée.
+- Limite : l’orthogonalité pour des modes cercle distincts dans un même
+  secteur, entre secteurs opposés et entre niveaux distincts à secteur/mode
+  fixé est désormais fermée. Leur somme hilbertienne est construite par la
+  gate jointe ci-dessous. Les blocs signés sont orthonormalisés séparément et
+  leurs finranks sont exacts; les signes opposés d’un même label et tous les
+  labels spectraux distincts sont orthogonaux. Leur somme jointe globale et
+  son unitaire sur l’image fermée sont construits; la densité ambiante est
+  fermée par la gate de complétude Fourier--monopôle ci-dessous.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-FOURIER-ORTHOGONALITY` — Orthogonalité Fourier géométrique
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2FourierOrthogonality4D`.
+- Résultat : le produit quotient intégral est réduit exactement au domaine
+  fondamental sphère ronde × intervalle temporel canonique. Dans les deux
+  cartes monopôle, chaque paquet nul possède le même facteur Fourier mobile.
+  L’intégrale temporelle annule donc exactement deux modes cercle distincts
+  d’un même secteur, quels que soient niveaux et multiplicités. Le résultat
+  vaut pour les familles brutes, leurs spans et les synthèses orthonormales
+  de blocs. Les deux plans demi-spinoriels Hopf sont en outre orthogonaux :
+  les secteurs racine opposés s’annulent point par point puis dans `L²`, pour
+  tous niveaux, modes et multiplicités.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni hypothèse
+  d’orthogonalité ajoutée.
+- Limite : l’axe niveau est fermé par la gate Casimir dédiée ci-dessous.
+  L’assemblage scalaire est fermé par la gate d’isométrie jointe. Les
+  isométries finies signées, leur orthogonalité complète et leur assemblage
+  global sont fermés. L’unitaire sur l’image spectrale fermée est
+  inconditionnel; sa densité ambiante est fermée par la gate de complétude
+  Fourier--monopôle ci-dessous.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-LEVEL-ORTHOGONALITY` — Orthogonalité géométrique inter-niveaux
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2LevelOrthogonality4D`.
+- Résultat : les rotations standards de la sphère sont reliées à leur
+  champ infinitésimal et à la mesure ronde invariante. L’intégration par
+  parties rend le Casimir de rotation symétrique. Les puissances nulles de
+  degré `p` ont exactement la valeur propre `p(p+1)`; deux degrés distincts
+  sont donc orthogonaux sans hypothèse ajoutée. Le calcul local du germe Hopf
+  donne le facteur de norme exact `8`, puis Fubini transporte l’annulation aux
+  vraies sections SpinC, aux blocs bruts, à leurs spans et aux synthèses
+  normalisées.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier, aucune
+  orthogonalité ni complétude postulée.
+- Limite : les trois axes de séparation (secteur, mode cercle, niveau
+  sphérique) sont fermés. Leur assemblage hilbertien et la description exacte
+  de son image fermée sont fermés par la gate suivante.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-GRADIENT-CASIMIR` — Orthogonalité exacte des deux signes
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/PREMIER-ORDRE`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2GradientCasimir4D`.
+- Résultat : les identités Clifford/tangentielles du germe Hopf donnent la
+  paire pointwise exacte des gradients reconstruits. L’intégration par
+  parties annule le terme ambient–angulaire; le terme de Dirichlet est
+  exactement le Casimir `p(p+1)` fois la paire scalaire. Après Fubini sur le
+  vrai domaine sphère × temps, la paire `L²` des gradients vaut donc
+  `p(p+1)` fois la paire scalaire. Le produit des coefficients scalaires des
+  branches `+` et `-` vaut son opposé, d’où l’orthogonalité exacte des deux
+  familles brutes puis de leurs spans complets dans chaque bloc fixé.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni orthogonalité
+  postulée.
+- Limite : l’orthogonalité des paquets signés portant des labels
+  secteur/mode/niveau distincts et leur isométrie jointe sont fermées par la
+  gate suivante. L’exhaustion de toute la complétion géométrique est fermée
+  par la gate Fourier--monopôle ultérieure.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-JOINT-ISOMETRY` — Isométrie hilbertienne jointe
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2JointIsometry4D`.
+- Résultat : les blocs euclidiens normalisés, indexés simultanément par niveau
+  sphérique, secteur racine et mode cercle, forment une famille orthogonale
+  d’isométries dans la complétion `L²` géométrique indépendante. Leur somme
+  hilbertienne `ℓ²` définit une isométrie linéaire canonique. Son image est
+  exactement la fermeture du span de tous les blocs explicites. La densité de
+  cette image est équivalente à sa surjectivité et fournit alors
+  canoniquement l’équivalence unitaire globale.
+- Hypothèses : seulement `period ≠ 0`; aucune complétude spectrale ni densité
+  postulée.
+- Limite : la surjectivité scalaire n’est pas démontrée. La gate suivante
+  ferme toutefois toute l’orthogonalité et l’isométrie jointe de la famille
+  signée complète, tour zéro comprise.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-GEOMETRIC-L2-SIGNED-JOINT-ISOMETRY` — Isométrie signée globale
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL-SIGNÉ`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometry4D`.
+- Résultat : les paquets signés sont orthogonaux dès qu’un label
+  niveau/secteur/mode diffère. La tour zéro est orthogonale à tous les blocs
+  positifs signés. Tous ces blocs Parseval s’assemblent donc en une isométrie
+  canonique sur leur somme hilbertienne `ℓ²`. Son image est exactement la
+  fermeture de leur span, et une équivalence unitaire inconditionnelle entre
+  les coefficients globaux et cette image spectrale fermée est construite.
+  La densité dans toute la complétion géométrique est équivalente à la
+  surjectivité et fournit alors l’unitaire ambiant.
+- Hypothèses : seulement `period ≠ 0`; aucune complétude spectrale, densité
+  ou orthogonalité postulée.
+- Limite : la densité de la famille signée explicite dans la complétion de
+  toutes les sections lisses est fermée par la gate suivante.
+- Porte terminale : aucune ; réduit `DIRAC-GLOBAL-01` et
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-FOURIER-MONOPOLE-CORE-COMPLETENESS` — Complétude géométrique signée
+
+- État : `DONE` (2026-07-28). Portée :
+  `DIRAC/GÉOMÉTRIQUE/HILBERT-INTÉGRAL/SPECTRAL-SIGNÉ`.
+- Gate :
+  `P0EFTJanusProgramPD9PrimitiveSpinCFourierMonopoleCoreCompleteness4D`.
+- Résultat : les polynômes monopôle et les modes de Fourier temporels
+  approchent uniformément les huit coefficients du repère de Hopf signé.
+  Leur réalisation par de vraies sections lisses donne une erreur ponctuelle
+  quadratique intégrable. Toute section lisse appartient donc à la fermeture
+  de la synthèse signée. La densité du cœur lisse et la fermeture déjà prouvée
+  de l’image rendent cette synthèse surjective et produisent l’équivalence
+  linéaire isométrique globale avec la complétion géométrique `L²`.
+- Hypothèses : seulement `period ≠ 0` et les structures géométriques déjà
+  construites; aucune hypothèse de complétude spectrale.
+- Limite : aucune pour la complétude géométrique du DIRAC SpinC. Les blocs
+  non-SpinC de la Hessienne globale restent séparés.
+- Porte terminale : ferme `DIRAC-GLOBAL-01` et retire le résidu de densité de
+  `HESSIAN-GLOBAL-01`.
+
+### `P9-SPINC-SIGNED-MODE-HESSIAN-UNITARY` — Unitaire géométrique du Hessien signé
+
+- État : `DONE` (2026-07-29). Portée :
+  `HESSIAN/DIRAC/SPINC/CŒUR-LISSE/MAXIMAL`.
+- Gates :
+  `P0EFTJanusProgramPD9PrimitiveSpinCGeometricSignedModeUnitary4D`,
+  `P0EFTJanusProgramPGlobalHessianFrontier4D`.
+- Résultat : les blocs Fourier--monopôle complets sont raffinés aux labels
+  signés individuels du Hessien. Une permutation PT involutive corrige
+  exactement la tour zéro lorsque l’orientation de la période l’exige. La
+  famille obtenue est orthonormale et donne un unitaire sur toute la
+  complétion géométrique. Chaque vecteur lisse porte la vraie valeur propre du
+  Dirac de premier ordre. Sur toute combinaison finie, le véritable opérateur
+  différentiel `2D + m²` entrelace exactement le multiplicateur diagonal du
+  Hessien; sa réalisation maximale est auto-adjointe et Fredholm pour toute
+  masse, avec noyau résonant fini. Son domaine maximal est tiré explicitement
+  sur le `L²` géométrique, où l’opérateur non borné transporté est exactement
+  conjugué au multiplicateur coefficient.
+- Hypothèses : seulement `period ≠ 0`; aucun axiome métier ni contrat de
+  complétude supplémentaire.
+- Limite : cette fermeture concerne le modèle géométrique/spectral SpinC.
+  L’action matière primitive et son accord same-action sur le cœur fini sont
+  fermés par la gate suivante; le chart global et les autres blocs restent
+  dans `HESSIAN-GLOBAL-01`.
+- Porte terminale : retire le résidu géométrique/spectral SpinC.
+
+### `P-HESSIAN-D10FREE-SPINC-BRST-LL` — Contenu physique corrigé
+
+- État : `DONE` (2026-07-30). Portée :
+  `HESSIAN/CONTENU-DE-CHAMPS/SECTORIEL`.
+- Gates :
+  `P0EFTJanusProgramPGlobalFieldSpace4D`,
+  `P0EFTJanusProgramPGlobalAnalysisDomain4D`,
+  `P0EFTJanusProgramPGlobalGaugeFixedSpectralHessianFredholm4D`,
+  `P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D`,
+  `P0EFTJanusD9CombinedNonminimalBRSTGaugeFermion4D`,
+  `P0EFTJanusFullLLSameActionFredholmRestriction4D`.
+- Résultat : le tangent, le domaine et la cible physiques sont D10-free;
+  l’extension D10 est réservée au régulateur/déterminant. La matière
+  Candidate-A est directement une paire sectorielle de sections SpinC
+  primitives et son action graphe a pour vrai second Fréchet le Fredholm
+  `2D+m²`, avec accord sur le cœur fini. Les BRST D9 abélien/difféomorphisme
+  utilisent des types distincts `c/c̄/B`, donnent exactement `s²=0`, `sΨ`, un
+  Hessien symétrique et les symboles FP existants. Le Fredholm LL same-action
+  est exact sur la tranche maximale prouvée
+  `llAuxMetric = llMeasure = 0`.
+- Limite : aucune de ces gates ne prétend assembler le Hessien total. Lorenz
+  et de Donder sont maintenant globaux dans les gates ultérieures; manquent
+  leur intégration au chart global `C²`, les blocs métrique/normal/Maxwell
+  mixte/bord et leurs multiplicités. La gate graphe ultérieure couvre le
+  Hessien LL complet, mais pas encore sa coercivité/Fredholm.
+- Porte terminale : réduit `HESSIAN-GLOBAL-01`, sans le fermer.
+
+Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
+
+- les cinq graphes déjà assemblés ont maintenant un produit Hilbert réel
+  imbriqué `WithLp 2`, continûment linéairement équivalent à l'ancien produit à
+  norme max; le graphe matière est lui aussi transporté vers sa norme `L²`;
+- le cœur lisse reste injectif et dense; l'action `C²` est exactement la même
+  action transportée, avec première variation et seconde variation constante;
+- son Hessien bloc apparié possède un représentant de Riesz borné
+  auto-adjoint. Cela ne prouve ni l'auto-adjonction du FP scalaire isolé, ni le
+  chart total, ni la somme de Fredholm globale.
+
+### `P9-D10-CONTINUUM-HEAT-REGULATOR` — Régulateur thermique D10 tous niveaux
+
+- État : `DONE` (2026-07-27). Portée : `ANALYTIQUE/SPECTRALE`.
+- Gates : `P0EFTJanusProgramPD10ContinuumHeatRegulator4D`,
+  `P0EFTJanusProgramPD10ContinuumHeatOperatorNuclear4D`.
+- Résultat : le mode D10 complet est réindexé exactement par les deux racines,
+  tous les niveaux sphériques avec leur multiplicité et tous les modes du
+  cercle. À tout temps strictement positif, le poids thermique et le terme
+  chiral sont sommables. La permutation PT conserve le spectre carré, inverse
+  la chiralité, annule la trace infinie et tout filet cofinal de coupures finies
+  converge vers zéro. La restriction aux modes tronqués est exactement
+  l’ancien régulateur D10 fini. Sur le véritable espace de Hilbert D10, le
+  régulateur est aussi un opérateur compact, somme nucléaire en norme
+  d’opérateur de projecteurs de rang un; ses troncatures spectrales finies
+  convergent en norme.
+- Hypothèses : aucune nouvelle hypothèse physique ni aucun axiome métier.
+- Limite : cela ferme le secteur spectral D10, pas encore le régulateur commun
+  des blocs non spectraux matière–métrique–Maxwell–ghost–bord ni son identité
+  avec la Hessienne complète.
+- Porte terminale : aucune ; réduit `REGULATOR-GLOBAL-01`.
+
+### `P9-REGULATOR-PHYSICAL-LL-TEMPORAL-GHOST` — Ponts thermiques assemblés
+
+- État : `DONE` (2026-07-30). Portée : `ANALYTIQUE/CONDITIONNELLE`.
+- Gates : `P0EFTJanusProgramPD10AgreementHeatRegulatorBridge4D`,
+  `P0EFTJanusProgramPGlobalPhysicalLLHessianHeatRegulator4D`,
+  `P0EFTJanusMappingTorusTemporalGhostContinuumHeatRegulator4D`,
+  `P0EFTJanusProgramPPhysicalLLTemporalGhostHeatRegulator4D`.
+- Résultat : sous le contrat commun d’accord domaine/Hessienne, le régulateur
+  D10 continuum se transporte à la variation complète, agit mode par mode
+  comme `exp(-t Hessian)`, est contractant et préserve le domaine
+  Fredholm/bord. Indépendamment, un même temps positif définit un opérateur
+  borné sur l’ancienne somme étendue D9–matière–D10–LL et ghost temporel.
+  Le sous-bloc ghost temporel
+  spatialement constant possède maintenant son opérateur de chaleur continuum
+  exact : spectre de la dérivée, compacité, décomposition nucléaire,
+  cohomologie exacte du zéro-mode et annulation PT de la trace chirale, y
+  compris à cutoff symétrique.
+- Limite : le transport D10 reste conditionnel. Aucune compacité ni classe de
+  trace n’est revendiquée pour la somme complète : la chaleur LL actuelle est
+  compacte si et seulement si son espace d’énergie est de dimension finie; il
+  manque aussi la croissance spectrale D9 et une réalisation LL elliptique à
+  résolvante compacte/trace de chaleur.
+  Les autres ghosts et blocs non spectraux, puis leur synthèse géométrique
+  dense avec la Hessienne assemblée, restent ouverts.
+- Porte terminale : aucune ; réduit `REGULATOR-GLOBAL-01` sans le fermer.
+
+### `P-T01-AMBIENT-PINMINUS-LOCAL-SECTIONS-REDUCTION` — Fermeture du revêtement
+
+- État : `DONE` (2026-07-25). Portée : `TOPOLOGIQUE`.
+- Gates : `P0EFTJanusMappingTorusAmbientPinMinusProjectionKernel4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusCompactness4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusLocalSectionsClosure4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusLocalSectionsPropagation4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusCechCoherenceClosure4D`,
+  `P0EFTJanusMappingTorusAmbientPinMinusRealNormalRestrictionGauge4D`,
+  `P0EFTJanusMappingTorusCanonicalLatitudeNormalPresentationComparison4D`.
+- Résultat : Cartan–Dieudonné est borné à quatre réflexions, le groupe Pin
+  concret est compact, le noyau de la projection est exactement `{±1}`, et la
+  projection est un revêtement possédant les sections locales requises. Le
+  cocycle Čech ambiant canonique est normalisé, inverse-cohérent, strictement
+  cohérent sur les triples overlaps et définit le vrai bundle principal. Le
+  normal réel possède également son cocycle Čech exact et cohérent. La
+  zéro-cochaîne requise est maintenant construite explicitement par le vecteur
+  de Clifford demi-angle normalisé `e+n`; elle entrelace tous les windings,
+  réalise exactement la restriction et coïncide sur les overlaps sans choix
+  de chemin. Sa continuité est prouvée pour tout champ normal horizontal,
+  continu et non nul.
+- Résultat complémentaire (2026-07-30) :
+  `canonicalLatitudeNormalLift_contMDiff` et
+  `canonicalLatitudeNormalCoordinate_contMDiffOn` donnent la régularité `C∞`
+  intrinsèque, puis `canonicalLatitudeNormal_presentations_compare` transporte
+  la représentation cover-produit vers une vraie trivialisation tangente du
+  quotient et `canonicalLatitudeNormalCoordinate_eq_sectionPresentation`
+  prouve l’égalité exacte des deux présentations au niveau normal zéro.
+- Frontière exacte : ce pont ferme le sous-verrou de présentation `Pin⁻/T01`,
+  pas le certificat terminal typé de fondations/pairings `T01`; ce n'est
+  toujours pas une carte analytique autonome.
+- Porte terminale : aucune ; réduction exacte d'un sous-verrou de `T01`.
+
+### `P-LL-WEAK-JACOBI-SCOPE` — Hessien LL simultané et obstruction flux-only
+
+- État : `DONE` (2026-07-25). Portée : `ANALYTIQUE/PARTIELLE`.
+- Gates : `P0EFTJanusMappingTorusLLWeakJacobiGaugeComplex4D`,
+  `P0EFTJanusMappingTorusLLFullWeakJacobiGaugeComplex4D`,
+  `P0EFTJanusMappingTorusLLGeneratingFrameVariation4D`,
+  `P0EFTJanusMappingTorusLLGeneratingFrameFullHessian4D`,
+  `P0EFTJanusMappingTorusLLGeneratingFrameElementaryFlows4D`.
+- Résultat : le Hessien réel des trois slots typés (métrique auxiliaire, mesure,
+  flux) donne un opérateur de Jacobi bilinéaire; une variation typée du repère,
+  sa courbe exponentielle, son Hessien radial et le générateur diagonal à quatre
+  slots sont construits. Le secteur radial possède maintenant une vraie courbe
+  simultanée non gelée, son Hessien quatre slots avec termes croisés, sa
+  symétrie, son Jacobi et son critère exact de noyau. Les taux exponentiels
+  indépendants de chaque générateur et les cisaillements par un coefficient
+  scalaire lisse donnent maintenant des courbes globales supplémentaires de
+  vrais repères, avec vitesses exactes. Dans le secteur flux-only strictement
+  positif, `J ∘ R = 0` équivaut à `R = 0`.
+- Frontière exacte : le dépôt possède déjà la famille génératrice lisse, ses
+  coefficients locaux et la reconstruction locale de tout tangent. Réaliser
+  simultanément un tangent arbitraire exige seulement leur assemblage en une
+  droite inverse lisse globale, puis un flot matriciel inversible; ce pont est
+  rattaché à `HESSIAN-GLOBAL-01`, pas à une nouvelle carte LL.
+  La direction de jauge générale n'est radiale que sous le critère affiché, et
+  aucune dégénérescence injustifiée n'est affirmée.
+- Porte terminale : aucune ; avance `HESSIAN-GLOBAL-01`.
+
+### `P-FULL-ACTION-FRECHET-LINE-BRIDGE` — Pont Fréchet concret maximal
+
+- État : `DONE` (2026-07-25). Portée : `ACTION/ANALYTIQUE-PARTIELLE`.
+- Gates : `P0EFTJanusProgramPConcreteFullActionFrechetBridge4D`,
+  `P0EFTJanusProgramPConcreteFullActionFrechetC2Closure4D`,
+  `P0EFTJanusProgramPConcreteCandidateALineC2Closure4D`,
+  `P0EFTJanusProgramPConcreteMatterLineC2Closure4D`,
+  `P0EFTJanusProgramPConcreteMatterLineC2CriterionRealization4D`,
+  `P0EFTJanusProgramPConcreteMatterLineC2CriterionCompletion4D`,
+  `P0EFTJanusMappingTorusConcreteEinsteinMaxwellLineC2Closure4D`,
+  `P0EFTJanusMappingTorusConcreteEinsteinMaxwellGeneralMeasureC2Closure4D`,
+  `P0EFTJanusMappingTorusConcreteEinsteinMaxwellGeneralMeasureC2Realization4D`,
+  `P0EFTJanusProgramPConcreteFullActionFrechetDiracAssembly4D`,
+  `P0EFTJanusProgramPConcreteFullActionFrechetGeneralMeasureAssembly4D`.
+- Résultat : Robin + LL + BV intégré instancient inconditionnellement le contrat
+  Fréchet `C²` sur leur ligne commune; le pont neuf blocs est réduit exactement
+  à six régularités `C²`. Candidate A est `C²` pour toute mesure finie; le slot
+  matière est équivalent à la continuité de son Hessien sous les deux identités
+  de dérivation exactes; EH `±` et Maxwell `±` sont `C²` pour une mesure de
+  Dirac concrète et pour toute mesure finie sous leur critère de continuité
+  jointe. Le bridge neuf blocs complet est construit sur mesure de Dirac, sous
+  le seul critère matière affiché; il est aussi construit pour toute mesure
+  finie sous les critères matière et Einstein–Maxwell exacts. Le critère matière
+  est désormais construit depuis les contrats translatés, la continuité jointe
+  et la densité diagonale de second ordre; le Hessien intégré et sa continuité
+  sont alors démontrés.
+- Limite : le contrat de base ne fournit pas la finitude de mesure, les cinq
+  continuités conjointes ni la règle de chaîne diagonale. Surtout,
+  `GlobalFixedFrameComponentContinuity` n'est pas une conséquence de la
+  lissité intrinsèque : les quatre vecteurs modèles fixes ne sont pas des
+  sections tangentes globales continues d'un atlas quotient arbitraire. Pour
+  EH/Maxwell, la lissité séparée en chaque point ne fournit pas la continuité
+  jointe paramètre–point. L'espace de champs intrinsèque, ses repères recollés,
+  son produit `H¹`, sa trace et ses domaines fermés sont maintenant construits.
+  Le transport vers l'action globale régulière est maintenant effectué.
+  La variation complète et la Hessienne chartwise sont maintenant intégrées;
+  leur identification au Fredholm gauge-fixé relève de
+  `HESSIAN-GLOBAL-01`, pas d'un résidu technique autonome.
+- Porte terminale : aucune ; avance `T03`–`T05`, `T11` et `T12`.
+
+### `P-HESSIAN-EXISTING-GRAPH-BRICKS` — Réintégration des graphes fidèles
+
+- État : `DONE` (2026-07-31). Portée :
+  `HESSIAN/GAUGE-BRST/LL-ON-SHELL/NORMAL-JOINT`, sans fermeture globale.
+- Gates déjà disponibles et désormais raccordées :
+  `P0EFTJanusProgramPGlobalGaugeTangentIntrinsicEmbedding4D`,
+  `P0EFTJanusProgramPGlobalMetricTangentIntrinsicEmbedding4D`,
+  `P0EFTJanusProgramPGlobalAbelianLorenzGraphRiesz4D`,
+  `P0EFTJanusProgramPGlobalAbelianLorenzGraphC2Chart4D`,
+  `P0EFTJanusProgramPGlobalAbelianBRSTOffShellGraphC2Chart4D`,
+  `P0EFTJanusProgramPGlobalGeneralMetricDiffeomorphismFaddeevPopov4D`,
+  `P0EFTJanusProgramPGlobalNormalDisplacementCollarGraph4D`,
+  `P0EFTJanusProgramPGlobalGeneralMetricDeDonderGraphPairing4D`,
+  `P0EFTJanusProgramPGlobalGeneralMetricDeDonderGraphPairingC2Chart4D`,
+  `P0EFTJanusProgramPGlobalCandidateAGaugeGraphC2Chart4D`,
+  `P0EFTJanusProgramPGlobalFullLLGraphRiesz4D`,
+  `P0EFTJanusProgramPGlobalCandidateABulkGraphC2Chart4D`,
+  `P0EFTJanusProgramPGlobalCandidateAAbelianExtendedBulkGraphC2Chart4D`,
+  `P0EFTJanusProgramPGlobalDiffeomorphismBRSTOffShellGraphC2Chart4D`,
+  `P0EFTJanusProgramPGlobalFullLLOnShellFredholmReduction4D`,
+  `P0EFTJanusProgramPGlobalNormalDisplacementCollarJointSmooth4D`.
+- Résultat : les potentiels intrinsèques des deux secteurs s'injectent
+  linéairement dans le tangent physique minimal via les vrais repères
+  Candidate-A. Le graphe Lorenz possède un cœur lisse dense injectif et un
+  Riesz borné symétrique, de noyau exactement Lorenz, égal au Hessien BRST
+  réduit on-shell. Il porte désormais une action quadratique `C∞` (donc
+  `C²`) dont les première et seconde dérivées de Fréchet sont exactes; son
+  cœur lisse s'injecte conjointement dans ce chart et dans le tangent minimal.
+  Le graphe de Donder raffiné ajoute la caractéristique relevée du pairing
+  lorentzien : son Hessien borné symétrique coïncide exactement avec le pairing
+  intégré sur le cœur lisse, et son action quadratique est `C∞` avec second
+  Fréchet constant. Les deux copies métriques et Lorenz sont assemblées dans
+  un sous-chart physique métrique-plus-Abelien `C²`; son cœur commun s'injecte
+  dans le tangent gauge-fixed typé en gardant le non-minimal nul. Le cœur LL complet
+  `llAuxMetric × llMeasure × llField` possède lui aussi une injection dense,
+  un Riesz symétrique et l'égalité exacte au Hessien same-action, termes
+  croisés compris. Il porte maintenant une action quadratique `C∞`, de second
+  Fréchet constant exactement égal à ce Hessien. Le sous-chart gauge, le
+  graphe matière SpinC primitif et ce graphe LL sont désormais assemblés dans
+  un produit physique bulk unique. Son action quadratique est `C∞`, égale
+  exactement à la somme des trois actions de graphe, sa
+  première dérivée est exacte et son second Fréchet constant est la somme
+  bloc-diagonale exacte des trois formes same-action existantes. Son cœur
+  jauge lisse × coefficients SpinC finis × LL lisse s'insère linéairement,
+  injectivement et densément pour la vraie norme de graphe. À la métrique et
+  à la masse physiques Candidate-A, une application linéaire injective
+  enregistre conjointement le point graphe et ses slots exacts dans
+  `GlobalPhysicalFieldTangent`.
+  L'extension BRST abélienne off-shell réutilise une seule fois le potentiel
+  et la caractéristique Lorenz, puis ajoute les coordonnées indépendantes
+  `B/c̄/c` et le vrai FP `δ_g d c`. Son cœur lisse est injectif et dense; son
+  Hessien borné symétrique, son Riesz et son action quadratique `C∞` coïncident
+  exactement avec la polarisation du `sΨ` à la mesure lorentzienne canonique.
+  Cette fermeture de caractéristiques ne prouve pas à elle seule la
+  closabilité différentielle; la gate Green-core FP la fournit désormais pour
+  la métrique intrinsèque, conditionnellement au datum Stokes scalaire. À la métrique Candidate-A,
+  le même cœur s'injecte dans le graphe et dans les deux triplets abéliens de
+  `GlobalGaugeFixedPhysicalFieldTangent`, avec triplet difféomorphisme nul.
+  Dans le produit bulk étendu, cette brique remplace le facteur Lorenz sans
+  dupliquer potentiel ni caractéristique. Les deux graphes de Donder, ce graphe
+  abélien, la matière primitive et LL gardent un cœur lisse dense injectif,
+  une action `C∞` (donc `C²`) et le second Fréchet constant égal à la somme
+  bloc-diagonale exacte de leurs formes same-action, avec raccord typé injectif.
+  Pour chaque métrique fournie, le vrai bloc BRST difféomorphe mono-métrique
+  assemble `h/c/c̄/B`, le FP `c ↦ B_g(L_c g)`, `s² = 0` et la polarisation
+  exacte de `sΨ`. Son cœur lisse est injectif et dense, son Riesz/Hessien est
+  borné symétrique, son action est `C∞` et son raccord non minimal typé est
+  injectif.
+  Sur le lieu stationnaire LL, le champ LL est nul, les poids auxiliaires et
+  projections croisées disparaissent et le Hessien se réduit au produit
+  scalaire du champ LL. Le quotient par le noyau exact de sa projection est
+  équivalent à `LLH1Space`; son Riesz quotient est l'identité, donc Fredholm
+  d'indice zéro.
+  La vraie section normale produit aussi une famille de collier
+  deck-équivariante descendue gorge→bulk, égale à l'inclusion canonique en
+  zéro, avec vitesse de coordonnée normale prescrite et accélération scalaire
+  nulle. Le lift scalaire sur le cover et la coordonnée de graphe normale sont
+  conjointement `C∞`; l'application physique descendue
+  `(point, paramètre) ↦ normalGraph paramètre point` l'est aussi. Après
+  transport le long du graphe nul, sa dérivée en zéro est exactement le lift
+  normal orthogonal global de la classe différentielle correspondante.
+- Limite : aucune identité de Green différentielle ni coercivité/range fermé
+  LL off-shell n'est déduite; la conclusion Fredholm LL est limitée au quotient
+  stationnaire à flux nul. La somme quadratique bulk n'est
+  pas encore identifiée au pullback de l'action covariante non linéaire
+  complète. Le produit physique bulk n'est
+  pas le chart total : le raccord porte sur le cœur seulement et ne transforme
+  aucun vecteur arbitraire de la complétion en champ lisse. Le chart analytique
+  typé total, le raccord difféomorphe diagonal Candidate-A, les actions,
+  Hessiens et complétions normal/bord, ainsi que les blocs Einstein--Maxwell
+  en directions métriques générales, restent à assembler.
+  Le bloc BRST mono-métrique ne fixait pas la projection des deux conditions
+  de Donder vers l'unique triplet difféomorphe diagonal typé. Le pont d'adjoint
+  cinétique la fixe maintenant aux poids Einstein `1/(2κ₊), 1/(2κ₋)`, construit
+  la condition et le FP globaux, et prouve le critère d'ellipticité spatiale.
+  Le no-go scalaire interdit toujours de prétendre préserver l'ancienne somme
+  des deux carrés; le graphe off-shell doit employer la nouvelle forme croisée.
+  Un chart nul avec coordonnée `Theta` indépendante et coefficient non nul
+  non compensé doit aussi rester sur une strate régulière `Theta ≠ 0` : le
+  facteur `Theta log |Theta|` n'est pas `C¹` en zéro. Les sous-charts
+  contraints avec annulation prouvée ne sont pas exclus. Sur les strates
+  régulières, le Hessien ponctuel same-action est désormais exactement
+  `(u,v) ↦ Theta⁻¹ u v`, multiplié par le coefficient écran/gravité déjà
+  déclaré; son intégration géométrique reste ouverte.
+  Pour la normale, le pont dérivé vers le lift orthogonal est fermé; la famille
+  d'action induite reste à construire. Aucun Hessien normal ni complétion n'est
+  encore revendiqué.
+- Porte terminale : réduit `HESSIAN-GLOBAL-01`, sans le fermer.
+
+### Classement final des anciens résidus immédiats — 26 juillet 2026
+
+Il ne reste aucune carte autonome dans cette ancienne liste :
+
+- le spectre SpinC signé abstrait, la synthèse géométrique à support fini
+  conjointement injective sur tous les niveaux positifs, secteurs, modes et
+  multiplicités, et le transport unitaire du domaine maximal de coefficients
+  sont fermés; la tour zéro est incluse dans la même synthèse canonique. Son
+  véritable span lisse a désormais une analyse dense et une complétion
+  spectrale unitaire. La complétude Fourier--monopôle prouve désormais
+  l’égalité avec le produit géométrique intégral sur tout le cœur lisse et
+  fournit l’unitaire ambiant;
+- la normale intrinsèque et ses coordonnées locales sont `C∞`; leur
+  comparaison explicite avec la représentation cover-produit est maintenant
+  fermée comme contrôle de présentation `Pin⁻/T01`, distinct de la géométrie
+  Candidate A et du certificat terminal `T01`;
+- les générateurs LL, coefficients locaux, directions radiales/anisotropes et
+  cisaillements sont construits; l'assemblage global d'un tangent arbitraire
+  appartient à `HESSIAN-GLOBAL-01`;
+- les critères et assemblages `C²` maximaux sont fermés; l'espace des vrais
+  champs et l'action régulière assemblée sont maintenant fixés. L'Euler
+  chartwise est fermé; Hessien et famille de Fredholm restent dans leurs
+  blocs globaux dédiés.
+
 ## 6. Verrous globaux — ne pas distribuer comme petites cartes
 
-Ces paquets exigent d'abord les ponts précédents. Un agent peut proposer un
-lemme intermédiaire, mais ne doit pas annoncer leur fermeture partielle comme
-fermeture globale.
+Ces paquets absorbent tous les ponts restants. Aucun lemme intermédiaire ne
+doit être annoncé comme fermeture globale.
+
+Mise à jour `HESSIAN-GLOBAL-01` (2026-08-01) : la gate
+`P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D`
+réduit le raccord au vrai second
+Fréchet est désormais réduit exactement à un seul résidu physique sur le cœur
+diagonal. Pour tout pont de carte existant fourni,
+`H_covariant_gauge-fixed = H_graphe + R_ancien`. La gate
+`P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D` établit
+maintenant `R_ancien = H_physique + défaut_même_action(matière--LL)`. La cible
+correcte conserve donc `H_physique` et n'annule que ce défaut; annuler tout
+`R_ancien` supprimerait la dynamique Einstein--Maxwell/bord. Aucun nouvel
+axiome n'est ajouté par ce raccord.
+
+La gate
+`P0EFTJanusProgramPGlobalCandidateAMatterFiniteGraphVariationalChart4D`
+ferme désormais le sous-raccord matière sur l'action covariante elle-même :
+cœur fini à norme de graphe, neuf blocs `C²`, pullback exact
+« spectateur constant + action SpinC » et vrai Hessien égal au pullback de
+`2D+m²`. Elle ne construit pas l'habitant du pont diagonal total et ne change
+donc pas l'état ouvert de `HESSIAN-GLOBAL-01` pour métrique/bord/domaines.
+
+La gate
+`P0EFTJanusProgramPGlobalCandidateABoundaryReparametrizationVariationalChart4D`
+raccorde maintenant les normalisations indépendantes des générateurs nuls à
+l'action covariante exacte : neuf blocs `C²`, pullback constant et vrai Hessien
+nul. Elle ne couvre pas le déplacement normal ni la géométrie de bord générale.
+Le même fichier prolonge désormais toute carte covariante par ce facteur : le
+Hessien est le pullback par la première projection, donc les blocs purs et
+mixtes de normalisation sont nuls. L'instance matière-plus-normalisation garde
+exactement le Hessien `2D+m²`.
+
+Registre autoritatif : [carte de fermeture
+`HESSIAN-GLOBAL-01`](hessian_global_01_closure_map.md). Les listes historiques
+de cette page ne créent aucune obligation supplémentaire.
+
+Mise à jour `HESSIAN-GLOBAL-01` (2026-08-02) :
+`P0EFTJanusProgramPGlobalLocalVariationalChart4D` ferme l’obstacle
+d’interface. Une carte peut désormais porter ses données physiques seulement
+sur un ouvert admissible `U` du modèle normé, avec `0 ∈ U`, et demander les
+neuf propriétés `ContDiffWithinAt` dans `U`. L’ouverture donne le vrai Euler et
+le Hessien de Fréchet ambiants sur tout l’espace tangent; le Hessien est
+symétrique. Les cartes historiques sont retrouvées par `U = univ` avec action,
+Euler et Hessien identiques. Le ticket devient `FRONTIER` : l'habitant
+intrinsèque est encodé dans son coin fort et la sélection positive ferme sa
+bijectivité Sylvester; restent la famille jointe et les blocs physiques à
+identifier sans annuler leur dynamique.
+
+`P0EFTJanusProgramPGlobalCandidateADiagonalLocalCovariantHessianResidualBridge4D`
+raccorde désormais cette API au cœur lisse diagonal dense et injectif. Pour
+tout point admissible, le Hessien covariant gauge-fixé est exactement le
+graphe augmenté par les sept blocs physiques, plus le seul défaut same-action
+matière--LL. L’accord équivaut à l’annulation de ce défaut, pas de la Hessienne
+physique. Les blocs BRST, matière et LL sont réutilisés sans duplication;
+`U = univ` redonne exactement l’ancien pont.
+La racine ponctuelle générale possède maintenant son propre domaine de
+perturbations ouvert centré en `0`, une branche `C²` sur tout le domaine et
+l’identité carrée exacte, via
+`P0EFTJanusPositiveRawSplitCharpolyContDiffLocalRootBranch4D`. Cette gate vaut
+autour de tout target raw à spectre réel positif scindé, sans réduction
+diagonale/Minkowski. La même gate montre maintenant que toute racine continue
+vérifiant l’identité carrée et la régularité de Sylvester point par point est
+automatiquement `C²` lorsque la cible est `C²`; le recollement local est donc
+fermé.
+La couche uniforme `C⁰` est maintenant construite par
+`P0EFTJanusContinuousMatrixFieldContDiffLocalRootBranch4D` : sur une base
+compacte, les inverses de Sylvester ponctuels se recollent en un opérateur
+borné sur les champs matriciels continus, donnant un ouvert centré en `0`, une
+branche `C²` et le carré exact.
+`P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0Space4D` construit maintenant
+la brique scalaire forte comme égaliseur fermé des applications existantes
+`C⁰ → L²` et `H¹ → L²`. C’est un espace de Banach `C⁰ ∩ H¹` contenant le cœur
+lisse exact, sans plongement de Sobolev ni nouvel axiome.
+`P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0CoreClosure4D` définit le
+domaine analytique canonique comme fermeture de ce cœur lisse dans l’égaliseur.
+Il est complet, s’y injecte et possède une image lisse dense par construction,
+sans postuler une approximation simultanée.
+`P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0SmoothLeibniz4D` ferme la
+règle exacte du premier jet `(fg, f·dg + g·df)` pour le produit lisse déjà
+présent et l’organise en application bilinéaire vers ce cœur.
+`P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0ProductExtension4D` ferme sa
+borne en norme forte avec Hölder `L∞·L² → L²`, puis le prolonge canoniquement en
+produit bilinéaire continu sur toute la fermeture complète, avec accord exact
+sur les champs lisses et sans nouvel axiome.
+`P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0MatrixProduct4D` assemble ce
+produit sur les coefficients `4 × 4`, prouve l’accord exact avec les produits
+lisse et continu, puis établit que le carré est `C∞` et que sa dérivée est le
+Sylvester fort attendu.
+`P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0LocalRootBranch4D` réutilise
+ensuite la famille inverse ponctuelle existante. Pour toute racine matricielle
+lisse générale à Sylvester ponctuellement bijectif, ses coefficients inverses
+sont lisses, donnent une équivalence bornée sur le cœur fort et produisent un
+ouvert `0 ∈ U`, une branche `C²` et le carré exact, sans restriction diagonale
+ni axiome supplémentaire.
+  La taille fixe n'est plus un verrou. La nouvelle multiplication forte pour
+  matrices finies arbitraires est associative et possède le calcul lisse
+  carré/Sylvester exact; le relèvement linéaire fini transforme toute famille
+  lisse ponctuellement bijective en équivalence bornée forte. Le pont de repère fini encode ensuite la racine
+Candidate-A intrinsèque avec le projecteur lisse `P` de la famille génératrice
+redondante. Les gates `...StrongFiniteFrameCorner4D` et
+`...StrongFiniteFrameCornerAlgebra4D` construisent le coin fermé complet
+`P M_N P`, y placent la racine et ferment son algèbre forte. La gate
+`...StrongFiniteFrameCornerLocalRoot4D` donne enfin un certificat IFT Banach
+réutilisable : sous bijectivité du Sylvester fort au centre, `U` est ouvert,
+`0 ∈ U`, la branche est `C²` sur tout `U` et son carré est exact sur `U`. Aucun
+repère global ni axiome physique n'est ajouté.
+`P0EFTJanusProgramPGlobalStrongH1C0AnalysisDomain4D` l’étend au type fini
+`GlobalBulkSobolevSlot` déjà présent : toutes les coordonnées bulk métriques,
+jauge et fantômes forment un produit complet, compatible dans `L²`, avec
+  relèvement exact du vrai tangent lisse. Les gates
+  `...StrongFiniteFrameSylvester*` ferment aussi le transport manquant : la
+  bijectivité intrinsèque ponctuelle donne la bijectivité forte du coin et la
+  branche locale `C²` sur tout un ouvert. La portée est la strate régulière; le type
+  `GlobalCandidateAGeometry` non qualifié admet encore des racines singulières.
+  Le sous-type régulier explicite et le prédicat correspondant sur les cartes
+  locales sont maintenant construits. La gate
+  `P0EFTJanusProgramPGlobalCandidateAPositiveSelectedRootSylvester4D` prouve que
+  la racine stockée, lorsqu’elle est exactement le sélecteur spectral positif
+  physique existant, est intrinsèquement Sylvester-régulière et active la
+  branche locale forte sans nouvel axiome.
+  `P0EFTJanusProgramPGlobalCandidateALocalRootJointRegularity4D` ferme ensuite
+  le passage fonctionnel : toute cible forte `C²` fournit un domaine paramètre
+  ouvert, une racine sélectionnée `C²`, le carré exact et des coefficients
+  conjointement continus en paramètre et point d'espace-temps.
+  La couche d'ordre deux est désormais effective : le cœur scalaire C²
+  valeur/premier jet/second jet est complet, son produit satisfait le Leibniz
+  exact et il se projette continûment dans le cœur fort. Les matrices finies C²
+  ont un produit associatif, un carré `C∞`, le Sylvester exact et une branche
+  locale C² sur un ouvert; la gate jointe contrôle en plus tous les jets des
+  coefficients en paramètre et espace-temps. Les gates
+  `P0EFTJanusProgramPGlobalCandidateAC2FiniteFrameCorner4D`,
+  `...CornerAlgebra4D` et `...SylvesterLocalRoot4D` transportent enfin la
+  sélection intrinsèque dans le coin C² complet et activent sa branche locale
+  par la régularité Sylvester déjà prouvée. Aucun nouvel axiome n'est utilisé.
+  Restent la vraie application métrique générale vers ce cœur C² et les neuf
+  blocs d'action.
+
+Mise à jour supplémentaire `HESSIAN-GLOBAL-01` (2026-08-02) : le pont
+`P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D` formule
+maintenant le vrai Hessien local et son split directement sur le tangent
+physique minimal D10-free; l’ancien pont étendu se factorise à D10 nul. Le
+graphe LL complet possède son Riesz off-shell borné auto-adjoint et son radical
+exact. Seuls la fermeture d’image et le Fredholm LL restent ouverts off shell;
+sur la branche stationnaire, le quotient Fredholm d’indice zéro est déjà fermé.
+
+Mise à jour P1 (2026-08-02) :
+`P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbert4D` ferme H05. Sa gate
+terminale prouve l'appartenance du point physique à l'ouvert métrique général,
+la dépendance `C²` de l'action et son égalité exacte avec
+`intrinsicEinsteinHilbertAction`. La chaîne active commence désormais à P2.
 
 | ID | Résultat global exigé | Dépendances principales |
 |---|---|---|
-| `GEO-GLOBAL-01` | Deux métriques Candidate A comme sections intrinsèques du même `T*⊗T*`, avec racine et densités identifiées aux modèles de coefficients. | `P-INTRINSIC-ROOT-01`, atlas tensoriel |
-| `FIELD-GLOBAL-01` | Un espace de configurations/tangents unique pour métriques générales, matière, `U(1)^2`, ghosts, auxiliaires, LL, D9/D10 et bord. | `P-CV-MODULE-01`, `PE-PIN-CANONICAL-BUNDLE` |
-| `ANALYSIS-GLOBAL-01` | Sobolev intrinsèque, trace du throat et domaines fermés communs. | cartes H¹ et Stokes |
-| `BOUNDARY-GLOBAL-01` | EH+GHY+faces nulles+joints+LL sur la vraie géométrie, variation sans flux incontrôlé. | métriques intrinsèques, Stokes |
-| `KJ-GLOBAL-01` | Opérateurs distincts `K_Gram`, `DK_Gram`, `K_SV`, `R`, `B_Noether`, `B_Bianchi` sur les vrais bundles. | champ/domaines communs |
-| `KJ-GLOBAL-02` | Complexe global, identités, conditions au bord, cohomologie et quotient Sobolev. | `KJ-GLOBAL-01`, analyse globale |
-| `NATURAL-GLOBAL-01` | Catégorie Janus, jets holonomes, bundles `Pin⁻`/`PinC` et classification naturelle finie des pairings/termes locaux. | bundle Pin réel, champs communs |
-| `ACTION-GLOBAL-01` | Une action Candidate A covariante complète : EH, interaction, matière, Maxwell, LL et tous termes de bord. | géométrie, bord, classification naturelle |
-| `EULER-GLOBAL-01` | Euler complet de cette action exacte sur toutes ses variables. | `ACTION-GLOBAL-01` |
-| `NOETHER-GLOBAL-01` | Identités locales Noether/Bianchi pour ghosts arbitraires sur la même action. | Euler, `KJ-GLOBAL-01` |
-| `HELMHOLTZ-GLOBAL-01` | Helmholtz non linéaire et reconstruction de cette même classe d'action. | Euler, Noether, complexe global |
-| `VARCOH-GLOBAL-01` | Cohomologie variationnelle, lagrangiens nuls et ambiguïtés de bord classifiés. | classification naturelle, Helmholtz |
-| `ADM-GLOBAL-01` | ADM dérivée, moments, contraintes primaires/secondaires, rang et crochet fonctionnel. | action/variation de bord |
-| `STABILITY-GLOBAL-01` | Fermeture des contraintes, absence du mode BD ou rejet, stabilité du quotient, limite faible et PPN. | `ADM-GLOBAL-01` |
-| `DIRAC-GLOBAL-01` | Vrai Dirac géométrique Janus signé, domaine global commun et famille Fredholm lisse. | champs/bundles/domaines communs |
-| `BRST-GLOBAL-01` | Complexe BRST/BV non linéaire complet sur la même action et les mêmes conditions au bord. | champs, Noether, domaines |
-| `HESSIAN-GLOBAL-01` | Seconde variation de la même action = opérateur Fredholm naturel gauge-fixé ; dégénérescence avant quotient et descente après quotient. | action, BRST, Sobolev, Fredholm |
-| `REGULATOR-GLOBAL-01` | Régulateur commun, vrais spectres, multiplicités et statistiques de tous les secteurs/ghosts. | Dirac, Hessien, BRST |
-| `QUILLEN-GLOBAL-01` | Indice familial et ligne/gerbe avec géométrie Quillen/Bismut–Freed naturelle. | famille Fredholm, régulateur |
-| `ANOMALY-GLOBAL-01` | Anomalies locale/globale, eta analytique, APS/inflow et annulation PT pour le contenu complet. | Quillen, régulateur commun |
-| `SCHEME-GLOBAL-01` | Contre-termes covariants, parties finies microscopiques et indépendance de schéma. | classification locale, anomalie globale, principe microscopique |
-| `MICRO-GLOBAL-01` | Parent bulk/junction ou principe microscopique sélectionnant Candidate A. | entrée physique absente du dépôt actuel |
-| `VACUUM-GLOBAL-01` | Action effective complète, branches stationnaires, vide unique et stabilité contrainte. | action, anomalies, schéma, sélection |
-| `SCALE-GLOBAL-01` | Normalisation, unités et échelle absolue sans ajustement à un rayon observé. | principe microscopique, vide |
+| `GEO-GLOBAL-01` | **DONE (2026-07-26)** — Deux métriques Candidate A comme sections intrinsèques du même `T*⊗T*`, avec racine et densités identifiées aux modèles de coefficients. | `P0EFTJanusProgramPGlobalCandidateAGeometry4D` |
+| `FIELD-GLOBAL-01` | **DONE (2026-07-30, contenu corrigé)** — Configuration commune pour métriques générales, deux secteurs de matière SpinC primitive, `U(1)^2`, ghosts/auxiliaires historiques, LL et bord. Le tangent physique exclut D10; un tangent étendu séparé le conserve pour régulateur/déterminant. | `P0EFTJanusProgramPGlobalFieldSpace4D` |
+| `ANALYSIS-GLOBAL-01` | **DONE (2026-07-30, contenu corrigé)** — Sobolev intrinsèque, trace du throat et domaine physique fermé bulk/SpinC/LL; l’agrégat étendu ajoute explicitement D10. | `P0EFTJanusProgramPGlobalAnalysisDomain4D` |
+| `BOUNDARY-GLOBAL-01` | **DONE (2026-07-26)** — EH+GHY, faces nulles/joints finis et LL sur la vraie gorge; flux scalaire conservé en général puis fermé sur le domaine PT/Dirichlet. | `P0EFTJanusProgramPGlobalBoundaryCompletion4D` |
+| `KJ-GLOBAL-01` | **DONE (2026-07-26)** — `K_Gram`, `DK_Gram`, `R` et `B_Noether` sont intrinsèques; `K_SV` est la courbure de la vraie connexion de Levi-Civita sur l'atlas holonome total et `B_Bianchi` sa dérivée cyclique covariante. La connexion satisfait sa loi de transition et `B_Bianchi ∘ K_SV = 0` en tout point physique. Les opérateurs plats `Fin 4` sont séparés par le suffixe `_symbol`. | `P0EFTJanusMappingTorusIntrinsicLeviCivitaBianchi4D`, `P0EFTJanusProgramPGlobalCompatibilityOperators4D` |
+| `KJ-GLOBAL-02` | **DONE (2026-07-26)** — Le complexe physique assemble le Bianchi covariant, le vrai différentiel de jauge `U(1)^2` dans le `L²` canonique, son noyau exact `H⁰ ≃ ℝ²`, quotient et complétion fermée, ainsi que la version appariée du package global avec noyau `GaugeLieAlgebra × GaugeLieAlgebra` et le domaine Dirichlet commun. Le complexe `ℤ⁴` reste explicitement un certificat de symbole auxiliaire. | `P0EFTJanusMappingTorusPhysicalGaugeSobolevComplex4D`, `P0EFTJanusProgramPGlobalCompatibilityComplex4D` |
+| `NATURAL-GLOBAL-01` | **DONE (2026-07-26)** — Catégorie Janus, jets holonomes descendus, vrais bundles `Pin⁻`/`PinC`, classificateur local fini fidèle et unicité exacte des coefficients dans la troncature EFT à six invariants. | `P0EFTJanusProgramPGlobalNaturalClassification4D` |
+| `ACTION-GLOBAL-01` | **DONE (2026-07-30, matière migrée)** — Action Candidate A sur son domaine régulier commun : deux EH, interaction, matière SpinC primitive sectorielle `½ Re⟨ψ,(2D+m²)ψ⟩`, deux Maxwell, LL, GHY, faces nulles, contre-termes et joints. | `P0EFTJanusProgramPGlobalCovariantAction4D`, `P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D` |
+| `EULER-GLOBAL-01` | **DONE (2026-07-26, portée chartwise)** — Les neuf blocs de l'action exacte sont identifiés, `C²` sur toute carte variationnelle régulière commune, et leur véritable dérivée de Fréchet définit l'Euler dans toute direction de cette carte. | `P0EFTJanusProgramPGlobalEulerLagrange4D` |
+| `NOETHER-GLOBAL-01` | **DONE (2026-07-26, portée physique `U(1)²`)** — L'Euler annule tout générateur d'une symétrie terme par terme; indépendamment, l'orbite de jauge des deux Maxwell est constante pour toute paire de ghosts lisses et se combine au Bianchi courbe intrinsèque. | `P0EFTJanusProgramPGlobalNoether4D` |
+| `HELMHOLTZ-GLOBAL-01` | **DONE (2026-07-26, portée chartwise)** — Le Jacobien du véritable Euler est symétrique; la primitive radiale normalisée reconstruit exactement la même action, et deux représentants de même Euler diffèrent d'une constante. | `P0EFTJanusProgramPGlobalHelmholtzReconstruction4D` |
+| `VARCOH-GLOBAL-01` | **DONE (2026-07-26, portée fonctionnelle globale)** — Obstruction fonctionnelle exacte nulle, fonctionnelles variationnellement nulles constantes, noyau nul du classificateur naturel fini, ambiguïtés de contre-termes constantes et résidu physique de bord nul. | `P0EFTJanusProgramPGlobalVariationalCohomology4D` |
+| `ADM-GLOBAL-01` | **FRONTIER (2026-07-27, portée FLRW réduite)** — La Legendre de l’action Candidate-A FLRW donne exactement `N₊C₊+N₋C₋`; les primaires sont ses dérivées de lapse, leur crochet canonique est la secondaire, la préservation la force, et un ouvert non vide garde le rang trois. Un témoin poussière positif fixe aussi le rapport des lapses. Il manque la réduction covariante avec shifts/dérivées spatiales, l’algèbre fonctionnelle, le rang global et l’exclusion BD. | `P0EFTJanusProgramPGlobalADMFrontier4D` |
+| `STABILITY-GLOBAL-01` | **FRONTIER (2026-07-27, portée réduite)** — Le cône proportionnel sûr a une énergie non négative. Sur le témoin poussière, le noyau tangent contraint est exactement unidimensionnel; une courbe contrainte non triviale garde le Hamiltonien nul, donc la Hessienne ambiante négative n’est pas une instabilité contrainte mais le vide n’est pas strictement isolé. Il manque quotient ADM/BD, tous les modes, matière/bord, limite faible et PPN. | `P0EFTJanusProgramPGlobalStabilityFrontier4D`, `ADM-GLOBAL-01` |
+| `DIRAC-GLOBAL-01` | **DONE (2026-07-28)** — Dirac D9 intrinsèque lisse/elliptique; tour de coefficients SpinC tous niveaux (zéro compris, deux racines) dense, auto-adjointe, Fredholm d’indice nul; accord D10 positif et domaine maximal unitairement égal à la tour zéro plus D10 positif. Pour tout `p`, la courbe nulle fournit exactement `2p+1` sections lisses complexes du véritable fibré quotient. Leur récurrence démontre directement le vrai `D²`. Chaque label signé complet possède une vraie eigensection lisse du Dirac de premier ordre, y compris la tour zéro corrigée selon l’orientation du period; les branches `±` sont disjointes et épuisent chaque bloc scalaire/gradient. Chaque branche possède une isométrie de Parseval géométrique à image complétée fermée et entrelace le vrai Dirac; le bloc deux signes possède la même réalisation pour `D²`. La séparation radiale prouve les finranks exacts `2p+1` par signe et `2(2p+1)` par bloc. Tous les blocs signés sont orthogonaux selon secteur/mode/niveau et s’assemblent avec la tour zéro dans une isométrie globale à image fermée. La complétude Fourier temporelle, l’approximation polynomiale monopôle et la reconstruction exacte du repère de Hopf signé prouvent que cette image contient le cœur lisse dense. Elle est donc toute la complétion géométrique et la synthèse fournit l’unitaire géométrique DIRAC global. | `P0EFTJanusProgramPGlobalDiracFrontier4D`, `P0EFTJanusProgramPD9PrimitiveSpinCAllLevelSignedGeometricRealization4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedBranchCompletion4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedMultiplicity4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2GradientCasimir4D`, `P0EFTJanusProgramPD9PrimitiveSpinCGeometricL2SignedJointIsometry4D`, `P0EFTJanusProgramPD9PrimitiveSpinCFourierMonopoleCoreCompleteness4D` |
+| `BRST-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-29)** — Le paquet commun champs/ghosts extérieurs, métrique–antifields et bord vérifie `s²=0`; `U(1)²`, scalaire, densité mesurée et antifield scalaire de gorge sont fermés. Les actions Cartan Maxwell et métrique globales sont maintenant lisses et bilinéaires; leurs données Cartan, représentations de Lie et crochets sont fermés. Elles forment le paquet tensoriel concret `canonicalTensorialCartanActionData`, dont les obstructions coadjointes BRST algébriques Maxwell/deux-métriques sont nulles et les pairings canoniques sont invariants; aucun dual tensoriel géométrique ou intégré n’est revendiqué. Le ghost bulk de translation temporelle et les trois ghosts bulk de rotation se restreignent exactement à leurs ghosts de gorge par la dérivée de l’inclusion, sans conclure de skew. Pour les rotations de gorge, le pullback tensoriel, l’isométrie intrinsèque, la naturalité ponctuelle du pairing relevé/deux-secteurs et l’invariance finie de son intégrale contre la mesure canonique sont fermés; la courbe scalaire intégrée correspondante a une dérivée nulle à angle zéro par constance. La chain rule publique pour tout `SmoothThroatField` à fibre fixe donne son `mvfderiv` le long du ghost, sans dériver le pullback tensoriel. Restent la différentiabilité tensorielle en angle, la chain rule du pairing et le pont générateur/action avant toute skew ou conclusion coadjointe. Pour le pairing métrique bulk, le vrai flot temporel, la mesure préservée, la naturalité par conjugaison/trace et la dérivée scalaire nulle de l’orbite du pairing sont fermés; restent le pont pointwise générateur/action et la différentiation à travers le pairing intégré avant toute skew. L’IPP canonique ferme aussi la skew des coefficients LL. Les dualiseurs lisses finis ferment séparation/injectivité métrique de gorge et de bulk. `finiteBV` est relié à sa vraie reparamétrisation nulle. Enfin, la nouvelle interface de flots complets non linéaires Candidate-A transforme l’invariance terme par terme des neuf blocs en invariance exacte de l’action et horizontalité Euler pour le générateur dépendant du champ. Restent les duals géométriques/intégrés et leur skew/coadjoint, les ponts flow/action concrets et le flot Candidate-A neuf-blocs à mesure fixe. | `P0EFTJanusMappingTorusGaugePotentialCartanFiber4D`, `P0EFTJanusMappingTorusGaugePotentialCartanFiberBridge4D`, `P0EFTJanusMappingTorusGaugePotentialCartanSmoothBundle4D`, `P0EFTJanusMappingTorusGaugePotentialCartanGlobalAction4D`, `P0EFTJanusMappingTorusGaugePotentialCartanRepresentation4D`, `P0EFTJanusProgramPMaxwellCartanCoadjointAntifieldBRST4D`, `P0EFTJanusMappingTorusMetricCartanFiberCore4D`, `P0EFTJanusMappingTorusMetricCartanFiber4D`, `P0EFTJanusMappingTorusMetricCartanGlobalAction4D`, `P0EFTJanusProgramPCanonicalTensorialCartanBRST4D`, `P0EFTJanusMappingTorusTensorialDiffeomorphismRepresentation4D`, `P0EFTJanusMappingTorusSpatialRotationAmbientLorentzIsometry4D`, `P0EFTJanusMappingTorusIntrinsicLorentzMetricSpatialRotationIsometry4D`, `P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D`, `P0EFTJanusMappingTorusCanonicalTimeTranslationMetricMatterGaugeNoether4D`, `P0EFTJanusProgramPGeneralMetricPositiveDualizer4D`, `P0EFTJanusProgramPGeneralMetricTimeTranslationSkew4D`, `P0EFTJanusProgramPGeneralMetricTimeTranslationPairingNaturality4D`, `P0EFTJanusProgramPThroatMetricRestrictedGhostSkew4D`, `P0EFTJanusProgramPD8RotationGhostThroatRestriction4D`, `P0EFTJanusProgramPThroatMetricRotationPullback4D`, `P0EFTJanusProgramPThroatMetricRotationPairingNaturality4D`, `P0EFTJanusProgramPGlobalBRSTFrontier4D` |
+| `HESSIAN-GLOBAL-01` | **FRONTIER ANALYTIQUE (2026-08-02; P1 fermé)** — Les données physiques vivent sur un ouvert admissible `U`, `0 ∈ U`, et le Hessien ambiant agit sur tout le tangent. La sélection positive et la branche locale C² sont fermées. Les familles générales Maxwell et Einstein--Hilbert sont construites; H05/P1 prouve l'accord exact de l'action EH physique avec l'action intrinsèque. Le split minimal D10-free conserve les sept blocs physiques et n’isole que le défaut same-action matière--LL. Le quotient LL stationnaire est Fredholm d’indice zéro. Restent P2 (normal/bord), P3 (domaine commun, Green, adjoints, fermetures) et P4 (défaut matière--LL, multiplicités fidèles, somme Fredholm totale). D10 reste réservé au régulateur. | `P0EFTJanusProgramPGlobalLocalVariationalChart4D`, `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbert4D`, `P0EFTJanusProgramPRegularGeneralMetricC2Maxwell4D`, `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D`, `P0EFTJanusProgramPGlobalFullLLOnShellFredholmReduction4D` |
+| `REGULATOR-GLOBAL-01` | **DONE (2026-07-30, portée régulateur nucléaire de référence)** — À tout temps positif, un opérateur unique sur le produit Hilbert ambiant exact — slots bulk `L²` métrique/jauge/ghost/auxiliaire, coefficients SpinC signés des deux secteurs, D10 tous niveaux et flux LL `L²` — est inconditionnellement compact, injectif et muni d’une expansion rang-un absolument sommable. Le bulk conserve en plus son inclusion Dirichlet compacte, son Gram compact positif auto-adjoint et le lift adjoint à trace nulle. Les blocs SpinC et D10 gardent leurs chaleurs physiques exactes nucléaires. La chaleur D9 continuum exacte est nucléaire sous son hypothèse explicite de sommabilité, et chaque paquet fini l’est sans hypothèse. La chaleur exacte de la Hessienne LL reste compacte ssi son espace d’énergie est de dimension finie. Le régulateur global est un régulateur de référence dépendant d’une base : ni son accord avec la Hessienne globale, ni une convergence forte vers l’identité n’est affirmé; cet accord appartient à `HESSIAN-GLOBAL-01`. | `P0EFTJanusProgramPGlobalReferenceNuclearRegulator4D`, `P0EFTJanusProgramPGlobalBulkReferenceNuclearRegulator4D`, `P0EFTJanusProgramPGlobalBulkDirichletCompactRegulator4D`, `P0EFTJanusProgramPSpinCMatterContinuumHeatRegulator4D`, `P0EFTJanusD9GaugeGhostContinuumHeatRegulator4D`, `P0EFTJanusProgramPLL2SeparableReferenceNuclearRegulator4D`, `P0EFTJanusProgramPGlobalPhysicalLLHessianHeatRegulator4D`, `P0EFTJanusProgramPD10ContinuumHeatOperatorNuclear4D` |
+| `QUILLEN-GLOBAL-01` | **FRONTIER (2026-07-26)** — La vraie famille cercle possède ligne déterminante, métrique hermitienne, connexion plate compatible, recollement et holonomie unitaire. Il manque l’identification à la géométrie Quillen/Bismut–Freed de la famille Janus géométrique complète. | `P0EFTJanusProgramPGlobalQuillenFrontier4D` |
+| `ANOMALY-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Annulation additive PT, convergence du cutoff `Z4`, égalité des logarithmes renormalisés, annulation des phases mode par mode et inflow opposé. Le certificat inclut désormais la trace chirale D10 tous niveaux, absolument sommable, nulle par PT, avec convergence de tout filet de cutoffs finis. Il manque la classe locale/globale et sa trivialisation équivariante pour tout le contenu géométrique. | `P0EFTJanusProgramPGlobalAnomalyFrontier4D`, `P0EFTJanusProgramPD10ContinuumHeatRegulator4D` |
+| `SCHEME-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-26)** — Des témoins distincts satisfont platitude et annulation PT; une ligne de Quillen fixée ne fixe pas l’action scalaire renormalisée. Les parties finies et la normalisation doivent venir d’une loi microscopique. | `P0EFTJanusProgramPGlobalSchemeFrontier4D`, `MICRO-GLOBAL-01` |
+| `MICRO-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27)** — Le parent bulk fourni se réduit exactement et satisfait Helmholtz/PT, mais deux parents admissibles donnent des mixages réduits différents. La sélection discrète de `α` et du sextique est exacte seulement après fourniture de `β`, du niveau, du verrou et de l’ancrage UV. Il manque donc la loi microscopique Janus sélectionnant le parent et ses parties finies. | `P0EFTJanusProgramPGlobalMicroFrontier4D`, `SCHEME-GLOBAL-01` |
+| `VACUUM-GLOBAL-01` | **FRONTIER (2026-07-27; dépendance physique bloquante)** — L’interaction PT-plate proportionnelle a un minimum positif unique en `c=1` et une Hessienne réduite positive, mais les contraintes FLRW du vide y perdent leur rang et la branche poussière possède une direction contrainte isoénergétique. Le vide global exige encore l’action effective renormalisée, le quotient stable, la trivialisation d’anomalie et les parties finies microscopiques. | `P0EFTJanusProgramPGlobalVacuumFrontier4D`, `STABILITY/ANOMALY/SCHEME/MICRO-GLOBAL-01` |
+| `SCALE-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27)** — Géométrie, gap de Dirac, flux LL, action locale de chaleur et compatibilité des charges conservent une orbite commune de redimensionnement; les hypothèses actuelles ne sélectionnent donc aucune longueur positive unique. Il faut un ancrage microscopique dimensionné indépendant et un vide effectif stable sélectionné, sans injecter un rayon observé. | `P0EFTJanusProgramPGlobalScaleFrontier4D`, `MICRO-GLOBAL-01`, `VACUUM-GLOBAL-01` |
+
+Portée exacte des fermetures et frontières globales :
+
+- `GEO` travaille sur le domaine maximal honnête des paires munies d'une
+  racine réelle lisse. Le constructeur conforme prouve que ce domaine est
+  habité; aucune racine universelle incompatible avec l'obstruction spectrale
+  n'est postulée.
+- `FIELD` retire l'ancien tangent métrique diagonal en doublon et conserve une
+  seule perturbation tensorielle générale; matière SpinC, projection D9,
+  coordonnées D10 et trace de bord proviennent du même objet.
+- `ANALYSIS` extrait les coefficients du vrai tenseur par la famille
+  génératrice lisse intrinsèque, les complète dans le produit physique `H¹`,
+  construit la trace continue et son noyau Dirichlet fermé, puis agrège les
+  domaines SpinC, D10 et LL.
+- `BOUNDARY` identifie la gorge canonique à la donnée non nulle
+  gaussienne, relie son flux EH au même vecteur de Palatini que le bulk,
+  assemble GHY/null/joints, et utilise le repère LL préservant la mesure. La
+  formule scalaire universelle garde son flux orienté; son annulation est un
+  théorème du secteur PT-fixe ou Dirichlet, jamais un axiome.
+- `KJ-01/02` ne reposent sur aucun renommage du modèle de Fourier. Sur le vrai
+  mapping-torus, la connexion de Levi-Civita, sa courbure et la dérivée de
+  Bianchi incluent les termes de connexion/courbure; l'identité est couverte
+  par l'atlas total. Le secteur linéaire de jauge possède son vrai modèle
+  `L²`, son `H⁰`, son quotient et sa complétion fermée. Le modèle spectral
+  `ℤ⁴` reste auxiliaire. Aucune exactitude globale de type Calabi
+  `ker B = im K` pour une métrique courbe arbitraire n'est affirmée : cette
+  question de linéarisation elliptique/Fredholm appartient à
+  `HESSIAN-GLOBAL-01`, pas à la fermeture du complexe covariant.
+- `NATURAL` est fermé à la portée annoncée : classification exacte des termes
+  locaux dans la troncature EFT finie à six invariants. Elle classe les
+  coefficients libres; elle ne les sélectionne pas physiquement.
+- `ACTION` est fermée sur le domaine régulier explicitement typé. Le terme
+  cinétique de matière est le vrai Dirac Levi-Civita doublé de la gorge
+  canonique, pas un substitut scalaire.
+- `EULER/HELMHOLTZ` travaillent sur toute carte normée commune dont les neuf
+  blocs physiques exacts sont `C²`. Ils utilisent la vraie dérivée de
+  Fréchet de l'action assemblée, prouvent la symétrie de son Jacobien et
+  reconstruisent exactement l'action normalisée. Ils ne construisent pas
+  encore un atlas normé couvrant chaque valeur brute de `GlobalFieldTangent`.
+- `HESSIAN` ne dépend plus du contrat monolithique qui identifiait à tort tout
+  tangent lisse au `ℓ²` D10. Le tangent, le domaine et la cible physiques sont
+  désormais D10-free. L’ancien tangent étendu et son facteur D10 restent
+  explicitement réservés au régulateur/déterminant et ne peuvent pas être
+  réutilisés comme Hessienne d’action. Le produit Hilbert étendu
+  bulk/SpinC/D10/LL et son cœur opérateur dense injectif sont construits à
+  cette seule portée régulateur. La tour SpinC de **coefficients** tous niveaux
+  et le bloc D10
+  sont Fredholm; son domaine maximal est unitairement identifié à la tour
+  zéro plus le domaine D10 positif, avec conjugaison exacte et énergie de
+  graphe préservée. L’identité de Riesz LL est maintenant un facteur exact du
+  même opérateur Fredholm, avec le repère canonique de l’action et l’accord
+  démontré de son pairing de Hessienne.
+  Pour toute symétrie physique `U(1)²` chartwise certifiée, la descente de la
+  Hessienne vraie est exacte, symétrique et canonique. Une symétrie
+  difféomorphe exacte fournie se combine désormais automatiquement et donne
+  le sous-module total. Les résidus sont séparés : vrai pont tangent-carte,
+  orthogonalité/complétude et analyse **géométrique** SpinC tous niveaux
+  (les paquets finis et l’extension complétée sont fermés), invariance difféomorphe des neuf
+  blocs et égalité au Fredholm elliptique global. Le no-go Hessien nul impose
+  des hypothèses de couplage non dégénérées.
+- `NOETHER` est inconditionnel pour les ghosts lisses appariés du secteur
+  physique `U(1)²` et pour le Bianchi de Levi-Civita. Pour toute symétrie
+  difféomorphe exacte des neuf blocs, l’identité d’Euler est automatique.
+  Pour un générateur non linéaire différentiable, sa linéarisation est
+  exactement `H(v,G)+E(DG·v)=0`; la dégénérescence Hessienne gauche/droite
+  suit donc au point critique, y compris sur le cœur tangent global via tout
+  bridge dense fourni. Le certificat associé juxtapose l’invariance de
+  l’action et l’identité Euler/Noether issues de la symétrie affine fournie
+  avec le carré nul et la stabilité du bord déjà indépendants dans le paquet
+  BRST nonlinear; il n’identifie pas les deux différentielles. La construction
+  de l’habitant géométrique neuf-blocs reste dans `BRST/HESSIAN-GLOBAL-01`.
+- `BRST` combine désormais les représentations Cartan Maxwell et métrique
+  concrètes dans un paquet tensoriel canonique et ferme les représentations
+  coadjointes algébriques de Maxwell et de la paire de métriques, avec carré
+  nul et pairings invariants. Le pairing tensoriel
+  métrique intégré définit maintenant un morphisme linéaire canonique des
+  antifields lisses vers ce dual algébrique. La famille tangentielle finie,
+  son dualiseur covariant lisse et le support plein canonique prouvent
+  maintenant son injectivité/non-dégénérescence **bulk**. Son entrelacement
+  coadjoint reste exactement équivalent à l’identité intégrée
+  `B(L_c α,h)+B(α,L_c h)=0`. La paire tensorielle de la gorge fixe est
+  désormais un vrai module réel et son pairing intrinsèque intégré fournit
+  aussi un morphisme linéaire vers le dual algébrique. Son injectivité est
+  exactement réduite à la séparation par le pairing et est maintenant prouvée
+  par le dualiseur positif lisse fini, sans définitude diagonale. Son
+  équivariance reste réduite à la skew-adjonction intégrée pour toute
+  représentation de gorge fournie. La réalisation
+  inconditionnelle et ces critères sont
+  désormais intégrés aux certificats nonlinear BRST et
+  `GlobalBRSTFrontier`. Cette frontière globale agrège aussi le certificat
+  nonlinear complet, le dual géométrique métrique de bulk et la fermeture
+  coadjointe tensorielle pour la représentation Maxwell canonique et toute
+  représentation Lie métrique fournie. Sur les tenseurs réels de gorge, la séparation bilinéaire et la
+  skew-adjonction intégrée construisent directement le pont coadjoint
+  géométrique fidèle via une porte globale. Un tenseur lorentzien symétrique
+  non nul à endomorphisme relevé nilpotent et trace quadratique nulle exclut
+  formellement la définitude diagonale comme voie générique. Le même modèle
+  prouve toutefois la séparation bilinéaire de tous les tenseurs symétriques.
+  Un certificat de dualiseur lisse positif globalise désormais
+  automatiquement ce résultat par continuité et support plein : séparation
+  intégrée et injectivité du dual en découlent; le pont coadjoint demande en
+  plus une skew intégrée fournie. Le dualiseur est maintenant construit depuis
+  l’inverse métrique lisse; il reste à prouver la skew-adjonction intégrée. La famille génératrice lisse finie existante
+  fournit maintenant l’énergie explicite `Σᵢⱼ h(vᵢ,vⱼ)²`, positive et
+  séparante. La somme covariante finie de rang un est maintenant définie et
+  son identité de pairing avec cette énergie est prouvée abstraitement. La
+  contraction fibrée existante prouve maintenant chaque coefficient et les
+  deux énergies lisses; la continuité n’est donc plus une hypothèse.
+  Les contractions métrique-repère sont désormais de vraies sections
+  covecteur lisses, leurs produits extérieur et symétrisé sont de vrais
+  tenseurs lisses et la multiplication scalaire lisse est construite. La
+  somme finie pondérée symétrique est assemblée dans les deux secteurs
+  intrinsèques. Son identité exacte de pairing pointwise est prouvée par un
+  lemme intrinsèque de contraction de rang un, sans transport entre les
+  wrappers `TangentSpace`.
+  Les générateurs de pullback tensoriel et Maxwell sont désormais additifs
+  sur les orbites différentiables et homogènes dans le champ; un contrat
+  explicite de différentiabilité les bundle en applications linéaires. La métrique
+  intrinsèque canonique a un générateur nul pour le sous-groupe complet de
+  translation temporelle; cette fermeture métrique restreinte est agrégée
+  par `GlobalBRSTFrontier`, sans être étendue artificiellement à tous les
+  ghosts lisses.
+  La contraction lisse tenseur–deux-vecteurs déjà disponible donne maintenant
+  la réduction de Cartan métrique : comme pour Maxwell, le crochet est
+  automatique dès que l’action lisse est construite. Son résidu est tensoriel
+  dans les deux champs tests, fournit par `mkHom₂` un tenseur covariant
+  symétrique fibre et se spécialise aux tenseurs lisses Janus. Toute évaluation
+  sur deux ghosts lisses est un scalaire global lisse. L’assemblage fini donne
+  maintenant l’action métrique globale lisse et bilinéaire, son
+  `symmetricTensorCartanActionData`, sa représentation de Lie et son crochet
+  exacts. Le résidu Cartan Maxwell
+  est tensoriel, fournit un vrai covecteur fibre par `mkHom` et se spécialise
+  aux potentiels D8. Sa régularité Hom-bundle uniforme est prouvée; l’action
+  globale est lisse et bilinéaire, son `GaugePotentialCartanActionData`, sa
+  représentation de Lie et son crochet sont fermés. Les obstructions BRST du
+  champ et de l’antifield coadjoint algébrique ainsi que le pairing canonique
+  d’évaluation sont fermés, sans construire de dual Maxwell géométrique ou
+  intégré. Le ghost bulk de
+  translation temporelle et les trois ghosts bulk de rotation se restreignent
+  exactement à leurs ghosts de gorge par `mfderiv` de l’inclusion. Aucune skew
+  tensorielle n’en découle seule. L’orbite de pullback des rotations existe,
+  et la naturalité ponctuelle du pairing relevé et de sa version deux-secteurs
+  est fermée. Son intégrale contre la mesure canonique est invariante sous
+  chaque rotation finie, donc la courbe scalaire intégrée a une dérivée nulle
+  à angle zéro par constance. Une chain rule publique dérive aussi tout
+  `SmoothThroatField` à fibre fixe composé avec la rotation en son `mvfderiv`
+  le long du ghost de rotation de gorge. Elle ne dérive pas le pullback
+  tensoriel. Restent sa différentiabilité en angle, la chain rule du pairing
+  et le pont générateur/action avant toute skew ou conclusion coadjointe;
+  l’orbite tensorielle temporelle de gorge n’est pas encore bundlée.
+  Chaque rotation de gorge possède maintenant un vrai difféomorphisme lisse
+  et un pullback lisse des tenseurs symétriques, identité à angle nul. La
+  rotation ambiante préserve exactement la forme de Minkowski et la rotation
+  du cover est une isométrie exacte du tenseur Lorentzien intrinsèque. La
+  naturalité ponctuelle du pairing quotient/gorge et son invariance intégrée
+  finie sont fermées, ainsi que la dérivée nulle de la courbe scalaire
+  intégrée. La chain rule générique à fibre fixe est publique, mais ne dérive
+  pas le pullback tensoriel. Restent la différentiabilité tensorielle en
+  angle, la chain rule du pairing et le pont générateur/action avant toute
+  skew ou conclusion coadjointe.
+  Pour le pairing métrique bulk, le vrai flot temporel, la fixité du fond
+  intrinsèque, la mesure préservée et la dérivée scalaire nulle du pairing
+  invariant sont formalisés. La naturalité est prouvée par conjugaison et
+  invariance de la trace; restent le pont pointwise générateur/action et la
+  différentiation à travers le pairing intégré avant toute skew.
+  Candidate A possède aussi une interface correcte de flots complets non
+  linéaires : l’invariance terme par terme implique l’invariance de l’action
+  et l’horizontalité Euler du générateur dépendant du champ. La covariance
+  avec mesure transportée implique maintenant exactement le contrat à mesure
+  fixe sous préservation de la mesure; l’action scalaire générale instancie
+  ce pont. Le changement de variables des cinq blocs mesurés Candidate-A
+  (interaction, EH±, Maxwell±) est maintenant réduit à sept identités de
+  pullback des champs densitaires fournies; pour l’interaction, la naturalité
+  déterminant/racine/potentiel est réduite exactement au pullback musical,
+  à la conjugaison de `rootAt` et au transport du repère régulier. La mesure
+  canonique spécialise cette réduction au vrai flot temporel. Une orbite
+  conforme concrète `ℝ → GlobalFieldConfiguration`, construite avec une
+  échelle positive explicite et sa partenaire PT, possède maintenant ses lois
+  zéro/add exactes; elle n’est pas relevée en données d’action ou en chart.
+  Cela ne construit encore ni `GlobalCandidateAActionData`, ni chart, ni
+  pullback du champ global complet. Le bloc GHY de la gorge canonique est
+  identiquement nul, donc
+  sa covariance est fermée; restent les covariances ambiantes
+  SpinC-matière/LL/finite-BV, et l’interface abstraite autorise toujours le
+  flot identité. L’API des données d’action passe encore par l’exigence
+  historique de repère global `RegularGeneralLorentzMetric.frameEquiv`, alors
+  que la brique statique de volume est désormais frame-free pour toute
+  `SmoothGeneralLorentzMetric`. Restent la dépendance `C²`/Fréchet en métrique,
+  Maxwell/l’interaction et le chart/core variationnel Candidate-A. La descente
+  globale de la courbure scalaire est
+  maintenant fermée : le
+  troisième jet des vraies transitions
+  holonomes et sa symétrie externe sont prouvés. Les composantes dans la base de
+  la courbure-endomorphisme du gate de Bianchi sont identifiées exactement aux
+  composantes de Riemann utilisées par Einstein--Hilbert. Une transition
+  holonome fixe satisfait la loi complète de Levi--Civita/Christoffel comme
+  `EventuallyEq`, grâce à l’égalité de germ de ses inverses fixe et ré-ancré.
+  Cette loi est maintenant étendue aux vecteurs arbitraires, différentiée avec
+  tous les termes connexion/Jacobienne, puis antisymétrisée. Les jets
+  symétriques `D²` et `D³` s’annulent et donnent sans hypothèse
+  `J (R₁(u,v)z) = R₂(Ju,Jv)(Jz)`, avec son corollaire sur
+  l’endomorphisme de Riemann. Ricci est désormais sa trace sur les vecteurs
+  arbitraires, sa matrice suit la congruence jacobienne, et la contraction par
+  la métrique inverse prouve l’invariance du scalaire. L’atlas holonome total
+  et les inverses locaux le recollent en `globalSmoothScalarCurvature`.
+  Tout `RegularGeneralLorentzMetric` fournit donc un
+  `RegularEinsteinHilbertMetric`. `frameFreeEinsteinHilbertAction` intègre
+  maintenant le scalaire calculé contre toute mesure d’action finie non nulle.
+  `P0EFTJanusMappingTorusFrameFreeRelativeLorentzVolume4D` construit, pour
+  toute `SmoothGeneralLorentzMetric`, un ratio global positif lisse indépendant
+  des cartes, la mesure finie non nulle `generalLorentzVolumeMeasure` et son
+  interface `generalLorentzActionMeasure`; la métrique intrinsèque redonne
+  exactement la mesure canonique. `P0EFTJanusMetricVolumeDensityHessian4D`
+  prouve aussi la vraie seconde variation mixte ponctuelle de `sqrt |det g|`
+  le long de courbes affines de matrices à signe de déterminant fixé :
+  `sqrt |det g| * (1/4 tr(g⁻¹h) tr(g⁻¹k) -
+  1/2 tr(g⁻¹h g⁻¹k))`, symétrique en `h,k`.
+  `P0EFTJanusMappingTorusFrameFreeRelativeLorentzVolumeHessian4D` globalise
+  cette formule, via `globalMetricVolumeRatio` et
+  `generalMetricTensorPairingAt`, en une densité frame-free continue et
+  intégrable dont l’intégrale est symétrique.
+  `P0EFTJanusMappingTorusConformalRelativeLorentzVolumeHessian4D` construit
+  maintenant la vraie ligne conforme exponentielle positive
+  `scale(t)=baseScale*exp(t*u)`. Son ratio relatif est exactement
+  `rho=scale²`, avec dérivées `2*u*rho` et `4*u²*rho`; la seconde se décompose
+  exactement en Hessien sur la vitesse plus première variation sur
+  l’accélération, `2*u²*rho + 2*u²*rho`. Pour tout intégrande scalaire lisse
+  fixé, l’action contre le volume variable est `C²`; la différentiation sous
+  l’intégrale compacte de mesure finie est mutualisée dans
+  `P0EFTJanusCompactParametricIntegralC2`. Ce résultat reste limité à cette
+  ligne conforme à un paramètre : il ne construit ni atlas/topologie de
+  sections ni dépendance `C²`/Fréchet métrique générale. Comme l’intégrande est
+  fixé, ce gate seul ne constitue pas la variation générale de la courbure
+  d’Einstein--Hilbert.
+  `P0EFTJanusMappingTorusHomotheticEinsteinHilbertHessian4D` ferme maintenant
+  cette variation sur la tranche des homothéties positives constantes de la
+  métrique intrinsèque : Christoffel et Ricci sont invariants,
+  `R(scale*g0)=scale⁻¹*R0`, tandis que le volume varie comme `scale²`. La vraie
+  action Einstein--Hilbert est égale à son polynôme réduit en coordonnée
+  affine, dont le Hessien est symétrique. Le long de sa courbe métrique
+  exponentielle positive, l’action est `C∞` (donc `C²`) et sa dérivée seconde
+  se décompose en Hessien sur la vitesse plus première variation sur
+  l’accélération ; à `t=0`, elle
+  vaut `u²/(2κ) * (Rtot - 8*Λ*Vol)`. Le facteur conforme spatialement
+  variable est fermé séparément ci-dessous ; le Hessien Fréchet métrique
+  général et l’opérateur de Jacobi neuf blocs ne sont pas construits.
+  `P0EFTJanusMappingTorusConformalFrameFreeMaxwellHessian4D` globalise
+  séparément, pour toute `SmoothGeneralLorentzMetric`, le pairing Maxwell de
+  deux potentiels abéliens lisses arbitraires, puis sa densité diagonale et son
+  action frame-free. Les lois `F₁=JᵀF₂J` et `g₁=Jᵀg₂J` donnent des champs
+  globaux lisses et intégrables. En dimension quatre, `scale⁻²` annule le
+  facteur de volume `scale²`; à potentiel fixé, l’action conforme est donc
+  `C∞`, constante et son Hessien conforme symétrique est nul.
+  `P0EFTJanusMappingTorusFrameFreeMaxwellGaugeOrbitHessian4D` prouve ensuite
+  l’invariance gauge exacte globale dans chacun des deux slots du pairing et
+  pour l’action. Le Hessien tiré aux orbites gauge exactes est nul. L’ordre de
+  dérivation gauge exacte puis variation de potentiel arbitraire certifie le
+  noyau mixte nul; l’ordre log-conforme puis variation de potentiel arbitraire
+  certifie aussi un bloc mixte nul.
+  `P0EFTJanusMappingTorusFrameFreeMaxwellPotentialHessian4D` ferme maintenant
+  le Hessien physique à métrique fixée entre deux variations lisses arbitraires
+  du potentiel sous forme bilinéaire symétrique intégrable. Les dérivées de
+  ligne et mixtes coïncident avec ce Hessien, et les directions gauge exactes
+  appartiennent à ses deux noyaux. Le bloc métrique
+  arbitraire--potentiel, la dépendance Fréchet générale,
+  et l’interaction/chart/core/Jacobi/Fredholm Candidate-A restent ouverts.
+  `P0EFTJanusMappingTorusGlobalGeneralMetricAbelianLorenzCodifferential4D`
+  ferme maintenant le Lorenz différentiel lisse pour toute métrique générale
+  fournie : potentiel relevé, divergence Levi-Civita, loi d’overlap,
+  linéarité et vrai Faddeev--Popov `δ_g d`, égal au wave covariant dans chaque
+  carte. La gate canonique précédente est exactement sa spécialisation
+  intrinsèque et donne `δ(d c) = +□c`.
+  `P0EFTJanusProgramPGlobalAbelianFaddeevPopovGreenStokes4D` réutilise, sans
+  nouvelle structure ni axiome, le datum Green--Stokes scalaire déjà isolé :
+  le défaut FP devient exactement le courant orienté du cut-bulk et s’annule
+  sur tout domaine Green-isotrope existant, avec spécialisation Dirichlet.
+  Sous ce même datum, le Green-core physique de masse nulle est exactement
+  chaque composante FP. La densité minimale par cutoffs déjà prouvée rend sa
+  projection de graphe injective; le produit fini `Sector × Fin 2` possède un
+  vrai cœur lisse apparié dense et une réalisation mono-valuée qui coïncide
+  avec le FP existant sur ce cœur. La closabilité FP intrinsèque conditionnelle
+  n’est donc plus un résidu.
+  `P0EFTJanusProgramPGlobalAbelianFaddeevPopovLagrangianSelfAdjoint4D`
+  spécialise aussi la triple frontière complétée déjà disponible : sous des
+  entrées de triple, une condition lagrangienne et le paquet de clôture
+  analytique existant, chaque composante réelle a un domaine dense et son
+  domaine adjoint actuel égale son domaine de réalisation. L’inclusion appariée
+  finie est dense/injective et coïncide avec le vrai FP sur son cœur lisse
+  admis. Aucun habitant du paquet analytique n’est construit : ce résultat
+  reste conditionnel. La route existante
+  `...IntrinsicWaveCanonicalNormalRieszL2OperatorGraphMinimalProgramPClosure4D`
+  est maintenant raccordée elle aussi : ses données PDE, son estimation de
+  graphe et sa coercivité décalée suffisent déjà; Rellich est inconditionnel,
+  le résolvant réel borné donne l’égalité des domaines adjoints, et la
+  réalisation lisse admise est exactement le FP intrinsèque. La divergence
+   locale y reconstruit aussi le datum Green--Stokes global avec exactement le
+   même Green-core scalaire. Ces données ne
+   sont pas habitées ici. L’audit des constructeurs confirme que les routes
+   énergie/Gårding et décomposition positive redemandent exactement ces
+   entrées. Dirichlet ferme le courant de bord, pas l’ellipticité ni la
+   coercivité du wave lorentzien complet; le coefficient temporel strictement
+   négatif déjà prouvé le sépare du régulateur elliptique `H¹` positif.
+   Cette branche ne doit donc être habitée qu’après choix explicite d’une
+   réalisation elliptique auxiliaire. Restent l’identité Stokes 4D
+   inconditionnelle et l’identification au domaine du Hessien total, ainsi que
+   l’adjoint compatible avec une métrique générale; le transport pondéré déjà
+  construit règle le facteur deux, pas l’annulation tangentielle globale.
+  `P0EFTJanusMappingTorusGeneralMetricSmoothTrace4D` ferme la moitié trace du
+  de Donder général sans choix de carte : `tr_g h`, `d(tr_g h)`, la correction
+  `-1/2 d(tr_g h)` et son gradient sont des champs globaux lisses.
+  `P0EFTJanusMappingTorusGeneralMetricSymmetricTensorCovariantDerivative4D`
+  construit maintenant la vraie dérivée de Levi-Civita induite sur `Sym²` dans
+  chaque présentation, avec lissité, symétrie, `∇g = 0` et loi d’overlap
+  rang trois complète. Les gates de divergence la contractent directement
+  dans les cartes, prouvent la loi covectorielle, puis recollent `div_g h`
+  en une 1-forme globale lisse. Son assemblage avec la correction de trace
+  ferme le de Donder complet et sa formule locale, sans nouveau postulat ni
+  fibré rang trois artificiel.
+  `P0EFTJanusMappingTorusGlobalGeneralMetricDeDonderLinear4D` prouve maintenant
+  son additivité et son homogénéité depuis ces briques locales et le bundle en
+  application linéaire. La gate
+  `P0EFTJanusMappingTorusGlobalGeneralMetricDeDonderGaugePairing4D` relève les
+  sorties, construit leur contraction lisse, prouve son intégrabilité pour la
+  mesure générale existante et fournit une forme bilinéaire symétrique avec
+  polarisation quadratique exacte. Elle ne revendique ni adjoint, ni
+  réalisation `H¹`, ni insertion dans l’action Candidate-A.
+  `P0EFTJanusProgramPGlobalGeneralMetricDeDonderGraphPairing4D` réutilise le
+  frame fini existant pour ajouter la caractéristique relevée, construire le
+  graphe Hilbert raffiné et étendre exactement ce pairing lorentzien par un
+  Hessien borné symétrique. La gate `...GraphPairingC2Chart4D` en fait une
+  action quadratique `C∞` dont le second Fréchet constant redonne le pairing
+  sur le cœur lisse. Enfin
+  `P0EFTJanusProgramPGlobalCandidateAGaugeGraphC2Chart4D` assemble deux copies
+  métriques avec Lorenz dans un sous-chart physique commun et injecte son cœur
+  dans le tangent gauge-fixed typé avec non-minimal nul. Il ne revendique pas
+  le chart total ni le Fredholm final.
+  `P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D` installe aussi les neuf
+  espèces globales distinctes `c/c̄/B` (deux triplets sectoriels
+  `U(1)^2`-valués et un triplet tangent difféomorphe), leur différentiel non
+  minimal carré nul, et l’extension
+  injective de la configuration physique. Les wrappers et leurs produits
+  portent désormais leurs vraies structures de modules réels, avec projections
+  et inclusion physique linéaires. Le tangent gauge-fixed est le noyau de la
+  projection vers les anciens coefficients ghost/auxiliaire : ils sont donc
+  fixés et ne doublonnent plus les neuf champs typés. La règle physique
+  abélienne globale
+  `sA = -dc`, sa nilpotence, son vrai `sΨ` à mesure finie et son branchement
+  sur les métriques, potentiels Maxwell et champs non minimaux Candidate-A
+  sont fermés. Le sous-chart physique branche désormais les perturbations
+  métriques de Donder avec Lorenz; la règle difféomorphe complète `sg` et les
+  directions non minimales du chart total restent ouvertes.
+  `P0EFTJanusProgramPGlobalGeneralMetricDiffeomorphismFaddeevPopov4D`
+  construit toutefois le vrai opérateur FP mono-métrique
+  `c ↦ B_g(L_c g)` depuis l'action de Cartan existante. Candidate A en fournit
+  deux copies canoniques mais un seul triplet non minimal difféomorphe : le
+  choix d'une somme, différence ou pondération des deux conditions n'est fixé
+  nulle part et n'est donc pas ajouté artificiellement.
+  `P0EFTJanusProgramPGlobalLLAuxMeasureSameActionHessian4D` ferme désormais
+  le second-ordre directionnel exact des slots `llAuxMetric × llMeasure`
+  directement depuis `globalCandidateALLAction`. La symétrie est prouvée;
+  `P0EFTJanusProgramPGlobalLLAuxMeasureGraphRiesz4D` construit en plus une
+  complétion Hilbert de graphe, l’inclusion lisse dense injective et le
+  représentant de Riesz borné qui redonne ce Hessien exact sur le cœur.
+  Toutes les directions `llMeasure` pures restent toutefois dans son noyau.
+  Leur radical fermé, le quotient Hilbert action-faithful et l’opérateur
+  descendu sont maintenant explicites. Son injectivité équivaut exactement à
+  l’égalité « radical mesure = noyau pondéré total », qui peut échouer lorsque
+  les poids d’énergie LL s’annulent; une coercivité reste ensuite nécessaire
+  pour l’image fermée. Aucun Fredholm n’est donc ajouté artificiellement.
+  `P0EFTJanusProgramPGlobalGHYSameActionHessian4D` ferme séparément le contrôle
+  GHY canonique fixe : sous l'hypothèse explicite que la famille sélectionne
+  cette branche, l’action exacte et ses deux dérivées de Fréchet sont nulles.
+  Le datum mobile reste dans le même sommant Robin et n'est pas annulé. Le bloc
+  faces nulles/contre-termes/joints possède aussi son vrai Hessien nul le long
+  de toute mise à l’échelle des normalisations de générateurs, par la
+  transgression exacte face--joint existante. Ses variations géométriques et
+  normales générales restent ouvertes.
+  Aucun théorème formel
+  d’inhabitabilité du type historique n’est revendiqué.
+  Côté Hessien, sous flot difféomorphe non linéaire fourni, différentiabilité
+  de tous ses générateurs et criticité, leur span ponctuel est maintenant un
+  noyau bilatère exact. La Hessienne descend par ce quotient puis par le
+  quotient combiné avec `U(1)²`. Cela ne construit ni le flot neuf-blocs, ni
+  le chart, ni le pont tangent global → chart.
+  Le pairing Maxwell global construit sur la courbure est gauge-dégénéré et
+  n’est pas utilisé comme dual des potentiels; les résultats ci-dessus portent
+  seulement sur les orbites gauge exactes et les directions métriques
+  log-conformes.
+- `VARCOH` ferme la cohomologie **fonctionnelle globale** sur ces cartes et
+  le noyau de la troncature naturelle finie. Il ne prétend pas construire le
+  bicomplexe variationnel horizontal local complet des densités de jets.
+- `ADM` ferme toute la chaîne réellement dérivée dans la réduction FLRW :
+  Legendre, primaires, crochet secondaire, préservation et rang local ouvert.
+  Le compte `7` degrés de liberté reste la cible arithmétique conditionnelle;
+  aucun shift ni crochet fonctionnel de champs n’est caché dans ce certificat.
+- `STABILITY` sépare formellement la Hessienne ambiante de la variation
+  contrainte. La courbe poussière exacte donne des configurations distinctes
+  de même énergie : elle interdit une lecture de minimum strict isolé dans ce
+  secteur, sans prouver une instabilité globale.
+- `VACUUM` rassemble le minimum proportionnel 1D, le no-go de rang du vide
+  FLRW, la direction contrainte sourcée et la liberté de schéma. Ces résultats
+  sont compatibles mais ne sélectionnent pas un vide physique global.
+- `MICRO` rassemble la réduction exacte du parent disponible, sa réciprocité
+  de Helmholtz et la sélection discrète conditionnelle. Le contre-exemple à
+  deux parents prouve que les hypothèses actuelles ne sélectionnent ni
+  l'action réduite ni ses parties finies.
+- `SCALE` combine les no-go géométrique, spectral, chaleur et charge : toutes
+  les lois disponibles sont covariantes sous une même dilatation. Une longueur
+  absolue exige donc une donnée dimensionnée indépendante, puis un vide stable.
+- `DIRAC` et `REGULATOR` sont `DONE` à leurs portées déclarées; ce dernier
+  fournit un régulateur nucléaire de référence sans l’identifier à la
+  Hessienne. `BRST/QUILLEN/ANOMALY` conservent des certificats de frontier
+  intégrés et sans nouvel axiome. `HESSIAN` est désormais une `FRONTIER` :
+  l’interface locale sur domaine ouvert est fermée, mais son habitant métrique
+  général et l’accord avec la cible Fredholm restent à construire. Le pont chaleur–Hessienne
+  ne peut reprendre qu’après choix d’une action et d’un opérateur compatibles.
+- `SCHEME` est plus qu’un TODO technique : le no-go construit deux libertés
+  de schéma effectives. Sans donnée microscopique supplémentaire,
+  `SCHEME-GLOBAL-01` est impossible à déduire des hypothèses actuelles.
+
+Ces distinctions expliquent pourquoi les portes terminales plus fortes
+`T03`–`T06` restent décochées ci-dessous : elles exigent encore l'atlas
+physique brut, le système local par composantes et le bicomplexe local, pas
+seulement leur fermeture fonctionnelle chartwise.
 
 `MICRO-GLOBAL-01` et `SCALE-GLOBAL-01` sont actuellement
 `BLOQUÉ-PHYSIQUE`. Aucun LLM ne doit les rendre vrais par définition ou par
@@ -2200,5 +3715,111 @@ dénominateur `14`, affiche le décompte terminal `0/14` et rejette toute porte
 cochée sans `TerminalGateEvidence`. Chaque évidence doit fournir module,
 façade, théorème pleinement qualifié, portée et fragment de type ; le module
 doit être importé, sans placeholder, et le théorème ne peut pas être un simple
-contrat `ProgramStatus`. L'audit complet est vert le 2026-07-19. Aucune porte
+contrat `ProgramStatus`. L'audit complet a été revérifié vert le 2026-07-26.
+Aucune porte
 terminale n'est fermée.
+
+Mise à jour : `P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` ferme le
+paquetage global lisse, la linéarité réelle et l'intégrabilité de l'onde
+scalaire canonique. `P0EFTJanusMappingTorusGlobalSmoothScalarProduct4D`
+ajoute le produit global lisse et la règle de Leibniz du gradient local.
+Le jet-produit covariant symétrique et sa contraction d'onde exacte sont aussi
+fermés algébriquement. Son identification à la dérivée seconde effective du
+produit global est maintenant prouvée. L'appariement global
+lisse des gradients et la règle ponctuelle globale de l'onde sont fermés.
+Les lois conformes de courbure et le Hessien EH spatial sont fermés. Le cœur
+Einstein--Maxwell conforme restreint assemble désormais ce Hessien et le bloc
+potentiel Maxwell; son bloc croisé conforme--potentiel est identifié au vrai
+Hessien mixte same-action existant et vaut zéro. Le mélange dans des directions
+métriques arbitraires attend toujours une carte concrète de l'espace des
+métriques.
+`P0EFTJanusMappingTorusSpatialConformalMetricJet4D` ferme maintenant les lois
+locales du coefficient, de la matrice et de la dérivée première de la métrique
+conforme positive existante. L'inverse, Christoffel, Riemann, Ricci et la
+contraction scalaire sont fermés.
+### Hessien conforme spatial — fermé
+
+- courbe exponentielle et densités d'ordres `0`, `1`, `2` ;
+- dérivation deux fois sous l'intégrale compacte ;
+- Hessien bilinéaire symétrique ;
+- égalité exacte avec la dérivée seconde diagonale en zéro ;
+- inverse de la métrique conforme explicite.
+
+`P0EFTJanusMappingTorusSpatialConformalEinsteinMaxwellCoreHessian4D` ajoute la
+forme bilinéaire symétrique sur le produit des directions conformes spatiales
+et des directions de potentiel abélien. Son bloc croisé est exactement
+`conformalPotentialFrameFreeMaxwellMixedHessian`, nul par le théorème
+same-action à deux paramètres déjà disponible. Aucune direction métrique
+lorentzienne arbitraire n'est ajoutée.
+
+Fermeture géométrique : la loi de Christoffel contractée, sa dérivée,
+Riemann, Ricci, la séparation Palatini/quadratique et leur contraction
+scalaire prouvent maintenant la formule conforme standard depuis la
+construction coordonnée brute. La spécialisation exponentielle locale et
+globale donne
+`R(g_t) = exp(-2tu) (R(g₀) - 6t □u - 6t² ⟨du,du⟩)`.
+Le ratio de volume `exp(4tu)` identifie ensuite la vraie action
+Einstein--Hilbert frame-free à la courbe différentiée ci-dessus ; sa seconde
+variation diagonale en zéro est donc exactement le Hessien symétrique certifié.
+
+### Pont d'adjoint cinétique diagonal — fermé (2026-08-01)
+
+- les poids sont ceux de l'action Einstein--Hilbert existante :
+  `w₊ = 1/(2κ₊)` et `w₋ = 1/(2κ₋)` ;
+- l'adjoint 4D du générateur diagonal pour le pairing de DeWitt pondéré est
+  exactement `w₊F₊ + w₋F₋`, avec unicité des deux poids ;
+- la condition globale lisse et son FP sont construits depuis les deux briques
+  mono-métriques existantes ;
+- le symbole spatial vaut `(w₊+w₋)|ξ|²`; l'annulation des poids l'annule, leur
+  non-annulation donne le noyau trivial à covecteur non nul ;
+- limite : les blocs normal/bord, l'identification à l'action covariante
+  non linéaire et les fermetures de domaines restent hors de ce pont.
+
+### Graphe BRST diagonal et insertion bulk — fermés (2026-08-01)
+
+- le cœur partagé contient deux perturbations métriques et un seul triplet
+  difféomorphe ; son BRST est nilpotent et sa condition est exactement le
+  poids cinétique dérivé ci-dessus ;
+- son image lisse est injective et dense dans le graphe off-shell complété ;
+  le Hessien borné symétrique, le représentant de Riesz et l'action `C²`
+  coïncident exactement avec la polarisation de `sΨ` ;
+- ce graphe remplace les deux blocs de Donder dans le produit bulk existant,
+  à côté du graphe abélien apparié, de la matière SpinC primitive et du graphe
+  LL complet ; l'action a pour seconde dérivée exacte le Hessien assemblé ;
+- le produit imbriqué `WithLp 2` de ces quatre facteurs est un Hilbert réel
+  complet, continûment équivalent au chart précédent ; le même cœur reste
+  dense/injectif et le Hessien exact possède un Riesz borné auto-adjoint ;
+- le même cœur possède un raccord linéaire injectif vers les slots typés
+  existants, sans seconde copie Lorenz ni second triplet difféomorphe ;
+- `HESSIAN-GLOBAL-01` reste ouvert uniquement au-delà de cette insertion :
+  identification à l'action covariante complète, chart métrique d'ordre
+  supérieur, blocs normal/bord et Einstein--Maxwell métrique général,
+  domaines/adjoints, portée fermée et radical fini LL off-shell, puis somme
+  Fredholm fidèle finale. Le cœur typé est déjà fidèle; la cible spectrale
+  historique `ι × Fin 8` ne l'est pas comme contenu total.
+
+### Réductions fortes Einstein--Maxwell et LL — fermées (2026-08-02)
+
+- l'intégrale sur toute mesure finie est une application linéaire continue du
+  cœur scalaire fort; des lifts forts `C²` du volume/courbure ou du
+  volume/pairing suffisent donc aux vraies lignes Einstein--Hilbert/Maxwell ;
+- le cœur C² ferme désormais produit, racine et jets spatiaux d'ordre deux;
+  reste à construire la vraie application métrique générale vers ce cœur pour
+  le volume, la courbure scalaire et le pairing Maxwell ;
+- tout opérateur borné auto-adjoint à portée fermée et noyau fini a conoyau
+  fini; appliqué au Riesz LL complet, ceci réduit le Fredholm off-shell aux
+  deux seules estimées portée fermée/radical fini ;
+- les no-go Hessien nul interdisent de déduire le Fredholm de la seule
+  régularité `C²`; une strate elliptique non dégénérée et son domaine de bord
+  doivent être construits explicitement, sans les cacher dans un nouvel axiome.
+
+### Bloc bord par reparamétrisation finie — fermé (2026-08-01)
+
+- les paramètres de normalisation des faces nulles sont indépendants dans le
+  vrai Hilbert fini `EuclideanSpace ℝ NullFace` ;
+- la transgression face--joint existante prouve que l'action exacte
+  `GHY + faces nulles + contre-termes + joints` y est constante ;
+- sa première et sa seconde Fréchet exactes sont nulles, et son Riesz nul est
+  borné auto-adjoint ;
+- limite : les déformations normales et la géométrie de bord générale restent
+  ouvertes.

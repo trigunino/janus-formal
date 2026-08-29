@@ -1,0 +1,978 @@
+✔ [8557/8965] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBoundaryDensityLedger (10s)
+✔ [8558/8965] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteModeHeatKernelAnomalyRegulator (10s)
+✔ [8559/8965] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFourDimensionalDensityLieDerivativeNoether (11s)
+✖ [8560/8965] Building JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusNormalLineClutching (14s)
+trace: .> LEAN_PATH=C:\Users\alzie\Documents\Janus\.lake\packages\Cli\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\batteries\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\Qq\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\aesop\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\proofwidgets\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\importGraph\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\LeanSearchClient\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\plausible\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.b\l c:\Users\alzie\.elan\toolchains\leanprover--lean4---v4.31.0\bin\lean.exe -DmaxHeartbeats=800000 C:\Users\alzie\Documents\Janus\JanusFormal\Branches\FundamentalGeometryD8TopologyRepresentation\Gates\P0EFTJanusNormalLineClutching.lean -o C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryD8TopologyRepresentation\Gates\P0EFTJanusNormalLineClutching.olean -i C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryD8TopologyRepresentation\Gates\P0EFTJanusNormalLineClutching.ilean -c C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryD8TopologyRepresentation\Gates\P0EFTJanusNormalLineClutching.c --setup C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryD8TopologyRepresentation\Gates\P0EFTJanusNormalLineClutching.setup.json --json
+error: JanusFormal/Branches/FundamentalGeometryD8TopologyRepresentation/Gates/P0EFTJanusNormalLineClutching.lean:1:0: failed to read file 'C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean\Mathlib\Tactic\NormNum\Basic.olean.private'
+error: Lean exited with code 1
+✖ [8561/8965] Building JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusReflectionFixedThroat (6.4s)
+trace: .> LEAN_PATH=C:\Users\alzie\Documents\Janus\.lake\packages\Cli\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\batteries\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\Qq\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\aesop\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\proofwidgets\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\importGraph\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\LeanSearchClient\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\plausible\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.b\l c:\Users\alzie\.elan\toolchains\leanprover--lean4---v4.31.0\bin\lean.exe -DmaxHeartbeats=800000 C:\Users\alzie\Documents\Janus\JanusFormal\Branches\FundamentalGeometryD\Gates\P0EFTJanusReflectionFixedThroat.lean -o C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryD\Gates\P0EFTJanusReflectionFixedThroat.olean -i C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryD\Gates\P0EFTJanusReflectionFixedThroat.ilean -c C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryD\Gates\P0EFTJanusReflectionFixedThroat.c --setup C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryD\Gates\P0EFTJanusReflectionFixedThroat.setup.json --json
+error: JanusFormal/Branches/FundamentalGeometryD/Gates/P0EFTJanusReflectionFixedThroat.lean:1:0: failed to read file 'c:\Users\alzie\.elan\toolchains\leanprover--lean4---v4.31.0\lib\lean\Init\Core.olean'
+error: Lean exited with code 1
+✖ [8562/8965] Building JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusReciprocalBimetricPotential (23s)
+trace: .> LEAN_PATH=C:\Users\alzie\Documents\Janus\.lake\packages\Cli\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\batteries\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\Qq\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\aesop\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\proofwidgets\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\importGraph\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\LeanSearchClient\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\plausible\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.b\l c:\Users\alzie\.elan\toolchains\leanprover--lean4---v4.31.0\bin\lean.exe -DmaxHeartbeats=800000 C:\Users\alzie\Documents\Janus\JanusFormal\Branches\NonlinearBimetricJunctionAlpha\Gates\P0EFTJanusReciprocalBimetricPotential.lean -o C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\NonlinearBimetricJunctionAlpha\Gates\P0EFTJanusReciprocalBimetricPotential.olean -i C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\NonlinearBimetricJunctionAlpha\Gates\P0EFTJanusReciprocalBimetricPotential.ilean -c C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\NonlinearBimetricJunctionAlpha\Gates\P0EFTJanusReciprocalBimetricPotential.c --setup C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\NonlinearBimetricJunctionAlpha\Gates\P0EFTJanusReciprocalBimetricPotential.setup.json --json
+error: JanusFormal/Branches/NonlinearBimetricJunctionAlpha/Gates/P0EFTJanusReciprocalBimetricPotential.lean:1:0: failed to read file 'C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean\Mathlib\Algebra\Category\ModuleCat\Presheaf.olean'
+error: Lean exited with code 1
+✖ [8566/8965] Building JanusFormal.Branches.FundamentalGeometryD9ImmersedSpinCEllipticComplex.Gates.P0EFTJanusImmersionFiberAlgebra (32s)
+trace: .> LEAN_PATH=C:\Users\alzie\Documents\Janus\.lake\packages\Cli\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\batteries\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\Qq\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\aesop\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\proofwidgets\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\importGraph\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\LeanSearchClient\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\plausible\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.b\l c:\Users\alzie\.elan\toolchains\leanprover--lean4---v4.31.0\bin\lean.exe -DmaxHeartbeats=800000 C:\Users\alzie\Documents\Janus\JanusFormal\Branches\FundamentalGeometryD9ImmersedSpinCEllipticComplex\Gates\P0EFTJanusImmersionFiberAlgebra.lean -o C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryD9ImmersedSpinCEllipticComplex\Gates\P0EFTJanusImmersionFiberAlgebra.olean -i C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryD9ImmersedSpinCEllipticComplex\Gates\P0EFTJanusImmersionFiberAlgebra.ilean -c C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryD9ImmersedSpinCEllipticComplex\Gates\P0EFTJanusImmersionFiberAlgebra.c --setup C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryD9ImmersedSpinCEllipticComplex\Gates\P0EFTJanusImmersionFiberAlgebra.setup.json --json
+error: JanusFormal/Branches/FundamentalGeometryD9ImmersedSpinCEllipticComplex/Gates/P0EFTJanusImmersionFiberAlgebra.lean:1:0: failed to read file 'C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean\Mathlib\CategoryTheory\Limits\Shapes\Pullback\Categorical\Basic.olean.private'
+error: Lean exited with code 1
+✔ [8794/8977] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondJetNormalForm (50s)
+✔ [8813/8977] Built JanusFormal.Branches.FundamentalGeometryD11NaturalImmersionOperators.Gates.P0EFTJanusCanonicalImmersionSymbolFamily (50s)
+✔ [8814/8977] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteJetEquivariance (50s)
+✔ [8824/8990] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAbelianConnectionJetNormalForm (50s)
+✔ [8825/8994] Built JanusFormal.Branches.FundamentalGeometryD11NaturalImmersionOperators.Gates.P0EFTJanusSpinCImmersionCategory (51s)
+✖ [8826/8994] Building JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothNotPolynomial (51s)
+trace: .> LEAN_PATH=C:\Users\alzie\Documents\Janus\.lake\packages\Cli\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\batteries\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\Qq\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\aesop\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\proofwidgets\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\importGraph\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\LeanSearchClient\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\plausible\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.b\l c:\Users\alzie\.elan\toolchains\leanprover--lean4---v4.31.0\bin\lean.exe -DmaxHeartbeats=800000 C:\Users\alzie\Documents\Janus\JanusFormal\Branches\FundamentalGeometryPEJetUniversality\Gates\P0EFTJanusSmoothNotPolynomial.lean -o C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryPEJetUniversality\Gates\P0EFTJanusSmoothNotPolynomial.olean -i C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryPEJetUniversality\Gates\P0EFTJanusSmoothNotPolynomial.ilean -c C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryPEJetUniversality\Gates\P0EFTJanusSmoothNotPolynomial.c --setup C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryPEJetUniversality\Gates\P0EFTJanusSmoothNotPolynomial.setup.json --json
+info: stderr:
+libc++abi: terminating due to uncaught exception of type std::bad_alloc: std::bad_alloc
+error: Lean exited with code 3221226505
+✔ [8827/9005] Built JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusFiniteModeFredholmDeterminantLine (51s)
+✔ [8828/9005] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusFiniteOrderUniformization (51s)
+✖ [8830/9009] Building JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusAnomalyTransgressionInflow (51s)
+trace: .> LEAN_PATH=C:\Users\alzie\Documents\Janus\.lake\packages\Cli\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\batteries\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\Qq\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\aesop\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\proofwidgets\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\importGraph\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\LeanSearchClient\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\plausible\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.lake\packages\mathlib\.lake\build\lib\lean;C:\Users\alzie\Documents\Janus\.b\l c:\Users\alzie\.elan\toolchains\leanprover--lean4---v4.31.0\bin\lean.exe -DmaxHeartbeats=800000 C:\Users\alzie\Documents\Janus\JanusFormal\Branches\FundamentalGeometryD10QuillenAnomaly\Gates\P0EFTJanusAnomalyTransgressionInflow.lean -o C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryD10QuillenAnomaly\Gates\P0EFTJanusAnomalyTransgressionInflow.olean -i C:\Users\alzie\Documents\Janus\.b\l\JanusFormal\Branches\FundamentalGeometryD10QuillenAnomaly\Gates\P0EFTJanusAnomalyTransgressionInflow.ilean -c C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryD10QuillenAnomaly\Gates\P0EFTJanusAnomalyTransgressionInflow.c --setup C:\Users\alzie\Documents\Janus\.b\i\JanusFormal\Branches\FundamentalGeometryD10QuillenAnomaly\Gates\P0EFTJanusAnomalyTransgressionInflow.setup.json --json
+info: stderr:
+libc++abi: terminating due to uncaught exception of type std::bad_alloc: std::bad_alloc
+error: Lean exited with code 3221226505
+✔ [8831/9009] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMetricCoupledScalarMatterJetVariation (51s)
+✔ [8850/9009] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusStructuredJetActionGroupoid (51s)
+✔ [8851/9009] Built JanusFormal.Branches.FundamentalGeometryD11NaturalImmersionOperators.Gates.P0EFTJanusNaturalLowerOrderFreedom (51s)
+✔ [8852/9019] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusPEInvariantPairings (52s)
+✔ [8856/9038] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullExpansionCountertermVariation (20s)
+✔ [8857/9038] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusExplicitBoundaryDensityLocalVariations (11s)
+✔ [8858/9045] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleDiracHeatTraceCancellation (13s)
+✔ [8859/9045] Built JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusNormalOrientationZ4Lift (34s)
+✔ [8883/9045] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusInvariantMeasureFlowIPP4D (16s)
+✔ [8904/9092] Built JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusEulerMaclaurinOrderFour (18s)
+✔ [8905/9094] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusConvexHelmholtzReconstruction (17s)
+✔ [8978/9350] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullJointReparametrizationCancellation (18s)
+✔ [8979/9357] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNullExpansionCountertermNonDifferentiable (18s)
+✔ [8980/9358] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYFirstVariation (13s)
+✔ [8981/9358] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleUnboundedDiracDomain (15s)
+✔ [8982/9358] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConcreteSecondJetChainRule (29s)
+✔ [8983/9358] Built JanusFormal.Branches.FundamentalGeometryDiracSpectral.Gates.P0EFTJanusFullHolonomyDeterminant (29s)
+✔ [8985/9364] Built JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusUniversalClosedHeatCoefficients (29s)
+✔ [8994/9381] Built JanusFormal.Branches.FundamentalGeometryD11NaturalImmersionOperators.Gates.P0EFTJanusNaturalBundleFunctor (29s)
+✔ [9030/9450] Built JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusProductThroatLocalInvariants (30s)
+✔ [9031/9450] Built JanusFormal.Branches.FundamentalGeometryD11NaturalImmersionOperators.Gates.P0EFTJanusNaturalOperatorBlueprint (30s)
+✔ [9033/9450] Built JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusThroatMonopoleEmergence (30s)
+✔ [9034/9450] Built JanusFormal.Branches.FundamentalGeometryD9ImmersedSpinCEllipticComplex.Gates.P0EFTJanusNormalRootMonopoleSeparation (30s)
+✔ [9052/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteBoxBulkBoundaryStokes (30s)
+⚠ [9053/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusComplexDiagonalMaximalOperator4D (16s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusComplexDiagonalMaximalOperator4D.lean:73:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusComplexDiagonalMaximalOperator4D.complexDiagonalHilbertCongr_apply`:
+  [DecidableEq Mode]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Mode] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusComplexDiagonalMaximalOperator4D.lean:134:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusComplexDiagonalMaximalOperator4D.complexDiagonalImage_apply`:
+  [DecidableEq Mode]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Mode] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusComplexDiagonalMaximalOperator4D.lean:314:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusComplexDiagonalMaximalOperator4D.complexDiagonalWeight_ne_zero_of_gap`:
+  [DecidableEq Mode]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Mode] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusComplexDiagonalMaximalOperator4D.lean:325:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusComplexDiagonalMaximalOperator4D.complexDiagonalInverseCoefficient_norm_le`:
+  [DecidableEq Mode]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Mode] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9054/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.L2Compactness.Kernels (14s)
+✔ [9055/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.H1 (15s)
+✔ [9056/9495] Built RellichKondrachov.MeasureTheory.Function.LpSpace.Restrict (15s)
+✔ [9057/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYMeasureVariation (13s)
+⚠ [9058/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusMeasureOpenPositiveDenseMap4D (11s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusMappingTorusMeasureOpenPositiveDenseMap4D.lean:35:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusMappingTorusMeasureOpenPositiveDenseMap4D.DenseRange.nonempty_preimage_of_isOpen`:
+  [TopologicalSpace Source]
+  [MeasurableSpace Source]
+  [MeasurableSpace Target]
+  [BorelSpace Target]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [TopologicalSpace Source] [MeasurableSpace Source] [MeasurableSpace Target] [BorelSpace Target] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusMappingTorusMeasureOpenPositiveDenseMap4D.lean:79:0: Definition `JanusFormal.P0EFTJanusMappingTorusMeasureOpenPositiveDenseMap4D.OpenPositiveDenseParametrization.targetOpenPositive` of class type must be marked with `@[reducible]` or `@[implicit_reducible]`
+✔ [9060/9495] Built JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusPrimitiveMonopoleZ4Spectrum (24s)
+✔ [9061/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleDiracHeatFunctionalBridge (13s)
+✔ [9062/9495] Built RellichKondrachov.MeasureTheory.Function.LpSpace.ChangeMeasureLeSmul (14s)
+✔ [9063/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCompactParametricIntegralC2 (13s)
+✔ [9064/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusComplexDiagonalGraphFredholm4D (15s)
+✔ [9065/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.Translation (13s)
+⚠ [9066/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.TranslationEstimate (14s)
+warning: RellichKondrachov/Analysis/FunctionalSpaces/Sobolev/Euclidean/TranslationEstimate.lean:91:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+✔ [9067/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.L2Compactness.Smoothing (13s)
+✔ [9068/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusNonNullGHYExactInverseCurve (12s)
+✔ [9069/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConcreteAbelianConnectionJet (24s)
+⚠ [9070/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBoundedFiberJetSubstitutionC2 (23s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJetSubstitutionC2.lean:337:4: 'change
+  RealHasDerivAt (fun varied : Real => 1 / (1 + varied ^ 2))
+    ((-2) * ((fiber / (1 + fiber ^ 2)) * (1 / (1 + fiber ^ 2)))) fiber' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJetSubstitutionC2.lean:342:58: 'ring' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJetSubstitutionC2.lean:342:58: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJetSubstitutionC2.lean:359:56: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJetSubstitutionC2.lean:386:40: Variable name `bound` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJetSubstitutionC2.lean:514:15: This simp argument is unused:
+  remainder
+
+Hint: Omit it from the simp argument list.
+  simp only [r̵e̵m̵a̵i̵n̵d̵e̵r̵,̵ ̵Real.norm_eq_abs, pow_two, sub_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJetSubstitutionC2.lean:513:28: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJetSubstitutionC2.lean:514:63: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [9071/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatSemigroupOperator (11s)
+✔ [9072/9495] Built JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusDiracSeeleyDeWittCandidate (23s)
+⚠ [9073/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D (24s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D.lean:95:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D.lean:258:27: This simp argument is unused:
+  Real.sq_sqrt
+
+Hint: Omit it from the simp argument list.
+  simp [Fin.sum_univ_succ, Real.sq̵_̵s̵q̵r̵t̵,̵ ̵R̵e̵a̵l̵.̵s̵in_sq_add_cos_sq]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D.lean:258:41: This simp argument is unused:
+  Real.sin_sq_add_cos_sq
+
+Hint: Omit it from the simp argument list.
+  simp [Fin.sum_univ_succ, Real.sq_sqrt,̵ ̵R̵e̵a̵l̵.̵s̵i̵n̵_̵s̵q̵_̵a̵d̵d̵_̵c̵o̵s̵_̵s̵q̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D.lean:331:36: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveMonopoleClutchingConnection4D.lean:343:37: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+✔ [9074/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryGaussWeingartenFiniteAlgebra4D (24s)
+✔ [9075/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.L2Compactness.Compactness (11s)
+✔ [9076/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussianNormalEHGHYCancellation (11s)
+✔ [9078/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusComplexDiagonalRealFredholm4D (12s)
+✔ [9079/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatSemigroupStrongContinuity (11s)
+✔ [9080/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.TranslationEstimateL2 (14s)
+✔ [9081/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.L2Compactness.Approximation (17s)
+⚠ [9082/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusBoundedFiberJet2SubstitutionC2 (19s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJet2SubstitutionC2.lean:325:15: This simp argument is unused:
+  remainder
+
+Hint: Omit it from the simp argument list.
+  simp only [r̵e̵m̵a̵i̵n̵d̵e̵r̵,̵ ̵Real.norm_eq_abs, pow_two, sub_zero]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJet2SubstitutionC2.lean:324:28: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJet2SubstitutionC2.lean:325:63: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJet2SubstitutionC2.lean:331:20: Variable name `hBoundNonnegative` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusBoundedFiberJet2SubstitutionC2.lean:1177:2: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+✔ [9083/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusLowOrderStructuredBackground (20s)
+✔ [9084/9495] Built JanusFormal.Branches.FundamentalGeometryD7SpectralTheory.Gates.P0EFTJanusProductThroatDiracHeatCoefficients (19s)
+✔ [9088/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusGaussianNormalEmbeddedHypersurface (11s)
+✔ [9119/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteStratifiedBoundaryVariation (11s)
+⚠ [9120/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusComplexDiagonalProperShiftFredholm4D (11s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusComplexDiagonalProperShiftFredholm4D.lean:185:8: automatically included section variable(s) unused in theorem `_private.JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusComplexDiagonalProperShiftFredholm4D.0.JanusFormal.P0EFTJanusComplexDiagonalProperShiftFredholm4D.complexDiagonalShiftNonzeroValues_pos`:
+  [DecidableEq Mode]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Mode] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusComplexDiagonalProperShiftFredholm4D.lean:210:8: automatically included section variable(s) unused in theorem `_private.JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusComplexDiagonalProperShiftFredholm4D.0.JanusFormal.P0EFTJanusComplexDiagonalProperShiftFredholm4D.one_le_abs_add_of_not_relevant`:
+  [DecidableEq Mode]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Mode] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9121/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveMonopoleSmoothClutching4D (22s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPPrimitiveMonopoleSmoothClutching4D.lean:89:4: This simp argument is unused:
+  Function.comp_def
+
+Hint: Omit it from the simp argument list.
+  simp [monopoleSphereXY, monopoleSphereCoordinate,̵
+  ̵ ̵ ̵ ̵ ̵F̵u̵n̵c̵t̵i̵o̵n̵.̵c̵o̵m̵p̵_̵d̵e̵f̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [9122/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatSemigroupCompactness (13s)
+✔ [9130/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatGeneratorDomain (13s)
+✔ [9158/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.L2Compactness.ArzelaAscoli (18s)
+✔ [9159/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.TranslationEstimateH1 (15s)
+✔ [9160/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.L2Compactness.TranslationIntegral (13s)
+✔ [9161/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteNullFaceAction (10s)
+✔ [9229/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceClass (10s)
+⚠ [9230/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAdaptedOrthogonalSplitting (18s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusAdaptedOrthogonalSplitting.lean:56:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusAdaptedOrthogonalSplitting.tangentRangePoint_coe`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusAdaptedOrthogonalSplitting.lean:64:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusAdaptedOrthogonalSplitting.derivative_mem_tangentRange`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusAdaptedOrthogonalSplitting.lean:116:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusAdaptedOrthogonalSplitting.tangent_range_finrank`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9231/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.L2Compactness.Transfer (14s)
+✔ [9232/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceContinuity (10s)
+✔ [9233/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatFiniteMultiplicityNuclearTrace4D (10s)
+✔ [9234/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.L2Compactness.FrechetKolmogorov (11s)
+✔ [9235/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatNuclearTraceDerivative (9.7s)
+⚠ [9236/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatFiniteInternalSpaceNuclearTrace4D (11s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusCircleHeatFiniteInternalSpaceNuclearTrace4D.lean:40:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusCircleHeatFiniteInternalSpaceNuclearTrace4D.circleFiniteInternalHeat_apply`:
+  [Fintype Internal]
+  [DecidableEq Internal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype Internal] [DecidableEq Internal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusCircleHeatFiniteInternalSpaceNuclearTrace4D.lean:158:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusCircleHeatFiniteInternalSpaceNuclearTrace4D.circleFiniteInternalNuclearTrace_pt_eq_positive`:
+  [DecidableEq Internal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Internal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9237/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondFundamentalFormJet (19s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSecondFundamentalFormJet.lean:101:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSecondFundamentalFormJet.covariantSecondDerivative_sourceCoordinateChange`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSecondFundamentalFormJet.lean:139:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSecondFundamentalFormJet.covariantSecondDerivative_ambientCoordinateChange`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSecondFundamentalFormJet.lean:171:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSecondFundamentalFormJet.covariantSecondDerivative_isSymmetric`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9238/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatFiniteSectorFamilyNuclearTrace4D (12s)
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusCircleHeatFiniteSectorFamilyNuclearTrace4D.lean:58:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusCircleHeatFiniteSectorFamilyNuclearTrace4D.circleFiniteSectorFamilyHeat_apply`:
+  [Fintype Internal]
+  [DecidableEq Internal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype Internal] [DecidableEq Internal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusCircleHeatFiniteSectorFamilyNuclearTrace4D.lean:193:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusCircleHeatFiniteSectorFamilyNuclearTrace4D.circleFiniteSectorFamilyNuclearTrace_pt_eq`:
+  [DecidableEq Internal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq Internal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9239/9495] Built RellichKondrachov.Analysis.FunctionalSpaces.Sobolev.Euclidean.Rellich (20s)
+✔ [9267/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusGaussCodazziBianchiIdentities (17s)
+✔ [9268/9495] Built JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusCircleHeatFiniteSectorFamilyTraceRegularity4D (8.2s)
+⚠ [9276/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSecondFundamentalResidualEquivariance (23s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSecondFundamentalResidualEquivariance.lean:49:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSecondFundamentalResidualEquivariance.actOnSecondFundamentalTensor_one`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSecondFundamentalResidualEquivariance.lean:59:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSecondFundamentalResidualEquivariance.actOnSecondFundamentalTensor_mul`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSecondFundamentalResidualEquivariance.lean:71:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSecondFundamentalResidualEquivariance.actOnSecondFundamentalTensor_preserves_symmetry`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSecondFundamentalResidualEquivariance.lean:97:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSecondFundamentalResidualEquivariance.actOnAdaptedSplitJet_normalQuadratic`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9277/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRicciNormalEquation (16s)
+⚠ [9278/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothProjectorField (16s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSmoothProjectorField.lean:97:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSmoothProjectorField.tangentProjector_frame`:
+  [NormedAddCommGroup Base]
+  [NormedSpace ℝ Base]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup Base] [NormedSpace ℝ Base] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSmoothProjectorField.lean:118:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSmoothProjectorField.inner_tangent_normalProjector_eq_zero`:
+  [NormedAddCommGroup Base]
+  [NormedSpace ℝ Base]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup Base] [NormedSpace ℝ Base] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSmoothProjectorField.lean:134:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSmoothProjectorField.tangent_add_normal_projector`:
+  [NormedAddCommGroup Base]
+  [NormedSpace ℝ Base]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup Base] [NormedSpace ℝ Base] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSmoothProjectorField.lean:143:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSmoothProjectorField.tangentProjector_sub`:
+  [NormedAddCommGroup Base]
+  [NormedSpace ℝ Base]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup Base] [NormedSpace ℝ Base] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSmoothProjectorField.lean:155:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSmoothProjectorField.tangentProjector_idempotent`:
+  [NormedAddCommGroup Base]
+  [NormedSpace ℝ Base]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup Base] [NormedSpace ℝ Base] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9279/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperator (16s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperator.lean:58:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperator.pairedBilinearLinear_apply`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9280/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothAdaptedFrame (16s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSmoothAdaptedFrame.lean:122:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSmoothAdaptedFrame.varyingGramSchmidtNormed_orthonormal`:
+  [NormedAddCommGroup Base]
+  [NormedSpace ℝ Base]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup Base] [NormedSpace ℝ Base] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusSmoothAdaptedFrame.lean:208:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusSmoothAdaptedFrame.smoothNormalFrame_mem_projected_span`:
+  [NormedAddCommGroup Base]
+  [NormedSpace ℝ Base]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [NormedAddCommGroup Base] [NormedSpace ℝ Base] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9281/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorEquivariance (18s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorEquivariance.lean:24:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorEquivariance.FiniteSecondFundamentalForm.ext`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorEquivariance.lean:144:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorEquivariance.actOnFiniteSecondFundamentalForm_apply`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorEquivariance.lean:185:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorEquivariance.conjugateShapeOperator_apply`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9282/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMovingAdaptedFrameSecondJet (17s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusMovingAdaptedFrameSecondJet.lean:44:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusMovingAdaptedFrameSecondJet.transformedDerivative_apply`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusMovingAdaptedFrameSecondJet.lean:67:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusMovingAdaptedFrameSecondJet.frameDerivativeCorrection_isSymmetric`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusMovingAdaptedFrameSecondJet.lean:89:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusMovingAdaptedFrameSecondJet.movingFrameRawSecond_formula`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusMovingAdaptedFrameSecondJet.lean:118:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusMovingAdaptedFrameSecondJet.movingAmbientFrameChange_rawSecond`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusMovingAdaptedFrameSecondJet.lean:127:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusMovingAdaptedFrameSecondJet.movingAmbientFrameChange_ambientConnection`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusMovingAdaptedFrameSecondJet.lean:139:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusMovingAdaptedFrameSecondJet.covariantSecondDerivative_movingAmbientFrameChange`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusMovingAdaptedFrameSecondJet.lean:174:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusMovingAdaptedFrameSecondJet.movingAdaptedFrameChange_rawSecond_formula`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9283/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothDependence (21s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorSmoothDependence.lean:45:21: `ContinuousLinearMap.add_apply` has been deprecated: Use `add_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.add_apply` to `add_apply x`).
+✔ [9284/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusMovingNormalTransport (22s)
+⚠ [9285/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorMovingFrame (18s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorMovingFrame.lean:157:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorMovingFrame.conjugatedOperatorFamily_contDiff`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9286/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusAdaptedFrameOverlapCocycle (17s)
+✔ [9287/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorVariableOverlap (14s)
+✔ [9288/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFramePointwiseTransition (18s)
+⚠ [9289/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusDeterminantOrientedReduction (18s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusDeterminantOrientedReduction.lean:32:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusDeterminantOrientedReduction.orthogonalDeterminant_apply`:
+  [FiniteDimensional ℝ V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusDeterminantOrientedReduction.lean:39:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusDeterminantOrientedReduction.coe_orthogonalDeterminant_ne_zero`:
+  [FiniteDimensional ℝ V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusDeterminantOrientedReduction.lean:50:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusDeterminantOrientedReduction.mem_specialOrthogonalSubgroup_iff`:
+  [FiniteDimensional ℝ V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusDeterminantOrientedReduction.lean:100:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusDeterminantOrientedReduction.mem_orientedResidualSubgroup_iff`:
+  [FiniteDimensional ℝ TangentModel]
+  [FiniteDimensional ℝ NormalModel]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ TangentModel] [FiniteDimensional ℝ NormalModel] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusDeterminantOrientedReduction.lean:112:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusDeterminantOrientedReduction.orientationPredicate_iff_mem_orientedResidualSubgroup`:
+  [FiniteDimensional ℝ TangentModel]
+  [FiniteDimensional ℝ NormalModel]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ TangentModel] [FiniteDimensional ℝ NormalModel] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusDeterminantOrientedReduction.lean:123:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusDeterminantOrientedReduction.determinantOrientedTransition_cocycle`:
+  [FiniteDimensional ℝ TangentModel]
+  [FiniteDimensional ℝ NormalModel]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ TangentModel] [FiniteDimensional ℝ NormalModel] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusDeterminantOrientedReduction.lean:138:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusDeterminantOrientedReduction.determinantOrientedTransition_reverse`:
+  [FiniteDimensional ℝ TangentModel]
+  [FiniteDimensional ℝ NormalModel]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ TangentModel] [FiniteDimensional ℝ NormalModel] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusDeterminantOrientedReduction.lean:151:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusDeterminantOrientedReduction.orientedResidualSubgroup_carrier`:
+  [FiniteDimensional ℝ TangentModel]
+  [FiniteDimensional ℝ NormalModel]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ TangentModel] [FiniteDimensional ℝ NormalModel] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9290/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorBundleDescent (19s)
+⚠ [9291/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorOpenMovingFrame (21s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorOpenMovingFrame.lean:64:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorOpenMovingFrame.conjugatedOperatorFamilyOn_contDiffOn`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9292/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCentralLiftCocycleObstruction (18s)
+⚠ [9293/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusNormalFrameSmoothTransition (21s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusNormalFrameSmoothTransition.lean:71:4: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusNormalFrameSmoothTransition.lean:146:4: 'change
+  ContDiff ℝ ∞
+    (fun base =>
+      (normalFrameTransition (first.frame base) (second.frame base)
+          (hRange base)).toContinuousLinearEquiv.toContinuousLinearMap)' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusNormalFrameSmoothTransition.lean:161:4: 'change
+  ContDiff ℝ ∞
+    (fun base =>
+      ((normalFrameTransition (first.frame base) (second.frame base)
+            (hRange base)).symm).toContinuousLinearEquiv.toContinuousLinearMap)' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+✔ [9294/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorLocalRegularityDescent (16s)
+✔ [9295/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSpinCDiagonalDefectCancellation (17s)
+⚠ [9296/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorOpenCanonicalTransition (18s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorOpenCanonicalTransition.lean:100:23: This simp argument is unused:
+  ↓reduceIte
+
+Hint: Omit it from the simp argument list.
+  simp only [hValid, ↓̵r̵e̵d̵u̵c̵e̵I̵t̵e̵,̵ ̵openAdjointTransitionCLM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorOpenCanonicalTransition.lean:110:23: This simp argument is unused:
+  ↓reduceIte
+
+Hint: Omit it from the simp argument list.
+  simp only [hValid, ↓̵r̵e̵d̵u̵c̵e̵I̵t̵e̵,̵ ̵openAdjointTransitionCLM]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+✔ [9297/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorOpenDomainDescent (17s)
+✔ [9298/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorMetricAtlasInterface (18s)
+✔ [9299/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusDeterminantSquareRootDefect (15s)
+✔ [9300/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorOpenMetricAtlas (17s)
+⚠ [9301/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedAtlas (17s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedAtlas.lean:48:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedAtlas.projectedSeedChartValid_isOpen`:
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9302/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCirclePhaseTwoTorsion (13s)
+⚠ [9303/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover (19s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover.lean:56:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorPointwiseNormalBasisCover.tangentProjector_normalBasisAt_center`:
+  [Fintype κ]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype κ] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9304/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedOpenAtlas (20s)
+✔ [9305/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSpin2CircleModel (18s)
+⚠ [9306/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedFramePackaging (20s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedFramePackaging.lean:56:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedFramePackaging.synthesizedIsometryValue_toContinuousLinearMap`:
+  [FiniteDimensional ℝ Model]
+  [Fintype κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Model] [Fintype κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedFramePackaging.lean:120:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedFramePackaging.projectedSeedSynthesisCLM_basis`:
+  [Fintype κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9307/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorPointwiseBasisOpenDescent (14s)
+✔ [9308/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedSynthesisSmoothness (18s)
+✔ [9309/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCircleSO2Equivalence (18s)
+⚠ [9310/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedOpenInstantiation (17s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedOpenInstantiation.lean:55:20: Variable name `center` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedOpenInstantiation.lean:90:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedOpenInstantiation.ProjectedSeedOpenRieszInstantiationData.localOperator_realizes`:
+  [Fintype κ]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype κ] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedOpenInstantiation.lean:107:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedOpenInstantiation.ProjectedSeedOpenRieszInstantiationData.localOperator_contDiffOn`:
+  [Fintype κ]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype κ] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9311/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCliffordSpin2Bridge (14s)
+⚠ [9312/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedPhysicalRangeBridge (17s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedPhysicalRangeBridge.lean:68:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedPhysicalRangeBridge.projectedSeedFrame_range_eq_physicalFrame`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9313/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusCliffordSpin2DoubleCover (17s)
+⚠ [9314/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange (18s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange.lean:49:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange.projectedSeedNormalSpan_eq_projectedNormalFamilySpan`:
+  [FiniteDimensional ℝ Ambient]
+  [Fintype κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] [Fintype κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange.lean:69:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange.projectedSeedNormalSpan_le_tangentFrameSpan_orthogonal`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange.lean:91:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange.tangentFrameSpan_finrank`:
+  [FiniteDimensional ℝ Ambient]
+  [Fintype κ]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  Ambient] [Fintype κ] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange.lean:100:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedOrthogonalRange.projectedSeedNormalSpan_finrank`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9315/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair (14s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair.lean:56:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair.tangentFrameSynthesisCLM_basis`:
+  [FiniteDimensional ℝ Ambient]
+  [Fintype ι]
+  [Fintype κ]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  Ambient] [Fintype ι] [Fintype κ] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair.lean:74:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair.tangentFrameSynthesisCLM_eq_sum`:
+  [FiniteDimensional ℝ Ambient]
+  [Fintype κ]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  Ambient] [Fintype κ] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorProjectedSeedAdaptedFramePair.lean:355:5: Variable name `hClosed` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+✔ [9316/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorCanonicalProjectedSeedAssembly (13s)
+⚠ [9317/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation (13s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation.lean:118:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorGlobalCoefficientInstantiation.GlobalRieszCoefficientData.physicalOperator_contDiff_direct`:
+  [FiniteDimensional ℝ Ambient]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9318/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase (16s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorSmoothReducedJetBase.lean:68:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase.reducedSecondFundamentalProjection_apply`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorSmoothReducedJetBase.lean:76:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase.reducedGaugeCurvatureProjection_apply`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorSmoothReducedJetBase.lean:166:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorSmoothReducedJetBase.SmoothReducedJetRieszFamilyData.secondFundamental_contDiff`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+  [FiniteDimensional ℝ Ambient]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  Tangent] [FiniteDimensional ℝ
+  Normal] [FiniteDimensional ℝ Ambient] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9319/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction (16s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.lean:91:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.continuousDerivativeFlip_apply`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.lean:112:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.continuousCurvatureFromDerivative_contDiff`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.lean:132:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.smoothLowOrderReduction_secondFundamental`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.lean:138:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.smoothLowOrderReduction_curvature_apply`:
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.lean:145:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusRieszShapeOperatorContinuousStructuredJetReduction.smoothLowOrderReduction_contDiff`:
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9320/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusActualStructuredJetExtraction (14s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusActualStructuredJetExtraction.lean:53:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusActualStructuredJetExtraction.ActualJanusLocalJetData.toStructuredJet_tangentialQuadratic`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusActualStructuredJetExtraction.lean:60:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusActualStructuredJetExtraction.ActualJanusLocalJetData.toStructuredJet_normalQuadratic`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusActualStructuredJetExtraction.lean:67:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusActualStructuredJetExtraction.ActualJanusLocalJetData.toStructuredJet_connectionDerivative`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusActualStructuredJetExtraction.lean:73:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusActualStructuredJetExtraction.ActualJanusLocalJetData.toStructuredJet_isGeometric`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusActualStructuredJetExtraction.lean:89:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusActualStructuredJetExtraction.ActualJanusLocalJetData.toReducedJet_secondFundamental`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusActualStructuredJetExtraction.lean:137:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusActualStructuredJetExtraction.ActualJanusLocalJetFamilyData.structuredJet_contDiff`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9322/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusConnectionCorrectedActualJetBridge (13s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusConnectionCorrectedActualJetBridge.lean:75:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusConnectionCorrectedActualJetBridge.ConnectionCorrectedActualJanusLocalJetData.covariantSecondDerivative_apply`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusConnectionCorrectedActualJetBridge.lean:85:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusConnectionCorrectedActualJetBridge.ConnectionCorrectedActualJanusLocalJetData.normalQuadratic_eq_secondFundamentalForm`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusConnectionCorrectedActualJetBridge.lean:96:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusConnectionCorrectedActualJetBridge.ConnectionCorrectedActualJanusLocalJetData.normalQuadratic_symmetric`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9323/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalSpaceTrivialization (14s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedNormalSpaceTrivialization.lean:209:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedNormalSpaceTrivialization.transportContinuousSecondFundamentalForm_apply`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+  [FiniteDimensional ℝ NormalSource]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] [FiniteDimensional ℝ NormalSource] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9324/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedSmoothCoefficientTransport (19s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedSmoothCoefficientTransport.lean:115:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedSmoothCoefficientTransport.sourceConnectionAmbientCorrection_apply`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedSmoothCoefficientTransport.lean:123:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedSmoothCoefficientTransport.sourceConnectionAmbientCorrection_contDiffOn`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedSmoothCoefficientTransport.lean:151:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedSmoothCoefficientTransport.projectedSeedAmbientCovariantSecondDerivative_apply`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedSmoothCoefficientTransport.lean:202:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedSmoothCoefficientTransport.projectedSeedFixedNormalQuadratic_apply`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedSmoothCoefficientTransport.lean:211:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedSmoothCoefficientTransport.projectedSeedFixedNormalQuadratic_contDiffOn`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Normal]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Normal] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedSmoothCoefficientTransport.lean:287:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedSmoothCoefficientTransport.ProjectedSeedSmoothAmbientJetFamilyOn.correctedAmbientSecondDerivative_contDiffOn`:
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedSmoothCoefficientTransport.lean:334:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedSmoothCoefficientTransport.ProjectedSeedSmoothAmbientJetFamilyOn.physicalNormal_contDiffOn`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9325/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedNormalCoefficientOverlap (13s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedNormalCoefficientOverlap.lean:109:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedNormalCoefficientOverlap.frameNormalQuadratic_transition_apply`:
+  [FiniteDimensional ℝ Tangent]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9326/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedAmbientJetDescent (16s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusProjectedSeedAmbientJetDescent.lean:178:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusProjectedSeedAmbientJetDescent.ProjectedSeedGlobalAmbientJetData.chart_corrected_eq_global`:
+  [FiniteDimensional ℝ Normal]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Normal] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+✔ [9327/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusProjectedSeedAmbientJetSmoothDescent (12s)
+⚠ [9328/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanImmersionConnectionJetExtraction (15s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusEuclideanImmersionConnectionJetExtraction.lean:69:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusEuclideanImmersionConnectionJetExtraction.EuclideanImmersionConnectionJetData.firstDerivative_contDiff`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusEuclideanImmersionConnectionJetExtraction.lean:98:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusEuclideanImmersionConnectionJetExtraction.EuclideanImmersionConnectionJetData.connectionDerivative_contDiff`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusEuclideanImmersionConnectionJetExtraction.lean:106:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusEuclideanImmersionConnectionJetExtraction.EuclideanImmersionConnectionJetData.rawSecond_symmetric`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusEuclideanImmersionConnectionJetExtraction.lean:207:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusEuclideanImmersionConnectionJetExtraction.EuclideanProjectedSeedImmersionData.correctedAmbientSecondDerivative_apply`:
+  [FiniteDimensional ℝ Normal]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Normal] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9329/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanMetricKoszulConnection (18s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusEuclideanMetricKoszulConnection.lean:149:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusEuclideanMetricKoszulConnection.pullbackAmbientConnection_apply`:
+  [FiniteDimensional ℝ Tangent]
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Tangent] [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusEuclideanMetricKoszulConnection.lean:161:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusEuclideanMetricKoszulConnection.pullbackAmbientConnection_contDiff`:
+  [FiniteDimensional ℝ Ambient]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Ambient] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9330/9495] Built JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusEuclideanGlobalSpinCJetRealization (13s)
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusEuclideanGlobalSpinCJetRealization.lean:97:5: Variable name `data` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: JanusFormal/Branches/FundamentalGeometryPEJetUniversality/Gates/P0EFTJanusEuclideanGlobalSpinCJetRealization.lean:115:0: automatically included section variable(s) unused in theorem `JanusFormal.P0EFTJanusEuclideanGlobalSpinCJetRealization.EuclideanMetricProjectedSeedImmersionData.immersion_contMDiff`:
+  [FiniteDimensional ℝ Normal]
+  [LinearOrder κ]
+  [LocallyFiniteOrderBot κ]
+  [WellFoundedLT κ]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ Normal] [LinearOrder κ] [LocallyFiniteOrderBot κ] [WellFoundedLT κ] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Some required targets logged failures:
+- JanusFormal.Branches.FundamentalGeometryD8TopologyRepresentation.Gates.P0EFTJanusNormalLineClutching
+- JanusFormal.Branches.FundamentalGeometryD.Gates.P0EFTJanusReflectionFixedThroat
+- JanusFormal.Branches.NonlinearBimetricJunctionAlpha.Gates.P0EFTJanusReciprocalBimetricPotential
+- JanusFormal.Branches.FundamentalGeometryD9ImmersedSpinCEllipticComplex.Gates.P0EFTJanusImmersionFiberAlgebra
+- JanusFormal.Branches.FundamentalGeometryPEJetUniversality.Gates.P0EFTJanusSmoothNotPolynomial
+- JanusFormal.Branches.FundamentalGeometryD10QuillenAnomaly.Gates.P0EFTJanusAnomalyTransgressionInflow
+error: build failed

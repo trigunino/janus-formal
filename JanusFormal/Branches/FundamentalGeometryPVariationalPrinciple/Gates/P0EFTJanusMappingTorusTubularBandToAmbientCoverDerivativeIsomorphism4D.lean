@@ -34,7 +34,7 @@ local instance quotientChartedSpace :
     ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
   reflectedSphereQuotientChartedSpace period hPeriod
 
-private def openSubtypePartialDiffeomorph
+def openSubtypePartialDiffeomorph
     {E H M : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
     [TopologicalSpace H] [TopologicalSpace M] [ChartedSpace H M]
     (I : ModelWithCorners Real E H) (U : TopologicalSpace.Opens M) (base : U) :
@@ -52,7 +52,7 @@ private def openSubtypePartialDiffeomorph
         exact U.2.isOpenEmbedding_subtypeVal.toOpenPartialHomeomorph_right_inv
           Subtype.val hTarget }
 
-private def partialDiffeomorphProd
+def partialDiffeomorphProd
     {E H M E' H' M' F G N F' G' N' : Type*}
     [NormedAddCommGroup E] [NormedSpace Real E] [TopologicalSpace H]
     [TopologicalSpace M] [ChartedSpace H M]

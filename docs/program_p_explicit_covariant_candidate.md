@@ -1036,34 +1036,45 @@ to cover general symmetric D9 metric perturbations is proved. Finite D10
 product modes are literal truncations with the same mapping-torus period,
 exact PT pairing and heat-regulator cancellation. A smooth section of the true
 D8 normal line supplies the D9 normal slot in a valid local chart, with
-one-loop transition `-1 = Z4²`; no canonical global scalar normal coordinate
-is inferred. The `Z4` factors now come from actual global root lines. The
-diffeomorphism ghost, SpinC identification, general metric sector and
-action--Hessian--mode--boundary-domain agreement remain explicit inputs.
+one-loop transition `-1 = Z4²`. The intrinsic latitude normal lift and its
+tangent-trivialization coordinates are now `C∞`; the absence of a single
+untwisted global scalar coordinate is the expected topology of the normal
+line, not a regularity gap. The `Z4` factors come from actual global root lines,
+and Program P constructs the ambient PinC principal/spinor bundles and D9
+spinor sections/connections. Every signed sphere/Fourier label now has a
+genuine smooth eigensection; exact multiplicities, orthogonality and
+Fourier--monopole completeness produce the global geometric unitary. Its
+orientation-correct Hessian-label refinement intertwines the true smooth
+`2D+m²` core with the maximal self-adjoint Fredholm multiplier. The general
+metric family, nine-block diffeomorphism symmetry and
+action--Hessian--boundary-domain agreement for the non-SpinC blocks remain
+explicit inputs for the complete variation/Hessian, not for the regular
+finite action assembly now constructed.
 
-The existing global LL action now has an exact simultaneous measure/flux
-cubic expansion and integrated derivative for every finite measure. Its
-pointwise Euler system is equivalent to the zero-flux branch. Since the
-action, variation, Euler data and stationarity are exactly PT covariant for
-PT-invariant measures. Since the auxiliary LL metric has zero response in this
-selected action, a differential
-LL PDE still requires a richer action.
+The algebraic global LL action has an exact simultaneous measure/flux cubic
+expansion and integrated derivative for every finite measure; its pointwise
+Euler system is equivalent to the zero-flux branch and is exactly PT
+covariant. A separate differential PT-symmetric LL functional now has genuine
+weak/strong equations, canonical-frame global integration by parts, Hessian,
+Jacobi and Fredholm realizations. The global boundary package and regular
+Candidate-A action now include this LL term; the actual chartwise Euler is
+closed, while its componentwise local PDE and the coupled Hessian remain open.
 
 ## Six-lock checkpoint
 
 | Lock | Implemented now | Remaining rejection test |
 | --- | --- | --- |
 | 1. Cross densities | explicit reciprocal pair, one common interaction, spectral Frechet data, actual metric-inverse/relative-product derivatives, first Frechet derivative of the co-diagonal root, coordinate off-diagonal boost orbit still conjugate to its diagonal seed, an independent non-diagonalizable Lorentz Jordan family, a continuous three-parameter two-dimensional Cayley--Hamilton root chart with an explicit bijective Sylvester inverse, an unconditional relative-root branch on an explicit open IFT target domain with continuity, exact square, chart-source uniqueness and pointwise Sylvester invertibility/differentiability everywhere, exact identification with the global principal root on their open nonempty diagonal overlap, complete Candidate-A determinant/root/potential variation throughout that domain and on its PT-paired exchanged intersection, conditional gluing along any supplied continuous Sylvester-regular four-dimensional root lift, genuine Frechet derivative of the full co-diagonal Candidate-A density through the Sylvester inverse, and exact finite-frame density weight | extension to a unique global causal-compatible four-dimensional general Lorentz domain and global functional variation there |
-| 2. Fields/induced/gauge | compact effective D8 quotients; smooth/L²/graph-`H¹` fields and norm-one throat-supported trace; populated independent/induced package and exact variation chain; global scalar `p=d phi`; intrinsic abelian `U(1)^2` connection one-forms with `A+dλ`, diffeomorphism covariance and nilpotent BRST bridged to both ghosts; diagonal diffeomorphism action; LL worldvolume action with exact PT covariance; null domain `Theta ≠ 0`; integrated scalar stress/holonomic variations and finite periodic Euler models | intrinsic Sobolev/physical-volume trace, general tensor metrics, diffeomorphism/nonabelian/BV BRST, stationarity/stability, physical boundary flux, covariant matter PDE/stress conservation and density law |
-| 3. Bulk/boundary/worldvolume | typed ledger, exact inverse-compatible GHY curve, Gaussian-normal EH cancellation, finite-box Stokes, null/joint transgression, global finite-measure LL action/variation, zero-flux algebraic branch and exact PT covariance | arbitrary-coordinate variable-field continuum flux, physical EH/GHY/null/joint completion, differential/metric-dependent LL PDE and full stratum integration |
-| 4. Concrete `K/J` | Euclidean and explicit Minkowski Gram `K/J`, source/ambient naturality, exact infinitesimal gauge kernels, finite principal-symbol kernels, Gram--Saint-Venant exactness at every nonzero 4D frequency, coefficientwise exactness for finite nonzero Fourier families, and unique normalized decomposition with a finite zero-mode cohomology residual | boundary analysis, infinite-series convergence, and the global Lorentzian Janus compatibility differential/PDE complex |
-| 5. Euler/Helmholtz/Noether | actual spectral-plus-matter Euler/Hessian/Helmholtz, independent metric-coupled scalar first-jet variation, pointwise 4D determinant/inverse-constrained scalar stress variation, integrated one/two-sector stress variation under an explicit dominated-differentiation contract and exchange invariance, continuous flat-chart holonomic scalar first variation and simultaneous metric/holonomic split integrated under an explicit contract, pointwise flat scalar Euler-plus-flux-divergence decomposition and integrated weak Euler identity under explicit integrability/zero-flux assumptions, finite periodic holonomic scalar Euler equation and positive-metric `sqrt(g)`/inverse variation, finite-frame density identities, flat linearized Einstein Bianchi/gauge symbol, reduced signed-charge/Newtonian bridge, reduced Legendre/Dirac chain, finite-site ultralocal primary bracket/localization, nonlinear canonical second-jet Jacobi, PT-flat vacuum no-go and dust-supported witnesses | nonlinear curved Candidate-A metric/matter PDEs, discharge of domination and derivation of zero flux from physical boundary conditions, nonlinear Bianchi/stress conservation, covariant signed charge, dust reduction, actual constraint second jets and continuum ADM closure |
-| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup whose maximal strong generator domain is exactly the iterated `D²` domain and which has a summable rank-one nuclear expansion at positive time, compact D7 level blocks, convergent physical `Z4` determinants, order-four Euler--Maclaurin remainder control and unconditional spectral/universal `a0/a2/a4` small-time matching | physical quotient stability, PPN, covariant counterterms, abstract `D^2` functional calculus/general trace-class API, full Janus Dirac/Fredholm/Quillen family, local/global anomalies and microscopic normalization/finite-part law |
+| 2. Fields/induced/gauge | one intrinsic global configuration/tangent now contains both general metrics, doubled SpinC matter, `U(1)^2`, ghosts, auxiliaries, LL and D9/D10; its finite-product `H¹`, continuous trace, closed Dirichlet kernel and common SpinC/D10/LL domain are constructed | normed atlas covering every raw tangent, nonlinear diffeomorphism/BV BRST, componentwise stress conservation and variable metric/gauge-coupled Dirac family |
+| 3. Bulk/boundary/worldvolume | EH/GHY cancellation, physical throat, finite null faces/counterterms/joints, LL weak/strong equations, one regular global action and its actual chartwise Euler | arbitrary ambient null stratification, componentwise local Euler PDE and Hessian/Fredholm realization of that same action |
+| 4. Concrete `K/J` | actual quotient `K_Gram`, `DK_Gram`, `R`, abelian `B_Noether`; genuine Levi-Civita curvature `K_SV`, covariant `B_Bianchi` and `B∘K=0` over the total physical atlas; faithful physical gauge `L²` differential with exact `H⁰ ≃ ℝ²`, quotient and closed completion, plus the paired global gauge package and common Dirichlet domain; complete `ℤ⁴` Fourier–Sobolev Saint–Venant complex retained separately as a symbol certificate | no residual in the stated K/J scope; curved linearized Calabi exactness and Fredholm realization belong to the Hessian block |
+| 5. Euler/Helmholtz/Noether | the exact nine-block Candidate-A action has its actual Euler derivative on every regular common `C²` chart, symmetric Euler Jacobian, exact normalized radial reconstruction and uniqueness up to constants; arbitrary paired smooth `U(1)²` ghosts give constant Maxwell gauge orbits and combine with the intrinsic curved Bianchi identity; global functional null actions, the finite natural-basis kernel and boundary ambiguities are classified | raw-field normed atlas, componentwise nonlinear metric/matter Euler PDEs, local diffeomorphism Noether/BRST-BV, full horizontal jet variational bicomplex, covariant stress/charge, actual constraint second jets and continuum ADM/Hessian closure |
+| 6. Stability/scheme | spectral indefiniteness, source-mode precursor, constrained dust tangent audit, scheme-freedom no-go, finite/countable heat traces, explicit circle Fourier Gaussian summability/cutoff/PT cancellation, a dense closed unbounded self-adjoint circle Dirac operator, a basiswise `D^2`-to-trace bridge, a contractive diagonal heat semigroup whose maximal strong generator domain is exactly the iterated `D²` domain and which has a summable rank-one nuclear expansion at positive time, compact D7 level blocks, convergent physical `Z4` determinants, order-four Euler--Maclaurin remainder control and unconditional spectral/universal `a0/a2/a4` small-time matching; complete signed geometric SpinC tower, Fourier--monopole unitary and exact smooth `2D+m²` core identification with a maximal self-adjoint Fredholm operator | physical quotient stability, PPN, covariant counterterms, variable-background Dirac/Hessian family, general trace-class API, full Janus Quillen family, local/global anomalies and microscopic normalization/finite-part law |
 
-Current-scope refinement: lock 1 also closes causal compatibility, the exact
-spectral frontier and global-field functional variation on the selected
-diagonal D8 domain; lock 2 closes the fixed-frame global scalar action and the
-conditional graph-`H¹` trace construction; lock 5 closes its fixed-metric
-scalar first variation. References above to missing Sobolev/tensor fields or a
-global functional variation now mean the intrinsic general-tensor extension,
-not these proved diagonal/conditional sectors.
+Current-scope refinement: lock 1 closes causal compatibility on its stated
+regular root domain; locks 2 and 3 include the intrinsic common field domain,
+boundary completion and regular finite action assembly. Lock 4 is closed on
+the physical covariant and paired `U(1)²` complexes; its `ℤ⁴` realization is
+only the separate symbol certificate. Lock 5 is closed at the chartwise
+functional level stated above; local component PDE/BV/bicomplex and the
+physical Hessian remain stronger targets.

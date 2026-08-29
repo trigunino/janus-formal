@@ -70,7 +70,7 @@ theorem reducedBosonicSmoothAction_reconstructed_from_naturalFredholmDiagonal
     (scalar : StaticGlobalScalarTest period hPeriod scalarData)
     (junction : SmoothThroatField period hPeriod Real) :
     reducedBosonicSmoothAction period hPeriod scalarData kPlus kMinus bulkPlus
-        bulkMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        bulkMinus robinMeasure llData.frame
         llData.mu scalar.toField junction llData.fields =
       robinJunctionAction period hPeriod kPlus kMinus bulkPlus bulkMinus
           (0 : SmoothThroatField period hPeriod Real) robinMeasure +
@@ -90,7 +90,7 @@ theorem reducedBosonicSmoothAction_reconstructed_from_naturalFredholmDiagonal
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   rw [reducedBosonicSmoothAction_reconstructed_from_euler_and_actualHessian
     period hPeriod scalarData kPlus kMinus bulkPlus bulkMinus robinMeasure
-    (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu scalar.toField
+    llData.frame llData.mu scalar.toField
     junction llData.fields]
   rw [reducedBosonicNaturalHessian_smooth_eq_assembledActionMixedHessian
     period hPeriod scalarData kPlus kMinus robinMeasure llData scalar.toField

@@ -1,0 +1,51 @@
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1512:4: warning: This simp argument is unused:
+  WithLp.toLp_fst
+
+Hint: Omit it from the simp argument list.
+  simp only [globalCandidateAFullLLCrossU,
+  ̵  ̵ ̵ ̵globalCandidateAFullLLCrossV, WithLp.prod_inner_apply,
+      WithLp.toLp_f̵st̵,̵ ̵W̵i̵t̵h̵L̵p̵.̵t̵o̵L̵p̵_̵s̵nd]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1512:21: warning: This simp argument is unused:
+  WithLp.toLp_snd
+
+Hint: Omit it from the simp argument list.
+  simp only [globalCandidateAFullLLCrossU,
+  ̵  ̵ ̵ ̵globalCandidateAFullLLCrossV, WithLp.prod_inner_apply,
+      WithLp.toLp_fst,̵ ̵W̵i̵t̵h̵L̵p̵.̵t̵o̵L̵p̵_̵s̵n̵d̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1891:6: error: Application type mismatch: The argument
+  ContinuousLinearMap.id ℝ ↥(GlobalFullLLGraphHilbert period hPeriod data analysis)
+has type
+  @ContinuousLinearMap ℝ ℝ Real.semiring Real.semiring (RingHom.id ℝ)
+    (↥(GlobalFullLLGraphHilbert period hPeriod data analysis)) instTopologicalSpaceSubtype
+    (GlobalFullLLGraphHilbert period hPeriod data analysis).addCommMonoid
+    (↥(GlobalFullLLGraphHilbert period hPeriod data analysis)) instTopologicalSpaceSubtype
+    (GlobalFullLLGraphHilbert period hPeriod data analysis).addCommMonoid
+    (GlobalFullLLGraphHilbert period hPeriod data analysis).module
+    (GlobalFullLLGraphHilbert period hPeriod data analysis).module
+but is expected to have type
+  @ContinuousLinearMap ℝ ?m.80 Field.toSemifield.toDivisionSemiring.toSemiring
+    Field.toSemifield.toDivisionSemiring.toSemiring ?m.116 (↥(GlobalFullLLGraphHilbert period hPeriod data analysis))
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace
+    (GlobalFullLLGraphHilbert period hPeriod data analysis).seminormedAddCommGroup.toAddCommMonoid ?m.83
+    PseudoMetricSpace.toUniformSpace.toTopologicalSpace SeminormedAddCommGroup.toAddCommGroup.toAddCommMonoid
+    (globalFullLLGraphInnerProductSpace period hPeriod data analysis).toModule NormedSpace.toModule
+in the application
+  ContinuousLinearMap.bilinearComp ?m.123 ?m.130
+    (ContinuousLinearMap.id ℝ ↥(GlobalFullLLGraphHilbert period hPeriod data analysis))
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:1907:2: error: 'change' tactic failed, pattern
+  inner ℝ ((globalCandidateAFullLLGraphRieszOperator period hPeriod data analysis) first) second = ?m.46
+is not definitionally equal to target
+  ((globalCandidateAFullLLGraphForm period hPeriod data analysis) first) second =
+    globalCandidateAFullLLContinuousHessian period hPeriod data analysis first second
+JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/P0EFTJanusProgramPGlobalFullLLGraphRiesz4D.lean:2037:4: error: Application type mismatch: The argument
+  ContDiff.clm_apply (ContinuousLinearMap.contDiff ?m.59) contDiff_id
+has type
+  ContDiff ?m.74 ?m.79 fun x => (?m.59 x) (id x)
+but is expected to have type
+  ContDiff ℝ ω fun state => ((globalCandidateAFullLLGraphForm period hPeriod data analysis) state) state
+in the application
+  ContDiff.mul contDiff_const (ContDiff.clm_apply (ContinuousLinearMap.contDiff ?m.59) contDiff_id)

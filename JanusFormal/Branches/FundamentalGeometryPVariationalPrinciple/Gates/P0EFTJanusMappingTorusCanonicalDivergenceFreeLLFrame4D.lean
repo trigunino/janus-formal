@@ -184,6 +184,56 @@ theorem standardSphereRotation_continuous (axis : Fin 3) (angle : Real) :
   ((euclideanRotationLinearIsometryEquiv axis angle).continuous.comp
     continuous_subtype_val).subtype_mk _
 
+theorem standardSphereJointRotation_continuous (axis : Fin 3) :
+    Continuous (fun input : Real × StandardSphere =>
+      standardSphereRotation axis input.1 input.2) := by
+  apply Continuous.subtype_mk
+  change Continuous (fun input : Real × StandardSphere =>
+    euclideanRotation axis input.1 input.2.1)
+  apply (EuclideanSpace.equiv (Fin 3) Real).symm.continuous.comp
+  apply continuous_pi
+  intro coordinate
+  fin_cases axis <;> fin_cases coordinate <;>
+    fun_prop
+
+@[simp]
+theorem standardSphereRotation_zero
+    (axis : Fin 3) (point : StandardSphere) :
+    standardSphereRotation axis 0 point = point := by
+  apply Subtype.ext
+  change euclideanRotation axis 0 point.1 = point.1
+  apply (EuclideanSpace.equiv (Fin 3) Real).injective
+  funext coordinate
+  fin_cases axis <;> fin_cases coordinate <;>
+    simp [euclideanRotation]
+
+theorem standardSphereRotation_add
+    (axis : Fin 3) (first second : Real) (point : StandardSphere) :
+    standardSphereRotation axis (first + second) point =
+      standardSphereRotation axis first
+        (standardSphereRotation axis second point) := by
+  apply Subtype.ext
+  exact euclideanRotation_angle_add axis first second point.1
+
+private def standardSphereRotationHomeomorph
+    (axis : Fin 3) (angle : Real) :
+    StandardSphere ≃ₜ StandardSphere where
+  toFun := standardSphereRotation axis angle
+  invFun := standardSphereRotation axis (-angle)
+  left_inv point := by
+    rw [← standardSphereRotation_add]
+    simp
+  right_inv point := by
+    rw [← standardSphereRotation_add]
+    simp
+  continuous_toFun := standardSphereRotation_continuous axis angle
+  continuous_invFun := standardSphereRotation_continuous axis (-angle)
+
+theorem standardSphereRotation_measurableEmbedding
+    (axis : Fin 3) (angle : Real) :
+    MeasurableEmbedding (standardSphereRotation axis angle) :=
+  (standardSphereRotationHomeomorph axis angle).measurableEmbedding
+
 private theorem standardSphereRotation_cone_preimage
     (axis : Fin 3) (angle : Real) (s : Set StandardSphere) :
     (euclideanRotationLinearIsometryEquiv axis angle) ⁻¹'
@@ -824,13 +874,13 @@ private theorem throatCoverTimeTranslationCurve_contMDiff
   exact ((throatCoverJointTimeTranslation_contMDiff period hPeriod).comp
     (contMDiff_id.prodMk contMDiff_const)).congr (fun _ => rfl)
 
-private def throatCoverTimeTranslationValue
+def throatCoverTimeTranslationValue
     (point : EffectiveThroatCover period hPeriod) :
     TangentSpace throatCoverModelWithCorners point :=
   mfderiv 𝓘(Real, Real) throatCoverModelWithCorners
     (throatCoverTimeTranslationCurve period hPeriod point) 0 1
 
-private theorem throatProjection_mfderiv_time
+theorem throatProjection_mfderiv_time
     (point : EffectiveThroatCover period hPeriod) :
     mfderiv throatCoverModelWithCorners throatCoverModelWithCorners
         (mappingTorusMk (throatData period hPeriod)) point
@@ -866,7 +916,7 @@ private theorem throatProjection_mfderiv_time
           (mappingTorusMk (throatData period hPeriod) point)) 0 1 := by
       congr 2
 
-private theorem throatCoverRadialMap_mfderiv_time
+theorem throatCoverRadialMap_mfderiv_time
     (point : EffectiveThroatCover period hPeriod) :
     mfderiv throatCoverModelWithCorners 𝓘(Real, EuclideanR3)
         (throatCoverRadialMap period hPeriod) point
@@ -914,7 +964,7 @@ private theorem throatCoverRadialMap_mfderiv_time
       rw [hMap, mfderiv_eq_fderiv]
       exact hDerivative.deriv
 
-private def canonicalRotationVelocity
+def canonicalRotationVelocity
     (axis : Fin 3) (point : EuclideanR3) : EuclideanR3 :=
   (EuclideanSpace.equiv (Fin 3) Real).symm <|
     match axis with
@@ -925,7 +975,17 @@ private def canonicalRotationVelocity
     | 2 => ![-(EuclideanSpace.equiv (Fin 3) Real point) 1,
         (EuclideanSpace.equiv (Fin 3) Real point) 0, 0]
 
-private theorem canonicalRotationVelocity_smul
+theorem canonicalRotationVelocity_add
+    (axis : Fin 3) (first second : EuclideanR3) :
+    canonicalRotationVelocity axis (first + second) =
+      canonicalRotationVelocity axis first +
+        canonicalRotationVelocity axis second := by
+  apply (EuclideanSpace.equiv (Fin 3) Real).injective
+  funext index
+  fin_cases axis <;> fin_cases index <;>
+    simp [canonicalRotationVelocity] <;> abel
+
+theorem canonicalRotationVelocity_smul
     (axis : Fin 3) (scalar : Real) (point : EuclideanR3) :
     canonicalRotationVelocity axis (scalar • point) =
       scalar • canonicalRotationVelocity axis point := by
@@ -933,6 +993,20 @@ private theorem canonicalRotationVelocity_smul
   funext index
   fin_cases axis <;> fin_cases index <;>
     simp [canonicalRotationVelocity]
+
+noncomputable def canonicalRotationVelocityCLM
+    (axis : Fin 3) : EuclideanR3 →L[Real] EuclideanR3 :=
+  LinearMap.toContinuousLinearMap
+    { toFun := canonicalRotationVelocity axis
+      map_add' := canonicalRotationVelocity_add axis
+      map_smul' := canonicalRotationVelocity_smul axis }
+
+@[simp]
+theorem canonicalRotationVelocityCLM_apply
+    (axis : Fin 3) (point : EuclideanR3) :
+    canonicalRotationVelocityCLM axis point =
+      canonicalRotationVelocity axis point :=
+  rfl
 
 private theorem euclideanRotation_hasDerivAt_zero
     (axis : Fin 3) (point : EuclideanR3) :
@@ -1002,6 +1076,46 @@ private theorem euclideanRotation_hasDerivAt_zero
     · simpa [euclideanRotation, canonicalRotationVelocity] using
         (hasDerivAt_const (x := (0 : Real))
           (c := (EuclideanSpace.equiv (Fin 3) Real point) 2))
+
+theorem standardSphereRotation_coe_hasDerivAt
+    (axis : Fin 3) (point : StandardSphere) (parameter : Real) :
+    HasDerivAt
+      (fun angle : Real =>
+        (standardSphereRotation axis angle point : EuclideanR3))
+      (canonicalRotationVelocity axis
+        (standardSphereRotation axis parameter point : EuclideanR3))
+      parameter := by
+  change HasDerivAt
+    (fun angle : Real => euclideanRotation axis angle point.1)
+    (canonicalRotationVelocity axis
+      (euclideanRotation axis parameter point.1)) parameter
+  have hShift :
+      HasDerivAt (fun angle : Real => angle - parameter) 1 parameter := by
+    simpa using (hasDerivAt_id parameter).sub_const parameter
+  have hOuter : HasDerivAt
+      (fun angle : Real =>
+        euclideanRotation axis angle
+          (euclideanRotation axis parameter point.1))
+      (canonicalRotationVelocity axis
+        (euclideanRotation axis parameter point.1))
+      (parameter - parameter) := by
+    simpa using euclideanRotation_hasDerivAt_zero axis
+      (euclideanRotation axis parameter point.1)
+  have hDerivative : HasDerivAt
+      (fun angle : Real =>
+        euclideanRotation axis (angle - parameter)
+          (euclideanRotation axis parameter point.1))
+      (canonicalRotationVelocity axis
+        (euclideanRotation axis parameter point.1)) parameter :=
+    by
+      simpa [Function.comp_def] using
+        hOuter.scomp (h := fun angle : Real => angle - parameter)
+          parameter hShift
+  apply hDerivative.congr_of_eventuallyEq
+  filter_upwards with angle
+  rw [← euclideanRotation_angle_add]
+  congr 2
+  ring
 
 private theorem equatorial_rotation_to_euclidean
     (axis : Fin 3) (angle : Real) (point : EquatorialTwoSphere) :
@@ -1122,7 +1236,7 @@ private theorem throatCoverSpatialRotationValue_eq_canonicalCurve_mfderiv
   exact throatCoverSpatialRotationValue_eq_curve_mfderiv
     period hPeriod axis point
 
-private theorem throatCoverRadialMap_mfderiv_rotation
+theorem throatCoverRadialMap_mfderiv_rotation
     (axis : Fin 3) (point : EffectiveThroatCover period hPeriod) :
     mfderiv throatCoverModelWithCorners 𝓘(Real, EuclideanR3)
         (throatCoverRadialMap period hPeriod) point
@@ -1278,14 +1392,14 @@ private theorem canonicalThroatProjectionDerivativeEquiv_coe
     (fixedThroat_projection_isLocalDiffeomorph period hPeriod)
       (by simp) point
 
-private def canonicalThroatRadialDerivativeEquiv
+def canonicalThroatRadialDerivativeEquiv
     (point : EffectiveThroatCover period hPeriod) :
     TangentSpace throatCoverModelWithCorners point ≃L[Real] EuclideanR3 :=
   (throatCoverRadialMap_isLocalDiffeomorph period hPeriod)
     |>.mfderivToContinuousLinearEquiv (by simp) point
 
 @[simp]
-private theorem canonicalThroatRadialDerivativeEquiv_coe
+theorem canonicalThroatRadialDerivativeEquiv_coe
     (point : EffectiveThroatCover period hPeriod) :
     (canonicalThroatRadialDerivativeEquiv period hPeriod point :
       TangentSpace throatCoverModelWithCorners point →L[Real] EuclideanR3) =
@@ -1397,6 +1511,38 @@ private theorem smoothThroatField_hasDerivAt_along_curve_zero
   convert hDeriv using 1
   simp only [ContinuousLinearMap.comp_apply]
   rfl
+
+/-- Chain rule at angle zero for any smooth field on the genuine throat along
+one of the three canonical spatial-rotation flows.  This is a composition
+result for `field ∘ rotation`; it does not differentiate tensor pullback
+factors. -/
+theorem smoothThroatField_spatialRotation_hasDerivAt_zero
+    {Fiber : Type*} [NormedAddCommGroup Fiber] [NormedSpace Real Fiber]
+    [ContinuousSMul Real Fiber]
+    (field : SmoothThroatField period hPeriod Fiber)
+    (axis : Fin 3) (point : EffectiveThroat period hPeriod) :
+    HasDerivAt
+      (fun angle =>
+        field (throatSpatialRotationFlow period hPeriod axis angle point))
+      (mvfderiv throatCoverModelWithCorners field.toFun point
+        (throatSpatialRotationGhost period hPeriod axis point)) 0 := by
+  have h := smoothThroatField_hasDerivAt_along_curve_zero
+    period hPeriod field
+      (throatSpatialRotationCurve period hPeriod axis point)
+      (throatSpatialRotationCurve_contMDiff period hPeriod axis point)
+  have hCurveZero :
+      throatSpatialRotationCurve period hPeriod axis point 0 = point :=
+    throatSpatialRotationFlow_zero period hPeriod axis point
+  have hVelocity := throatSpatialRotationGhost_eq_curve_mfderiv
+    period hPeriod axis point
+  rw [hCurveZero] at h
+  rw [hCurveZero] at hVelocity
+  rw [← hVelocity] at h
+  change HasDerivAt
+    (fun angle =>
+      field (throatSpatialRotationFlow period hPeriod axis angle point))
+    _ 0 at h
+  exact h
 
 private def canonicalThroatGeneratorAt
     (point : EffectiveThroat period hPeriod) :
@@ -1584,23 +1730,8 @@ private theorem smoothThroatField_rotationFlow_hasDerivAt_zero
       (Fin.castSucc axis) = _
     exact canonicalThroatGeneratorAt_castSucc period hPeriod point axis
   rw [hVector]
-  have h := smoothThroatField_hasDerivAt_along_curve_zero
-    period hPeriod field
-      (throatSpatialRotationCurve period hPeriod axis point)
-      (throatSpatialRotationCurve_contMDiff period hPeriod axis point)
-  have hCurveZero :
-      throatSpatialRotationCurve period hPeriod axis point 0 = point :=
-    throatSpatialRotationFlow_zero period hPeriod axis point
-  have hVelocity := throatSpatialRotationGhost_eq_curve_mfderiv
-    period hPeriod axis point
-  rw [hCurveZero] at h
-  rw [hCurveZero] at hVelocity
-  rw [← hVelocity] at h
-  change HasDerivAt
-    (fun parameter => field
-      (throatSpatialRotationFlow period hPeriod axis parameter point))
-    _ 0 at h
-  exact h
+  exact smoothThroatField_spatialRotation_hasDerivAt_zero
+    period hPeriod field axis point
 
 private theorem smoothThroatField_timeFlow_hasDerivAt
     (field : SmoothThroatField period hPeriod LLFieldFiber)
@@ -1662,7 +1793,8 @@ private theorem smoothThroatField_rotationFlow_hasDerivAt
   exact (hComp.congr_of_eventuallyEq hEventually).congr_deriv
     (one_smul Real _)
 
-private theorem canonicalTimeGenerator_integral_inner_derivative_eq_neg
+/-- Integration by parts for the genuine quotient-time generator. -/
+theorem canonicalTimeGenerator_integral_inner_derivative_eq_neg
     (first second : SmoothThroatField period hPeriod LLFieldFiber) :
     (∫ point, inner Real (first point)
       (throatFrameDerivative period hPeriod LLFieldFiber
@@ -1705,7 +1837,8 @@ private theorem canonicalTimeGenerator_integral_inner_derivative_eq_neg
   · exact smoothThroatField_timeFlow_hasDerivAt period hPeriod first
   · exact smoothThroatField_timeFlow_hasDerivAt period hPeriod second
 
-private theorem canonicalRotationGenerator_integral_inner_derivative_eq_neg
+/-- Integration by parts for each genuine round-sphere rotation generator. -/
+theorem canonicalRotationGenerator_integral_inner_derivative_eq_neg
     (axis : Fin 3)
     (first second : SmoothThroatField period hPeriod LLFieldFiber) :
     (∫ point, inner Real (first point)
@@ -1752,7 +1885,9 @@ private theorem canonicalRotationGenerator_integral_inner_derivative_eq_neg
   · exact smoothThroatField_rotationFlow_hasDerivAt
       period hPeriod second axis
 
-private theorem canonicalGenerator_integral_inner_derivative_eq_neg
+/-- Integration by parts for every member of the canonical divergence-free
+time-plus-rotations frame. -/
+theorem canonicalGenerator_integral_inner_derivative_eq_neg
     (index : Fin 4)
     (first second : SmoothThroatField period hPeriod LLFieldFiber) :
     (∫ point, inner Real (first point)
@@ -1769,6 +1904,24 @@ private theorem canonicalGenerator_integral_inner_derivative_eq_neg
       period hPeriod first second
   · exact canonicalRotationGenerator_integral_inner_derivative_eq_neg
       period hPeriod axis first second
+
+/-- Skew-adjoint form of canonical-frame integration by parts on the
+coefficient-valued throat fields. -/
+theorem canonicalGenerator_integral_inner_derivative_add_eq_zero
+    (index : Fin 4)
+    (first second : SmoothThroatField period hPeriod LLFieldFiber) :
+    (∫ point, inner Real
+        (throatFrameDerivative period hPeriod LLFieldFiber
+          (canonicalDivergenceFreeLLFrame period hPeriod) first point index)
+        (second point)
+      ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) +
+      ∫ point, inner Real (first point)
+        (throatFrameDerivative period hPeriod LLFieldFiber
+          (canonicalDivergenceFreeLLFrame period hPeriod) second point index)
+        ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod) = 0 := by
+  rw [canonicalGenerator_integral_inner_derivative_eq_neg
+    period hPeriod index first second]
+  ring
 
 /-- Raw global integration by parts for the canonical divergence-free frame. -/
 theorem canonicalDivergenceFreeLLFrame_rawGlobalIPP

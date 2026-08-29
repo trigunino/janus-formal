@@ -63,7 +63,7 @@ theorem representativeEulerCurve_hasDerivAt_reducedJacobi_pairing_on_robinLL
     (llFirst llSecond : LLH1Smooth period hPeriod llData) :
     HasDerivAt
       (representativeEulerCurve period hPeriod matterData kPlus kMinus bulkPlus bulkMinus
-        robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu matter junction
+        robinMeasure llData.frame llData.mu matter junction
         llData.fields (fullRobinLLDirection period hPeriod robinFirst llFirst.toTest)
         (fullRobinLLDirection period hPeriod robinSecond llSecond.toTest))
       (reducedBosonicNaturalHessian period hPeriod scalarData kPlus kMinus robinMeasure llData
@@ -75,7 +75,7 @@ theorem representativeEulerCurve_hasDerivAt_reducedJacobi_pairing_on_robinLL
           llH1SmoothEmbedding period hPeriod llData llSecond)) 0 := by
   have h := representativeEulerCurve_hasDerivAt_enrichedD9ActiveHessian
     period hPeriod matterData kPlus kMinus bulkPlus bulkMinus robinMeasure
-    (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu matter junction llData.fields
+    llData.frame llData.mu matter junction llData.fields
     sector column point (fullRobinLLDirection period hPeriod robinFirst llFirst.toTest)
     (fullRobinLLDirection period hPeriod robinSecond llSecond.toTest)
   rw [enrichedD9_robinLL_Hessian_eq_reducedJacobi_pairing period hPeriod matterData scalarData

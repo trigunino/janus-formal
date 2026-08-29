@@ -1,5 +1,7 @@
 # Program P.E — Lemma 2: Naturality implies finite-jet equivariance
 
+> Analytic Lemma 1: [`program_pe_lemma1_locality_finite_jet.md`](program_pe_lemma1_locality_finite_jet.md)
+
 ## Status
 
 This document records the precise statement used by Program P.E-J. It separates:

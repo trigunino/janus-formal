@@ -135,6 +135,20 @@ theorem intrinsicThroatInverseMusical_apply_musical
         (intrinsicThroatMusical period hPeriod point vector) = vector :=
   (intrinsicThroatMusical period hPeriod point).symm_apply_apply vector
 
+/-- Contracting the intrinsic metric with a raised covector recovers that
+covector, with the metric argument order used by finite-frame matrices. -/
+theorem intrinsicThroatMetric_apply_inverseMusical
+    (point : EffectiveThroat period hPeriod)
+    (vector : ThroatTangentFiber period hPeriod point)
+    (covector : ThroatCotangentFiber period hPeriod point) :
+    (intrinsicSmoothNondegenerateThroatMetric period hPeriod).1.tensor point
+        vector (intrinsicThroatInverseMusical period hPeriod point covector) =
+      covector vector := by
+  rw [(intrinsicSmoothNondegenerateThroatMetric
+    period hPeriod).1.symmetric point]
+  rw [← intrinsicThroatMusical_apply,
+    intrinsicThroatMusical_inverse_apply]
+
 /-- The intrinsic throat metric is pointwise invariant under the true throat
 PT differential. -/
 theorem intrinsicThroatMetric_pt_natural
@@ -291,12 +305,126 @@ def intrinsicThroatTensorPairingAt
     ((raisedIntrinsicThroatTensorAt period hPeriod first point).toLinearMap *
       (raisedIntrinsicThroatTensorAt period hPeriod second point).toLinearMap)
 
+/-- Pairing with a symmetrized metric rank-one tensor reads the original
+tensor on its two generating vectors.  The value hypothesis keeps this
+fiberwise lemma independent of any particular smooth assembly. -/
+theorem intrinsicThroatTensorPairingAt_symmetricMetricRankOne
+    (tensor rankOne :
+      SmoothSymmetricThroatCovariantTwoTensor period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (first second : ThroatTangentFiber period hPeriod point)
+    (hRankOne : ∀ left right,
+      rankOne.tensor point left right =
+        (1 / 2 : Real) *
+            ((intrinsicSmoothNondegenerateThroatMetric
+              period hPeriod).1.tensor point first left *
+              (intrinsicSmoothNondegenerateThroatMetric
+                period hPeriod).1.tensor point second right) +
+          (1 / 2 : Real) *
+            ((intrinsicSmoothNondegenerateThroatMetric
+              period hPeriod).1.tensor point second left *
+              (intrinsicSmoothNondegenerateThroatMetric
+                period hPeriod).1.tensor point first right)) :
+    intrinsicThroatTensorPairingAt
+        period hPeriod tensor rankOne point =
+      tensor.tensor point first second := by
+  have hMusicalSymmetric :
+      ∀ left right : ThroatTangentFiber period hPeriod point,
+        intrinsicThroatMusical period hPeriod point left right =
+          intrinsicThroatMusical period hPeriod point right left := by
+    intro left right
+    rw [intrinsicThroatMusical_apply, intrinsicThroatMusical_apply]
+    exact
+      (intrinsicSmoothNondegenerateThroatMetric
+        period hPeriod).1.symmetric point left right
+  have hRaised :
+      raisedIntrinsicThroatTensorAt period hPeriod rankOne point =
+        (1 / 2 : Real) •
+            (intrinsicThroatMusical period hPeriod point first).smulRight second +
+          (1 / 2 : Real) •
+            (intrinsicThroatMusical period hPeriod point second).smulRight first := by
+    apply ContinuousLinearMap.ext
+    intro left
+    apply (intrinsicThroatMusical period hPeriod point).injective
+    apply ContinuousLinearMap.ext
+    intro right
+    simp only [raisedIntrinsicThroatTensorAt,
+      ContinuousLinearMap.comp_apply, map_add, map_smul,
+      add_apply, smul_apply,
+      ContinuousLinearMap.smulRight_apply, smul_eq_mul]
+    calc
+      intrinsicThroatMusical period hPeriod point
+          (intrinsicThroatInverseMusical period hPeriod point
+            (rankOne.tensor point left)) right =
+          rankOne.tensor point left right :=
+        DFunLike.congr_fun
+          (intrinsicThroatMusical_inverse_apply period hPeriod point
+            (rankOne.tensor point left)) right
+      _ = _ := by
+        rw [hRankOne,
+          intrinsicThroatMusical_apply, intrinsicThroatMusical_apply]
+  unfold intrinsicThroatTensorPairingAt
+  rw [hRaised]
+  simp [mul_add, map_add, map_smul]
+  have hTrace :
+      ∀ (left right : ThroatTangentFiber period hPeriod point),
+        LinearMap.trace Real (ThroatTangentFiber period hPeriod point)
+          ((raisedIntrinsicThroatTensorAt
+              period hPeriod tensor point).toLinearMap *
+            (intrinsicThroatMusical period hPeriod point left).toLinearMap.smulRight
+              right) =
+          tensor.tensor point right left := by
+    intro left right
+    have hComposition :
+        (raisedIntrinsicThroatTensorAt
+            period hPeriod tensor point).toLinearMap *
+            (intrinsicThroatMusical period hPeriod point left).toLinearMap.smulRight
+              right =
+          (intrinsicThroatMusical period hPeriod point left).toLinearMap.smulRight
+            (intrinsicThroatInverseMusical period hPeriod point
+              (tensor.tensor point right)) := by
+      apply LinearMap.ext
+      intro vector
+      simp [raisedIntrinsicThroatTensorAt]
+    rw [hComposition, LinearMap.trace_smulRight]
+    calc
+      intrinsicThroatMusical period hPeriod point left
+          (intrinsicThroatInverseMusical period hPeriod point
+            (tensor.tensor point right)) =
+        intrinsicThroatMusical period hPeriod point
+          (intrinsicThroatInverseMusical period hPeriod point
+            (tensor.tensor point right)) left :=
+        hMusicalSymmetric left _
+      _ = tensor.tensor point right left :=
+        DFunLike.congr_fun
+          (intrinsicThroatMusical_inverse_apply
+            period hPeriod point (tensor.tensor point right)) left
+  rw [← intrinsicThroatMusical_apply period hPeriod point first,
+    ← intrinsicThroatMusical_apply period hPeriod point second]
+  rw [hTrace first second, hTrace second first, tensor.symmetric point second first]
+  ring
+
 theorem intrinsicThroatTensorPairingAt_symmetric
     (first second : SmoothSymmetricThroatCovariantTwoTensor period hPeriod)
     (point : EffectiveThroat period hPeriod) :
     intrinsicThroatTensorPairingAt period hPeriod first second point =
       intrinsicThroatTensorPairingAt period hPeriod second first point := by
   exact LinearMap.trace_mul_comm Real _ _
+
+theorem intrinsicThroatTensorPairingAt_congr_right_at
+    (first second third :
+      SmoothSymmetricThroatCovariantTwoTensor period hPeriod)
+    (point : EffectiveThroat period hPeriod)
+    (hValue : second.tensor point = third.tensor point) :
+    intrinsicThroatTensorPairingAt period hPeriod first second point =
+      intrinsicThroatTensorPairingAt period hPeriod first third point := by
+  have hRaised :
+      raisedIntrinsicThroatTensorAt period hPeriod second point =
+        raisedIntrinsicThroatTensorAt period hPeriod third point := by
+    unfold raisedIntrinsicThroatTensorAt
+    rw [hValue]
+  unfold intrinsicThroatTensorPairingAt
+  rw [hRaised]
 
 theorem intrinsicThroatTensorPairingAt_add_left
     (first second third : SmoothSymmetricThroatCovariantTwoTensor period hPeriod)

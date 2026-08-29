@@ -52,6 +52,15 @@ theorem normalBundleBaseSet_isOpen (anchor : ThroatCover period hPeriod) :
     IsOpen (normalBundleBaseSet period hPeriod anchor) :=
   ((throatProjectionLocalHomeomorph period hPeriod).localInverseAt anchor).open_source
 
+/-- The quotient of an anchor belongs to the bundle chart based at that
+anchor. -/
+theorem mappingTorusMk_mem_normalBundleBaseSet
+    (anchor : ThroatCover period hPeriod) :
+    mappingTorusMk (fixedEquatorData period hPeriod) anchor ∈
+      normalBundleBaseSet period hPeriod anchor :=
+  (throatProjectionLocalHomeomorph period hPeriod)
+    |>.apply_self_mem_localInverseAt_source
+
 /-- A preferred lift supplies a bundle chart at every quotient point. -/
 def normalBundleIndexAt (base : ThroatBase period hPeriod) :
     ThroatCover period hPeriod :=

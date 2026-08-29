@@ -65,6 +65,9 @@ structure SmoothHolonomicFrameChart4 where
   coordinateMap_contMDiff :
     ContMDiff (modelWithCornersSelf Real Vector4) coverModelWithCorners ∞
       coordinateMap
+  coordinateMap_isLocalDiffeomorph :
+    IsLocalDiffeomorph (modelWithCornersSelf Real Vector4)
+      coverModelWithCorners ∞ coordinateMap
   frame : ∀ coordinate,
     Basis Index4 Real (TangentFiber period hPeriod (coordinateMap coordinate))
   frame_eq_coordinateDerivative : ∀ coordinate index,

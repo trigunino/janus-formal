@@ -46,7 +46,7 @@ theorem reducedJacobi_kernel_annihilates_enrichedD9_robinLL_observations
         llH1SmoothEmbedding period hPeriod llData llFirst) = 0) :
     ∀ (robinSecond : SmoothThroatField period hPeriod Real) (llSecond : LLH1Smooth period hPeriod llData),
       enrichedD9ActiveHessian period hPeriod matterData kPlus kMinus robinMeasure
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         (globalMatterEnrichedD9Projection period hPeriod llData.fields
           (fullRobinLLDirection period hPeriod robinFirst llFirst.toTest) sector column point)
         (globalMatterEnrichedD9Projection period hPeriod llData.fields

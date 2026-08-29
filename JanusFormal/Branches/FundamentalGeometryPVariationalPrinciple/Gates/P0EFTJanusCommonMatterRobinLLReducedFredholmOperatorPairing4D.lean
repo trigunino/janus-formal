@@ -106,7 +106,7 @@ theorem reducedBosonicJacobiOperator_pairing_eq_commonMatterRobinLLHessian
         (reducedRobinLLInclusion period hPeriod scalarData robinMeasure
           llData robinSecond llSecond) =
       commonMatterRobinLLHessian period hPeriod matterData kPlus kMinus
-        robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        robinMeasure llData.frame
         llData.mu llData.fields
         (commonRobinLLDirection period hPeriod robinFirst llFirst.toTest)
         (commonRobinLLDirection period hPeriod robinSecond llSecond.toTest) := by

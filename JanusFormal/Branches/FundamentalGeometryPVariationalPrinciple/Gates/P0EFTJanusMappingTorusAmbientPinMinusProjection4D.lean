@@ -647,7 +647,7 @@ theorem ambientPinMinusReferenceZ4Character_intCast (winding : Int) :
     ambientPinMinusReferenceZ4Character 3 =
         ambientPinMinusReferenceZ4Character (2 + 1) := by
       exact congrArg ambientPinMinusReferenceZ4Character
-        (by native_decide : (3 : ZMod 4) = 2 + 1)
+        (by decide : (3 : ZMod 4) = 2 + 1)
     _ = ambientPinMinusReferenceZ4Character 2 *
         ambientPinMinusReferenceZ4Character 1 :=
       ambientPinMinusReferenceZ4Character.map_add_eq_mul 2 1

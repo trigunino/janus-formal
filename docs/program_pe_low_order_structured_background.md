@@ -24,8 +24,10 @@ B  = normal quadratic immersion tensor,
 F  = abelian curvature two-form.
 ```
 
-This document records the exact theorem now formalized and separates it from the
-remaining smooth SpinC geometry.
+This document records the exact theorem now formalized and separates it from
+the remaining SpinC structured-jet reduction. Concrete global PinC/spinor
+bundles now exist in the Program-P facade; their integration into this
+low-order jet quotient remains open.
 
 ## 1. Concrete second-order chain rule
 

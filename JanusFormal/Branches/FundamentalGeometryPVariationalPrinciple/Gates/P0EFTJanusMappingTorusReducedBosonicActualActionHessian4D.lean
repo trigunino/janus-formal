@@ -337,7 +337,7 @@ theorem reducedBosonicNaturalHessian_smooth_eq_actualScalarActionHessian
         robinHessian period hPeriod kPlus kMinus robinFirst robinSecond
           robinMeasure +
         globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+          llData.frame llData.fields
           llFirst.toTest llSecond.toTest llData.mu := by
   rw [reducedBosonicNaturalHessian_smooth_eq period hPeriod scalarData
     kPlus kMinus robinMeasure llData scalarFirst scalarSecond robinFirst
@@ -374,7 +374,7 @@ theorem reducedBosonicNaturalHessian_smooth_eq_actualActionHessians
         robinJunctionActionMixedHessian period hPeriod kPlus kMinus bulkPlus
           bulkMinus junction robinFirst robinSecond robinMeasure +
         globalPTSymmetricDifferentialLLActionMixedHessian period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+          llData.frame llData.fields
           llFirst.toTest llSecond.toTest llData.mu := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
   rw [reducedBosonicNaturalHessian_smooth_eq_actualScalarActionHessian period
@@ -383,7 +383,7 @@ theorem reducedBosonicNaturalHessian_smooth_eq_actualActionHessians
   rw [robinJunctionActionMixedHessian_eq_robinHessian period hPeriod kPlus
     kMinus bulkPlus bulkMinus junction robinFirst robinSecond robinMeasure]
   rw [globalPTSymmetricDifferentialLLActionMixedHessian_eq_fluxHessian period
-    hPeriod (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+    hPeriod llData.frame llData.fields
     llFirst.toTest llSecond.toTest llData.mu]
 
 /-- The completed reduced Fredholm pairing, restricted to its smooth dense
@@ -411,7 +411,7 @@ theorem reducedBosonicNaturalHessian_smooth_eq_assembledActionMixedHessian
           llH1SmoothEmbedding period hPeriod llData llSecond) =
       reducedBosonicSmoothActionMixedHessian period hPeriod scalarData kPlus
         kMinus bulkPlus bulkMinus robinMeasure
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu scalarBase
+        llData.frame llData.mu scalarBase
         scalarFirst.toField scalarSecond.toField junction robinFirst robinSecond
         llData.fields llFirst.toTest llSecond.toTest := by
   letI : IsFiniteMeasure llData.mu := llData.finiteMeasure
@@ -420,7 +420,7 @@ theorem reducedBosonicNaturalHessian_smooth_eq_assembledActionMixedHessian
     robinSecond llFirst llSecond]
   rw [reducedBosonicSmoothActionMixedHessian_eq period hPeriod scalarData
     kPlus kMinus bulkPlus bulkMinus robinMeasure
-    (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu scalarBase
+    llData.frame llData.mu scalarBase
     scalarFirst.toField scalarSecond.toField junction robinFirst robinSecond
     llData.fields llFirst.toTest llSecond.toTest]
   rw [weakGlobalHolonomicScalarJacobiOperator_apply]

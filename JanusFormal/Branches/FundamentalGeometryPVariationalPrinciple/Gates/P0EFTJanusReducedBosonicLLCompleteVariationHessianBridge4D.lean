@@ -113,7 +113,7 @@ theorem completeVariationLLHessian_eq_reducedBosonic_LL_block
     (llData : PositiveLLH1Data period hPeriod) [IsFiniteMeasure llData.mu]
     (first second : LLH1Smooth period hPeriod llData) :
     completeVariationLLHessian period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+        llData.frame llData.fields
         (reducedLLSmoothCompleteVariation period hPeriod llData first)
         (reducedLLSmoothCompleteVariation period hPeriod llData second) llData.mu =
       reducedBosonicNaturalHessian period hPeriod scalarData kPlus kMinus
@@ -126,14 +126,14 @@ theorem completeVariationLLHessian_eq_reducedBosonic_LL_block
           llH1SmoothEmbedding period hPeriod llData second) := by
   rw [reducedBosonicNaturalHessian_smooth_eq]
   change globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-      (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+      llData.frame llData.fields
       first.toTest second.toTest llData.mu =
     globalHolonomicScalarJacobiForm period hPeriod scalarData.formData
         (0 : StaticGlobalScalarTest period hPeriod scalarData).toField
         (0 : StaticGlobalScalarTest period hPeriod scalarData).toField +
       robinHessian period hPeriod kPlus kMinus 0 0 robinMeasure +
       globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+        llData.frame llData.fields
         first.toTest second.toTest llData.mu
   rw [staticScalarJacobiForm_zero_zero]
   have hRobin : robinHessian period hPeriod kPlus kMinus 0 0 robinMeasure = 0 := by
@@ -158,7 +158,7 @@ theorem completeVariationMatterLLHessian_eq_reducedBosonic_LL_block
     (llData : PositiveLLH1Data period hPeriod) [IsFiniteMeasure llData.mu]
     (first second : LLH1Smooth period hPeriod llData) :
     completeVariationMatterLLHessian period hPeriod matterData
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+        llData.frame llData.fields
         (reducedLLSmoothCompleteVariation period hPeriod llData first)
         (reducedLLSmoothCompleteVariation period hPeriod llData second) llData.mu =
       reducedBosonicNaturalHessian period hPeriod scalarData kPlus kMinus
@@ -188,7 +188,7 @@ theorem reducedBosonic_LL_pairing_is_completeAction_secondVariation
     HasDerivAt
       (fun parameter =>
         globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod)
+          llData.frame
           (independentFieldCurve period hPeriod llData.fields
             (reducedLLSmoothCompleteVariation period hPeriod llData first).independent
             parameter)
@@ -202,7 +202,7 @@ theorem reducedBosonic_LL_pairing_is_completeAction_secondVariation
           smoothThroatFieldToL2 period hPeriod robinMeasure 0,
           llH1SmoothEmbedding period hPeriod llData second)) 0 := by
   have h := completeVariationLLFirstVariation_llOnly_hasDerivAt period hPeriod
-    (finiteSmoothThroatGeneratingFrame period hPeriod) llData.fields
+    llData.frame llData.fields
     first.toTest second.toTest llData.mu
   rw [← completeVariationLLHessian_eq_reducedBosonic_LL_block
     period hPeriod scalarData kPlus kMinus robinMeasure llData first second]

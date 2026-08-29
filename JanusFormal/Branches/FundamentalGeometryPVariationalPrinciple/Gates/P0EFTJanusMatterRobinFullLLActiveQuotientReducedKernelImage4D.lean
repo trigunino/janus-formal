@@ -44,7 +44,7 @@ theorem reducedJacobi_kernel_annihilates_quotient_robinLL_image
         llH1SmoothEmbedding period hPeriod llData llFirst) = 0) :
     ∀ (robinSecond : SmoothThroatField period hPeriod Real) (llSecond : LLH1Smooth period hPeriod llData),
       P0EFTJanusMatterRobinFullLLActiveQuotientHessian4D.quotientHessian period hPeriod matterData
-        kPlus kMinus robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        kPlus kMinus robinMeasure llData.frame llData.mu llData.fields
         (robinLLActiveQuotientDirection period hPeriod robinFirst llFirst.toTest)
         (robinLLActiveQuotientDirection period hPeriod robinSecond llSecond.toTest) = 0 := by
   have hScalar := congrArg (fun value => value.1) hKernel

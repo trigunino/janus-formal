@@ -424,7 +424,7 @@ theorem robinCompleteHessian_reducedRobinLL_eq_fredholmPairing
     [IsFiniteMeasure llData.mu]
     (first second : ProgramPRobinCompleteVariation4D period hPeriod) :
     robinCompleteMatterTrueLLHessian period hPeriod matterData kPlus kMinus
-        robinMeasure (finiteSmoothThroatGeneratingFrame period hPeriod)
+        robinMeasure llData.frame
         llData.mu llData.fields
         (reducedRobinLLSector period hPeriod first)
         (reducedRobinLLSector period hPeriod second) =

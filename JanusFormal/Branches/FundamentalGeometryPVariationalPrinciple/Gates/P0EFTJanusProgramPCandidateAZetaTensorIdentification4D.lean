@@ -1,0 +1,12 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPCandidateAComplexFredholmSection4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPZetaTensorIdentification4D
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPCandidateAZetaTensorIdentification4D
+
+set_option autoImplicit false
+noncomputable section
+
+end
+end P0EFTJanusProgramPCandidateAZetaTensorIdentification4D
+end JanusFormal

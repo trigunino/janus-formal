@@ -2,6 +2,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusPTSymmetricLLH1FredholmOperator4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusD8NonabelianGhostSmoothThroatBVMaster4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusShiftedSobolevPhysicalQuotient
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBPreferredClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusMappingTorusScalarProgramPFullAnalyticArchitecture4D
 
 namespace JanusFormal.P0EFTJanusProgramPQuantumLLBridge
 
@@ -16,6 +18,7 @@ open P0EFTJanusMappingTorusD8NonabelianGhostSmoothThroatBVMaster4D
 open P0EFTJanusShiftedSobolevLatticeLorentzGram
 open P0EFTJanusShiftedSobolevPullbackHessian
 open P0EFTJanusShiftedSobolevPhysicalQuotient
+open P0EFTJanusMappingTorusCanonicalPhysicalScalarProgramPBPreferredClosure4D
 
 noncomputable section
 
@@ -57,6 +60,50 @@ theorem program_p_shifted_sobolev_quotient_packet
     ⟨_, _, hEquivalence, hNondegenerate⟩
   exact ⟨hEquivalence, hNondegenerate⟩
 
+/-- Program P now derives the measured Green--Stokes identity on its actual
+physical boundary-tangent domain, rather than assuming an external Stokes
+axiom. -/
+def program_p_boundary_tangent_measured_green_stokes_certificate :=
+  canonicalPhysicalScalarProgramPBPreferredBoundaryTangentMeasuredGreenStokes_certificate
+
+/-- The corresponding metric Green--Stokes certificate is also unconditional
+on the physical on-shell domain. -/
+def program_p_boundary_tangent_metric_green_stokes_certificate :=
+  canonicalPhysicalScalarProgramPBPreferredBoundaryTangentMetricGreenStokes_certificate
+
+/-- The full scalar spectral/determinant architecture is importable. Its
+physical LL use still requires the explicit elliptic/coercive closure data. -/
+theorem program_p_conditional_scalar_spectral_architecture_available : True :=
+  P0EFTJanusMappingTorusScalarProgramPFullAnalyticArchitecture4D.scalarProgramPFullAnalyticArchitecture_available
+
+/-- Exact obligations that separate the physical Lorentzian LL Hessian from
+P's auxiliary elliptic compact-resolvent realization. -/
+structure ProgramPLLPhysicalEllipticInstantiationStatus where
+  llHessianMatchedToScalarRealization : Prop
+  graphEllipticEstimateDerived : Prop
+  sixBoundaryL2ResidualOperatorsDerived : Prop
+  shiftedCoercivityDerived : Prop
+  finiteCoordinateRellichDerived : Prop
+
+def programPLLPhysicalEllipticInstantiationClosed
+    (s : ProgramPLLPhysicalEllipticInstantiationStatus) : Prop :=
+  s.llHessianMatchedToScalarRealization ∧
+  s.graphEllipticEstimateDerived ∧
+  s.sixBoundaryL2ResidualOperatorsDerived ∧
+  s.shiftedCoercivityDerived ∧
+  s.finiteCoordinateRellichDerived
+
+theorem program_p_spectral_instantiation_iff_exact_obligations
+    (hessianMatch graphEstimate boundaryOperators coercivity rellich : Prop) :
+    programPLLPhysicalEllipticInstantiationClosed {
+      llHessianMatchedToScalarRealization := hessianMatch
+      graphEllipticEstimateDerived := graphEstimate
+      sixBoundaryL2ResidualOperatorsDerived := boundaryOperators
+      shiftedCoercivityDerived := coercivity
+      finiteCoordinateRellichDerived := rellich } ↔
+      hessianMatch ∧ graphEstimate ∧ boundaryOperators ∧ coercivity ∧ rellich := by
+  rfl
+
 structure ProgramPToAQuantumLLStatus where
   globalLLActionImported : Prop
   ptVariationImported : Prop
@@ -64,6 +111,8 @@ structure ProgramPToAQuantumLLStatus where
   energyHilbertFredholmPacketImported : Prop
   smoothUltralocalBVMasterImported : Prop
   periodicShiftedSobolevQuotientImported : Prop
+  physicalOnShellGreenStokesImported : Prop
+  conditionalScalarSpectralArchitectureImported : Prop
   physicalSobolevComparisonDerived : Prop
   compactResolventOrPrimedDeterminantDerived : Prop
   perturbativeGaugeFermionFixed : Prop
@@ -75,7 +124,9 @@ def programPBridgeAvailable (s : ProgramPToAQuantumLLStatus) : Prop :=
   s.hessianImported ∧
   s.energyHilbertFredholmPacketImported ∧
   s.smoothUltralocalBVMasterImported ∧
-  s.periodicShiftedSobolevQuotientImported
+  s.periodicShiftedSobolevQuotientImported ∧
+  s.physicalOnShellGreenStokesImported ∧
+  s.conditionalScalarSpectralArchitectureImported
 
 def physicalQuantumLLClosed (s : ProgramPToAQuantumLLStatus) : Prop :=
   programPBridgeAvailable s ∧
@@ -97,6 +148,8 @@ def importedProgramPStatus
   energyHilbertFredholmPacketImported := True
   smoothUltralocalBVMasterImported := True
   periodicShiftedSobolevQuotientImported := True
+  physicalOnShellGreenStokesImported := True
+  conditionalScalarSpectralArchitectureImported := True
   physicalSobolevComparisonDerived := physicalSobolevComparisonDerived
   compactResolventOrPrimedDeterminantDerived :=
     compactResolventOrPrimedDeterminantDerived

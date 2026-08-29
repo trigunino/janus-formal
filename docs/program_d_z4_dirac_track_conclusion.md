@@ -157,7 +157,11 @@ fermionic Z4
   -> A=L.
 ```
 
-Its next stage is no longer additional algebra. It is the analytic construction
-of the global SpinC/Pin Dirac operator, its complete spectrum, zeta determinant
-and eta invariant. Even if that stage succeeds, a separate quantum or
-gravitational law is still required to fix `L` in physical units.
+Its next stage is no longer bundle-existence or fixed-background spectral
+completion: Program P constructs the global PinC/spinor geometry, every signed
+smooth Dirac level, exact multiplicities and orthogonality, the
+Fourier--monopole unitary and the exact smooth `2D+m²` Hessian-core
+intertwining with a maximal self-adjoint Fredholm multiplier. The remaining
+analytic stage is the variable metric/gauge-coupled family, then the zeta
+determinant and eta invariant. Even if that stage succeeds, a separate quantum
+or gravitational law is still required to fix `L` in physical units.

@@ -1,0 +1,220 @@
+import Mathlib.Analysis.InnerProductSpace.PiL2
+import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+
+/-!
+# Finite families from a nondegenerate Gram operator
+
+For a finite family `v_i` in a real inner-product space, the coefficient
+synthesis map is
+
+`S(c) = sum_i c_i v_i`.
+
+Its Gram operator is the finite-dimensional endomorphism
+
+`G(c)_j = <S(c), v_j>`.
+
+Injectivity of `G` forces injectivity of `S`.  If the ambient finite dimension
+is the number of indices, `S` is then bijective and canonically produces a
+basis.  This is the finite criterion used for the projected physical zero-mode
+family.
+-/
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPFiniteFamilyGramBasis4D
+
+set_option autoImplicit false
+noncomputable section
+
+open scoped BigOperators InnerProductSpace
+
+variable {Index E : Type*}
+
+section Synthesis
+
+variable
+  [Fintype Index] [DecidableEq Index]
+  [AddCommMonoid E] [Module Real E]
+
+/-- Synthesis from finite real coefficients. -/
+def finiteFamilySynthesis (vectors : Index → E) :
+    (Index → Real) →ₗ[Real] E where
+  toFun := fun coefficient => ∑ index, coefficient index • vectors index
+  map_add' := by
+    intro first second
+    simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib]
+  map_smul' := by
+    intro scalar coefficient
+    simp only [Pi.smul_apply, RingHom.id_apply, smul_eq_mul, mul_smul,
+      Finset.smul_sum]
+
+@[simp]
+theorem finiteFamilySynthesis_single
+    (vectors : Index → E) (index : Index) (scalar : Real) :
+    finiteFamilySynthesis vectors (Pi.single index scalar) =
+      scalar • vectors index := by
+  classical
+  unfold finiteFamilySynthesis
+  change (∑ other, (Pi.single index scalar : Index → Real) other • vectors other) =
+    scalar • vectors index
+  rw [Finset.sum_eq_single index]
+  · simp
+  · intro other _ hOther
+    simp [Pi.single_apply, hOther]
+  · intro hIndex
+    exact (hIndex (Finset.mem_univ index)).elim
+
+/-- Synthesis by the vectors of a basis is bijective; no inner product on the
+ambient module is needed. -/
+theorem finiteFamilySynthesis_bijective_of_basis
+    (vectors : Index → E) (basis : Module.Basis Index Real E)
+    (hBasis : ∀ index, basis index = vectors index) :
+    Function.Bijective (finiteFamilySynthesis vectors) := by
+  have hSynthesis :
+      finiteFamilySynthesis vectors = basis.equivFun.symm.toLinearMap := by
+    apply LinearMap.ext
+    intro coefficient
+    change (∑ index, coefficient index • vectors index) =
+      basis.equivFun.symm coefficient
+    rw [← basis.sum_repr (basis.equivFun.symm coefficient)]
+    have hCoefficient :
+        basis.repr (basis.equivFun.symm coefficient) = coefficient :=
+      basis.equivFun.apply_symm_apply coefficient
+    rw [hCoefficient]
+    exact Finset.sum_congr rfl (fun index _ => congrArg (coefficient index • ·)
+      (hBasis index).symm)
+  rw [hSynthesis]
+  exact basis.equivFun.symm.bijective
+
+end Synthesis
+
+section Gram
+
+variable [Fintype Index] [DecidableEq Index]
+  [NormedAddCommGroup E] [InnerProductSpace Real E]
+
+/-- Gram endomorphism of one finite family. -/
+def finiteFamilyGramMap (vectors : Index → E) :
+    (Index → Real) →ₗ[Real] (Index → Real) where
+  toFun := fun coefficient index =>
+    inner Real (finiteFamilySynthesis vectors coefficient) (vectors index)
+  map_add' := by
+    intro first second
+    ext index
+    change inner Real (finiteFamilySynthesis vectors (first + second))
+        (vectors index) =
+      inner Real (finiteFamilySynthesis vectors first) (vectors index) +
+        inner Real (finiteFamilySynthesis vectors second) (vectors index)
+    rw [map_add, inner_add_left]
+  map_smul' := by
+    intro scalar coefficient
+    ext index
+    change inner Real (finiteFamilySynthesis vectors (scalar • coefficient))
+        (vectors index) =
+      scalar • inner Real (finiteFamilySynthesis vectors coefficient)
+        (vectors index)
+    rw [map_smul, inner_smul_left]
+    simp
+
+@[simp]
+theorem finiteFamilyGramMap_apply
+    (vectors : Index → E) (coefficient : Index → Real) (index : Index) :
+    finiteFamilyGramMap vectors coefficient index =
+      inner Real (finiteFamilySynthesis vectors coefficient) (vectors index) :=
+  rfl
+
+/-- Gram injectivity forces coefficient synthesis injectivity. -/
+theorem finiteFamilySynthesis_injective_of_gram_injective
+    (vectors : Index → E)
+    (hGram : Function.Injective (finiteFamilyGramMap vectors)) :
+    Function.Injective (finiteFamilySynthesis vectors) := by
+  intro first second hEqual
+  apply hGram
+  ext index
+  simp only [finiteFamilyGramMap_apply]
+  rw [hEqual]
+
+/-- Gram injectivity makes the underlying finite vector family linearly
+independent. -/
+theorem finiteFamily_linearIndependent_of_gram_injective
+    (vectors : Index → E)
+    (hGram : Function.Injective (finiteFamilyGramMap vectors)) :
+    LinearIndependent Real vectors := by
+  rw [Fintype.linearIndependent_iff]
+  intro coefficient hSum index
+  have hSynthesis : finiteFamilySynthesis vectors coefficient = 0 := by
+    simpa [finiteFamilySynthesis] using hSum
+  have hCoefficient : coefficient = 0 :=
+    (finiteFamilySynthesis_injective_of_gram_injective vectors hGram)
+      (by simpa using hSynthesis)
+  exact congrFun hCoefficient index
+
+/-- With exactly as many vectors as the ambient finite dimension, Gram
+injectivity makes synthesis bijective. -/
+theorem finiteFamilySynthesis_bijective_of_gram_injective
+    [FiniteDimensional Real E]
+    (vectors : Index → E)
+    (hFinrank : Module.finrank Real E = Fintype.card Index)
+    (hGram : Function.Injective (finiteFamilyGramMap vectors)) :
+    Function.Bijective (finiteFamilySynthesis vectors) := by
+  have hInjective := finiteFamilySynthesis_injective_of_gram_injective
+    vectors hGram
+  have hRank :
+      Module.finrank Real (Index → Real) = Module.finrank Real E := by
+    simp [hFinrank]
+  have hSurjective : Function.Surjective (finiteFamilySynthesis vectors) :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank hRank).mp hInjective
+  exact ⟨hInjective, hSurjective⟩
+
+/-- Linear equivalence generated by a Gram-nondegenerate family of the correct
+cardinality. -/
+def finiteFamilyLinearEquivOfGramInjective
+    [FiniteDimensional Real E]
+    (vectors : Index → E)
+    (hFinrank : Module.finrank Real E = Fintype.card Index)
+    (hGram : Function.Injective (finiteFamilyGramMap vectors)) :
+    (Index → Real) ≃ₗ[Real] E :=
+  LinearEquiv.ofBijective (finiteFamilySynthesis vectors)
+    (finiteFamilySynthesis_bijective_of_gram_injective vectors hFinrank hGram)
+
+/-- Canonical basis generated by the nondegenerate Gram family. -/
+def finiteFamilyBasisOfGramInjective
+    [FiniteDimensional Real E]
+    (vectors : Index → E)
+    (hFinrank : Module.finrank Real E = Fintype.card Index)
+    (hGram : Function.Injective (finiteFamilyGramMap vectors)) :
+    Module.Basis Index Real E :=
+  Module.Basis.ofEquivFun
+    (finiteFamilyLinearEquivOfGramInjective vectors hFinrank hGram).symm
+
+/-- The resulting basis vectors are exactly the original family. -/
+theorem finiteFamilyBasisOfGramInjective_apply
+    [FiniteDimensional Real E]
+    (vectors : Index → E)
+    (hFinrank : Module.finrank Real E = Fintype.card Index)
+    (hGram : Function.Injective (finiteFamilyGramMap vectors))
+    (index : Index) :
+    finiteFamilyBasisOfGramInjective vectors hFinrank hGram index =
+      vectors index := by
+  apply (finiteFamilyLinearEquivOfGramInjective vectors hFinrank hGram).symm.injective
+  simp [finiteFamilyBasisOfGramInjective,
+    finiteFamilyLinearEquivOfGramInjective,
+    finiteFamilySynthesis_single]
+
+/-- Public finite Gram-basis checkpoint. -/
+theorem finite_family_gram_basis_gate
+    [FiniteDimensional Real E]
+    (vectors : Index → E)
+    (hFinrank : Module.finrank Real E = Fintype.card Index)
+    (hGram : Function.Injective (finiteFamilyGramMap vectors)) :
+    (∀ index,
+      finiteFamilyBasisOfGramInjective vectors hFinrank hGram index =
+        vectors index) ∧
+    Function.Bijective (finiteFamilySynthesis vectors) :=
+  ⟨finiteFamilyBasisOfGramInjective_apply vectors hFinrank hGram,
+    finiteFamilySynthesis_bijective_of_gram_injective vectors hFinrank hGram⟩
+
+end Gram
+
+end
+end P0EFTJanusProgramPFiniteFamilyGramBasis4D
+end JanusFormal

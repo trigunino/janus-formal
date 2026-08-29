@@ -282,8 +282,11 @@ g^2 != 1.
 ```
 
 The inherited twisted-Hopf monodromy module implements this arithmetic in
-`ZMod 4`.  A complete proof still requires a global Pin lift of the mapping
-torus and an identification of its square with fermion parity.
+`ZMod 4`. The Program-P facade now constructs the concrete ambient Pin⁻
+principal bundle, its real-normal half-angle restriction gauge, and the
+associated PinC/spinor bundles. What remains is the identification of the
+central square with fermion parity inside the complete physical action and
+geometric Dirac tower, not existence of the global lift.
 
 Thus:
 
@@ -330,10 +333,10 @@ of the dimensionful bulk/boundary charge units.
 | **D1** | twisted-Hopf smooth quotient and invariants | scaffold plus cellular algebra |
 | **D2** | direct Hopf `U(1)` descent test | **no-go proved** |
 | **D3** | primitive throat monopole and circle transport | **integer algebra proved** |
-| **D4** | Pin obstruction pattern | algebra proved; geometric classes open |
+| **D4** | Pin obstruction pattern | oriented no-go and concrete Pin⁻/PinC geometric bundles proved in the Program-P facade |
 | **D5** | spectral modulus and alpha-ratio candidate | **conditional theorem proved** |
-| **D6** | global Pin-lifted `Z4` | finite arithmetic proved; global lift open |
-| **D7** | geometry-derived QFT | open research theorem |
+| **D6** | global Pin-lifted `Z4` | global lift/bundles proved; physical fermion-parity/action identification open |
+| **D7** | geometry-derived QFT | all signed geometric Dirac levels, exact multiplicities/orthogonality, Fourier--monopole unitary and the smooth `2D+m²` finite-core identification with its maximal self-adjoint Fredholm multiplier are proved in the Program-P facade; variable-background family and determinant remain open |
 | **D8** | geometry-derived bimetric junction | open research theorem |
 | **D9** | absolute alpha | requires D7, D8 and charge normalization |
 

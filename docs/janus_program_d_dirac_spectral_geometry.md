@@ -71,9 +71,17 @@ Primary spectral/index anchors:
 - A. A. Abrikosov Jr., *Dirac operator on the Riemann sphere*,
   arXiv:hep-th/0212134.
 
-The Lean branch proves the finite arithmetic consequences of the spectral
-formula.  Construction of the SpinC bundle, self-adjoint operator, compact
-resolvent and spectrum remains an explicit operator-theorem target.
+The original D2 branch proves the finite arithmetic consequences of the
+spectral formula. The Program-P facade now additionally constructs the actual
+ambient PinC and D9 spinor bundles, local geometric Dirac data and every signed
+sphere/Fourier eigensection. Exact multiplicities, all inter-label
+orthogonality and Fourier--monopole completeness promote their synthesis to a
+unitary onto the independent geometric completion. After the
+orientation-correct PT permutation of the zero tower, this unitary also
+identifies the genuine smooth `2D+m²` core with its maximal self-adjoint
+Fredholm coefficient multiplier. The remaining family theorem is its
+extension to variable metric/gauge-coupled backgrounds; the full determinant
+and geometric eta invariant are not asserted here.
 
 ## 2. Product with the compact circle
 
@@ -362,16 +370,15 @@ P0EFTJanusDiracScaleOrbitNoGo.lean
 | PT-paired half-level anomaly cancellation | proved arithmetically |
 | absolute metric scale | open |
 | full determinant vacuum uniqueness | open |
-| actual SpinC/Dirac operator construction in Lean | open |
+| actual PinC/SpinC bundle and primitive geometric Dirac data | proved for every signed level, sector, circle mode and multiplicity |
+| arbitrary-level completed geometric Fourier realization of the signed operator | proved unitarily, including the exact `2D+m²` finite-core intertwining |
 
 ## 10. Next deepest targets
 
-1. Construct the monopole line bundle and twisted SpinC Dirac operator using
-   concrete differential-geometric objects.
-2. Prove the explicit spectrum and index in the formal environment.
-3. Construct the product operator on `S2 x S1` and prove that eta reduces to the
-   zero-mode tower.
-4. Compute the complete zeta determinant, including nonzero modes and local
+1. Lift the fixed-background geometric unitary and Hessian core to the
+   variable metric/gauge-coupled Janus family.
+2. Derive the geometric eta reduction from that family operator.
+3. Compute the complete zeta determinant, including nonzero modes and local
    counterterms.
 5. Derive the one-eighth LL normalization from the operator/auxiliary metric,
    rather than importing it as an interface law.
@@ -386,7 +393,8 @@ geometric interpretation of the previous ratio, explains why the primitive
 monopole is singled out simultaneously by topology and bimetric matching, and
 reduces the parity anomaly to the single chiral zero mode per fold.
 
-The remaining hard problem is now sharply isolated: construct and regularize
-the actual twisted Dirac determinant on the Janus throat, then determine whether
-its renormalized scale can be fixed by the global geometry without importing an
+The remaining hard problem is now sharply isolated: complete the geometric
+Fourier realization of the already constructed signed Dirac model, construct
+and regularize its determinant on the Janus throat, then determine whether its
+renormalized scale can be fixed by the global geometry without importing an
 observed cosmological length.

@@ -162,7 +162,7 @@ theorem completedLLJacobiOperator_smooth_pairing
           (llH1SmoothEmbedding period hPeriod data first))
         (llH1SmoothEmbedding period hPeriod data second) =
       globalPTSymmetricDifferentialLLFluxHessian period hPeriod
-        (finiteSmoothThroatGeneratingFrame period hPeriod) data.fields
+        data.frame data.fields
         first.toTest second.toTest data.mu := by
   rw [completedLLJacobiOperator_extends_smooth]
   exact strongLLJacobiH1Operator_iff_weak_on_smooth
@@ -176,7 +176,7 @@ theorem completedLLJacobiOperator_pairing_linearizes_action
     HasDerivAt
       (fun epsilon : Real =>
         globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod
-          (finiteSmoothThroatGeneratingFrame period hPeriod)
+          data.frame
           (differentialLLFluxCurve period hPeriod data.fields
             first.toTest epsilon) second.toTest data.mu)
       (inner Real
@@ -187,7 +187,7 @@ theorem completedLLJacobiOperator_pairing_linearizes_action
   rw [completedLLJacobiOperator_smooth_pairing]
   exact
     globalPTSymmetricDifferentialLLFluxFirstVariation_fluxCurve_hasDerivAt
-      period hPeriod (finiteSmoothThroatGeneratingFrame period hPeriod)
+      period hPeriod data.frame
       data.fields first.toTest second.toTest data.mu
 
 /-- Closure package for the completed positive-energy Jacobi realization. -/

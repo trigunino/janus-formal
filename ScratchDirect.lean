@@ -1,0 +1,5 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
+
+namespace JanusFormal
+open P0EFTJanusProgramPGlobalCandidateANormalBoundaryFiberSubstitution4D
+end JanusFormal

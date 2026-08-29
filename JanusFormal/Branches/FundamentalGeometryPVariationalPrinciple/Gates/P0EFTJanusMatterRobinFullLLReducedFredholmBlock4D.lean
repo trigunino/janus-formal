@@ -113,7 +113,7 @@ theorem globalMatterRobinFullLLHessian_eq_reducedNatural_robinLL_block
     (robinFirst robinSecond : SmoothThroatField period hPeriod Real)
     (llFirst llSecond : LLH1Smooth period hPeriod llData) :
     globalMatterRobinFullLLHessian period hPeriod matterData kPlus kMinus robinMeasure
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu llData.fields
+        llData.frame llData.mu llData.fields
         (fullRobinLLDirection period hPeriod robinFirst llFirst.toTest)
         (fullRobinLLDirection period hPeriod robinSecond llSecond.toTest) =
       reducedBosonicNaturalHessian period hPeriod scalarData kPlus kMinus robinMeasure llData

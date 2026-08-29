@@ -171,7 +171,7 @@ theorem reducedBosonicRobinCouplingOperatorFamily_pairing_eq_sameActionHessian
           llH1SmoothEmbedding period hPeriod llData llSecond) =
       reducedBosonicSmoothActionMixedHessian period hPeriod scalarData kPlus
         kMinus bulkPlus bulkMinus robinMeasure
-        (finiteSmoothThroatGeneratingFrame period hPeriod) llData.mu scalarBase
+        llData.frame llData.mu scalarBase
         scalarFirst.toField scalarSecond.toField junction robinFirst robinSecond
         llData.fields llFirst.toTest llSecond.toTest := by
   calc

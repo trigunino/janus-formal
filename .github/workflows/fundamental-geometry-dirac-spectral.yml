@@ -30,8 +30,13 @@ on:
       - ".github/workflows/fundamental-geometry-dirac-spectral.yml"
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   lean:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref != 'dev-branch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -47,6 +52,7 @@ jobs:
         run: lake build JanusFormal.Branches.FundamentalGeometryDiracSpectral
 
   python-audit:
+    if: ${{ github.event_name != 'pull_request' || github.head_ref != 'dev-branch' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
