@@ -37,6 +37,7 @@ open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
 open P0EFTJanusProgramPGlobalCandidateACommonHilbertChartTransport4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -59,47 +60,29 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-private abbrev MinimalHilbertModel
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod) :=
-  GlobalMinimalPhysicalFieldTangent period hPeriod configuration.physical
-
-private abbrev ExistingCommonHilbert
-    {couplings : GlobalCandidateAActionCouplings}
-    {NonNullFace NullFace : Type*}
-    [Fintype NonNullFace] [Fintype NullFace]
-    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
-    (data : GlobalCandidateAActionData period hPeriod configuration.physical
-      couplings NonNullFace NullFace)
-    (analysis : GlobalAnalysisData period hPeriod configuration.physical) :=
-  GlobalCandidateADiagonalExtendedBulkL2Hilbert period hPeriod
-    (globalCandidateAMetricBySector period hPeriod data)
-    couplings.matterMassSquared data analysis
-
 /-- Exact identification of the selected normed minimal tangent with the
 existing H11 Hilbert completion.  Agreement on the dense diagonal core fixes
 the equivalence uniquely on that core. -/
-structure ProgramPGlobalMinimalPhysicalHilbertModel4D
+abbrev ProgramPGlobalMinimalPhysicalHilbertModel4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
-    [NormedAddCommGroup (MinimalHilbertModel period hPeriod configuration)]
-    [NormedSpace Real (MinimalHilbertModel period hPeriod configuration)] where
-  toCommonHilbert :
-    MinimalHilbertModel period hPeriod configuration ≃L[Real]
-      ExistingCommonHilbert period hPeriod configuration data analysis
-  diagonal_core :
-    ∀ core : GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod
-        analysis,
-      toCommonHilbert
-          (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
-            configuration data analysis core) =
-        diagonalExtendedBulkL2SmoothEmbedding period hPeriod
-          (globalCandidateAMetricBySector period hPeriod data)
-          couplings.matterMassSquared data analysis core
+    (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
+      (measure := measure) configuration data analysis)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis
+        (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+          configuration data analysis chartData)) :=
+  ProgramPGlobalMinimalPhysicalCommonHilbertChart4D period hPeriod
+    configuration data analysis
+      (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+        configuration data analysis chartData)
+      sameAction
 
 /-- Construct the common-Hilbert chart adapter for the concrete minimal
 physical chart. -/
@@ -113,24 +96,19 @@ def programPGlobalMinimalPhysicalCommonHilbertChart
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis)
+      (measure := measure) configuration data analysis)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
           configuration data analysis chartData))
-    (hilbert : @ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
-      couplings NonNullFace NullFace _ _ configuration data analysis
-      chartData.normedAddCommGroup chartData.normedSpace) :
+    (hilbert : ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
+      configuration data analysis chartData sameAction) :
     ProgramPGlobalMinimalPhysicalCommonHilbertChart4D period hPeriod
       configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
           configuration data analysis chartData)
-        sameAction where
-  toChart := hilbert.toCommonHilbert.symm
-  smooth_core_compatibility := by
-    intro core
-    rw [← hilbert.diagonal_core core]
-    exact hilbert.toCommonHilbert.symm_apply_apply _
+        sameAction :=
+  hilbert
 
 /-- The actual seven physical blocks extend to the common domain as soon as the
 minimal physical norm is identified with the existing graph Hilbert norm. -/
@@ -144,14 +122,13 @@ def globalCandidateAMinimalPhysicalSevenBlockExtension
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis)
+      (measure := measure) configuration data analysis)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
           configuration data analysis chartData))
-    (hilbert : @ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
-      couplings NonNullFace NullFace _ _ configuration data analysis
-      chartData.normedAddCommGroup chartData.normedSpace) :=
+    (hilbert : ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
+      configuration data analysis chartData sameAction) :=
   globalCandidateASevenPhysicalCommonDomainExtension_of_hilbertChart period
     hPeriod configuration data analysis
       (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
@@ -171,14 +148,20 @@ theorem global_candidateA_h11_minimalPhysical_hilbertChart_gate
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
-      configuration data analysis)
+      (measure := measure) configuration data analysis)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis
         (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
           configuration data analysis chartData))
-    (hilbert : @ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
-      couplings NonNullFace NullFace _ _ configuration data analysis
-      chartData.normedAddCommGroup chartData.normedSpace) :=
+    (hilbert : ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
+      configuration data analysis chartData sameAction) :
+    GlobalCandidateACommonAugmentedAnalyticDomainCertificate4D period hPeriod
+      configuration data analysis
+      (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+        configuration data analysis chartData)
+      sameAction
+      (globalCandidateAMinimalPhysicalSevenBlockExtension period hPeriod
+        configuration data analysis chartData sameAction hilbert) :=
   global_candidateA_h11_common_augmented_domain_gate period hPeriod
     configuration data analysis
       (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod

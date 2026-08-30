@@ -62,7 +62,7 @@ global tangent/pairing realization, intrinsic L2 completion and
 `program_p_t01_global_foundations_pairings_terminal_gate` compile directly and
 as `.olean`; the integrity audit is green at `1/14`, with no business axiom.
 The full Program-P façade and its complete local import closure are green.
-One hundred seventeen nonterminal `T02` support gates are now compiled and integrated.  In
+One hundred twenty-four nonterminal `T02` support gates are now compiled and integrated.  In
 addition to the stratified carrier, generic `C²` constructor, actual SpinC/LL
 throat packet and low-order `(II, F)` orbit, they extract both actual metric
 jets, the realized bulk Christoffel/`U(1)²` background core and all typed
@@ -140,8 +140,30 @@ the physical sectors. Seven further gates provide the generic common product
 atlas/core, smooth product cores and smooth product-section assembly, then
 instantiate them for the four gauge jets, three heterogeneous LL jets, two
 metric jets and two SpinC jets. The resulting common physical second-jet core
-and Candidate-A section are globally `C∞`. The normal/background bridge and
-the invariant classification remain open.
+and Candidate-A section are globally `C∞`. The normal/background bridge remains
+a separate stronger target. The bounded linear local
+functionals fixed by every genuine transition of this common physical bundle
+now form a finite-dimensional subspace and admit unique finite coefficients.
+The homogeneous quadratic class represented by continuous symmetric invariant
+bilinear forms now has the same finite-coordinate classification; polarization
+proves that diagonal evaluation is injective. Constants, linear terms and these
+quadratic terms now assemble into a complete degree-at-most-two class whose
+evaluation and scalar coefficient decomposition are both injective. Higher-degree
+homogeneous cubics represented by continuous symmetric invariant trilinear
+forms now also have a finite basis, unique coefficients and injective diagonal
+evaluation by polarization. The complete degree-at-most-three class is now
+assembled with injective evaluation and unique scalar reconstruction; parity
+and dilation at `x`, `-x`, `2x`, `-2x` separate its linear and cubic parts.
+Homogeneous quartics represented by continuous symmetric invariant
+quadrilinear forms now also have a finite basis, unique coefficients and
+injective diagonal evaluation through three small polarization steps. The
+complete degree-at-most-four class is assembled with injective evaluation and
+unique scalar reconstruction. On 29 August 2026 the global terminal `T02`
+certificate fixed this degree-at-most-four class as the explicitly bounded
+admissible class and assembled bundle smoothness, transition invariance,
+evaluation injectivity, reconstruction and unique coefficients. The integrity
+audit is therefore green at `2/14`. Degree five and general smooth invariant
+functionals remain stronger targets outside the bounded `T02` contract.
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`
@@ -1699,7 +1721,203 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   `E_bulk + E_induced ∘ D(induced)`; an exact diagonal counterexample proves
   that imposing both slot equations separately can overconstrain the system.
 - **P-B:** four explicit finite candidates realize every anomaly/Helmholtz truth pattern, so anomaly cancellation is an independent consistency filter rather than a dynamics principle.
-- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. The exact Candidate-A action now instantiates this chain on every regular common `C²` variational chart: actual Euler derivative, symmetric Jacobian, normalized radial reconstruction, paired physical `U(1)²` Noether orbit and global functional null-classification. A normed atlas for every raw global tangent, the componentwise local PDE/diffeomorphism system and the full local jet variational bicomplex remain stronger open targets.
+- **P-C:** finite quadratic and polynomial Helmholtz reconstruction is formalized, including the exact three-sector PT-plus-reciprocity criterion. For the finite quadratic Euler family, self-adjointness of the actual Jacobian is equivalent to the coefficient Helmholtz swaps; these data construct a normalized cubic polynomial primitive with the prescribed actual Fréchet derivative, and derivative equality alone recovers its formal coefficients. A Poincaré--Helmholtz theorem reconstructs an action from a symmetric differentiable Euler one-form on an open convex configuration domain; on the whole space, under a global actual-gradient hypothesis, additive linear gauge invariance is equivalent to Euler horizontality. More generally, for a supplied complete differentiable one-parameter flow, full-orbit invariance is equivalent to annihilation of its field-dependent generator by the actual Euler derivative; horizontal Helmholtz data give an invariant normalized radial primitive. The exact Candidate-A action now instantiates this chain on every regular common `C²` variational chart: actual Euler derivative, symmetric Jacobian, normalized radial reconstruction, paired physical `U(1)²` Noether orbit and global functional null-classification. On a supplied genuine overlap, the Euler covector now obeys its exact derivative transition law; identity, composition and chart-independence of criticality are compiled. Constructing these overlaps for a normed atlas of every raw global tangent, the componentwise local PDE/diffeomorphism system and the full local jet variational bicomplex remain stronger open targets.
+- The exact global Euler one-form is now proved equal, pointwise and in every
+  direction, to the sum of the Fréchet derivatives of all nine assembled action
+  blocks. Extracting their local tensor PDE representatives remains open.
+- Given a linear identification with the actual D10-free physical tangent,
+  Euler vanishing is now exactly equivalent to its non-SpinC bulk and primitive
+  SpinC-matter component equations; both are evaluated as the sum of the nine
+  exact action-block derivatives on pure sector variations. Constructing that
+  identification from a normed raw-field atlas remains open.
+- The same physical two-sector split is now connected to the local variational
+  atlas: its descended `IsEulerCritical` predicate is equivalent to the bulk
+  and SpinC equations in any represented chart carrying the algebraic tangent
+  identification. At each admissible local point, both components are also
+  identified with the exact nine-block Fréchet derivative sum.
+- A first atlas inhabitant is now concrete rather than supplied: the injective
+  finite SpinC-matter graph chart defines a singleton atlas on its physical
+  image, and descended criticality is exactly its closed graph Euler equation.
+- The null-normalization chart gives a second concrete atlas. Distinct
+  representatives of its singleton physical carrier are joined by explicit
+  affine transitions; its exact action is constant and its Euler covector
+  vanishes in every normalization representation.
+- The combined finite-matter/null-normalization chart now has a concrete atlas
+  on the matter image with affine boundary fibers. Its descended criticality is
+  independent of the normalization representative and equivalent exactly to
+  the finite matter graph Euler equation.
+- Every admissible local chart injective on its domain now canonically yields
+  an atlas on its physical image. This promotes the corrected D10-free
+  minimal-physical chart to an atlas and covers its base configuration once
+  injectivity of the supplied field parametrization is proved; that geometric
+  injectivity remains open rather than being hidden in the analytic chart data.
+  At that base, descended criticality is exactly the local minimal-physical
+  Euler equation.
+- This remaining injectivity now has a constructive interface: a decoder from
+  represented global fields back to admissible chart coordinates, with an
+  exact recovery law, automatically proves injectivity and builds the same
+  atlas. Constructing that decoder for the raw metric/gauge/LL fields remains
+  the geometric task.
+- The corrected minimal tangent itself now has a canonical product
+  decomposition into a bulk kernel with the obsolete coefficient
+  ghost/auxiliary directions removed and primitive SpinC matter. Consequently
+  the minimal-chart Euler equation, and the retractive-atlas criticality at its
+  base, are exactly the vanishing of these two sector covectors; no equivalence
+  with the obsolete larger physical tangent is assumed.
+- The corrected bulk kernel is now explicitly linearly equivalent to its seven
+  free field families: full metric perturbation, paired Abelian gauge field,
+  normal displacement, diffeomorphism ghost and the three LL fields. Its Euler
+  covector vanishes exactly when all seven restrictions vanish. Together with
+  primitive SpinC matter this gives an exact eight-sector formulation of local
+  Euler vanishing and retractive-atlas criticality at the base.
+- The seven-coordinate bulk packet and primitive SpinC variations now have
+  explicit linear transports into the minimal chart. At every admissible
+  point, both Euler evaluations equal the exact sum of the derivatives of all
+  nine assembled action blocks. Every linear pure-component restriction of
+  the seven bulk coordinates inherits this formula.
+- These identities now form an exact weak field system: the nine-block
+  derivative sum vanishes against every seven-field bulk test packet and every
+  primitive SpinC test variation if and only if the local minimal Euler
+  covector vanishes. At the covered base this is also equivalent to
+  retractive-atlas criticality.
+- The weak-to-strong frontier is now explicit: supplied bulk and SpinC PDE
+  residuals must represent the two weak covectors and be separated by their
+  test spaces. Under exactly these nondegeneracy data, vanishing of both
+  residuals is equivalent to the nine-block weak system, local minimal Euler
+  vanishing and retractive-atlas criticality. Concrete tensorial residuals and
+  their separation proofs remain open; legacy scalar/LL operators are not
+  silently identified with the current minimal sectors.
+- The same frontier is also split into eight named residual obligations:
+  metric, paired Abelian gauge, normal displacement, diffeomorphism ghost,
+  auxiliary LL metric, LL measure, LL field and primitive SpinC matter. Their
+  simultaneous strong equations are equivalent to the exact weak/local/atlas
+  systems, while the concrete differential representatives remain explicit
+  missing inhabitants.
+- The seven pure bulk injections are now explicit, and each named bulk
+  covector is proved to be the corresponding restriction. Consequently every
+  supplied component residual pairing, including SpinC, equals the exact sum
+  of all nine action-block derivatives along its transported pure variation.
+- The residual interface has an unconditional canonical baseline: each of the
+  eight covectors represents itself in its algebraic dual, separated by all
+  tests. This concrete package is equivalent to the weak/local/atlas systems,
+  but is explicitly not a tensorial differential representative; it isolates
+  that analytic identification as the remaining strong-PDE task.
+- The concrete finite SpinC atlas now goes further: its closed graph Hessian is
+  a separating residual in the continuous dual, its evaluation is exactly the
+  true Euler and nine-block derivative sum, and descended criticality is its
+  vanishing. This is an actual finite-mode closure, not yet the full smooth
+  SpinC differential operator.
+- On that same finite SpinC core, the residual is now genuinely explicit in
+  spectral coordinates: `(2D + m²)c`. Its Hilbert pairing is the exact graph
+  Euler functional, separation is coefficientwise, and both chart Euler
+  vanishing and descended criticality are equivalent to the diagonal mode
+  equation. Extending this to the full smooth/distributional sector remains
+  open.
+- Its kernel is completely classified: a finite coefficient family is
+  critical exactly when its support lies on the mass shell `(2D + m²)=0`.
+  Off resonance the zero core is the unique critical point; any resonant mode
+  gives an explicit nonzero critical core.
+- The finite-support restriction is now removed for the closed graph action:
+  the second graph component is the full maximal diagonal residual, its
+  pairing with graph tests separates the ambient Hilbert field, and exact
+  stationarity is equivalent to its vanishing. Off resonance the zero graph
+  state is unique. Identification with the full coupled minimal chart and the
+  other seven differential residuals remains open.
+- Its full maximal kernel is also classified: a graph state is stationary
+  exactly when its first component is supported on `(2D + m²)=0`, and every
+  resonant mode yields an explicit nonzero stationary graph state.
+- The complete three-slot LL graph now has an equally concrete strong
+  equation: its existing bounded Riesz operator is a separating Hilbert
+  residual for the genuine quadratic graph action, whose stationarity is
+  exactly Riesz-residual vanishing. Coupled-chart identification and a
+  pointwise three-operator decomposition remain open.
+- The paired Abelian off-shell BRST graph is closed in the same strong sense:
+  its bounded Riesz operator represents the exact graph Euler covector,
+  separates tests, and vanishes exactly at stationary graph states. Its
+  coupled minimal-chart identification remains open.
+- The action-weighted diagonal diffeomorphism BRST graph now also has a
+  separating strong Riesz residual. It vanishes exactly when the Frechet
+  covector certified by the graph action's `HasFDerivAt` theorem vanishes;
+  coupled minimal-chart identification is still open.
+- These graph equations are now assembled into one faithful strong residual
+  for the diagonal diffeomorphism BRST, paired Abelian BRST, SpinC and full LL
+  same-action sum. Its Hilbert pairing separates the aggregate Euler covector.
+  The seven physical action blocks are deliberately excluded, exactly as in
+  the source faithful Riesz operator.
+- The existing common-domain extension now upgrades that residual to the full
+  augmented quadratic Candidate-A action, including all seven physical
+  blocks. Its exact Frechet Euler covector vanishes iff the strong Riesz
+  residual vanishes, and on the dense smooth core its pairing is the genuine
+  local gauge-fixed Hessian. This remains conditional on supplied inhabitants
+  of the same-action bridge and bounded seven-block extension. The latter is
+  now constructed canonically from one aggregate norm estimate for the six
+  non-Robin blocks, since the H10 Robin extension is already continuous.
+  The six forms in that estimate are now fixed to the genuine Candidate-A
+  chart Hessians; exact H10 Robin agreement and one graph-norm bound for the
+  smooth core-to-chart map derive the estimate automatically. The Robin
+  Hessian agreement itself is now derived from action-level H10 projection
+  data, smooth-core projection agreement and transversality. Constructing
+  that projection data remains necessary. The core-to-chart bound is no longer
+  supplied separately: any bounded linear realization of the common Hilbert
+  space in the chart that agrees on the smooth core yields it from its operator
+  norm. The completed H10 boundary projection is likewise no longer supplied:
+  it is the composite of the local projection with that realization. The
+  remaining inputs are the continuous chart realization, local Robin action
+  identification/base normalization, transversality, the chart/same-action
+  bridge, and the nonlinear global chart Euler identification.
+- Density of the typed smooth core now closes the weak--strong linearized
+  equation: vanishing of the full local gauge-fixed Hessian against every
+  smooth test is equivalent both to the augmented Riesz residual being zero
+  and to the Frechet covector of the augmented quadratic action being zero.
+  This does not identify the quadratic model with the nonlinear global Euler
+  map away from the selected base chart.
+- The exact nonlinear local action is now pulled back along any bounded affine
+  realization of the common augmented Hilbert space. At every admissible
+  state, its true Frechet derivative is the pulled Euler covector; the Riesz
+  residual represents that covector and vanishes exactly at its critical
+  points. The pulled action is also proved equal to the covariant action.
+  On a genuine chart overlap, compatible bounded realizations now give the
+  same action value, Euler covector, Riesz residual and stationarity equation.
+  These data are now packaged as a residual atlas: one reference chart defines
+  a global nonlinear action and residual on its Hilbert carrier, proved equal
+  to every chart representative. Every bounded single-chart realization gives
+  a compiled singleton inhabitant on its admissible preimage. A canonical
+  multi-chart inhabitant covering the actual physical field space is still
+  required for the terminal operator.
+- The nonlinear Hilbert Euler map is now connected back to the certified local
+  Hessian: its actual Frechet derivative is precisely the chart Hessian pulled
+  through the bounded realization in both slots. The derivative of the strong
+  nonlinear residual is its symmetric Riesz representative. This closes the
+  nonlinear/linearized calculus bridge without assuming the missing bounded
+  physical realization.
+- On the dense smooth core, this nonlinear linearization is now identified
+  with the genuine local covariant Hessian. The older augmented strong model
+  is proved to equal it plus the explicit gauge-fixing Hessian, both in weak
+  Hessian form and through the strong Riesz pairing. Equality without the
+  correction is equivalent exactly to vanishing of that gauge-fixing form;
+  no gauge dynamics is silently removed.
+- For a complete local chart model, the existing dense-core graph-norm bound
+  now constructs the bounded Hilbert-to-chart realization by the canonical
+  `extendOfNorm` operation. Its smooth-core agreement and operator-norm bound
+  are proved; density also makes it the unique continuous realization with
+  those core values. It supplies the nonlinear singleton residual atlas and the
+  covariant linearization theorem without a separately postulated realization.
+  Completeness and the actual graph-norm estimate remain the honest inputs.
+  On the concrete minimal physical chart, the previously isolated continuous
+  linear equivalence from the common graph Hilbert space now supplies the
+  bounded realization and its core estimate automatically. It directly gives
+  the nonlinear singleton residual atlas and its covariant smooth-core
+  linearization. The remaining analytic input on this route is construction
+  of that Hilbert equivalence itself; multi-chart physical coverage is still
+  open.
+  The older minimal-Hilbert H11 adapter and its constructive H14 consumer were
+  also repaired, compiled in isolation and integrated into the main facade;
+  they now use this same typed common-Hilbert chart contract instead of
+  incompatible duplicate norm instances.
+  A supplied covering variational atlas now descends local Euler vanishing to a
+  well-defined predicate on its physical carrier, equivalent to the equation in
+  every chart representation. The concrete construction of that atlas from all
+  raw global tangents remains open.
   The set quotient by complete-flow orbits is constructed. For any target,
   functions on this quotient are equivalent to configuration-space functions
   invariant under the flow; the real-valued specialization gives the same

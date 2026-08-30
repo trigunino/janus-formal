@@ -1,0 +1,186 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalEulerLagrangeCanonicalSixRobinProjectionRieszResidual4D
+
+/-!
+# Canonical-six Euler residual from a bounded chart realization
+
+A continuous linear realization of the common Hilbert space in the physical
+chart, agreeing with the typed map on the smooth core, automatically supplies
+the sole core-to-chart graph-norm estimate.
+-/
+
+namespace JanusFormal
+namespace P0EFTJanusProgramPGlobalEulerLagrangeCanonicalSixContinuousChartRieszResidual4D
+
+set_option autoImplicit false
+set_option synthInstance.maxHeartbeats 1600000
+
+noncomputable section
+
+open Set Topology MeasureTheory
+open scoped Manifold ContDiff InnerProductSpace
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
+open P0EFTJanusProgramPGlobalFieldSpace4D
+open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
+open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalSixDenseCore4D
+open P0EFTJanusProgramPGlobalCandidateAH10RobinProjectionCore4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
+open P0EFTJanusProgramPDenseCoreChartBilinearBound4D
+open P0EFTJanusProgramPGlobalEulerLagrangeFaithfulAugmentedRieszResidual4D
+open P0EFTJanusProgramPGlobalEulerLagrangeCanonicalSixRobinProjectionRieszResidual4D
+
+variable (period : Real) (hPeriod : period ≠ 0)
+
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
+
+local instance effectiveQuotientChartedSpace :
+    ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance effectiveQuotientIsManifold :
+    IsManifold coverModelWithCorners ω
+      (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotient_isManifold period hPeriod
+
+local instance effectiveQuotientMeasurableSpace :
+    MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance effectiveQuotientBorelSpace :
+    BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+
+section
+
+variable {couplings : GlobalCandidateAActionCouplings}
+variable {NonNullFace NullFace : Type*}
+variable [Fintype NonNullFace] [Fintype NullFace]
+variable {measure : Measure (EffectiveQuotient period hPeriod)}
+variable (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+variable (data : GlobalCandidateAActionData period hPeriod
+  configuration.physical couplings NonNullFace NullFace)
+variable (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+variable (chart : GlobalCandidateALocalVariationalChart period hPeriod
+  couplings NonNullFace NullFace measure)
+variable (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+  period hPeriod configuration data analysis chart)
+variable (einsteinScale : Real)
+variable (projection : GlobalCandidateAH10RobinProjectionCoreData4D period
+  hPeriod configuration data analysis chart sameAction einsteinScale)
+variable (hTransverse : HasNoTangentialRadical period hPeriod
+  data.plusGravity.metric.metric)
+variable (chartRealization :
+  CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
+    chart.Model)
+variable (smoothCoreAgreement :
+  ∀ core : GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod
+      analysis,
+    chartRealization
+        (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+          configuration data analysis core) =
+      globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+        analysis chart sameAction core)
+
+/-- The operator norm of the continuous chart realization supplies the exact
+core-to-chart estimate. -/
+def globalCandidateACanonicalSixContinuousChartBound : DenseCoreChartMapBound
+    (globalCandidateASevenPhysicalCoreEmbedding period hPeriod configuration
+      data analysis)
+    (globalCandidateACanonicalSixCoreToChart period hPeriod configuration data
+      analysis chart sameAction) where
+  constant := ‖chartRealization‖
+  constant_nonneg := norm_nonneg chartRealization
+  estimate := by
+    intro core
+    rw [← smoothCoreAgreement core]
+    exact chartRealization.le_opNorm _
+
+/-- Full action generated by the bounded chart realization. -/
+def globalCandidateACanonicalSixContinuousChartAugmentedAction
+    (state : CommonAugmentedHilbert period hPeriod configuration data analysis) :
+    Real :=
+  globalCandidateACanonicalSixRobinProjectionAugmentedAction period hPeriod
+    configuration data analysis chart sameAction einsteinScale projection
+      hTransverse
+      (globalCandidateACanonicalSixContinuousChartBound period hPeriod
+        configuration data analysis chart sameAction chartRealization
+          smoothCoreAgreement) state
+
+/-- Strong Riesz residual generated by the bounded chart realization. -/
+def globalCandidateACanonicalSixContinuousChartRieszResidual
+    (state : CommonAugmentedHilbert period hPeriod configuration data analysis) :
+    CommonAugmentedHilbert period hPeriod configuration data analysis :=
+  globalCandidateACanonicalSixRobinProjectionRieszResidual period hPeriod
+    configuration data analysis chart sameAction einsteinScale projection
+      hTransverse
+      (globalCandidateACanonicalSixContinuousChartBound period hPeriod
+        configuration data analysis chart sameAction chartRealization
+          smoothCoreAgreement) state
+
+/-- The full Euler covector vanishes exactly when this residual vanishes. -/
+theorem globalCandidateACanonicalSixContinuousChartEulerCovector_eq_zero_iff_rieszResidual
+    (state : CommonAugmentedHilbert period hPeriod configuration data analysis) :
+    fderiv Real
+        (globalCandidateACanonicalSixContinuousChartAugmentedAction period
+          hPeriod configuration data analysis chart sameAction einsteinScale
+            projection hTransverse chartRealization smoothCoreAgreement) state =
+      0 ↔
+      globalCandidateACanonicalSixContinuousChartRieszResidual period hPeriod
+        configuration data analysis chart sameAction einsteinScale projection
+          hTransverse chartRealization smoothCoreAgreement state = 0 := by
+  unfold globalCandidateACanonicalSixContinuousChartAugmentedAction
+  unfold globalCandidateACanonicalSixContinuousChartRieszResidual
+  exact
+    globalCandidateACanonicalSixRobinProjectionEulerCovector_eq_zero_iff_rieszResidual
+      period hPeriod configuration data analysis chart sameAction einsteinScale
+        projection hTransverse
+        (globalCandidateACanonicalSixContinuousChartBound period hPeriod
+          configuration data analysis chart sameAction chartRealization
+            smoothCoreAgreement) state
+
+/-- Its pairing on the dense core is the full local gauge-fixed Hessian. -/
+theorem globalCandidateACanonicalSixContinuousChartRieszResidual_smooth_pairing
+    (first second : GlobalCandidateADiagonalExtendedBulkSmoothCore period
+      hPeriod analysis) :
+    globalCandidateAFaithfulAugmentedRieszResidualPairing period hPeriod
+        configuration data analysis
+        (globalCandidateACanonicalSixContinuousChartRieszResidual period hPeriod
+          configuration data analysis chart sameAction einsteinScale projection
+            hTransverse chartRealization smoothCoreAgreement
+            (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+              (globalCandidateAMetricBySector period hPeriod data)
+              couplings.matterMassSquared data analysis first))
+        (diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+          (globalCandidateAMetricBySector period hPeriod data)
+          couplings.matterMassSquared data analysis second) =
+      diagonalExtendedBulkMinimalPhysicalLocalGaugeFixedHessianOnCore period
+        hPeriod configuration data analysis chart sameAction.chartBridge first
+          second := by
+  simpa only [globalCandidateACanonicalSixContinuousChartRieszResidual] using
+    globalCandidateACanonicalSixRobinProjectionRieszResidual_smooth_pairing
+      period hPeriod configuration data analysis chart sameAction einsteinScale
+        projection hTransverse
+        (globalCandidateACanonicalSixContinuousChartBound period hPeriod
+          configuration data analysis chart sameAction chartRealization
+            smoothCoreAgreement) first second
+
+end
+
+end
+end P0EFTJanusProgramPGlobalEulerLagrangeCanonicalSixContinuousChartRieszResidual4D
+end JanusFormal

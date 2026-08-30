@@ -10,7 +10,7 @@ mesuraient surtout l'accumulation de microlemmes. Son historique reste
 consultable dans Git.
 
 La fermeture globale est mesurée uniquement par les **14 portes terminales**
-de la section 7. État actuel : **1/14**. Une preuve locale, pointwise,
+de la section 7. État actuel : **2/14**. Une preuve locale, pointwise,
 finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 
 En cas de contradiction entre prose et code, le type exact du théorème Lean
@@ -18,17 +18,18 @@ compilé fait autorité.
 
 ### Synthèse active au 2026-08-26
 
-Les quatorze portes restent la mesure finale. Après le lot `T01` fermé, leur
-travail restant se regroupe en six lots ouverts :
+Les quatorze portes restent la mesure finale. Après les lots `T01` et `T02`
+fermés, leur travail restant se regroupe en cinq lots ouverts :
 
 1. **Validation globale (`T01`) — FERMÉE** : le certificat typé commun, sa
-   complétion L2 intrinsèque, son import de façade et l'audit terminal `1/14`
-   sont verts, sans axiome métier.
-2. **Classification locale (`T02`)** : prolonger l'extraction `C²` réelle du
-   paquet primitif SpinC+LL en carte fixe et le quotient bas ordre `(II, F)`
-   vers l'ensemble du carrier bulk/gorge, les changements de carte et l'action
-   structurée, puis prouver l'exhaustivité d'une classe admissible explicitement
-   bornée. Le classificateur historique à six invariants reste une troncature.
+   complétion L2 intrinsèque et son import de façade sont verts, sans axiome
+   métier.
+2. **Classification locale (`T02`) — FERMÉE** : le vrai bundle produit des jets
+   physiques d'ordre deux est lisse ; la classe admissible explicitement bornée
+   au degré polynomial au plus quatre contient toutes les composantes homogènes
+   invariantes continues de ce degré. Son évaluation est injective et ses
+   coefficients sont uniques. Le classificateur historique à six invariants
+   n'est pas utilisé comme hypothèse d'exhaustivité.
 3. **Calcul variationnel global (`T03`--`T06`)** : promouvoir les résultats
    chartwise vers l'atlas physique brut, puis fermer Euler global, Helmholtz
    non linéaire, bicomplexe local et classification des lagrangiens nuls/bords.
@@ -3734,7 +3735,7 @@ seulement leur fermeture fonctionnelle chartwise.
 `BLOQUÉ-PHYSIQUE`. Aucun LLM ne doit les rendre vrais par définition ou par
 choix arbitraire de constantes.
 
-Cent dix-sept gates de support non terminales `T02` sont désormais compilées et
+Cent vingt-quatre gates de support non terminales `T02` sont désormais compilées et
 importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 
 ### `P-T02-PHYSICAL-SECOND-ORDER-JET-CARRIER` — Carrier local physique stratifié
@@ -4396,6 +4397,676 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Porte terminale : aucune ; `T02` reste ouvert et le compteur terminal reste
   `1/14`.
 
+### `P-T02-ACTUAL-PHYSICAL-INVARIANT-LINEAR-FUNCTIONAL-BASIS` — Gate 118
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/LINÉAIRE/BORNÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualPhysicalSecondOrderJetInvariantLinearFunctionalBasis4D`.
+- Résultat : les fonctionnelles linéaires continues sur la fibre physique
+  commune qui sont fixes sous chaque changement de coordonnées réel forment
+  un sous-espace de dimension finie. Une base complète, une équivalence de
+  coordonnées et l'existence-unicité des coefficients sont compilées.
+- Limite : cette classification exhaustive porte uniquement sur la classe
+  linéaire bornée ; elle ne classe pas encore les fonctionnelles locales
+  non linéaires, polynomiales ou lisses.
+- Porte terminale : aucune ; support 118 de `T02`, compteur terminal `1/14`.
+
+### `P-T02-ACTUAL-PHYSICAL-INVARIANT-QUADRATIC-FUNCTIONAL-BASIS` — Gate 119
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/QUADRATIQUE/BORNÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualPhysicalSecondOrderJetInvariantQuadraticFunctionalBasis4D`.
+- Résultat : les formes bilinéaires continues, symétriques et fixes sous chaque
+  changement de coordonnées réel forment un sous-espace de dimension finie,
+  avec base complète et coefficients uniques. Leur évaluation diagonale donne
+  des fonctionnelles quadratiques invariantes et la polarisation prouve que
+  cette évaluation est injective.
+- Limite : classe homogène de degré deux uniquement ; les degrés supérieurs et
+  les fonctionnelles lisses générales restent ouverts.
+- Porte terminale : aucune ; support 119 de `T02`, compteur terminal `1/14`.
+
+### `P-T02-ACTUAL-PHYSICAL-INVARIANT-DEGREE-TWO-FUNCTIONAL-BASIS` — Gate 120
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/DEGRÉ-≤2/BORNÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualPhysicalSecondOrderJetInvariantDegreeTwoFunctionalBasis4D`.
+- Résultat : constantes, fonctionnelles linéaires invariantes et formes
+  quadratiques invariantes sont assemblées dans une classe exhaustive de degré
+  au plus deux. L'évaluation sur la fibre est injective et chaque objet possède
+  une famille unique de coefficients scalaires avec reconstruction exacte.
+- Limite : aucun terme de degré supérieur à deux ni fonctionnelle lisse
+  générale n'est classé.
+- Porte terminale : aucune ; support 120 de `T02`, compteur terminal `1/14`.
+
+### `P-T02-ACTUAL-PHYSICAL-INVARIANT-CUBIC-FUNCTIONAL-BASIS` — Gate 121
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/CUBIQUE/BORNÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualPhysicalSecondOrderJetInvariantCubicFunctionalBasis4D`.
+- Résultat : les formes trilinéaires continues, symétriques et invariantes sous
+  les transitions réelles forment un sous-espace de dimension finie avec base
+  complète et coefficients uniques. Leur évaluation diagonale est une
+  fonctionnelle cubique invariante et la polarisation prouve son injectivité.
+- Limite : classe homogène cubique uniquement ; l'assemblage du degré au plus
+  trois, le degré quatre et les fonctionnelles lisses générales restent ouverts.
+- Porte terminale : aucune ; support 121 de `T02`, compteur terminal `1/14`.
+
+### `P-T02-ACTUAL-PHYSICAL-INVARIANT-DEGREE-THREE-FUNCTIONAL-BASIS` — Gate 122
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/DEGRÉ-≤3/BORNÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualPhysicalSecondOrderJetInvariantDegreeThreeFunctionalBasis4D`.
+- Résultat : la classe complète constante, linéaire, quadratique et cubique est
+  assemblée. Son évaluation est injective ; les valeurs en `x`, `-x`, `2x` et
+  `-2x` séparent les degrés impairs. Chaque fonctionnelle possède une famille
+  unique de coefficients scalaires avec reconstruction exacte.
+- Limite : aucun terme de degré quatre ou supérieur ni fonctionnelle lisse
+  générale n'est classé.
+- Porte terminale : aucune ; support 122 de `T02`, compteur terminal `1/14`.
+
+### `P-T02-ACTUAL-PHYSICAL-INVARIANT-QUARTIC-FUNCTIONAL-BASIS` — Gate 123
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/DEGRÉ-4-HOMOGÈNE/BORNÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualPhysicalSecondOrderJetInvariantQuarticFunctionalBasis4D`.
+- Résultat : les formes quadrilinéaires continues, symétriques et invariantes
+  sous les transitions réelles forment un sous-espace de dimension finie avec
+  base complète et coefficients uniques. Trois petites étapes de polarisation
+  prouvent l'injectivité de leur évaluation diagonale quartique.
+- Limite : l'assemblage du degré au plus quatre et les fonctionnelles lisses
+  invariantes générales restent ouverts.
+- Porte terminale : aucune ; support 123 de `T02`, compteur terminal `1/14`.
+
+### `P-T02-ACTUAL-PHYSICAL-INVARIANT-DEGREE-FOUR-FUNCTIONAL-BASIS` — Gate 124
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/DEGRÉ-≤4/BORNÉE/NONTERMINALE`.
+- Gate : `P0EFTJanusProgramPActualPhysicalSecondOrderJetInvariantDegreeFourFunctionalBasis4D`.
+- Résultat : la classe complète constante, linéaire, quadratique, cubique et
+  quartique est assemblée avec évaluation injective et reconstruction scalaire
+  unique. Les valeurs en `0`, `x`, `-x`, `2x` et `-2x` séparent les composantes
+  quadratique et quartique.
+- Limite : aucun terme de degré cinq ou supérieur ni fonctionnelle lisse
+  générale n'est classé.
+- Porte terminale : aucune ; support 124 de `T02`, compteur terminal `1/14`.
+
+### `P-T02-INVARIANT-LOCAL-FUNCTIONAL-BASIS-TERMINAL` — Fermeture terminale T02
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/DEGRÉ-≤4/BORNÉE/TERMINALE`.
+- Gate : `P0EFTJanusProgramPT02InvariantLocalFunctionalBasisTerminalCertificate4D`.
+- Théorème : `program_p_t02_invariant_local_functional_basis_terminal_gate`.
+- Résultat : un certificat concret sur le vrai `VectorBundleCore` produit
+  physique assemble sa lissité, la dimension finie de la fibre, l'invariance
+  de toute fonctionnelle admissible sous chaque transition réelle,
+  l'injectivité de l'évaluation et de la synthèse, la reconstruction exacte et
+  l'unicité de toute la famille de coefficients jusqu'au degré quatre.
+- Portée exacte : la classe admissible est explicitement bornée au degré quatre.
+  Les degrés supérieurs et les fonctionnelles lisses générales sont des cibles
+  plus fortes, hors du contrat terminal `T02`.
+- Porte terminale : `T02` fermée ; compteur terminal `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-CHART-TRANSITION` — Gate 126
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/OVERLAP/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeChartTransition4D`.
+- Résultat : pour deux cartes variationnelles locales représentant le même
+  action sur un voisinage d'overlap, toute transition différentiable à dérivée
+  linéaire continue inversible transporte exactement l'Euler comme un
+  covecteur. La nullité de l'Euler est indépendante de la carte ; les
+  transitions identité et composées sont construites.
+- Limite : l'overlap est encore une donnée structurée. Il reste à construire
+  ces transitions depuis l'atlas physique brut concret et à en extraire le
+  système Euler local par composantes.
+- Porte terminale : aucune ; premier support d'atlas pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-ATLAS-DESCENT` — Gate 127
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/ATLAS/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeAtlasDescent4D`.
+- Résultat : une interface d'atlas variationnel couvre un carrier explicite de
+  configurations physiques et fournit les transitions pour deux représentants
+  du même champ. La nullité Euler descend en un prédicat global
+  `IsEulerCritical`, équivalent à l'équation dans toute représentation locale.
+- Limite : l'interface doit encore être instanciée par l'atlas normé concret de
+  tous les tangents physiques bruts ; aucun certificat terminal n'est déduit
+  d'un atlas seulement fourni.
+- Porte terminale : aucune ; deuxième support d'atlas pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-BLOCK-DECOMPOSITION` — Gate 128
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/NEUF-BLOCS/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeBlockDecomposition4D`.
+- Résultat : l'opérateur d'Euler exact de l'action globale est égal à la somme
+  des dérivées de Fréchet de ses neuf blocs, comme covecteur et dans toute
+  direction, à partir des régularités `C²` déjà portées par la carte.
+- Limite : les neuf covecteurs ne sont pas encore identifiés à leurs
+  représentants tensoriels locaux ni assemblés en système PDE concret.
+- Porte terminale : aucune ; troisième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-PHYSICAL-SECTOR-SPLIT` — Gate 129
+
+- État : `DONE` (2026-08-29). Portée : `GLOBALE/TANGENT-PHYSIQUE/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangePhysicalSectorSplit4D`.
+- Résultat : sous une identification linéaire de la carte avec le vrai tangent
+  physique sans D10, l'annulation de l'Euler est exactement équivalente aux
+  deux équations composantes bulk non-SpinC et matière SpinC primitive. Chacune
+  est explicitement la somme des neuf dérivées de blocs sur une variation pure.
+- Limite : l'identification reste à construire depuis un atlas normé concret ;
+  aucune topologie absente n'est postulée sur le tangent brut.
+- Porte terminale : aucune ; quatrième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-ATLAS-PHYSICAL-SECTOR-SYSTEM` — Gate 130
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/ATLAS/TANGENT/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeAtlasPhysicalSectorSystem4D`.
+- Résultat : l'équivalence bulk non-SpinC/matière SpinC est portée aux cartes
+  locales ; la criticité descendue `IsEulerCritical` de l'atlas équivaut au
+  système des deux secteurs dans toute représentation identifiée. Au point
+  admissible, chaque secteur est la somme exacte des neuf dérivées de blocs.
+- Limite : l'équivalence linéaire avec le tangent brut reste une donnée ; il
+  faut encore la construire et extraire les représentants PDE tensoriels.
+- Porte terminale : aucune ; cinquième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MATTER-FINITE-CONCRETE-ATLAS` — Gate 131
+
+- État : `DONE` (2026-08-30). Portée : `SECTORIELLE/MATIÈRE-FINIE/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMatterFiniteConcreteAtlas4D`.
+- Résultat : toute carte globale injective engendre un atlas singleton sur son
+  image. La carte SpinC de graphe fini est prouvée injective et instancie cet
+  atlas ; sa criticité descendue équivaut exactement à l'équation fermée du
+  Hessien de graphe appliqué au point.
+- Limite : le carrier ne couvre que la famille matière SpinC finie, pas tous
+  les champs physiques ni leurs représentants PDE tensoriels.
+- Porte terminale : aucune ; sixième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-BOUNDARY-CONCRETE-ATLAS` — Gate 132
+
+- État : `DONE` (2026-08-30). Portée : `SECTORIELLE/BORD-NULL/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeBoundaryConcreteAtlas4D`.
+- Résultat : une carte d'action constante produit un atlas concret à carrier
+  singleton, avec transitions affines explicites entre toutes ses
+  représentations. La carte de normalisation des générateurs nuls l'instancie ;
+  son Euler est nul partout et sa configuration physique est critique.
+- Limite : seules les normalisations des générateurs nuls sont couvertes, pas
+  les déplacements normaux ni la géométrie de bord générale.
+- Porte terminale : aucune ; septième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MATTER-BOUNDARY-CONCRETE-ATLAS` — Gate 133
+
+- État : `DONE` (2026-08-30). Portée : `SECTORIELLE/MATIÈRE+BORD/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMatterBoundaryConcreteAtlas4D`.
+- Résultat : la carte matière finie étendue par les normalisations nulles
+  possède un atlas concret sur l'image matière, avec transitions affines dans
+  chaque fibre de bord. Son Euler est le covecteur matière composé avec la
+  première projection ; la criticité descendue est indépendante de la
+  normalisation et équivaut exactement à l'équation du Hessien matière.
+- Limite : ce carrier sectoriel ne contient toujours ni métriques arbitraires,
+  ni jauges complètes, ni déplacements normaux généraux.
+- Porte terminale : aucune ; huitième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-ATLAS` — Gate 134
+
+- État : `DONE` (2026-08-30). Portée : `GÉOMÉTRIQUE/PHYSIQUE-MINIMALE/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalAtlas4D`.
+- Résultat : toute carte locale injective sur son domaine admissible engendre
+  un atlas singleton sur son image. La carte physique minimale D10-free est
+  promue à cet atlas sous l'hypothèse exacte d'injectivité de sa famille, et sa
+  configuration de base appartient au carrier ; sa criticité descendue y
+  équivaut exactement à l'annulation de l'Euler local physique minimal.
+- Limite : le constructeur analytique existant ne prouve pas l'injectivité de
+  `datumAt`; celle-ci reste la donnée géométrique concrète à construire.
+- Porte terminale : aucune ; neuvième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-ATLAS-RETRACTION` — Gate 135
+
+- État : `DONE` (2026-08-30). Portée : `GÉOMÉTRIQUE/PHYSIQUE-MINIMALE/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalAtlasRetraction4D`.
+- Résultat : un décodeur des champs globaux vers les coordonnées admissibles,
+  muni d'une loi de récupération exacte, prouve automatiquement l'injectivité
+  de `datumAt`, construit l'atlas physique minimal, couvre la configuration de
+  base et y identifie la criticité à l'Euler local.
+- Limite : ce décodeur concret doit encore être construit depuis les composantes
+  métrique, jauge, LL et matière des champs bruts.
+- Porte terminale : aucune ; dixième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-SECTOR-SYSTEM` — Gate 136
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/TANGENT-MINIMAL/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalSectorSystem4D`.
+- Résultat : le tangent physique minimal se décompose canoniquement en bulk
+  sans anciennes directions ghost/auxiliaire et matière SpinC primitive.
+  L'annulation de l'Euler de la carte minimale, puis la criticité de l'atlas
+  rétractif à sa base, équivalent exactement aux deux équations sectorielles.
+- Limite : les représentants PDE tensoriels internes au secteur bulk et le
+  décodeur concret des champs globaux restent à construire.
+- Porte terminale : aucune ; onzième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-SEVEN-BULK-SYSTEM` — Gate 137
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/COMPOSANTES-PHYSIQUES/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalSevenBulkSystem4D`.
+- Résultat : le bulk minimal est linéairement équivalent aux sept familles
+  libres : perturbation métrique complète, jauge abélienne paire, déplacement
+  normal, fantôme de difféomorphisme et trois champs LL. Son Euler s'annule si
+  et seulement si les sept restrictions s'annulent. Avec SpinC, l'Euler local
+  et la criticité de l'atlas à sa base donnent huit équations exactes.
+- Limite : ces covecteurs ne sont pas encore identifiés à leurs expressions
+  PDE tensorielle locale ; le décodeur global concret reste aussi ouvert.
+- Porte terminale : aucune ; douzième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-EIGHT-SECTOR-BLOCK-SUM` — Gate 138
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HUIT-SECTEURS/NEUF-BLOCS/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalEightSectorBlockSum4D`.
+- Résultat : les sept coordonnées bulk et la matière SpinC ont des transports
+  linéaires explicites vers la carte minimale. En tout point admissible, leurs
+  évaluations d'Euler sont exactement la somme des dérivées des neuf blocs
+  d'action. Toute restriction linéaire à une composante pure hérite de cette
+  formule.
+- Limite : la somme fonctionnelle exacte n'est pas encore convertie en
+  expressions PDE tensorielle locale ni recollée sur un atlas brut couvrant.
+- Porte terminale : aucune ; treizième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-WEAK-EIGHT-SECTOR-SYSTEM` — Gate 139
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/SYSTÈME-FAIBLE/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalWeakEightSectorSystem4D`.
+- Résultat : l'annulation de la somme des neuf dérivées de blocs contre tout
+  paquet test des sept champs bulk et toute variation SpinC primitive équivaut
+  exactement à l'annulation de l'Euler local minimal. À la base couverte, ce
+  système faible équivaut aussi à la criticité de l'atlas rétractif.
+- Limite : aucun représentant tensoriel fort ni opérateur différentiel local
+  n'est déduit de cette formulation faible ; le décodeur couvrant reste ouvert.
+- Porte terminale : aucune ; quatorzième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-SEPARATING-PDE-RESIDUAL` — Gate 140
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/PDE-FORTE/FRONTIÈRE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalSeparatingPDEResidual4D`.
+- Résultat : une interface non dégénérée exige, pour le paquet bulk à sept
+  champs et la matière SpinC primitive, un résidu, son pairing faible, la loi
+  de représentation exacte et la séparation par tous les tests. Sous ces
+  données, le système PDE fort est équivalent au système faible à neuf blocs,
+  à l'Euler local minimal et à la criticité de l'atlas rétractif à sa base.
+- Limite : les résidus tensoriels/différentiels concrets et leurs lois de
+  séparation ne sont pas encore construits ; aucun ancien opérateur scalaire
+  ou LL n'est identifié artificiellement au système minimal actuel.
+- Porte terminale : aucune ; quinzième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-COMPONENTWISE-PDE-RESIDUAL` — Gate 141
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/PDE-FORTE/COMPOSANTES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalComponentwisePDEResidual4D`.
+- Résultat : l'obligation forte est séparée en huit représentations nommées :
+  métrique, jauge abélienne appariée, déplacement normal, ghost difféomorphe,
+  métrique auxiliaire LL, mesure LL, champ LL et matière SpinC primitive.
+  L'annulation des huit résidus équivaut exactement à l'Euler minimal, au
+  système faible à neuf blocs et à la criticité de l'atlas rétractif.
+- Limite : cette porte organise les futurs résidus concrets mais ne les
+  construit pas ; chaque pairing et preuve de séparation reste à instancier.
+- Porte terminale : aucune ; seizième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-COMPONENT-PDE-BLOCK-PAIRING` — Gate 142
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/PDE-FORTE/BLOCS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalComponentPDEBlockPairing4D`.
+- Résultat : les sept injections linéaires de variations pures dans le paquet
+  bulk sont explicites, et chaque covecteur nommé est sa restriction exacte.
+  Pour toute représentation PDE séparante, son pairing de résidu est donc
+  exactement la somme des dérivées des neuf blocs d'action dans la direction
+  pure transportée ; la même identité est fermée pour SpinC.
+- Limite : les opérateurs différentiels tensoriels qui doivent fournir ces
+  représentations restent à construire secteur par secteur.
+- Porte terminale : aucune ; dix-septième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-CANONICAL-ALGEBRAIC-RESIDUAL` — Gate 143
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/RÉSIDU-ALGÉBRIQUE/BASELINE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalCanonicalAlgebraicResidual4D`.
+- Résultat : tout covecteur se représente canoniquement par lui-même dans le
+  dual algébrique, avec pairing d'évaluation séparant. Les huit secteurs ont
+  donc un paquet de résidus concret et sans hypothèse ; son annulation équivaut
+  au système faible, à l'Euler minimal et à la criticité de l'atlas rétractif.
+- Limite : ce témoin n'est volontairement pas appelé représentant tensoriel
+  local. Il montre que le seul saut encore ouvert est analytique/géométrique :
+  construire les vrais opérateurs différentiels et les identifier à ces duals.
+- Porte terminale : aucune ; dix-huitième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MATTER-FINITE-CONTINUOUS-RESIDUAL` — Gate 144
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/SPINC-FINI/RÉSIDU-CONTINU-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMatterFiniteContinuousResidual4D`.
+- Résultat : sur l'atlas SpinC fini concret, le Hessien de graphe fermé est
+  instancié comme résidu dans le dual continu. Son pairing d'évaluation est
+  exactement l'Euler de la même action et la somme des dérivées de ses neuf
+  blocs ; la criticité descendue équivaut à l'annulation de ce résidu.
+- Limite : cette fermeture est authentique mais limitée au cœur SpinC de modes
+  finis. Elle ne fournit pas encore l'opérateur local du secteur SpinC lisse
+  complet ni les sept autres secteurs minimaux.
+- Porte terminale : aucune ; dix-neuvième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MATTER-FINITE-SPECTRAL-RESIDUAL` — Gate 145
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/SPINC-FINI/RÉSIDU-SPECTRAL-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMatterFiniteSpectralResidual4D`.
+- Résultat : le résidu fort du cœur SpinC fini est maintenant la famille
+  spectrale explicite `(2D + m²)c`. Son pairing Hilbert représente exactement
+  le Hessien/Euler de graphe, et la séparation est prouvée coefficient par
+  coefficient. L'Euler et la criticité de l'atlas équivalent à l'équation
+  diagonale `(2D + m²)c = 0`.
+- Limite : le support spectral reste fini pour chaque vecteur et ne fournit pas
+  encore la réalisation distributionnelle/PDE du cœur lisse complet.
+- Porte terminale : aucune ; vingtième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MATTER-FINITE-SPECTRAL-KERNEL` — Gate 146
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/SPINC-FINI/NOYAU-SPECTRAL-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMatterFiniteSpectralKernel4D`.
+- Résultat : le noyau fort est exactement formé des coefficients dont le
+  support est contenu dans la coquille `(2D + m²)=0`. Hors résonance, le cœur
+  nul est l'unique point critique de l'atlas fini. Tout mode résonant engendre
+  explicitement un cœur critique non nul.
+- Limite : classification exacte du cœur spectral fini uniquement ; la
+  fermeture du domaine maximal lisse/distributionnel reste ouverte.
+- Porte terminale : aucune ; vingt-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MATTER-GRAPH-MAXIMAL-SPECTRAL-RESIDUAL` — Gate 147
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/SPINC-GRAPHE-MAXIMAL/RÉSIDU-SPECTRAL-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMatterGraphMaximalSpectralResidual4D`.
+- Résultat : la seconde composante du graphe diagonal maximal est le résidu
+  spectral fort complet. Son pairing avec la première composante des tests du
+  graphe représente exactement la dérivée de l'action et sépare le Hilbert
+  ambiant. La stationnarité équivaut donc au résidu maximal nul ; hors
+  résonance, l'état nul est l'unique point stationnaire.
+- Limite : cette fermeture porte sur l'action de graphe SpinC maximale, pas
+  encore sur son identification avec le chart minimal couplé complet ni sur
+  les sept autres résidus différentiels.
+- Porte terminale : aucune ; vingt-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MATTER-GRAPH-MAXIMAL-SPECTRAL-KERNEL` — Gate 148
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/SPINC-GRAPHE-MAXIMAL/NOYAU-SPECTRAL-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMatterGraphMaximalSpectralKernel4D`.
+- Résultat : sur tout le domaine fermé maximal, le résidu fort est nul si et
+  seulement si la première composante du graphe est supportée sur la coquille
+  `(2D + m²)=0`. La même condition caractérise exactement la stationnarité ;
+  chaque mode résonant produit un état stationnaire non nul explicite.
+- Limite : le noyau maximal SpinC est fermé, mais son transport dans le chart
+  minimal couplé et les sept autres résidus différentiels restent ouverts.
+- Porte terminale : aucune ; vingt-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-LL-GRAPH-RIESZ-RESIDUAL` — Gate 149
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/LL-GRAPHE-COMPLET/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeLLGraphRieszResidual4D`.
+- Résultat : le Riesz borné déjà construit pour le graphe complet des trois
+  slots LL est maintenant le résidu fort de sa véritable action quadratique.
+  Son pairing Hilbert représente exactement l'Euler de graphe, sépare le
+  résidu, et la stationnarité équivaut à l'équation de Riesz nulle.
+- Limite : ce résultat ferme le bloc LL same-action sur son graphe, mais pas
+  son identification à l'Euler du chart minimal couplé ni la décomposition du
+  résidu en trois opérateurs différentiels ponctuels.
+- Porte terminale : aucune ; vingt-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-ABELIAN-GRAPH-RIESZ-RESIDUAL` — Gate 150
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/ABELIEN-BRST-GRAPHE/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeAbelianGraphRieszResidual4D`.
+- Résultat : l'opérateur de Riesz borné de l'action BRST abélienne appariée
+  représente exactement son Hessien/Euler de graphe. Le pairing Hilbert est
+  séparant et la stationnarité de l'action équivaut au résidu de Riesz nul.
+- Limite : cette fermeture concerne le graphe abélien off-shell same-action ;
+  son transport vers l'Euler couplé du chart minimal reste à identifier.
+- Porte terminale : aucune ; vingt-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-DIFFEOMORPHISM-GRAPH-RIESZ-RESIDUAL` — Gate 151
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/DIFF-BRST-DIAGONAL-GRAPHE/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeDiffeomorphismGraphRieszResidual4D`.
+- Résultat : le Riesz du graphe BRST difféomorphe diagonal représente et
+  sépare son covecteur de Fréchet exact. L'annulation de ce covecteur équivaut
+  à l'équation forte de Riesz nulle.
+- Limite : le module source conserve ses instances de calcul différentiel
+  locales ; le résultat utilise donc son covecteur certifié par `HasFDerivAt`,
+  sans identification encore avec l'Euler couplé du chart minimal.
+- Porte terminale : aucune ; vingt-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-FAITHFUL-SAME-ACTION-RIESZ-RESIDUAL` — Gate 152
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/GRAPHE-FIDÈLE-BRST-SPINC-LL/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeFaithfulSameActionRieszResidual4D`.
+- Résultat : le Riesz fidèle agrégé fournit une équation forte unique pour le
+  BRST difféomorphe diagonal, le BRST abélien apparié, SpinC et LL. Son pairing
+  représente exactement le Hessien de graphe fidèle, sépare le résidu, et
+  l'annulation du covecteur équivaut au résidu nul.
+- Limite : conformément au module source, les sept blocs physiques de l'action
+  ne font pas partie de cet opérateur. Leur réalisation sur le même domaine et
+  leur identification au chart minimal restent nécessaires pour fermer `T03`.
+- Porte terminale : aucune ; vingt-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-FAITHFUL-AUGMENTED-RIESZ-RESIDUAL` — Gate 153
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/ACTION-AUGMENTÉE/SEPT-BLOCS-PHYSIQUES/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeFaithfulAugmentedRieszResidual4D`.
+- Résultat : sous le pont same-action et l'extension bornée commune déjà
+  définis, le Riesz augmenté représente et sépare le covecteur d'Euler exact
+  de l'action quadratique complète. Son annulation équivaut au résidu fort nul ;
+  sur le cœur lisse dense, son pairing est exactement le Hessien local
+  gauge-fixed Candidate-A incluant les sept blocs physiques.
+- Limite : les habitants canoniques du pont same-action et de l'extension des
+  sept blocs ne sont pas construits ici ; l'identification à l'Euler global
+  non linéaire du chart reste ouverte.
+- Porte terminale : aucune ; vingt-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-FAITHFUL-AUGMENTED-SIX-AGGREGATE-BOUND-RIESZ-RESIDUAL` — Gate 154
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/ACTION-AUGMENTÉE/BORNE-SIX-BLOCS/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeFaithfulAugmentedSixAggregateBoundRieszResidual4D`.
+- Résultat : la continuité H10 du bloc Robin et une unique estimation de norme
+  sur l'agrégat des six autres blocs construisent canoniquement l'extension
+  physique complète. Le covecteur d'Euler de l'action ainsi étendue s'annule
+  exactement quand son résidu fort de Riesz s'annule, avec accord au Hessien
+  gauge-fixed local sur le cœur lisse.
+- Limite : la borne agrégée des six blocs et le pont same-action restent des
+  données à construire ; l'Euler global non linéaire reste ouvert.
+- Porte terminale : aucune ; vingt-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-CANONICAL-SIX-DENSE-CORE-RIESZ-RESIDUAL` — Gate 155
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/SIX-HESSIENS-CANONIQUES/CŒUR-DENSE/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeCanonicalSixDenseCoreRieszResidual4D`.
+- Résultat : les six formes non-Robin ne sont plus choisies : ce sont les six
+  Hessians physiques Candidate-A du chart. L'accord Robin H10 et une borne du
+  core-to-chart engendrent la borne agrégée, l'extension des sept blocs,
+  l'action augmentée et son résidu fort ; stationnarité et résidu nul sont
+  équivalents, avec l'accord local exact sur le cœur lisse.
+- Limite : l'accord Robin, la borne core-to-chart et le pont chart/same-action
+  restent à construire ; l'Euler global non linéaire reste ouvert.
+- Porte terminale : aucune ; trentième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-CANONICAL-SIX-ROBIN-PROJECTION-RIESZ-RESIDUAL` — Gate 156
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/H10-ROBIN-PROJECTION/CŒUR-DENSE/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeCanonicalSixRobinProjectionRieszResidual4D`.
+- Résultat : l'accord des Hessians Robin n'est plus fourni. L'égalité de
+  l'action Robin locale avec l'action H10 complétée après projection, l'accord
+  des projections sur le cœur et la transversalité le dérivent par pullback
+  de la seconde dérivée de Fréchet. Le résidu canonique-six conserve alors
+  l'équivalence exacte stationnarité/résidu nul et l'accord local.
+- Limite : les données de projection H10, la borne core-to-chart et le pont
+  chart/same-action restent à construire ; l'Euler global non linéaire reste
+  ouvert.
+- Porte terminale : aucune ; trente-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-CANONICAL-SIX-CONTINUOUS-CHART-RIESZ-RESIDUAL` — Gate 157
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/CHART-CONTINU/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeCanonicalSixContinuousChartRieszResidual4D`.
+- Résultat : une réalisation linéaire continue du Hilbert commun dans le chart,
+  égale au core-to-chart typé sur le cœur lisse, engendre automatiquement la
+  borne de graphe avec constante `‖T‖`. Elle alimente ensuite l'action physique
+  canonique-six, son résidu fort et les équivalences exactes déjà établies.
+- Limite : la réalisation continue, les données de projection H10 et le pont
+  chart/same-action restent à construire ; l'Euler global non linéaire reste
+  ouvert.
+- Porte terminale : aucune ; trente-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-CANONICAL-SIX-LOCAL-PROJECTION-RIESZ-RESIDUAL` — Gate 158
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/H10-PROJECTION-LOCALE/CHART-CONTINU/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeCanonicalSixLocalProjectionRieszResidual4D`.
+- Résultat : la projection H10 complétée n'est plus une entrée. La composition
+  de la projection locale avec la réalisation continue du chart la construit,
+  et l'accord sur le cœur résulte de l'accord du chart. L'action complète, le
+  résidu fort, l'équivalence d'Euler et le raccord local restent exacts.
+- Limite : la réalisation continue, la projection/action Robin locale, la
+  transversalité et le pont chart/same-action restent à construire ; l'Euler
+  global non linéaire reste ouvert.
+- Porte terminale : aucune ; trente-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-FAITHFUL-AUGMENTED-SMOOTH-WEAK-STRONG` — Gate 159
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HESSIEN-LOCAL/FAIBLE-FORT/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeFaithfulAugmentedSmoothWeakStrongResidual4D`.
+- Résultat : la densité du cœur typé prolonge l'annulation du Hessien local
+  gauge-fixed contre tous les tests lisses en annulation du covecteur continu
+  complet. Ce système faible est équivalent au résidu fort de Riesz nul et au
+  covecteur de Fréchet nul de l'action quadratique augmentée.
+- Limite : il s'agit de l'Euler linéarisé/Hessien au chart base ; son
+  identification à l'Euler global non linéaire reste ouverte.
+- Porte terminale : aucune ; trente-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-NONLINEAR-HILBERT-RIESZ-RESIDUAL` — Gate 160
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/RÉSIDU-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeNonlinearHilbertRieszResidual4D`.
+- Résultat : toute réalisation linéaire continue du Hilbert augmenté commun
+  dans un chart local définit un pullback exact de l'action non linéaire. À
+  chaque état admissible, son covecteur d'Euler est sa vraie dérivée de
+  Fréchet ; son inverse de Riesz représente exactement ce covecteur, et leur
+  annulation est équivalente. Le pullback est égal à l'action covariante.
+- Limite : la réalisation couvrante canonique et sa compatibilité sur les
+  changements de cartes restent à construire pour descendre cet opérateur sur
+  tout l'espace physique.
+- Porte terminale : aucune ; trente-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-NONLINEAR-HILBERT-CHART-TRANSITION` — Gate 161
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/CHEVAUCHEMENT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeNonlinearHilbertChartTransition4D`.
+- Résultat : sur tout chevauchement variationnel réel, deux réalisations
+  bornées reliées par la dérivée du changement de carte produisent le même
+  covecteur d'Euler et le même résidu de Riesz. Les valeurs d'action et les
+  équations de stationnarité coïncident également.
+- Limite : il reste à construire une famille couvrante canonique de ces
+  réalisations compatibles sur le véritable espace physique.
+- Porte terminale : aucune ; trente-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-NONLINEAR-HILBERT-ATLAS-RESIDUAL` — Gate 162
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/DESCENTE-ATLAS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeNonlinearHilbertAtlasResidual4D`.
+- Résultat : le contrat exact d'un atlas de réalisations Hilbert compatibles
+  est typé. Une carte de référence définit une action et un résidu non
+  linéaires uniques sur son porteur ; ils sont égaux à chaque représentant, et
+  la criticité globale équivaut à la vraie équation de Fréchet dans toute carte.
+  Toute réalisation bornée fournit un habitant singleton sur sa préimage
+  admissible.
+- Limite : il reste à construire un habitant géométrique canonique de ce
+  contrat couvrant l'espace physique réel ; aucune couverture n'est postulée
+  comme déjà réalisée.
+- Porte terminale : aucune ; trente-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-NONLINEAR-HILBERT-LINEARIZATION` — Gate 163
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/LINÉARISATION-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeNonlinearHilbertLinearization4D`.
+- Résultat : la vraie dérivée du covecteur d'Euler non linéaire est exactement
+  le Hessien local tiré par la réalisation bornée dans ses deux variables. Ce
+  Hessien est symétrique. La vraie dérivée du résidu non linéaire fort est son
+  représentant de Riesz, avec l'identité faible-forte exacte.
+- Limite : aucune réalisation bornée canonique du Hilbert commun vers le chart
+  physique n'existe encore ; le théorème ne transforme pas l'application
+  linéaire dense du cœur en opérateur continu sans preuve de borne.
+- Porte terminale : aucune ; trente-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-NONLINEAR-HILBERT-AUGMENTED-LINEARIZATION-BRIDGE` — Gate 164
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/GAUGE-FIXING-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeNonlinearHilbertAugmentedLinearizationBridge4D`.
+- Résultat : sur le cœur lisse dense, la linéarisation du véritable Euler
+  covariant est le Hessien covariant local. Le Hessien et le Riesz augmentés
+  antérieurs sont exactement cette linéarisation plus le Hessien explicite de
+  gauge. L'égalité sans correction équivaut précisément à l'annulation de ce
+  terme de gauge.
+- Limite : l'accord du cœur suppose toujours une réalisation bornée du Hilbert
+  commun vers le chart ; seule son application linéaire dense est actuellement
+  construite dans le dépôt.
+- Porte terminale : aucune ; trente-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-DENSE-CORE-CHART-REALIZATION` — Gate 165
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT/EXTENSION-DENSE/CHART-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeDenseCoreChartRealization4D`.
+- Résultat : si le modèle du chart est complet, la borne graphe du cœur dense
+  construit canoniquement la réalisation continue par `LinearMap.extendOfNorm`.
+  L'accord sur le cœur et la borne de norme sont prouvés. Cette réalisation
+  est aussi l'unique opérateur continu ayant ces valeurs sur le cœur dense.
+  Elle instancie l'atlas résiduel singleton et identifie sa linéarisation au
+  Hessien covariant sans supposer séparément un opérateur continu.
+- Limite : la complétude du véritable chart et surtout la borne graphe de son
+  application tangentielle doivent encore être établies pour les champs
+  physiques réels ; la couverture multi-chart reste également ouverte.
+- Porte terminale : aucune ; quarantième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-HILBERT-RESIDUAL-ATLAS` — Gate 166
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/CHART-PHYSIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertResidualAtlas4D`.
+- Résultat : l'équivalence linéaire continue déjà requise entre le
+  Hilbert graphe commun et le chart physique minimal fournit directement la
+  réalisation bornée. Sa norme d'opérateur donne la borne du cœur dense ;
+  l'accord lisse, l'atlas résiduel singleton et l'identification de sa
+  linéarisation au Hessien covariant sont prouvés.
+- Limite : il reste à construire cette équivalence Hilbert pour les champs
+  physiques réels et un atlas compatible couvrant plus que le chart singleton.
+- Porte terminale : aucune ; quarante-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
@@ -4404,7 +5075,7 @@ un `ProgramStatus` arbitraire.
 
 - [x] `T01` — Revalider toutes les fondations et pairings par un certificat
   typé et compilé sur les objets globaux communs.
-- [ ] `T02` — `invariantLocalFunctionalBasisClassified`.
+- [x] `T02` — `invariantLocalFunctionalBasisClassified`.
 - [ ] `T03` — `fullEulerLagrangeOperatorDerived`.
 - [ ] `T04` — `nonlinearHelmholtzConditionsProved`.
 - [ ] `T05` — `variationalBicomplexObstructionVanishing`.
@@ -4440,13 +5111,14 @@ Cette carte améliore la fiabilité du suivi mais ne ferme aucune porte
 scientifique.
 
 Validation : l'audit lit exclusivement la section fixe `T01–T14`, impose le
-dénominateur `14`, affiche le décompte terminal `1/14` et rejette toute porte
+dénominateur `14`, affiche le décompte terminal `2/14` et rejette toute porte
 cochée sans `TerminalGateEvidence`. Chaque évidence doit fournir module,
 façade, théorème pleinement qualifié, portée et fragment de type ; le module
 doit être importé, sans placeholder, et le théorème ne peut pas être un simple
 contrat `ProgramStatus`. Le certificat global typé `T01`, sa complétion L2
 intrinsèque et son intégration à la façade ont été revérifiés verts le
-2026-08-26. `T01` est la seule porte terminale fermée.
+2026-08-26. Le certificat borné global `T02` a été ajouté et revérifié le
+2026-08-29 ; `T01` et `T02` sont les deux portes terminales fermées.
 
 Mise à jour : `P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` ferme le
 paquetage global lisse, la linéarité réelle et l'intégrabilité de l'onde
@@ -4566,5 +5238,5 @@ variation diagonale en zéro est donc exactement le Hessien symétrique certifi�
 - le paquet spectral exige encore les différences actual/reference, les
   frontières filtrées, les moyennes de slices et leurs identités de
   semi-groupes. Les frontends Bochner fixes ne prouvent pas encore ce pont ; le
-  décompte terminal actuel est néanmoins `1/14`, par fermeture indépendante de
-  `T01`.
+  décompte terminal actuel est néanmoins `2/14`, par fermeture indépendante de
+  `T01` et `T02`.
