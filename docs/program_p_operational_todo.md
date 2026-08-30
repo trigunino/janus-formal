@@ -3303,7 +3303,7 @@ la dépendance `C²` de l'action et son égalité exacte avec
 | `QUILLEN-GLOBAL-01` | **FRONTIER (2026-07-26)** — La vraie famille cercle possède ligne déterminante, métrique hermitienne, connexion plate compatible, recollement et holonomie unitaire. Il manque l’identification à la géométrie Quillen/Bismut–Freed de la famille Janus géométrique complète. | `P0EFTJanusProgramPGlobalQuillenFrontier4D` |
 | `ANOMALY-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Annulation additive PT, convergence du cutoff `Z4`, égalité des logarithmes renormalisés, annulation des phases mode par mode et inflow opposé. Le certificat inclut désormais la trace chirale D10 tous niveaux, absolument sommable, nulle par PT, avec convergence de tout filet de cutoffs finis. Il manque la classe locale/globale et sa trivialisation équivariante pour tout le contenu géométrique. | `P0EFTJanusProgramPGlobalAnomalyFrontier4D`, `P0EFTJanusProgramPD10ContinuumHeatRegulator4D` |
 | `SCHEME-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-26)** — Des témoins distincts satisfont platitude et annulation PT; une ligne de Quillen fixée ne fixe pas l’action scalaire renormalisée. Les parties finies et la normalisation doivent venir d’une loi microscopique. | `P0EFTJanusProgramPGlobalSchemeFrontier4D`, `MICRO-GLOBAL-01` |
-| `MICRO-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27)** — Le parent bulk fourni se réduit exactement et satisfait Helmholtz/PT, mais deux parents admissibles donnent des mixages réduits différents. La sélection discrète de `α` et du sextique est exacte seulement après fourniture de `β`, du niveau, du verrou et de l’ancrage UV. Il manque donc la loi microscopique Janus sélectionnant le parent et ses parties finies. | `P0EFTJanusProgramPGlobalMicroFrontier4D`, `SCHEME-GLOBAL-01` |
+| `MICRO-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27; complétion conditionnelle 2026-08-30)** — Le parent bulk fourni se réduit exactement et satisfait Helmholtz/PT. Pour toute empreinte microscopique à trois coefficients et toute cible réduite PT-even, un parent de Schur explicite existe, ses trois coefficients nus de bord/jonction sont forcés et ce parent est unique. Réciproquement, deux empreintes bulk distinctes possèdent des complétions distinctes donnant exactement la même cible réduite : l’action effective seule ne reconstruit donc pas le microscopique. Il reste à dériver physiquement l’empreinte bulk Janus. La sélection discrète de `α` et du sextique reste conditionnelle à `β`, au niveau, au verrou et à l’ancrage UV. | `P0EFTJanusParentBulkMicroscopicFingerprintSelection`, `P0EFTJanusProgramPGlobalMicroFrontier4D`, `SCHEME-GLOBAL-01` |
 | `VACUUM-GLOBAL-01` | **FRONTIER (2026-07-27; dépendance physique bloquante)** — L’interaction PT-plate proportionnelle a un minimum positif unique en `c=1` et une Hessienne réduite positive, mais les contraintes FLRW du vide y perdent leur rang et la branche poussière possède une direction contrainte isoénergétique. Le vide global exige encore l’action effective renormalisée, le quotient stable, la trivialisation d’anomalie et les parties finies microscopiques. | `P0EFTJanusProgramPGlobalVacuumFrontier4D`, `STABILITY/ANOMALY/SCHEME/MICRO-GLOBAL-01` |
 | `SCALE-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27)** — Géométrie, gap de Dirac, flux LL, action locale de chaleur et compatibilité des charges conservent une orbite commune de redimensionnement; les hypothèses actuelles ne sélectionnent donc aucune longueur positive unique. Il faut un ancrage microscopique dimensionné indépendant et un vide effectif stable sélectionné, sans injecter un rayon observé. | `P0EFTJanusProgramPGlobalScaleFrontier4D`, `MICRO-GLOBAL-01`, `VACUUM-GLOBAL-01` |
 
@@ -5065,6 +5065,125 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : il reste à construire cette équivalence Hilbert pour les champs
   physiques réels et un atlas compatible couvrant plus que le chart singleton.
 - Porte terminale : aucune ; quarante-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-HILBERT-PHYSICAL-ATLAS-BRIDGE` — Gate 167
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/ATLAS-PHYSIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertPhysicalAtlasBridge4D`.
+- Résultat : chaque état admissible du porteur résiduel Hilbert représente
+  une configuration couverte par l'atlas physique rétractif. La surjectivité
+  de l'équivalence de chart prouve que l'annulation du résidu fort est
+  exactement l'annulation de l'Euler local, donc la criticité physique
+  descendue. L'origine Hilbert appartient au porteur et représente exactement
+  la configuration physique de base.
+- Limite : l'équivalence Hilbert et la rétraction restent des entrées
+  analytiques ; la couverture construite demeure singleton.
+- Porte terminale : aucune ; quarante-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-VARIATIONAL-ATLAS-HILBERT-RESIDUAL-BRIDGE` — Gate 168
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/MULTI-CHART-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeVariationalAtlasHilbertResidualBridge4D`.
+- Résultat : une famille d'équivalences Hilbert au-dessus d'un atlas
+  variationnel physique construit automatiquement l'atlas résiduel non
+  linéaire. Les transitions ne sont plus fournies une seconde fois : elles
+  sont déduites de l'égalité des configurations représentées via l'atlas
+  physique. Chaque état du porteur donne une configuration physique couverte,
+  représentée dans chaque chart, et les deux notions de criticité coïncident.
+- Limite : les équivalences Hilbert, leur compatibilité différentielle et
+  une couverture physique concrète restent à construire.
+- Porte terminale : aucune ; quarante-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-VARIATIONAL-ATLAS-HILBERT-REALIZATION` — Gate 169
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/SINGLETON-CANONIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalVariationalAtlasHilbertRealization4D`.
+- Résultat : l'atlas physique minimal rétractif instancie canoniquement le
+  contrat Hilbert multi-chart. Pour ce singleton, admissibilité, égalité des
+  configurations, couverture et compatibilité différentielle sont déduites
+  sans nouvelle hypothèse. Le constructeur générique reproduit exactement le
+  porteur, l'action, le résidu et la criticité du constructeur direct.
+- Limite : l'équivalence Hilbert et la rétraction du chart minimal restent
+  des entrées analytiques ; aucun second chart physique concret n'est construit.
+- Porte terminale : aucune ; quarante-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-HILBERT-PDE-RESIDUAL-BRIDGE` — Gate 170
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/PDE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertPDEResidualBridge4D`.
+- Résultat : en tout état admissible Hilbert, l'annulation du résidu non
+  linéaire est exactement le système faible à huit secteurs. En tout état,
+  elle est aussi le système résiduel algébrique canonique à huit secteurs et,
+  pour toute représentation séparante fournie, les huit équations PDE fortes
+  composante par composante au point de chart représenté. À l'origine Hilbert,
+  les mêmes équivalences sont identifiées aux systèmes de la configuration
+  physique de base.
+- Limite : les résidus canoniques restent des covecteurs algébriques ; leurs
+  représentants tensoriels différentiels concrets, l'équivalence Hilbert et
+  la rétraction du chart restent à construire.
+- Porte terminale : aucune ; quarante-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-HILBERT-BLOCK-SUM` — Gate 171
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/NEUF-BLOCS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertBlockSum4D`.
+- Résultat : en tout état Hilbert admissible et contre tout test Hilbert, le
+  pairing du résidu fort non linéaire est exactement la somme des dérivées des
+  neuf vrais blocs de l'action dans la direction réalisée dans le chart. La
+  dérivée de Fréchet de l'action Hilbert tirée en arrière satisfait la même
+  formule exacte.
+- Limite : la formule est portée par le chart physique minimal fourni ;
+  l'équivalence Hilbert, la rétraction et les représentants PDE tensoriels
+  différentiels restent à construire.
+- Porte terminale : aucune ; quarante-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-VARIATIONAL-ATLAS-HILBERT-BLOCK-SUM` — Gate 172
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/MULTI-CHART/NEUF-BLOCS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeVariationalAtlasHilbertBlockSum4D`.
+- Résultat : pour toute réalisation Hilbert compatible au-dessus d'un atlas
+  variationnel physique, le pairing du résidu global est la somme exacte des
+  dérivées des neuf blocs dans chaque chart de l'atlas, au point et dans la
+  direction Hilbert représentés. La formule n'est donc pas limitée au chart
+  de référence.
+- Limite : la réalisation multi-chart et la couverture physique restent des
+  données ; les représentants PDE tensoriels différentiels ne sont pas encore
+  construits.
+- Porte terminale : aucune ; quarante-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-HILBERT-COMPONENT-PDE-PAIRING` — Gate 173
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT/COMPOSANTES-PDE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertComponentPDEPairing4D`.
+- Résultat : l'inverse de l'équivalence Hilbert réalise chaque direction test
+  physique pure. Le pairing du résidu Hilbert contre ce test est exactement le
+  pairing du résidu PDE séparant fourni, génériquement pour les sept
+  composantes bulk et explicitement pour la matière SpinC primitive.
+- Limite : ce pont ne construit pas les représentants différentiels ; il
+  identifie exactement ceux qui sont fournis au résidu non linéaire global.
+- Porte terminale : aucune ; quarante-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-DENSE-CORE-HILBERT-CHART-EQUIVALENCE` — Gate 174
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT/EXTENSION-ISOMÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeDenseCoreHilbertChartEquivalence4D`.
+- Résultat : si le modèle du chart est complet, si le vrai core-to-chart
+  préserve exactement la norme graphe commune et si son image est dense, ce
+  core-to-chart est injectif et s'étend canoniquement en équivalence linéaire
+  isométrique continue du Hilbert commun vers le chart. La compatibilité sur le
+  cœur lisse est intégrée au contrat de chart Hilbert.
+- Limite : la complétude du chart minimal, l'identité de normes et la densité
+  du core-to-chart doivent encore être prouvées géométriquement ; elles
+  remplacent l'ancienne équivalence continue arbitrairement fournie.
+- Porte terminale : aucune ; quarante-neuvième support pour `T03`, compteur
   terminal inchangé à `2/14`.
 
 ## 7. Les 14 portes terminales fixes

@@ -1,5 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianClosure4D
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterSmoothSpectralGraph4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCDiracGreenClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChartConstructor4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalHilbertChart4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedParametrix4D
@@ -17,7 +17,6 @@ a finite-defect parametrix.
 The remaining inputs are therefore genuine analytic theorems rather than
 aggregate Hessian contracts:
 
-* weighted Fourier--monopole decay for smooth primitive SpinC sections;
 * an open `C²` Candidate-A family on the minimal physical tangent with exact
   matter and LL action identities;
 * identification of that tangent norm with the unique common graph Hilbert
@@ -50,7 +49,7 @@ open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedFredholmSum4D
 open P0EFTJanusProgramPGlobalHessianClosure4D
-open P0EFTJanusProgramPPrimitiveSpinCMatterSmoothSpectralGraph4D
+open P0EFTJanusProgramPPrimitiveSpinCDiracGreenClosure4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChartConstructor4D
@@ -78,15 +77,15 @@ local instance effectiveQuotientBorelSpace :
     BorelSpace (EffectiveQuotient period hPeriod) where
   measurable_eq := rfl
 
-/-- Canonical smooth matter graph realization obtained from the spectral data. -/
+/-- Canonical smooth matter graph realization obtained unconditionally from
+the geometric Green identity. -/
 def minimalPhysicalClosureMatterRealization
-    (massSquared : Real)
-    (spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
-      hPeriod massSquared) :=
-  programPPrimitiveSpinCMatterSmoothGraphRealization_of_spectral period hPeriod
-    massSquared spectral
+    (massSquared : Real) :=
+  programPPrimitiveSpinCMatterSmoothGraphRealization_of_geometricGreen period
+    hPeriod massSquared
 
-/-- Concrete chart data assembled from the local family and spectral graph. -/
+/-- Concrete chart data assembled from the local family and canonical matter
+graph. -/
 def minimalPhysicalClosureChartData
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -96,16 +95,14 @@ def minimalPhysicalClosureChartData
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
-    (spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
-      hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
       (measure := measure) configuration data analysis
         (minimalPhysicalClosureMatterRealization period hPeriod
-          couplings.matterMassSquared spectral)) :=
+          couplings.matterMassSquared)) :=
   globalCandidateAMinimalPhysicalActionChartData_of_family period hPeriod
     configuration data analysis
       (minimalPhysicalClosureMatterRealization period hPeriod
-        couplings.matterMassSquared spectral)
+        couplings.matterMassSquared)
       family
 
 /-- The resulting local variational chart. -/
@@ -118,16 +115,14 @@ def minimalPhysicalClosureChart
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
-    (spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
-      hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
       (measure := measure) configuration data analysis
         (minimalPhysicalClosureMatterRealization period hPeriod
-          couplings.matterMassSquared spectral)) :=
+          couplings.matterMassSquared)) :=
   globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
     configuration data analysis
       (minimalPhysicalClosureChartData period hPeriod configuration data analysis
-        spectral family)
+        family)
 
 /-- H13 same-action witness determined by the same minimal physical family. -/
 def minimalPhysicalClosureSameAction
@@ -139,16 +134,14 @@ def minimalPhysicalClosureSameAction
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical)
-    (spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
-      hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
       (measure := measure) configuration data analysis
         (minimalPhysicalClosureMatterRealization period hPeriod
-          couplings.matterMassSquared spectral)) :=
+          couplings.matterMassSquared)) :=
   globalCandidateAMinimalPhysicalMatterLLSameActionBridge period hPeriod
     configuration data analysis
       (minimalPhysicalClosureChartData period hPeriod configuration data analysis
-        spectral family)
+        family)
 
 /-- Complete analytic input packet after all formal reductions. -/
 structure GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D
@@ -160,31 +153,29 @@ structure GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
     (analysis : GlobalAnalysisData period hPeriod configuration.physical) where
-  spectral : ProgramPPrimitiveSpinCMatterSmoothSpectralGraphData4D period
-    hPeriod couplings.matterMassSquared
   family : ProgramPGlobalMinimalPhysicalLocalActionFamilyData4D period hPeriod
     (measure := measure) configuration data analysis
       (minimalPhysicalClosureMatterRealization period hPeriod
-        couplings.matterMassSquared spectral)
+        couplings.matterMassSquared)
   hilbert : ProgramPGlobalMinimalPhysicalHilbertModel4D period hPeriod
     configuration data analysis
       (minimalPhysicalClosureChartData period hPeriod configuration data analysis
-        spectral family)
+        family)
       (minimalPhysicalClosureSameAction period hPeriod configuration data
-        analysis spectral family)
+        analysis family)
   parametrix :
     GlobalCandidateAFaithfulAugmentedFiniteDefectParametrix4D period hPeriod
       configuration data analysis
         (minimalPhysicalClosureChart period hPeriod configuration data analysis
-          spectral family)
+          family)
         (minimalPhysicalClosureSameAction period hPeriod configuration data
-          analysis spectral family)
+          analysis family)
         (globalCandidateAMinimalPhysicalSevenBlockExtension period hPeriod
           configuration data analysis
           (minimalPhysicalClosureChartData period hPeriod configuration data
-            analysis spectral family)
+            analysis family)
           (minimalPhysicalClosureSameAction period hPeriod configuration data
-            analysis spectral family)
+            analysis family)
           hilbert)
 
 /-- H11 extension canonically extracted from the common Hilbert norm. -/
@@ -202,9 +193,9 @@ def GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D.physical
   globalCandidateAMinimalPhysicalSevenBlockExtension period hPeriod
     configuration data analysis
       (minimalPhysicalClosureChartData period hPeriod configuration data analysis
-        inputs.spectral inputs.family)
+        inputs.family)
       (minimalPhysicalClosureSameAction period hPeriod configuration data
-        analysis inputs.spectral inputs.family)
+        analysis inputs.family)
       inputs.hilbert
 
 /-- H12 estimates obtained from the displayed finite-defect parametrix. -/
@@ -222,13 +213,13 @@ def GlobalCandidateAHessianMinimalPhysicalConstructiveInputs4D.estimates
   globalCandidateAFaithfulAugmentedFredholmEstimates_of_parametrix period hPeriod
     configuration data analysis
       (minimalPhysicalClosureChart period hPeriod configuration data analysis
-        inputs.spectral inputs.family)
+        inputs.family)
       (minimalPhysicalClosureSameAction period hPeriod configuration data
-        analysis inputs.spectral inputs.family)
+        analysis inputs.family)
       inputs.physical
       inputs.parametrix
 
-/-- Terminal H14 certificate from the four remaining analytic inputs. -/
+/-- Terminal H14 certificate from the three remaining analytic inputs. -/
 theorem global_candidateA_hessian_minimalPhysical_constructive_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
@@ -246,18 +237,18 @@ theorem global_candidateA_hessian_minimalPhysical_constructive_closure_gate
     GlobalCandidateAHessianClosureCertificate4D period hPeriod configuration
       data analysis
         (minimalPhysicalClosureChart period hPeriod configuration data analysis
-          inputs.spectral inputs.family)
+          inputs.family)
         einsteinScale
         (minimalPhysicalClosureSameAction period hPeriod configuration data
-          analysis inputs.spectral inputs.family)
+          analysis inputs.family)
         inputs.physical inputs.estimates :=
   global_candidateA_hessian_closure_gate period hPeriod configuration data
     analysis
       (minimalPhysicalClosureChart period hPeriod configuration data analysis
-        inputs.spectral inputs.family)
+        inputs.family)
       einsteinScale hBoundaryTransverse
       (minimalPhysicalClosureSameAction period hPeriod configuration data
-        analysis inputs.spectral inputs.family)
+        analysis inputs.family)
       inputs.physical inputs.estimates
 
 end

@@ -51,7 +51,7 @@ structure SameContractedMeanCurvatureGermAt
       Variation → Boundary → Index → Index → Real)
     (completedSecondForm historicalSecondForm :
       Variation → Boundary → Index → Index → Real)
-    (base : Variation) : Prop where
+    (base : Variation) where
   domain : Set Variation
   isOpen_domain : IsOpen domain
   base_mem_domain : base ∈ domain

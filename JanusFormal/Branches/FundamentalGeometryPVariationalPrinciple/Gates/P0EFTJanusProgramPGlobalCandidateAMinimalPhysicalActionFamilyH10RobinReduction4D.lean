@@ -33,6 +33,7 @@ open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionChart4D
@@ -130,7 +131,7 @@ structure ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
   completedRobinAction :
     ReducedFamilyModel period hPeriod configuration → Real
   completedRobin_contDiffWithin_two :
-    ContDiffWithin Real 2 completedRobinAction domain
+    ContDiffOn Real 2 completedRobinAction domain
   completedRobin_sameAction :
     let family : GlobalCandidateALocalActionFamily period hPeriod
         (ReducedFamilyModel period hPeriod configuration) couplings
@@ -184,9 +185,9 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D.toPhysicalC2
     {realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared}
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis realization) :
+      period hPeriod (measure := measure) configuration data analysis realization) :
     ProgramPGlobalMinimalPhysicalLocalActionFamilyPhysicalC2Data4D
-      period hPeriod configuration data analysis realization where
+      period hPeriod (measure := measure) configuration data analysis realization where
   normedAddCommGroup := family.normedAddCommGroup
   normedSpace := family.normedSpace
   toAddCommGroup_eq := family.toAddCommGroup_eq
@@ -198,6 +199,12 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D.toPhysicalC2
   datumAt := family.datumAt
   datumAt_zero_configuration := family.datumAt_zero_configuration
   physicalBlocksC2Within := by
+    letI : NormedAddCommGroup
+        (ReducedFamilyModel period hPeriod configuration) :=
+      family.normedAddCommGroup
+    letI : NormedSpace Real
+        (ReducedFamilyModel period hPeriod configuration) :=
+      family.normedSpace
     intro point hPoint
     let localFamily : GlobalCandidateALocalActionFamily period hPeriod
         (ReducedFamilyModel period hPeriod configuration) couplings
@@ -251,13 +258,14 @@ def ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D.toReduced
     {realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared}
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis realization) :
+      period hPeriod (measure := measure) configuration data analysis realization) :
     ProgramPGlobalMinimalPhysicalLocalActionFamilyReducedData4D
-      period hPeriod configuration data analysis realization :=
-  (family.toPhysicalC2 period hPeriod).toReduced period hPeriod
+      period hPeriod (measure := measure) configuration data analysis realization :=
+  (family.toPhysicalC2 period hPeriod (measure := measure)).toReduced period hPeriod
+    (measure := measure)
 
 /-- H13 from six local `C²` proofs plus the H10 same-action Robin transfer. -/
-theorem global_candidateA_h13_minimalPhysical_h10RobinFamily_gate
+def global_candidateA_h13_minimalPhysical_h10RobinFamily_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -269,9 +277,10 @@ theorem global_candidateA_h13_minimalPhysical_h10RobinFamily_gate
     (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
       period hPeriod couplings.matterMassSquared)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis realization) :=
+      period hPeriod (measure := measure) configuration data analysis realization) :=
   global_candidateA_h13_minimalPhysical_reducedFamily_gate period hPeriod
-    configuration data analysis realization (family.toReduced period hPeriod)
+    configuration data analysis realization
+      (family.toReduced period hPeriod (measure := measure))
 
 end
 end P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D

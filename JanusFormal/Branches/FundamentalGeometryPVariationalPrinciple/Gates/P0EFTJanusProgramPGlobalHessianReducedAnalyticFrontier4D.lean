@@ -1,4 +1,4 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCMatterSmoothGraphFrontier4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPPrimitiveSpinCDiracGreenClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryComponentwiseTerminalClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyPhysicalC2Reduction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D
@@ -8,6 +8,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedComplementInverse4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianConstructiveAnalyticClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinComplementClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinActualKernelGapClosure4D
 
 /-!
 # Reduced analytic frontier of `HESSIAN-GLOBAL-01`
@@ -25,8 +26,8 @@ The preferred terminal route has three decomposed analytic inputs:
   physical blocks; H10 supplies the Robin block;
 * seven continuous bilinear physical extensions on the common Hilbert space;
   all H11 constants and estimates are their operator norms;
-* an inverse on finite kernel/cokernel complements; the generalized inverse,
-  canonical defects, Fredholm property and index zero are derived.
+* finite-dimensionality of the genuine Hessian kernel and a positive gap on
+  its orthogonal complement; the Fredholm property and index zero are derived.
 
 No D10 direction, replacement action, second completion or duplicate Robin,
 matter or LL regularity hypothesis enters this route.
@@ -51,6 +52,8 @@ open P0EFTJanusProgramPGlobalCandidateAAugmentedComplementInverse4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
 open P0EFTJanusProgramPGlobalHessianConstructiveAnalyticClosure4D
 open P0EFTJanusProgramPGlobalHessianH10RobinComplementClosure4D
+open P0EFTJanusProgramPGlobalHessianH10RobinActualKernelGapClosure4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
 
 /-- Compatibility name of the earlier reduced local-family packet. -/
 def GlobalHessianLocalFamilyInput :=
@@ -89,6 +92,11 @@ def GlobalHessianGeneralizedInverseInput :=
 def GlobalHessianComplementInverseInput :=
   GlobalCandidateAFaithfulAugmentedComplementInverse4D
 
+/-- Narrowest H12 input: finite actual kernel and a positive gap on its
+orthogonal complement. -/
+def GlobalHessianActualKernelGapInput :=
+  GlobalCandidateAActualKernelGap4D
+
 /-- Raw terminal gate accepting the three aggregate compatibility packets. -/
 def global_candidateA_hessian_reduced_analytic_closure_gate :=
   @global_candidateA_hessian_diracGreen_bounded_closure_gate
@@ -98,9 +106,9 @@ def global_candidateA_hessian_decomposed_analytic_closure_gate :=
   @global_candidateA_hessian_constructive_analytic_closure_gate
 
 /-- Preferred terminal gate: H10 Robin transfer, seven continuous physical
-extensions and finite kernel/cokernel complements. -/
+extensions and the actual-kernel spectral gap. -/
 def global_candidateA_hessian_preferred_analytic_closure_gate :=
-  @global_candidateA_hessian_h10Robin_complement_closure_gate
+  @global_candidateA_hessian_h10Robin_actualKernelGap_closure_gate
 
 /-- Public componentwise H10 gate used by the preferred route. -/
 def global_candidateA_normal_boundary_componentwise_germ_gate :=

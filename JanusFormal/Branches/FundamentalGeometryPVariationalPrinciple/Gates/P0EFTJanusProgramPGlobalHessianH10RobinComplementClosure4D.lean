@@ -29,6 +29,7 @@ open scoped Manifold ContDiff InnerProductSpace
 open P0EFTJanusMappingTorusQuotient
 open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzMetricThroatTrace4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
@@ -65,7 +66,7 @@ local instance effectiveQuotientBorelSpace :
   measurable_eq := rfl
 
 /-- Preferred H14 gate from the fully decomposed analytic inputs. -/
-theorem global_candidateA_hessian_h10Robin_complement_closure_gate
+def global_candidateA_hessian_h10Robin_complement_closure_gate
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
@@ -78,33 +79,33 @@ theorem global_candidateA_hessian_h10Robin_complement_closure_gate
     (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
       data.plusGravity.metric.metric)
     (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
-      period hPeriod configuration data analysis
+      period hPeriod (measure := measure) configuration data analysis
         (diracGreenClosureMatterRealization period hPeriod
           couplings.matterMassSquared))
     (extensions : GlobalCandidateASevenPhysicalContinuousBlockExtensions4D
-      period hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
+      period hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
           analysis family))
     (inverse : GlobalCandidateAFaithfulAugmentedComplementInverse4D period
       hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod
+        (globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod (measure := measure)
           configuration data analysis family extensions)) :=
-  global_candidateA_hessian_h10Robin_continuous_closure_gate period hPeriod
+  global_candidateA_hessian_h10Robin_continuous_closure_gate period hPeriod (measure := measure)
     configuration data analysis einsteinScale hBoundaryTransverse family
     extensions
       (globalCandidateAFaithfulAugmentedGeneralizedInverse_of_complement period
-        hPeriod configuration data analysis
-        (globalCandidateAH10RobinChart period hPeriod configuration data
+        hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinSameAction period hPeriod configuration data
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure) configuration data
           analysis family)
-        (globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod
+        (globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod (measure := measure)
           configuration data analysis family extensions)
         inverse)
 

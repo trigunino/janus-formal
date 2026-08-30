@@ -215,8 +215,35 @@ def globalCandidateAAugmentedKernelDefect
       (GlobalCandidateAFaithfulSameActionHilbert period hPeriod configuration data
         analysis))
     (parametrix.comp
-      (adaptedAugmentedRieszOperator period hPeriod configuration data analysis
+    (adaptedAugmentedRieszOperator period hPeriod configuration data analysis
         chart sameAction physical))
+
+@[simp]
+theorem globalCandidateAAugmentedKernelDefect_apply
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart)
+    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
+      hPeriod configuration data analysis chart sameAction)
+    (parametrix : AugmentedEndomorphism period hPeriod configuration data
+      analysis)
+    (vector : GlobalCandidateAFaithfulSameActionHilbert period hPeriod
+      configuration data analysis) :
+    globalCandidateAAugmentedKernelDefect period hPeriod configuration data
+        analysis chart sameAction physical parametrix vector =
+      vector - parametrix
+        (globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+          configuration data analysis chart sameAction physical vector) :=
+  rfl
 
 /-- Canonical right defect `I - HQ`. -/
 def globalCandidateAAugmentedCokernelDefect
@@ -243,6 +270,34 @@ def globalCandidateAAugmentedCokernelDefect
         analysis))
     ((adaptedAugmentedRieszOperator period hPeriod configuration data analysis
       chart sameAction physical).comp parametrix)
+
+@[simp]
+theorem globalCandidateAAugmentedCokernelDefect_apply
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
+      NonNullFace NullFace measure)
+    (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
+      period hPeriod configuration data analysis chart)
+    (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D period
+      hPeriod configuration data analysis chart sameAction)
+    (parametrix : AugmentedEndomorphism period hPeriod configuration data
+      analysis)
+    (vector : GlobalCandidateAFaithfulSameActionHilbert period hPeriod
+      configuration data analysis) :
+    globalCandidateAAugmentedCokernelDefect period hPeriod configuration data
+        analysis chart sameAction physical parametrix vector =
+      vector -
+        globalCandidateAFaithfulAugmentedRieszOperator period hPeriod
+          configuration data analysis chart sameAction physical
+            (parametrix vector) :=
+  rfl
 
 /-- A bounded generalized inverse with finite canonical left and right defects.
 The relation `HQH = H` is precisely what is needed to make the right defect

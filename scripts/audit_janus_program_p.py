@@ -2650,6 +2650,14 @@ PROGRAM_P_GATES = {
             "theorem globalCandidateANonlinearHilbertHessian_denseCoreBound_smooth_eq_covariant",
         ),
     ),
+    "P0EFTJanusProgramPGlobalEulerLagrangeDenseCoreHilbertChartEquivalence4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateACommonHilbertSmoothCoreEmbedding",
+            "theorem globalCandidateACanonicalSixCoreToChart_injective_of_norm",
+            "def globalCandidateACommonHilbertChartOfDenseCoreIsometry",
+        ),
+    ),
     "P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertResidualAtlas4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
@@ -2658,6 +2666,73 @@ PROGRAM_P_GATES = {
             "def globalCandidateAMinimalPhysicalHilbertChartBound",
             "def globalCandidateAMinimalPhysicalNonlinearHilbertResidualAtlas",
             "theorem globalCandidateAMinimalPhysicalNonlinearHilbertHessian_smooth_eq_covariant",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertPhysicalAtlasBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateAMinimalPhysicalHilbertChartPoint",
+            "theorem globalCandidateAMinimalPhysical_zero_mem_hilbertResidualCarrier",
+            "def globalCandidateAMinimalPhysicalConfigurationOfHilbertState",
+            "theorem globalCandidateAMinimalPhysicalConfigurationOfHilbertState_zero",
+            "theorem globalCandidateAMinimalPhysicalHilbertCritical_iff_localEuler",
+            "theorem globalCandidateAMinimalPhysicalConfigurationOfHilbertState_mem_atlas",
+            "theorem globalCandidateAMinimalPhysicalHilbertCritical_iff_physicalAtlas",
+            "theorem globalCandidateAMinimalPhysicalHilbertZeroCritical_iff_baseConfiguration",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalEulerLagrangeVariationalAtlasHilbertResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateAVariationalAtlasHilbertPoint",
+            "structure GlobalCandidateAVariationalAtlasHilbertRealization",
+            "def toNonlinearHilbertResidualAtlas",
+            "def representedConfiguration",
+            "theorem representedConfiguration_mem",
+            "theorem chart_represents",
+            "theorem isEulerCritical_iff_physicalAtlas",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalEulerLagrangeVariationalAtlasHilbertBlockSum4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem GlobalCandidateAVariationalAtlasHilbertRealization.residual_pairing_eq_blockSum",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalVariationalAtlasHilbertRealization4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def globalCandidateAMinimalPhysicalVariationalAtlasHilbertRealization",
+            "def globalCandidateAMinimalPhysicalResidualAtlasViaVariationalAtlas",
+            "theorem globalCandidateAMinimalPhysicalResidualAtlasViaVariationalAtlas_carrier",
+            "theorem globalCandidateAMinimalPhysicalResidualAtlasViaVariationalAtlas_action",
+            "theorem globalCandidateAMinimalPhysicalResidualAtlasViaVariationalAtlas_residual",
+            "theorem globalCandidateAMinimalPhysicalResidualAtlasViaVariationalAtlas_critical",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertPDEResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateAMinimalPhysicalHilbertCritical_iff_weakEightSectorSystem",
+            "theorem globalCandidateAMinimalPhysicalHilbertCritical_iff_canonicalAlgebraicResidual",
+            "theorem globalCandidateAMinimalPhysicalHilbertCritical_iff_componentwiseStrongPDE",
+            "theorem globalCandidateAMinimalPhysicalHilbertZeroCritical_iff_canonicalAlgebraicResidual",
+            "theorem globalCandidateAMinimalPhysicalHilbertZeroCritical_iff_componentwiseStrongPDE",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertBlockSum4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateAMinimalPhysicalHilbertResidual_pairing_eq_blockSum",
+            "theorem globalCandidateAMinimalPhysicalHilbertResidual_pairing_symm_eq_blockSum",
+            "theorem globalCandidateAMinimalPhysicalHilbertAction_fderiv_apply_eq_blockSum",
+        ),
+    ),
+    "P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertComponentPDEPairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem globalCandidateAMinimalPhysicalHilbertResidual_pairing_eq_componentResidual",
+            "theorem globalCandidateAMinimalPhysicalHilbertResidual_pairing_eq_spinCResidual",
         ),
     ),
     "P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalHilbertChart4D.lean": (
@@ -2997,6 +3072,9 @@ PROGRAM_P_GATES = {
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
             "def ConditionalParentBulkReduction4D",
+            "theorem global_conditional_parent_fingerprint_selection",
+            "theorem global_conditional_microscopic_parent_completion",
+            "theorem reduced_target_alone_does_not_identify_fingerprint_4d",
             "theorem current_parent_family_does_not_select_unique_reduced_potential",
             "structure ProgramPGlobalMicroFrontierCertificate4D",
             "theorem global_micro_frontier_gate",

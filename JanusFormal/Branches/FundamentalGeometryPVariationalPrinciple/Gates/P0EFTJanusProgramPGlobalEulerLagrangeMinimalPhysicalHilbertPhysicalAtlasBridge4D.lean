@@ -140,6 +140,22 @@ theorem globalCandidateAMinimalPhysicalHilbertChartPoint_mem_domain
         configuration data analysis chartData).family.domain := by
   exact hState
 
+/-- The Hilbert origin belongs to the residual carrier because it represents
+the distinguished admissible base point. -/
+theorem globalCandidateAMinimalPhysical_zero_mem_hilbertResidualCarrier :
+    (0 : CommonAugmentedHilbert period hPeriod configuration data analysis) ∈
+      (globalCandidateAMinimalPhysicalNonlinearHilbertResidualAtlas period
+        hPeriod configuration data analysis chartData hilbertChart).carrier := by
+  change
+    globalCandidateAMinimalPhysicalHilbertChartPoint period hPeriod
+        configuration data analysis chartData hilbertChart 0 ∈
+      (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+        configuration data analysis chartData).family.domain
+  simpa [globalCandidateAMinimalPhysicalHilbertChartPoint,
+    globalCandidateANonlinearHilbertChartPoint] using
+    (globalCandidateAMinimalPhysicalMatterLLSameActionBridge period hPeriod
+      configuration data analysis chartData).chartBridge.basePoint_mem
+
 /-- The physical configuration represented by an admissible Hilbert state. -/
 def globalCandidateAMinimalPhysicalConfigurationOfHilbertState
     (state : CommonAugmentedHilbert period hPeriod configuration data analysis)
@@ -154,6 +170,25 @@ def globalCandidateAMinimalPhysicalConfigurationOfHilbertState
         configuration data analysis chartData hilbertChart state,
       globalCandidateAMinimalPhysicalHilbertChartPoint_mem_domain period hPeriod
         configuration data analysis chartData hilbertChart state hState⟩
+
+/-- The Hilbert origin represents exactly the selected physical base
+configuration. -/
+theorem globalCandidateAMinimalPhysicalConfigurationOfHilbertState_zero :
+    globalCandidateAMinimalPhysicalConfigurationOfHilbertState period hPeriod
+        configuration data analysis chartData hilbertChart 0
+        (globalCandidateAMinimalPhysical_zero_mem_hilbertResidualCarrier period
+          hPeriod configuration data analysis chartData hilbertChart) =
+      configuration.physical := by
+  change
+    ((globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+      configuration data analysis chartData).family.datumAt
+      (globalCandidateAMinimalPhysicalHilbertChartPoint period hPeriod
+        configuration data analysis chartData hilbertChart 0) _).1 =
+      configuration.physical
+  simpa [globalCandidateAMinimalPhysicalHilbertChartPoint,
+    globalCandidateANonlinearHilbertChartPoint] using
+    (globalCandidateAMinimalPhysicalMatterLLSameActionBridge period hPeriod
+      configuration data analysis chartData).chartBridge.baseConfiguration_fields
 
 /-- The strong Hilbert residual vanishes exactly when the genuine local Euler
 one-form vanishes at the represented chart point. -/
@@ -198,7 +233,14 @@ theorem globalCandidateAMinimalPhysicalHilbertCritical_iff_localEuler
     apply ContinuousLinearMap.ext
     intro value
     have hValue := DFunLike.congr_fun hComp (hilbertChart.toChart.symm value)
-    simpa [globalCandidateAMinimalPhysicalHilbertChartRealization] using hValue
+    change
+      globalCandidateALocalEulerLagrangeOperator period hPeriod
+          (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+            configuration data analysis chartData)
+          (globalCandidateAMinimalPhysicalHilbertChartPoint period hPeriod
+            configuration data analysis chartData hilbertChart state)
+          (hilbertChart.toChart (hilbertChart.toChart.symm value)) = 0 at hValue
+    simpa using hValue
   · intro hEuler
     rw [hEuler]
     rfl
@@ -282,6 +324,25 @@ theorem globalCandidateAMinimalPhysicalHilbertCritical_iff_physicalAtlas
     (globalCandidateAMinimalPhysicalHilbertCritical_iff_localEuler period
       hPeriod configuration data analysis chartData hilbertChart state).trans
       hPhysical.symm
+
+/-- At the Hilbert origin, the strong residual equation is exactly physical
+atlas criticality of the selected base configuration. -/
+theorem globalCandidateAMinimalPhysicalHilbertZeroCritical_iff_baseConfiguration
+    (retraction : LocalChartCoordinateRetraction period hPeriod
+      (globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
+        configuration data analysis chartData)) :
+    (globalCandidateAMinimalPhysicalNonlinearHilbertResidualAtlas period
+        hPeriod configuration data analysis chartData hilbertChart).IsEulerCritical
+          period hPeriod 0 ↔
+      (globalCandidateAMinimalPhysicalVariationalAtlas_of_retraction period
+        hPeriod configuration data analysis chartData retraction).IsEulerCritical
+          period hPeriod configuration.physical := by
+  rw [← globalCandidateAMinimalPhysicalConfigurationOfHilbertState_zero period
+    hPeriod configuration data analysis chartData hilbertChart]
+  exact globalCandidateAMinimalPhysicalHilbertCritical_iff_physicalAtlas period
+    hPeriod configuration data analysis chartData hilbertChart retraction 0
+      (globalCandidateAMinimalPhysical_zero_mem_hilbertResidualCarrier period
+        hPeriod configuration data analysis chartData hilbertChart)
 
 end
 

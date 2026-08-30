@@ -1903,6 +1903,10 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   those core values. It supplies the nonlinear singleton residual atlas and the
   covariant linearization theorem without a separately postulated realization.
   Completeness and the actual graph-norm estimate remain the honest inputs.
+  If the genuine core-to-chart map is norm preserving with dense range and the
+  chart model is complete, it now extends canonically to the full continuous
+  Hilbert-chart equivalence itself. Thus the formerly supplied equivalence is
+  reduced to these three explicit core-level analytic obligations.
   On the concrete minimal physical chart, the previously isolated continuous
   linear equivalence from the common graph Hilbert space now supplies the
   bounded realization and its core estimate automatically. It directly gives
@@ -1914,6 +1918,39 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   also repaired, compiled in isolation and integrated into the main facade;
   they now use this same typed common-Hilbert chart contract instead of
   incompatible duplicate norm instances.
+  Every admissible state of this Hilbert residual carrier is now mapped to the
+  physical configuration represented by its minimal-chart point. With a chart
+  coordinate retraction, that configuration belongs to the physical
+  variational atlas, and strong Hilbert criticality is equivalent to its
+  chart-independent physical criticality. The Hilbert origin is admissible and
+  represents exactly the selected base configuration.
+  More generally, compatible Hilbert equivalences over any physical
+  variational atlas now construct the nonlinear residual atlas without a
+  second family of pairwise transition witnesses: physical-atlas transitions
+  are recovered from equality of the represented configurations. Every
+  residual-carrier state represents one covered physical configuration in all
+  charts, and the descended Hilbert and physical criticality predicates agree.
+  The minimal retractive singleton atlas now canonically instantiates this
+  generic contract: all transition and differential-compatibility obligations
+  close automatically, and the resulting carrier, action, residual and
+  criticality are definitionally the same as in the direct construction.
+  This nonlinear Hilbert criticality is now identified, at every admissible
+  represented chart point, with the weak eight-sector system and, at every
+  state, with the canonical algebraic residual system or any supplied
+  separating componentwise strong PDE realization. At the Hilbert origin the
+  same strong equivalences hold for the selected physical base configuration.
+  Concrete tensorial differential residuals remain open.
+  On every admissible Hilbert state, pairing the nonlinear strong residual
+  with any Hilbert test is now exactly the nine-block action-derivative sum in
+  the realized chart direction. The Frechet derivative of the pulled Hilbert
+  action has the same exact formula; this strengthens the zero-locus bridge to
+  an operator-level identity.
+  For a compatible multi-chart Hilbert realization, the descended global
+  residual now satisfies this exact nine-block pairing formula in every atlas
+  chart, not only at the distinguished reference index.
+  Via the inverse minimal Hilbert-chart equivalence, every supplied separating
+  bulk-component residual pairing and the primitive SpinC residual pairing are
+  now exact coordinate pairings of that nonlinear Hilbert residual.
   A supplied covering variational atlas now descends local Euler vanishing to a
   well-defined predicate on its physical carrier, equivalent to the equation in
   every chart representation. The concrete construction of that atlas from all

@@ -36,7 +36,7 @@ variable {Variation : Type u}
 agree on an open neighbourhood containing `base`. -/
 structure SameRealActionGermAt
     (completed historical : Variation → Real)
-    (base : Variation) : Prop where
+    (base : Variation) where
   domain : Set Variation
   isOpen_domain : IsOpen domain
   base_mem_domain : base ∈ domain

@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkHelmholtzReciprocity
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkMicroscopicFingerprintSelection
 import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusDiscreteMicroscopicAlphaCandidate
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalSchemeFrontier4D
 
@@ -24,6 +25,7 @@ set_option autoImplicit false
 
 open P0EFTJanusCoupledSectorHelmholtzSelection
 open P0EFTJanusParentBulkHelmholtzReciprocity
+open P0EFTJanusParentBulkMicroscopicFingerprintSelection
 open P0EFTJanusDiscreteMicroscopicAlphaCandidate
 open P0EFTJanusProgramPGlobalSchemeFrontier4D
 
@@ -40,6 +42,27 @@ def ConditionalParentBulkReduction4D : Prop :=
 theorem conditional_parent_bulk_reduction :
     ConditionalParentBulkReduction4D :=
   parent_bulk_helmholtz_reciprocity_synthesis
+
+/-- Exact uniqueness recovered after supplying the three microscopic bulk
+coefficients and matching the same reduced action. -/
+theorem global_conditional_parent_fingerprint_selection :
+    ConditionalMicroscopicFingerprintSelection4D :=
+  conditional_microscopic_fingerprint_selection
+
+theorem global_conditional_microscopic_parent_completion :
+    ConditionalMicroscopicParentCompletion4D :=
+  conditional_microscopic_parent_completion
+
+def ReducedTargetAloneDoesNotIdentifyFingerprint4D : Prop :=
+  ∀ target : ReducedTwoSectorTarget,
+    parentCompletion referenceFingerprint target ≠
+        parentCompletion shiftedFingerprint target /\
+    reducedPotential (parentCompletion referenceFingerprint target) =
+        reducedPotential (parentCompletion shiftedFingerprint target)
+
+theorem reduced_target_alone_does_not_identify_fingerprint_4d :
+    ReducedTargetAloneDoesNotIdentifyFingerprint4D :=
+  reduced_target_alone_does_not_identify_fingerprint
 
 /-- The currently admissible parent family would select a unique reduced
 potential only if every two parent data induced the same potential. -/
@@ -89,6 +112,12 @@ structure ProgramPGlobalMicroFrontierCertificate4D where
   parentReduction : ConditionalParentBulkReduction4D
   parentNonuniqueness :
     ¬ CurrentParentFamilySelectsUniqueReducedPotential4D
+  conditionalParentFingerprintSelection :
+    ConditionalMicroscopicFingerprintSelection4D
+  conditionalParentCompletion :
+    ConditionalMicroscopicParentCompletion4D
+  reducedTargetFingerprintNonidentifiability :
+    ReducedTargetAloneDoesNotIdentifyFingerprint4D
   conditionalAlphaSelection :
     ConditionalDiscreteMicroscopicAlphaSelection4D
   conditionalSexticSelection :
@@ -101,6 +130,12 @@ def programPGlobalMicroFrontierCertificate4D :
   parentReduction := conditional_parent_bulk_reduction
   parentNonuniqueness :=
     current_parent_family_does_not_select_unique_reduced_potential
+  conditionalParentFingerprintSelection :=
+    global_conditional_parent_fingerprint_selection
+  conditionalParentCompletion :=
+    global_conditional_microscopic_parent_completion
+  reducedTargetFingerprintNonidentifiability :=
+    reduced_target_alone_does_not_identify_fingerprint_4d
   conditionalAlphaSelection :=
     conditional_discrete_microscopic_alpha_selection
   conditionalSexticSelection :=
