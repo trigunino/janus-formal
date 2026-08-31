@@ -57,6 +57,63 @@ def rootCharacteristicSign : NormalRootChoice → ℤ
       -rootCharacteristicSign root := by
   cases root <;> rfl
 
+/-- Literal truncated modes on the positive normal-root branch. -/
+abbrev TruncatedD10PositiveRootMode
+    (spectral : ProductThroatSpectralData)
+    (sphereCutoff circleCutoff : ℕ) :=
+  {mode : TruncatedD10Mode spectral sphereCutoff circleCutoff //
+    mode.2.2.2 = .positiveQuarter}
+
+/-- Literal truncated modes on the negative normal-root branch. -/
+abbrev TruncatedD10NegativeRootMode
+    (spectral : ProductThroatSpectralData)
+    (sphereCutoff circleCutoff : ℕ) :=
+  {mode : TruncatedD10Mode spectral sphereCutoff circleCutoff //
+    mode.2.2.2 = .negativeQuarter}
+
+/-- The concrete D10 PT action has no fixed mode. -/
+theorem truncatedPT_ne
+    {spectral : ProductThroatSpectralData}
+    {sphereCutoff circleCutoff : ℕ}
+    (mode : TruncatedD10Mode spectral sphereCutoff circleCutoff) :
+    truncatedPT mode ≠ mode := by
+  rcases mode with ⟨level, degeneracy, circleMode, root⟩
+  intro hEqual
+  have hRoot := congrArg
+    (fun current : TruncatedD10Mode spectral sphereCutoff circleCutoff =>
+      current.2.2.2) hEqual
+  cases root <;> simp [truncatedPT, oppositeRoot] at hRoot
+
+/-- PT gives an exact bijection between the two normal-root packets at every
+finite cutoff, retaining all sphere and circle multiplicities. -/
+def truncatedD10PositiveNegativeRootEquiv
+    (spectral : ProductThroatSpectralData)
+    (sphereCutoff circleCutoff : ℕ) :
+    TruncatedD10PositiveRootMode spectral sphereCutoff circleCutoff ≃
+      TruncatedD10NegativeRootMode spectral sphereCutoff circleCutoff where
+  toFun mode := ⟨truncatedPT mode.1, by
+    change oppositeRoot mode.1.2.2.2 = .negativeQuarter
+    rw [mode.2]
+    rfl⟩
+  invFun mode := ⟨truncatedPT mode.1, by
+    change oppositeRoot mode.1.2.2.2 = .positiveQuarter
+    rw [mode.2]
+    rfl⟩
+  left_inv mode := Subtype.ext (truncatedPT_involutive mode.1)
+  right_inv mode := Subtype.ext (truncatedPT_involutive mode.1)
+
+/-- The positive and negative normal-root packets have exactly equal finite
+cardinality at every literal D10 cutoff. -/
+theorem truncatedD10_positive_negative_root_card_eq
+    (spectral : ProductThroatSpectralData)
+    (sphereCutoff circleCutoff : ℕ) :
+    Fintype.card
+        (TruncatedD10PositiveRootMode spectral sphereCutoff circleCutoff) =
+      Fintype.card
+        (TruncatedD10NegativeRootMode spectral sphereCutoff circleCutoff) :=
+  Fintype.card_congr
+    (truncatedD10PositiveNegativeRootEquiv spectral sphereCutoff circleCutoff)
+
 /-- Integral characteristic contribution of one literal truncated D10 mode. -/
 def truncatedD10CharacteristicContribution
     {Base Tangent : Type*}
@@ -232,6 +289,14 @@ structure ProgramPT07TruncatedD10CharacteristicCancellationCertificate4D
     {Base Tangent : Type*}
     (quantized : QuantizedGeometricFamiliesIndexData4D Base Tangent)
     (spectral : ProductThroatSpectralData) where
+  ptFixedPointFree : ∀ (sphereCutoff circleCutoff : ℕ)
+    (mode : TruncatedD10Mode spectral sphereCutoff circleCutoff),
+    truncatedPT mode ≠ mode
+  rootMultiplicityPaired : ∀ (sphereCutoff circleCutoff : ℕ),
+    Fintype.card
+        (TruncatedD10PositiveRootMode spectral sphereCutoff circleCutoff) =
+      Fintype.card
+        (TruncatedD10NegativeRootMode spectral sphereCutoff circleCutoff)
   pointwiseQuantization : ∀ sphereCutoff circleCutoff base first second mode,
     truncatedD10LocalFamiliesIndexContribution
         (spectral := spectral) (sphereCutoff := sphereCutoff)
@@ -259,6 +324,9 @@ def programPT07TruncatedD10CharacteristicCancellationCertificate4D
     (spectral : ProductThroatSpectralData) :
     ProgramPT07TruncatedD10CharacteristicCancellationCertificate4D
       quantized spectral where
+  ptFixedPointFree := fun _ _ mode => truncatedPT_ne mode
+  rootMultiplicityPaired :=
+    truncatedD10_positive_negative_root_card_eq spectral
   pointwiseQuantization :=
     fun _ _ base first second mode =>
       truncatedD10_localFamiliesIndex_eq_characteristic_cast

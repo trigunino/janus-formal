@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelResolvent4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinContinuousClosure4D
 
@@ -36,6 +37,7 @@ open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalActionFamilyH10RobinReduction4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousExtensions4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelResolvent4D
 open P0EFTJanusProgramPGlobalCandidateANormalBoundaryH10Closure4D
 open P0EFTJanusProgramPGlobalHessianClosure4D
 open P0EFTJanusProgramPGlobalHessianDiracGreenBoundedClosure4D
@@ -138,6 +140,54 @@ def global_candidateA_hessian_h10Robin_actualKernelGap_closure_gate
         (globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod
           (measure := measure) configuration data analysis family extensions)
       gap
+
+/-- Full preferred output: H14 together with the canonical reduced Green and
+the real resolvent on the open spectral gap. -/
+def global_candidateA_hessian_h10Robin_actualKernelGap_full_closure_gate
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    {measure : Measure (EffectiveQuotient period hPeriod)}
+    (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+    (data : GlobalCandidateAActionData period hPeriod configuration.physical
+      couplings NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+    (einsteinScale : Real)
+    (hBoundaryTransverse : HasNoTangentialRadical period hPeriod
+      data.plusGravity.metric.metric)
+    (family : ProgramPGlobalMinimalPhysicalLocalActionFamilyH10RobinData4D
+      period hPeriod (measure := measure) configuration data analysis
+        (diracGreenClosureMatterRealization period hPeriod
+          couplings.matterMassSquared))
+    (extensions : GlobalCandidateASevenPhysicalContinuousBlockExtensions4D
+      period hPeriod (measure := measure) configuration data analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure)
+          configuration data analysis family))
+    (gap : GlobalCandidateAActualKernelGap4D period hPeriod configuration data
+      analysis
+        (globalCandidateAH10RobinChart period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinSameAction period hPeriod (measure := measure)
+          configuration data analysis family)
+        (globalCandidateAH10RobinContinuousPhysicalExtension period hPeriod
+          (measure := measure) configuration data analysis family extensions)) :=
+  let chart := globalCandidateAH10RobinChart period hPeriod (measure := measure)
+    configuration data analysis family
+  let sameAction := globalCandidateAH10RobinSameAction period hPeriod
+    (measure := measure) configuration data analysis family
+  let physical := globalCandidateAH10RobinContinuousPhysicalExtension period
+    hPeriod (measure := measure) configuration data analysis family extensions
+  let h14 :=
+    global_candidateA_hessian_h10Robin_actualKernelGap_closure_gate period
+      hPeriod configuration data analysis einsteinScale hBoundaryTransverse
+      family extensions gap
+  let complement := global_candidateA_actual_kernel_complement_gate period
+    hPeriod configuration data analysis chart sameAction physical gap
+  let resolvent := global_candidateA_actual_kernel_resolvent_gate period hPeriod
+    configuration data analysis chart sameAction physical gap
+  And.intro h14 (And.intro complement resolvent)
 
 end
 end P0EFTJanusProgramPGlobalHessianH10RobinActualKernelGapClosure4D

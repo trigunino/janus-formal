@@ -1907,6 +1907,227 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   chart model is complete, it now extends canonically to the full continuous
   Hilbert-chart equivalence itself. Thus the formerly supplied equivalence is
   reduced to these three explicit core-level analytic obligations.
+  For the concrete minimal physical chart, those three obligations are now
+  bundled in one closure certificate. That certificate directly constructs
+  the Hilbert equivalence and residual atlas and instantiates the canonical
+  criticality, exact nine-block pairing, and covariant smooth-core Hessian
+  theorems, so no second equivalence argument remains downstream.
+  The concrete augmented source, however, cannot satisfy that certificate in
+  the presence of a nonzero typed diffeomorphism nonminimal direction: an
+  explicit pure nonminimal smooth-core vector is nonzero but maps to zero in
+  the minimal physical chart. Thus norm compatibility would force every such
+  direction to vanish. The honest next analytic architecture is a reduced
+  physical Hilbert quotient (or an enlarged gauge-fixed chart), not a direct
+  equivalence between the current augmented Hilbert and minimal chart.
+  The reduced-Hilbert foundation is now constructed from the full kernel of
+  the canonical minimal-physical tangent map, rather than only that explicit
+  nonminimal direction. Orthogonal projection onto its complement is
+  surjective, has precisely the closed null span as kernel, kills the known
+  obstruction, and preserves density of the projected smooth core. Quotient
+  and orthogonal-complement presentations are canonically isometric. The
+  algebraic smooth core is also quotiented by the full physical kernel; its
+  canonical projected embedding descends to that quotient and remains dense.
+  The minimal core-to-chart has exactly this physical kernel, so it descends
+  injectively to the quotient core. A new reduced closure certificate now
+  constructs the isometric continuous equivalence from the reduced Hilbert
+  completion to the concrete minimal chart. Once a compatible reduced Hilbert
+  chart is supplied, chart completeness and core-to-chart density are automatic;
+  only exact norm preservation on the quotient core remains independent. This
+  quotient identity is now equivalent exactly to the raw smooth-core equality
+  between the canonical chart realization and orthogonally reduced Hilbert
+  embedding, and that raw equality directly supplies the full closure. Proving
+  this concrete equality and constructing the reduced chart remain open, but
+  the nonminimal obstruction no longer contradicts them.
+  The completed metric, Abelian, matter and LL graph coordinates now define a
+  continuous physical-feature projection which detects exactly the canonical
+  minimal kernel on the smooth core. The closed Hilbert null span stays inside
+  its kernel, so closure introduces no additional smooth null directions. The
+  reduced smooth embedding consequently has exactly the physical kernel and
+  descends injectively to the quotient core. Chart completeness, norm
+  compatibility and density of the core-to-chart map remain open.
+  The quotient smooth core now carries the norm and inner product induced by
+  that injection. Its uniform completion is canonically unitarily equivalent
+  to the reduced physical Hilbert space, and the equivalence agrees exactly
+  with the original core embedding. This closes the canonical completion,
+  norm and density problem itself; what still does not extend automatically is
+  the genuine `C²` action family and configuration-valued chart on that
+  completed model.
+  Orthogonal reduction is now proved to preserve every completed physical
+  feature. Consequently the primitive-matter and full-LL coordinates define
+  genuine `C²` actions directly on the reduced Hilbert space, with exact
+  graph-action values on the dense quotient core. The two metric gauge
+  coordinates and the closed Abelian Lorenz coordinate now likewise define
+  genuine `C²` De Donder/Lorenz actions and a combined five-sector graph
+  action, with exact quotient-core agreement. These are gauge graph terms, not
+  Einstein--Hilbert or curvature-Maxwell actions. Under the existing H10 chart,
+  projection and transversality inputs, the Robin block also descends to a
+  `C²` action on its natural open reduced domain containing zero. Finally, any
+  supplied bounded H11 extensions of the two Maxwell Hessians annihilate the
+  closed physical null span and yield smooth reduced quadratic energies with
+  exact core Hessian agreement. Seven supplied H11 physical block extensions
+  now also sum and descend in one canonical step to a symmetric reduced
+  Hessian, smooth quadratic action and strong Riesz operator, with exact
+  derivative, pairing and quotient-core agreement. Separately, the genuine
+  five-sector graph and Robin actions plus the Maxwell quadratic energy form a
+  concrete partial `C²` action on the open Robin domain. Its Frechet Euler
+  covector, strong Riesz residual, derivative block sum, criticality equation
+  and core value are explicit. The four remaining H11 blocks -- interaction,
+  Einstein--Hilbert plus/minus and finite-BV -- now descend individually as
+  symmetric reduced Hessians. Their summed quadratic action has an exact
+  Frechet gradient, strong Riesz operator and quotient-core formula. Adding it
+  to the preceding partial action gives the strongest currently available
+  reduced `C²` action: five graph sectors, genuine Robin, and all six non-Robin
+  physical blocks at quadratic Hessian order. This deliberately named
+  quadratic action is not Candidate-A: nonlinear interaction,
+  Einstein--Hilbert, curvature-Maxwell and finite-BV completions still remain
+  before a full nonlinear completed action can replace the smooth chart.
+  A canonical indexed packet whose seven core forms are fixed by the genuine
+  local block Hessians now instantiates that entire available quadratic
+  domain, action, Euler covector, Riesz residual and criticality API without a
+  second independently supplied block packet. Independently, one aggregate
+  continuous extension -- or one aggregate core bound through the canonical
+  extension constructor -- yields the total seven-physical reduced Hessian,
+  quadratic action, Riesz operator and exact strong-criticality equation. This
+  parallel endpoint cannot separate GHY from the genuine Robin term and is not
+  added to the preceding action. Seven product bounds on the genuine block
+  core forms now construct the canonical indexed H11 packet itself, preserving
+  block separation and exact dense-core agreement. More strongly, one
+  graph-norm estimate for the genuine smooth-core map into the local chart
+  derives all seven bounds; block symmetry and reconstruction are theorems of
+  the existing `C²` action decomposition. The already defined common-Hilbert
+  chart contract supplies this estimate by its operator norm and therefore now
+  yields the separated canonical packet directly. That packet now feeds the
+  strongest available reduced quadratic action without a separately supplied
+  H11 extension: its Frechet Euler covector, strong Riesz residual, exact
+  derivative pairing/decomposition, criticality and dense-core formula are
+  all exposed directly from the Hilbert chart plus the genuine Robin data.
+  On the actual-kernel specialization, zero admissibility in the H10 family
+  now derives tangential transversality, while that same Hilbert chart derives
+  the completed genuine Robin projection. Thus neither transversality nor the
+  projection remains an independent input to the quadratic Euler/Riesz route;
+  however, the augmented common chart is subject to the established
+  nonminimal-direction obstruction. The unobstructed quotient-core closure now
+  instead constructs the reduced Hilbert chart and directly yields the exact
+  nonlinear action, strong Euler--Riesz equation, weak eight-sector system,
+  Helmholtz symmetry and nine-block linearization. The same reduced chart,
+  composed with orthogonal Hilbert reduction, now also supplies the core bound
+  that canonically constructs all seven separated H11 extensions without the
+  obstructed augmented chart. Specialized to the H10 actual-kernel family and
+  its reduced dense-core closure, one packet now derives transversality, the
+  genuine completed Robin projection, all seven H11 extensions, the canonical
+  quadratic Euler/Riesz model and the exact nonlinear Euler/Riesz pairing. A
+  direct theorem now confirms that any augmented common chart would collapse
+  every typed diffeomorphism nonminimal direction, making the reduced route
+  mandatory whenever one such direction is nonzero. The closure-derived strong
+  criticality equation is now also equivalent to all eight supplied separating
+  componentwise PDE residual equations at the represented chart point. The
+  differential tensorial construction of those PDE representatives remains open.
+  On every supplied genuine overlap of two reduced charts with compatible
+  realization derivatives, the pulled action, Euler covector and strong Riesz
+  residual now obey the exact transition law; Frechet stationarity is therefore
+  chart-independent. A compatible supplied family of these reduced charts now
+  descends to one action, one strong residual and one criticality predicate on
+  its common carrier, with exact recovery in every member and an explicit
+  singleton constructor. In each admissible member, that descended equation is
+  now exactly the local Euler equation, the weak eight-sector system and any
+  supplied separating componentwise strong PDE system; the descended action
+  is the genuine covariant action there. A second, genuinely covered atlas
+  interface now works on an explicit carrier contained in the union of chart
+  domains: it chooses a member pointwise and proves the descended action,
+  residual and criticality independent of that choice using only actual
+  overlaps. In every member containing the state, this covered equation is
+  exactly the weak eight-sector system and every supplied separating strong
+  componentwise PDE system, while its action is the genuine covariant action.
+  A specialized physical-atlas adapter now builds this covered reduced atlas
+  directly from minimal chart data and physical overlap transitions; the
+  descended reduced criticality is exactly the existing chart-independent
+  physical-atlas criticality of the represented configuration.
+  The reduced dense-core completion no longer requires exact equality of its
+  two norms: uniform comparison bounds in both directions now extend the core
+  equivalence to a continuous linear equivalence of the completions, and this
+  criterion is equivalent to existence of the reduced Hilbert chart.
+  Those two bounds are exactly equivalent to their explicit versions on raw
+  smooth representatives, isolating the remaining analytic estimates before
+  quotienting.
+  The authentic matter block now has an explicit separating maximal spectral
+  residual in every minimal chart. Its Frechet covector is the pullback of the
+  primitive SpinC graph form, while the complete coupled SpinC covector is
+  exactly this matter contribution plus a named cross-block remainder.
+  The authentic complete three-slot LL block likewise has an exact pulled-back
+  graph Riesz residual, separated by the dense smooth LL core; its vanishing is
+  equivalent to stationarity of that block. Each coupled LL component is now
+  exactly decomposed into the authentic complete-LL Riesz pairing on its pure
+  chart direction plus a named cross-block remainder. Vanishing of those
+  remainders, and hence identification with the isolated LL equations, remains
+  open.
+  The two authentic Maxwell members are now combined into one exact covariant
+  block on the admissible minimal chart and proved `C²`. Its Frechet covector
+  on pure gauge directions differs from the coupled gauge equation by one
+  explicit cross-block remainder; vanishing of that remainder and a strong
+  Maxwell residual remain open.
+  The authentic Robin/GHY member is likewise isolated from the coupled normal
+  equation. Under the existing H10 projection contract and transversality, its
+  base-point Frechet covector is now proved to be the pullback of the genuine
+  H10 first variation; the generic chart still does not construct those inputs
+  or cancel the normal cross-block remainder.
+  The metric slot now keeps both Einstein--Hilbert and both Maxwell members in
+  one authentic covariant `C²` block, so the Maxwell metric response is not
+  discarded. Its difference from the coupled metric covector is explicit;
+  identifying it with the existing Einstein/stress first-variation formulas
+  still needs a chart-to-geometric-line compatibility construction.
+  The remaining diffeomorphism-BRST mismatch is now a theorem-level no-go:
+  every nonzero typed nonminimal direction lies in the kernel of the canonical
+  minimal core-to-chart map, which is therefore noninjective and admits no
+  linear left inverse. A faithful BRST equation requires either ghost inertia
+  in the physical chart or an enlarged gauge-fixed chart and action. The latter
+  route is now implemented additively: the reduced physical Hilbert chart
+  canonically supplies all seven physical Hessian extensions on the existing
+  diagonal gauge-fixed Hilbert graph. This graph keeps one shared `c/cbar/B`
+  triplet with the same two metric perturbations, its typed smooth core is
+  injective, and its quadratic action is `C²` with exact Frechet--Riesz pairing.
+  On the dense smooth core the action is exactly the diffeomorphism BRST
+  variation plus Abelian BRST, matter, LL and the seven-block physical Hessian
+  contribution. This closes the faithful quadratic augmentation, not yet a
+  nonlinear gauge-fixed atlas for the full covariant action. A second,
+  relational gate now supplies the missing exact nonlinear layer for the
+  physical action plus the diagonal diffeomorphism BRST sector: one metric
+  coordinate is shared between the physical chart and completed BRST graph,
+  the induced domain is open, and the resulting action is `C²` with its exact
+  Euler derivative. Its BRST projection retains the strong graph Riesz
+  pairing, its smooth-core action is the covariant action plus the genuine
+  gauge-fermion variation, and the zero-`c/cbar/B` slice is exactly physical.
+  The relational range is not claimed complete, so the completed total Riesz
+  model remains the quadratic Gate 221 construction.
+  Its physical carrier, cover, transitions and differential PDE representatives
+  remain supplied rather than constructed; no global differentiability of the
+  pointwise-selected action is claimed.
+  Any resulting reduced equivalence now pulls the exact local action, Euler
+  covector and strong Frechet--Riesz residual back to the reduced physical
+  Hilbert space. Its pairing on each quotient-core test is the genuine chart
+  Euler pairing; density makes vanishing of all those weak pairings equivalent
+  to the strong residual equation. Surjectivity of the reduced chart further
+  identifies it with vanishing of the genuine local Euler covector and, on
+  admissible states, with the exact weak eight-sector system of the nine action
+  blocks. The pulled action is exactly the covariant action there.
+  The reduced strong-residual pairing and the Frechet derivative of that action
+  are now also identified pointwise with the exact nine-block derivative sum,
+  for arbitrary reduced Hilbert tests, arbitrary chart directions and the
+  canonical quotient-core tests.
+  Inverse reduced-chart representatives of every pure bulk component and of
+  primitive SpinC matter now identify those same strong-residual pairings with
+  the supplied separating component PDE residual pairings.
+  The reduced Euler covector is now differentiable with derivative equal to
+  the local Hessian pulled through the reduced chart in both slots. Its Riesz
+  representative is the derivative of the strong residual, and on raw smooth
+  core directions at the base state its pairing is exactly the genuine
+  minimal-physical covariant Hessian.
+  This reduced Hessian is now also identified, as a continuous bilinear
+  operator and through its strong Riesz pairing, with the exact sum of the six
+  canonical physical block Hessians, Robin, primitive matter and full LL.
+  Its admissible reduced domain is open and contains zero. On that domain the
+  Euler covector is the actual reduced-action gradient, satisfies the nonlinear
+  Helmholtz Jacobian symmetry, and has a pairing-symmetric strong Riesz
+  linearization.
   On the concrete minimal physical chart, the previously isolated continuous
   linear equivalence from the common graph Hilbert space now supplies the
   bounded realization and its core estimate automatically. It directly gives

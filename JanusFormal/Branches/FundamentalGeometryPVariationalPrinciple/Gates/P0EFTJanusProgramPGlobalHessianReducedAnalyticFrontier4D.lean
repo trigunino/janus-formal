@@ -9,6 +9,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianConstructiveAnalyticClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinComplementClosure4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalHessianH10RobinActualKernelGapClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalCandidateANaturalGraphRieszIdentification4D
 
 /-!
 # Reduced analytic frontier of `HESSIAN-GLOBAL-01`
@@ -54,6 +55,7 @@ open P0EFTJanusProgramPGlobalHessianConstructiveAnalyticClosure4D
 open P0EFTJanusProgramPGlobalHessianH10RobinComplementClosure4D
 open P0EFTJanusProgramPGlobalHessianH10RobinActualKernelGapClosure4D
 open P0EFTJanusProgramPGlobalCandidateAAugmentedActualKernelComplement4D
+open P0EFTJanusProgramPGlobalCandidateANaturalGraphRieszIdentification4D
 
 /-- Compatibility name of the earlier reduced local-family packet. -/
 def GlobalHessianLocalFamilyInput :=
@@ -84,6 +86,11 @@ def GlobalHessianSevenPhysicalBlockBoundsInput :=
 def GlobalHessianSevenPhysicalContinuousExtensionsInput :=
   GlobalCandidateASevenPhysicalContinuousBlockExtensions4D
 
+/-- Natural elliptic Riesz realization on the existing Candidate-A graph
+Hilbert space, identified by its genuine dense-core Hessian pairing. -/
+def GlobalHessianNaturalGraphRieszInput :=
+  GlobalCandidateANaturalGraphRieszRealization4D
+
 /-- Intermediate H12 input: one generalized inverse with canonical defects. -/
 def GlobalHessianGeneralizedInverseInput :=
   GlobalCandidateAFaithfulAugmentedGeneralizedInverse4D
@@ -109,6 +116,11 @@ def global_candidateA_hessian_decomposed_analytic_closure_gate :=
 extensions and the actual-kernel spectral gap. -/
 def global_candidateA_hessian_preferred_analytic_closure_gate :=
   @global_candidateA_hessian_h10Robin_actualKernelGap_closure_gate
+
+/-- Preferred quantitative export: H14, exact kernel-complement Green operator
+and the real resolvent throughout the open gap. -/
+def global_candidateA_hessian_preferred_spectral_closure_gate :=
+  @global_candidateA_hessian_h10Robin_actualKernelGap_full_closure_gate
 
 /-- Public componentwise H10 gate used by the preferred route. -/
 def global_candidateA_normal_boundary_componentwise_germ_gate :=

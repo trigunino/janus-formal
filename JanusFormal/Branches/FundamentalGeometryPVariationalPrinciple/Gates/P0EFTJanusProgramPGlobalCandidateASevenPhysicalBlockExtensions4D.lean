@@ -36,8 +36,12 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateALocalPhysicalHessianSplit4D
 open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
 open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
@@ -103,9 +107,9 @@ private theorem actionHessian_add
       (hFirstState.differentiableAt (by norm_num))
       (hSecondState.differentiableAt (by norm_num))
   have hFirstGradient : DifferentiableAt Real (actionGradient first) point :=
-    (hFirst.fderiv_right (by norm_num)).differentiableAt (by norm_num)
+    (hFirst.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
   have hSecondGradient : DifferentiableAt Real (actionGradient second) point :=
-    (hSecond.fderiv_right (by norm_num)).differentiableAt (by norm_num)
+    (hSecond.fderiv_right (m := 1) (by norm_num)).differentiableAt (by norm_num)
   rw [hGradient.fderiv_eq]
   exact fderiv_add hFirstGradient hSecondGradient
 
@@ -211,7 +215,7 @@ theorem globalCandidateAH11LocalPhysicalHessian_eq_seven
           point) +
         globalCandidateAH11LocalMaxwellPlusHessian period hPeriod chart point) +
         globalCandidateAH11LocalMaxwellMinusHessian period hPeriod chart point) +
-        globalCandidateAH11LocalFiniteBVHessian period hPeriod chart point := by
+        globalCandidateAH11LocalFiniteBVHessian period hPeriod chart point) := by
   let blocks := h11LocalBlocks period hPeriod chart
   have hC2 : FullCoupledC2At blocks point :=
     fullCoupledC2WithinAt_toAt
@@ -232,7 +236,7 @@ theorem globalCandidateAH11LocalPhysicalHessian_eq_seven
               blocks.einsteinHilbertPlus state) +
               blocks.einsteinHilbertMinus state) +
               blocks.maxwellPlus state) + blocks.maxwellMinus state) +
-              blocks.finiteBV state)) point = _
+              blocks.finiteBV state))) point = _
   rw [actionHessian_add
       (fun state => (((((blocks.candidateA state + blocks.robin state) +
         blocks.einsteinHilbertPlus state) + blocks.einsteinHilbertMinus state) +
@@ -475,7 +479,7 @@ theorem diagonalExtendedBulkH11PhysicalHessian_eq_seven
         diagonalExtendedBulkH11MaxwellMinusHessianOnCore period hPeriod
           configuration data analysis chart sameAction first second) +
         diagonalExtendedBulkH11FiniteBVHessianOnCore period hPeriod
-          configuration data analysis chart sameAction first second := by
+          configuration data analysis chart sameAction first second) := by
   unfold diagonalExtendedBulkMinimalPhysicalLocalActionHessianOnCore
     diagonalExtendedBulkH11InteractionHessianOnCore
     diagonalExtendedBulkH11GHYHessianOnCore
@@ -495,7 +499,6 @@ structure GlobalCandidateAPhysicalBlockCommonDomainExtension4D
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
-    {measure : Measure (EffectiveQuotient period hPeriod)}
     (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
     (data : GlobalCandidateAActionData period hPeriod configuration.physical
       couplings NonNullFace NullFace)
@@ -504,8 +507,8 @@ structure GlobalCandidateAPhysicalBlockCommonDomainExtension4D
       analysis → GlobalCandidateADiagonalExtendedBulkSmoothCore period hPeriod
         analysis → Real) where
   form :
-    SevenBlockHilbert period hPeriod configuration data analysis →L[Real]
-      SevenBlockHilbert period hPeriod configuration data analysis →L[Real] Real
+    CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real]
+      CommonAugmentedHilbert period hPeriod configuration data analysis →L[Real] Real
   symmetric : ∀ first second, form first second = form second first
   smooth_agreement : ∀ first second,
     form
@@ -603,7 +606,21 @@ def globalCandidateASevenPhysicalCommonDomainExtension_of_blocks
   symmetric := by
     intro first second
     unfold GlobalCandidateASevenPhysicalBlockExtensions4D.sumForm
-    simp only [ContinuousLinearMap.add_apply]
+    change
+      ((((((blocks.interaction.form first second +
+        blocks.ghy.form first second) +
+        blocks.einsteinHilbertPlus.form first second) +
+        blocks.einsteinHilbertMinus.form first second) +
+        blocks.maxwellPlus.form first second) +
+        blocks.maxwellMinus.form first second) +
+        blocks.finiteBV.form first second) =
+      ((((((blocks.interaction.form second first +
+        blocks.ghy.form second first) +
+        blocks.einsteinHilbertPlus.form second first) +
+        blocks.einsteinHilbertMinus.form second first) +
+        blocks.maxwellPlus.form second first) +
+        blocks.maxwellMinus.form second first) +
+        blocks.finiteBV.form second first)
     rw [blocks.interaction.symmetric first second,
       blocks.ghy.symmetric first second,
       blocks.einsteinHilbertPlus.symmetric first second,
@@ -614,7 +631,20 @@ def globalCandidateASevenPhysicalCommonDomainExtension_of_blocks
   smooth_agreement := by
     intro first second
     unfold GlobalCandidateASevenPhysicalBlockExtensions4D.sumForm
-    simp only [ContinuousLinearMap.add_apply]
+    let first' := diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+      (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis first
+    let second' := diagonalExtendedBulkL2SmoothEmbedding period hPeriod
+      (globalCandidateAMetricBySector period hPeriod data)
+      couplings.matterMassSquared data analysis second
+    change
+      ((((((blocks.interaction.form first' second' +
+        blocks.ghy.form first' second') +
+        blocks.einsteinHilbertPlus.form first' second') +
+        blocks.einsteinHilbertMinus.form first' second') +
+        blocks.maxwellPlus.form first' second') +
+        blocks.maxwellMinus.form first' second') +
+        blocks.finiteBV.form first' second') = _
     rw [blocks.interaction.smooth_agreement first second,
       blocks.ghy.smooth_agreement first second,
       blocks.einsteinHilbertPlus.smooth_agreement first second,

@@ -3303,7 +3303,7 @@ la dépendance `C²` de l'action et son égalité exacte avec
 | `QUILLEN-GLOBAL-01` | **FRONTIER (2026-07-26)** — La vraie famille cercle possède ligne déterminante, métrique hermitienne, connexion plate compatible, recollement et holonomie unitaire. Il manque l’identification à la géométrie Quillen/Bismut–Freed de la famille Janus géométrique complète. | `P0EFTJanusProgramPGlobalQuillenFrontier4D` |
 | `ANOMALY-GLOBAL-01` | **FRONTIER RÉDUITE (2026-07-27)** — Annulation additive PT, convergence du cutoff `Z4`, égalité des logarithmes renormalisés, annulation des phases mode par mode et inflow opposé. Le certificat inclut désormais la trace chirale D10 tous niveaux, absolument sommable, nulle par PT, avec convergence de tout filet de cutoffs finis. Il manque la classe locale/globale et sa trivialisation équivariante pour tout le contenu géométrique. | `P0EFTJanusProgramPGlobalAnomalyFrontier4D`, `P0EFTJanusProgramPD10ContinuumHeatRegulator4D` |
 | `SCHEME-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-26)** — Des témoins distincts satisfont platitude et annulation PT; une ligne de Quillen fixée ne fixe pas l’action scalaire renormalisée. Les parties finies et la normalisation doivent venir d’une loi microscopique. | `P0EFTJanusProgramPGlobalSchemeFrontier4D`, `MICRO-GLOBAL-01` |
-| `MICRO-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27; complétion conditionnelle 2026-08-30)** — Le parent bulk fourni se réduit exactement et satisfait Helmholtz/PT. Pour toute empreinte microscopique à trois coefficients et toute cible réduite PT-even, un parent de Schur explicite existe, ses trois coefficients nus de bord/jonction sont forcés et ce parent est unique. Réciproquement, deux empreintes bulk distinctes possèdent des complétions distinctes donnant exactement la même cible réduite : l’action effective seule ne reconstruit donc pas le microscopique. Il reste à dériver physiquement l’empreinte bulk Janus. La sélection discrète de `α` et du sextique reste conditionnelle à `β`, au niveau, au verrou et à l’ancrage UV. | `P0EFTJanusParentBulkMicroscopicFingerprintSelection`, `P0EFTJanusProgramPGlobalMicroFrontier4D`, `SCHEME-GLOBAL-01` |
+| `MICRO-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27; complétion conditionnelle 2026-08-30)** — Le parent bulk fourni se réduit exactement et satisfait Helmholtz/PT. Pour toute empreinte microscopique à trois coefficients et toute cible réduite PT-even, un parent de Schur explicite existe, ses trois coefficients nus de bord/jonction sont forcés et ce parent est unique. Réciproquement, deux empreintes bulk distinctes possèdent des complétions distinctes donnant exactement la même cible réduite : l’action effective seule ne reconstruit donc pas le microscopique. Au rang fini arbitraire, le coefficient bulk et chaque couplage bulk–bord sont extraits exactement de l’action non réduite, puis toute Hessienne réduite symétrique possède une unique complétion parentale. Ce résultat est maintenant étendu à un espace de Hilbert de bord complet : couplage continu, forme bilinéaire continue, solution bulk stationnaire exacte, Schur symétrique et complétion parentale unique. L’opérateur Schur/Robin scalaire issu de la construction Poisson–Green existante est désormais instancié comme cible réduite et admet exactement une telle complétion pour chaque empreinte fournie. Deux empreintes explicites, de coefficients bulk `1` et `2`, donnent deux parents distincts ayant exactement cette même réponse Schur : même l’opérateur effectif concret du dépôt ne sélectionne donc pas le microscopique. Il reste à dériver la vraie action Janus et à remplacer le bulk scalaire borné par le PDE non borné avec domaines et jauge. La sélection discrète de `α` et du sextique reste conditionnelle à `β`, au niveau, au verrou et à l’ancrage UV. | `P0EFTJanusScalarGraphSchurMicroscopicCompletion4D`, `P0EFTJanusHilbertBoundaryParentSchurSelection`, `P0EFTJanusFiniteRankParentActionFingerprint`, `P0EFTJanusParentBulkMicroscopicFingerprintSelection`, `P0EFTJanusProgramPGlobalMicroFrontier4D`, `SCHEME-GLOBAL-01` |
 | `VACUUM-GLOBAL-01` | **FRONTIER (2026-07-27; dépendance physique bloquante)** — L’interaction PT-plate proportionnelle a un minimum positif unique en `c=1` et une Hessienne réduite positive, mais les contraintes FLRW du vide y perdent leur rang et la branche poussière possède une direction contrainte isoénergétique. Le vide global exige encore l’action effective renormalisée, le quotient stable, la trivialisation d’anomalie et les parties finies microscopiques. | `P0EFTJanusProgramPGlobalVacuumFrontier4D`, `STABILITY/ANOMALY/SCHEME/MICRO-GLOBAL-01` |
 | `SCALE-GLOBAL-01` | **BLOQUÉ-PHYSIQUE (no-go formel 2026-07-27)** — Géométrie, gap de Dirac, flux LL, action locale de chaleur et compatibilité des charges conservent une orbite commune de redimensionnement; les hypothèses actuelles ne sélectionnent donc aucune longueur positive unique. Il faut un ancrage microscopique dimensionné indépendant et un vide effectif stable sélectionné, sans injecter un rayon observé. | `P0EFTJanusProgramPGlobalScaleFrontier4D`, `MICRO-GLOBAL-01`, `VACUUM-GLOBAL-01` |
 
@@ -5184,6 +5184,705 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   du core-to-chart doivent encore être prouvées géométriquement ; elles
   remplacent l'ancienne équivalence continue arbitrairement fournie.
 - Porte terminale : aucune ; quarante-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-DENSE-CORE-HILBERT-CLOSURE` — Gate 175
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT/FERMETURE-CONCRÈTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalDenseCoreHilbertClosure4D`.
+- Résultat : les trois obligations analytiques du chart physique minimal sont
+  réunies dans un certificat unique : complétude du modèle, identité de normes
+  sur le cœur lisse et densité du core-to-chart. Ce certificat construit
+  automatiquement l'équivalence Hilbert et l'atlas résiduel, puis fournit la
+  criticité canonique, la formule exacte des neuf blocs et l'identité du
+  Hessien covariant sur le cœur, sans équivalence Hilbert séparément fournie.
+- Limite : ce certificat est conditionnel. Gate 176 montre que sa compatibilité
+  de norme est impossible dès qu'une direction non minimale typée non nulle
+  subsiste dans le Hilbert augmenté ; il faut réduire le Hilbert source ou
+  agrandir le chart. Les résidus différentiels tensoriels et la couverture
+  physique multi-chart restent ouverts.
+- Porte terminale : aucune ; cinquantième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-HILBERT-AUGMENTATION-OBSTRUCTION` — Gate 176
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT/NO-GO-AUGMENTÉ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertAugmentationObstruction4D`.
+- Résultat : une direction lisse portée uniquement par les champs non minimaux
+  typés de difféomorphisme est construite explicitement. Elle est non nulle si
+  son champ non minimal l'est, mais sa projection vers le tangent physique
+  minimal et le core-to-chart canonique sont nulles. L'identité de normes de
+  Gate 175 forcerait donc toutes ces directions à être nulles ; une seule
+  direction non nulle réfute l'existence du certificat de fermeture augmenté.
+- Conséquence : la suite correcte doit employer soit un Hilbert physique réduit
+  quotientant ce noyau, soit un chart gauge-fixed augmenté qui conserve les
+  directions non minimales ; tenter de prouver directement les trois champs de
+  Gate 175 sur les objets actuels serait incorrect.
+- Porte terminale : aucune ; cinquante-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-HILBERT` — Gate 177
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT/RÉDUCTION-PHYSIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedHilbert4D`.
+- Résultat : le noyau complet du tangent physique minimal sur le cœur lisse
+  est plongé dans le Hilbert augmenté. L'orthogonal de son image définit un
+  Hilbert physique réduit canonique ; la projection est surjective, son noyau
+  est exactement la fermeture de l'image nulle, elle annule notamment
+  l'obstruction non minimale de Gate 176, et le cœur réduit reste dense. Le
+  quotient par ce noyau fermé est canoniquement isométrique au complément
+  orthogonal. Le cœur lisse quotienté par le noyau physique se plonge
+  canoniquement dans ce Hilbert réduit et y conserve une image dense.
+- Limite : l'identification isométrique de ce Hilbert réduit avec le chart
+  minimal exige encore une compatibilité de norme sur le cœur quotienté et la
+  densité du core-to-chart physique.
+- Porte terminale : aucune ; cinquante-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-CORE-TO-CHART` — Gate 178
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT/CORE-QUOTIENT-CHART-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCoreToChart4D`.
+- Résultat : le noyau du core-to-chart minimal est exactement le noyau
+  physique quotienté par Gate 177. Le core-to-chart descend donc en un map
+  injectif sur le cœur réduit. La complétude du chart, l'identité de normes
+  sur ce cœur quotienté et sa densité construisent canoniquement une
+  équivalence linéaire isométrique continue entre le Hilbert réduit et le
+  chart, avec compatibilité exacte sur le cœur.
+- Limite : ces trois obligations analytiques réduites restent à habiter sur
+  le chart concret ; contrairement à Gate 175, elles ne sont plus contredites
+  par les directions non minimales éliminées.
+- Porte terminale : aucune ; cinquante-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-RESIDUAL` — Gate 179
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/NON-LINÉAIRE/HILBERT-RÉDUIT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertResidual4D`.
+- Résultat : toute équivalence réduite de Gate 178 tire l'action locale exacte,
+  son covecteur d'Euler et son représentant fort de Fréchet–Riesz sur le
+  Hilbert physique réduit. Le pairing contre un test du cœur quotienté est
+  exactement le pairing d'Euler du chart ; par densité, l'équation forte est
+  équivalente à toutes ces équations faibles. La surjectivité du chart réduit
+  l'identifie aussi à l'annulation du véritable covecteur d'Euler local et,
+  sur le domaine admissible, au système faible exact à huit secteurs des neuf
+  blocs. L'action tirée y est exactement l'action covariante.
+- Limite : l'existence concrète de l'équivalence reste conditionnelle aux trois
+  obligations analytiques réduites de Gate 178 ; la couverture multi-chart et
+  les représentants PDE différentiels restent ouverts.
+- Porte terminale : aucune ; cinquante-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-HILBERT-BLOCK-SUM` — Gate 180
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/NEUF-BLOCS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedHilbertBlockSum4D`.
+- Résultat : le pairing du résidu fort réduit avec tout test Hilbert est
+  exactement la somme des dérivées des neuf blocs véritables. La même formule
+  vaut pour toute direction du chart via l'équivalence, pour la dérivée de
+  Fréchet de l'action réduite et pour chaque test canonique du cœur quotienté.
+- Limite : l'équivalence réduite reste conditionnelle aux obligations de Gate
+  178 ; l'identification avec des représentants PDE différentiels séparés
+  reste à transporter sur le cœur quotienté.
+- Porte terminale : aucune ; cinquante-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-HILBERT-COMPONENT-PDE-PAIRING` — Gate 181
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/COMPOSANTES-PDE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedHilbertComponentPDEPairing4D`.
+- Résultat : l'inverse du chart réduit réalise chaque direction physique pure.
+  Le pairing du résidu fort réduit contre ces représentants est exactement le
+  pairing du résidu PDE séparant fourni, génériquement pour chaque composante
+  bulk et explicitement pour la matière SpinC primitive.
+- Limite : les représentants PDE restent des données fournies ; leur
+  construction différentielle tensorielle et leur compatibilité multi-chart
+  ne sont pas encore établies.
+- Porte terminale : aucune ; cinquante-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-LINEARIZATION` — Gate 182
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/HESSIENNE-NON-LINÉAIRE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertLinearization4D`.
+- Résultat : la dérivée du covecteur d'Euler réduit est la Hessienne locale
+  tirée dans les deux directions par le chart Hilbert réduit. Son représentant
+  de Riesz est exactement la dérivée du résidu fort. Cette Hessienne est
+  symétrique sur le domaine admissible et, à l'état nul sur le cœur lisse,
+  coïncide avec la véritable Hessienne covariante minimale-physique.
+- Limite : l'équivalence réduite reste conditionnelle aux obligations
+  analytiques de Gate 178 ; aucune inversibilité/coercivité de la Hessienne ni
+  couverture multi-chart n'est encore démontrée.
+- Porte terminale : aucune ; cinquante-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-NINE-BLOCK-LINEARIZATION` — Gate 183
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/HESSIENNE-NEUF-BLOCS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertNineBlockLinearization4D`.
+- Résultat : la Hessienne locale complète est identifiée comme opérateur à la
+  somme des six Hessiennes physiques canoniques, de la Hessienne Robin, de la
+  Hessienne matière primitive et de la Hessienne LL complète. Le pullback de
+  cet opérateur est exactement la Hessienne réduite, et le pairing de la
+  linéarisation forte de Riesz est cette même somme à neuf blocs, y compris sur
+  les directions canoniques du cœur lisse.
+- Limite : aucune coercivité ou inversibilité n'est déduite ; l'équivalence du
+  chart réduit reste conditionnelle aux obligations analytiques de Gate 178.
+- Porte terminale : aucune ; cinquante-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T04-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HELMHOLTZ` — Gate 184
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/HELMHOLTZ-NON-LINÉAIRE-T04`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHelmholtz4D`.
+- Résultat : le domaine admissible réduit est ouvert et contient l'état nul.
+  Sur tout ce domaine, le covecteur d'Euler réduit est le véritable gradient
+  de Fréchet de l'action réduite et son Jacobien satisfait exactement la
+  condition de Helmholtz non linéaire. La linéarisation forte de Riesz est
+  symétrique en pairing Hilbert.
+- Limite : le résultat est chart-local et dépend encore de l'équivalence
+  réduite conditionnelle de Gate 178 ; le recollement global multi-chart de la
+  condition de Helmholtz reste ouvert.
+- Porte terminale : aucune ; premier support explicite pour `T04`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-HILBERT-KERNEL-SATURATION` — Gate 185
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/SATURATION-DU-NOYAU-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedHilbertKernelSaturation4D`.
+- Résultat : la projection continue vers les cinq coordonnées physiques
+  complétées sépare exactement le noyau minimal sur le cœur lisse. La clôture
+  hilbertienne du sous-espace nul reste dans son noyau ; l'embedding réduit a
+  donc exactement le noyau physique canonique et son passage au quotient est
+  injectif.
+- Limite : la complétude du modèle de chart, la compatibilité des normes et la
+  densité de l'application cœur-vers-chart de Gate 178 restent à établir.
+- Porte terminale : aucune ; cinquante-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-SMOOTH-CORE-HILBERT-COMPLETION` — Gate 186
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/COMPLÉTION-DU-CŒUR-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedSmoothCoreHilbertCompletion4D`.
+- Résultat : l'injection de Gate 185 induit une norme et un produit scalaire
+  canoniques sur le cœur quotienté. Sa complétion uniforme est complète, son
+  inclusion est isométrique et dense, et elle est canoniquement unitairement
+  équivalente au Hilbert physique réduit, avec accord exact sur le cœur.
+- Limite : cette complétion n'est pas encore un chart variationnel ; il manque
+  le prolongement véritable `C²` de la famille d'action sur le modèle complété.
+- Porte terminale : aucune ; soixantième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-MATTER-LL-ACTION` — Gate 187
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/ACTIONS-C2-MATIÈRE-LL-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedMatterLLAction4D`.
+- Résultat : la projection vers toutes les coordonnées physiques est inchangée
+  par la réduction orthogonale. Les coordonnées matière primitive et LL
+  définissent donc deux actions véritables `C²` sur le Hilbert réduit ; elles
+  récupèrent exactement les actions de graphe établies sur le cœur quotienté.
+- Limite : les blocs métriques, Maxwell, Robin et BV doivent encore être
+  prolongés ; une configuration lisse ne peut pas être reconstruite pour un
+  point arbitraire de la complétion par simple densité.
+- Porte terminale : aucune ; soixante-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-GAUGE-ACTION` — Gate 188
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/ACTIONS-C2-DE-JAUGE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedGaugeAction4D`.
+- Résultat : les projections métriques des deux secteurs et la projection
+  abélienne fermée descendent au Hilbert réduit avec accord exact sur le cœur.
+  Elles définissent les actions `C²` de De Donder ± et de Lorenz, ainsi que
+  leur somme et l'action de graphe à cinq secteurs matière/LL/jauge.
+- Limite : ces termes sont les actions de jauge du graphe ; ils ne construisent
+  ni les actions Einstein--Hilbert ni l'action Maxwell par la courbure `dA`.
+- Porte terminale : aucune ; soixante-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-ROBIN-ACTION` — Gate 189
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/ACTION-C2-ROBIN-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedRobinAction4D`.
+- Résultat : sous les données H10 et la condition transverse déjà explicites,
+  la projection Robin descend au Hilbert réduit. Le domaine naturel tiré en
+  arrière est ouvert, contient zéro, et l'action Robin y est `C²`, avec accord
+  exact avec le bloc local canonique sur le cœur.
+- Limite : le résultat reste conditionnel au chart d'action minimal, aux
+  données de projection H10 et à la condition transverse fournies.
+- Porte terminale : aucune ; soixante-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-MAXWELL-QUADRATIC-ACTION` — Gate 190
+
+- État : `DONE` (2026-08-30). Portée : `GLOBALE/HILBERT-RÉDUIT/MAXWELL-HESSIEN-QUADRATIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedMaxwellQuadraticAction4D`.
+- Résultat : toute paire d'extensions bilinéaires bornées des Hessiennes
+  Maxwell ± annule la clôture du noyau physique, descend canoniquement au
+  Hilbert réduit et définit une énergie quadratique lisse. Son accord avec les
+  deux Hessiennes Maxwell locales est exact sur le cœur quotienté.
+- Limite : la construction est conditionnelle aux deux extensions H11 et ne
+  constitue pas une action Maxwell non linéaire complétée.
+- Porte terminale : aucune ; soixante-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-SEVEN-PHYSICAL-QUADRATIC-ACTION` — Gate 191
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/HESSIENNE-PHYSIQUE-QUADRATIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedSevenPhysicalQuadraticAction4D`.
+- Résultat : les sept extensions H11 fournies sont sommées avant une unique
+  descente canonique au Hilbert réduit. La Hessienne bornée obtenue est
+  symétrique, possède un opérateur fort de Riesz et définit une action
+  quadratique lisse dont la dérivée et le pairing de Riesz coïncident. L'accord
+  avec la Hessienne physique locale complète est exact sur le cœur quotienté.
+- Limite : le résultat est conditionnel aux sept extensions H11 et décrit le
+  développement quadratique au point de base, pas l'action non linéaire.
+- Porte terminale : aucune ; soixante-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-GRAPH-ROBIN-MAXWELL-QUADRATIC-EULER` — Gate 192
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/EULER-PARTIEL-CONCRET-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedGraphRobinMaxwellQuadraticEuler4D`.
+- Résultat : l'action de graphe à cinq secteurs, l'action Robin véritable et
+  l'énergie Maxwell quadratique sont assemblées sur le domaine Robin ouvert
+  contenant zéro. Leur somme est `C²` sur ce domaine ; son covecteur d'Euler,
+  son résidu fort de Riesz, le pairing, la décomposition exacte de la dérivée,
+  la criticité forte et l'accord sur le cœur sont tous construits.
+- Limite : ce nom volontairement partiel exclut l'interaction non linéaire,
+  Einstein--Hilbert ±, Maxwell par `dA` et finite-BV ; il ne ferme donc pas T03.
+- Porte terminale : aucune ; soixante-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-REMAINING-PHYSICAL-QUADRATIC-EULER` — Gate 193
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/EULER-QUADRATIQUE-DISPONIBLE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedRemainingPhysicalQuadraticEuler4D`.
+- Résultat : les extensions H11 interaction, Einstein--Hilbert ± et finite-BV
+  descendent séparément en Hessiennes symétriques sur le Hilbert réduit. Leur
+  somme possède une action quadratique lisse, un gradient de Fréchet exact et
+  un opérateur fort de Riesz, avec accord exact sur le cœur quotienté. Cette
+  énergie est ajoutée à l'action de Gate 192 : l'action disponible contient
+  désormais les cinq secteurs de graphe, Robin véritable et les six blocs
+  physiques non-Robin au niveau Hessien quadratique, avec domaine ouvert,
+  `C²`, Euler/Riesz, décomposition de dérivée, criticité et formule cœur.
+- Limite : interaction, Einstein--Hilbert, Maxwell par `dA` et finite-BV ne
+  sont toujours pas complétés non linéairement ; le Hilbert réduit actuel ne
+  contrôle pas les données pointwise/C², la courbure ni les données de face
+  finie nécessaires.
+- Porte terminale : aucune ; soixante-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-CANONICAL-AVAILABLE-QUADRATIC-EULER` — Gate 194
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/EULER-QUADRATIQUE-CANONIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedCanonicalAvailableQuadraticEuler4D`.
+- Résultat : un paquet canonique indexé fixe les sept formes de cœur par
+  les vraies Hessiennes des blocs locaux et fournit seulement leurs extensions
+  H11 symétriques. Il instancie directement l'intégralité de Gate 193 :
+  domaine Robin, action disponible `C²`, Euler/Riesz, décomposition de la
+  dérivée, criticité et formule exacte sur le cœur.
+- Limite : le résultat reste quadratique au point de base ; il ne construit pas
+  les quatre complétions non linéaires encore absentes.
+- Porte terminale : aucune ; soixante-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-SEVEN-PHYSICAL-QUADRATIC-ACTION-OF-BOUND` — Gate 195
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/HESSIENNE-AGRÉGÉE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedSevenPhysicalQuadraticActionOfBound4D`.
+- Résultat : une extension commune de la Hessienne physique totale descend
+  sur le Hilbert réduit avec symétrie, action quadratique lisse, dérivée exacte,
+  opérateur de Riesz, criticité forte et accord cœur. Une seule borne produit canonique
+  `GlobalCandidateASevenPhysicalCoreBound4D` suffit à construire cette
+  extension et tous ces objets.
+- Limite : cette voie agrégée ne sépare pas GHY de Robin ni les sept blocs ;
+  elle est parallèle à Gate 193 et ne doit pas lui être additionnée.
+- Porte terminale : aucune ; soixante-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-CANDIDATE-A-SEVEN-PHYSICAL-CANONICAL-EXTENSIONS-OF-BOUNDS` — Gate 196
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/EXTENSIONS-H11-CANONIQUES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensionsOfBounds4D`.
+- Résultat : sept bornes produit sur les vraies formes de cœur construisent,
+  par double extension dense, les sept formes H11 continues canoniques avec
+  accord exact. Symétrie et reconstruction sont dérivées du `C²`. Une unique
+  borne du morphisme cœur-vers-chart produit automatiquement les sept bornes ;
+  le contrat de chart Hilbert existant fournit cette borne par norme d'opérateur.
+- Limite : l'identification normée du chart Hilbert reste un contrat ; les quatre
+  complétions non linéaires interaction/courbure/Maxwell/finite-BV restent absentes.
+- Porte terminale : aucune ; soixante-dixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-CANONICAL-AVAILABLE-QUADRATIC-EULER-OF-HILBERT-CHART` — Gate 197
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/EULER-QUADRATIQUE-CANONIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedCanonicalAvailableQuadraticEulerOfHilbertChart4D`.
+- Résultat : le contrat commun Hilbert-chart construit directement les sept
+  extensions canoniques séparées puis l'action quadratique disponible, son
+  Euler de Fréchet et son résidu fort de Riesz. Sont prouvés `C²`, pairing
+  exact avec `fderiv`, décomposition par blocs, criticité et formule cœur.
+- Limite : la projection Robin véritable et sa transversalité restent des
+  entrées distinctes ; le Hilbert-chart lui-même reste un contrat analytique.
+- Porte terminale : aucune ; soixante-et-onzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COMPLETED-CANONICAL-AVAILABLE-QUADRATIC-EULER-OF-ACTUAL-KERNEL-HILBERT-CHART` — Gate 198
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/NOYAU-RÉEL/EULER-QUADRATIQUE-CANONIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCompletedCanonicalAvailableQuadraticEulerOfActualKernelHilbertChart4D`.
+- Résultat : l'admissibilité du zéro dans la famille H10 implique la
+  transversalité du noyau tangentiel. Sur ce noyau réel, un même contrat
+  Hilbert-chart fournit la borne cœur-vers-chart, les sept extensions H11
+  canoniques et la projection Robin complétée. L'action, son caractère `C²`,
+  son Euler de Fréchet, son résidu de Riesz et sa criticité suivent donc de la
+  seule famille accompagnée de ce Hilbert-chart.
+- Limite : l'équivalence Hilbert-chart augmentée reste un contrat analytique
+  et Gate 176 l'obstrue en présence d'une direction non minimale non nulle ;
+  l'action demeure quadratique au point de base.
+- Porte terminale : aucune ; soixante-douzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-OF-DENSE-CORE-CLOSURE` — Gate 199
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/NON-LINÉAIRE/FERMETURE-CŒUR-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertOfDenseCoreClosure4D`.
+- Résultat : les trois obligations réduites et non obstruées de Gate 178
+  construisent le chart Hilbert quotienté. Elles déterminent alors l'action
+  covariante non linéaire tirée, son Euler de Fréchet, son résidu fort de
+  Riesz, l'équivalence avec le système faible exact à huit secteurs, la
+  symétrie de Helmholtz et la linéarisation exacte à neuf blocs.
+- Limite : complétude du chart, compatibilité des normes et densité du cœur
+  quotienté restent à démontrer sur les espaces fonctionnels concrets ; le
+  recollement multi-chart et les représentants PDE différentiels restent
+  ouverts.
+- Porte terminale : aucune ; soixante-treizième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-CANDIDATE-A-SEVEN-PHYSICAL-CANONICAL-EXTENSIONS-OF-REDUCED-HILBERT-CHART` — Gate 200
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/EXTENSIONS-H11-CANONIQUES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateASevenPhysicalCanonicalExtensionsOfReducedHilbertChart4D`.
+- Résultat : l'équivalence du chart Hilbert réduit, composée avec la réduction
+  orthogonale du Hilbert augmenté, fournit une borne explicite du cœur lisse
+  vers le chart. Cette borne construit canoniquement les sept extensions H11
+  séparées, sans recourir au chart commun obstrué.
+- Limite : l'existence du chart réduit dépend toujours des trois obligations
+  analytiques honnêtes de Gate 178 ; aucune fermeture terminale n'en découle.
+- Porte terminale : aucune ; soixante-quatorzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-ACTUAL-KERNEL-REDUCED-DENSE-CORE-CLOSURE` — Gate 201
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/NOYAU-RÉEL/HILBERT-RÉDUIT/EULER-NON-LINÉAIRE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalActualKernelReducedDenseCoreClosure4D`.
+- Résultat : la famille H10 dérive sa transversalité et la fermeture dense
+  réduite construit son chart Hilbert. Ce chart dérive la borne cœur→chart,
+  les sept extensions H11 et la projection Robin complétée. Les mêmes données
+  déterminent alors à la fois l'action quadratique canonique `C²` avec son
+  Euler/Riesz fort et l'action covariante non linéaire exacte avec son pairing
+  Euler/Riesz de Fréchet.
+- Limite : les trois obligations analytiques réduites restent à prouver
+  concrètement ; la couverture multi-chart et les représentants PDE séparés
+  manquent encore pour fermer honnêtement `T03`.
+- Porte terminale : aucune ; soixante-quinzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-CANDIDATE-A-COMMON-HILBERT-CHART-OBSTRUCTION` — Gate 202
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-AUGMENTÉ/NO-GO-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateACommonHilbertChartObstruction4D`.
+- Résultat : tout chart commun augmenté compatible avec le cœur lisse force
+  chaque direction non minimale de difféomorphisme à être nulle, donc leur
+  carrier est subsingleton. Une seule direction non nulle exclut directement
+  l'existence de ce chart, indépendamment de son mode de construction.
+- Limite : c'est un no-go qui justifie la route réduite des Gates 199–201 ; il
+  ne fournit aucune des obligations analytiques réduites restantes.
+- Porte terminale : aucune ; soixante-seizième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-DENSE-CORE-CLOSURE-OF-HILBERT-CHART` — Gate 203
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/FERMETURE-CŒUR-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedDenseCoreClosureOfHilbertChart4D`.
+- Résultat : pour tout chart Hilbert réduit compatible avec le cœur
+  quotienté, la complétude du modèle se transporte par l'équivalence et
+  la densité du core-to-chart suit de la densité du cœur réduit. Une seule
+  identité de norme sur le cœur suffit donc à reconstruire le paquet complet
+  de fermeture de Gate 178.
+- Limite : le chart réduit et cette identité de norme ne sont pas construits
+  par ce résultat ; il réduit trois obligations analytiques à une sans fermer
+  la circularité de leur existence.
+- Porte terminale : aucune ; soixante-dix-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-COMPONENTWISE-PDE-OF-DENSE-CORE-CLOSURE` — Gate 204
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/PDE-COMPOSANTES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertComponentwisePDEOfDenseCoreClosure4D`.
+- Résultat : le résidu non linéaire fort issu de la fermeture réduite est
+  le gradient de Fréchet–Riesz sur le domaine admissible, et son annulation
+  est exactement équivalente aux huit équations PDE composante par composante
+  associées au même covecteur d'Euler.
+- Limite : les huit représentants PDE séparants restent des données fournies ;
+  leur construction tensorielle différentielle et le recollement multi-chart
+  restent ouverts.
+- Porte terminale : aucune ; soixante-dix-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-CHART-TRANSITION` — Gate 205
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/RECOLLEMENT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertChartTransition4D`.
+- Résultat : sur tout chevauchement variationnel authentique dont la dérivée
+  entrelace les deux réalisations réduites, l'action, le covecteur d'Euler et
+  le résidu fort de Riesz coïncident ; l'annulation de la dérivée de Fréchet
+  est donc indépendante du chart réduit.
+- Limite : le chevauchement et sa compatibilité différentielle restent des
+  données fournies ; aucune couverture physique multi-chart n'est construite.
+- Porte terminale : aucune ; soixante-dix-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-ATLAS-RESIDUAL` — Gate 206
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/ATLAS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertAtlasResidual4D`.
+- Résultat : une famille fournie de charts réduits avec transitions compatibles
+  descend vers une action et un résidu non linéaire forts indépendants du
+  chart ; la stationnarité descendue équivaut à la dérivée de Fréchet nulle
+  dans chaque membre. Le constructeur singleton est explicite.
+- Limite : l'atlas physique, son carrier couvrant et ses transitions restent
+  à construire ; le résultat ne transforme pas un atlas supposé en couverture.
+- Porte terminale : aucune ; quatre-vingtième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-ATLAS-PDE` — Gate 207
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/ATLAS-PDE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertAtlasPDE4D`.
+- Résultat : dans chaque membre admissible de l'atlas réduit, l'équation
+  descendue est exactement l'annulation de l'Euler local, le système faible
+  à huit secteurs et tout système PDE fort composante par composante séparant ;
+  l'action descendue récupère aussi l'action covariante authentique.
+- Limite : les représentants PDE et l'atlas physique restent fournis, pas
+  construits à partir de données différentielles globales.
+- Porte terminale : aucune ; quatre-vingt-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-DENSE-CORE-RAW-NORM-COMPATIBILITY` — Gate 208
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/NORME-CŒUR-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedDenseCoreRawNormCompatibility4D`.
+- Résultat : l'unique identité de norme sur le cœur quotienté est équivalente
+  à l'égalité explicite entre l'application canonique cœur-vers-chart et la
+  projection Hilbert réduite sur chaque représentant lisse brut. Avec un chart
+  réduit, cette seule égalité brute construit toute la fermeture dense.
+- Limite : l'égalité brute est isolée mais pas encore démontrée à partir des
+  normes physiques ; elle demeure l'entrée analytique réelle.
+- Porte terminale : aucune ; quatre-vingt-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-COVERED-ATLAS` — Gate 209
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/ATLAS-COUVRANT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertCoveredAtlas4D`.
+- Résultat : un carrier couvert par l'union des domaines de charts réduits
+  compatibles porte une action et un résidu forts indépendants du chart choisi.
+  Leur criticité équivaut à la dérivée de Fréchet nulle et à l'Euler local dans
+  tout chart contenant l'état ; les transitions ne sont requises que sur les
+  chevauchements effectifs. Le constructeur singleton est explicite.
+- Limite : le carrier physique, sa couverture et ses transitions restent
+  fournis. Aucune différentiabilité globale de l'action choisie point par point
+  sur le subtype n'est affirmée sans hypothèses locales supplémentaires.
+- Porte terminale : aucune ; quatre-vingt-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-NONLINEAR-HILBERT-COVERED-ATLAS-PDE` — Gate 210
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/ATLAS-COUVRANT-PDE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedNonlinearHilbertCoveredAtlasPDE4D`.
+- Résultat : dans tout domaine membre contenant un état couvert, la criticité
+  descendue équivaut au système faible à huit secteurs et à tout système PDE
+  fort composante par composante séparant. L'action descendue y est exactement
+  l'action covariante authentique.
+- Limite : les représentants PDE tensoriels, le carrier physique, la couverture
+  et les transitions restent des données fournies.
+- Porte terminale : aucune ; quatre-vingt-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-COVERED-PHYSICAL-ATLAS-BRIDGE` — Gate 211
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/ATLAS-PHYSIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedCoveredPhysicalAtlasBridge4D`.
+- Résultat : une famille d'atlas variationnels minimaux spécialisée par ses
+  données de charts se convertit vers l'API physique existante. Une réalisation
+  Hilbert réduite compatible construit alors l'atlas couvert de Gate 209 à
+  partir des transitions physiques, et sa criticité est exactement la
+  criticité chart-indépendante de la configuration physique représentée.
+- Limite : la couverture physique, la représentation commune des états, les
+  équivalences Hilbert réduites et la compatibilité différentielle restent les
+  données explicites du constructeur ; ce gate ne les postule pas implicitement.
+- Porte terminale : aucune ; quatre-vingt-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-DENSE-CORE-TOPOLOGICAL-CLOSURE` — Gate 212
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/FERMETURE-TOPOLOGIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedDenseCoreTopologicalClosure4D`.
+- Résultat : l'égalité exacte des normes de Gate 208 est remplacée par les deux
+  estimations uniformes nécessaires et suffisantes à l'extension de
+  l'équivalence algébrique du cœur dense en équivalence linéaire continue des
+  complétés. L'ancien cas isométrique s'y injecte avec les constantes un, et
+  l'existence de ce certificat est équivalente à celle du chart Hilbert réduit.
+- Limite : la complétude du chart, la densité et les deux estimations doivent
+  encore être démontrées sur le chart physique concret.
+- Porte terminale : aucune ; quatre-vingt-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-REDUCED-DENSE-CORE-RAW-TOPOLOGICAL-COMPATIBILITY` — Gate 213
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/HILBERT-RÉDUIT/BORNES-CŒUR-BRUT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalReducedDenseCoreRawTopologicalCompatibility4D`.
+- Résultat : les deux estimations de Gate 212 sur le cœur quotienté sont
+  exactement équivalentes aux deux estimations explicites sur chaque
+  représentant lisse brut. Avec complétude et densité, ces bornes brutes
+  construisent directement le chart Hilbert réduit.
+- Limite : les deux estimations brutes, la complétude et la densité restent les
+  obligations analytiques concrètes à démontrer.
+- Porte terminale : aucune ; quatre-vingt-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-SPINC-MATTER-GRAPH-RESIDUAL-BRIDGE` — Gate 214
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-SPINC/BLOC-MATIÈRE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalSpinCMatterGraphResidualBridge4D`.
+- Résultat : la dérivée de Fréchet du bloc matière authentique dans le chart
+  minimal est exactement le pullback de la forme de graphe SpinC. Le résidu
+  spectral maximal explicite `2D + m²` en donne une représentation séparante,
+  et son annulation équivaut à la stationnarité de ce bloc. Le covecteur SpinC
+  complet est décomposé exactement en cette contribution et un reste croisé.
+- Limite : l'identification à l'équation SpinC couplée complète exige encore
+  l'annulation ou le calcul du covecteur croisé provenant des huit autres blocs.
+- Porte terminale : aucune ; quatre-vingt-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-LL-GRAPH-RIESZ-RESIDUAL-BRIDGE` — Gate 215
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-LL/BLOC-COMPLET-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalLLGraphRieszResidualBridge4D`.
+- Résultat : la dérivée de Fréchet du bloc LL authentique à trois slots dans le
+  chart minimal est exactement le pullback de sa forme de graphe complète. Son
+  résidu Riesz donne une représentation séparante sur le cœur LL lisse dense,
+  et son annulation équivaut à la stationnarité de ce bloc.
+- Limite : le bloc LL agrège encore les slots auxiliaire-métrique, mesure et
+  champ ; leur séparation et les contributions croisées des huit autres blocs
+  à l'équation couplée complète restent à identifier.
+- Porte terminale : aucune ; quatre-vingt-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-LL-THREE-SLOT-CROSS-BLOCK-DECOMPOSITION` — Gate 216
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-LL/TROIS-SLOTS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalLLThreeSlotCrossBlockDecomposition4D`.
+- Résultat : chacun des trois covecteurs LL couplés — métrique auxiliaire,
+  mesure et champ — est exactement la contribution du bloc LL complet sur sa
+  direction pure plus un reste croisé nommé. La contribution authentique est
+  exprimée par le pairing avec le résidu Riesz LL de la Gate 215.
+- Limite : une direction pure ne sépare pas à elle seule le résidu LL complet,
+  et l'annulation des trois restes croisés n'est pas encore démontrée.
+- Porte terminale : aucune ; quatre-vingt-dixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-MAXWELL-GAUGE-CROSS-BLOCK-DECOMPOSITION` — Gate 217
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-MAXWELL/JAUGE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalMaxwellGaugeCrossBlockDecomposition4D`.
+- Résultat : la somme des deux membres Maxwell du chart est prouvée égale à
+  l'action Maxwell covariante sur le domaine admissible et `C²` en chaque point.
+  Sa dérivée de Fréchet restreinte aux directions de jauge est séparée du
+  covecteur de jauge couplé par un reste croisé exact et nommé.
+- Limite : aucun résidu Maxwell fort n'est encore construit et l'annulation du
+  reste croisé n'est pas démontrée.
+- Porte terminale : aucune ; quatre-vingt-onzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-ROBIN-NORMAL-CROSS-BLOCK-DECOMPOSITION` — Gate 218
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-ROBIN/NORMALE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalRobinNormalCrossBlockDecomposition4D`.
+- Résultat : le membre Robin/GHY authentique du chart est égal à l'action
+  covariante sur le domaine, `C²`, puis séparé du covecteur normal couplé par un
+  reste croisé nommé. Sous le contrat de projection H10 existant et la
+  transversalité, sa première variation au point de base est exactement le
+  pullback de la première variation H10 complète.
+- Limite : le chart générique ne construit pas encore la transversalité ni la
+  projection H10, et le reste croisé normal n'est pas prouvé nul.
+- Porte terminale : aucune ; quatre-vingt-douzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-EINSTEIN-MAXWELL-METRIC-CROSS-BLOCK-DECOMPOSITION` — Gate 219
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-EINSTEIN-MAXWELL/METRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalEinsteinMaxwellMetricCrossBlockDecomposition4D`.
+- Résultat : les deux blocs Einstein--Hilbert et les deux blocs Maxwell sont
+  conservés ensemble, donc incluent la réponse métrique Maxwell. Leur action
+  est exactement la somme covariante Einstein--Maxwell sur le domaine, `C²`,
+  et leur covecteur métrique est séparé du système couplé par un reste nommé.
+- Limite : `chartData` ne relie pas encore ses directions métriques aux lignes
+  géométriques nécessaires pour identifier ce covecteur aux formules
+  Einstein/tension Maxwell existantes ; le reste croisé n'est pas prouvé nul.
+- Porte terminale : aucune ; quatre-vingt-treizième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-MINIMAL-PHYSICAL-DIFFEOMORPHISM-BRST-OBSTRUCTION` — Gate 220
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-BRST/OBSTRUCTION-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalDiffeomorphismBRSTObstruction4D`.
+- Résultat : toute direction diffeomorphisme non minimale non nulle rend le
+  raccord canonique cœur-vers-chart minimal non injectif ; aucun inverse
+  linéaire à gauche ne peut donc récupérer le graphe BRST depuis ce chart.
+- Limite : l'action Candidate-A à neuf blocs ne contient pas l'action BRST
+  off-shell séparée. Fermer ce slot exige soit un chart physique où le ghost est
+  prouvé inerte, soit un chart gauge-fixed élargi conservant `c/cbar/B` et une
+  égalité d'action explicite.
+- Porte terminale : aucune ; quatre-vingt-quatorzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-AUGMENTED-BRST-ACTION` — Gate 221
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-BRST/CHART-AUGMENTÉ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedAugmentedBRSTAction4D`.
+- Résultat : le chart Hilbert physique réduit construit canoniquement les sept
+  extensions physiques sur le graphe Hilbert gauge-fixed déjà existant. Ce
+  même modèle conserve deux perturbations métriques et un unique triplet
+  diagonal `c/cbar/B`, sans copie métrique supplémentaire. L'action quadratique
+  augmentée est `C²`; son `fderiv` est représenté par un opérateur de Riesz
+  borné, le raccord typé du cœur reste injectif, et sa valeur sur le cœur lisse
+  est exactement la variation BRST difféomorphe, le BRST abélien, les actions
+  matière/LL et la moitié du Hessien des sept blocs physiques.
+- Limite : cette action est le modèle gauge-fixed quadratique au point de base,
+  pas encore une extension non linéaire globale de l'action covariante. Le chart
+  réduit et ses obligations analytiques restent fournis.
+- Porte terminale : aucune ; quatre-vingt-quinzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-DIFFEOMORPHISM-BRST-GRAPH-CHART` — Gate 222
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-BRST/CHART-NONLINEAIRE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearDiffeomorphismBRSTGraphChart4D`.
+- Résultat : l'action physique locale non linéaire exacte est couplée au
+  graphe BRST difféomorphe diagonal par une relation imposant une unique
+  perturbation métrique partagée. Le domaine est ouvert et contient zéro ; le
+  cœur typé est bijectif sur le chart relationnel. L'action est `C²`, sa
+  dérivée est la somme exacte Euler physique/BRST, la contribution BRST garde
+  son représentant de Riesz, et l'égalité au cœur est explicite. Sur la tranche
+  `c/cbar/B = 0`, elle se réduit exactement à l'action covariante physique.
+- Limite : le sous-espace relationnel porte la norme induite mais aucune
+  complétude n'est revendiquée ; le Riesz fort total reste donc fourni par la
+  Gate 221 quadratique complétée. Les équations composante par composante et les
+  restes croisés de `T03` restent à fermer.
+- Porte terminale : aucune ; quatre-vingt-seizième support pour `T03`, compteur
   terminal inchangé à `2/14`.
 
 ## 7. Les 14 portes terminales fixes

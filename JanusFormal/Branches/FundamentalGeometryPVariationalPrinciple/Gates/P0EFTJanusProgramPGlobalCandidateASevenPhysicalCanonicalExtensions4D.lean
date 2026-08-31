@@ -29,10 +29,15 @@ open P0EFTJanusProgramPFullCoupledHelmholtzAssembly4D
 open P0EFTJanusProgramPGlobalFieldSpace4D
 open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalEulerLagrange4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousExtensions4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousSum4D
@@ -194,14 +199,33 @@ def globalCandidateAPhysicalBlockCanonicalCoreForm
     (block : GlobalCandidateAPhysicalBlock) :
     PhysicalCore period hPeriod analysis →ₗ[Real]
       PhysicalCore period hPeriod analysis →ₗ[Real] Real :=
-  (globalCandidateAPhysicalBlockLocalHessian period hPeriod chart
-      sameAction.chartBridge.basePoint block).bilinearComp
-    (sameAction.chartBridge.tangentAnalysis.comp
-      (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
-        configuration data analysis))
-    (sameAction.chartBridge.tangentAnalysis.comp
-      (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period hPeriod
-        configuration data analysis))
+  { toFun := fun first =>
+      { toFun := fun second =>
+          globalCandidateAPhysicalBlockLocalHessian period hPeriod chart
+            sameAction.chartBridge.basePoint block
+            (sameAction.chartBridge.tangentAnalysis
+              (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period
+                hPeriod configuration data analysis first))
+            (sameAction.chartBridge.tangentAnalysis
+              (diagonalExtendedBulkMinimalPhysicalTangentLinearMap period
+                hPeriod configuration data analysis second))
+        map_add' := by
+          intro second third
+          rw [map_add, map_add, map_add]
+        map_smul' := by
+          intro scalar second
+          rw [map_smul, map_smul, map_smul]
+          rfl }
+    map_add' first second := by
+      apply LinearMap.ext
+      intro test
+      simp only [map_add, LinearMap.add_apply]
+      rfl
+    map_smul' scalar first := by
+      apply LinearMap.ext
+      intro test
+      simp only [map_smul, LinearMap.smul_apply]
+      rfl }
 
 /-- Canonical extension packet: only the completed forms and their exact core
 restrictions are supplied. -/
@@ -217,7 +241,7 @@ structure GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
     (chart : GlobalCandidateALocalVariationalChart period hPeriod couplings
       NonNullFace NullFace measure)
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
-      period hPeriod configuration data analysis chart) : Prop where
+      period hPeriod configuration data analysis chart) where
   extension : GlobalCandidateAPhysicalBlock →
     PhysicalHilbert period hPeriod configuration data analysis →L[Real]
       PhysicalHilbert period hPeriod configuration data analysis →L[Real] Real
@@ -299,7 +323,24 @@ theorem candidate_a_seven_physical_canonical_extensions_gate
     (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridge4D
       period hPeriod configuration data analysis chart)
     (extensions : GlobalCandidateASevenPhysicalCanonicalContinuousExtensions4D
-      period hPeriod configuration data analysis chart sameAction) :=
+      period hPeriod configuration data analysis chart sameAction) :
+    (∀ first second,
+      globalCandidateASevenPhysicalContinuousSum period hPeriod configuration
+          data analysis chart sameAction
+          (extensions.toSymmetric period hPeriod).extensions first second =
+        globalCandidateASevenPhysicalContinuousSum period hPeriod configuration
+          data analysis chart sameAction
+          (extensions.toSymmetric period hPeriod).extensions second first) ∧
+      (∀ first second : PhysicalCore period hPeriod analysis,
+        globalCandidateASevenPhysicalContinuousSum period hPeriod configuration
+            data analysis chart sameAction
+            (extensions.toSymmetric period hPeriod).extensions
+            (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+              configuration data analysis first)
+            (globalCandidateASevenPhysicalCoreEmbedding period hPeriod
+              configuration data analysis second) =
+          globalCandidateASevenPhysicalCoreLinearForm period hPeriod
+            configuration data analysis chart sameAction first second) :=
   candidate_a_seven_physical_continuous_sum_gate period hPeriod configuration
     data analysis chart sameAction (extensions.toSymmetric period hPeriod)
 

@@ -1,5 +1,8 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkHelmholtzReciprocity
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusParentBulkMicroscopicFingerprintSelection
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteRankParentActionFingerprint
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusHilbertBoundaryParentSchurSelection
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusScalarGraphSchurMicroscopicCompletion4D
 import JanusFormal.Branches.AlphaDeepCompletion.Gates.P0EFTJanusDiscreteMicroscopicAlphaCandidate
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPGlobalSchemeFrontier4D
 
@@ -12,7 +15,8 @@ discrete microscopic data also fix the sextic coupling and the same Janus
 length.
 
 The present assumptions do not select one such parent: two admissible parents
-produce different reduced same-parity mixing.  Nor do they derive the UV
+produce different reduced same-parity mixing, while two distinct bounded bulk
+fingerprints also reproduce the same actual scalar graph Schur response.  Nor do they derive the UV
 anchor, beta function, level or finite renormalized parts required by the
 conditional microscopic candidate.  Hence this is a frontier/no-go, not
 terminal `MICRO-GLOBAL-01`, and no new physical assumption is introduced.
@@ -26,6 +30,9 @@ set_option autoImplicit false
 open P0EFTJanusCoupledSectorHelmholtzSelection
 open P0EFTJanusParentBulkHelmholtzReciprocity
 open P0EFTJanusParentBulkMicroscopicFingerprintSelection
+open P0EFTJanusFiniteRankParentActionFingerprint
+open P0EFTJanusHilbertBoundaryParentSchurSelection
+open P0EFTJanusScalarGraphSchurMicroscopicCompletion4D
 open P0EFTJanusDiscreteMicroscopicAlphaCandidate
 open P0EFTJanusProgramPGlobalSchemeFrontier4D
 
@@ -63,6 +70,14 @@ def ReducedTargetAloneDoesNotIdentifyFingerprint4D : Prop :=
 theorem reduced_target_alone_does_not_identify_fingerprint_4d :
     ReducedTargetAloneDoesNotIdentifyFingerprint4D :=
   reduced_target_alone_does_not_identify_fingerprint
+
+theorem global_finite_rank_parent_action_fixes_bulk_fingerprint :
+    FiniteRankParentActionFixesBulkFingerprint :=
+  finite_rank_parent_action_fixes_bulk_fingerprint
+
+theorem global_conditional_finite_rank_microscopic_parent_completion :
+    ConditionalFiniteRankMicroscopicParentCompletion :=
+  conditional_finite_rank_microscopic_parent_completion
 
 /-- The currently admissible parent family would select a unique reduced
 potential only if every two parent data induced the same potential. -/
@@ -118,6 +133,10 @@ structure ProgramPGlobalMicroFrontierCertificate4D where
     ConditionalMicroscopicParentCompletion4D
   reducedTargetFingerprintNonidentifiability :
     ReducedTargetAloneDoesNotIdentifyFingerprint4D
+  parentActionFingerprintIdentifiability :
+    FiniteRankParentActionFixesBulkFingerprint
+  finiteRankConditionalParentCompletion :
+    ConditionalFiniteRankMicroscopicParentCompletion
   conditionalAlphaSelection :
     ConditionalDiscreteMicroscopicAlphaSelection4D
   conditionalSexticSelection :
@@ -136,6 +155,10 @@ def programPGlobalMicroFrontierCertificate4D :
     global_conditional_microscopic_parent_completion
   reducedTargetFingerprintNonidentifiability :=
     reduced_target_alone_does_not_identify_fingerprint_4d
+  parentActionFingerprintIdentifiability :=
+    global_finite_rank_parent_action_fixes_bulk_fingerprint
+  finiteRankConditionalParentCompletion :=
+    global_conditional_finite_rank_microscopic_parent_completion
   conditionalAlphaSelection :=
     conditional_discrete_microscopic_alpha_selection
   conditionalSexticSelection :=

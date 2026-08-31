@@ -68,6 +68,34 @@ theorem global_quantized_anomaly_discrete_constraint
   certificate.familiesIndexConstraint.discreteConstraint multiplicity base
     first second hNonzero
 
+/-- The integrated frontier exposes the fixed-point-free PT pairing on every
+literal D10 cutoff. -/
+theorem global_exact_d10_pt_fixedPointFree
+    {Base Tangent : Type*}
+    {spectral : ProductThroatSpectralData}
+    {quantized : QuantizedGeometricFamiliesIndexData4D Base Tangent}
+    (certificate : ProgramPT07GlobalQuantizedAnomalyFrontierCertificate4D
+      spectral quantized)
+    (sphereCutoff circleCutoff : ℕ)
+    (mode : TruncatedD10Mode spectral sphereCutoff circleCutoff) :
+    truncatedPT mode ≠ mode :=
+  certificate.exactD10Cutoffs.ptFixedPointFree sphereCutoff circleCutoff mode
+
+/-- Hence the two root packets retain exactly equal multiplicity inside the
+integrated T07 certificate. -/
+theorem global_exact_d10_root_multiplicity_paired
+    {Base Tangent : Type*}
+    {spectral : ProductThroatSpectralData}
+    {quantized : QuantizedGeometricFamiliesIndexData4D Base Tangent}
+    (certificate : ProgramPT07GlobalQuantizedAnomalyFrontierCertificate4D
+      spectral quantized)
+    (sphereCutoff circleCutoff : ℕ) :
+    Fintype.card
+        (TruncatedD10PositiveRootMode spectral sphereCutoff circleCutoff) =
+      Fintype.card
+        (TruncatedD10NegativeRootMode spectral sphereCutoff circleCutoff) :=
+  certificate.exactD10Cutoffs.rootMultiplicityPaired sphereCutoff circleCutoff
+
 /-- Public integrated T07 frontier checkpoint. -/
 theorem t07_global_quantized_anomaly_frontier_gate
     {Base Tangent : Type*}

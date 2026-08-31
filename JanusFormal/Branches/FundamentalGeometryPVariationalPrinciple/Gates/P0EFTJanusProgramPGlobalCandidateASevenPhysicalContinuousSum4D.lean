@@ -28,9 +28,11 @@ open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
 open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
 open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBoundedExtension4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalBlockBounds4D
 open P0EFTJanusProgramPGlobalCandidateASevenPhysicalContinuousExtensions4D
 
@@ -194,7 +196,7 @@ theorem globalCandidateASevenPhysicalContinuousSum_symmetric
           data analysis chart sameAction extensions.extensions second first := by
   intro first second
   unfold globalCandidateASevenPhysicalContinuousSum
-  simp_rw [ContinuousLinearMap.sum_apply]
+  simp_rw [sum_apply]
   apply Finset.sum_congr rfl
   intro block hBlock
   exact extensions.symmetric block first second
@@ -225,7 +227,7 @@ theorem globalCandidateASevenPhysicalContinuousSum_core_agreement
       globalCandidateASevenPhysicalCoreLinearForm period hPeriod configuration
         data analysis chart sameAction first second := by
   unfold globalCandidateASevenPhysicalContinuousSum
-  simp_rw [ContinuousLinearMap.sum_apply]
+  simp_rw [sum_apply]
   rw [extensions.reconstruct first second]
   apply Finset.sum_congr rfl
   intro block hBlock
