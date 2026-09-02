@@ -2098,9 +2098,574 @@ equivalent to the exact band `x₀ ∈ Ioc(0,sin 1)` of `S³`, with explicit
   gauge-fermion variation, and the zero-`c/cbar/B` slice is exactly physical.
   The relational range is not claimed complete, so the completed total Riesz
   model remains the quadratic Gate 221 construction.
+  The exact nonlinear relational layer now also carries the paired Abelian
+  BRST graph. Its core separates the gauge-free physical tangent from one
+  intrinsic Abelian state, then inserts that potential into both compatible
+  projections, so no independent duplicate potential is introduced. The full
+  domain is open and contains zero, the core embedding is bijective, and the
+  summed nonlinear action has its exact Frechet derivative and local `C²`
+  proof. On the smooth core it is the covariant action plus both genuine BRST
+  variations; with both nonminimal sectors zero it reduces exactly to the
+  covariant physical action. Completeness of this relational range, and hence
+  a new strong total Riesz representative, is not claimed.
+  Pullback of this exact Euler operator along the bijective algebraic core now
+  gives a canonical three-part system: gauge-free physical,
+  diffeomorphism-nonminimal and paired Abelian. Operator vanishing is exactly
+  equivalent to those three restrictions, while the core-test formula keeps
+  the unique Abelian potential visibly coupled to the physical direction.
+  The same core formula is now expanded factorwise into the physical Euler
+  pairing and the two BRST Hessian pairings. Their separate strong Riesz
+  representatives remain available, and full criticality is equivalent to
+  vanishing of this three-term weak pairing on every algebraic core test.
+  Restricting those tests to the unique paired Abelian potential now gives its
+  exact coupled Euler equation: Maxwell block plus the named physical
+  cross-block remainder plus the Abelian BRST Hessian pairing. Full criticality
+  forces this sum to vanish; no separate vanishing or total Riesz claim is made.
+  The complementary Abelian nonminimal tests are now split off by a genuine
+  linear product equivalence. Their physical and diffeomorphism contributions
+  vanish exactly, leaving the restricted Abelian BRST Hessian. Consequently,
+  full criticality is equivalent to four exact core equations: gauge-free
+  physical, diffeomorphism nonminimal, coupled Abelian potential and Abelian
+  nonminimal. This still does not make either factorwise Riesz residual vanish
+  outside the tested component.
+  Pure diffeomorphism-nonminimal tests are now resolved as well: the physical
+  and Abelian contributions vanish exactly, while the surviving covector is
+  the diagonal diffeomorphism BRST Hessian restricted to those tests. Its
+  pairing uses the existing strong factor Riesz operator, but does not test or
+  annihilate that operator's metric component.
+  Gauge-free physical tests are now expanded exactly as well. The paired
+  Abelian term vanishes on them, while the surviving equation is the sum of
+  the restricted minimal-physical Euler covector and the metric response of
+  the diagonal diffeomorphism BRST Hessian. Criticality is equivalent to the
+  resulting coupled four-part core system; neither summand is declared zero
+  separately, and full tangent exhaustion is still open.
+  Pure metric tests now refine that equation into the exact sum of the
+  Einstein--Maxwell metric block, the named physical metric cross-block and
+  the diagonal diffeomorphism-BRST metric response. Full criticality kills
+  only this coupled covector; no strong tensor equation or separate vanishing
+  of its three terms is asserted.
+  Pure normal tests now give the corresponding exact Robin equation. Their
+  metric and Abelian components are zero, so the diffeomorphism-BRST response
+  vanishes definitionally and the remaining covector is precisely the Robin
+  block plus its named physical cross-block. This is still a weak covector
+  identity, not a strong tensorial normal equation.
+  The same restriction is now complete for all three LL coordinates:
+  auxiliary metric, measure and field. Their BRST responses vanish exactly,
+  and each full-BRST covector is the authentic LL block restriction plus its
+  named physical cross-block. Criticality annihilates the three coupled sums,
+  without separately killing any cross-block or supplying strong LL PDEs.
+  Primitive SpinC tests are now treated identically: their bulk metric and
+  Abelian components vanish, hence so does the BRST response, and the exact
+  full-BRST equation is the authentic matter-block SpinC covector plus its
+  named cross-block. The latter is not known to vanish, so no isolated spectral
+  residual equation is inferred.
+  The corrected minimal physical diffeomorphism-ghost coordinate is now
+  exposed separately from the nonminimal BRST triplet. Its metric component is
+  zero, hence its BRST response vanishes and the full-BRST covector is exactly
+  the existing complete physical ghost covector. No dedicated authentic block
+  or strong differential residual is yet available for this slot.
+  The gauge-free tangent is now exhausted by an exact linear product of these
+  seven physical coordinates: metric, normal, corrected diffeomorphism ghost,
+  the three LL slots and primitive SpinC. Its Euler covector vanishes exactly
+  when all seven component covectors vanish. This is exhaustion only inside the
+  gauge-free factor; the paired Abelian potential, nonminimal sectors and strong
+  local PDE representatives remain separate.
+  Combining that equivalence with the resolved core system now makes full-BRST
+  criticality equivalent to ten weak covector equations: those seven physical
+  components, the paired Abelian potential, and the two aggregated nonminimal
+  sectors. This is an exact weak/core component system, not a field-by-field
+  strong PDE system or a covering multi-chart result.
+  The diffeomorphism nonminimal factor is now further resolved by a genuine
+  linear equivalence into ghost, antighost and Nakanishi--Lautrup fields. Its
+  aggregate BRST covector vanishes exactly when the three field covectors do,
+  so only the paired Abelian nonminimal triplet remains aggregated in the weak
+  component system.
+  The paired Abelian nonminimal family is now split pointwise in the same way.
+  Full-BRST criticality is therefore exactly equivalent to fourteen weak
+  field-type covectors: seven gauge-free physical slots, three diffeomorphism
+  nonminimal slots, the shared Abelian potential and three paired Abelian
+  nonminimal slots. This count is unrelated to terminal gates `T01--T14`, and
+  it still supplies no strong differential residuals.
+  The paired Abelian Nakanishi--Lautrup slot now has the first authentic strong
+  representative in that fieldwise system. Smooth paired gauge-Lie tests are
+  dense in the completed `L²` carrier, and the weak covector is exactly the
+  separating pairing with `Lorenz - B`; hence weak vanishing is equivalent to
+  vanishing of this strong `L²` residual. This does not yet strengthen the
+  other thirteen field-type covectors or close terminal gate `T03`.
+  The paired Abelian antighost slot now has the analogous exact strong
+  representation by the completed Faddeev--Popov projection. Its weak
+  covector vanishes exactly when that `L²` residual vanishes. This is not yet
+  an arbitrary completed-state differential-operator formula, and the ghost
+  covector still lacks the dense FP-image statement needed for separation.
+  On embedded algebraic smooth cores, that FP projection is now identified
+  exactly with the genuine paired Faddeev--Popov `L²` map of the smooth ghost.
+  Thus antighost stationarity there is the actual paired FP equation. The
+  bridge is intentionally core-only and does not manufacture a smooth ghost
+  representative for an arbitrary completed graph state.
+  On the same embedded smooth cores, the Nakanishi--Lautrup residual is now
+  identified exactly with the genuine paired Lorenz `L²` coordinate of the
+  smooth potential minus the smooth `B` embedding. Its weak equation is thus
+  precisely `Lorenz - B = 0` there. This remains core-only and leaves the
+  ghost covector, coupled physical blocks and terminal gate `T03` open.
+  Those two resolved Abelian equations are packaged as one exact strong
+  subsystem: completed states carry the FP-projection and Lorenz-minus-B
+  residuals, while embedded smooth cores carry the genuine paired FP and
+  Lorenz-minus-field equations. That package deliberately excludes the third,
+  ghost covector and makes no claim about it.
+  The paired Abelian ghost slot now also has an exact separating residual,
+  but on the closed Hilbert graph generated by pure smooth ghost tests. Its
+  smooth pairing is the completed antighost coordinate against the genuine FP
+  image of the test ghost. No unsupported identification with an `L²`
+  `FP(antighost)` operator or local PDE is claimed.
+  Consequently the full paired Abelian nonminimal triplet is now an exact
+  strong system: graph-Riesz ghost residual, completed FP projection, and
+  Lorenz-minus-B residual. On smooth cores the latter two are the genuine FP
+  and Lorenz--B equations; the ghost entry remains a nonlocal graph residual.
+  The diffeomorphism Nakanishi--Lautrup slot now likewise has an exact
+  graph-Riesz residual on the closed Hilbert graph generated by its pure
+  smooth tests. Its zero is equivalent to the original weak field covector,
+  and full-BRST criticality forces it to vanish. This is a separating graph
+  residual only: no `L²` formula or local PDE is asserted.
+  The diffeomorphism antighost slot now has the same exact construction on
+  its own closed pure-test graph: its weak covector vanishes exactly when its
+  graph-Riesz residual does. It likewise remains an abstract graph residual,
+  without an asserted differential or `L²` representative.
+  The remaining diffeomorphism nonminimal ghost slot now has its corresponding
+  exact graph-Riesz residual too. Hence all three diffeomorphism nonminimal
+  field covectors have individual separating residuals, although none is yet
+  identified with a local PDE or `L²` operator.
+  These three residuals are now packaged as one exact diffeomorphism
+  nonminimal strong system: the aggregate weak covector vanishes if and only
+  if all three graph-Riesz residuals vanish, and full-BRST criticality implies
+  the whole triplet.
+  Both nonminimal triplets are now substituted back into one exact hybrid
+  full-BRST Euler system. Criticality is equivalent to its ten blocks: seven
+  gauge-free weak covectors, the diffeomorphism residual triplet, the coupled
+  Abelian-potential weak covector, and the Abelian residual triplet. This does
+  not strengthen the eight remaining weak blocks into PDE or `L²` equations.
+  The coupled Abelian-potential covector now also has an exact separating
+  graph-Riesz residual. Its state-dependent graph norm records the entire
+  Maxwell plus physical cross-block plus BRST covector as a scalar coordinate.
+  Thus it is exact but abstract: it is not a fixed-domain `L²` representative
+  or a local Maxwell PDE.
+  A reusable augmented-graph construction now packages this exact pattern:
+  an authentic Hilbert block plus an algebraic scalar cross-block produces a
+  separating Riesz residual without discarding compensations between them.
+  Applying it to SpinC retains the genuine maximal `2D + m²` spectral output
+  and the full physical cross-block. The complete SpinC covector vanishes
+  exactly when this combined graph residual vanishes; neither summand is
+  asserted to vanish separately, and no local PDE for the total is claimed.
+  The same augmented-graph construction now resolves all three coupled LL
+  slots. Their shared authentic complete-LL Riesz residual is retained while
+  each auxiliary-metric, measure and field cross-block is encoded separately;
+  the three weak equations vanish exactly when the three combined graph
+  residuals vanish. This remains an exact separating statement, not three
+  local PDEs or separate vanishing of the authentic and cross-block terms.
+  Substituting the potential, SpinC and three LL graph residuals back into the
+  resolved nonminimal system now gives one exact ten-block full-BRST Euler
+  system. Only the metric, normal and physical diffeomorphism-ghost entries
+  remain weak covectors; the other seven entries are the five available
+  augmented residuals and the two nonminimal strong systems. This assembly
+  adds no local PDE interpretation and does not yet close terminal gate `T03`.
+  The three remaining weak entries now also admit exact separating scalar
+  graph-Riesz certificates. Substitution yields a ten-block system made only
+  of residual equations and the two strong nonminimal systems, equivalent to
+  full-BRST criticality. These last three certificates are deliberately
+  scalar and state-dependent: they are not tensorial fields, local PDEs, or
+  fixed-domain analytic operators, so terminal gate `T03` remains open.
+  The metric certificate has now been strengthened further: its Hilbert
+  coordinate is the authentic completed diagonal diffeomorphism-BRST graph,
+  whose Riesz representative is paired explicitly with pure metric tests;
+  Einstein--Maxwell plus the physical metric cross-block remains the scalar
+  coordinate. The resulting ten-block system is still exactly equivalent to
+  full-BRST criticality. It remains an augmented graph statement, not a local
+  tensorial metric PDE, so this does not close `T03`.
+  The normal certificate is now strengthened as well: pure normal tests retain
+  an injective two-sheet orientation-double `L²` coordinate, together with the
+  authentic Robin action covector and the physical normal cross-block scalar.
+  Its zero is exactly equivalent to the normal Euler covector equation, and
+  the strengthened ten-block system remains equivalent to full-BRST
+  criticality. The Robin covector is not yet identified with a local `L²`
+  density or Robin PDE, so terminal gate `T03` remains open.
+  The metric augmented coordinate is now proved faithful on pure metric tests:
+  injectivity of its authentic diagonal diffeomorphism-BRST graph component
+  implies injectivity after adjoining the scalar remainder. This is a
+  coordinate-level statement only; it supplies no local tensor PDE,
+  ellipticity or Fredholm property, and `T03` remains open.
+  The physical diffeomorphism ghost now has a genuine faithful Hilbert
+  coordinate as well. Intrinsic coefficients in the finite redundant throat
+  generating frame embed linearly and injectively into a finite `PiLp` of
+  canonical scalar throat `L²` spaces. This uses no global tangent-bundle
+  trivialization and does not yet identify a local Faddeev--Popov PDE.
+  Those faithful coordinates now replace the physical-ghost scalar certificate
+  in the exact ten-block full-BRST system. Both sectors' finite-frame `L²`
+  coordinates and the authentic physical ghost covector are retained in one
+  augmented graph, whose BRST remainder is exactly zero. Criticality remains
+  equivalent to the strengthened system; no local FP density, `L²`-bounded
+  covector, ellipticity or Fredholm statement is inferred.
+  The smooth paired-potential embedding used by the coupled Abelian graph is
+  now proved injective in addition to its existing dense-range theorem. Thus
+  the potential residual's completed graph coordinate is faithful, while its
+  state-dependent graph norm and lack of a local Maxwell PDE remain explicit.
+  The SpinC residual now retains both the authentic maximal spectral output
+  and the injective canonical two-sector Fourier coordinate. Its augmented
+  graph is faithful and the strengthened ten-block system remains exactly
+  equivalent to full-BRST criticality. This does not make the abstract chart
+  projection injective or supply a local Dirac PDE, ellipticity or Fredholmness.
+  The three pure LL slots are now faithful as well. Auxiliary metric, measure
+  and LL field tests map exactly through the common chart core to the already
+  injective complete LL smooth embedding, hence each associated augmented graph
+  map is injective. No local LL PDE, ellipticity, closed range, finite kernel or
+  Fredholm property follows, so `T03` remains open.
+  The last four smooth nonminimal graph coordinates are now faithful too: the
+  paired Abelian pure ghost and the pure diffeomorphism ghost, antighost and
+  Nakanishi--Lautrup inclusions remain injective through their closed Hilbert
+  graph embeddings. Their dense ranges were already known. This still does not
+  identify local PDE representatives or prove Fredholmness.
+  A full-BRST capstone now combines the exact ten-block criticality equivalence
+  with a single certificate that every physical and nonminimal test coordinate
+  used by the system is injective. The shared paired gauge-Lie `L²` coordinate
+  covers both Abelian antighost and Nakanishi--Lautrup equations. This is not
+  injectivity of the state-to-residual map and still does not close `T03`.
+  The three authentic LL covectors now jointly separate the complete authentic
+  LL Riesz residual: their pure base maps sum exactly to the canonical dense
+  smooth embedding, so simultaneous weak vanishing is equivalent to strong
+  residual vanishing. Cross-block remainders remain excluded; no local LL PDE,
+  ellipticity, closed-range, finite-kernel or Fredholm statement follows.
+  The fourteen separated residuals are now assembled into one nonlinear map
+  from the full-BRST chart to a state-independent ambient Hilbert target.
+  Its zero locus is exactly full-BRST criticality. That construction by itself
+  asserts no continuity or differentiability of the operator, nor any atlas
+  gluing, local PDE representatives, analytic domains or boundary conditions.
+  On the admissible open chart domain, the exact full-BRST action is now
+  globally `C²`, its actual Frechet derivative is the established Euler
+  operator, and that covector-valued operator is `C¹`. The fixed-ambient
+  residual equation has exactly the same zero locus as this true derivative.
+  This regularity is chartwise; it does not prove regularity of the
+  fourteen-coordinate residual map itself or construct atlas transitions.
+  For every supplied bounded full-BRST chart transport compatible with the
+  physical, diffeomorphism-graph and Abelian projections, the exact actions
+  agree, the Euler covectors obey the exact pullback law, and their fixed-
+  ambient critical equations are equivalent. This remains conditional: no
+  canonical full-BRST transport, atlas, cocycle or cover is constructed.
+  Those seven compatibility requirements are now packaged in one typed
+  full-BRST transition. Identity transitions are constructed at admissible
+  states, every transition certifies both endpoint domains, compatible
+  transitions compose, and exact action, Euler-covector and critical-equation
+  covariance is stable under composition. No nontrivial
+  cross-chart transition, inverse transition, atlas or coverage follows.
+  A supplied full-BRST atlas now places those transitions on pairwise overlaps
+  of an explicitly covered subset of the common algebraic full-BRST core.
+  Selecting any covering member defines an exact action and Euler covector,
+  and the action, transported covector and critical locus are independent of
+  that selection. In every covering member this locus is also exactly the
+  vanishing of the actual Frechet derivative; every single chart constructs
+  such an atlas on its domain preimage. Multi-chart coverage and nontrivial
+  compatible transitions remain inputs rather than canonical constructions,
+  so this conditional descent does not close `T03`.
+  Two authentic coordinates of the fixed residual now have genuine global
+  regularity: the Abelian antighost Faddeev--Popov residual and the
+  Nakanishi--Lautrup `Lorenz - B` residual are bounded linear maps of the full
+  chart state, hence their paired projection is `C∞`. The fixed fourteen-slot
+  record target itself still has no intrinsic global normed structure, and no
+  continuity is inferred for the other twelve state-dependent graph/Riesz
+  coordinates.
+  Every covered atlas now also has canonical coherent bounded transports
+  between its local linear fibres: normalizing through the selected fibre
+  proves identity, inverse and cocycle laws, and the exact Euler covectors form
+  a compatible section with chart-independent vanishing. This is a linear
+  fibre groupoid only; it does not construct inverse nonlinear chart germs,
+  nontrivial coverage or PDE representatives, so `T03` remains open.
+  The same fourteen coordinates now also have an explicit balanced normed
+  product model. Encoding the fixed residual in it preserves exactly the
+  critical zero locus, while its final Abelian pair is a bounded projection
+  whose composition with the residual is `C∞`. The original record is left
+  untouched to avoid incompatible algebraic instances; continuity of the
+  complete fourteen-coordinate operator and of its other twelve projections
+  remains unproved.
+  Smoothness of that complete normed residual is now reduced exactly to
+  smoothness of its fourteen coordinate maps. The two authentic Abelian `L²`
+  coordinates, the three fixed diffeomorphism graph coordinates and the
+  Abelian ghost graph coordinate discharge six of those analytic obligations.
+  The remaining eight state-dependent graph/Riesz coordinate regularity proofs
+  are still open, so `T03` remains open.
+  This frontier is now itself formalized: complete normed-residual smoothness
+  is equivalent to the record containing exactly those eight remaining
+  obligations; the six established coordinates are filled canonically.
+  For the physical-ghost obligation, the faithful paired finite-frame `L²`
+  coordinate now has a fixed closed complete carrier, and the original smooth
+  ghost tests embed into it densely and injectively. Constructing a globally
+  `C∞` continuous Euler-covector family on this carrier remains open. The
+  precise missing datum is now typed: any such family representing the true
+  Euler covector on the dense tests is unique, and its fixed-carrier Riesz
+  representative is automatically `C∞`. Conditional on this datum, the
+  covector also has a canonical globally `C∞` extension to the whole paired
+  `L²` ambient space by orthogonal projection, still representing the exact
+  Euler covector on tests. Its continuous fixed-carrier graph now factors the
+  authentic algebraic augmented graph exactly, and its lift has dense range in
+  the original completed graph. The authentic state-dependent graph residual
+  is now identified with the explicit fixed-carrier formula obtained by scaling
+  the carrier Riesz representative by `(1 + ‖ρ‖²)⁻¹`. This formula proves the
+  authentic fixed-ambient physical-ghost residual coordinate globally `C∞`
+  whenever the Gate 281 datum exists. Constructing that datum remains open, so
+  this coordinate is not yet counted among the six unconditional obligations.
+  Given that datum, the complete residual frontier is now reduced formally to
+  the other seven coordinate regularity obligations.
+  The potential coordinate now has the analogous fixed closed complete carrier
+  with dense injective smooth tests. Its precise continuous Euler-covector datum
+  is typed and unique; conditionally on that datum, the authentic graph/Riesz
+  residual has an explicit fixed-carrier formula and is globally `C∞`.
+  Constructing the datum remains open, so the unconditional count stays `6/14`.
+  Assuming both typed ghost and potential data, the complete residual frontier
+  is therefore reduced formally to the remaining six coordinates.
+  The Fourier-faithful SpinC coordinate now has a fixed closed complete carrier
+  with dense injective smooth tests. Its canonical spectral base Riesz
+  representative is unconditionally `C∞`. The only additional analytic input
+  is a typed cross-block remainder covector; it is unique on the fixed carrier
+  and has a `C∞` Riesz representative whenever it exists. Conditional on this
+  datum, the authentic state-dependent graph residual equals an explicit
+  fixed-carrier rank-one formula and its SpinC coordinate is globally `C∞`.
+  Constructing the remainder datum remains open, so the unconditional count
+  stays `6/14`. Assuming the ghost, potential and SpinC remainder data, the
+  complete residual frontier is reduced formally to the five coordinates
+  `metric`, `normal`, `llAuxMetric`, `llMeasure` and `llField`.
+  Gates 298--308 now give the metric and normal coordinates fixed-carrier
+  treatments. Pure tests embed densely and injectively in fixed closed complete
+  carriers. The metric remainder datum and the normal Robin/cross data are typed
+  and unique there, but their existence remains open. Conditional on those
+  data, the authentic residuals equal explicit fixed-carrier formulas: rank one
+  for the metric and a two-covector Gram formula for the normal coordinate.
+  Both coordinates are then globally `C∞`. Under the ghost, potential, SpinC,
+  metric and normal data, the residual frontier is therefore reduced exactly to
+  `llAuxMetric`, `llMeasure` and `llField`. These conditional advances leave the
+  unconditional analytic count at `6/14` and the terminal count at `2/14`.
+  Gates 309--314 place those three LL coordinates in one fixed complete ambient
+  space with three distinct closed carriers; every pure-slot test map is dense
+  and injective in its carrier. The three cross-block remainder covectors are
+  packaged, unique and have smooth Riesz representatives whenever the package
+  exists. Independently, the common authentic LL base residual and its three
+  carrier restrictions are globally `C∞`. The three authentic residuals now
+  equal their exact fixed-carrier rank-one graph formulas and are globally
+  `C∞` whenever the LL remainder package exists. Combined with the five
+  earlier analytic packages, this yields global `C∞` regularity of the full
+  fourteen-coordinate fixed residual. Explicit reverse constructors now turn
+  smooth fixed-carrier Riesz representatives with the authentic dense-test
+  pairings into each of the six required packages. Those representatives still
+  lack constructions, and the generic chart contract supplies only `C²`, not
+  the required `C∞` dependence. The capstone is therefore conditional: the
+  unconditional analytic count stays `6/14`, `T03` remains open and the
+  terminal count stays `2/14`.
+  Gate 315 constructs one previously implicit unconditional subterm: the
+  Abelian-BRST potential covector has a canonical fixed-carrier Riesz
+  representative, with exact dense-test pairing and global `C∞` dependence.
+  Maxwell and the physical cross-block still prevent construction of the full
+  potential package. This smoothness campaign is stronger than the terminal
+  regularity needed by `T03`; its actual blockers remain the global physical
+  atlas, local PDE system, analytic domains and coherent boundary terms.
+  Gate 316 makes the first atlas blocker exact: a projection-compatible atlas
+  covering the whole full-BRST core necessarily yields a genuine admissible
+  `chartData` at every core state. No constructor currently provides even
+  `Nonempty` of that chart-data type from the canonical inputs; all available
+  constructors still consume an analytic local family. Nontrivial smooth
+  overlap transitions remain a second independent obligation.
+  Gate 317 removes the purely functional-analytic projection sub-obstruction.
+  A choice-dependent Hamel embedding into `ℓ¹`, augmented by the canonical
+  matter and LL graph maps, induces a compatible norm on the full minimal
+  tangent; both graph maps then have bound one. This explicit norm is not
+  asserted to be the geometric Sobolev topology. The local `datumAt` family,
+  seven physical `C²` blocks and exact matter/LL same-action identities remain
+  to be constructed, so `T03` and the terminal count are unchanged.
+  Gate 318 specializes that norm with the unconditional geometric-Green SpinC
+  realization and inserts both into the existing chart constructor. Hence a
+  reduced input containing only the actual local `datumAt` family, the seven
+  physical `C²` statements and the two exact same-action identities now
+  constructs genuine minimal-physical `chartData`. Those geometric fields are
+  still unconstructed, so this is a strict frontier reduction, not an atlas.
   Its physical carrier, cover, transitions and differential PDE representatives
   remain supplied rather than constructed; no global differentiability of the
   pointwise-selected action is claimed.
+  Gate 319 additionally consumes the existing H10 Robin theorem. The remaining
+  chart input now asks for only six independent physical `C²` blocks, the
+  bounded boundary projection with its exact Robin identity, the local
+  `datumAt` family, the matter/LL same-action identities and transversality.
+  It still does not construct those geometric data or an atlas.
+  Gate 320 extends the Hamel graph norm by any additional algebraic linear
+  coordinate; matter, LL and that coordinate then become contractions. This
+  can absorb a future boundary projection without assuming its continuity,
+  but does not manufacture its geometric definition or action identity.
+  Gate 321 observes that H10-domain membership of the boundary projection at
+  zero already forces the plus throat metric to have no tangential radical.
+  The separate transversality hypothesis is therefore removed: the remaining
+  frontier is `datumAt`, six physical `C²` blocks, the boundary projection and
+  Robin identity, plus the exact matter/LL same-action identities.
+  Gate 322 weakens the remaining boundary projection from a continuous linear
+  map to a purely algebraic one: the extra-graph norm supplies continuity and
+  the matter/LL bounds automatically. Gate 323 constructs the metric-normal
+  part of that algebraic projection by extracting either Program-P sector and
+  proves it retracts the existing diagonal smooth insertion. Gate 324 inserts
+  this construction into the H10 chart route, leaving only a sector choice and
+  a real linear graph-parameter map instead of an arbitrary boundary map.
+  The first genuinely geometric obstruction is now a local Lorentzian metric
+  chart realizing the extracted tensor while preserving signature; without
+  it the H10-domain and exact Robin-action identities cannot be constructed.
+  Gate 325 makes the non-geometric half of `datumAt` canonical: once an
+  admissible Candidate-A geometry is supplied, it installs its metric pair,
+  translates the genuine gauge, LL and SpinC fields along the minimal tangent,
+  keeps D10 fixed and returns exactly the base configuration at zero.
+  Gate 326 removes a second artificial metric input. Any smooth symmetric
+  tensor already certified Lorentzian now canonically yields its pointwise
+  musical equivalence and hence a genuine `SmoothGeneralLorentzMetric` with
+  exactly that tensor. The remaining metric theorem is therefore precisely
+  stability of Lorentz signature for the affine tensor `g + h`; Candidate-A
+  root/action data and the H10 same-action identities still remain afterward.
+  Gate 327 connects genuine smooth variations to the existing relative `C²`
+  open domain. Membership now proves that `g + h` is pointwise nondegenerate,
+  constructs its exact musical equivalence and packages the affine tensor.
+  This deliberately does not infer Lorentz signature from invertibility: the
+  next metric step must restrict to the identity component and construct a
+  Lorentz congruence (or an equivalent explicit signature certificate).
+  Gate 328 proves the exact congruence route. A pointwise root `R` satisfying
+  `R² = I + g⁻¹h` and base-metric self-adjointness is automatically
+  invertible on the Gate-327 domain, yields `g+h = g(R·,R·)`, and therefore
+  constructs a genuine affine `SmoothGeneralLorentzMetric`. The remaining
+  metric task is now only to obtain this root data from the local `C²` root
+  branch on a suitably restricted identity neighbourhood.
+  Gate 329 performs the identity specialization of that Banach inverse-function
+  theorem: a concrete open `C²` neighbourhood of zero contains zero, its root
+  branch is `C²`, equals `I` at zero and satisfies exactly `R(h)² = I+h`.
+  The remaining bridge is to evaluate this completed matrix field in the
+  regular metric frame and prove the selected local branch is `g`-self-adjoint.
+  Gate 330 performs that intrinsic evaluation and frame conjugation. The
+  resulting tangent endomorphism has exactly the completed root matrix in the
+  regular frame and its square is exactly `I + g⁻¹h`. Thus only
+  `g`-self-adjointness of the selected local branch remains before Gate 328
+  packages `g+h` as a genuine Lorentz metric. Gate 331 constructs the bounded
+  regular-frame adjoint `R ↦ G⁻¹RᵀG`, proves its anti-multiplicative square
+  algebra, and proves exactly that both `g⁻¹h` and `I + g⁻¹h` are fixed by
+  it. The remaining root step is now an IFT uniqueness argument on the smaller
+  open neighbourhood where the adjoint root also belongs to the square-chart
+  source; no invariance of the original arbitrary chart source is assumed.
+  Gate 332 constructs exactly that open zero-neighbourhood. Both the selected
+  root and its metric adjoint lie in the same chart source, their squares agree,
+  and chart injectivity gives `R†=R`. Evaluation in the regular frame and the
+  matrix adjoint-pair equivalence prove intrinsic `g`-self-adjointness. Combined
+  with the existing affine nondegenerate domain, this now constructs the genuine
+  Lorentz metric with tensor exactly `g+h`, without any external root or
+  self-adjointness hypothesis.
+  Gate 333 combines the nondegenerate/positive-volume domain and the
+  self-adjoint-root domain into one open zero-neighbourhood in the completed
+  relative `C²` core. Every genuine smooth variation landing there now directly
+  yields a `SmoothGeneralLorentzMetric` whose tensor is exactly `g+h`. The next
+  task is downstream integration into the operational Candidate-A metric/chart
+  data, not further root algebra. Gate 334 installs the existing
+  Einstein--Hilbert and integrated Maxwell families on this same Lorentz chart,
+  proves their sum `C²`, and retains its exact intrinsic physical value at zero.
+  Thus the bulk Einstein--Maxwell metric action no longer uses the larger
+  multi-signature inverse domain. Gate 335 then substitutes the chart-built
+  Lorentz metric into the Candidate-A regular-frame actual-metric matrix, both
+  in the ambient quotient and on the moving boundary graph. The former external
+  `variedMetric` plus its tensor-equality witness are no longer inputs at this
+  layer. Gate 336 intersects the mobile-boundary GHY domain with the pullback
+  of that Lorentz chart. This joint set is open, contains zero under the
+  existing throat-transversality hypothesis, and every genuine smooth point
+  now canonically supplies both the metric `g+h` and the non-null moving graph.
+  Gate 337 further restricts it by two explicit unit-ball conditions around
+  the selected normal and induced-volume roots. The result is still an open
+  zero-neighbourhood, and both roots are now strictly positive pointwise by
+  construction, removing their former downstream nonnegativity hypotheses.
+  Gate 338 then installs this canonical metric and graph in the unique central
+  Candidate-A non-null source. The completed two-sheet GHY action equals that
+  central GHY summand without external varied-metric, graph, root-sign or
+  source-equality witnesses. Gate 339 packages the resulting open domain,
+  `C²` action, canonical smooth-source equality and genuine symmetric second
+  Frechet derivative in one downstream certificate. Gate 340 finally projects
+  the same boundary-enhanced metric coordinate to the bulk Lorentz chart and
+  adds the Einstein--Maxwell and mobile GHY terms there. Their sum is `C²` on
+  one positive domain and, on its smooth core, uses the same tensor variation
+  and the canonical central Candidate-A boundary source. Its genuine second
+  Frechet derivative at the physical origin is consequently defined and
+  symmetric. Gate 341 identifies that Hessian exactly with the sum of the
+  pulled-back Einstein--Maxwell bulk Hessian and the completed mobile GHY
+  Hessian, both as continuous bilinear maps and pointwise on directions; the
+  genuine bulk pullback Hessian is itself symmetric. Gate 342 defines the
+  genuine Euler covector on the whole positive domain, proves its exact
+  bulk/GHY split there and identifies its derivative at zero with the Gate 341
+  Hessian decomposition. Gate 343 attacks the remaining smooth-root blocker:
+  matrix squaring is promoted to `C∞`, and the unchanged local IFT root branch
+  is proved `C∞` on its existing open target. Continuous Sylvester-regular
+  roots of smooth finite-matrix targets are consequently smooth. Gate 344
+  applies that bootstrap to the actual completed Candidate-A identity root:
+  its evaluated matrix field is globally `C∞`, remains pointwise
+  Sylvester-regular and squares exactly to the smooth affine target `I+g⁻¹h`.
+  Gate 345 reconstructs this field in the genuine regular frame as a linear
+  operator on global `C∞` tangent sections. Its pointwise action is exactly the
+  intrinsic completed root, and applying it twice gives the affine relative
+  endomorphism. Gate 346 packages the base metric, the genuine varied Lorentz
+  metric, the intrinsic root and its global `C∞` operator into one
+  `GlobalCandidateAGeometry`, with the exact intrinsic relative square law.
+  Gate 347 proves that this completed root is pointwise invertible, promotes
+  its inverse matrix to a global `C∞` field and reconstructs the exact
+  two-sided inverse operator on smooth tangent sections. Gate 348 uses it to
+  transport the regular frame, proves smoothness of the genuine inverse
+  musical map, preserves the exact Gram-volume field by root congruence and
+  thereby promotes every admissible varied chart metric to a full
+  `RegularGeneralLorentzMetric`. Gate 349 then uses the exact relative tensor
+  `(g₋+h₋)-(g₊+h₊)` to assemble a `GlobalCandidateAGeometry` from the
+  two independent metric directions already used by the global tangent. Its
+  two output tensors are exactly `g₊+h₊` and `g₋+h₋`; the honest nested
+  root admissibility remains explicit. Openness of that dependent paired
+  domain is still separate. Gate 350 then reuses the canonical global scalar-
+  curvature constructor to promote both regular outputs to
+  `RegularEinsteinHilbertMetric`; their two metric fields are identified
+  exactly with the plus/minus sectors of the same paired geometry. Gate 351
+  constructs the canonical `RegularIntrinsicMaxwellLine` from any intrinsic
+  potential and variation using the existing frame-free global Maxwell
+  pairing, then installs one line in each paired sector. Their gauge
+  coefficients are exactly their evaluations in the corresponding regular
+  frames; no inverse coframe is assumed. Gate 352 installs this same paired
+  geometry in a `GlobalFieldConfiguration`, defines its two gauge coefficient
+  fields by those frame evaluations and proves the exact `plusGauge_eq` and
+  `minusGauge_eq` obligations needed downstream. All unrelated fields are
+  inherited unchanged from a supplied configuration. Gate 353 proves that
+  the complete finite-matrix spectral potential is `C∞`, composes it with
+  the completed smooth relative root, multiplies by the regular plus-volume
+  field and identifies the result exactly with the `interactionDensityAt`
+  value required by `GlobalCandidateAActionData` in its regular basis. Gate
+  354 then rebases the existing explicit face/scalar boundary controls onto
+  the paired configuration and assembles the two gravity packets, two Maxwell
+  lines, gauge identities and interaction density into one complete
+  `GlobalCandidateAActionData`. The physical boundary strata remain those of
+  the supplied base datum rather than being discarded or replaced by empty
+  faces. Gate 355 bundles that paired configuration and action package into
+  the exact dependent `GlobalCandidateALocalActionDatum` expected by the local
+  variational-family interface. Gate 356 then uses the smooth inverse Gram
+  matrix of a regular frame to reconstruct an intrinsic smooth gauge potential
+  from arbitrary smooth frame coefficients and proves exact recovery under
+  `gaugePotentialFrameCoefficients`. Gauge-coefficient representability is
+  therefore no longer an obstruction; the paired open domain, exact center,
+  six `C²` blocks, Robin/matter/LL identities and Euler/PDE raccords remain.
+  Gate 357 removes the last circularity when the desired target configuration
+  already carries the paired geometry: it reconstructs both state potentials
+  from that target and builds the action datum directly on it. Gate 358
+  specializes this to the genuine minimal physical tangent, using
+  `globalMinimalPhysicalConfigurationAt` so that translated gauge, LL and
+  SpinC fields are retained, and reconstructs the Maxwell direction from the
+  same tangent's gauge slot. Gate 359 packages these pointwise data as the
+  actual `datumAt` of a `GlobalCandidateALocalActionFamily` on every supplied
+  pointwise-admissible domain. Gates 360--361 isolate the honest base-pair and
+  root-selection compatibility needed at zero and prove the exact central
+  configuration identity. Gate 362 makes the paired projection to the two
+  fixed-base C² cores continuous in an existing matter/LL graph-adapted norm;
+  Gate 363 therefore constructs an open zero-neighborhood carrying both
+  separate Lorentz conditions. Gate 364 replaces the arbitrary domain by the
+  exact paired admissibility locus, proves it contains zero, centres its local
+  action family and embeds it into that open neighborhood. Its only remaining
+  metric-openness condition is the relative root over the varying plus metric.
+  Gate 365 proves the Robin and finite-BV blocks constant and C², reducing the
+  seven physical certificates to five variable blocks: interaction,
+  Einstein--Hilbert plus/minus and Maxwell plus/minus. Those five C² results,
+  the matter/LL action identities, relative-root openness and the Euler/PDE
+  raccords remain before the local variational chart closes T03.
   Any resulting reduced equivalence now pulls the exact local action, Euler
   covector and strong Frechet--Riesz residual back to the reduced physical
   Hilbert space. Its pairing on each quotient-core test is the genuine chart

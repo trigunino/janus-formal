@@ -5885,6 +5885,1949 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Porte terminale : aucune ; quatre-vingt-seizième support pour `T03`, compteur
   terminal inchangé à `2/14`.
 
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-GRAPH-CHART` — Gate 223
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-BRST/CHART-NONLINEAIRE-COMPLET-T03`.
+- Gate : chaîne `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTGraphChart4D{,Calculus,Closure,Reduction,Terminal}`.
+- Résultat : le chart relationnel non linéaire exact réunit le secteur physique,
+  le graphe BRST difféomorphe et le graphe BRST abélien. Son cœur utilise un
+  tangent physique sans jauge et un unique état abélien apparié : le potentiel
+  est inséré une seule fois dans le tangent physique et dans le graphe, sans
+  degré de liberté dupliqué. Le domaine est ouvert, contient zéro et le cœur y
+  est bijectif. L'action totale possède sa dérivée exacte et est localement
+  `C²`; sur le cœur elle est exactement l'action covariante plus les deux
+  variations BRST, et la tranche non minimale nulle redonne l'action physique.
+- Limite : le chart relationnel porte toujours la norme induite sans preuve de
+  complétude ; aucun opérateur de Riesz fort total supplémentaire n'est donc
+  revendiqué. Les pairings forts des deux facteurs restent ceux déjà prouvés.
+- Porte terminale : aucune ; quatre-vingt-dix-septième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-CORE-EULER-SYSTEM` — Gate 224
+
+- État : `DONE` (2026-08-31). Portée : `GLOBALE/EULER-BRST/SYSTEME-COEUR-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTCoreEulerSystem4D`.
+- Résultat : la dérivée exacte du chart full-BRST est tirée sur son cœur
+  algébrique bijectif. L'annulation de l'opérateur d'Euler équivaut exactement
+  aux trois restrictions gauge-free physique, non minimale difféomorphe et
+  abélienne appariée. La formule sur tout test du cœur expose la somme couplée
+  des variations difféomorphe/physique et abélienne.
+- Limite : la troisième équation n'est pas un secteur abélien indépendant :
+  son potentiel unique est aussi injecté dans le tangent physique. Aucun Riesz
+  total ni aucune complétude du range relationnel n'est revendiqué.
+- Porte terminale : aucune ; quatre-vingt-dix-huitième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-FACTORWISE-EULER-PAIRING` — Gate 225
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/PAIRING-FACTEURS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFactorwiseEulerPairing4D`.
+- Résultat : sur chaque test du cœur full-BRST, la première variation est
+  exactement la somme du covecteur d'Euler physique et des pairings hessiens
+  BRST difféomorphe et abélien. Son annulation sur tous les tests équivaut à la
+  criticité exacte. Chaque pairing BRST conserve le représentant de Riesz fort
+  déjà prouvé dans son propre facteur.
+- Limite : les trois scalaires ne sont pas regroupés en un Riesz total, car la
+  complétude du chart relationnel n'est pas établie. L'extraction de
+  l'équation du potentiel abélien unique est fournie par la Gate 226.
+- Porte terminale : aucune ; quatre-vingt-dix-neuvième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PAIRED-ABELIAN-POTENTIAL-EULER` — Gate 226
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/POTENTIEL-ABELIEN-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPairedAbelianPotentialEuler4D`.
+- Résultat : les tests full-BRST qui varient uniquement l'unique potentiel
+  abélien donnent exactement la somme du bloc Maxwell physique, du reste
+  croisé physique nommé et du pairing hessien BRST abélien. Toute
+  configuration full-BRST critique annule ce covecteur potentiel couplé.
+- Limite : ni le reste croisé physique ni le terme BRST ne sont annulés
+  séparément ; aucun faux découplage sectoriel ni Riesz total n'est revendiqué.
+- Porte terminale : aucune ; centième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PAIRED-ABELIAN-NONMINIMAL-EULER` — Gate 227
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/NONMINIMAL-ABELIEN-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPairedAbelianNonminimalEuler4D`.
+- Résultat : l'état abélien apparié est identifié linéairement au
+  produit potentiel/nonminimal. Les tests non minimaux purs annulent
+  définitionnellement les contributions physique et BRST difféomorphe ; leur
+  covecteur d'Euler est exactement la restriction du Hessien BRST abélien.
+  La criticité full-BRST équivaut ainsi au système raffiné physique gauge-free,
+  nonminimal difféomorphe, potentiel abélien couplé et nonminimal abélien.
+- Limite : l'annulation sur les tests non minimaux ne force pas à elle seule
+  l'annulation du représentant de Riesz abélien complet, qui contient aussi la
+  composante potentiel.
+- Porte terminale : aucune ; cent-unième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-DIFFEOMORPHISM-NONMINIMAL-EULER` — Gate 228
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/NONMINIMAL-DIFFEOMORPHE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTDiffeomorphismNonminimalEuler4D`.
+- Résultat : les tests non minimaux difféomorphes purs annulent exactement
+  les contributions physique et abélienne. Leur covecteur d'Euler est la
+  restriction du Hessien BRST difféomorphe diagonal et son pairing est celui
+  du représentant de Riesz fort déjà construit. La criticité équivaut au
+  système résolu où les deux équations non minimales sont ces restrictions
+  hessiennes explicites.
+- Limite : les tests non minimaux ne testent pas la composante métrique du
+  résidu BRST difféomorphe ; aucun Riesz total ni annulation du résidu complet
+  n'est conclu.
+- Porte terminale : aucune ; cent-deuxième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-GAUGE-FREE-PHYSICAL-EULER` — Gate 229
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/PHYSIQUE-GAUGE-FREE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTGaugeFreePhysicalEuler4D`.
+- Résultat : les tests physiques gauge-free annulent exactement la contribution
+  abélienne. Leur covecteur d'Euler est la somme de l'Euler de l'action
+  physique minimale restreint et de la réponse métrique du Hessien BRST
+  difféomorphe diagonal. La criticité équivaut au système couplé qui remplace
+  l'équation physique abstraite par cette identité exacte.
+- Limite : le terme BRST métrique n'est pas annulé séparément et la
+  décomposition gauge-free/potentiel n'est pas encore prouvée exhaustive sur
+  tout le tangent physique minimal.
+- Porte terminale : aucune ; cent-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-METRIC-EULER` — Gate 230
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/METRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTMetricEuler4D`.
+- Résultat : les tests métriques purs appartiennent au tangent physique
+  gauge-free. Leur covecteur full-BRST est exactement la somme du bloc métrique
+  Einstein–Maxwell, du reste croisé physique nommé et de la réponse métrique
+  du Hessien BRST difféomorphe. Toute configuration critique annule cette somme.
+- Limite : équation faible de covecteurs seulement ; les trois termes ne sont
+  pas annulés séparément. Aucun tenseur Einstein–Maxwell fort, Riesz total ou
+  complétude du chart relationnel n'est revendiqué.
+- Porte terminale : aucune ; cent-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-NORMAL-EULER` — Gate 231
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/NORMALE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTNormalEuler4D`.
+- Résultat : les tests normaux purs appartiennent au tangent physique
+  gauge-free et ont une composante métrique nulle. Leur réponse BRST
+  difféomorphe s'annule donc exactement ; l'équation full-BRST est la somme du
+  bloc Robin authentique et du reste croisé physique nommé. La criticité
+  annule cette somme.
+- Limite : équation faible de covecteurs ; le reste croisé n'est pas annulé
+  séparément et aucune équation normale tensorielle forte n'est revendiquée.
+- Porte terminale : aucune ; cent-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-THREE-SLOT-EULER` — Gate 232
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/LL-TROIS-SLOTS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLThreeSlotEuler4D`.
+- Résultat : les tests LL de métrique auxiliaire, mesure et champ sont injectés
+  dans le tangent physique gauge-free. Leur métrique et leur potentiel sont
+  nuls, donc les réponses BRST disparaissent exactement. Chacun des trois
+  covecteurs full-BRST est le bloc LL authentique plus son cross-block nommé ;
+  la criticité annule simultanément les trois sommes.
+- Limite : équations faibles de covecteurs ; aucun cross-block n'est annulé
+  séparément et aucune PDE LL forte n'est revendiquée.
+- Porte terminale : aucune ; cent-sixième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-SPINC-MATTER-EULER` — Gate 233
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/SPINC-MATIERE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTSpinCMatterEuler4D`.
+- Résultat : les tests SpinC primitifs ont des composantes bulk métrique et
+  abélienne nulles. Leur réponse BRST s'annule exactement et leur covecteur
+  full-BRST est la somme du bloc matière authentique et du cross-block SpinC
+  nommé. Toute configuration critique annule cette somme couplée.
+- Limite : le cross-block n'est pas annulé séparément ; le résidu spectral du
+  seul bloc matière n'est donc pas déclaré nul, et aucune PDE SpinC forte n'est
+  revendiquée.
+- Porte terminale : aucune ; cent-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-DIFFEOMORPHISM-GHOST-EULER` — Gate 234
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-DIFFEOMORPHE-PHYSIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalDiffeomorphismGhostEuler4D`.
+- Résultat : le test du ghost difféomorphe du tangent physique minimal est
+  distingué du triplet BRST non minimal. Sa composante métrique est nulle, donc
+  la réponse BRST disparaît exactement et son covecteur full-BRST est le
+  covecteur physique minimal existant. La criticité l'annule.
+- Limite : aucun bloc/cross-block authentique dédié ni résidu différentiel
+  concret n'existe encore pour ce slot ; seule l'équation faible complète est
+  revendiquée.
+- Porte terminale : aucune ; cent-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-GAUGE-FREE-COMPONENT-EQUIV` — Gate 235
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/EXHAUSTION-COMPOSANTES-GAUGE-FREE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTGaugeFreeComponentEquiv4D`.
+- Résultat : une équivalence linéaire exacte identifie le tangent physique
+  gauge-free au produit de ses sept coordonnées métrique, normale, ghost
+  difféomorphe physique, trois slots LL et SpinC. L'annulation de son covecteur
+  Euler full-BRST équivaut exactement à l'annulation des sept covecteurs de
+  composante.
+- Limite : cette exhaustion concerne uniquement le facteur gauge-free ; le
+  potentiel abélien apparié et les secteurs non minimaux restent séparés, et
+  aucune PDE forte locale n'est revendiquée.
+- Porte terminale : aucune ; cent-neuvième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-COMPONENT-EULER-SYSTEM` — Gate 236
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/SYSTEME-COMPOSANTES-FAIBLE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTComponentEulerSystem4D`.
+- Résultat : la criticité exacte de l'action full-BRST est équivalente aux dix
+  équations faibles de covecteurs : sept composantes physiques gauge-free, le
+  secteur difféomorphe non minimal, le potentiel abélien apparié et le secteur
+  abélien non minimal.
+- Limite : les deux secteurs non minimaux restent agrégés, les cross-blocks ne
+  sont pas annulés séparément et aucun résidu PDE fort ni atlas multi-chart
+  couvrant n'est obtenu.
+- Porte terminale : aucune ; cent-dixième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-DIFFEOMORPHISM-NONMINIMAL-COMPONENT-EULER` — Gate 237
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/DIFFEO-NONMINIMAL-COMPOSANTES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTDiffeomorphismNonminimalComponentEuler4D`.
+- Résultat : une équivalence linéaire sépare exactement le secteur non minimal
+  difféomorphe en ghost, antighost et Nakanishi–Lautrup. L'annulation de son
+  covecteur BRST agrégé équivaut aux trois annulations, et la criticité full-BRST
+  est réécrite avec ces trois slots distincts.
+- Limite : il s'agit de covecteurs faibles ; le Hessien n'est pas découplé et
+  aucune PDE forte de ghost n'est revendiquée. Le triplet abélien reste agrégé.
+- Porte terminale : aucune ; cent-onzième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-NONMINIMAL-COMPONENT-EULER` — Gate 238
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/ABELIEN-NONMINIMAL-COMPOSANTES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianNonminimalComponentEuler4D`.
+- Résultat : une équivalence linéaire pointwise sépare les familles abéliennes
+  appariées en ghost, antighost et Nakanishi–Lautrup. Avec Gate 237, la
+  criticité full-BRST est exactement équivalente à quatorze covecteurs faibles
+  résolus par type de champ.
+- Limite : « quatorze » compte ici des équations de champ et non les quatorze
+  portes terminales `T01–T14`. Ces covecteurs ne sont toujours pas des résidus
+  PDE forts, et les cross-blocks physiques restent couplés.
+- Porte terminale : aucune ; cent-douzième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-NAKANISHI-LAUTRUP-L2-RESIDUAL` — Gate 239
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/ABELIEN-B-RESIDU-L2-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianNakanishiLautrupL2Residual4D`.
+- Résultat : les champs de Lie de jauge lisses appariés sont denses dans
+  leur porteur `L²`. Le covecteur faible de Nakanishi–Lautrup est exactement
+  représenté et séparé par le résidu fort `Lorenz - B`; son annulation est
+  équivalente à l'annulation de ce résidu `L²`.
+- Limite : c'est le premier résidu fort authentique parmi les quatorze
+  covecteurs par type de champ, pas encore le système Euler–Lagrange fort
+  complet. Les secteurs ghost et les blocs physiques couplés restent ouverts.
+- Porte terminale : aucune ; cent-treizième support pour `T03`, compteur terminal
+  inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-ANTIGHOST-L2-RESIDUAL` — Gate 240
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/ABELIEN-ANTIGHOST-FP-L2-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianAntighostL2Residual4D`.
+- Résultat : le covecteur faible de l'antighost abélien apparié est
+  exactement le pairing avec la projection Faddeev–Popov du graphe complété.
+  La densité des tests lisses prouvée en Gate 239 sépare ce résidu ; annulation
+  faible et annulation forte `L²` sont donc équivalentes.
+- Limite : sur un état complété arbitraire, le résidu reste la projection FP
+  du graphe. Son identification à l'opérateur différentiel FP n'est justifiée
+  que sur le cœur lisse ; aucune séparation analogue du covecteur ghost n'est
+  encore disponible.
+- Porte terminale : aucune ; cent-quatorzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-ANTIGHOST-SMOOTH-FP-BRIDGE` — Gate 241
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/ABELIEN-ANTIGHOST-FP-COEUR-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianAntighostSmoothFPBridge4D`.
+- Résultat : sur l'image du cœur algébrique lisse, la projection FP du
+  graphe complété est exactement `globalPairedAbelianFPL2LinearMap` appliquée
+  au ghost lisse. L'équation faible d'antighost et la criticité full-BRST y
+  imposent donc la vraie équation FP `L²` appariée.
+- Limite : le pont est volontairement restreint aux états embarqués depuis le
+  cœur lisse. Il ne fournit ni représentant ghost séparant pour un état
+  complété arbitraire, ni identification à une réalisation Green canonique
+  pour une métrique Candidate-A générale.
+- Porte terminale : aucune ; cent-quinzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-NAKANISHI-LAUTRUP-SMOOTH-LORENZ-B-BRIDGE` — Gate 242
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/ABELIEN-B-LORENZ-COEUR-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianNakanishiLautrupSmoothLorenzBBridge4D`.
+- Résultat : sur l'image du cœur algébrique lisse, le résidu fort de
+  Nakanishi–Lautrup est exactement la coordonnée Lorenz `L²` du potentiel
+  moins l'embarquement `L²` du champ auxiliaire `B`. Son covecteur faible et
+  la criticité full-BRST imposent donc la vraie équation `Lorenz - B = 0`.
+- Limite : le pont reste restreint au cœur lisse. Il ne fournit pas de
+  représentant différentiel pour un état complété arbitraire, ne sépare pas
+  le covecteur ghost et ne clôt pas les blocs physiques couplés.
+- Porte terminale : aucune ; cent-seizième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-RESOLVED-TWO-EQUATION-STRONG-SYSTEM` — Gate 243
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/ABELIEN-DEUX-EQUATIONS-FORTES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianResolvedTwoEquationStrongSystem4D`.
+- Résultat : les équations faibles d'antighost et de Nakanishi–Lautrup sont
+  réunies en un sous-système fort exact sur les états complétés. Sur le cœur
+  lisse, il devient exactement le couple `FP(ghost) = 0` et
+  `Lorenz(potential) - B = 0`, imposé par la criticité full-BRST.
+- Limite : il s'agit explicitement de deux équations, pas du triplet
+  nonminimal complet. Le covecteur ghost ne possède toujours pas de résidu
+  séparant, et les blocs physiques couplés restent ouverts.
+- Porte terminale : aucune ; cent-dix-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-GHOST-GRAPH-RIESZ-RESIDUAL` — Gate 244
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/ABELIEN-GHOST-RIESZ-GRAPHE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianGhostGraphRieszResidual4D`.
+- Résultat : les tests ghost lisses engendrent un sous-espace Hilbert fermé
+  du graphe abélien complété. La restriction du vrai Hessien y possède un
+  représentant de Riesz séparant, dont l'annulation est exactement celle du
+  covecteur ghost. Son pairing lisse est l'antighost complété apparié à
+  l'image FP du ghost test.
+- Limite : ce résidu fort vit dans la fermeture du graphe des tests ghost ;
+  il n'est pas identifié à `FP(antighost)` dans `L²`, faute d'adjoint FP
+  général pour la métrique Candidate-A. Ce n'est pas encore une PDE locale.
+- Porte terminale : aucune ; cent-dix-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-NONMINIMAL-STRONG-SYSTEM` — Gate 245
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/ABELIEN-NONMINIMAL-SYSTEME-FORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianNonminimalStrongSystem4D`.
+- Résultat : l'annulation du covecteur abélien nonminimal agrégé est
+  exactement équivalente au triplet de résidus séparants : Riesz de graphe du
+  ghost, projection FP `L²` de l'antighost et `Lorenz - B` en `L²`. Sur le
+  cœur lisse, les deux derniers deviennent les vraies équations FP et
+  Lorenz–B.
+- Limite : le résidu ghost demeure un résidu de graphe, pas une PDE locale.
+  Les onze autres covecteurs du système full-BRST restent faibles ou couplés.
+- Porte terminale : aucune ; cent-dix-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-DIFFEOMORPHISM-NAKANISHI-LAUTRUP-GRAPH-RIESZ-RESIDUAL` — Gate 246
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/DIFFEO-B-RIESZ-GRAPHE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTDiffeomorphismNakanishiLautrupGraphRieszResidual4D`.
+- Résultat : la fermeture Hilbert des tests Nakanishi--Lautrup
+  difféomorphisme purs porte le représentant de Riesz exact du vrai Hessien
+  restreint. Son annulation équivaut au covecteur faible de ce champ, et la
+  criticité full-BRST l'impose.
+- Limite : résidu séparant abstrait de graphe seulement ; aucune formule
+  `L²`, équation différentielle locale ou identification PDE n'est revendiquée.
+  Les deux autres slots non minimaux difféomorphisme restent à résoudre.
+- Porte terminale : aucune ; cent-vingtième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-DIFFEOMORPHISM-ANTIGHOST-GRAPH-RIESZ-RESIDUAL` — Gate 247
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/DIFFEO-ANTIGHOST-RIESZ-GRAPHE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTDiffeomorphismAntighostGraphRieszResidual4D`.
+- Résultat : la fermeture Hilbert des tests antighost difféomorphisme purs
+  porte le représentant de Riesz exact du Hessien restreint. Son zéro est
+  exactement équivalent au covecteur antighost faible, et la criticité
+  full-BRST l'annule.
+- Limite : résidu abstrait de graphe, sans identification `L²` ni PDE locale.
+  Le slot ghost difféomorphisme nonminimal reste à résoudre.
+- Porte terminale : aucune ; cent-vingt-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-DIFFEOMORPHISM-GHOST-GRAPH-RIESZ-RESIDUAL` — Gate 248
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/DIFFEO-GHOST-RIESZ-GRAPHE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTDiffeomorphismGhostGraphRieszResidual4D`.
+- Résultat : la fermeture Hilbert des tests ghost difféomorphisme nonminimal
+  purs porte le représentant de Riesz exact du Hessien restreint. Son zéro
+  équivaut au covecteur ghost faible et découle de la criticité full-BRST.
+  Les trois slots non minimaux difféomorphisme possèdent désormais chacun un
+  résidu séparant exact.
+- Limite : ces trois résidus restent abstraits sur leurs graphes de tests ;
+  aucune identification `L²` ou PDE locale n'est revendiquée.
+- Porte terminale : aucune ; cent-vingt-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-DIFFEOMORPHISM-NONMINIMAL-STRONG-SYSTEM` — Gate 249
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/DIFFEO-NONMINIMAL-SYSTEME-FORT-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTDiffeomorphismNonminimalStrongSystem4D`.
+- Résultat : l'annulation du covecteur nonminimal difféomorphisme agrégé est
+  exactement équivalente au triplet des résidus graph-Riesz ghost, antighost
+  et Nakanishi--Lautrup. La criticité full-BRST impose le système entier.
+- Limite : les trois représentants sont des résidus abstraits sur fermetures
+  de graphes de tests, sans formule `L²` ni PDE locale.
+- Porte terminale : aucune ; cent-vingt-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-RESOLVED-NONMINIMAL-EULER-SYSTEM` — Gate 250
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/SYSTEME-HYBRIDE-NONMINIMAL-RESOLU-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTResolvedNonminimalEulerSystem4D`.
+- Résultat : la criticité full-BRST est exactement équivalente à un système
+  hybride de dix blocs où les deux triplets nonminimaux sont remplacés par
+  leurs résidus séparateurs forts.
+- Limite : les sept covecteurs physiques sans jauge et le covecteur potentiel
+  abélien couplé restent faibles, sans représentant PDE ou `L²` revendiqué.
+- Porte terminale : aucune ; cent-vingt-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-POTENTIAL-GRAPH-RIESZ-RESIDUAL` — Gate 251
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/POTENTIEL-COUPLE-RESIDU-GRAPHE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPotentialGraphRieszResidual4D`.
+- Résultat : le covecteur potentiel complet, incluant Maxwell, cross-block
+  physique et BRST, s'annule exactement si son résidu graph-Riesz séparateur
+  dépendant de l'état s'annule.
+- Limite : la norme de graphe encode la valeur du covecteur comme coordonnée
+  scalaire ; ce n'est ni un domaine fixe, ni un représentant `L²`, ni une PDE
+  locale.
+- Porte terminale : aucune ; cent-vingt-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-STATE-DEPENDENT-AUGMENTED-GRAPH-RIESZ-RESIDUAL` — Gate 252
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/HELPER-GRAPHE-AUGMENTE-T03`.
+- Gate : `P0EFTJanusProgramPStateDependentAugmentedGraphRieszResidual4D`.
+- Résultat : un bloc Hilbert continu et un reste scalaire algébrique sont
+  assemblés sur une fermeture de graphe dotée d'un résidu de Riesz exact et
+  séparateur, réutilisable par les composantes couplées.
+- Limite : le graphe dépend des données du covecteur et n'ajoute aucune
+  interprétation PDE au reste scalaire.
+- Porte terminale : aucune ; cent-vingt-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-SPINC-AUGMENTED-GRAPH-RIESZ-RESIDUAL` — Gate 253
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/SPINC-RESIDU-GRAPHE-AUGMENTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTSpinCAugmentedGraphRieszResidual4D`.
+- Résultat : le résidu spectral maximal authentique `2D + m²` et le cross-block
+  physique SpinC exact forment un résidu graph-Riesz combiné dont l'annulation
+  équivaut exactement à l'équation SpinC full-BRST.
+- Limite : les deux contributions peuvent se compenser ; aucune annulation
+  séparée du résidu spectral ni PDE locale totale n'est revendiquée.
+- Porte terminale : aucune ; cent-vingt-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-THREE-SLOT-AUGMENTED-GRAPH-RIESZ-RESIDUAL` — Gate 254
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/LL-TROIS-RESIDUS-GRAPHE-AUGMENTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLThreeSlotAugmentedGraphRieszResidual4D`.
+- Résultat : les trois covecteurs LL couplés — métrique auxiliaire, mesure et
+  champ — s'annulent exactement si leurs trois résidus graph-Riesz augmentés
+  s'annulent. Chaque résidu conserve le bloc LL complet authentique et son
+  cross-block physique exact.
+- Limite : les contributions authentiques et cross-block peuvent se compenser ;
+  aucune PDE locale ni annulation séparée n'est revendiquée.
+- Porte terminale : aucune ; cent-vingt-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-AUGMENTED-RESIDUAL-EULER-SYSTEM` — Gate 255
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/SYSTEME-RESIDUS-AUGMENTES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAugmentedResidualEulerSystem4D`.
+- Résultat : la criticité full-BRST est exactement équivalente au système de
+  dix blocs obtenu en remplaçant les covecteurs potentiel, SpinC et les trois
+  covecteurs LL par leurs cinq résidus graph-Riesz, tout en conservant les deux
+  systèmes nonminimaux forts.
+- Limite : les covecteurs métrique, normal et ghost difféomorphisme physique
+  restent faibles ; aucune PDE locale supplémentaire n'est obtenue.
+- Porte terminale : aucune ; cent-vingt-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-REMAINING-PHYSICAL-SCALAR-GRAPH-RIESZ-RESIDUAL` — Gate 256
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/TROIS-RESIDUS-GRAPHE-SCALAIRES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTRemainingPhysicalScalarGraphRieszResidual4D`.
+- Résultat : les covecteurs métrique, normal et ghost difféomorphisme physique
+  s'annulent exactement si leurs trois résidus graph-Riesz scalaires s'annulent.
+  Leur substitution donne un système résiduel de dix blocs exactement
+  équivalent à la criticité full-BRST.
+- Limite : ces trois certificats sont scalaires et dépendants de l'état, pas des
+  champs tensoriels, PDE locales ou opérateurs analytiques à domaine fixe.
+- Porte terminale : aucune ; cent-trentième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-METRIC-AUGMENTED-GRAPH-RIESZ-RESIDUAL` — Gate 257
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/METRIQUE-RESIDU-GRAPHE-AUGMENTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTMetricAugmentedGraphRieszResidual4D`.
+- Résultat : le résidu métrique conserve comme coordonnée Hilbert le graphe
+  diagonal difféomorphisme-BRST authentique et son représentant de Riesz ; les
+  covecteurs Einstein--Maxwell et cross-block physique forment le reste
+  scalaire exact. Le système de dix blocs renforcé reste équivalent à la
+  criticité full-BRST.
+- Limite : le reste scalaire peut compenser le bloc BRST ; aucune PDE métrique
+  tensorielle locale ni annulation séparée n'est obtenue.
+- Porte terminale : aucune ; cent-trente-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-NORMAL-L2-ROBIN-AUGMENTED-GRAPH-RIESZ-RESIDUAL` — Gate 258
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/NORMALE-L2-ROBIN-RESIDU-GRAPHE-AUGMENTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTNormalL2RobinAugmentedGraphRieszResidual4D`.
+- Résultat : les tests normaux conservent une coordonnée `L²` injective sur
+  les deux feuilles de la double orientation, le covecteur Robin authentique
+  et le cross-block physique scalaire. Le système résiduel renforcé de dix
+  blocs reste exactement équivalent à la criticité full-BRST.
+- Limite : le covecteur Robin n'est pas identifié à une densité `L²` locale
+  ni à une PDE de Robin ; aucune annulation séparée des coordonnées n'est
+  obtenue.
+- Porte terminale : aucune ; cent-trente-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-METRIC-AUGMENTED-GRAPH-FAITHFULNESS` — Gate 259
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/METRIQUE-FIDELITE-GRAPHE-AUGMENTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTMetricAugmentedGraphFaithfulness4D`.
+- Résultat : la coordonnée de graphe diagonal difféomorphisme-BRST est
+  injective sur les tests métriques purs ; la coordonnée augmentée qui y ajoute
+  le reste scalaire est donc fidèle elle aussi.
+- Limite : aucune PDE tensorielle locale, ellipticité ou propriété de Fredholm
+  n'est obtenue.
+- Porte terminale : aucune ; cent-trente-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-GHOST-L2-FAITHFULNESS` — Gate 260
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-PHYSIQUE-L2-FIDELITE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalGhostL2Faithfulness4D`.
+- Résultat : les coefficients scalaires intrinsèques du repère générateur fini
+  redondant plongent linéairement et injectivement tout ghost tangent lisse
+  dans une somme Hilbert finie de vrais espaces `L²` canoniques.
+- Limite : aucune trivialisation globale du fibré tangent ni PDE locale de
+  Faddeev--Popov n'est affirmée.
+- Porte terminale : aucune ; cent-trente-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-GHOST-L2-AUGMENTED-GRAPH-RIESZ-RESIDUAL` — Gate 261
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-PHYSIQUE-L2-RESIDU-GRAPHE-AUGMENTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalGhostL2AugmentedGraphRieszResidual4D`.
+- Résultat : le troisième bloc du système full-BRST conserve maintenant les
+  coordonnées `L²` injectives des deux secteurs et le covecteur ghost physique
+  authentique ; le reste BRST y est exactement nul. Le système de dix blocs
+  reste équivalent à la criticité.
+- Limite : aucune densité de Faddeev--Popov locale, continuité du covecteur pour
+  la seule norme `L²`, ellipticité ou propriété de Fredholm n'est obtenue.
+- Porte terminale : aucune ; cent-trente-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-POTENTIAL-GRAPH-FAITHFULNESS` — Gate 262
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/POTENTIEL-FIDELITE-GRAPHE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPotentialGraphFaithfulness4D`.
+- Résultat : la coordonnée de graphe Abelienne déjà utilisée par le résidu du
+  potentiel partagé est injective sur les potentiels lisses appariés ; son
+  inclusion dans le graphe Hilbert fermé est donc à la fois dense et fidèle.
+- Limite : aucune PDE de Maxwell locale ni norme de graphe indépendante de
+  l'état n'est obtenue.
+- Porte terminale : aucune ; cent-trente-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-SPINC-FOURIER-FAITHFUL-AUGMENTED-GRAPH-RIESZ-RESIDUAL` — Gate 263
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/SPINC-FOURIER-FIDELE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTSpinCFourierFaithfulAugmentedGraphRieszResidual4D`.
+- Résultat : le bloc SpinC du système exact de dix blocs conserve le résidu
+  spectral maximal authentique et lui adjoint la coordonnée de Fourier
+  canonique injective des deux secteurs ; le cross-block physique reste le
+  reste scalaire du graphe augmenté. La criticité reste équivalente au système.
+- Limite : aucune injectivité de la projection spectrale abstraite du chart,
+  PDE de Dirac locale, ellipticité ou propriété de Fredholm n'est affirmée.
+- Porte terminale : aucune ; cent-trente-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-THREE-SLOT-AUGMENTED-GRAPH-FAITHFULNESS` — Gate 264
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/LL-TROIS-SLOTS-FIDELITE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLThreeSlotAugmentedGraphFaithfulness4D`.
+- Résultat : les trois coordonnées de base LL pures — métrique auxiliaire,
+  mesure et champ — atteignent exactement l'inclusion lisse LL complète déjà
+  injective. Leurs trois applications linéaires de graphe augmenté sont donc
+  injectives.
+- Limite : aucune PDE LL locale, ellipticité, image fermée, noyau fini ou
+  propriété de Fredholm n'est obtenue.
+- Porte terminale : aucune ; cent-trente-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-NONMINIMAL-GRAPH-FAITHFULNESS` — Gate 265
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/NONMINIMAL-FIDELITE-GRAPHES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTNonminimalGraphFaithfulness4D`.
+- Résultat : l'inclusion ghost pure du secteur abélien apparié et les trois
+  inclusions pures ghost, antighost et Nakanishi--Lautrup du secteur de
+  difféomorphismes restent injectives après leur plongement dans les graphes
+  Hilbert fermés. Leurs images lisses déjà denses sont donc fidèles.
+- Limite : aucune formule PDE locale, injectivité du résidu comme fonction de
+  l'état, ellipticité ou propriété de Fredholm n'est obtenue.
+- Porte terminale : aucune ; cent-trente-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-FAITHFUL-RESIDUAL-SYSTEM-CAPSTONE` — Gate 266
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/SYSTEME-RESIDUEL-FIDELE-CAPSTONE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFaithfulResidualSystemCapstone4D`.
+- Résultat : l'équivalence entre criticité full-BRST et système résiduel exact
+  de dix blocs est maintenant accompagnée d'un certificat unique d'injectivité
+  pour toutes les coordonnées de tests physiques et non minimales employées.
+  La même coordonnée gauge-Lie `L²` fidèle sert aux équations antighost et
+  Nakanishi--Lautrup abéliennes.
+- Limite : cette fidélité porte sur les coordonnées de tests, pas sur
+  l'application état-vers-résidu ; elle ne construit aucune PDE locale ni
+  propriété de Fredholm.
+- Porte terminale : aucune ; cent-quarantième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-AUTHENTIC-DENSE-SEPARATION` — Gate 267
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/LL-RESIDU-AUTHENTIQUE-SEPARATION-DENSE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLAuthenticDenseSeparation4D`.
+- Résultat : les trois applications de base LL pures se recomposent exactement
+  en l'inclusion lisse dense du graphe LL complet. Par densité, l'annulation
+  simultanée des covecteurs authentiques auxiliaire-métrique, mesure et champ
+  équivaut à l'annulation du résidu de Riesz authentique LL complet.
+- Limite : les restes cross-block sont explicitement exclus ; aucune PDE LL
+  locale, ellipticité, image fermée, noyau fini ou propriété de Fredholm n'est
+  obtenue.
+- Porte terminale : aucune ; cent-quarante-et-unième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-FIXED-AMBIENT-EULER-RESIDUAL-OPERATOR` — Gate 268
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/OPERATEUR-RESIDUEL-AMBIANT-FIXE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFixedAmbientEulerResidualOperator4D`.
+- Résultat : les quatorze résidus séparés sont projetés dans leurs Hilbert
+  ambiants fixes puis assemblés en une application non linéaire authentique du
+  chart full-BRST vers une cible indépendante de l'état. Son annulation équivaut
+  exactement au système résiduel complet, donc à la criticité full-BRST.
+- Limite : résultat chartwise sans continuité, différentiabilité, recollement
+  d'atlas, représentants PDE locaux, domaines analytiques ni conditions de bord.
+- Porte terminale : aucune ; cent-quarante-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-EULER-OPERATOR-REGULARITY` — Gate 269
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/REGULARITE-OPERATEUR-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTEulerOperatorRegularity4D`.
+- Résultat : sur le domaine ouvert admissible, l'action full-BRST exacte est
+  `C²`, sa dérivée de Fréchet est exactement l'opérateur d'Euler construit, et
+  cet opérateur à valeurs covecteurs est `C¹`. L'équation du résidu ambiant fixe
+  équivaut à l'annulation de cette vraie dérivée.
+- Limite : régularité chartwise de l'action et de l'opérateur d'Euler, pas de
+  régularité prouvée pour l'application résiduelle à quatorze coordonnées, ni
+  transitions/recollement d'atlas, PDE locales, domaines ou conditions de bord.
+- Porte terminale : aucune ; cent-quarante-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PROJECTION-COMPATIBLE-CHART-COVARIANCE` — Gate 270
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/COVARIANCE-CHARTS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTProjectionCompatibleChartCovariance4D`.
+- Résultat : pour tout transport linéaire continu inversible full-BRST fourni,
+  compatible avec la transition physique et entrelaçant les projections
+  physique, graphe difféomorphisme et Abélienne, les actions exactes coïncident,
+  les covecteurs d'Euler satisfont la loi exacte de pullback et leurs équations
+  résiduelles ambiantes fixes ont le même ensemble de zéros.
+- Limite : résultat conditionnel ; aucun transport full-BRST canonique, atlas,
+  cocycle, couverture, représentant PDE local, domaine analytique ou condition
+  de bord n'est construit.
+- Porte terminale : aucune ; cent-quarante-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PROJECTION-COMPATIBLE-CHART-TRANSITION` — Gate 271
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/CALCUL-TRANSITIONS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTProjectionCompatibleChartTransition4D`.
+- Résultat : les sept données de compatibilité de Gate 270 sont réunies dans
+  une transition full-BRST typée. L'identité est construite sur chaque état
+  admissible, toute transition certifie les domaines de ses deux extrémités,
+  deux transitions compatibles se composent, et leur composée préserve
+  exactement l'action, le covecteur d'Euler et l'équation résiduelle.
+- Limite : aucune transition non triviale entre deux charts arbitraires n'est
+  construite ; pas d'inverse, atlas, cocycle choisi, couverture, PDE locales,
+  domaines analytiques ni conditions de bord.
+- Porte terminale : aucune ; cent-quarante-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PROJECTION-COMPATIBLE-COVERED-ATLAS` — Gate 272
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/DESCENTE-ATLAS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTProjectionCompatibleCoveredAtlas4D`.
+- Résultat : un sous-ensemble explicitement couvert du noyau algébrique
+  full-BRST commun, réalisé dans chaque chart, et muni sur chaque recouvrement
+  des transitions typées de Gate 271 porte une action descendue exacte, un
+  covecteur d'Euler dans la fibre locale choisie avec sa loi exacte de
+  transport, et un lieu critique indépendant du chart, exactement équivalent
+  à l'annulation de la vraie dérivée de Fréchet locale. Tout chart seul fournit
+  effectivement cet atlas sur la préimage de son domaine admissible.
+- Limite : la couverture et les transitions non triviales restent fournies ;
+  aucun atlas canonique sur le porteur brut, représentant PDE local, domaine
+  analytique ni condition de bord n'est construit.
+- Porte terminale : aucune ; cent-quarante-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-L2-RESIDUAL-REGULARITY` — Gate 273
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/REGULARITE-RESIDUELLE-PARTIELLE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianL2ResidualRegularity4D`.
+- Résultat : les résidus abéliens authentiques antighost Faddeev--Popov et
+  Nakanishi--Lautrup `Lorenz - B` sont identifiés à des applications linéaires
+  continues du chart full-BRST. Ils sont donc globalement `C∞`, séparément et
+  comme projection à deux coordonnées du résidu ambiant fixe.
+- Limite : la cible fixe à quatorze composantes n'a pas encore de structure
+  normée globale et aucune régularité des douze autres coordonnées graph/Riesz,
+  dont plusieurs dépendent de l'état, n'est déduite.
+- Porte terminale : aucune ; cent-quarante-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-COVERED-ATLAS-COHERENT-FIBER-TRANSPORT` — Gate 274
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/COCYCLE-FIBRES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTCoveredAtlasCoherentFiberTransport4D`.
+- Résultat : pour chaque état couvert, les transports bornés des fibres locales
+  sont normalisés via le chart sélectionné. Ils satisfont exactement identité,
+  inverse et cocycle, les covecteurs d'Euler forment une section compatible, et
+  leur annulation est indépendante du membre couvrant.
+- Limite : ce groupoïde concerne seulement les fibres linéaires ; aucun germe
+  de transition non linéaire inversible, nouvel atlas canonique, représentant
+  PDE local, domaine analytique ni condition de bord n'est construit.
+- Porte terminale : aucune ; cent-quarante-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-FIXED-RESIDUAL-TARGET-NORMED-SPACE` — Gate 275
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/CIBLE-RESIDUELLE-NORMEE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFixedResidualTargetNormedSpace4D`.
+- Résultat : les quatorze coordonnées fixes sont encodées bijectivement dans
+  un produit normé équilibré. L'opérateur ainsi encodé a exactement le même
+  lieu zéro critique, et la paire abélienne finale est une projection linéaire
+  continue dont la composée avec le résidu est globalement `C∞`.
+- Limite : aucune continuité du résidu complet ni régularité des douze autres
+  projections n'est prouvée ; le record historique reste inchangé afin
+  d'éviter un diamant d'instances algébriques.
+- Porte terminale : aucune ; cent-quarante-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-FIXED-NORMED-RESIDUAL-REGULARITY-REDUCTION` — Gate 276
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/REDUCTION-REGULARITE-RESIDUELLE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFixedNormedResidualRegularityReduction4D`.
+- Résultat : la régularité `C∞` du résidu normé complet est équivalente aux
+  quatorze obligations coordonnées. Les deux coordonnées abéliennes `L²`
+  authentiques sont déjà `C∞`.
+- Limite : les douze autres obligations coordonnées restent à prouver ; aucune
+  régularité complète, fermeture PDE ou condition de bord n'est déduite.
+- Porte terminale : aucune ; cent-cinquantième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-DIFFEOMORPHISM-GRAPH-RESIDUAL-REGULARITY` — Gate 277
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/REGULARITE-DIFFEO-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTDiffeomorphismGraphResidualRegularity4D`.
+- Résultat : les résidus fixes ghost, antighost et Nakanishi--Lautrup de
+  difféomorphisme sont réalisés par des applications linéaires continues ;
+  leurs trois obligations coordonnées sont donc globalement `C∞`.
+- Limite : cinq obligations seulement sur quatorze sont alors déchargées ;
+  aucune régularité du résidu complet n'est déduite.
+- Porte terminale : aucune ; cent-cinquante-et-unième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-ABELIAN-GHOST-RESIDUAL-REGULARITY` — Gate 278
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/REGULARITE-GHOST-ABELIEN-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTAbelianGhostResidualRegularity4D`.
+- Résultat : le résidu fixe du ghost abélien est réalisé par une application
+  linéaire continue et satisfait globalement son obligation `C∞`. Le progrès
+  coordonné exact atteint `6/14`.
+- Limite : les huit coordonnées à graphe/Riesz dépendant de l'état restent
+  ouvertes ; le résidu complet n'est pas encore prouvé `C∞`.
+- Porte terminale : aucune ; cent-cinquante-deuxième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-FIXED-NORMED-RESIDUAL-REMAINING-EIGHT-REGULARITY` — Gate 279
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/FRONTIERE-REGULARITE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFixedNormedResidualRemainingEightRegularity4D`.
+- Résultat : la régularité `C∞` du résidu normé complet est désormais
+  équivalente au paquet exact des huit coordonnées encore dépendantes de
+  l'état ; les six coordonnées déjà prouvées sont injectées canoniquement.
+- Limite : cette réduction ne prouve aucune des huit hypothèses restantes et
+  ne ferme donc pas la régularité du résidu complet.
+- Porte terminale : aucune ; cent-cinquante-troisième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-GHOST-PAIRED-L2-CLOSURE` — Gate 280
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-PHYSIQUE-L2-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalGhostPairedL2Closure4D`.
+- Résultat : la fermeture de l'image des coordonnées `L²` fidèles du ghost
+  physique fournit un Hilbert fixe complet ; l'inclusion canonique des tests
+  y est dense et injective.
+- Limite : aucune extension continue, famille `C∞` de covecteurs ni régularité
+  du résidu de Riesz dépendant de l'état n'est encore construite.
+- Porte terminale : aucune ; cent-cinquante-quatrième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-GHOST-L2-EULER-REGULARITY-DATA` — Gate 281
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-PHYSIQUE-REGULARITE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalGhostL2EulerRegularityData4D`.
+- Résultat : le paquet analytique minimal exige une famille globale `C∞` de
+  covecteurs continus sur le carrier `L²` fermé, égale au vrai covecteur
+  d'Euler sur les tests denses. Une telle extension est unique et son
+  représentant de Riesz sur le carrier fixe est `C∞`.
+- Limite : l'existence de ce paquet et son identification complète avec le
+  résidu du graphe augmenté dépendant de l'état restent à construire ; la
+  coordonnée ghost physique n'est donc pas comptée comme résolue.
+- Porte terminale : aucune ; cent-cinquante-cinquième support pour `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-GHOST-L2-EULER-AMBIENT-EXTENSION` — Gate 282
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-PHYSIQUE-EXTENSION-L2-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalGhostL2EulerAmbientExtension4D`.
+- Résultat : conditionnellement au paquet analytique de Gate 281, la projection
+  orthogonale sur le carrier fermé donne une extension canonique globale `C∞`
+  du covecteur à tout le `L²` ambiant, représentant encore exactement le vrai
+  covecteur d'Euler sur les tests.
+- Limite : l'existence du paquet de Gate 281 et l'identification au résidu du
+  graphe augmenté restent ouvertes ; la coordonnée ghost physique n'est donc
+  pas comptée comme résolue.
+- Porte terminale : aucune ; cent-cinquante-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-GHOST-REGULAR-GRAPH-BRIDGE` — Gate 283
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-PHYSIQUE-GRAPHE-REGULIER-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalGhostRegularGraphBridge4D`.
+- Résultat : conditionnellement au paquet de Gate 281, le graphe continu sur le
+  carrier `L²` fixe factorise exactement le graphe augmenté authentique sur les
+  tests ; son lift dans le graphe complété original a une image dense.
+- Limite : l'existence du paquet et la formule régulière du résidu de Riesz du
+  graphe variable restent ouvertes ; la coordonnée ghost physique n'est pas
+  encore comptée comme résolue.
+- Porte terminale : aucune ; cent-cinquante-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-GHOST-REGULAR-GRAPH-RIESZ-FORMULA` — Gate 284
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-PHYSIQUE-FORMULE-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalGhostRegularGraphRieszFormula4D`.
+- Résultat : conditionnellement au paquet de Gate 281, le vrai résidu du graphe
+  augmenté ghost physique est égal à la formule explicite obtenue en appliquant
+  le graphe régulier à `(1 + ‖ρ‖²)⁻¹ • ρ`, où `ρ` est le représentant de Riesz
+  sur le carrier fixe.
+- Limite : l'existence du paquet et la régularité `C∞` finale de la coordonnée
+  restent ouvertes ; elle n'est pas encore comptée parmi les coordonnées
+  résolues.
+- Porte terminale : aucune ; cent-cinquante-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-PHYSICAL-GHOST-RESIDUAL-REGULARITY-FROM-L2-DATA` — Gate 285
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/GHOST-PHYSIQUE-REGULARITE-RESIDU-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPhysicalGhostResidualRegularityFromL2Data4D`.
+- Résultat : la formule fixe de Gate 284 est globalement `C∞`; tout paquet
+  analytique de Gate 281 implique donc la régularité `C∞` de l'authentique
+  coordonnée ghost physique du résidu ambiant fixe.
+- Limite : l'existence du paquet de Gate 281 reste à construire ; cette
+  implication conditionnelle ne fait donc pas passer le compteur analytique
+  inconditionnel de `6/14` à `7/14`.
+- Porte terminale : aucune ; cent-cinquante-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-REMAINING-SEVEN-AND-PHYSICAL-GHOST-DATA` — Gate 286
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/FRONTIERE-SEPT-PLUS-DONNEE-GHOST-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFixedNormedResidualRemainingSevenAndPhysicalGhostData4D`.
+- Résultat : un paquet analytique ghost physique de Gate 281, joint aux sept
+  obligations `C∞` restantes (`metric`, `normal`, trois coordonnées `LL`,
+  `spinC`, `potential`), implique la régularité `C∞` du résidu complet.
+- Limite : Gate 281 reste une hypothèse ; le compteur analytique inconditionnel
+  reste donc `6/14` et les sept autres obligations restent ouvertes.
+- Porte terminale : aucune ; cent-soixantième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-POTENTIAL-FIXED-CARRIER` — Gate 287
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/POTENTIEL-PORTEUR-FIXE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPotentialFixedCarrier4D`.
+- Résultat : la coordonnée potentiel possède un porteur fermé complet fixe ;
+  les tests lisses s'y plongent densément et injectivement.
+- Limite : aucune famille de covecteurs d'Euler continue n'est encore construite.
+- Porte terminale : aucune ; cent-soixante-et-unième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-POTENTIAL-EULER-REGULARITY-DATA` — Gate 288
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/POTENTIEL-DONNEE-REGULARITE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPotentialEulerRegularityData4D`.
+- Résultat : le paquet analytique manquant est typé ; il est unique sur le
+  porteur dense et son représentant de Riesz fixe est globalement `C∞`.
+- Limite : l'existence de ce paquet reste à prouver.
+- Porte terminale : aucune ; cent-soixante-deuxième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-POTENTIAL-REGULAR-GRAPH-RIESZ-FORMULA` — Gate 289
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/POTENTIEL-GRAPHE-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPotentialRegularGraphRieszFormula4D`.
+- Résultat : conditionnellement au paquet de Gate 288, le graphe fixe se plonge
+  densément dans le graphe authentique et donne sa formule de Riesz exacte.
+- Limite : l'existence du paquet de Gate 288 reste ouverte.
+- Porte terminale : aucune ; cent-soixante-troisième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-POTENTIAL-RESIDUAL-REGULARITY-FROM-DATA` — Gate 290
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/POTENTIEL-REGULARITE-RESIDU-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPotentialResidualRegularityFromData4D`.
+- Résultat : la formule fixe est globalement `C∞`; tout paquet de Gate 288
+  implique la régularité `C∞` de l'authentique coordonnée potentiel.
+- Limite : Gate 288 reste une hypothèse ; le compteur analytique inconditionnel
+  reste `6/14`.
+- Porte terminale : aucune ; cent-soixante-quatrième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-REMAINING-SIX-AND-GHOST-POTENTIAL-DATA` — Gate 291
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/FRONTIERE-SIX-PLUS-DONNEES-GHOST-POTENTIEL-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFixedNormedResidualRemainingSixAndPhysicalGhostPotentialData4D`.
+- Résultat : les paquets analytiques de Gates 281 et 288, joints aux six
+  obligations restantes (`metric`, `normal`, trois coordonnées `LL`, `spinC`),
+  impliquent la régularité `C∞` du résidu complet.
+- Limite : Gates 281 et 288 restent des hypothèses ; le compteur analytique
+  inconditionnel reste `6/14`.
+- Porte terminale : aucune ; cent-soixante-cinquième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-SPINC-FOURIER-FAITHFUL-FIXED-CARRIER` — Gate 292
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST-SPINC/PORTEUR-FIXE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTSpinCFourierFaithfulFixedCarrier4D`.
+- Résultat : la coordonnée SpinC Fourier-fidèle possède un porteur fermé complet
+  fixe ; les tests lisses s'y plongent densément et injectivement.
+- Limite : aucun covecteur continu représentant le reste inter-blocs n'est
+  encore construit.
+- Porte terminale : aucune ; cent-soixante-sixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-SPINC-FOURIER-FAITHFUL-REMAINDER-REGULARITY-DATA` — Gate 293
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST-SPINC/DONNEE-REGULARITE-RESTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTSpinCFourierFaithfulRemainderRegularityData4D`.
+- Résultat : le paquet analytique du reste inter-blocs est typé ; son covecteur
+  est unique sur le porteur dense et son représentant de Riesz fixe est `C∞`.
+- Limite : l'existence de ce paquet reste à prouver.
+- Porte terminale : aucune ; cent-soixante-septième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-SPINC-FOURIER-FAITHFUL-SPECTRAL-BASE-REGULARITY` — Gate 294
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST-SPINC/BASE-SPECTRALE-REGULARITE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTSpinCFourierFaithfulSpectralBaseRegularity4D`.
+- Résultat : la partie spectrale canonique du covecteur SpinC est un opérateur
+  linéaire continu et son représentant de Riesz sur le porteur fixe est
+  globalement `C∞` sans hypothèse supplémentaire.
+- Limite : cette régularité ne contrôle pas le reste inter-blocs de Gate 293.
+- Porte terminale : aucune ; cent-soixante-huitième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-SPINC-FOURIER-FAITHFUL-REGULAR-GRAPH-RIESZ-FORMULA` — Gate 295
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST-SPINC/GRAPHE-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTSpinCFourierFaithfulRegularGraphRieszFormula4D`.
+- Résultat : conditionnellement au paquet de Gate 293, le résidu du graphe
+  SpinC authentique est exactement égal à sa formule rang-un explicite sur le
+  porteur fixe.
+- Limite : l'existence du paquet de Gate 293 reste ouverte.
+- Porte terminale : aucune ; cent-soixante-neuvième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-SPINC-FOURIER-FAITHFUL-RESIDUAL-REGULARITY-FROM-DATA` — Gate 296
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST-SPINC/REGULARITE-RESIDU-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTSpinCFourierFaithfulResidualRegularityFromData4D`.
+- Résultat : la formule fixe de Gate 295 est globalement `C∞`; tout paquet de
+  Gate 293 implique donc la régularité `C∞` de l'authentique coordonnée SpinC.
+- Limite : Gate 293 reste une hypothèse ; le compteur analytique inconditionnel
+  reste `6/14`.
+- Porte terminale : aucune ; cent-soixante-dixième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-REMAINING-FIVE-REGULARITY` — Gate 297
+
+- État : `DONE` (2026-09-01). Portée : `GLOBALE/EULER-BRST/FRONTIERE-CINQ-PLUS-DONNEES-GHOST-POTENTIEL-SPINC-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTRemainingFiveRegularity4D`.
+- Résultat : les paquets analytiques de Gates 281, 288 et 293, joints aux cinq
+  obligations restantes (`metric`, `normal`, `llAuxMetric`, `llMeasure`,
+  `llField`), impliquent la régularité `C∞` du résidu complet.
+- Limite : ces trois paquets restent des hypothèses ; le compteur analytique
+  inconditionnel reste `6/14` et `T03` reste ouverte.
+- Porte terminale : aucune ; cent-soixante-et-onzième support pour `T03`, compteur
+  terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-METRIC-FIXED-CARRIER` — Gate 298
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-METRIC/PORTEUR-FIXE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTMetricFixedCarrier4D`.
+- Résultat : les tests métriques purs possèdent un porteur fermé complet fixe et
+  s'y plongent densément et injectivement.
+- Limite : aucun covecteur continu représentant le reste métrique inter-blocs
+  n'est encore construit.
+- Porte terminale : aucune ; 172e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-METRIC-REMAINDER-REGULARITY-DATA` — Gate 299
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-METRIC/DONNEE-REGULARITE-RESTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTMetricRemainderRegularityData4D`.
+- Résultat : le paquet analytique du reste métrique est typé ; son covecteur est
+  unique sur le porteur dense et son représentant de Riesz fixe est `C∞`.
+- Limite : l'existence de ce paquet reste à prouver.
+- Porte terminale : aucune ; 173e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-METRIC-BASE-REGULARITY` — Gate 300
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-METRIC/BASE-AUTHENTIQUE-CINF-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTMetricBaseRegularity4D`.
+- Résultat : le résidu de base BRST-difféomorphisme métrique possède
+  canoniquement un représentant de Riesz fixe globalement `C∞`.
+- Limite : cette régularité ne construit pas le paquet de reste de Gate 299.
+- Porte terminale : aucune ; 174e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-METRIC-REGULAR-GRAPH-RIESZ-FORMULA` — Gate 301
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-METRIC/FORMULE-GRAPHE-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTMetricRegularGraphRieszFormula4D`.
+- Résultat : sous le paquet de Gate 299, le résidu métrique authentique est égal
+  à sa formule exacte de rang un sur le porteur fixe.
+- Limite : l'égalité reste conditionnelle à l'existence du paquet de Gate 299.
+- Porte terminale : aucune ; 175e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-METRIC-RESIDUAL-REGULARITY-FROM-DATA` — Gate 302
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-METRIC/RESIDU-CINF-DEPUIS-DONNEES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTMetricResidualRegularityFromData4D`.
+- Résultat : le paquet métrique de Gate 299 implique la régularité `C∞` de la
+  coordonnée résiduelle métrique authentique.
+- Limite : l'existence du paquet reste ouverte ; le compteur analytique
+  inconditionnel reste `6/14`.
+- Porte terminale : aucune ; 176e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-REMAINING-FOUR-REGULARITY` — Gate 303
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/FRONTIERE-QUATRE-PLUS-DONNEES-GHOST-POTENTIEL-SPINC-METRIC-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTRemainingFourRegularity4D`.
+- Résultat : les paquets physique-ghost, potentiel, SpinC et métrique réduisent
+  exactement la frontière du résidu complet à `normal`, `llAuxMetric`,
+  `llMeasure` et `llField`.
+- Limite : ces quatre paquets restent des hypothèses ; le compteur analytique
+  inconditionnel reste `6/14` et `T03` reste ouverte.
+- Porte terminale : aucune ; 177e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-NORMAL-PAIRED-L2-FIXED-CARRIER` — Gate 304
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-NORMAL/PORTEUR-FIXE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTNormalPairedL2FixedCarrier4D`.
+- Résultat : les tests normaux purs possèdent un porteur paired-`L²` fermé,
+  complet et fixe, dans lequel ils se plongent densément et injectivement.
+- Limite : les covecteurs continus Robin et inter-blocs ne sont pas encore
+  construits.
+- Porte terminale : aucune ; 178e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-NORMAL-ROBIN-CROSS-REGULARITY-DATA` — Gate 305
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-NORMAL/DONNEES-ROBIN-CROSS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTNormalRobinCrossRegularityData4D`.
+- Résultat : le paquet Robin/cross normal est typé ; ses deux covecteurs sont
+  uniques sur le porteur dense et leurs représentants de Riesz fixes sont `C∞`.
+- Limite : l'existence de ce paquet reste à prouver.
+- Porte terminale : aucune ; 179e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-NORMAL-REGULAR-GRAPH-RIESZ-FORMULA` — Gate 306
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-NORMAL/FORMULE-GRAPHE-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTNormalRegularGraphRieszFormula4D`.
+- Résultat : sous le paquet de Gate 305, le résidu normal authentique est égal à
+  sa formule fixe exacte à deux covecteurs, donnée par la matrice de Gram.
+- Limite : l'égalité reste conditionnelle à l'existence du paquet de Gate 305.
+- Porte terminale : aucune ; 180e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-NORMAL-RESIDUAL-REGULARITY-FROM-DATA` — Gate 307
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-NORMAL/RESIDU-CINF-DEPUIS-DONNEES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTNormalResidualRegularityFromData4D`.
+- Résultat : le paquet Robin/cross de Gate 305 implique la régularité `C∞` de la
+  coordonnée résiduelle normale authentique.
+- Limite : l'existence du paquet reste ouverte ; le compteur analytique
+  inconditionnel reste `6/14`.
+- Porte terminale : aucune ; 181e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-REMAINING-THREE-REGULARITY` — Gate 308
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/FRONTIERE-TROIS-LL-PLUS-DONNEES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTRemainingThreeRegularity4D`.
+- Résultat : les paquets physique-ghost, potentiel, SpinC, métrique et normal
+  réduisent exactement la frontière du résidu complet à `llAuxMetric`,
+  `llMeasure` et `llField`.
+- Limite : ces paquets et les trois régularités LL restent des hypothèses ; le
+  compteur analytique inconditionnel reste `6/14` et `T03` reste ouverte.
+- Porte terminale : aucune ; 182e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-COMMON-FIXED-CARRIER` — Gate 309
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-LL/PORTEURS-FIXES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLCommonFixedCarrier4D`.
+- Résultat : les trois tests LL partagent un ambiant fixe complet, avec un
+  porteur fermé distinct par coordonnée et des plongements denses injectifs.
+- Limite : les données de reste inter-blocs et les formules de graphe restent
+  à établir.
+- Porte terminale : aucune ; 183e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-THREE-SLOT-REMAINDER-REGULARITY-DATA` — Gate 310
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-LL/DONNEES-RESTE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLThreeSlotRemainderRegularityData4D`.
+- Résultat : les trois covecteurs de reste LL sont typés et uniques sur leurs
+  porteurs ; leurs représentants de Riesz fixes sont `C∞` lorsqu'ils existent.
+- Limite : l'existence de ce paquet reste à prouver.
+- Porte terminale : aucune ; 184e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-THREE-SLOT-BASE-REGULARITY` — Gate 311
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-LL/BASE-CINF-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLThreeSlotBaseRegularity4D`.
+- Résultat : le résidu LL de base authentique commun et ses trois représentants
+  restreints aux porteurs fixes sont globalement `C∞`.
+- Limite : la prochaine Gate 312 doit établir les trois formules exactes de
+  graphe de rang un ; le compteur analytique inconditionnel reste `6/14`.
+- Porte terminale : aucune ; 185e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-THREE-SLOT-REGULAR-GRAPH-RIESZ-FORMULA` — Gate 312
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-LL/FORMULES-GRAPHE-RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLThreeSlotRegularGraphRieszFormula4D`.
+- Résultat : sous le paquet de Gate 310, chacun des trois résidus LL
+  authentiques est égal à sa formule exacte de graphe de rang un sur son
+  porteur fixe.
+- Limite : l'existence du paquet de Gate 310 reste ouverte.
+- Porte terminale : aucune ; 186e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-LL-THREE-SLOT-RESIDUAL-REGULARITY-FROM-DATA` — Gate 313
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST-LL/RESIDUS-CINF-DEPUIS-DONNEES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTLLThreeSlotResidualRegularityFromData4D`.
+- Résultat : le paquet LL de Gate 310 implique la régularité `C∞` des trois
+  coordonnées résiduelles LL authentiques.
+- Limite : l'existence du paquet reste ouverte ; le compteur analytique
+  inconditionnel reste `6/14`.
+- Porte terminale : aucune ; 187e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-FIXED-NORMED-RESIDUAL-REGULARITY-FROM-DATA` — Gate 314
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/RESIDU-COMPLET-CINF-DEPUIS-DONNEES-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFixedNormedResidualRegularityFromData4D`.
+- Résultat : les six paquets physique-ghost, potentiel, SpinC, métrique,
+  normal et LL impliquent la régularité `C∞` du résidu fixe complet à
+  quatorze coordonnées. Chacun de ces paquets possède aussi un constructeur
+  explicite depuis un ou plusieurs représentants de Riesz fixes `C∞` satisfaisant
+  les pairings authentiques sur les tests denses.
+- Limite : les six paquets restent des hypothèses ; `T03` n'est pas fermée et
+  le compteur analytique inconditionnel reste `6/14`. Le contrat de chart ne
+  fournit que `C²`, donc il ne permet pas à lui seul de construire ces familles
+  de Riesz `C∞`.
+- Porte terminale : aucune ; 188e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-POTENTIAL-ABELIAN-BRST-BASE-REGULARITY` — Gate 315
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/POTENTIEL-BASE-CINF-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTPotentialAbelianBRSTBaseRegularity4D`.
+- Résultat : la contribution Abelian-BRST au covecteur potentiel possède un
+  représentant de Riesz canonique sur le porteur fixe potentiel. Son pairing
+  sur les tests lisses denses est exact et sa dépendance en l'état est `C∞`.
+- Limite : Maxwell et le cross-block physique restent à représenter sur ce
+  porteur fixe. Cette régularité renforcée n'est pas le critère terminal de
+  `T03`, dont les verrous restent l'atlas physique global, les PDE locales,
+  leurs domaines et les termes de bord cohérents.
+- Porte terminale : aucune ; 189e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-EULER-LAGRANGE-GAUGE-FIXED-NONLINEAR-FULL-BRST-FULL-CORE-ATLAS-EXISTENCE-OBSTRUCTION` — Gate 316
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/OBSTRUCTION-ATLAS-T03`.
+- Gate : `P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearFullBRSTFullCoreAtlasExistenceObstruction4D`.
+- Résultat : tout atlas projection-compatible couvrant le core full-BRST
+  entier fournit nécessairement une vraie `chartData`, et plus fortement une
+  carte admissible contenant chaque état du core.
+- Limite : le repo ne construit actuellement aucune `chartData` depuis les
+  seules données canoniques ; ses constructeurs consomment encore une famille
+  analytique. Même une couverture ponctuelle devra ensuite être munie de
+  transitions non triviales lisses sur les recouvrements.
+- Porte terminale : aucune ; obstruction exacte au prochain pas de `T03`,
+  compteur terminal inchangé à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-MATTER-LL-GRAPH-ADAPTED-NORM` — Gate 317
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/NORME-GRAPHE-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalMatterLLGraphAdaptedNorm4D`.
+- Résultat : un plongement de Hamel du tangent physique minimal complet dans
+  `ℓ¹`, augmenté des projections algébriques matière et LL, induit une norme
+  compatible pour laquelle les deux projections de graphe ont la borne `1`.
+- Limite : cette norme explicite dépend d'un choix et n'est pas identifiée à
+  une topologie de Sobolev géométrique. Il reste à construire la famille locale
+  `datumAt`, les sept blocs physiques `C²` et les identités exactes same-action
+  matière/LL.
+- Porte terminale : aucune ; 190e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-GRAPH-ADAPTED-CHART-DATA-REDUCTION` — Gate 318
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/REDUCTION-CHART-DATA-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphAdaptedChartDataReduction4D`.
+- Résultat : la réalisation SpinC issue de l'identité de Green, la norme
+  adaptée et les deux bornes sont insérées automatiquement dans la voie
+  `PhysicalC2Data -> chartData`.
+- Limite : le paquet réduit exige encore une vraie famille locale `datumAt`,
+  les sept blocs physiques `C²` et les identités exactes same-action matière/LL.
+  Il ne construit ni couverture globale ni transitions.
+- Porte terminale : aucune ; 191e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-GRAPH-ADAPTED-H10-CHART-DATA-REDUCTION` — Gate 319
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/REDUCTION-H10-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphAdaptedH10ChartDataReduction4D`.
+- Résultat : les choix canoniques de réalisation/norme/bornes sont combinés à
+  H10 ; la régularité `C²` Robin est déduite de la projection frontière et de
+  l'hypothèse transverse, au lieu d'être demandée séparément.
+- Limite : il reste la famille locale `datumAt`, six blocs physiques `C²`, la
+  projection frontière et son identité Robin, les identités same-action
+  matière/LL et la transversalité. Ni atlas ni transitions ne sont construits.
+- Porte terminale : aucune ; 192e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-MATTER-LL-EXTRA-GRAPH-ADAPTED-NORM` — Gate 320
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/NORME-GRAPHE-EXTRA-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalMatterLLExtraGraphAdaptedNorm4D`.
+- Résultat : toute projection linéaire algébrique supplémentaire peut être
+  ajoutée au plongement Hamel-matière-LL ; les trois projections deviennent
+  alors continues avec borne `1` pour la norme induite.
+- Limite : la projection supplémentaire et son sens géométrique restent à
+  fournir ; cette norme n'est pas identifiée à une topologie de Sobolev.
+- Porte terminale : aucune ; 193e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-GRAPH-ADAPTED-H10-TRANSVERSALITY-REDUCTION` — Gate 321
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/REDUCTION-H10-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphAdaptedH10TransversalityReduction4D`.
+- Résultat : l'appartenance H10 de la projection frontière à l'origine
+  implique automatiquement l'absence de radical tangent ; `chartData` est
+  construit sans hypothèse de transversalité séparée.
+- Limite : restent `datumAt`, six blocs physiques `C²`, la projection et son
+  identité Robin, puis les identités same-action matière/LL.
+- Porte terminale : aucune ; 194e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-ALGEBRAIC-BOUNDARY-H10-CHART-DATA-REDUCTION` — Gate 322
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/REDUCTION-H10-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalAlgebraicBoundaryH10ChartDataReduction4D`.
+- Résultat : la projection frontière n'est plus supposée continue ; une
+  simple `LinearMap` algébrique suffit, la norme extra-graphe fournissant son
+  `ContinuousLinearMap` et les bornes matière/LL.
+- Limite : la projection algébrique, son domaine H10 et l'identité Robin
+  restent à construire avec la vraie famille locale.
+- Porte terminale : aucune ; 195e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-NORMAL-BOUNDARY-ALGEBRAIC-PROJECTION` — Gate 323
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/PROJECTION-BORD-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalNormalBoundaryAlgebraicProjection4D`.
+- Résultat : chaque secteur du tangent minimal fournit algébriquement ses
+  variations métrique et normale dans le cœur H10 complété ; cette extraction
+  rétracte exactement l'insertion lisse diagonale existante.
+- Limite : le paramètre réel du graphe mobile reste une forme linéaire
+  explicite ; aucune identité same-action n'est affirmée ici.
+- Porte terminale : aucune ; 196e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-NORMAL-BOUNDARY-H10-CHART-DATA-REDUCTION` — Gate 324
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/REDUCTION-H10-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalNormalBoundaryH10ChartDataReduction4D`.
+- Résultat : un secteur et une forme linéaire réelle déterminent toute la
+  projection frontière algébrique utilisée par le constructeur de `chartData`.
+- Limite : restent `datumAt`, six blocs physiques `C²`, l'admissibilité H10,
+  l'identité Robin et les identités same-action matière/LL. Le premier verrou
+  concret est le chart local de métriques lorentziennes préservant la signature.
+- Porte terminale : aucune ; 197e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-GLOBAL-MINIMAL-PHYSICAL-CONFIGURATION-AT` — Gate 325
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BRST/CONFIGURATION-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalConfigurationAt4D`.
+- Résultat : une géométrie Candidate-A admissible et un tangent physique
+  minimal déterminent canoniquement la configuration variée : métriques,
+  jauge, champs LL et matière SpinC ; le D10 reste fixe et le point zéro est
+  exactement la configuration de base.
+- Limite : la géométrie Candidate-A variée et ses données d'action régulières
+  restent à construire ; ce gate ne prouve pas la stabilité lorentzienne.
+- Porte terminale : aucune ; 198e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-SMOOTH-GENERAL-LORENTZ-METRIC-OF-TENSOR` — Gate 326
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/LORENTZ-T03`.
+- Gate : `P0EFTJanusSmoothGeneralLorentzMetricOfTensor4D`.
+- Résultat : tout tenseur symétrique lisse certifié de signature `(3,1)`
+  fournit canoniquement son frame, son musical continu inversible et une vraie
+  `SmoothGeneralLorentzMetric` dont le tenseur est exactement celui fourni.
+- Limite : il reste à prouver que `g + h` conserve la signature lorentzienne
+  sur un voisinage ouvert ; l'inversibilité seule ne fixe pas l'inertie.
+- Porte terminale : aucune ; 199e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-AFFINE-NONDEGENERATE-BRIDGE` — Gate 327
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/CHART-C²-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricAffineNondegenerateBridge4D`.
+- Résultat : pour une variation symétrique lisse appartenant au domaine
+  relatif `C²` existant, l'endomorphisme de `g + h` est injectif en tout point ;
+  le musical continu inversible et le tenseur affine exact sont construits.
+- Limite : ce domaine d'inversibilité contient plusieurs composantes de
+  signature ; il faut encore le rétrécir autour de l'identité et produire un
+  certificat explicite de congruence lorentzienne.
+- Porte terminale : aucune ; 200e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-AFFINE-LORENTZ-ROOT-BRIDGE` — Gate 328
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/RACINE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricAffineLorentzRootBridge4D`.
+- Résultat : une racine intrinsèque auto-adjointe pour `g`, de carré
+  `I + g⁻¹h`, devient automatiquement inversible sur le domaine de Gate 327
+  et fournit l'identité exacte `g+h = g(R·,R·)` ; le tenseur affine est donc
+  empaqueté en vraie `SmoothGeneralLorentzMetric`.
+- Limite : l'existence de la racine n'est pas déduite de l'inversibilité ; il
+  reste à relever la branche locale `C²` autour de l'identité et à prouver son
+  auto-adjonction intrinsèque.
+- Porte terminale : aucune ; 201e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANONICAL-PHYSICAL-C2-IDENTITY-ROOT-BRANCH` — Gate 329
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/RACINE-C²-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhysicalC2IdentityRootBranch4D`.
+- Résultat : la branche de racine Banach existante est spécialisée à la
+  matrice identité. Son domaine est ouvert, contient zéro, la branche est `C²`,
+  vaut `I` à zéro et vérifie exactement `R(h)² = I+h`.
+- Limite : la racine est encore une matrice `C²` complétée ; son relèvement
+  tangent dans le frame métrique et son auto-adjonction pour `g` restent à
+  établir.
+- Porte terminale : aucune ; 202e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-IDENTITY-ROOT-LIFT` — Gate 330
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/RACINE-C²-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2IdentityRootLift4D`.
+- Résultat : la racine matricielle complétée de Gate 329 est évaluée
+  point par point et conjuguée par le vrai `frameEquiv` de la métrique
+  régulière. Sa matrice de frame est exactement la racine évaluée et son
+  carré intrinsèque vaut exactement `I + g⁻¹h`.
+- Limite : l'auto-adjonction pour `g` de la branche locale sélectionnée reste
+  à prouver ; elle est la seule condition racine encore requise par Gate 328.
+- Porte terminale : aucune ; 203e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-ADJOINT-ALGEBRA` — Gate 331
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/RACINE-C²-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2AdjointAlgebra4D`.
+- Résultat : la transposée bornée et l'adjoint métrique exact
+  `R ↦ G⁻¹RᵀG` sont construits sur le coeur matriciel `C²`. L'adjoint est
+  anti-multiplicatif, commute au carré, et fixe exactement `g⁻¹h` ainsi que
+  la cible affine `I + g⁻¹h`, via l'identité fidèle `G(g⁻¹h)=h`.
+- Limite : pour appliquer l'unicité de la carte carrée à la racine, il faut
+  restreindre le domaine ouvert aux variations dont la racine adjointe reste
+  elle aussi dans la source de cette carte.
+- Porte terminale : aucune ; 204e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SELF-ADJOINT-ROOT-DOMAIN` — Gate 332
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/RACINE-C²-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SelfAdjointRootDomain4D`.
+- Résultat : le domaine de racine est restreint au vrai ouvert contenant zéro
+  où la racine adjointe appartient à la même source IFT. L'injectivité de la
+  carte carrée donne `R†=R`; l'équivalence matricielle des paires adjointes
+  fournit alors l'auto-adjonction intrinsèque pour `g`. Avec le domaine affine
+  non dégénéré, la construction produit une vraie métrique lorentzienne dont
+  le tenseur est exactement `g+h`, sans hypothèse racine externe.
+- Limite : l'admissibilité reste exprimée par l'appartenance aux deux ouverts
+  `C²` explicites (racine auto-adjointe et non-dégénérescence) ; leur interface
+  unifiée peut maintenant être installée dans le chart métrique opérationnel.
+- Porte terminale : aucune ; 205e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-LORENTZ-CHART-DOMAIN` — Gate 333
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/CHART-C²-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2LorentzChartDomain4D`.
+- Résultat : un seul ouvert contenant zéro dans le coeur relatif `C²` combine
+  le domaine non dégénéré/volume positif et le domaine de racine auto-adjointe.
+  Toute variation lisse qui y appartient construit directement une vraie
+  `SmoothGeneralLorentzMetric` dont le tenseur est exactement `g+h`.
+- Limite : cette métrique locale doit maintenant alimenter les données de chart
+  et d'action Candidate-A aval ; aucune algèbre supplémentaire de racine n'est
+  requise.
+- Porte terminale : aucune ; 206e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-LORENTZ-CHART-ACTIONS` — Gate 334
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/CHART-C²-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2LorentzChartActions4D`.
+- Résultat : les familles Einstein--Hilbert et Maxwell intégrée sont restreintes
+  au même ouvert lorentzien de Gate 333. Leur somme est `C²` sur cet ouvert et
+  sa valeur en zéro est exactement la somme des actions intrinsèques physiques.
+- Limite : la géométrie Candidate-A complète exige encore que la racine variée
+  préserve les sections `C∞`; le coeur `C²` seul ne fournit pas ce
+  `rootOperator` lisse.
+- Porte terminale : aucune ; 207e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANDIDATE-A-NORMAL-BOUNDARY-C2-LORENTZ-CHART-METRIC-BRIDGE` — Gate 335
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/BORD/CHART-C²-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC2LorentzChartMetricBridge4D`.
+- Résultat : la matrice de métrique actuelle Candidate-A, dans le quotient puis
+  sur le graphe mobile, est exactement celle de la métrique lorentzienne `g+h`
+  construite par Gate 333. Aucune métrique variée ni égalité de tenseurs
+  redondante n'est désormais fournie à cette couche.
+- Limite : les conditions H10 de graphe non nul, de racines normales positives
+  et l'identité Robin same-action restent distinctes de la stabilité de
+  signature ambiante.
+- Porte terminale : aucune ; 208e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANDIDATE-A-NORMAL-BOUNDARY-C2-LORENTZ-GHY-DOMAIN` — Gate 336
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/BORD/DOMAINE-C²-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC2LorentzGHYDomain4D`.
+- Résultat : un seul ouvert Candidate-A intersecte le domaine GHY mobile et
+  la préimage du chart lorentzien `C²`. Il contient zéro sous l'hypothèse de
+  transversalité existante ; sur chaque point lisse, il construit
+  canoniquement la métrique `g+h` et prouve le graphe mobile non nul.
+- Limite : les racines normales positives et l'identité Robin same-action
+  restent à raccorder à ce domaine commun ; le `rootOperator` global lisse
+  requiert toujours un pont de régularité `C²` vers `C∞`.
+- Porte terminale : aucune ; 209e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANDIDATE-A-NORMAL-BOUNDARY-C2-LORENTZ-POSITIVE-GHY-DOMAIN` — Gate 337
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/BORD/DOMAINE-POSITIF-C²-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC2LorentzPositiveGHYDomain4D`.
+- Résultat : deux conditions ouvertes explicites maintiennent les racines
+  sélectionnées normale et de volume induit dans la boule unité autour de
+  `1`. Le domaine commun reste ouvert, contient zéro et force les deux racines
+  à être strictement positives en chaque point, tout en conservant la métrique
+  lorentzienne `g+h` et le graphe mobile non nul.
+- Limite : l'égalité avec la source GHY centrale Candidate-A doit encore être
+  spécialisée à cette métrique canonique ; le `rootOperator` global lisse
+  reste hors de portée sans pont `C²` vers `C∞`.
+- Porte terminale : aucune ; 210e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANDIDATE-A-NORMAL-BOUNDARY-C2-LORENTZ-POSITIVE-GHY-ACTION-BRIDGE` — Gate 338
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/BORD/ACTION-C²-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC2LorentzPositiveGHYActionBridge4D`.
+- Résultat : le domaine positif de Gate 337 met à jour l'unique source de
+  bord non nul du datum central Candidate-A avec sa métrique et son graphe
+  canoniques. L'action GHY complétée à deux feuilles est exactement le terme
+  GHY central sans fournir séparément métrique variée, égalité de tenseurs,
+  non-nullité, signes des racines ou égalité de source.
+- Limite : ce raccord ferme la source GHY lisse mais ne construit pas le
+  `rootOperator` global sur les sections `C∞`, qui exige toujours une
+  régularité plus forte que le coeur complété `C²`.
+- Porte terminale : aucune ; 211e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANDIDATE-A-NORMAL-BOUNDARY-C2-LORENTZ-POSITIVE-GHY-ACTION-CERTIFICATE` — Gate 339
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/BORD/CERTIFICAT-C²-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC2LorentzPositiveGHYActionCertificate4D`.
+- Résultat : un certificat unique regroupe l'ouvert positif lorentzien/GHY,
+  son origine admissible, la régularité `C²` de l'action complétée, son
+  identité lisse avec la source centrale canonique et son vrai second dérivé
+  de Fréchet symétrique.
+- Limite : il s'agit de l'interface aval complète du bloc de bord `C²`, pas
+  d'un relèvement du root matriciel complété en opérateur sur sections `C∞`.
+- Porte terminale : aucune ; 212e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANDIDATE-A-NORMAL-BOUNDARY-C2-LORENTZ-POSITIVE-EINSTEIN-MAXWELL-GHY-ACTION` — Gate 340
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION-BULK-BORD/C²-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC2LorentzPositiveEinsteinMaxwellGHYAction4D`.
+- Résultat : la coordonnée métrique `C³` du courant Candidate-A est projetée
+  vers le chart lorentzien `C²`, puis l'action bulk Einstein--Maxwell et
+  l'action GHY mobile sont additionnées sur le même domaine positif. La somme
+  est `C²`, sa valeur bulk en zéro reste exacte et, sur le coeur lisse, les
+  deux termes utilisent la même variation `g+h` et la source centrale canonique.
+  Son vrai second dérivé de Fréchet à l'origine est défini et symétrique.
+- Limite : cette vraie action locale bulk--bord ne fournit toujours pas le
+  `rootOperator` sur sections `C∞` requis par la géométrie Candidate-A globale.
+- Porte terminale : aucune ; 213e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANDIDATE-A-NORMAL-BOUNDARY-C2-LORENTZ-POSITIVE-EINSTEIN-MAXWELL-GHY-HESSIAN-SPLIT` — Gate 341
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/HESSIEN-BULK-BORD/C²-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC2LorentzPositiveEinsteinMaxwellGHYHessianSplit4D`.
+- Résultat : le Hessien véritable de l'action Einstein--Maxwell plus GHY est
+  exactement la somme du Hessien bulk tiré en arrière par la projection
+  métrique et du Hessien GHY mobile déjà construit. L'égalité est fournie
+  comme identité de formes bilinéaires continues et point par point sur deux
+  directions ; le Hessien bulk tiré en arrière est lui-même symétrique.
+- Limite : cette scission ne relève pas le root matriciel complété en
+  `rootOperator` sur sections `C∞`.
+- Porte terminale : aucune ; 214e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-CANDIDATE-A-NORMAL-BOUNDARY-C2-LORENTZ-POSITIVE-EINSTEIN-MAXWELL-GHY-EULER-SPLIT` — Gate 342
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/EULER-BULK-BORD/C¹-T03`.
+- Gate : `P0EFTJanusProgramPGlobalCandidateANormalBoundaryC2LorentzPositiveEinsteinMaxwellGHYEulerSplit4D`.
+- Résultat : le vrai covecteur d'Euler de l'action Einstein--Maxwell plus GHY
+  est `C¹` et se scinde exactement en covecteurs bulk et bord en tout point du
+  domaine positif. Sa dérivée à l'origine est exactement la somme des deux
+  Hessiennes de Gate 341.
+- Limite : cette équation locale complétée ne construit toujours pas le
+  `rootOperator` sur sections `C∞`.
+- Porte terminale : aucune ; 215e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-POSITIVE-RAW-SPLIT-CHARPOLY-SMOOTH-LOCAL-ROOT-BRANCH` — Gate 343
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/RACINE-C∞-T03`.
+- Gate : `P0EFTJanusPositiveRawSplitCharpolySmoothLocalRootBranch4D`.
+- Résultat : le carré matriciel est `C∞` et la branche IFT locale existante,
+  sans modifier son ouvert, est `C∞` sur toute sa cible. Toute racine continue,
+  Sylvester-régulière et de carré une cible matricielle lisse est donc lisse.
+- Limite : il reste à appliquer cette promotion à la racine matricielle
+  Candidate-A de Gate 330 puis à reconstruire son opérateur sur sections.
+- Porte terminale : aucune ; 216e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-IDENTITY-ROOT-SMOOTH-LIFT` — Gate 344
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/RACINE-C∞-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2IdentityRootSmoothLift4D`.
+- Résultat : la racine matricielle Candidate-A complétée de Gate 330 est
+  continue, Sylvester-régulière en tout point puis globalement `C∞`. Son carré
+  est exactement le champ affine lisse `I+g⁻¹h`, et elle est empaquetée comme
+  champ matriciel lisse pour la reconstruction intrinsèque.
+- Limite : il reste à reconstruire à partir de ce champ le `rootOperator`
+  linéaire sur sections `C∞`, puis à l'insérer dans la géométrie Candidate-A.
+- Porte terminale : aucune ; 217e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-IDENTITY-ROOT-SMOOTH-OPERATOR` — Gate 345
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/OPÉRATEUR-C∞-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2IdentityRootSmoothOperator4D`.
+- Résultat : le champ matriciel lisse de Gate 344 est reconstruit dans le vrai
+  repère régulier en un opérateur linéaire sur les sections tangentielles
+  globales `C∞`. Son action point par point est exactement la racine intrinsèque
+  complétée et son carré agit comme l'endomorphisme relatif affine.
+- Limite : il reste à empaqueter cet opérateur avec les deux métriques du chart
+  lorentzien dans `GlobalCandidateAGeometry`, puis à reconnecter les théorèmes
+  terminaux T03 à cette géométrie canonique unique.
+- Porte terminale : aucune ; 218e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-LORENTZ-CHART-GEOMETRY` — Gate 346
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/CANDIDATE-A-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2LorentzChartGeometry4D`.
+- Résultat : toute variation du chart lorentzien régulier produit désormais un
+  `GlobalCandidateAGeometry` canonique réunissant la métrique de base, la vraie
+  métrique variée, la racine intrinsèque complétée et son opérateur global
+  `C∞`. Le carré de la racine est exactement l'endomorphisme relatif des deux
+  métriques.
+- Limite : il reste à construire le `datumAt` local effectif, à fournir les
+  données physiques et les six paquets de résidus, puis à établir les
+  transitions et le recollement global requis par T03.
+- Porte terminale : aucune ; 219e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-IDENTITY-ROOT-SMOOTH-INVERSE` — Gate 347
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/INVERSE-C∞-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2IdentityRootSmoothInverse4D`.
+- Résultat : sur le chart lorentzien de Gate 346, la racine complétée est
+  injective sur chaque fibre, sa matrice est inversible, son inverse est un
+  champ global `C∞` et l'opérateur reconstruit sur les sections tangentielles
+  lisses satisfait les deux identités inverses exactes.
+- Limite : il reste à transporter le repère, le sharp et la densité de volume
+  afin de promouvoir la métrique variée en `RegularGeneralLorentzMetric`, puis
+  à construire le chart honnête des deux perturbations métriques.
+- Porte terminale : aucune ; 220e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-LORENTZ-CHART-REGULAR-METRIC` — Gate 348
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/MÉTRIQUE-RÉGULIÈRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2LorentzChartRegularMetric4D`.
+- Résultat : chaque variation du chart C² lorentzien produit maintenant une
+  vraie `RegularGeneralLorentzMetric`. Le `sharp` est l'inverse musical exact
+  et globalement `C∞`; le repère est transporté par la racine inverse, son
+  équivalence est explicite et la congruence de racine identifie exactement
+  la matrice de Gram variée à celle de base, permettant de réutiliser la
+  densité de volume lisse certifiée.
+- Limite : il reste à imbriquer deux perturbations métriques indépendantes
+  dans un même domaine ouvert puis à construire les données d'action locales
+  honnêtes sur cette paire.
+- Porte terminale : aucune ; 221e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-LORENTZ-CHART-GEOMETRY` — Gate 349
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/PAIRE-MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartGeometry4D`.
+- Résultat : deux perturbations métriques indépendantes produisent une seule
+  `GlobalCandidateAGeometry` via le tenseur relatif exact
+  `(g₋+h₋)-(g₊+h₊)`. Les sorties sont prouvées égales aux deux
+  métriques régulières variées et leurs tenseurs valent exactement `g₊+h₊`
+  et `g₋+h₋`. Un wrapper consomme directement le
+  `GlobalMetricPerturbationPair` du tangent global T03.
+- Limite : le constructeur est ponctuel sous trois admissibilités honnêtes
+  (secteurs `+`, `-`, puis racine relative). Il reste à prouver l'ouverture
+  du domaine apparié dépendant et à construire les données Maxwell,
+  interaction et bord du `GlobalCandidateAActionData` local.
+- Porte terminale : aucune ; 222e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-LORENTZ-CHART-GRAVITY` — Gate 350
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/GRAVITÉ-PAIRÉE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartGravity4D`.
+- Résultat : les deux métriques régulières de Gate 349 sont promues par le
+  constructeur de courbure scalaire global existant en deux vrais
+  `RegularEinsteinHilbertMetric`. Leurs champs métriques sont identifiés
+  exactement aux secteurs plus et moins de la même
+  `GlobalCandidateAGeometry`; un wrapper consomme directement le
+  `GlobalMetricPerturbationPair` de T03.
+- Limite : les quatre champs gravitationnels de
+  `GlobalCandidateAActionData` sont couverts, mais il reste Maxwell et les
+  identités de jauge, la densité d'interaction, les données de bord et le
+  domaine pairé ouvert.
+- Porte terminale : aucune ; 223e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-LORENTZ-CHART-MAXWELL` — Gate 351
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/MAXWELL-PAIRÉ-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartMaxwell4D`.
+- Résultat : le pairing Maxwell global frame-free existant construit
+  canoniquement les trois champs scalaires d'un
+  `RegularIntrinsicMaxwellLine` à partir d'un potentiel et d'une variation
+  intrinsèques. Gate 351 installe une telle ligne sur chacun des deux paquets
+  gravitationnels de Gate 350 et prouve que ses coefficients de jauge sont
+  exactement ses évaluations dans le repère régulier correspondant.
+- Limite : les lignes Maxwell sont honnêtes pour des potentiels intrinsèques
+  fournis. Le dépôt ne fournit toujours pas d'inverse lisse envoyant tout champ
+  de coefficients arbitraire vers un potentiel ; le futur `datumAt` doit donc
+  utiliser la sous-classe intrinsèque ou construire un coframe lisse.
+- Porte terminale : aucune ; 224e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-LORENTZ-CHART-CONFIGURATION` — Gate 352
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CONFIGURATION/JAUGE-INTRINSÈQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartConfiguration4D`.
+- Résultat : la géométrie pairée de Gate 349 est installée dans une vraie
+  `GlobalFieldConfiguration`. Ses deux champs de coefficients de jauge sont
+  définis par l'évaluation des potentiels intrinsèques de Gate 351 dans les
+  repères réguliers plus et moins. Les identités exactes `plusGauge_eq` et
+  `minusGauge_eq` requises par `GlobalCandidateAActionData` sont prouvées ;
+  tous les autres champs non métriques sont conservés.
+- Limite : ce constructeur choisit honnêtement la sous-classe de configurations
+  à jauge intrinsèque ; il ne prétend pas inverser un champ de coefficients
+  arbitraire. Il reste la densité d'interaction et les paquets de bord.
+- Porte terminale : aucune ; 225e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-LORENTZ-CHART-INTERACTION` — Gate 353
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/INTERACTION-PAIRÉE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartInteraction4D`.
+- Résultat : le potentiel spectral matriciel complet, déterminant inclus, est
+  prouvé `C∞`. Sa composition avec la racine relative lisse de Gate 349,
+  multipliée par le volume régulier plus, fournit un vrai
+  `SmoothScalarField`. Son évaluation est exactement
+  `GlobalCandidateAGeometry.interactionDensityAt` dans la base régulière
+  exigée par `GlobalCandidateAActionData`.
+- Limite : les champs gravitationnels, Maxwell, identités de jauge et densité
+  d'interaction sont maintenant couverts. Il reste les paquets de bord, leur
+  cohérence avec la configuration, puis l'assemblage `GlobalCandidateAActionData`
+  et le domaine pairé ouvert.
+- Porte terminale : aucune ; 226e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-LORENTZ-CHART-ACTION-DATA` — Gate 354
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/DONNÉE-PAIRÉE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartActionData4D`.
+- Résultat : les contrôles de bord explicites d'un datum de base sont
+  rebasés sur la configuration pairée sans supprimer ses faces. Les paquets
+  gravitationnels de Gate 350, les lignes Maxwell et identités de jauge de
+  Gates 351–352, ainsi que la densité d'interaction de Gate 353, sont assemblés
+  dans un `GlobalCandidateAActionData` complet sur la nouvelle configuration.
+- Limite : Gate 354 construit honnêtement un datum ponctuel sous admissibilité
+  et à partir des strates de bord existantes. Il reste à en faire une famille
+  `datumAt` sur un domaine pairé ouvert contenant zéro, à traiter l'identité
+  exacte au centre et à prouver `blocksC2Within` et les raccords Euler/PDE.
+- Porte terminale : aucune ; 227e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-LORENTZ-CHART-LOCAL-ACTION-DATUM` — Gate 355
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/DATUM-LOCAL-PAIRÉ-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartLocalActionDatum4D`.
+- Résultat : la configuration pairée de Gate 352 et le paquet d'action complet
+  de Gate 354 sont réunis dans le sigma dépendant exact
+  `GlobalCandidateALocalActionDatum`; ses deux projections sont prouvées par
+  égalité définitionnelle.
+- Limite : le datum reste ponctuel et paramétré par l'admissibilité. Il reste
+  la famille `datumAt` sur un domaine pairé ouvert contenant zéro, l'identité
+  exacte au centre, `blocksC2Within` et les raccords Euler/PDE.
+- Porte terminale : aucune ; 228e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-FRAME-GAUGE-POTENTIAL-RECONSTRUCTION` — Gate 356
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/JAUGE/RECONSTRUCTION-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameGaugePotentialReconstruction4D`.
+- Résultat : l'inverse lisse de la matrice de Gram reconstruit, depuis tout
+  champ lisse de coefficients du frame régulier, un vrai potentiel de jauge
+  intrinsèque lisse. L'évaluation dans le frame rend exactement les
+  coefficients fournis, donc `gaugePotentialFrameCoefficients` admet une
+  section droite explicite.
+- Limite : l'obstruction de représentabilité des coefficients de jauge est
+  levée, mais le domaine pairé ouvert, le centre exact, les six blocs
+  `C²`, Robin/matière/LL et les raccords Euler/PDE restent séparés.
+- Porte terminale : aucune ; 229e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-TARGET-LOCAL-ACTION-DATUM` — Gate 357
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/CIBLE-PAIRÉE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartTargetLocalActionDatum4D`.
+- Résultat : toute configuration cible portant la géométrie pairée reçoit
+  directement un `GlobalCandidateAActionData`. Ses deux potentiels intrinsèques
+  sont reconstruits depuis ses propres coefficients de jauge, les contrôles
+  de bord sont rebasés et le sigma local a exactement cette cible en première
+  projection.
+- Limite : la coïncidence de géométrie cible reste une hypothèse ponctuelle ;
+  l'ouverture du domaine et sa régularité paramétrique ne sont pas affirmées.
+- Porte terminale : aucune ; 230e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-MINIMAL-PHYSICAL-LOCAL-ACTION-DATUM` — Gate 358
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/TANGENT-MINIMAL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalLocalActionDatum4D`.
+- Résultat : le point de modèle est maintenant le vrai tangent physique
+  minimal. Sa paire métrique alimente la géométrie pairée et
+  `globalMinimalPhysicalConfigurationAt` conserve exactement les champs
+  jauge, LL et SpinC translatés. La variation Maxwell intrinsèque est elle
+  aussi reconstruite depuis le slot de jauge du même tangent.
+- Limite : le constructeur demande encore le témoin d'admissibilité pairée au
+  point ; il ne prouve ni l'ouverture ni l'identité exacte au centre.
+- Porte terminale : aucune ; 231e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-MINIMAL-PHYSICAL-LOCAL-ACTION-FAMILY` — Gate 359
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/FAMILLE-LOCALE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalLocalActionFamily4D`.
+- Résultat : sur tout sous-domaine du tangent minimal muni d'un certificat
+  d'admissibilité pairée pointwise, Gate 358 fournit le vrai `datumAt` d'une
+  `GlobalCandidateALocalActionFamily`; son domaine et sa configuration cible
+  sont identifiés exactement.
+- Limite : cette structure n'exige elle-même ni topologie, ni ouverture, ni
+  zéro, ni régularité. Il reste donc à construire un domaine ouvert contenant
+  zéro, résoudre la compatibilité centrale, puis prouver les neuf composantes
+  de `blocksC2Within` et les raccords Euler/PDE.
+- Porte terminale : aucune ; 232e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PAIRED-LORENTZ-CHART-CENTER` — Gate 360
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/CENTRE-MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartCenter4D`.
+- Résultat : une compatibilité explicite des deux métriques de base suffit
+  à rendre la perturbation pairée nulle admissible ; la géométrie reconstruite
+  retrouve exactement les deux tenseurs de base.
+- Limite : l'égalité du choix de racine avec la géométrie de configuration
+  reste une compatibilité distincte.
+- Porte terminale : aucune ; 233e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-PAIRED-MINIMAL-PHYSICAL-LOCAL-ACTION-FAMILY-CENTER` — Gate 361
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/CENTRE-EXACT-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalLocalActionFamilyCenter4D`.
+- Résultat : sous compatibilité exacte de la racine centrale, le datum de la
+  famille en zéro a exactement la configuration initiale comme première
+  projection.
+- Limite : la compatibilité de racine est un contrat explicite, non déduite des
+  seules égalités de métriques.
+- Porte terminale : aucune ; 234e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-PAIRED-MINIMAL-PHYSICAL-METRIC-CORE-PROJECTION` — Gate 362
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ANALYSE/PROJECTION-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalMetricCoreProjection4D`.
+- Résultat : les deux slots métriques du tangent minimal se projettent
+  linéairement dans les deux complétions `C²`. La norme graph-adapted existante
+  est enrichie par cette projection, qui devient continue avec borne un.
+- Limite : cette continuité ne traite pas encore la racine relative à base
+  variable.
+- Porte terminale : aucune ; 235e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-PAIRED-MINIMAL-PHYSICAL-SEPARATE-LORENTZ-DOMAIN` — Gate 363
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/DOMAINE-OUVERT-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalSeparateLorentzDomain4D`.
+- Résultat : le pullback du produit des deux domaines Lorentz fixes est un
+  vrai ouvert contenant zéro dans le tangent minimal normé. Il fournit
+  exactement `plus_mem` et `minus_mem`.
+- Limite : `relative_mem`, dont la base plus varie, reste la seule condition
+  métrique séparant ce domaine ouvert du domaine pairé complet.
+- Porte terminale : aucune ; 236e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-PAIRED-MINIMAL-PHYSICAL-ADMISSIBLE-LOCAL-ACTION-FAMILY` — Gate 364
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/FAMILLE-CANONIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalAdmissibleLocalActionFamily4D`.
+- Résultat : le domaine et le certificat pointwise arbitraires de Gate 359 sont
+  remplacés par le locus canonique d'admissibilité pairée. Il contient zéro,
+  porte la famille locale centrée et s'inclut dans l'ouvert de Gate 363.
+- Limite : l'ouverture de ce locus exact équivaut encore au contrôle joint de
+  `relative_mem`.
+- Porte terminale : aucune ; 237e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-PAIRED-MINIMAL-PHYSICAL-CONSTANT-BOUNDARY-C2` — Gate 365
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ACTION/C2-BORD-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalConstantBoundaryC24D`.
+- Résultat : les blocs Robin/GHY et BV fini de la famille canonique sont
+  constants sur son domaine, donc `C²` pour toute norme compatible. Le paquet
+  des sept blocs physiques est réduit à cinq blocs variables : interaction,
+  Einstein–Hilbert plus/minus et Maxwell plus/minus.
+- Limite : ces cinq régularités, les identités actionnelles matière/LL,
+  l'ouverture relative et les raccords Euler/PDE restent à fermer.
+- Porte terminale : aucune ; 238e support pour `T03`, compteur terminal inchangé
+  à `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-IDENTITY-ROOT-INVERSE-CORE` — Gate 366
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/RACINE-INVERSE-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2IdentityRootInverseCore4D`.
+- Résultat : l'inverse de la racine identité existe dans la même algèbre
+  matricielle complétée, dépend `C²` du paramètre sur un ouvert contenant
+  zéro et s'évalue en l'inverse pointwise déjà construit.
+- Porte terminale : aucune ; 239e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-RELATIVE-METRIC-CORE-PROJECTION` — Gate 367
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ANALYSE/PROJECTION-RELATIVE-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalRelativeMetricCoreProjection4D`.
+- Résultat : la norme du tangent contrôle simultanément les deux cores natifs,
+  la matrice plus dans sa base fixe et la différence croisée `h₋-h₊` dans
+  cette même base.
+- Porte terminale : aucune ; 240e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-RELATIVE-MATRIX-C2-CORE` — Gate 368
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/MATRICE-RELATIVE-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedRelativeMatrixCore4D`.
+- Résultat : le sandwich exact `S*C*S` définit une application `C²` sur un
+  domaine ouvert contenant zéro du core pairé relatif.
+- Porte terminale : aucune ; 241e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-RELATIVE-MATRIX-EVALUATION` — Gate 369
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/ÉVALUATION-RELATIVE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedRelativeMatrixEvaluation4D`.
+- Résultat : sur le tangent minimal, le terme central est exactement le tenseur
+  relatif complet entre les deux métriques affinement variées.
+- Porte terminale : aucune ; 242e support pour `T03`, compteur `2/14`.
+
+### `P-T03-LORENTZ-CHART-VARIATION-TRANSPORT` — Gate 370
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/TRANSPORT-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2LorentzChartVariationTransport4D`.
+- Résultat : pour tout tenseur symétrique, sa matrice dans le frame Lorentz
+  varié est exactement `S*C*S`; l'auto-adjonction de l'inverse et le changement
+  de frame sont prouvés intrinsèquement.
+- Porte terminale : aucune ; 243e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-RELATIVE-MATRIX-EXACT` — Gate 371
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/IDENTIFICATION-RELATIVE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedRelativeMatrixExact4D`.
+- Résultat : le core paramétrique pairé et l'entrée relative du vrai chart
+  Lorentz imbriqué ont exactement la même matrice à chaque point.
+- Limite : il reste à transporter cette identification au niveau du core `C²`
+  complet pour ouvrir `relative_mem`, puis fermer les cinq blocs variables et
+  les identités same-action.
+- Porte terminale : aucune ; 244e support pour `T03`, compteur `2/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

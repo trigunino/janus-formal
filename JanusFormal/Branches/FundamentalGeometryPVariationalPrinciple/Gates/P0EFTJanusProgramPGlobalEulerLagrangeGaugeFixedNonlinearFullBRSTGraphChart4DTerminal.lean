@@ -91,148 +91,22 @@ variable
     (chartData : ProgramPGlobalMinimalPhysicalActionChartData4D period hPeriod
       (measure := measure) configuration data analysis)
 
-private abbrev MinimalChart :=
-  globalCandidateAMinimalPhysicalLocalVariationalChart period hPeriod
-    configuration data analysis chartData
-
-private abbrev BaseMetric :=
-  globalCandidateAMetricBySector period hPeriod data
-
-private abbrev DiffeomorphismChart :=
-  GlobalCandidateAGaugeFixedNonlinearDiffeomorphismBRSTGraphChart4D period
-    hPeriod configuration data analysis chartData
-
-private abbrev AbelianGraph :=
-  GlobalPairedAbelianOffShellGraphHilbert period hPeriod
-    (BaseMetric period hPeriod configuration data)
-
-private abbrev FullAmbient :=
-  DiffeomorphismChart period hPeriod configuration data analysis chartData ×
-    AbelianGraph period hPeriod configuration data
-
-@[implicit_reducible]
-local instance (priority := 10001) fullDiffeomorphismChartNormedAddCommGroupTerminal :
-    NormedAddCommGroup
-      (DiffeomorphismChart period hPeriod configuration data analysis
-        chartData) :=
-  P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearDiffeomorphismBRSTGraphChart4D.nonlinearBRSTGraphChartNormedAddCommGroup
-    period hPeriod configuration data analysis chartData
-
-@[implicit_reducible]
-local instance (priority := 10001) fullDiffeomorphismChartNormedSpaceTerminal :
-    NormedSpace Real
-      (DiffeomorphismChart period hPeriod configuration data analysis
-        chartData) :=
-  P0EFTJanusProgramPGlobalEulerLagrangeGaugeFixedNonlinearDiffeomorphismBRSTGraphChart4D.nonlinearBRSTGraphChartNormedSpace
-    period hPeriod configuration data analysis chartData
-
-@[implicit_reducible]
-local instance (priority := 10002) fullDiffeomorphismChartAddCommGroupTerminal :
-    AddCommGroup
-      (DiffeomorphismChart period hPeriod configuration data analysis
-        chartData) :=
-  (fullDiffeomorphismChartNormedAddCommGroupTerminal period hPeriod configuration data
-    analysis chartData).toAddCommGroup
-
-@[implicit_reducible]
-local instance (priority := 10002) fullDiffeomorphismChartTopologicalSpaceTerminal :
-    TopologicalSpace
-      (DiffeomorphismChart period hPeriod configuration data analysis
-        chartData) :=
-  (fullDiffeomorphismChartNormedAddCommGroupTerminal period hPeriod configuration data
-    analysis chartData).toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
-
-@[implicit_reducible]
-local instance (priority := 10001) fullDiffeomorphismChartModuleTerminal :
-    Module Real
-      (DiffeomorphismChart period hPeriod configuration data analysis
-        chartData) :=
-  (fullDiffeomorphismChartNormedSpaceTerminal period hPeriod configuration data
-    analysis chartData).toModule
-
-@[implicit_reducible]
-local instance (priority := 10001) fullAbelianGraphNormedAddCommGroupTerminal :
-    NormedAddCommGroup
-      (AbelianGraph period hPeriod configuration data) :=
-  @Submodule.normedAddCommGroup Real
-    (GlobalPairedAbelianOffShellAmbient period hPeriod)
-    inferInstance inferInstance inferInstance
-    (globalPairedAbelianOffShellGraphSubmodule period hPeriod
-      (BaseMetric period hPeriod configuration data))
-
-@[implicit_reducible]
-local instance (priority := 10001) fullAbelianGraphNormedSpaceTerminal :
-    NormedSpace Real (AbelianGraph period hPeriod configuration data) :=
-  P0EFTJanusProgramPGlobalAbelianBRSTOffShellGraphC2Chart4D.globalPairedAbelianOffShellGraphNormedSpace
-    period hPeriod (BaseMetric period hPeriod configuration data)
-
-@[implicit_reducible]
-local instance (priority := 10002) fullAbelianGraphAddCommGroupTerminal :
-    AddCommGroup (AbelianGraph period hPeriod configuration data) :=
-  (fullAbelianGraphNormedAddCommGroupTerminal period hPeriod configuration
-    data).toAddCommGroup
-
-@[implicit_reducible]
-local instance (priority := 10002) fullAbelianGraphTopologicalSpaceTerminal :
-    TopologicalSpace (AbelianGraph period hPeriod configuration data) :=
-  (fullAbelianGraphNormedAddCommGroupTerminal period hPeriod configuration data
-    ).toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
-
-@[implicit_reducible]
-local instance (priority := 10001) fullAbelianGraphModuleTerminal :
-    Module Real (AbelianGraph period hPeriod configuration data) :=
-  (fullAbelianGraphNormedSpaceTerminal period hPeriod configuration data).toModule
-
-local instance (priority := 10002) nonlinearFullAmbientModuleTerminal :
-    Module Real
-      (FullAmbient period hPeriod configuration data analysis chartData) :=
-  Prod.instModule
-
-@[implicit_reducible]
-local instance (priority := 10002) nonlinearFullBRSTChartNormedAddCommGroupTerminal :
-    NormedAddCommGroup
-      (GlobalCandidateAGaugeFixedNonlinearFullBRSTGraphChart4D period hPeriod
-        configuration data analysis chartData) :=
-  @Submodule.normedAddCommGroup Real
-    (FullAmbient period hPeriod configuration data analysis chartData)
-    inferInstance inferInstance
-    (nonlinearFullAmbientModuleTerminal period hPeriod (measure := measure)
-      configuration data analysis chartData)
-    (globalCandidateAGaugeFixedNonlinearFullBRSTGraphSubmodule4D period hPeriod
-      configuration data analysis chartData)
-
-@[implicit_reducible]
-local instance (priority := 10002) nonlinearFullBRSTChartNormedSpaceTerminal :
-    NormedSpace Real
-      (GlobalCandidateAGaugeFixedNonlinearFullBRSTGraphChart4D period hPeriod
-        configuration data analysis chartData) :=
-  Submodule.normedSpace
-    (globalCandidateAGaugeFixedNonlinearFullBRSTGraphSubmodule4D period hPeriod
-      configuration data analysis chartData)
-
-@[implicit_reducible]
-local instance (priority := 10003) nonlinearFullBRSTChartModuleTerminal :
-    Module Real
-      (GlobalCandidateAGaugeFixedNonlinearFullBRSTGraphChart4D period hPeriod
-        configuration data analysis chartData) :=
-  (nonlinearFullBRSTChartNormedSpaceTerminal period hPeriod configuration data analysis
-    chartData).toModule
-
 @[implicit_reducible]
 local instance (priority := 10003) nonlinearFullBRSTChartAddCommGroupTerminal :
     AddCommGroup
       (GlobalCandidateAGaugeFixedNonlinearFullBRSTGraphChart4D period hPeriod
         configuration data analysis chartData) :=
-  (nonlinearFullBRSTChartNormedAddCommGroupTerminal period hPeriod configuration data
-    analysis chartData).toAddCommGroup
+  nonlinearFullBRSTChartAddCommGroup period hPeriod (measure := measure)
+    configuration data analysis chartData
 
 @[implicit_reducible]
 local instance (priority := 10003) nonlinearFullBRSTChartTopologicalSpaceTerminal :
     TopologicalSpace
       (GlobalCandidateAGaugeFixedNonlinearFullBRSTGraphChart4D period hPeriod
         configuration data analysis chartData) :=
-  (nonlinearFullBRSTChartNormedAddCommGroupTerminal period hPeriod configuration data
-    analysis chartData).toPseudoMetricSpace.toUniformSpace.toTopologicalSpace
+  nonlinearFullBRSTChartTopologicalSpace period hPeriod (measure := measure)
+    configuration data analysis chartData
+
 /-- Gate 223: the exact nonlinear physical chart and both completed BRST
 graphs form one faithful relational chart with a unique Abelian potential. -/
 theorem global_candidateA_gaugeFixed_nonlinear_full_BRST_graph_chart_gate :
