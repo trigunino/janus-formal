@@ -7823,10 +7823,692 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedRelativeMatrixExact4D`.
 - Résultat : le core paramétrique pairé et l'entrée relative du vrai chart
   Lorentz imbriqué ont exactement la même matrice à chaque point.
-- Limite : il reste à transporter cette identification au niveau du core `C²`
-  complet pour ouvrir `relative_mem`, puis fermer les cinq blocs variables et
-  les identités same-action.
+- Limite : le passage au core `C²` complet et l'ouverture de `relative_mem`
+  sont fermés par Gates 372–376 ; restent les cinq blocs variables, les
+  identités same-action et les raccords Euler/PDE.
 - Porte terminale : aucune ; 244e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-IDENTITY-ROOT-JET-RIGIDITY` — Gate 372
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/RIGIDITÉ-JETS-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2IdentityRootJetRigidity4D`.
+- Résultat : les jets d'ordre un et deux d'une racine matricielle `C²` sont
+  récupérés par injectivité de Sylvester ; les racines et inverses sélectionnés
+  coïncident donc avec leurs lifts lisses complets.
+- Porte terminale : aucune ; 245e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-RELATIVE-MATRIX-C2-EXACT` — Gate 373
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/EXACTITUDE-RELATIVE-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedRelativeMatrixC2Exact4D`.
+- Résultat : le sandwich pairé paramétrique égale la variation relative
+  réellement transportée dans tout le core matriciel `C²`, pas seulement pointwise.
+- Porte terminale : aucune ; 246e support pour `T03`, compteur `2/14`.
+
+### `P-T03-LORENTZ-CHART-GRAM-TRANSPORT` — Gate 374
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/GRAM-TRANSPORT-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2LorentzChartGramTransport4D`.
+- Résultat : le frame transporté conserve exactement Gram, Gram inverse,
+  l'adjoint métrique `C²` et le domaine de racine auto-adjointe.
+- Porte terminale : aucune ; 247e support pour `T03`, compteur `2/14`.
+
+### `P-T03-LORENTZ-CHART-MATRIX-DOMAIN` — Gate 375
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/CHART/DOMAINE-MATRICIEL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2LorentzChartMatrixDomain4D`.
+- Résultat : le domaine Lorentzien dépendant est remplacé exactement par un
+  ouvert matriciel ambiant, contenant zéro et invariant sous transport du chart.
+- Porte terminale : aucune ; 248e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MINIMAL-PHYSICAL-ADMISSIBLE-DOMAIN-OPEN` — Gate 376
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ANALYSE/OUVERTURE-PAIRED-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalAdmissibleDomainOpen4D`.
+- Résultat : la condition `relative_mem` et le prédicat pairé complet sont des
+  pullbacks d'ouverts matriciels ; le domaine admissible exact de la famille
+  d'action locale est donc un voisinage ouvert de zéro sous compatibilité des bases.
+- Porte terminale : aucune ; 249e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MATRIX-SPECTRAL-POTENTIAL-C2` — Gate 377
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ANALYSE/POTENTIEL-SPECTRAL-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2MatrixSpectralPotential4D`.
+- Résultat : les polynômes symétriques matriciels et le potentiel spectral
+  Candidate-A sont relevés dans le core `C²`, avec évaluation pointwise exacte.
+- Porte terminale : aucune ; 250e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MINIMAL-PHYSICAL-INTERACTION-C2` — Gate 378
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ANALYSE/INTERACTION-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalInteractionC24D`.
+- Résultat : le bloc d'interaction Candidate-A est exactement le pullback de
+  l'action spectrale `C²` sur le domaine admissible pairé ; sa régularité `C²`
+  y est démontrée. Premier des cinq blocs variables fermé.
+- Reste local T03 : Einstein-Hilbert `±`, Maxwell `±`, puis les raccords
+  same-action et l'assemblage Euler/PDE.
+- Porte terminale : aucune ; 251e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-FIXED-VOLUME-EINSTEIN-HILBERT-C2` — Gate 379
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/ANALYSE/EH-C2-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedFixedVolumeEinsteinHilbertC24D`.
+- Résultat : les familles Einstein–Hilbert auxiliaires `+/-` utilisent le
+  volume de base fixe exact du chart pairé, sont `C²` sur son domaine et le
+  restent après pullback vers le tangent minimal-physique.
+- Reste pour identifier les deux vrais blocs : le pont non nul entre la formule
+  de courbure scalaire `C² → C⁰` et la courbure intrinsèque du métrique affine.
+- Porte terminale : aucune ; 252e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-ACTUAL-METRIC-SECOND-DERIVATIVE` — Gate 380
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/JET-MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothActualMetricSecondDerivative4D`.
+- Résultat : pour toute variation métrique lisse non nulle, la dérivée
+  seconde ordonnée de chaque coefficient du core complété est exactement la
+  dérivée de la vraie matrice métrique affine dans le frame régulier fixe ;
+  le raccord `fderiv` local entre premier et second jets est explicite.
+- Reste local EH : transporter cette exactitude dans Riemann, Ricci puis la
+  courbure scalaire intrinsèque afin d'identifier les deux blocs de Gate 379.
+- Porte terminale : aucune ; 253e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-ACTUAL-METRIC-INVERSE` — Gate 381
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/INVERSE-MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothActualMetricInverse4D`.
+- Résultat : sur tout le domaine admissible, la matrice inverse `C²` annule
+  exactement la matrice métrique `C²`; pour toute variation lisse, cette
+  identité devient pointwise l'inverse de la vraie matrice affine non nulle.
+- Reste local EH : utiliser cette annulation pour globaliser Christoffel et sa
+  dérivée, puis contracter Riemann/Ricci/scalar.
+- Porte terminale : aucune ; 254e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-CHRISTOFFEL-BULK` — Gate 382
+
+- État : `DONE` (2026-09-02). Portée : `GLOBALE/GÉOMÉTRIE/CHRISTOFFEL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothChristoffel4D`.
+- Résultat : les coefficients de Christoffel du core complété sont
+  exactement ceux de la connexion de Levi–Civita de la vraie métrique affine,
+  en tout point d'un chart bulk et pour toute variation admissible non nulle.
+- Reste local EH : identifier leur dérivée puis reconstruire et contracter
+  Riemann, Ricci et la courbure scalaire.
+- Porte terminale : aucune ; 255e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-CHRISTOFFEL-DERIVATIVE` — Gate 383
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/GÉOMÉTRIE/JET-CHRISTOFFEL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothChristoffelDerivative4D`.
+- Résultat : pour toute variation métrique lisse admissible non nulle, les
+  dérivées locales exactes de la matrice inverse, du coefficient de Koszul et
+  du coefficient de Christoffel coïncident avec les jets complétés du core.
+- Reste local EH : reconstruire Riemann depuis Christoffel, puis contracter
+  Ricci et la courbure scalaire avant l'identification des deux actions.
+- Porte terminale : aucune ; 256e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-RIEMANN` — Gate 384
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/GÉOMÉTRIE/RIEMANN-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothRiemann4D`.
+- Résultat : la formule non holonome du core complété, avec dérivées de
+  Christoffel, produits quadratiques et correction de crochet, reconstruit
+  exactement le vecteur de Riemann intrinsèque de toute métrique affine lisse
+  admissible, puis chacune de ses composantes dans le frame régulier fixe.
+- Reste local EH : contracter Ricci puis la courbure scalaire et globaliser
+  leur identification avant de raccorder les deux actions de Gate 379.
+- Porte terminale : aucune ; 257e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-SCALAR-CURVATURE` — Gate 385
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/GÉOMÉTRIE/SCALAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothScalarCurvature4D`.
+- Résultat : pour toute variation métrique lisse admissible, les contractions
+  Ricci et scalaire du core complété coïncident avec celles de la vraie
+  métrique affine ; l'identification est globalisée sur le quotient.
+- Reste local EH : raccorder cette égalité aux deux actions à volume fixe de
+  Gate 379, puis poursuivre l'assemblage des blocs variables de `T03`.
+- Porte terminale : aucune ; 258e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-EINSTEIN-HILBERT-ACTION-BRIDGE` — Gate 386
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/EH-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedEinsteinHilbertActionBridge4D`.
+- Résultat : les familles EH complétées à volume fixe de Gate 379 coïncident
+  exactement, sur le domaine admissible, avec les vrais blocs intrinsèques
+  plus et moins ; leur régularité `C²` est transférée aux champs de blocs.
+- Reste `T03` : identifier et régulariser les blocs Maxwell plus et moins,
+  puis établir les raccords de même action et l'assemblage Euler/PDE final.
+- Porte terminale : aucune ; 259e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-MAXWELL` — Gate 387
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothMaxwell4D`.
+- Résultat : le pairing Maxwell du core métrique complété coïncide
+  ponctuellement puis globalement avec le vrai pairing frame-free pour toute
+  variation affine lisse admissible et deux potentiels intrinsèques fixes.
+- Reste : incorporer la dépendance conjointe des coefficients gauge et de la
+  frame métrique mobile.
+- Porte terminale : aucune ; 260e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FIXED-VOLUME-MAXWELL-ACTION-BRIDGE` — Gate 388
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2FixedVolumeMaxwellActionBridge4D`.
+- Résultat : la densité et l'action Maxwell complétées utilisent désormais le
+  volume de base fixe de la carte appariée et coïncident exactement avec
+  l'action intrinsèque pour tout potentiel fixé.
+- Reste : construire la graph norm métrique+jauge, puis raccorder les vrais
+  blocs `maxwellPlus` et `maxwellMinus` où le potentiel est reconstruit.
+- Porte terminale : aucune ; 261e support pour `T03`, compteur `2/14`.
+
+### `P-T03-METRIC-GAUGE-C2-GRAPH` — Gate 389
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalMetricGaugeCoreProjection4D`.
+- Résultat : une unique norme graphe contrôle simultanément le core métrique
+  relatif apparié et les seize coefficients de jauge `C²`; les projections
+  métrique et jauge sont des applications linéaires continues explicites.
+- Reste : construire la courbure en `C⁰` depuis ces coefficients (une dérivée),
+  puis les actions Maxwell conjointes plus et moins et leurs identités de blocs.
+- Porte terminale : aucune ; 262e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-CURVATURE-RECONSTRUCTION` — Gate 390
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameGaugeCurvatureReconstruction4D`.
+- Résultat : pour tout paquet de coefficients lisses, le potentiel intrinsèque
+  reconstruit possède exactement ces coefficients et sa courbure satisfait la
+  formule de Cartan avec les coefficients de structure de la frame régulière.
+- Reste : prolonger cette formule du paquet lisse au core `C²` avec cible `C⁰`,
+  puis traiter la transformation vers la frame métrique variée.
+- Porte terminale : aucune ; 263e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-C2-TO-C0-CURVATURE` — Gate 391
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameGaugeCurvatureC0FromC2Coefficients4D`.
+- Résultat : la formule de Cartan se prolonge continûment du core des huit
+  coefficients `C²` vers une matrice de courbure `C⁰`; elle est `C∞` en
+  paramètres et coïncide avec la vraie courbure du potentiel reconstruit sur
+  les coefficients lisses.
+- Reste : transporter les coefficients de la frame métrique variée vers la
+  frame de base fixe, puis effectuer la contraction et l'intégration Maxwell.
+- Porte terminale : aucune ; 264e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-FRAME-TRANSPORT` — Gate 392
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2GaugeCoefficientFrameTransport4D`.
+- Résultat : le transport `Qᵀ` des coefficients gauge de la frame variée
+  vers la frame fixe est `C∞` sur les cores complétés et coïncide
+  exactement avec le changement de repère intrinsèque sur les champs lisses.
+- Reste : contracter les courbures `C⁰` avec l'inverse métrique, intégrer,
+  puis identifier les vrais blocs Maxwell plus et moins.
+- Porte terminale : aucune ; 265e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-COEFFICIENT-MAXWELL-ACTION` — Gate 393
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2GaugeCoefficientMaxwellAction4D`.
+- Résultat : les courbures gauge `C⁰` issues des coefficients `C²` sont
+  contractées avec l'inverse métrique, multipliées par le volume fixe puis
+  intégrées ; l'action est conjointement `C²`. Pour les coefficients de la
+  frame métrique mobile, le transport par la racine restitue exactement
+  l'action Maxwell intrinsèque lisse.
+- Reste : instancier cette famille dans les secteurs pairés `+/-`, avec les
+  vrais paquets gauge `base + direction`, puis prouver les identités de blocs.
+- Porte terminale : aucune ; 266e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MAXWELL-ACTION-BRIDGE` — Gate 394
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/MAXWELL-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedGaugeCoefficientMaxwellAction4D`.
+- Résultat : les deux secteurs utilisent leur core métrique natif et le vrai
+  paquet gauge `base + direction`; leurs actions auxiliaires sont `C²` sur le
+  domaine apparié et coïncident exactement avec les blocs Maxwell intrinsèques
+  `+/-`, échelles de couplage incluses une seule fois.
+- Reste `T03` : assembler les cinq blocs variables `C²`, identifier leur somme
+  à l'action Candidate-A, puis dériver l'opérateur Euler/PDE terminal.
+- Porte terminale : aucune ; 267e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-SEVEN-PHYSICAL-C2` — Gate 395
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/C2-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalFiveVariableC24D`.
+- Résultat : une unique topologie graphe métrique+jauge porte simultanément la
+  régularité `C²` des cinq blocs variables sur un domaine ouvert ; les blocs de
+  bord constants complètent ensuite le certificat des sept blocs physiques.
+- Reste `T03` : fermer séparément les vraies actions matière et LL, assembler
+  directement les neuf blocs puis dériver l'opérateur Euler/PDE terminal.
+- Porte terminale : aucune ; 268e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-AFFINE-MATTER-C2` — Gate 396
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/C2-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalMatterC24D`.
+- Résultat : le huitième bloc physique, la vraie action matière, est `C²` dans
+  la même topologie jointe. L'entrée graphe est affine `base + direction` et
+  conserve donc exactement son terme croisé ; l'identité est prouvée seulement
+  sur le domaine admissible, sans fausse réduction quadratique globale.
+- Reste `T03` : renforcer le contrôle LL en `C⁰/H¹`, prouver le neuvième bloc
+  `C²`, assembler directement les neuf blocs et dériver l'opérateur Euler/PDE.
+- Porte terminale : aucune ; 269e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-LL-C0-FIRST-JET` — Gate 397
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/C2-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalLLC0FirstJetProjection4D`.
+- Résultat : la topologie graphe jointe conserve les graphes matière et LL-H¹,
+  le core métrique+jauge, et contrôle en plus par norme sup les trois champs LL
+  ainsi que le premier jet du champ dynamique. La projection est linéaire
+  continue et exacte sur les champs lisses.
+- Reste `T03` : prolonger la fonctionnelle polynomiale LL sur ce paquet, prouver
+  le neuvième bloc `C²`, assembler les neuf blocs et dériver l'opérateur Euler.
+- Porte terminale : aucune ; 270e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-NONLINEAR-LL-C2` — Gate 398
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/C2-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalLLC24D`.
+- Résultat : la vraie densité LL quartique est prolongée polynomialement
+  aux paquets `C⁰` de premier jet, intégrée par une application linéaire
+  continue puis moyennée exactement sur les paquets direct/PT. Le neuvième
+  bloc physique est `C²` dans la topologie graphe forte et conserve sa base.
+- Reste `T03` : assembler directement les neuf blocs `C²`, identifier leur
+  somme à l'action Candidate-A puis dériver l'opérateur Euler/PDE terminal.
+- Porte terminale : aucune ; 271e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-NINE-BLOCK-C2` — Gate 399
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/C2-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalNineBlockC24D`.
+- Résultat : les anciennes projections métrique/jauge et matière sont
+  continues depuis la topologie graphe LL forte ; les neuf blocs physiques
+  authentiques forment un unique certificat `FullCoupledC2WithinAt`.
+- Reste `T03` : identifier la somme des neuf blocs à l'action Candidate-A,
+  puis dériver l'opérateur Euler/PDE terminal.
+- Porte terminale : aucune ; 272e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-FULL-ACTION-C2` — Gate 400
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/ACTION/C2-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalFullActionC24D`.
+- Résultat : la somme exacte des neuf blocs est `C²` et s'identifie à
+  l'action covariante Candidate-A totalisée, puis à la vraie donnée locale
+  sur chaque direction admissible.
+- Reste `T03` : construire la carte locale forte et son opérateur Euler,
+  puis relier ses composantes au système PDE global.
+- Porte terminale : aucune ; 273e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-LOCAL-EULER` — Gate 401
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/CARTE-PAIRE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLocalEuler4D`.
+- Résultat : le domaine exact est ouvert dans la topologie LL forte ; il
+  fournit une carte variationnelle locale concrète. Son opérateur Euler est
+  la vraie dérivée de Candidate-A et il est différentiable sur le domaine.
+- Reste `T03` : identifier les composantes de cette un-forme au système PDE
+  physique, puis établir leur recollement/couverture globale.
+- Porte terminale : aucune ; 274e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-EULER-NINE-BLOCK` — Gate 402
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/DECOMPOSITION-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongEulerNineBlockDecomposition4D`.
+- Résultat : en chaque point admissible, l'opérateur Euler fort authentique
+  est exactement la somme des dérivées des neuf blocs de Candidate-A.
+- Reste `T03` : séparer cette équation en secteurs physiques, identifier les
+  résidus PDE correspondants, puis établir la couverture/recollement global.
+- Porte terminale : aucune ; 275e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-EIGHT-SECTOR-EULER` — Gate 403
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/SECTEURS-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongEightSectorEuler4D`.
+- Résultat : l'annulation du véritable opérateur Euler fort équivaut exactement
+  aux huit équations de secteurs : métrique, jauge, normale, fantôme difféo,
+  métrique/mesure/champ LL et matière SpinC.
+- Reste `T03` : représenter ces huit covecteurs par des résidus PDE physiques,
+  puis établir la couverture et le recollement global de ces équations.
+- Porte terminale : aucune ; 276e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-COMPONENTWISE-PDE-BRIDGE` — Gate 404
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/PDE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongComponentwisePDEResidual4D`.
+- Résultat : une interface typée reçoit huit représentations résiduelles
+  séparantes ; l'annulation de l'Euler authentique équivaut alors exactement
+  aux huit équations résiduelles fortes correspondantes.
+- Reste `T03` : construire les représentants tensoriels/distributionnels
+  concrets des covecteurs complets, puis leur couverture/recollement global.
+- Porte terminale : aucune ; 277e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-COMPONENT-PDE-BLOCK-PAIRING` — Gate 405
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/TESTS-PURS-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongComponentPDEBlockPairing4D`.
+- Résultat : les directions pures bulk et SpinC du nouveau chart fort sont
+  explicites. Chaque pairing résiduel séparant est exactement la dérivée de
+  la même action Candidate-A authentique, écrite comme somme des neuf blocs.
+- Reste `T03` : construire les résidus analytiques concrets, puis les formules
+  PDE tensorielle/distributionnelle et leur recollement global.
+- Porte terminale : aucune ; 278e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-SCALAR-GRAPH-RIESZ` — Gate 406
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/RIESZ-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongScalarGraphRieszResidual4D`.
+- Résultat : les huit covecteurs complets possèdent sans hypothèse des résidus
+  de Riesz séparants sur graphes hilbertiens fermés ; leur annulation équivaut
+  exactement à celle de l'opérateur Euler authentique.
+- Limite : ces résidus analytiques conservent les covecteurs comme coordonnées
+  scalaires de graphe ; ils ne sont pas encore les formules PDE tensorielle ou
+  distributionnelle locales.
+- Reste `T03` : dériver ces formules physiques puis leur recollement global.
+- Porte terminale : aucune ; 279e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-SPINC-SPECTRAL-AUGMENTED` — Gate 407
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/SPINC-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongSpinCSpectralAugmentedResidual4D`.
+- Résultat : le résidu SpinC complet est ancré sur le résidu spectral explicite
+  `(2D + m²)c` du véritable état matière traduit ; toutes les interactions des
+  autres blocs sont conservées exactement dans le graphe augmenté. Le système
+  à huit résidus reste équivalent à l'Euler authentique.
+- Limite : le reste SpinC et les sept autres secteurs n'ont pas encore leurs
+  formules PDE tensorielle/distributionnelle explicites.
+- Porte terminale : aucune ; 280e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-LL-WEAK-FIRST-VARIATION` — Gate 408
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/LL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLWeakFirstVariation4D`.
+- Résultat : sur le domaine admissible ouvert du chart fort, la dérivée du
+  véritable bloc LL suivant ses trois directions pures (métrique auxiliaire,
+  mesure et champ LL) est exactement l'intégrale faible explicite `fullLLEuler`.
+- Limite : ceci n'identifie pas encore les termes croisés des huit autres
+  blocs dans la composante LL totale, ni leurs PDE locales et leur recollement.
+- Porte terminale : aucune ; 281e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-LL-FIELD-WEAK-RESIDUAL` — Gate 409
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/LL-WEAK-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLFieldWeakResidual4D`.
+- Résultat : la composante champ LL pure du véritable bloc LL est exactement
+  le résidu faible existant `weakLLEulerOperator`, par unicité des dérivées du
+  même chemin d'action PT-symétrique.
+- Limite : ce résultat porte sur le bloc LL seul ; isoler la composante LL du
+  covecteur total exige encore de traiter les huit blocs croisés.
+- Porte terminale : aucune ; 282e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-LL-FIELD-WEAK-AUGMENTED` — Gate 410
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/LL-WEAK-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLFieldWeakAugmentedResidual4D`.
+- Résultat : le covecteur LL-field total est la somme exacte du résidu faible
+  `weakLLEulerOperator` et du reste couplé. Le système à huit résidus conserve
+  simultanément cet ancrage LL et l'ancrage spectral SpinC de Gate 407.
+- Limite : le résidu augmenté est scalaire/faible, non une PDE forte pointwise,
+  et son annulation ne sépare pas encore l'opérateur faible du reste couplé.
+- Porte terminale : aucune ; 283e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-LL-FIELD-STRONG-EQUATION` — Gate 411
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/LL-STRONG-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLFieldStrongEquation4D`.
+- Résultat : sur le domaine admissible, l'annulation du véritable bloc LL dans
+  toutes les directions pures du champ LL équivaut exactement à sa PDE forte
+  pointwise dans le frame canonique. La régularité lisse et le Stokes global
+  sans bord sont réutilisés, sans nouvelle hypothèse.
+- Limite : cette équivalence porte sur le bloc LL authentique seul ; la PDE du
+  covecteur LL total exige encore d'expliciter le reste des blocs couplés.
+- Porte terminale : aucune ; 284e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-ERASED-SECTOR-EULER` — Gate 412
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/ERASED-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongErasedSectorEuler4D`.
+- Résultat : le target physique, le datum dépendant et l'action totale sont
+  constants le long des directions normale et ghost de difféomorphisme ; leurs
+  deux covecteurs d'Euler forts s'annulent donc sur le domaine admissible.
+- Limite : c'est une dégénérescence architecturale due à l'effacement actuel
+  de ces coordonnées, et non une nouvelle équation physique pointwise.
+- Porte terminale : aucune ; 285e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-MAXWELL-WEAK-FIRST-VARIATION` — Gate 413
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMaxwellWeakFirstVariation4D`.
+- Résultat : les deux blocs Maxwell authentiques ont, dans toute direction
+  gauge forte admissible, leur variation faible intrinsèque exacte, multipliée
+  par `plusMaxwellScale` ou `minusMaxwellScale` ; la métrique reste fixe et la
+  reconstruction des coefficients suit exactement la ligne affine de potentiel.
+- Limite : ce n'est pas encore l'équation Maxwell totale couplée ni sa forme
+  pointwise ; les autres blocs dépendant du gauge restent à additionner.
+- Porte terminale : aucune ; 286e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-GAUGE-COUPLED-RESIDUAL` — Gate 414
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/GAUGE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeCoupledResidual4D`.
+- Résultat : le covecteur gauge fort total est exactement la somme des deux
+  variations faibles Maxwell explicites de Gate 413 et du résidu des sept
+  autres blocs authentiques, sans supprimer les couplages ; son annulation est
+  équivalente à l'annulation de ce résidu faible sur tout test gauge apparié.
+- Limite : le résidu couplé n'est pas encore réduit à une PDE pointwise.
+- Porte terminale : aucune ; 287e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-GAUGE-WEAK-AUGMENTED-RESIDUAL` — Gate 415
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/GAUGE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeWeakAugmentedResidual4D`.
+- Résultat : le résidu faible gauge couplé de Gate 414 est maintenant une
+  représentation séparante du secteur gauge et remplace ce secteur dans le
+  système à huit composantes, tout en conservant les ancres SpinC spectrale et
+  LL faible ; ce système est exactement équivalent à l'annulation d'Euler.
+- Limite : aucune identification pointwise n'est revendiquée pour une mesure
+  finie arbitraire, qui peut notamment être la mesure nulle.
+- Porte terminale : aucune ; 288e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-MAXWELL-LOCAL-EULER-BOUNDARY` — Gate 416
+
+- État : `DONE` (2026-09-03). Portée : `LOCALE/EULER/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMaxwellLocalEulerBoundary4D`.
+- Résultat : dans toute carte holonome, la densité intrinsèque de première
+  variation Maxwell est exactement la somme des pairings avec les coefficients
+  d'Euler Maxwell moins les divergences des courants de bord ; l'excitation
+  densitisée est construite depuis la métrique et prouvée lisse et antisymétrique.
+- Limite : l'annulation globale du terme de bord et la séparation pointwise
+  demandent encore un Stokes global et une mesure à support plein.
+- Porte terminale : aucune ; 289e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-MAXWELL-CANONICAL-EULER-BOUNDARY` — Gate 417
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMaxwellCanonicalEulerBoundary4D`.
+- Résultat : l'atlas holonome canonique sélectionne en chaque point le
+  résidu local Euler moins bord de Gate 416 ; ce scalaire est pointwise la
+  densité Maxwell lisse authentique et son intégrale est exactement la
+  première variation intrinsèque pour toute mesure.
+- Limite : seule la différence sommée Euler-bord est globale ; ses deux termes
+  ne sont pas séparés et le bord n'est pas annulé.
+- Porte terminale : aucune ; 290e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-GAUGE-EULER-BOUNDARY-COUPLED-RESIDUAL` — Gate 418
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/GAUGE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeEulerBoundaryCoupledResidual4D`.
+- Résultat : le covecteur gauge fort total est exactement la somme des deux
+  intégrales canoniques Euler-bord Maxwell et du reste couplé des sept blocs ;
+  sa stationnarité équivaut à l'annulation de ce résidu sur tout test apparié.
+- Limite : aucun Stokes global ni support plein n'est encore utilisé ; aucune
+  équation Maxwell pointwise n'est donc revendiquée.
+- Porte terminale : aucune ; 291e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-GAUGE-EULER-BOUNDARY-AUGMENTED-RESIDUAL` — Gate 419
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/GAUGE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeEulerBoundaryAugmentedResidual4D`.
+- Résultat : le résidu gauge Euler-bord de Gate 418 devient une
+  représentation séparante et remplace explicitement le secteur gauge du
+  système global à huit composantes, tout en conservant les ancres SpinC
+  spectrale et LL faible ; le système reste exactement équivalent à Euler.
+- Limite : la forme forte pointwise attend toujours la globalisation de la
+  divergence Maxwell et le traitement Stokes/support plein.
+- Porte terminale : aucune ; 292e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GLOBAL-MAXWELL-DIVERGENCE` — Gate 420
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/PDE/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricGlobalMaxwellDivergence4D`.
+- Résultat : l'API de dérivée covariante et divergence accepte désormais
+  tout tenseur covariant lisse ; la courbure de Cartan Maxwell est reconstruite
+  comme vrai tenseur global via la coframe duale lisse, puis `∇^μ F_μν` est
+  produit comme covecteur global lisse et identifié dans chaque carte.
+- Limite : il reste à relier cette divergence intrinsèque à la densité
+  Euler-bord de Gate 419, puis à appliquer Stokes et la séparation à support
+  plein pour obtenir l'équation pointwise couplée.
+- Porte terminale : aucune ; 293e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-STRONG-MAXWELL-PDE` — Gate 421
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/POINTWISE/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricStrongMaxwellPDE4D`.
+- Résultat : l'annulation du covecteur global `∇^μ F_μν` est exactement
+  équivalente aux huit équations scalaires (deux composantes abéliennes,
+  quatre indices) dans toute carte holonome ; la réciproque utilise l'atlas
+  canonique couvrant et la base tangentielle réelle.
+- Limite : cette PDE source-free n'est pas encore substituée dans le résidu
+  couplé de Gate 419 ; il faut d'abord traiter honnêtement le poids de mesure,
+  Stokes et les sources provenant des sept autres blocs.
+- Porte terminale : aucune ; 294e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-GAUGE-REDUCED-COUPLED-RESIDUAL` — Gate 422
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER-JAUGE/RÉDUCTION-MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeReducedCoupledResidual4D`.
+- Résultat : dans toute direction de jauge forte pure, les gradients des sept
+  blocs non-Maxwell (Candidate-A, matière, Robin, Landau--Lifshitz,
+  Einstein--Hilbert plus/minus et BV fini) s'annulent. Le résidu couplé et
+  l'évaluation Euler de jauge sont donc exactement la somme des deux résidus
+  Euler-bord Maxwell ; leur nullité pour tout test est équivalente.
+- Limite : l'identification pointwise avec Gate 421 exige encore le pont entre
+  le volume de frame stocké de l'action et la densité métrique holonome, puis
+  Stokes et la séparation des tests.
+- Porte terminale : aucune ; 295e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-GAUGE-MAXWELL-REDUCED-AUGMENTED-RESIDUAL` — Gate 423
+
+- État : `DONE` (2026-09-03). Portée : `GLOBALE/EULER/SYSTÈME-FORT-MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeMaxwellReducedAugmentedResidual4D`.
+- Résultat : le système fort complet à huit secteurs remplace sa coordonnée
+  jauge couplée par le résidu exactement réduit aux deux premières variations
+  Maxwell. Son annulation reste équivalente à celle de l'opérateur d'Euler
+  fort total.
+- Limite : la coordonnée Maxwell reste sous forme intégrale Euler-bord ; son
+  identification à la PDE pointwise de Gate 421 requiert toujours le pont de
+  densité métrique, Stokes et la séparation des tests.
+- Porte terminale : aucune ; 296e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-HOLONOMIC-MAXWELL-DENSITY-BRIDGE` — Gate 424
+
+- État : `DONE` (2026-09-03). Portée : `LOCALE/DENSITÉ/CHANGEMENT-DE-FRAME-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameHolonomicMaxwellDensityBridge4D`.
+- Résultat : le volume scalaire stocké d'une métrique régulière est exactement
+  le volume holonome `√|det g|` multiplié par la valeur absolue du déterminant
+  du changement de frame, strictement positive. L'excitation Maxwell de
+  l'action est pareillement ce jacobien fois l'excitation holonome.
+- Limite : la divergence de l'excitation contient donc aussi la dérivée de ce
+  jacobien. Il reste à expliciter ce terme et à le faire correspondre à la
+  mesure de référence avant toute identification à la PDE de Gate 421.
+- Porte terminale : aucune ; 297e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-MAXWELL-EULER-JACOBIAN-CORRECTION` — Gate 425
+
+- État : `DONE` (2026-09-03). Portée : `LOCALE/EULER/DIVERGENCE-PONDÉRÉE-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMaxwellEulerJacobianCorrection4D`.
+- Résultat : le jacobien de changement de frame est lisse et vaut le quotient
+  du volume stocké par `√|det g|`. La règle de Leibniz donne exactement le
+  coefficient Euler Maxwell de l'action : jacobien fois coefficient holonome,
+  plus la contraction de la dérivée du jacobien avec l'excitation.
+- Limite : pour retrouver la PDE source-free de Gate 421, la mesure de
+  référence doit absorber ce terme de frame (ou le jacobien doit être localement
+  constant). Cette compatibilité de mesure n'est pas encore construite.
+- Porte terminale : aucune ; 298e support pour `T03`, compteur `2/14`.
+
+### `P-T03-LOCAL-METRIC-VOLUME-CHRISTOFFEL-TRACE` — Gate 426
+
+- État : `DONE` (2026-09-03). Portée : `LOCALE/LEVI-CIVITA/VOLUME-T03`.
+- Gate : `P0EFTJanusMappingTorusLocalMetricVolumeChristoffelTrace4D`.
+- Résultat : pour toute métrique lorentzienne lisse et toute carte holonome,
+  la vraie dérivée directionnelle de `√|det g|` vaut exactement ce volume
+  multiplié par `Σρ Γ^ρ_{μρ}`. La preuve dérive le déterminant et sa racine,
+  puis ferme l'identité de trace de Levi--Civita en indices finis.
+- Limite : il reste à combiner cette identité avec la dérivée de l'inverse
+  métrique et l'antisymétrie de la courbure pour obtenir la divergence Maxwell
+  densitisée complète.
+- Porte terminale : aucune ; 299e support pour `T03`, compteur `2/14`.
+
+### `P-T03-LOCAL-MAXWELL-CHRISTOFFEL-SKEW-CANCELLATION` — Gate 427
+
+- État : `DONE` (2026-09-03). Portée : `LOCALE/LEVI-CIVITA/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusLocalMaxwellChristoffelSkewCancellation4D`.
+- Résultat : toute contraction d'un symbole de Christoffel sans torsion avec
+  une matrice antisymétrique s'annule. L'excitation Maxwell holonome est prouvée
+  antisymétrique, puis le terme de connexion correspondant est annulé.
+- Limite : la règle de produit complète doit encore combiner ce résultat avec
+  Gate 426 et la compatibilité de la dérivée de l'inverse métrique.
+- Porte terminale : aucune ; 300e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GLOBAL-GAUGE-CURVATURE-HOLONOMIC-COEFFICIENT` — Gate 428
+
+- État : `DONE` (2026-09-03). Portée : `GLOBAL/LOCAL/COURBURE-MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGlobalGaugeCurvatureHolonomicCoefficient4D`.
+- Résultat : dans toute carte holonome, la forme bilinéaire et la matrice de la
+  courbure globale reconstruite de Gate 420 coïncident exactement avec la
+  courbure locale authentique `dA`. L'égalité est aussi transportée à la vraie
+  dérivée directionnelle utilisée par la divergence covariante.
+- Limite : il reste à combiner cette identification avec Gates 426–427 et la
+  compatibilité métrique pour fermer l'identité de divergence densitisée.
+- Porte terminale : aucune ; 301e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MAXWELL-DENSITY-CONNECTION-JET` — Gate 429
+
+- État : `DONE` (2026-09-03). Portée : `ALGÈBRE/LEVI-CIVITA/MAXWELL-T03`.
+- Gate : `P0EFTJanusMaxwellDensityConnectionJet4D`.
+- Résultat : pour tout jet de connexion sans torsion et compatible avec la
+  métrique, la divergence coordonnée de la courbure Maxwell densitisée et
+  deux fois relevée vaut exactement le volume multiplié par sa divergence
+  covariante relevée. La preuve utilise uniquement la compatibilité de
+  l'inverse métrique, l'identité de trace du volume et l'antisymétrie.
+- Limite : il reste à instancier ce théorème par les vrais `fderiv` locaux de
+  la métrique et de `dA` afin d'identifier le coefficient Euler concret.
+- Porte terminale : aucune ; 302e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-HOLONOMIC-MAXWELL-DENSITY-DIVERGENCE` — Gate 430
+
+- État : `DONE` (2026-09-03). Portée : `LOCAL/GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularHolonomicMaxwellDensityDivergence4D`.
+- Résultat : les vrais `fderiv` du volume, de l'inverse métrique et de `dA`
+  réalisent le jet abstrait de Gate 429. Le coefficient Euler de l'excitation
+  holonome est donc exactement `√|det g|` fois la divergence covariante de la
+  courbure globale de Gate 420, avec son indice restant relevé.
+- Limite : il reste à utiliser la non-dégénérescence du volume et de la
+  métrique pour convertir cette identité en équivalence de zéros, puis à la
+  raccorder au résidu Maxwell de Gate 421 et au facteur de frame de Gate 425.
+- Porte terminale : aucune ; 303e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-HOLONOMIC-MAXWELL-EULER-STRONG-PDE` — Gate 431
+
+- État : `DONE` (2026-09-03). Portée : `GLOBAL/POINTWISE/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularHolonomicMaxwellEulerStrongPDE4D`.
+- Résultat : la positivité de `√|det g|` et l'inversibilité de la métrique
+  convertissent Gate 430 en une équivalence exacte de zéros. Les huit
+  coefficients Euler holonomes s'annulent dans toutes les cartes si et
+  seulement si le covecteur global Maxwell de Gate 421 s'annule.
+- Limite : l'excitation effectivement stockée par l'action possède encore le
+  facteur jacobien de frame et son terme dérivé explicité par Gate 425.
+- Porte terminale : aucune ; 304e support pour `T03`, compteur `2/14`.
 
 ## 7. Les 14 portes terminales fixes
 

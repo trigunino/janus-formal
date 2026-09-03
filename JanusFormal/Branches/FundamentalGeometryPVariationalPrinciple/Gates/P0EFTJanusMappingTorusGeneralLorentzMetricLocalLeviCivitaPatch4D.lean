@@ -58,7 +58,7 @@ private abbrev TangentFiber (point : EffectiveQuotient period hPeriod) :=
   TangentSpace coverModelWithCorners point
 
 /-- A supplied smooth holonomic coordinate patch.  The final field is the
-standard local-trivialization evaluation law: every genuine smooth symmetric
+standard local-trivialization evaluation law: every genuine smooth covariant
 two-tensor has smooth scalar coefficients in this frame. -/
 structure SmoothHolonomicFrameChart4 where
   coordinateMap : Vector4 → EffectiveQuotient period hPeriod
@@ -82,10 +82,10 @@ structure SmoothHolonomicFrameChart4 where
           TangentBundle coverModelWithCorners
             (EffectiveQuotient period hPeriod)))
   tensorCoefficient_contDiff : ∀
-      (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+      (tensor : SmoothCovariantTwoTensor period hPeriod)
       (first second : Index4),
     ContDiff Real ∞ (fun coordinate =>
-      tensor.tensor (coordinateMap coordinate)
+      tensor (coordinateMap coordinate)
         (frame coordinate first) (frame coordinate second))
 
 /-- Covariant metric coefficient in the supplied holonomic frame. -/
@@ -110,7 +110,7 @@ theorem localMetricCoefficient_contDiff
     (first second : Index4) :
     ContDiff Real ∞
       (localMetricCoefficient period hPeriod metric patch first second) :=
-  patch.tensorCoefficient_contDiff metric.tensor first second
+  patch.tensorCoefficient_contDiff metric.tensor.tensor first second
 
 theorem localMetricMatrix_contDiff
     (metric : SmoothGeneralLorentzMetric period hPeriod)

@@ -58,7 +58,7 @@ theorem d9TensorChartCoefficient_contDiff
   change ContDiff Real ∞ (fun coordinate =>
     tensor.tensor (patch.coordinateMap coordinate)
       (patch.frame coordinate first) (patch.frame coordinate second))
-  exact patch.tensorCoefficient_contDiff tensor first second
+  exact patch.tensorCoefficient_contDiff tensor.tensor first second
 
 /-- The spatial `1,2,3` block of a global tensor, expressed as the six D9
 metric coefficients at one supplied chart coordinate. -/

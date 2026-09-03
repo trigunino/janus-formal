@@ -78,7 +78,7 @@ private theorem transportCovector_eq_of_heq
 /-- Pointwise divergence selected from the canonical total holonomic atlas. -/
 def globalGeneralMetricSymmetricTensorDivergenceAt
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (point : EffectiveQuotient period hPeriod) :
     TangentSpace coverModelWithCorners point →L[Real] Real :=
   let witness :=
@@ -90,7 +90,7 @@ def globalGeneralMetricSymmetricTensorDivergenceAt
 /-- The selected pointwise covector equals every local representative. -/
 theorem globalGeneralMetricSymmetricTensorDivergenceAt_eq_local
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) :
     globalGeneralMetricSymmetricTensorDivergenceAt period hPeriod metric tensor
@@ -155,7 +155,7 @@ private theorem localInverseDerivativeCoordinates_apply
 
 private def globalGeneralMetricSymmetricTensorDivergenceCoordinates
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (anchor current : EffectiveQuotient period hPeriod) : ModelCovector :=
   ContinuousLinearMap.inCoordinates CoverCoordinates
     (TangentSpace coverModelWithCorners) Real
@@ -166,7 +166,7 @@ private def globalGeneralMetricSymmetricTensorDivergenceCoordinates
 
 private theorem globalGeneralMetricSymmetricTensorDivergenceCoordinates_apply
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (anchor current : EffectiveQuotient period hPeriod)
     (hCurrent : current ∈
       (trivializationAt CoverCoordinates
@@ -323,7 +323,7 @@ abbrev generalMetricDivergenceBackground : EffectiveD8Background where
 one-form. -/
 def globalGeneralMetricSymmetricTensorDivergence
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod) :
+    (tensor : SmoothCovariantTwoTensor period hPeriod) :
     EffectiveD8SmoothCovectorField
       (generalMetricDivergenceBackground period hPeriod) where
   toFun :=
@@ -403,7 +403,7 @@ def globalGeneralMetricSymmetricTensorDivergence
 @[simp]
 theorem globalGeneralMetricSymmetricTensorDivergence_apply
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (point : EffectiveQuotient period hPeriod) :
     globalGeneralMetricSymmetricTensorDivergence period hPeriod metric tensor
         point =

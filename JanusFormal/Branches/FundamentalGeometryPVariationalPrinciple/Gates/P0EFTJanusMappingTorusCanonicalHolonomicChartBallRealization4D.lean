@@ -163,13 +163,13 @@ private theorem tensorCoefficient_contDiff
     (coordinateMap : Vector4 → EffectiveQuotient period hPeriod)
     (hMap : IsLocalDiffeomorph (modelWithCornersSelf Real Vector4)
       coverModelWithCorners ∞ coordinateMap)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (first second : Index4) :
     ContDiff Real ∞ (fun coordinate =>
-      tensor.tensor (coordinateMap coordinate)
+      tensor (coordinateMap coordinate)
         (coordinateFrame period hPeriod coordinateMap hMap coordinate first)
         (coordinateFrame period hPeriod coordinateMap hMap coordinate second)) := by
-  have hTensor := tensor.tensor.contMDiff.comp hMap.contMDiff
+  have hTensor := tensor.contMDiff.comp hMap.contMDiff
   have hApplied := ContMDiff.clm_bundle_apply₂
     (𝕜 := Real) (B := EffectiveQuotient period hPeriod) (M := Vector4)
     (IM := modelWithCornersSelf Real Vector4) (IB := coverModelWithCorners)
@@ -178,7 +178,7 @@ private theorem tensorCoefficient_contDiff
     (E₂ := fun point => TangentSpace coverModelWithCorners point)
     (E₃ := fun _ : EffectiveQuotient period hPeriod => Real)
     (b := coordinateMap)
-    (ψ := fun coordinate => tensor.tensor (coordinateMap coordinate))
+    (ψ := fun coordinate => tensor (coordinateMap coordinate))
     (v := fun coordinate =>
       coordinateFrame period hPeriod coordinateMap hMap coordinate first)
     (w := fun coordinate =>

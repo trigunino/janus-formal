@@ -306,7 +306,7 @@ theorem candidateANormalBoundaryRegularGeneralMetricC0KoszulLower_smooth_apply
   simp only [candidateANormalBoundaryLocalMetricCoordinateForm_symmetric]
   ring
 
-private theorem candidateANormalBoundarySmoothRegularGeneralMetricActualMatrix_symmetric
+theorem candidateANormalBoundarySmoothRegularGeneralMetricActualMatrix_symmetric
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
     (variedMetric : SmoothGeneralLorentzMetric period hPeriod)
@@ -323,7 +323,7 @@ private theorem candidateANormalBoundarySmoothRegularGeneralMetricActualMatrix_s
       period hPeriod metric tensor variedMetric hVaried]
   exact variedMetric.tensor.symmetric _ _ _
 
-private theorem
+theorem
     candidateANormalBoundaryVariedRegularFrameLocalCovariantDerivative_metricPairing_mulVec
     (metric : RegularGeneralLorentzMetric period hPeriod)
     (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)

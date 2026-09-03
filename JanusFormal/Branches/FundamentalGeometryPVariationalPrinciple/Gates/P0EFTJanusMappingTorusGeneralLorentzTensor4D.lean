@@ -79,6 +79,10 @@ structure SmoothSymmetricCovariantTwoTensor where
   tensor : SmoothCovariantTwoTensor period hPeriod
   symmetric : IsSymmetric period hPeriod tensor
 
+instance : Coe (SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (SmoothCovariantTwoTensor period hPeriod) :=
+  ⟨SmoothSymmetricCovariantTwoTensor.tensor⟩
+
 @[ext]
 theorem SmoothSymmetricCovariantTwoTensor.ext
     {first second : SmoothSymmetricCovariantTwoTensor period hPeriod}

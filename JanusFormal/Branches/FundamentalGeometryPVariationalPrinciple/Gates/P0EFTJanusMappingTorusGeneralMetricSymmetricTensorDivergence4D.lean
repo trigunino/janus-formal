@@ -41,7 +41,7 @@ private def coordinateBasisVector (index : Index4) : Vector4 :=
 are contracted by the inverse metric. -/
 def localSymmetricTensorCovariantDerivativeSlice
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate last : Vector4) :
     LinearMap.BilinForm Real Vector4 where
@@ -97,7 +97,7 @@ def localSymmetricTensorCovariantDerivativeSlice
 /-- Matrix of the two contracted slots of `∇h`, with the last vector fixed. -/
 def localSymmetricTensorCovariantDerivativeSliceMatrix
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate last : Vector4) : Matrix4 :=
   LinearMap.BilinForm.toMatrix (Pi.basisFun Real Index4)
@@ -107,7 +107,7 @@ def localSymmetricTensorCovariantDerivativeSliceMatrix
 @[simp]
 theorem localSymmetricTensorCovariantDerivativeSliceMatrix_apply
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate last : Vector4) (derivative first : Index4) :
     localSymmetricTensorCovariantDerivativeSliceMatrix period hPeriod metric
@@ -123,7 +123,7 @@ covariant two-tensor, while its fixed last vector receives the third
 Jacobian factor. -/
 theorem localSymmetricTensorCovariantDerivativeSliceMatrix_transition
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
@@ -251,7 +251,7 @@ theorem matrixEntryContraction_congruence
 /-- Coordinate component `∇^μ h_{μν}`. -/
 def localSymmetricTensorDivergenceCoefficient
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) (last : Index4) : Real :=
   ∑ derivative : Index4, ∑ first : Index4,
@@ -262,7 +262,7 @@ def localSymmetricTensorDivergenceCoefficient
 
 theorem localSymmetricTensorDivergenceCoefficient_contDiff
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (last : Index4) :
     ContDiff Real ∞ (fun coordinate =>
@@ -281,7 +281,7 @@ theorem localSymmetricTensorDivergenceCoefficient_contDiff
 /-- The local divergence bundled as a continuous model covector. -/
 def localSymmetricTensorDivergenceModelCovector
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) : Vector4 →L[Real] Real :=
   LinearMap.toContinuousLinearMap
@@ -304,7 +304,7 @@ def localSymmetricTensorDivergenceModelCovector
 @[simp]
 theorem localSymmetricTensorDivergenceModelCovector_basis
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) (last : Index4) :
     localSymmetricTensorDivergenceModelCovector period hPeriod metric tensor
@@ -324,7 +324,7 @@ theorem localSymmetricTensorDivergenceModelCovector_basis
 
 theorem localSymmetricTensorDivergenceModelCovector_contDiff
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod) :
     ContDiff Real ∞ (fun coordinate =>
       localSymmetricTensorDivergenceModelCovector period hPeriod metric tensor
@@ -344,7 +344,7 @@ theorem localSymmetricTensorDivergenceModelCovector_contDiff
 
 private def localSymmetricTensorDivergenceContractionLinearMap
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) : Vector4 →ₗ[Real] Real :=
   ∑ derivative : Index4, ∑ first : Index4,
@@ -356,7 +356,7 @@ private def localSymmetricTensorDivergenceContractionLinearMap
 
 private theorem localSymmetricTensorDivergenceContractionLinearMap_apply
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate last : Vector4) :
     localSymmetricTensorDivergenceContractionLinearMap period hPeriod metric
@@ -377,7 +377,7 @@ private theorem localSymmetricTensorDivergenceContractionLinearMap_apply
 
 private theorem localSymmetricTensorDivergenceModelCovector_eq_contraction
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) :
     (localSymmetricTensorDivergenceModelCovector period hPeriod metric tensor
@@ -406,7 +406,7 @@ private theorem localSymmetricTensorDivergenceModelCovector_eq_contraction
 /-- Exact covector transition law for the contracted derivative. -/
 theorem localSymmetricTensorDivergenceModelCovector_transition
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =

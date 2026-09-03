@@ -51,14 +51,14 @@ local instance effectiveQuotientIsManifold :
 
 /-- Components of a genuine symmetric tensor in a supplied holonomic frame. -/
 def localSymmetricTensorCoefficient
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (first second : Index4) (coordinate : Vector4) : Real :=
-  tensor.tensor (patch.coordinateMap coordinate)
+  tensor (patch.coordinateMap coordinate)
     (patch.frame coordinate first) (patch.frame coordinate second)
 
 theorem localSymmetricTensorCoefficient_contDiff
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (first second : Index4) :
     ContDiff Real ∞
@@ -68,7 +68,7 @@ theorem localSymmetricTensorCoefficient_contDiff
 
 /-- Matrix of a genuine symmetric tensor in a supplied holonomic frame. -/
 def localSymmetricTensorMatrix
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) : Matrix4 :=
   fun first second =>
@@ -76,7 +76,7 @@ def localSymmetricTensorMatrix
       coordinate
 
 theorem localSymmetricTensorMatrix_contDiff
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod) :
     ContDiff Real ∞
       (localSymmetricTensorMatrix period hPeriod tensor patch) := by
@@ -101,7 +101,7 @@ theorem localSymmetricTensorMatrix_contDiff
 
 /-- Coordinate bilinear form of a genuine symmetric tensor. -/
 def localSymmetricTensorCoordinateForm
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) : LinearMap.BilinForm Real Vector4 :=
   Matrix.toBilin'
@@ -110,12 +110,12 @@ def localSymmetricTensorCoordinateForm
 /-- The coordinate form evaluates the intrinsic tensor on the two coordinate
 derivatives. -/
 theorem localSymmetricTensorCoordinateForm_apply
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate firstVector secondVector : Vector4) :
     localSymmetricTensorCoordinateForm period hPeriod tensor patch coordinate
         firstVector secondVector =
-      tensor.tensor (patch.coordinateMap coordinate)
+      tensor (patch.coordinateMap coordinate)
         (mfderiv (modelWithCornersSelf Real Vector4) coverModelWithCorners
           patch.coordinateMap coordinate firstVector)
         (mfderiv (modelWithCornersSelf Real Vector4) coverModelWithCorners
@@ -124,7 +124,7 @@ theorem localSymmetricTensorCoordinateForm_apply
     (Pi.basisFun Real Index4).equiv (patch.frame coordinate)
       (Equiv.refl Index4)
   let coordinateTensor : LinearMap.BilinForm Real Vector4 :=
-    (tensor.tensor (patch.coordinateMap coordinate)).toBilinForm.comp
+    (tensor (patch.coordinateMap coordinate)).toBilinForm.comp
       frameEquiv.toLinearMap frameEquiv.toLinearMap
   have hMatrix :
       localSymmetricTensorMatrix period hPeriod tensor patch coordinate =
@@ -147,28 +147,28 @@ theorem localSymmetricTensorCoordinateForm_apply
         exact Module.Basis.equiv_apply _ _ _ _
       simpa only [Pi.basisFun_apply] using hApply
     change
-      tensor.tensor (patch.coordinateMap coordinate)
+      tensor (patch.coordinateMap coordinate)
           (patch.frame coordinate first) (patch.frame coordinate second) =
         coordinateTensor (Pi.single first 1) (Pi.single second 1)
     dsimp only [coordinateTensor]
     rw [LinearMap.BilinForm.comp_apply]
     change
-      tensor.tensor (patch.coordinateMap coordinate)
+      tensor (patch.coordinateMap coordinate)
           (patch.frame coordinate first) (patch.frame coordinate second) =
-        tensor.tensor (patch.coordinateMap coordinate)
+        tensor (patch.coordinateMap coordinate)
           (frameEquiv (Pi.single first 1))
           (frameEquiv (Pi.single second 1))
     rw [hFirst, hSecond]
   rw [localSymmetricTensorCoordinateForm, hMatrix,
     Matrix.toBilin'_toMatrix']
   change
-    tensor.tensor (patch.coordinateMap coordinate)
+    tensor (patch.coordinateMap coordinate)
         (frameEquiv firstVector) (frameEquiv secondVector) = _
   rw [coordinateMap_mfderiv_eq_frameEquiv period hPeriod patch,
     coordinateMap_mfderiv_eq_frameEquiv period hPeriod patch]
 
 private theorem symmetricTensor_evaluation_eq_of_heq
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     {firstPoint secondPoint : EffectiveQuotient period hPeriod}
     (firstLeft firstRight :
       TangentSpace coverModelWithCorners firstPoint)
@@ -177,15 +177,15 @@ private theorem symmetricTensor_evaluation_eq_of_heq
     (hPoint : firstPoint = secondPoint)
     (hLeft : HEq firstLeft secondLeft)
     (hRight : HEq firstRight secondRight) :
-    tensor.tensor firstPoint firstLeft firstRight =
-      tensor.tensor secondPoint secondLeft secondRight := by
+    tensor firstPoint firstLeft firstRight =
+      tensor secondPoint secondLeft secondRight := by
   subst secondPoint
   rw [eq_of_heq hLeft, eq_of_heq hRight]
 
 /-- The coordinate form of any genuine tensor obeys the actual atlas
 transition law on arbitrary vectors. -/
 theorem localSymmetricTensorCoordinateForm_transition
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate firstVector secondVector : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
@@ -211,7 +211,7 @@ theorem localSymmetricTensorCoordinateForm_transition
 /-- On the genuine local inverse domain, first-chart coefficients are the
 pullback of the second-chart tensor by the varying transition derivative. -/
 theorem localSymmetricTensorCoefficient_eq_transitionPullback_of_mem
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate current : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
@@ -254,7 +254,7 @@ theorem localSymmetricTensorCoefficient_eq_transitionPullback_of_mem
 
 /-- Germ-level pullback identity for every genuine symmetric tensor. -/
 theorem localSymmetricTensorCoefficient_transitionPullback_eventuallyEq
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
@@ -287,7 +287,7 @@ theorem localSymmetricTensorCoefficient_transitionPullback_eventuallyEq
 
 /-- First coordinate derivative of a genuine tensor coefficient. -/
 def localSymmetricTensorDerivative
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4)
     (derivative first second : Index4) : Real :=
@@ -296,7 +296,7 @@ def localSymmetricTensorDerivative
       coordinate (Pi.single derivative 1)
 
 theorem localSymmetricTensorDerivative_contDiff
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (derivative first second : Index4) :
     ContDiff Real ∞ (fun coordinate =>
@@ -354,7 +354,7 @@ private theorem fderiv_tensor_matrix_entry_apply
 /-- The coordinate derivative of a symmetric tensor, bundled as a
 trilinear form. -/
 def localSymmetricTensorDerivativeTrilinearForm
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) :
     Vector4 →ₗ[Real] Vector4 →ₗ[Real] Vector4 →ₗ[Real] Real where
@@ -370,7 +370,7 @@ def localSymmetricTensorDerivativeTrilinearForm
 
 @[simp]
 theorem localSymmetricTensorDerivativeTrilinearForm_apply
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate direction firstVector secondVector : Vector4) :
     localSymmetricTensorDerivativeTrilinearForm period hPeriod tensor patch
@@ -384,7 +384,7 @@ theorem localSymmetricTensorDerivativeTrilinearForm_apply
 
 @[simp]
 theorem localSymmetricTensorDerivativeTrilinearForm_basis
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) (derivative first second : Index4) :
     localSymmetricTensorDerivativeTrilinearForm period hPeriod tensor patch
@@ -434,7 +434,7 @@ private theorem fderiv_continuousLinearMap_apply_const
 The two inhomogeneous second-transition-derivative terms are displayed
 explicitly; they will cancel against the Levi--Civita corrections. -/
 theorem localSymmetricTensorDerivative_transition
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
@@ -663,7 +663,7 @@ theorem localSymmetricTensorDerivative_transition
 /-- Local Levi--Civita covariant derivative of a symmetric tensor. -/
 def localSymmetricTensorCovariantDerivative
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4)
     (derivative first second : Index4) : Real :=
@@ -747,7 +747,7 @@ private theorem localLeviCivitaChristoffelApply_smul_right
 /-- Vector form of the local covariant derivative. -/
 def localSymmetricTensorCovariantDerivativeApply
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate direction firstVector secondVector : Vector4) : Real :=
   localSymmetricTensorDerivativeTrilinearForm period hPeriod tensor patch
@@ -764,7 +764,7 @@ def localSymmetricTensorCovariantDerivativeApply
 /-- The local covariant derivative as a genuine trilinear form. -/
 def localSymmetricTensorCovariantDerivativeTrilinearForm
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) :
     Vector4 →ₗ[Real] Vector4 →ₗ[Real] Vector4 →ₗ[Real] Real where
@@ -805,7 +805,7 @@ def localSymmetricTensorCovariantDerivativeTrilinearForm
 @[simp]
 theorem localSymmetricTensorCovariantDerivativeTrilinearForm_apply
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate direction firstVector secondVector : Vector4) :
     localSymmetricTensorCovariantDerivativeTrilinearForm period hPeriod metric
@@ -854,7 +854,7 @@ theorem trilinearFormPullback_apply
 @[simp]
 theorem localSymmetricTensorCovariantDerivativeApply_basis
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4)
     (derivative first second : Index4) :
@@ -895,7 +895,7 @@ theorem localSymmetricTensorCovariantDerivativeApply_basis
 rank-three tensor on every overlap of the canonical holonomic atlas. -/
 theorem localSymmetricTensorCovariantDerivativeApply_transition
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
@@ -979,7 +979,7 @@ theorem localSymmetricTensorCovariantDerivativeApply_transition
 coordinate presentations of one covariant rank-three tensor. -/
 theorem localSymmetricTensorCovariantDerivativeTrilinearForm_transition
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
@@ -1009,7 +1009,7 @@ theorem localSymmetricTensorCovariantDerivativeTrilinearForm_transition
 /-- Component form of the same overlap law. -/
 theorem localSymmetricTensorCovariantDerivative_transition
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
@@ -1036,7 +1036,7 @@ theorem localSymmetricTensorCovariantDerivative_transition
 
 theorem localSymmetricTensorCovariantDerivative_contDiff
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (derivative first second : Index4) :
     ContDiff Real ∞ (fun coordinate =>

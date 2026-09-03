@@ -2696,7 +2696,7 @@ private theorem fderiv_regularGeneralMetricC0Christoffel_zero_local
   exact hProductDerivative lower
 
 /-- Coordinate covariant derivative of one vector field along another. -/
-private def localCovariantDerivativeVectorField
+def localCovariantDerivativeVectorField
     (metric : SmoothGeneralLorentzMetric period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (first second : CoordinateVector → CoordinateVector)
@@ -2755,7 +2755,7 @@ private theorem localLeviCivitaChristoffelApply_add_right
 /-- Curvature computed with moving vector fields is the intrinsic coordinate
 Riemann vector.  The only second-derivative input is Mathlib's commutator
 identity for a `C²` vector field. -/
-private theorem localCovariantDerivativeVectorField_curvature
+theorem localCovariantDerivativeVectorField_curvature
     (metric : SmoothGeneralLorentzMetric period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : CoordinateVector)

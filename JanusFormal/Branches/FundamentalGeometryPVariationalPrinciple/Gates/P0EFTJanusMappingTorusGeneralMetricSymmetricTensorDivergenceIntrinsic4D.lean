@@ -63,7 +63,7 @@ local instance effectiveTangentT2
 /-- Intrinsic covector represented by one holonomic chart. -/
 def localSymmetricTensorDivergenceIntrinsicCovector
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate : Vector4) :
     TangentSpace coverModelWithCorners
@@ -77,7 +77,7 @@ def localSymmetricTensorDivergenceIntrinsicCovector
 @[simp]
 theorem localSymmetricTensorDivergenceIntrinsicCovector_frame
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (patch : SmoothHolonomicFrameChart4 period hPeriod)
     (coordinate vector : Vector4) :
     localSymmetricTensorDivergenceIntrinsicCovector period hPeriod metric tensor
@@ -172,7 +172,7 @@ private theorem heq_of_transportCovector_eq
 /-- Intrinsic local representatives agree on every overlap. -/
 theorem localSymmetricTensorDivergenceIntrinsicCovector_transition
     (metric : SmoothGeneralLorentzMetric period hPeriod)
-    (tensor : SmoothSymmetricCovariantTwoTensor period hPeriod)
+    (tensor : SmoothCovariantTwoTensor period hPeriod)
     (firstPatch secondPatch : SmoothHolonomicFrameChart4 period hPeriod)
     (firstCoordinate secondCoordinate : Vector4)
     (samePoint : firstPatch.coordinateMap firstCoordinate =
