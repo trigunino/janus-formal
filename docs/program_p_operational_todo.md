@@ -90,6 +90,20 @@ carte ultérieure les ferme. L'arriéré actif est formé uniquement des cartes
 dont l'état n'est pas `DONE`, des verrous globaux de la section 6 et des portes
 terminales de la section 7.
 
+### Point de reprise `T03` au 2026-09-05
+
+Les Gates577–580 ferment le transport des tests et l'annulation des dix
+résidus de divergence ; le défaut de Palatini est nul en jauge de volume
+canonique. Gate581 raccorde les deux blocs EH corrigés à l'opérateur métrique
+total au centre de la carte. Gate582 identifie chaque dérivée EH à volume
+fixé au pairage Ricci : le terme cosmologique s'annule exactement.
+
+Prochaine obligation : identifier la somme Ricci + interaction + Maxwell
+au pairage des deux résidus métriques lisses. La séparation est déjà prouvée
+dans `P0EFTJanusProgramPRegularGeneralMetricC2PairedMetricResidualTestSeparation4D`.
+Le recentrage hors `point = 0` et le raccord au système full-BRST à quatorze
+composantes restent à démontrer. `T03` reste ouverte ; compteur global `2/14`.
+
 ## 2. Protocole de travail
 
 Copier ce bloc avec l'identifiant d'une seule carte :
@@ -8509,6 +8523,1890 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : l'excitation effectivement stockée par l'action possède encore le
   facteur jacobien de frame et son terme dérivé explicité par Gate 425.
 - Porte terminale : aucune ; 304e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-MAXWELL-WEIGHTED-STRONG-PDE` — Gate 432
+
+- État : `DONE` (2026-09-03). Portée : `ACTION/POINTWISE/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMaxwellWeightedStrongPDE4D`.
+- Résultat : le coefficient Euler de l'excitation effectivement stockée dans
+  l'action est identifié à une PDE forte exacte : jacobien de frame fois
+  `√|det g|` fois divergence Maxwell relevée, plus la correction explicite de
+  dérivée du jacobien. Si ce jacobien est localement constant, l'annulation de
+  l'Euler stocké est équivalente à la PDE globale source-free de Gate 421.
+- Limite : la structure actuelle de `RegularGeneralLorentzMetric` autorise une
+  frame lisse arbitraire et n'impose pas cette constance. La correction doit
+  donc rester dans l'opérateur fort général ou être absorbée par une mesure
+  de référence compatible lors du théorème de Stokes.
+- Porte terminale : aucune ; 305e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-MAXWELL-WEIGHTED-EULER-BOUNDARY` — Gate 433
+
+- État : `DONE` (2026-09-03). Portée : `ACTION/LOCAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMaxwellWeightedEulerBoundary4D`.
+- Résultat : la première variation Maxwell locale de Gate 416 est réécrite
+  exactement comme l'appariement de la variation du potentiel avec le résidu
+  fort pondéré de Gate 432, moins la divergence du courant de bord.
+- Limite : il reste à transporter cette identité dans la fonctionnelle
+  canonique intégrée et à traiter le terme de bord par une hypothèse de
+  Stokes/domaine explicitement compatible.
+- Porte terminale : aucune ; 306e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-MAXWELL-CANONICAL-WEIGHTED-EULER-BOUNDARY` — Gate 434
+
+- État : `DONE` (2026-09-03). Portée : `ACTION/GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMaxwellCanonicalWeightedEulerBoundary4D`.
+- Résultat : le résidu fort pondéré moins la divergence de bord est recollé
+  par l'atlas canonique et coïncide point par point avec la densité de première
+  variation Maxwell. Son intégrale est donc exactement la première variation
+  intrinsèque, pour toute mesure de référence.
+- Limite : cette identité conserve honnêtement le terme de bord ; sa
+  suppression exige encore un théorème de Stokes ou une condition de bord
+  compatible avec le domaine variationnel choisi.
+- Porte terminale : aucune ; 307e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-GAUGE-MAXWELL-WEIGHTED-AUGMENTED-RESIDUAL` — Gate 435
+
+- État : `DONE` (2026-09-03). Portée : `FULL-SYSTEM/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeMaxwellWeightedAugmentedResidual4D`.
+- Résultat : les deux résidus Maxwell pondérés de Gate 434 remplacent
+  exactement l'ancienne coordonnée gauge du système fort à huit secteurs.
+  L'annulation de l'opérateur Euler--Lagrange complet est équivalente au
+  système augmenté contenant cette coordonnée forte pondérée et son bord.
+- Limite : la séparation PDE intrinsèque exige encore le pont vers les cartes
+  produit/coaire, puis un Stokes Maxwell et une classe de tests suffisamment
+  riche ; aucune annulation de bord n'est supposée ici.
+- Porte terminale : aucune ; 308e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-MAXWELL-PRODUCT-COAREA-EULER-BOUNDARY` — Gate 436
+
+- État : `DONE` (2026-09-03). Portée : `PRODUCT/GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMaxwellProductCoareaEulerBoundary4D`.
+- Résultat : le résidu combiné « appariement fort pondéré moins divergence de
+  bord » est réalisé dans le patch produit canonique à la coordonnée zéro. Il
+  est intégrable et son intégrale produit est transportée exactement vers
+  l'intégrale quotient de Gate 434 par la coaire déjà prouvée.
+- Limite : les deux termes ne sont volontairement pas séparés avant d'établir
+  leur intégrabilité propre et un vrai théorème/contrat de Stokes Maxwell.
+- Porte terminale : aucune ; 309e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-MAXWELL-PRODUCT-STOKES-WEAK-STRONG` — Gate 437
+
+- État : `DONE` (2026-09-03). Portée : `STOKES/WEAK-STRONG/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMaxwellProductStokesWeakStrong4D`.
+- Résultat : Gate436 est séparée en densité forte pondérée et divergence de
+  bord. Le contrat restant demande exactement leur intégrabilité et
+  l'annulation de l'intégrale du bord. Sous ce contrat, la stationnarité faible
+  Maxwell pour la mesure canonique équivaut à l'équation forte pondérée testée
+  sur le domaine produit.
+- Limite : le contrat Stokes doit encore être construit géométriquement ; la
+  séparation de tous les tests vers l'annulation pointwise reste distincte.
+- Porte terminale : aucune ; 310e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-GAUGE-MAXWELL-PRODUCT-STOKES-AUGMENTED` — Gate 438
+
+- État : `DONE` (2026-09-03). Portée : `FULL-SYSTEM/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeMaxwellProductStokesAugmentedResidual4D`.
+- Résultat : pour la mesure physique canonique et sous les deux contrats
+  Stokes ± explicites de Gate 437, la coordonnée gauge du système complet à
+  huit secteurs est exactement la somme des deux appariements Maxwell forts
+  pondérés sur le domaine produit, sans terme de bord.
+- Limite : il faut encore construire ces contrats Stokes à partir de la
+  géométrie produit et séparer la famille de tests pour obtenir l'annulation
+  pointwise de chaque résidu Maxwell.
+- Porte terminale : aucune ; 311e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-MAXWELL-SMOOTH-GAUGE-TEST-SEPARATION` — Gate 439
+
+- État : `DONE` (2026-09-03). Portée : `WEAK-STRONG/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMaxwellSmoothGaugeTestSeparation4D`.
+- Résultat : sur toute mesure finie à support topologique plein, tous les tests
+  Maxwell lisses séparent pointwise un résidu lisse à huit composantes. La
+  reconstruction de frame montre que ces tests proviennent tous de vraies
+  variations intrinsèques du potentiel ; un facteur de couplage non nul est
+  explicitement conservé. Le résultat est instancié pour le volume canonique.
+- Limite : le résidu pondéré de Gate 438 doit encore être globalisé en un champ
+  lisse de coefficients afin d'appliquer directement cette séparation aux deux
+  secteurs ± ; les contrats Stokes restent à construire.
+- Porte terminale : aucune ; 312e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-MAXWELL-GLOBAL-RESIDUAL-TEST-SEPARATION` — Gate 440
+
+- État : `DONE` (2026-09-03). Portée : `GLOBAL/WEAK-STRONG/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricMaxwellGlobalResidualTestSeparation4D`.
+- Résultat : le véritable covecteur global de divergence Maxwell est converti
+  en huit coefficients lisses sur la frame régulière. Son annulation pointwise
+  équivaut exactement à la PDE Maxwell forte globale. Pour les deux secteurs
+  indépendants, tous les tests intrinsèques lisses et deux couplages non nuls
+  séparent simultanément l'équation faible en les deux PDE fortes.
+- Limite : il reste à identifier le résidu pondéré issu de l'action de Gate 438
+  à ce résidu global et à construire géométriquement les deux contrats Stokes.
+- Porte terminale : aucune ; 313e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-MAXWELL-FRAME-FREE-ACTION-MEASURE-BRIDGE` — Gate 441
+
+- État : `DONE` (2026-09-03). Portée : `GLOBAL/ACTION/MESURE-MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMaxwellFrameFreeActionMeasureBridge4D`.
+- Résultat : le facteur de frame stocké par Candidate A est isolé en un
+  scalaire global lisse, quotient du volume de frame par le ratio de volume
+  métrique. L'action Maxwell historique contre le volume canonique est
+  exactement l'action frame-free contre le volume de la métrique, pondérée
+  par ce scalaire.
+- Limite : l'équation dérivée est donc `∇(wF)=0`; elle ne se réduit à
+  `∇F=0` que sous une condition supplémentaire sur `w`.
+- Porte terminale : aucune ; 314e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-WEIGHTED-GLOBAL-MAXWELL-RESIDUAL-SEPARATION` — Gate 442
+
+- État : `DONE` (2026-09-03). Portée : `GLOBAL/WEAK-FORT/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameWeightedGlobalMaxwellResidualTestSeparation4D`.
+- Résultat : l'équation authentiquement sélectionnée par l'action est
+  globalisée comme la divergence covariante lisse de `wF`. Ses huit
+  coefficients de frame sont séparés pointwise par toutes les variations
+  intrinsèques lisses. Les deux secteurs ± sont séparés simultanément avec
+  leurs deux couplages physiques explicitement non nuls.
+- Limite : il reste à raccorder la première variation à cet appariement par
+  un Stokes global relatif à la mesure métrique ; le contrat produit de
+  Gate437 omet la densité locale de la mesure canonique et ne peut pas servir
+  tel quel de constructeur général.
+- Porte terminale : aucune ; 315e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FULL-BRST-NONMINIMAL-SCOPE-DECISION` — Gate 443
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/FULL-BRST/SUPPORT-T03`.
+- Gate : `P0EFTJanusProgramPT03FullBRSTNonminimalScopeDecision4D`.
+- Résultat : l'invariance exacte de la cible physique le long des coordonnées
+  normal/ghost minimales prouve qu'elles sont effacées par projection, et non
+  annulées par une dynamique dérivée. La portée T03 est donc fixée au système
+  full-BRST : sa criticité équivaut au zéro d'un opérateur résiduel fixe à
+  quatorze composantes, dont on extrait les triplets non minimaux
+  difféomorphe et abélien forts.
+- Limite : les résidus métrique, LL et SpinC restent encore des résidus de
+  graphe augmentés, pas tous des PDE locales explicites ; l'atlas global et le
+  Stokes Maxwell pondéré restent à construire.
+- Porte terminale : aucune ; 316e support pour `T03`, compteur `2/14`.
+
+### `P-T03-TOTAL-STRONG-LL-EULER` — Gate 444
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/EULER-TOTAL/LL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLTotalEuler4D`.
+- Résultat : toute direction LL pure annule les huit blocs non-LL du système
+  physique concret. La restriction de l'opérateur d'Euler total est donc
+  exactement la première variation LL à trois slots. Pour le champ LL, sa
+  stationnarité totale équivaut à la PDE forte canonique déjà construite.
+- Limite : les deux slots LL auxiliaire et mesure restaient à séparer
+  pointwise ; les PDE métrique et SpinC totales restent ouvertes.
+- Porte terminale : aucune ; 317e support pour `T03`, compteur `2/14`.
+
+### `P-T03-TOTAL-STRONG-LL-AUX-MEASURE-EULER` — Gate 445
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/EULER-TOTAL/LL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLAuxMeasureTotalEuler4D`.
+- Résultat : l'énergie dérivée LL est promue en champ lisse. Le résidu fort
+  de la métrique auxiliaire est la moyenne PT explicite de `|DΦ|² a`, et le
+  résidu de mesure est `‖Φ‖²`. La mesure canonique de support plein et tous les
+  tests lisses séparent ces deux résidus ; leur annulation pointwise équivaut
+  exactement à la stationnarité de l'opérateur d'Euler total.
+- Limite : la totalité du secteur LL est désormais explicite ; restent les
+  PDE métrique et SpinC totales, l'atlas global et le Stokes Maxwell pondéré.
+- Porte terminale : aucune ; 318e support pour `T03`, compteur `2/14`.
+
+### `P-T03-TOTAL-STRONG-SPINC-EULER` — Gate 446
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/EULER-TOTAL/SPINC-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongSpinCTotalEuler4D`.
+- Résultat : une variation SpinC pure annule exactement les huit blocs
+  spectateurs du système physique. Le bloc matière restant est la forme du
+  graphe maximal ; les tests SpinC lisses la séparent grâce au cœur de Fourier
+  fini. La stationnarité totale est donc équivalente, mode par mode, à
+  `(2D + m²)ψ = 0`, sans reste couplé abstrait.
+- Limite : les PDE métriques totales, l'atlas global et le Stokes Maxwell
+  pondéré restent ouverts.
+- Porte terminale : aucune ; 319e support pour `T03`, compteur `2/14`.
+
+### `P-T03-TOTAL-STRONG-METRIC-EULER-REDUCTION` — Gate 447
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/EULER-TOTAL/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMetricTotalEulerReduction4D`.
+- Résultat : une variation métrique pure annule exactement les blocs matière,
+  LL, Robin et BV. L'opérateur d'Euler total se réduit donc sans reste aux
+  cinq variations métriques réelles : interaction, Einstein--Hilbert `±` et
+  Maxwell `±`.
+- Limite : l'identification locale pointwise et la séparation des cinq blocs,
+  l'atlas global et le Stokes Maxwell pondéré restent ouverts.
+- Porte terminale : aucune ; 320e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-METRIC-RESIDUAL-TEST-SEPARATION` — Gate 448
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/WEAK-FORT/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMetricResidualTestSeparation4D`.
+- Résultat : les tests métriques physiques indexés par les deux secteurs sont
+  identifiés à la paire tensorielle canonique. Le dualiseur de frame positif
+  prouve que leur pairing intégré sépare toute paire de résidus métriques
+  lisses, donc équivaut aux deux équations tensorielle pointwise nulles.
+- Limite : il reste à identifier les cinq gradients actifs de Gate447 à leur
+  paire de tenseurs locale explicite.
+- Porte terminale : aucune ; 321e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-METRIC-AFFINE-TARGET` — Gate 449
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/FORT/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMetricAffineTarget4D`.
+- Résultat : une direction métrique forte réalise exactement le test tensoriel
+  à deux secteurs. Sa ligne conserve tous les slots non métriques et produit
+  les tenseurs cibles affines `g₊+h₊+t k₊` et `g₋+h₋+t k₋`.
+- Limite : les dérivées explicites des cinq blocs métriques restent à établir.
+- Porte terminale : aucune ; 322e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-IDENTITY-ROOT-DERIVATIVE` — Gate 450
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/C²/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhysicalC2IdentityRootDerivative4D`.
+- Résultat : la branche de racine C² réellement utilisée par l'interaction
+  admet la dérivée de Fréchet inverse de Sylvester. Cette dérivée résout
+  exactement `XδX+δX X=δY`, sans contrat de dérivabilité ajouté.
+- Limite : il reste à composer cette dérivée avec la matrice relative, le
+  potentiel spectral et l'intégrale.
+- Porte terminale : aucune ; 323e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-MATRIX-INVERSE-DERIVATIVE` — Gate 451
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/C²/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhysicalC2FiniteMatrixInverseDerivative4D`.
+- Résultat : sur l'ouvert authentique des unités C², l'inverse matriciel
+  satisfait exactement `δ(A⁻¹)=-A⁻¹δA A⁻¹`. La preuve différentie
+  l'identité multiplicative déjà construite et n'ajoute aucun axiome.
+- Limite : la composition racine-inverse puis le sandwich relatif restent à
+  exposer.
+- Porte terminale : aucune ; 324e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-PAIRED-RELATIVE-MATRIX-DERIVATIVE` — Gate 452
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/C²/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedRelativeMatrixDerivative4D`.
+- Résultat : l'inverse de la racine, la matrice relative affine et le sandwich
+  complet `S(CS)` portent leurs dérivées de Fréchet exactes sur l'ouvert C²
+  authentique. La preuve applique explicitement les règles de chaîne et de
+  Leibniz, sans hypothèse de différentiabilité ajoutée.
+- Limite : il reste à dériver le potentiel spectral puis l'action intégrée.
+- Porte terminale : aucune ; 325e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-MATRIX-SPECTRAL-POTENTIAL-DERIVATIVE` — Gate 453
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/C²/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2MatrixSpectralPotentialDerivative4D`.
+- Résultat : le potentiel spectral polynomial C² possède sa dérivée de
+  Fréchet authentique. Son évaluation en chaque point est exactement la
+  covecteur matricielle explicite incluant trace, invariants et déterminant.
+- Limite : il reste à la composer avec la racine relative puis avec la densité
+  et l'intégrale.
+- Porte terminale : aucune ; 326e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-PAIRED-RELATIVE-ROOT-SPECTRAL-DERIVATIVE` — Gate 454
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/C²/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedRelativeRootSpectralDerivative4D`.
+- Résultat : sur le domaine Lorentz pairé authentique, la racine de la matrice
+  relative puis son potentiel spectral portent les dérivées composées exactes.
+  La valeur du second gradient est la covecteur matricielle explicite appliquée
+  à la variation de racine issue de Sylvester.
+- Limite : la multiplication par le volume fixe et l'intégrale restent à
+  dériver.
+- Porte terminale : aucune ; 327e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-PAIRED-INTERACTION-ACTION-DERIVATIVE` — Gate 455
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/C²/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedInteractionActionDerivative4D`.
+- Résultat : la densité Candidate-A à volume plus fixe et son action intégrée
+  possèdent leurs dérivées de Fréchet exactes. La première variation est
+  l'intégrale explicite de la covecteur spectrale appliquée à la variation de
+  racine relative.
+- Limite : ce gradient doit encore être tiré en arrière vers la direction
+  métrique physique puis identifié à une paire tensorielle locale.
+- Porte terminale : aucune ; 328e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-PAIRED-MINIMAL-PHYSICAL-INTERACTION-DERIVATIVE` — Gate 456
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/C²/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalInteractionDerivative4D`.
+- Résultat : la dérivée exacte de Gate 455 est tirée en arrière par la
+  projection relative continue sur tout le tangent minimal physique. Sur le
+  domaine ouvert admissible, elle est la dérivée de Fréchet du véritable bloc
+  Candidate-A et possède une formule intégrale explicite pour toute variation.
+- Limite : la covecteur obtenue doit encore être identifiée à la paire de
+  tenseurs locale des équations métriques plus/minus.
+- Porte terminale : aucune ; 329e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-PAIRED-STRONG-INTERACTION-DERIVATIVE` — Gate 457
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/C²/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongInteractionDerivative4D`.
+- Résultat : le gradient abstrait du bloc Candidate-A employé par l'opérateur
+  d'Euler fort est identifié à la covecteur spectrale exacte dans la même
+  topologie métrique/jauge/LL. Sa restriction aux tests métriques purs est une
+  intégrale explicite dépendant exactement de `test.plus` et `test.minus`.
+- Limite : cette intégrale matricielle doit encore être convertie en une paire
+  tensorielle locale et additionnée aux termes Einstein-Maxwell explicites.
+- Porte terminale : aucune ; 330e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-METRIC-INTERACTION-TOTAL-EULER` — Gate 458
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMetricInteractionTotalEuler4D`.
+- Résultat : dans l'équation d'Euler métrique totale, le terme Candidate-A
+  abstrait est remplacé par la dérivée spectrale exacte de Gate 457.
+- Limite : les deux gradients Einstein-Hilbert et les deux gradients Maxwell
+  métriques restent à expliciter et à convertir en résidus tensoriels locaux.
+- Porte terminale : aucune ; 331e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-EINSTEIN-HILBERT-DERIVATIVE` — Gate 459
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongEinsteinHilbertDerivative4D`.
+- Résultat : les deux gradients Einstein--Hilbert abstraits sont identifiés aux
+  dérivées de Fréchet des actions auxiliaires à volume fixé, tirées dans le
+  chart fort par la projection métrique.
+- Limite : leur identification locale à la forme tensorielle
+  `G + Λg` et le traitement des termes de bord restent à établir.
+- Porte terminale : aucune ; 332e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-METRIC-EINSTEIN-HILBERT-TOTAL-EULER` — Gate 460
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMetricEinsteinHilbertTotalEuler4D`.
+- Résultat : l'équation métrique totale contient désormais directement la
+  dérivée spectrale Candidate-A et les deux covecteurs Einstein--Hilbert à
+  volume fixé.
+- Limite : les deux gradients Maxwell métriques et les identifications
+  tensorielles locales restent à expliciter.
+- Porte terminale : aucune ; 333e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-MAXWELL-DERIVATIVE` — Gate 461
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMaxwellDerivative4D`.
+- Résultat : les deux blocs Maxwell réels ont leurs dérivées de Fréchet
+  conjointes métrique--jauge, avec les couplages non nuls conservés, dans le
+  chart fort utilisé par l'opérateur total.
+- Limite : la composante métrique doit encore être identifiée au tenseur de
+  Maxwell local ; la composante jauge possède déjà sa variation faible dédiée.
+- Porte terminale : aucune ; 334e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-METRIC-ALL-ACTION-DERIVATIVES` — Gate 462
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMetricAllActionDerivatives4D`.
+- Résultat : la première variation métrique totale est la somme explicite des
+  covecteurs Candidate-A, Einstein--Hilbert plus/minus et Maxwell plus/minus ;
+  aucun `actionGradient` abstrait ne subsiste.
+- Limite : les covecteurs EH/Maxwell doivent encore être identifiés aux
+  tenseurs locaux et les conditions de bord compatibles doivent être fermées.
+- Porte terminale : aucune ; 335e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GLOBAL-SMOOTH-EINSTEIN-COEFFICIENTS` — Gate 463
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricGlobalSmoothEinsteinCoefficients4D`.
+- Résultat : les seize coefficients du tenseur d'Einstein avec constante
+  cosmologique dans le repère régulier global sont des champs lisses ; dans
+  toute carte canonique, ils coïncident avec la formule intrinsèque locale.
+- Limite : leur reconstruction en tenseur symétrique global et leur
+  identification à la première variation Einstein--Hilbert restent à établir.
+- Porte terminale : aucune ; 336e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GLOBAL-SMOOTH-SYMMETRIC-EINSTEIN-TENSOR` — Gate 464
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricGlobalSmoothSymmetricEinsteinTensor4D`.
+- Résultat : le coframe dual régulier reconstruit un véritable tenseur
+  covariant symétrique global lisse ; ses coefficients sont la partie
+  symétrique de la formule intrinsèque locale `G + Λg`.
+- Limite : ce tenseur doit encore être identifié au covecteur de première
+  variation Einstein--Hilbert avec les termes de bord admissibles.
+- Porte terminale : aucune ; 337e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GLOBAL-SMOOTH-MAXWELL-STRESS-TENSOR` — Gate 465
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricGlobalSmoothMaxwellStressTensor4D`.
+- Résultat : le tenseur de stress Maxwell est reconstruit globalement depuis
+  `F = dA`, la métrique inverse et `F²`; sa symétrie et ses coefficients dans
+  le repère régulier sont prouvés.
+- Limite : son identification au covecteur de première variation Maxwell et
+  son facteur de couplage dans l'équation métrique totale restent à établir.
+- Porte terminale : aucune ; 338e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MAXWELL-STRESS-VARIATION-BRIDGE` — Gate 466
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricMaxwellStressVariationBridge4D`.
+- Résultat : la variation métrique locale de la densité Maxwell est exactement
+  l'appariement du tenseur de stress global de Gate465 avec la variation,
+  après relèvement de ses deux indices par la métrique inverse authentique.
+- Limite : il reste à transporter cette identité sous l'intégrale et dans les
+  deux covecteurs Maxwell couplés de l'équation métrique totale.
+- Porte terminale : aucune ; 339e support pour `T03`, compteur `2/14`.
+
+### `P-T03-INVARIANT-MAXWELL-STRESS-VARIATION` — Gate 467
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricInvariantMaxwellStressVariation4D`.
+- Résultat : les vecteurs métriquement duaux au corepère régulier sont
+  reconstruits et la formule matricielle de Gate466 est identifiée à
+  l'appariement tensoriel lorentzien invariant avec le stress Maxwell global ;
+  cette identité est transportée sous toute intégrale mesurée.
+- Limite : la dérivée de Fréchet de l'action Maxwell C2 intégrée et son
+  insertion avec les deux couplages dans l'équation métrique totale restent à
+  établir.
+- Porte terminale : aucune ; 340e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SCALAR-C2-ROOT-DERIVATIVE` — Gate 468
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhysicalScalarC2LocalRootDerivative4D`.
+- Résultat : la branche positive de racine scalaire sur le core C2 complet a
+  pour dérivée de Fréchet exacte `½·id` à l'unité.
+- Limite : il reste à calculer la dérivée du déterminant relatif, puis à
+  composer les deux résultats pour obtenir la variation de volume.
+- Porte terminale : aucune ; 341e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-FINITE-MATRIX-DETERMINANT-DERIVATIVE` — Gate 469
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhysicalC2FiniteMatrixDeterminantDerivative4D`.
+- Résultat : le déterminant polynomial des matrices finies sur le core C2
+  complet possède à l'identité la Fréchet-dérivée exacte donnée par la trace ;
+  l'identification est d'abord prouvée sur toute droite affine puis globalisée
+  par unicité de la dérivée.
+- Limite : il reste à composer cette formule avec la dérivée de la matrice
+  relative et avec la branche positive de racine pour obtenir la variation de
+  volume métrique complète.
+- Porte terminale : aucune ; 342e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GENERAL-METRIC-C2-VOLUME-DERIVATIVE` — Gate 470
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPGeneralMetricC2VolumeDerivative4D`.
+- Résultat : la chaîne authentique `I+g⁻¹h → det → √· → vol_g·`
+  possède à l'origine sa Fréchet-dérivée exacte. La densité obtenue est
+  `½ vol_g tr(g⁻¹h)` dans le core C2 complet, sans gradient supposé.
+- Limite : cette densité doit encore être transportée par l'intégrale continue
+  et injectée dans les variations complètes Einstein--Hilbert et Maxwell.
+- Porte terminale : aucune ; 343e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-INTEGRATED-VOLUME-DERIVATIVE` — Gate 471
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2IntegratedVolumeDerivative4D`.
+- Résultat : l'intégrale continue de la densité de Gate470 possède sa
+  Fréchet-dérivée exacte à l'origine. Elle vaut l'intégrale pointwise de
+  `½ vol_g tr(g⁻¹h)` pour toute direction du core métrique complet.
+- Limite : les actions EH et Maxwell existantes utilisent encore des familles
+  à volume fixé ; leur produit avec cette mesure variable reste à dériver.
+- Porte terminale : aucune ; 344e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-INVERSE-DERIVATIVE` — Gate 472
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2InverseMetricDerivative4D`.
+- Résultat : la matrice inverse métrique physique possède à l'origine sa
+  Fréchet-dérivée exacte dans le core C2 complet, avec la formule
+  `δg⁻¹ = -(g⁻¹h)g⁻¹` en repère régulier.
+- Limite : il reste à combiner cette dérivée avec celle du volume pour dériver
+  l'action Maxwell à métrique réellement variable et identifier son stress.
+- Porte terminale : aucune ; 345e support pour `T03`, compteur `2/14`.
+
+### `P-T03-C2-MAXWELL-MATRIX-CONTRACTION-DERIVATIVE` — Gate 473
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPC2MaxwellMatrixContractionDerivative4D`.
+- Résultat : la contraction Maxwell quadratique sur le core matriciel C2
+  complet possède partout sa Fréchet-dérivée canonique ; son application est
+  exactement la somme des deux insertions de la vitesse de métrique inverse.
+- Limite : cette dérivée doit encore être composée avec Gate472, puis avec la
+  variation de volume de Gate470 et l'intégrale.
+- Porte terminale : aucune ; 346e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-MAXWELL-PAIRING-DERIVATIVE` — Gate 474
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2MaxwellPairingDerivative4D`.
+- Résultat : le pairing Maxwell à deux composantes possède à l'origine sa
+  Fréchet-dérivée exacte sur le vrai core métrique C2. La formule substitue
+  explicitement `δg⁻¹ = -(g⁻¹h)g⁻¹` dans chacune des deux contractions.
+- Limite : il reste à appliquer la règle du produit au volume variable et à
+  transporter la densité obtenue sous l'intégrale.
+- Porte terminale : aucune ; 347e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-MAXWELL-DENSITY-DERIVATIVE` — Gate 475
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2MaxwellDensityDerivative4D`.
+- Résultat : la densité `vol_g F²` et son intégrale contre toute mesure finie
+  possèdent leur Fréchet-dérivée exacte à l'origine du core métrique C2. La
+  règle du produit combine effectivement Gate470 et Gate474.
+- Limite : l'expression C2 doit encore être évaluée pointwise et identifiée au
+  stress Maxwell invariant de Gates466--467, avec le facteur d'action `-1/4`.
+- Porte terminale : aucune ; 348e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-MAXWELL-DENSITY-POINTWISE` — Gate 476
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2MaxwellDensityPointwise4D`.
+- Résultat : l'évaluation pointwise de la dérivée de Gate475 est explicitée
+  en matrices réelles. Après la normalisation physique `-1/4`, elle coïncide
+  exactement avec `localMaxwellMetricVariation`, dont les deux vitesses sont
+  désormais dérivées des Gates470 et 472.
+- Limite : pour obtenir le tenseur de stress invariant, il reste à spécialiser
+  la direction C2 à l'image d'un tenseur covariant symétrique lisse.
+- Porte terminale : aucune ; 349e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-MAXWELL-STRESS-DERIVATIVE` — Gate 477
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2MaxwellStressDerivative4D`.
+- Résultat : sur chaque direction métrique C2 issue d'un tenseur covariant
+  symétrique lisse, la matrice relative est exactement `g⁻¹h`. La dérivée de
+  l'action Maxwell à métrique et volume variables coïncide alors, pointwise
+  puis sous toute mesure finie, avec le pairing du tenseur de stress Maxwell
+  invariant global.
+- Limite : la dérivée métrique totale doit encore agréger Einstein--Hilbert,
+  interactions, LL et SpinC sur ce même core, puis séparer ses tests.
+- Porte terminale : aucune ; 350e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-EINSTEIN-HILBERT-DERIVATIVE` — Gate 478
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbertDerivative4D`.
+- Résultat : la courbure scalaire, la densité Einstein--Hilbert à volume
+  variable et son action intégrée ont leurs Fréchet-dérivées exactes à
+  l'origine du vrai chart métrique C2. La dérivée de densité expose la règle
+  de Leibniz entre la demi-trace du volume et la variation de courbure.
+- Limite : la variation de courbure doit encore être identifiée pointwise au
+  tenseur d'Einstein plus la divergence de Palatini, puis le flux doit être
+  annulé par les conditions de bord communes.
+- Porte terminale : aucune ; 351e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SCALAR-CURVATURE-DERIVATIVE-POINTWISE` — Gate 479
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2ScalarCurvatureDerivativePointwise4D`.
+- Résultat : les coefficients inverses et de Ricci ont leurs dérivées exactes
+  sur le chart C2. La variation de courbure scalaire est séparée pointwise en
+  `δg⁻¹·Ric + g⁻¹·δRic`, c'est-à-dire le terme métrique et le terme Palatini.
+- Limite : il reste à identifier `δRic` à la divergence covariante de la
+  variation de connexion et à relier `δg⁻¹` à la direction tensorielle lisse.
+- Porte terminale : aucune ; 352e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-INVERSE-VELOCITY-POINTWISE` — Gate 480
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2InverseVelocityPointwise4D`.
+- Résultat : la vitesse inverse définie coefficient par coefficient dans
+  Gate479 est identifiée à l'évaluation pointwise de la Fréchet-dérivée C2 de
+  Gate472. Sur une direction tensorielle lisse, elle vaut exactement
+  `−(g⁻¹h)g⁻¹` dans le repère régulier.
+- Limite : il reste à combiner cette formule avec la demi-trace du volume et
+  le terme de Ricci pour obtenir la densité Einstein + Palatini.
+- Porte terminale : aucune ; 353e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-EINSTEIN-HILBERT-PALATINI-DENSITY` — Gate 481
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbertPalatiniDensity4D`.
+- Résultat : la variation C2 physique de la densité Einstein--Hilbert est
+  maintenant exactement la contraction avec le tenseur d'Einstein, plus le
+  terme de Palatini `g⁻¹·δRic`, pointwise puis sous l'intégrale. L'identité
+  `δvol = −vol/2 · g:δg⁻¹` est dérivée du vrai inverse métrique.
+- Limite : il reste à exprimer la vitesse de Ricci comme divergence covariante
+  de Palatini et à annuler son flux par les conditions de bord communes.
+- Porte terminale : aucune ; 354e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-RICCI-CONNECTION-VELOCITY` — Gate 482
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2RicciConnectionVelocity4D`.
+- Résultat : la vitesse de Ricci abstraite de Gate479 est désormais la
+  dérivée produit exacte de la connexion C2 concrète. La formule conserve le
+  terme d'anholonomie du repère régulier ; les vitesses de `Γ` et de sa
+  dérivée de repère sont de vraies Fréchet-dérivées au centre du chart.
+- Limite : il reste à convertir cette formule anholonome en divergence
+  covariante de Palatini puis en flux densitisé.
+- Porte terminale : aucune ; 355e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-ANHOLONOMIC-PALATINI` — Gate 483
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameAnholonomicPalatini4D`.
+- Résultat : l'identité de Palatini est prouvée dans un repère anholonome avec
+  la vraie relation de torsion `Γᵃ_bc − Γᵃ_cb = Cᵃ_bc`. Le terme de structure
+  conservé par Gate482 fournit exactement la correction nécessaire.
+- Limite : il faut encore prouver cette relation pour le jet C2 concret, puis
+  contracter et densitiser la divergence.
+- Porte terminale : aucune ; 356e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-TORSION-FREE-PALATINI-JET` — Gate 484
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2TorsionFreePalatiniJet4D`.
+- Résultat : l’atlas holonome total fournit, en chaque point du quotient, une
+  preuve géométrique que le Christoffel régulier concret vérifie
+  `Γᵃ_bc − Γᵃ_cb = Cᵃ_bc`. La vitesse de Ricci C2 est donc identifiée à sa
+  dérivée covariante de Palatini, sans hypothèse de jet fournie de l’extérieur.
+- Limite : la contraction inverse et l’identité de divergence densitisée
+  restent à construire pour ce jet concret.
+- Porte terminale : aucune ; 357e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-ANHOLONOMIC-PALATINI-DIVERGENCE` — Gate 485
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameAnholonomicPalatiniDivergence4D`.
+- Résultat : pour un jet régulier métriquement compatible, la contraction
+  inverse de la vitesse de Ricci de Palatini est exactement la divergence
+  covariante du vecteur de Palatini explicite. La preuve garde la torsion
+  anholonome correcte de Gate483.
+- Limite : il reste à munir le jet C2 de Gate484 de l’inverse et de sa
+  compatibilité métrique concrète, puis à densitiser cette divergence.
+- Porte terminale : aucune ; 358e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-METRIC-COMPATIBLE-PALATINI-JET` — Gate 486
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2MetricCompatiblePalatiniJet4D`.
+- Résultat : le jet C2 concret porte maintenant l’inverse métrique réel, sa
+  dérivée de repère et la compatibilité `∇g⁻¹ = 0`, toutes dérivées de la
+  métrique et de la connexion reconstruites. Ainsi le terme exact
+  `g⁻¹·δRic` de Gate481 est la divergence covariante du vecteur de Palatini.
+- Limite : il reste à transformer cette divergence en densité ordinaire et à
+  annuler son intégrale par le contrat Stokes/GHY global commun.
+- Porte terminale : aucune ; 359e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-EINSTEIN-HILBERT-COVARIANT-DIVERGENCE` — Gate 487
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/PDE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbertCovariantDivergence4D`.
+- Résultat : la dérivée exacte de la densité Einstein--Hilbert du vrai chart
+  C2 est maintenant `(vol/2κ)(G:δg⁻¹ + div V)`, pointwise et intégrée, avec
+  `V` construit par Gates482–486. Aucun résidu de courbure abstrait ne reste.
+- Limite : le flux `div V` doit encore être transporté dans les cartes
+  holonomes, densitisé puis annulé avec GHY sur le bord physique commun.
+- Porte terminale : aucune ; 360e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-PALATINI-GLOBAL-VECTOR` — Gate 488
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ATLAS/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PalatiniGlobalVector4D`.
+- Résultat : les coefficients de Palatini de Gate487 reconstruisent un vrai
+  vecteur tangent intrinsèque en chaque point. Dans toute carte holonome, son
+  représentant explicite est unique, se pousse exactement sur ce vecteur et
+  retrouve les mêmes coefficients dans la base régulière tirée.
+- Limite : la régularité spatiale de ce courant et l'identification de sa
+  divergence covariante à la divergence coordonnée restent à prouver avant
+  densitisation et Stokes/GHY.
+- Porte terminale : aucune ; 361e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-METRIC-PARAMETER-JET` — Gate 489
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothMetricParameterJet4D`.
+- Résultat : pour toute variation tensorielle lisse, les dérivées de Fréchet
+  paramétriques des coefficients métriques et de leurs jets spatiaux d'ordre
+  un et deux sont exactement les inclusions C0 de champs scalaires lisses.
+- Limite : il reste à assembler ces champs avec la vitesse de la métrique
+  inverse pour obtenir la vitesse de connexion lisse puis son jet spatial.
+- Porte terminale : aucune ; 362e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-INVERSE-VELOCITY` — Gate 490
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothInverseVelocity4D`.
+- Résultat : la vitesse de chaque coefficient de métrique inverse le long
+  d'une variation tensorielle lisse est le champ lisse explicite
+  `-g⁻¹(δg)g⁻¹`, exactement relié au `fderiv` du chart C2 complété.
+- Limite : assembler cette vitesse avec celle du Koszul inférieur pour
+  identifier la vitesse de Christoffel comme champ lisse.
+- Porte terminale : aucune ; 363e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-KOSZUL-VELOCITY` — Gate 491
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothKoszulVelocity4D`.
+- Résultat : le Koszul inférieur de fond et sa vitesse paramétrique sont
+  reconstruits comme champs lisses globaux ; la seconde est exactement le
+  `fderiv` du coefficient Koszul du chart C2.
+- Limite : relever l'indice avec la règle du produit pour identifier la
+  vitesse de Christoffel, puis contrôler son jet spatial.
+- Porte terminale : aucune ; 364e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-CHRISTOFFEL-VELOCITY` — Gate 492
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothChristoffelVelocity4D`.
+- Résultat : la règle du produit entre métrique inverse et Koszul inférieur
+  construit un champ lisse global `δΓ`; celui-ci est exactement la dérivée
+  de Fréchet du Christoffel complété dans toute direction tensorielle lisse.
+- Limite : identifier le `fderiv` du jet spatial de Christoffel à la dérivée
+  de cadre de ce champ, nécessaire à la divergence de Palatini lisse.
+- Porte terminale : aucune ; 365e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-INVERSE-SPATIAL-VELOCITY` — Gate 493
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothInverseSpatialVelocity4D`.
+- Résultat : le jet spatial stocké de la métrique inverse et sa vitesse de
+  paramètre sont réalisés par des champs lisses globaux, avec la règle exacte
+  du produit à trois facteurs.
+- Limite : construire les vitesses spatiales Koszul puis Christoffel et les
+  identifier à la dérivée de cadre du champ `δΓ`.
+- Porte terminale : aucune ; 366e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-KOSZUL-SPATIAL-VELOCITY` — Gate 494
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothKoszulSpatialVelocity4D`.
+- Résultat : le jet spatial de Koszul inférieur et sa vitesse paramétrique
+  sont des champs lisses globaux explicites ; la formule inclut le second jet
+  métrique et la dérivée des coefficients d'anholonomie.
+- Limite : relever ce jet avec la règle du produit complète, puis le comparer
+  à la dérivée de cadre du champ lisse `δΓ`.
+- Porte terminale : aucune ; 367e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-CHRISTOFFEL-SPATIAL-VELOCITY` — Gate 495
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothChristoffelSpatialVelocity4D`.
+- Résultat : le `fderiv` du jet spatial `e·Γ` est réalisé par un champ lisse
+  global avec les quatre termes exacts issus des vitesses de l'inverse, de
+  Koszul et de leurs jets spatiaux.
+- Limite : identifier ce champ à la dérivée de cadre de `δΓ`, puis construire
+  le courant et la divergence de Palatini lisses.
+- Porte terminale : aucune ; 368e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-CHRISTOFFEL-SPATIAL-COMPATIBILITY` — Gate 496
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothChristoffelSpatialCompatibility4D`.
+- Résultat : les jets spatiaux lisses de l'inverse, de Koszul et de Christoffel
+  sont identifiés aux dérivées de cadre effectives de leurs coefficients ; en
+  particulier le champ spatial à quatre termes est exactement `e·δΓ`.
+- Limite : construire le courant de Palatini lisse, puis sa divergence et son
+  raccord au terme de bord métrique.
+- Porte terminale : aucune ; 369e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-PALATINI-CURRENT` — Gate 497
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothPalatiniCurrent4D`.
+- Résultat : le courant de Palatini du jet métrique compatible est réalisé par
+  un véritable champ tangent lisse global, avec égalité exacte au courant
+  intrinsèque pointwise déjà présent dans la variation Einstein–Hilbert.
+- Limite : identifier sa divergence covariante à un champ scalaire lisse puis
+  établir le contrat Stokes/GHY sur le domaine physique à bord.
+- Porte terminale : aucune ; 370e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-PALATINI-DIVERGENCE` — Gate 498
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothPalatiniDivergence4D`.
+- Résultat : la dérivée de cadre du courant de Palatini et sa divergence
+  covariante sont des champs lisses explicites ; leur valeur est exactement le
+  scalaire de Palatini de la variation Einstein–Hilbert concrète.
+- Limite : transporter ce champ sur le domaine physique à bord et démontrer le
+  contrat Stokes/GHY correspondant.
+- Porte terminale : aucune ; 371e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-PALATINI-LOCAL-BOX-STOKES` — Gate 499
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/STOKES/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothPalatiniLocalBoxStokes4D`.
+- Résultat : le vrai courant de Palatini est tiré dans tout chart holonome,
+  densitisé par `sqrt |det g|` et prouvé lisse. Sa divergence de coordonnées
+  est intégrable sur toute boîte compacte et satisfait sans hypothèse le
+  théorème de Stokes de Bochner avec ses huit flux orientés.
+- Limite : identifier cette divergence locale à la divergence covariante lisse
+  de Gate498, puis construire le recollement des boîtes et le flux GHY externe.
+- Porte terminale : aucune ; 372e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-PALATINI-LOCAL-DIVERGENCE-DENSITY` — Gate 500
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothPalatiniLocalDivergenceDensity4D`.
+- Résultat : la règle du produit est démontrée pour le vrai courant : la
+  divergence ordinaire de `sqrt |det g| V` est exactement `sqrt |det g|`
+  fois la divergence covariante holonome, grâce à la trace de Christoffel et
+  à l'absence de torsion.
+- Limite : identifier la divergence holonome à la divergence en repère régulier.
+- Porte terminale : aucune ; 373e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-PALATINI-LOCAL-FRAME-DIVERGENCE` — Gate 501
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/GLOBAL/ANALYTIQUE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothPalatiniLocalFrameDivergence4D`.
+- Résultat : la dérivée covariante locale du vrai courant de Palatini est un
+  endomorphisme explicite. Sa trace holonome coïncide, par changement à la
+  base régulière, avec le champ lisse global de divergence de Gate498.
+- Limite : combiner Gates499–501 au scalaire EH, puis réaliser le flux GHY
+  externe et le recollement de l'atlas physique.
+- Porte terminale : aucune ; 374e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-PALATINI-LOCAL-EINSTEIN-HILBERT-STOKES` — Gate 502
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/STOKES/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothPalatiniLocalEinsteinHilbertStokes4D`.
+- Résultat : sur toute boîte compacte d'un chart holonome, l'intégrale du
+  vrai scalaire de Palatini EH pondéré par `sqrt |det g|` est exactement la
+  somme de ses huit flux de faces orientés.
+- Limite : sélectionner et recoller les faces internes, puis identifier les
+  faces physiques externes au terme GHY concret.
+- Porte terminale : aucune ; 375e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-PALATINI-CANONICAL-ATLAS-GLUING` — Gate 503
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/ATLAS/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothPalatiniCanonicalAtlasGluing4D`.
+- Résultat : les représentants holonomes de la divergence Palatini coïncident
+  sur tout recouvrement et l'atlas total canonique en fournit un représentant
+  égal au champ lisse global en chaque point du quotient.
+- Limite : recoller les intégrales de boîtes et identifier les faces physiques
+  externes au terme GHY concret.
+- Porte terminale : aucune ; 376e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-MAXWELL-LOCAL-BOX-STOKES` — Gate 504
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothMaxwellLocalBoxStokes4D`.
+- Résultat : le vrai courant de bord Maxwell de chaque composante est lisse,
+  sa divergence analytique est exactement celle de l'intégration par parties,
+  et Stokes l'identifie aux huit flux orientés de toute boîte compacte ; des
+  tests Dirichlet explicites annulent ces flux pour les deux composantes.
+- Limite : résultat local par boîte ; le recollement mesuré global et
+  l'identification aux deux contrats produit de Gate 437 restent à construire.
+- Porte terminale : aucune ; 377e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-MAXWELL-LOCAL-BOX-WEAK-STRONG` — Gate 505
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/PDE/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothMaxwellLocalBoxWeakStrong4D`.
+- Résultat : sur toute boîte compacte et pour tout test Maxwell lisse nul sur
+  ses faces, l'intégrale de la vraie première variation intrinsèque est
+  exactement l'intégrale de l'appariement au résidu Maxwell fort pondéré des
+  deux composantes, sans contrat Stokes supposé.
+- Limite : l'identité est locale dans une carte ; il reste à construire un
+  domaine global mesuré, ses tests compatibles et le recollement des cellules.
+- Porte terminale : aucune ; 378e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-GENERAL-METRIC-C2-SMOOTH-MAXWELL-LOCAL-DENSITY-WEAK-STRONG` — Gate 506
+
+- État : `DONE` (2026-09-04). Portée : `LOCAL/MESURE/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2SmoothMaxwellLocalDensityWeakStrong4D`.
+- Résultat : pour toute densité de Radon--Nikodym locale lisse positive
+  `ρ`, le courant Maxwell densitisé vérifie exactement
+  `div(ρJ)=ρ div(J)+dρ·J`. Stokes sur une boîte et les tests Dirichlet
+  annulent son flux ; la première variation tirée en coordonnées est donc
+  l'appariement au résidu fort corrigé par `dρ·J`.
+- Limite : il reste à construire `ρ` comme densité effective de la mesure
+  canonique dans chaque carte, puis à recoller ces identités ; Gate437 ne
+  peut pas ignorer ce terme lorsque `ρ` n'est pas constante.
+- Porte terminale : aucune ; 379e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-PHASED-NORMAL-ROTATION-FLOW` — Gate 507
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/FLOT/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhasedNormalRotationFlow4D`.
+- Résultat : trois rotations ambiantes mélangeant la coordonnée réfléchie avec
+  les trois directions spatiales sont explicites, complètes et conjuguées à
+  leur inverse par la réflexion. Deux phases de demi-fréquence, jamais nulles
+  simultanément, compensent exactement le signe acquis sur chaque lacet deck.
+- Limite : ces identités vivent encore sur le revêtement ambiant.
+- Porte terminale : aucune ; 380e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-PHASED-NORMAL-ROTATION-QUOTIENT` — Gate 508
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/QUOTIENT/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhasedNormalRotationQuotient4D`.
+- Résultat : les six flots normaux modulés commutent avec tout lacet deck et
+  descendent sur le tore de recollement en flots complets continus, additifs,
+  homéomorphes et plongements mesurables.
+- Limite : il reste à construire leurs générateurs tangents globaux et leur
+  contribution à une famille séparante de directions.
+- Porte terminale : aucune ; 381e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-PHASED-NORMAL-ROTATION-MEASURE` — Gate 509
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/MESURE/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhasedNormalRotationMeasure4D`.
+- Résultat : toute isométrie linéaire euclidienne préserve la mesure sphérique
+  canonique ; par produit biaisé et semi-conjugaison au domaine fondamental,
+  chacun des six flots normaux modulés préserve exactement le volume de Lorentz
+  canonique sur le quotient physique.
+- Limite : il reste à dériver l'intégration par parties infinitésimale et la
+  séparation pointwise avec les rotations spatiales et la direction temporelle.
+- Porte terminale : aucune ; 382e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-SPATIAL-ROTATION-QUOTIENT` — Gate 510
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/FLOT/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalSpatialRotationQuotient4D`.
+- Résultat : les trois rotations spatiales du revêtement descendent en actions
+  additives par homéomorphismes du quotient ; leur action jointe angle--point
+  est lisse dans l'atlas canonique global.
+- Limite : leur générateur doit encore être raccordé à l'opérateur différentiel
+  utilisé dans l'intégration par parties Maxwell.
+- Porte terminale : aucune ; 383e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-SPATIAL-ROTATION-MEASURE` — Gate 511
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/MESURE/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalSpatialRotationMeasure4D`.
+- Résultat : les trois rotations spatiales préservent la mesure sphérique sur
+  le domaine fondamental, puis exactement le volume de Lorentz canonique après
+  descente et semi-conjugaison au quotient physique.
+- Limite : l'identité infinitésimale d'intégration par parties reste à dériver.
+- Porte terminale : aucune ; 384e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-PHASED-NORMAL-ROTATION-SMOOTH` — Gate 512
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/LISSITÉ/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalPhasedNormalRotationSmooth4D`.
+- Résultat : l'action jointe paramètre--point de chacun des six flots normaux
+  modulés est lisse sur tout le quotient ; ces actions lisses conservent le
+  volume canonique pour chaque valeur du paramètre.
+- Limite : il reste à identifier leurs dérivées infinitésimales, puis à prouver
+  que ces six directions, les trois spatiales et le temps séparent les fibres.
+- Porte terminale : aucune ; 385e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-VOLUME-PRESERVING-FLOW-IPP` — Gate 513
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalVolumePreservingFlowIPP4D`.
+- Résultat : toute action réelle complète, lisse et préservant le volume
+  canonique produit un générateur tangent global lisse, une dérivée
+  directionnelle lisse et une IPP skew-adjointe exacte, sans bord supposé.
+- Limite : ce mécanisme doit encore être combiné à une famille séparant chaque
+  fibre tangentielle du quotient.
+- Porte terminale : aucune ; 386e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-IPP` — Gate 514
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D`.
+- Résultat : le temps, les trois rotations spatiales et les six rotations
+  normales modulées forment dix actions globales concrètes ; chacune satisfait
+  l'IPP canonique exacte pour tout champ lisse à valeurs hilbertiennes.
+- Limite : leur propriété de génération pointwise reste à démontrer avant de
+  remplacer totalement les contrats Stokes abstraits de Maxwell.
+- Porte terminale : aucune ; 387e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-EUCLIDEAN-SPAN` — Gate 515
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowEuclideanSpan4D`.
+- Résultat : au-dessus de tout point ambiant non nul, la direction radiale,
+  les trois rotations spatiales et les six rotations normales modulées
+  engendrent exactement l'espace euclidien de dimension quatre.
+- Limite : cette génération doit encore être transportée par le différentiel
+  radial puis par la projection vers chaque fibre tangentielle du quotient.
+- Porte terminale : aucune ; 388e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-RADIAL-GENERATOR` — Gate 516
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowRadialGenerator4D`.
+- Résultat : les dix actions sont relevées uniformément au cover ; le
+  différentiel projection-radial identifie leurs générateurs intrinsèques aux
+  dix vecteurs euclidiens explicites de Gate515.
+- Limite : il reste à transporter le span et à emballer ces sections dans le
+  contrat `SmoothD8Frame` utilisé par les espaces fonctionnels.
+- Porte terminale : aucune ; 389e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-FRAME` — Gate 517
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowFrame4D`.
+- Résultat : les dix générateurs définissent un `SmoothD8Frame` global concret,
+  lisse et pointwise générateur ; ses dix dérivées satisfont toutes l'IPP
+  exacte pour le volume lorentzien canonique.
+- Limite : il reste à convertir cette IPP de frame en contrat Stokes produit
+  pour les courants Maxwell et à fermer la séparation des tests.
+- Porte terminale : aucune ; 390e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-EUCLIDEAN-RECONSTRUCTION` — Gate 518
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowEuclideanReconstruction4D`.
+- Résultat : l'opérateur de frame formé par la direction radiale, les trois
+  rotations spatiales et les six rotations normales phasées vaut exactement
+  `‖x‖² id`; hors de l'origine, sa normalisation fournit donc un dual explicite
+  reconstruisant tout vecteur de `ℝ⁴`.
+- Limite : transporter ce dual sur le quotient comme coefficients lisses, puis
+  appliquer l'IPP de Gate517 au courant Maxwell global.
+- Porte terminale : aucune ; 391e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-SMOOTH-DUAL` — Gate 519
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowSmoothDual4D`.
+- Résultat : tout courant tangent lisse possède dix coefficients duaux globaux
+  lisses et une reconstruction exacte par les dix générateurs préservant le
+  volume canonique.
+- Limite : définir la divergence induite par ce cadre, prouver que son intégrale
+  s'annule, puis l'identifier au courant de bord Maxwell.
+- Porte terminale : aucune ; 392e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-DIVERGENCE-STOKES` — Gate 520
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowDivergenceStokes4D`.
+- Résultat : la reconstruction lisse définit une divergence globale intrinsèque
+  pour tout courant tangent ; elle est intégrable et son intégrale contre le
+  volume canonique s'annule exactement, sans bord artificiel de carte.
+- Limite : construire le courant tangent densitisé de Maxwell et identifier sa
+  divergence à la décomposition variationnelle faible/forte.
+- Porte terminale : aucune ; 393e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-DIVERGENCE-WEAK-STOKES` — Gate 521
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowDivergenceWeakStokes4D`.
+- Résultat : la divergence globale de Gate520 satisfait sa caractérisation
+  distributionnelle intrinsèque `∫ φ div(J) = -∫ dφ(J)` pour tout test scalaire
+  lisse, et conserve l'annulation de son intégrale totale.
+- Limite : construire le courant tangent densitisé de Maxwell et identifier sa
+  divergence à la variation faible/forte du secteur Maxwell.
+- Porte terminale : aucune ; 394e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-GLOBAL-MAXWELL-BOUNDARY-CURRENT` — Gate 522
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/STOKES/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameGlobalMaxwellBoundaryCurrent4D`.
+- Résultat : l'excitation Maxwell pondérée et toute variation de jauge lisse
+  définissent un courant tangent global densitisé ; le dual de cadre est lisse,
+  métriquement dual, et le courant satisfait les identités Stokes intégrale et
+  faible contre le volume canonique.
+- Limite : identifier sa divergence au terme de bord de la variation Maxwell et
+  son terme intérieur au résidu global densitisé.
+- Porte terminale : aucune ; 395e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-DENSITIZED-MAXWELL-RESIDUAL` — Gate 523
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalDensitizedMaxwellResidual4D`.
+- Résultat : le résidu global relevé `ρ_g ∇_μ(wF^{μν})` est un champ lisse à
+  huit composantes ; la positivité de `ρ_g` et la non-dégénérescence métrique
+  rendent son annulation pointwise équivalente à l'équation forte pondérée, et
+  les variations de jauge lisses la séparent pour tout couplage non nul.
+- Limite : identifier le pairing de ce résidu et la divergence du courant de
+  Gate522 à la dérivée première globale de l'action Maxwell.
+- Porte terminale : aucune ; 396e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-DENSITIZED-MAXWELL-PAIRING` — Gate 524
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalDensitizedMaxwellPairing4D`.
+- Résultat : le pairing faible canonique du résidu Maxwell densitisé est
+  explicitement l'intégrale de la contraction intrinsèque
+  `ρ_g ∇_μ(wF^{μν}) δA_ν` dans les huit composantes du repère régulier.
+- Limite : identifier cette contraction et la divergence du courant de Gate522
+  à la dérivée première authentique de l'action Maxwell.
+- Porte terminale : aucune ; 397e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-DIVERGENCE-LEIBNIZ` — Gate 525
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowDivergenceLeibniz4D`.
+- Résultat : la divergence globale sans bord de Gates520–521 satisfait
+  pointwise `div₀(fV) = f div₀(V) + df(V)` pour tout scalaire et courant lisses.
+- Limite : appliquer cette règle au courant Maxwell complet et identifier les
+  deux termes obtenus à la variation première authentique.
+- Porte terminale : aucune ; 398e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-DIVERGENCE-LINEAR` — Gate 526
+
+- État : `DONE` (2026-09-04). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowDivergenceLinear4D`.
+- Résultat : la divergence canonique est un morphisme additif et commute avec
+  toute somme finie de courants lisses, en complément de la règle de Leibniz.
+- Limite : décomposer le courant Maxwell en ses flux élémentaires et traiter
+  explicitement la correction d'anholonomie du repère régulier.
+- Porte terminale : aucune ; 399e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-CURRENT-DECOMPOSITION` — Gate 527
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellBoundaryCurrentDecomposition4D`.
+- Résultat : le courant Maxwell global est la somme exacte de ses quatre
+  composantes de repère, et sa divergence satisfait Leibniz terme à terme.
+- Porte terminale : aucune ; 400e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-ELEMENTARY-FLUX` — Gate 528
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellElementaryFlux4D`.
+- Résultat : le courant est décomposé en flux élémentaires indexés par
+  composante de jauge et deux indices de repère ; les dérivées de `δA` sont
+  exposées explicitement.
+- Porte terminale : aucune ; 401e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-ELEMENTARY-DIVERGENCE` — Gate 529
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellElementaryDivergence4D`.
+- Résultat : `div J` est scindée pointwise en pairing Euler des flux et terme
+  contenant toutes les dérivées de la variation.
+- Porte terminale : aucune ; 402e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-FLUX-DENSITY` — Gate 530
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellFluxDensity4D`.
+- Résultat : la densitisation annule exactement le poids de frame : chaque
+  flux vaut `volume métrique × F^{ij}` et reste antisymétrique.
+- Porte terminale : aucune ; 403e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-RAISED-PAIRING` — Gate 531
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellRaisedPairing4D`.
+- Résultat : le pairing Maxwell invariant est identifié exactement à la
+  contraction régulière entre courbure relevée et courbure covariante.
+- Porte terminale : aucune ; 404e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-FIRST-VARIATION-CURVATURE` — Gate 532
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellFirstVariationCurvature4D`.
+- Résultat : la vraie densité de première variation est
+  `-½ Σ (ρ_g wF^{ij})(dδA)_{ij}` dans tout repère régulier.
+- Porte terminale : aucune ; 405e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-CARTAN-VARIATION` — Gate 533
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellCartanVariation4D`.
+- Résultat : Cartan et l'antisymétrie donnent la variation authentique comme
+  opposé du terme dérivé plus la correction d'anholonomie explicite.
+- Porte terminale : aucune ; 406e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-VARIATIONAL-STOKES` — Gate 534
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellVariationalStokes4D`.
+- Résultat : construction concrète de l'identité
+  `δL = Euler_variationnel - div J`, intégrabilité de ses termes et annulation
+  globale de l'intégrale de `div J`; donc `δS = ∫ Euler_variationnel`.
+- Limite : identifier coefficient par coefficient cet Euler variationnel au
+  résidu covariant densitisé de Gate523.
+- Porte terminale : aucune ; 407e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-VARIATIONAL-RESIDUAL` — Gate 535
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellVariationalResidual4D`.
+- Résultat : l’Euler variationnel de Gate534 est représenté exactement par un
+  champ lisse global à huit composantes. Ses coefficients explicites combinent
+  la dérivée canonique du flux et la correction d’anholonomie du repère.
+- Limite : identifier ce résidu variationnel au résidu covariant densitisé de
+  Gate523.
+- Porte terminale : aucune ; 408e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-MAXWELL-VARIATIONAL-TEST-SEPARATION` — Gate 536
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/WEAK-FORT/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMaxwellVariationalTestSeparation4D`.
+- Résultat : la première variation Maxwell authentique est l’appariement au
+  résidu variationnel global. Pour tout couplage non nul, sa stationnarité
+  contre toutes les variations de jauge lisses équivaut exactement à
+  l’annulation pointwise des huit composantes.
+- Limite : identifier ce résidu à l’écriture covariante de Gate523 et le
+  raccorder au système Euler full-BRST total.
+- Porte terminale : aucune ; 409e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-GAUGE-CANONICAL-VARIATIONAL-RESIDUAL` — Gate 537
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/MAXWELL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongGaugeCanonicalVariationalResidual4D`.
+- Résultat : les deux champs Maxwell variationnels lisses de Gate535 remplacent
+  le résidu fonctionnel gauge dans le système Euler physique total. Avec les
+  deux couplages non nuls, leur pairing est séparant et l’annulation de
+  l’opérateur fort complet équivaut au système à huit secteurs ainsi augmenté,
+  sans contrat Stokes abstrait.
+- Limite : raccorder ce système physique au chart full-BRST et construire les
+  représentants locaux encore manquants du secteur métrique.
+- Porte terminale : aucune ; 410e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-LL-AUX-MEASURE-RESIDUAL` — Gate 538
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/LL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLAuxMeasureResidual4D`.
+- Résultat : les variations LL de la métrique auxiliaire et de la mesure sont
+  représentées par leurs champs lisses pointwise explicites. Leur appariement
+  intégral est séparant ; ils remplacent les deux résidus fonctionnels dans le
+  système physique fort déjà muni des résidus Maxwell canoniques.
+- Limite : expliciter encore les résidus métriques, du champ LL et SpinC, puis
+  raccorder le tout au chart full-BRST et à l’atlas physique global.
+- Porte terminale : aucune ; 411e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-SPINC-TOTAL-RESIDUAL` — Gate 539
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/SPINC-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongSpinCTotalResidual4D`.
+- Résultat : le résidu SpinC augmenté est remplacé dans le système physique par
+  le résidu spectral du covecteur SpinC total. Son annulation est exactement
+  l’équation mode par mode `(2D + m²)ψ = 0`.
+- Limite : expliciter les résidus métriques et le champ LL total, puis raccorder
+  le système au chart full-BRST et à l’atlas physique global.
+- Porte terminale : aucune ; 412e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-LL-FIELD-TOTAL-RESIDUAL` — Gate 540
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/LL-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLFieldTotalResidual4D`.
+- Résultat : le covecteur LL-field du système total est exactement l’appariement
+  intégral au résidu fort PT-symétrique pointwise. Le contrat Stokes géométrique
+  canonique élimine le flux sans hypothèse abstraite, et les tests lisses sont
+  séparants.
+- Limite : expliciter les deux résidus métriques, puis raccorder le système au
+  chart full-BRST et à l’atlas physique global.
+- Porte terminale : aucune ; 413e support pour `T03`, compteur `2/14`.
+
+### `P-T03-INVARIANT-EINSTEIN-VARIATION` — Gate 541
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricInvariantEinsteinVariation4D`.
+- Résultat : la somme des coefficients d’Einstein dans le repère régulier est
+  identifiée exactement à l’appariement tensoriel global invariant du tenseur
+  d’Einstein symétrique avec la variation métrique.
+- Limite : il reste à intégrer le flux Palatini et à raccorder cette variation
+  au bloc métrique du système physique total.
+- Porte terminale : aucune ; 414e support pour `T03`, compteur `2/14`.
+
+### `P-T03-EINSTEIN-HILBERT-INVARIANT-RESIDUAL` — Gate 542
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbertInvariantResidual4D`.
+- Résultat : la première variation Einstein–Hilbert à volume variable est
+  décomposée exactement en résidu d’Einstein invariant et divergence Palatini
+  lisse, pointwise puis sous l’intégrale.
+- Limite : aucune annulation globale du flux n’est encore déduite ; l’action
+  forte actuelle emploie encore son bloc métrique à volume fixé.
+- Porte terminale : aucune ; 415e support pour `T03`, compteur `2/14`.
+
+### `P-T03-EINSTEIN-HILBERT-LOCAL-INVARIANT-STOKES` — Gate 543
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbertLocalInvariantStokes4D`.
+- Résultat : sur toute boîte holonome régulière, l’intégrale de la première
+  variation est exactement la somme du bulk d’Einstein invariant et des huit
+  flux de face Palatini orientés.
+- Limite : le recollement des faces internes, les bords physiques et la
+  couverture finie globale restent à construire ; ce résultat local ne ferme
+  donc pas encore l’équation métrique totale.
+- Porte terminale : aucune ; 416e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-FINITE-HOLONOMIC-ATLAS-COVER` — Gate 544
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/ATLAS/T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalFiniteHolonomicAtlasCover4D`.
+- Résultat : la famille de cartes holonomes totales possède un sous-recouvrement
+  fini du quotient compact. Une sélection canonique non calculable est fixée,
+  et toutes ses transitions aux points de recouvrement sont de vrais
+  difféomorphismes locaux lisses.
+- Limite : cette couverture finie ne fournit encore ni partition de l’unité,
+  ni décomposition intégrale, ni annulation/recollement des flux Palatini.
+- Porte terminale : aucune ; 417e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-FINITE-HOLONOMIC-PARTITION` — Gate 545
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/ATLAS/STOKES-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalFiniteHolonomicPartition4D`.
+- Résultat : une partition de l’unité globalement lisse est construite sur
+  l’atlas holonome fini. Les poids somment exactement à un et le support fermé
+  de chaque poids reste dans l’image de sa carte sélectionnée.
+- Limite : il reste à transporter les densités et courants locaux dans ces
+  cartes, puis à démontrer le recollement/cancellation intégral Palatini.
+- Porte terminale : aucune ; 418e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-ERASED-RESIDUAL-STATUS` — Gate 546
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/STATUS-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongErasedResidualStatus4D`.
+- Résultat : les composantes normal et ghost difféomorphe du système physique
+  portent désormais un résidu singleton explicitement nommé « effacé
+  cinématiquement ». Leur covecteur nul vient exactement de l’oubli de ces
+  coordonnées par la cible minimale, pas d’une dynamique dérivée.
+- Limite : une formulation full-BRST demanderait de réintroduire ces champs
+  et leurs secteurs non minimaux dans une action qui ne les efface pas.
+- Porte terminale : aucune ; 419e support pour `T03`, compteur `2/14`.
+
+### `P-T03-EINSTEIN-HILBERT-FIXED-VARIABLE-VOLUME-DISCREPANCY` — Gate 547
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbertFixedVariableVolumeDiscrepancy4D`.
+- Résultat : les dérivées Einstein–Hilbert à volume stocké fixe et à
+  volume variable sont construites sur la même carte métrique, et leur
+  différence est exactement le lagrangien scalaire EH multiplié par la
+  dérivée du volume, pointwise puis sous l'intégrale.
+- Limite : cette identité diagnostique le bloc historique à volume fixe ; elle
+  ne supprime pas encore le flux Palatini de la vraie variation.
+- Porte terminale : aucune ; 420e support pour `T03`, compteur `2/14`.
+
+### `P-T03-EINSTEIN-HILBERT-FRAME-FREE-MEASURE-BRIDGE` — Gate 548
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/ACTION/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameEinsteinHilbertFrameFreeActionMeasureBridge4D`.
+- Résultat : un poids positif explicite, quotient du volume stocké par le
+  ratio de volume métrique, identifie exactement l'action EH frame-free
+  pondérée à l'action intrinsèque historique. Dans la jauge canonique de
+  volume, ce poids vaut un et les deux actions physiques coïncident.
+- Limite : la jauge canonique est une condition géométrique explicite, pas une
+  conséquence automatique de la structure actuelle de métrique régulière.
+- Porte terminale : aucune ; 421e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-METRIC-VOLUME-DIVERGENCE-STOKES` — Gate 549
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/STOKES/METRIC-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalMetricVolumeDivergenceStokes4D`.
+- Résultat : la divergence canonique relative au volume métrique est
+  construite par densitisation dans le repère global à dix flots. Son
+  intégrale globale est nulle sans contrat abstrait, et sa formule de Stokes
+  faible est prouvée pour tout test scalaire lisse.
+- Limite : il reste à identifier cette divergence intrinsèque à la divergence
+  Palatini calculée dans le repère régulier.
+- Porte terminale : aucune ; 422e support pour `T03`, compteur `2/14`.
+
+### `P-T03-EINSTEIN-HILBERT-WEIGHTED-PALATINI-RESIDUAL` — Gate 550
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbertWeightedPalatiniResidual4D`.
+- Résultat : la vraie dérivée EH pondérée est décomposée exactement en
+  bulk d'Einstein invariant, défaut de divergence Palatini/canonique et
+  dérivée directionnelle du poids. En jauge canonique de volume, le bulk pur
+  suit dès que ce défaut géométrique concret est nul.
+- Limite : l'annulation du défaut reste à prouver ; elle n'est ni supposée dans
+  le système physique ni remplacée par un contrat Stokes.
+- Porte terminale : aucune ; 423e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-DIVERGENCE-METRIC-INDEPENDENCE` — Gate 551
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/STOKES/METRIC-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowDivergenceMetricIndependence4D`.
+- Résultat : la divergence canonique à dix flots est indépendante de la
+  métrique régulière utilisée comme dualiseur redondant. La preuve compare
+  les deux formules de Stokes faibles, puis sépare leur différence continue
+  grâce au support total de la mesure canonique.
+- Limite : cette unicité faible ne l'identifie pas encore à la divergence
+  locale de Levi-Civita du courant Palatini.
+- Porte terminale : aucune ; 424e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-SMOOTH-METRIC-DIVERGENCE` — Gate 552
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/STOKES/METRIC-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowSmoothMetricDivergence4D`.
+- Résultat : la divergence à dix flots est construite avec tout dualiseur
+  lorentzien lisse, sans enveloppe de repère régulier. Sa formule de Stokes
+  faible est prouvée, puis l'unicité par support total identifie pointwise la
+  présentation par la métrique intrinsèque à toute présentation régulière.
+- Limite : la comparaison explicite avec la formule holonomique
+  `ρ⁻¹ ∂μ(ρ Vμ)` reste à établir.
+- Porte terminale : aucune ; 425e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-METRIC-VOLUME-DIVERGENCE-CALCULUS` — Gate 553
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/STOKES/METRIC-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalMetricVolumeDivergenceCalculus4D`.
+- Résultat : la divergence métrique canonique est désormais un morphisme
+  additif explicite et satisfait la règle de Leibniz pointwise après
+  densitisation par le ratio de volumes.
+- Limite : ce calcul intrinsèque ne prouve pas seul l'égalité à la trace de
+  la connexion dans un repère régulier.
+- Porte terminale : aucune ; 426e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-PALATINI-CANONICAL-DIVERGENCE-REDUCTION` — Gate 554
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFramePalatiniCanonicalDivergenceReduction4D`.
+- Résultat : le défaut global entre divergence Palatini et divergence
+  canonique est exactement la contraction du courant avec quatre scalaires
+  `Γᵃ_ab − div_g(e_b)`, indépendants de la variation métrique. Toutes les
+  dérivées des coefficients du courant s'annulent donc dans la comparaison.
+- Limite : il reste à annuler ces quatre résidus par la compatibilité du
+  volume métrique et de la connexion de Levi-Civita.
+- Porte terminale : aucune ; 427e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-LEVI-CIVITA-TRACE-REDUCTION` — Gate 555
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameLeviCivitaTraceReduction4D`.
+- Résultat : compatibilité métrique et absence de torsion donnent
+  algébriquement `Γᵃ_ab = 1/2 gⁱʲ e_b(gᵢⱼ) + Cᵃ_ab` dans le repère régulier.
+  La trace de connexion du résidu de Gate 554 est ainsi séparée en dérivée
+  logarithmique du volume métrique et trace d'anholonomie.
+- Limite : il reste à identifier la divergence canonique du vecteur de repère
+  à cette même somme par la loi de changement de volume et de repère.
+- Porte terminale : aucune ; 428e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-METRIC-VOLUME-DERIVATIVE` — Gate 556
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameMetricVolumeDerivative4D`.
+- Résultat : la dérivée directionnelle authentique du volume métrique stocké
+  satisfait globalement `e_b(volume_g) = volume_g · 1/2 gⁱʲ e_b(gᵢⱼ)`.
+  La preuve différentie `sqrt |det g|` sur la matrice de Gram du vrai repère
+  régulier et utilise sa non-dégénérescence pointwise.
+- Limite : la dérivée du volume explique la demi-trace métrique, mais la
+  divergence canonique du repère doit encore fournir la trace d'anholonomie.
+- Porte terminale : aucune ; 429e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-REFERENCE-DENSITY` — Gate 557
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/ATLAS/VOLUME-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalReferenceDensity4D`.
+- Résultat : la loi globale du rapport de volumes, jusque-là formulée dans
+  les cartes holonomes, est transportée au vrai repère régulier par sa matrice
+  de changement de base. Sous la jauge canonique, la densité du volume de
+  référence évaluée sur ce repère vaut exactement `1` pointwise.
+- Limite : cette normalisation algébrique doit encore être différentiée ou
+  intégrée pour identifier `div₀(e_b)` à la trace d'anholonomie.
+- Porte terminale : aucune ; 430e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-LOCAL-METRIC-DIVERGENCE` — Gate 558
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameLocalMetricDivergence4D`.
+- Résultat : dans chaque carte holonome, la divergence coordonnée du vrai
+  vecteur de repère est la trace invariante de `X ↦ ∇_X e_b`. La formule
+  pondérée par la densité métrique locale est prouvée égale à cette trace,
+  puis identifiée au champ global `regularFrameLeviCivitaTrace`.
+- Limite : il reste à effectuer le changement de densité depuis le volume
+  métrique vers le volume canonique et à recoller cette formule avec la
+  divergence globale utilisée par l'action.
+- Porte terminale : aucune ; 431e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-DENSITY-DIVERGENCE` — Gate 559
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalDensityDivergence4D`.
+- Résultat : une loi de changement de densité est prouvée directement par
+  Leibniz. Le rapport de volumes ajoute sa dérivée logarithmique à la
+  divergence canonique ; la jauge canonique et la formule de Gate 556
+  l'identifient à la demi-trace métrique. Après Gate 555, il reste exactement
+  la trace d'anholonomie du vrai repère régulier.
+- Limite : l'identité est encore exprimée dans chaque carte via la densité
+  canonique locale ; elle doit être identifiée à l'opérateur global
+  `canonicalTenFlowDivergence` utilisé dans la variation Palatini.
+- Porte terminale : aucune ; 432e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-DIVERGENCE-GLUING` — Gate 560
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/ATLAS/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalDivergenceGluing4D`.
+- Résultat : les représentants de divergence canonique de Gate 559 sont
+  prouvés identiques sur tout recouvrement de cartes. Leur recollement est le
+  champ global lisse `regularFrameCanonicalDivergence`, et l'atlas holonome
+  concret fournit une carte représentative passant par chaque point.
+- Limite : ce recollement pointwise ne prouve pas encore que la divergence
+  faible définie par les dix flots coïncide avec ce champ ; il faut relier la
+  mesure canonique à la formule locale, ou obtenir une caractérisation locale
+  équivalente des générateurs préservant le volume.
+- Porte terminale : aucune ; 433e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-GENERATOR-DIVERGENCE` — Gate 561
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/STOKES/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowGeneratorDivergence4D`.
+- Résultat : chacun des dix générateurs canoniques est empaqueté comme vrai
+  champ tangent lisse. L'IPP exacte des flots préservant le volume annule
+  l'intégrale de toute dérivée test le long de ce champ ; Stokes faible et le
+  support topologique total séparent alors les tests et prouvent que sa
+  divergence canonique est identiquement nulle point par point, pour tout
+  dualiseur métrique régulier.
+- Limite : cette annulation sur les générateurs ne suffit pas encore à
+  identifier la divergence locale recollée de Gate 560 sur un champ arbitraire
+  à coefficients non constants ; il faut aussi raccorder sa règle de Leibniz
+  et les dérivées de ces coefficients à la mesure canonique globale.
+- Porte terminale : aucune ; 434e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-TEN-FLOW-DIVERGENCE-CHARACTERIZATION` — Gate 562
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/STOKES/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalTenFlowDivergenceCharacterization4D`.
+- Résultat : tout champ tangent lisse est recollé exactement comme somme des
+  dix générateurs canoniques à coefficients globaux lisses. Par conséquent,
+  additivité, règle de Leibniz et annulation sur ces dix générateurs
+  caractérisent de façon unique la divergence canonique sur tous les champs ;
+  l'opérateur faible construit satisfait concrètement ces trois lois.
+- Limite : pour identifier le champ local recollé de Gate 560, il reste à
+  étendre sa formule aux champs tangents généraux, vérifier ses lois
+  additive/Leibniz, puis prouver son annulation sur les dix générateurs depuis
+  la densité locale canonique. La dernière obligation est le vrai raccord
+  mesure–coordonnées encore ouvert.
+- Porte terminale : aucune ; 435e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-DIVERGENCE-LAW` — Gate 563
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/ATLAS/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalDivergenceLaw4D`.
+- Résultat : le dual lisse du vrai frame régulier à quatre éléments étend la
+  trace d'anholonomie recollée à un opérateur global sur tout champ tangent
+  lisse. Les coefficients reconstruisent exactement le champ et toute dérivée
+  directionnelle ; l'opérateur est additif et satisfait la règle de Leibniz
+  pointwise attendue d'une divergence.
+- Limite : combinée à Gate 562, cette fermeture ramène toute l'identification
+  à la divergence faible à une seule famille finie de dix égalités : la
+  nouvelle divergence régulière doit s'annuler sur les dix générateurs des
+  flots canoniques. Cette annulation locale requiert encore le raccord exact
+  entre densité holonome canonique et mesure globale.
+- Porte terminale : aucune ; 436e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-DIVERGENCE-OBSTRUCTION` — Gate 564
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/ATLAS/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalDivergenceObstruction4D`.
+- Résultat : les coefficients canoniques des quatre vecteurs du frame
+  régulier sont prouvés être les symboles de Kronecker. L'opérateur de Gate
+  563 prend donc exactement la divergence recollée de Gate 560 sur chaque
+  vecteur de base. La caractérisation de Gate 562 fournit ensuite un théorème
+  global : l'égalité avec la divergence faible sur tout champ tangent est
+  équivalemment obtenue dès que dix résidus scalaires explicitement nommés
+  s'annulent sur les générateurs canoniques.
+- Limite : les dix annulations ne sont pas postulées ni déclarées acquises.
+  Elles restent le raccord géométrique concret entre les flots préservant la
+  mesure canonique et la formule locale recollée ; Gate 564 isole exactement
+  cette obligation sans circularité.
+- Porte terminale : aucune ; 437e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-METRIC-VOLUME-COMPATIBILITY` — Gate 565
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalMetricVolumeCompatibility4D`.
+- Résultat : en jauge de volume canonique, la divergence métrique de chacun
+  des quatre vecteurs du frame est la somme exacte de la demi-trace métrique
+  et de la divergence canonique recollée. Gate 557 identifie cette somme à la
+  trace de Levi–Civita. Sous les dix équations finies de Gate 564, les quatre
+  résidus de compatibilité, le défaut de Palatini pour toute variation lisse
+  et le reste de la dérivée Einstein–Hilbert pondérée s'annulent donc tous ;
+  la dérivée EH devient le pur pairing avec le tenseur d'Einstein invariant.
+- Limite : cette chaîne n'ajoute aucune hypothèse diffuse, mais dépend encore
+  des dix résidus explicitement nommés. Leur annulation exige le raccord local
+  entre la mesure canonique concrète et sa densité holonome.
+- Porte terminale : aucune ; 438e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-DIVERGENCE-LOCAL-FORMULA` — Gate 566
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/ATLAS/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalDivergenceLocalFormula4D`.
+- Résultat : tout champ tangent lisse admet dans chaque carte holonome son
+  développement exact dans le frame régulier, et la différentielle de la carte
+  renvoie ce développement sur le champ initial. La divergence algébrique
+  canonique est alors prouvée égale à la divergence coordonnée pondérée par le
+  facteur de volume métrique local. En particulier, chacun des dix résidus de
+  Gate 564 possède une telle formule locale dans une carte passant par tout
+  point du quotient physique.
+- Limite : Gate 566 identifie exactement l'équation locale à démontrer, mais ne
+  prouve pas encore son annulation. Il faut relier sans circularité le facteur
+  de volume holonome de ces cartes à la mesure canonique concrète préservée par
+  les dix flots.
+- Porte terminale : aucune ; 439e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-DIVERGENCE-LOCAL-STOKES-SEPARATION` — Gate 567
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/ANALYSIS/PDE/METRIC-T03`.
+- Gate : `P0EFTJanusProgramPRegularFrameCanonicalDivergenceLocalStokesSeparation4D`.
+- Résultat : pour toute densité lisse partout non nulle sur `R⁴`, la divergence
+  coordonnée pondérée de Gate 566 satisfait l'identité de Stokes exacte contre
+  tout test lisse à support compact. L'annulation de tous ces pairings faibles
+  implique ensuite l'annulation pointwise de la divergence, par le lemme
+  fondamental des distributions, continuité et support plein de Lebesgue.
+- Limite : la partie analytique locale est fermée, mais il faut encore transporter
+  géométriquement la mesure canonique préservée vers la densité métrique holonome
+  de chaque carte afin d'obtenir les hypothèses faibles pour les dix générateurs.
+- Porte terminale : aucune ; 440e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-STEREOGRAPHIC-EXACT-VOLUME` — Gate 568
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MESURE/COORDONNÉES-T03`.
+- Gate : `P0EFTJanusMappingTorusCanonicalStereographicExactVolume4D`.
+- Résultat : le changement de variables injectif sur une coquille radiale
+  donne une formule exacte de la mesure sphérique en coordonnées
+  stéréographiques. Sa densité de Lebesgue est l'intégrale radiale du
+  jacobien absolu du cône, normalisée par `15/4`. Cette égalité est étendue
+  au produit espace–temps puis transportée vers la mesure canonique du
+  quotient dans les cartes décalées, y compris à travers la couture.
+- Limite : il reste à évaluer ce jacobien et identifier la densité exacte
+  obtenue au facteur de volume métrique holonome, puis transporter cette
+  identité vers les cartes de Gate 566. Aucune annulation des dix résidus
+  n'est encore déclarée acquise.
+- Validation : Lean ciblé mono-thread en priorité haute, sans avertissement ;
+  `.olean` généré.
+- Porte terminale : aucune ; 441e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STEREOGRAPHIC-INVERSE-DIFFERENTIAL` — Gate 569
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/MÉTRIQUE/JACOBIEN-T03`.
+- Gate : `P0EFTJanusStereographicInverseDifferential4D`.
+- Résultat : différentielle exacte de l'inverse stéréographique, conformité
+  sur l'orthogonal au pôle et tangence à la sphère. Le Gram du cône radial
+  est diagonal par blocs, sans terme croisé. Pour la carte concrète de
+  Gate568, la matrice métrique spatiale est `c² I₃`, son déterminant `c⁶`
+  et sa densité positive `c³`, où `c = 4 / (‖x‖² + 4)` selon la
+  normalisation effective de Mathlib.
+- Limite : relier le déterminant du cône de Gate568 à ce Gram, intégrer le
+  facteur radial, puis transporter l'égalité mesure–densité vers les cartes
+  holonomes de Gate566. Les dix résidus restent ouverts.
+- Validation : Lean ciblé mono-thread, priorité haute, plafond Lean 4096 Mo
+  et réserve système surveillée de 8192 Mo ; `.olean` généré. Le lanceur
+  `scripts/run_lean_guarded.ps1` refuse les compilations concurrentes et
+  arrête uniquement son arbre de processus si le seuil mémoire est franchi.
+- Porte terminale : aucune ; 442e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STEREOGRAPHIC-CONE-METRIC-VOLUME` — Gate 570
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/MESURE/MÉTRIQUE-T03`.
+- Gate : `P0EFTJanusStereographicConeMetricVolume4D`.
+- Résultat : le Gram du cône concret est diagonal, de déterminant `r⁶ c⁶`.
+  Une base orthonormée compatible avec l'identification de Gate568 relie
+  ce Gram au carré du déterminant réellement intégré. Son jacobien absolu
+  est donc exactement `r³ c³` pour `r ≥ 0`. L'intégrale radiale sur `[1,2)`
+  vaut `15/4` et annule le facteur de normalisation de Gate568 : sa densité
+  mesurée est prouvée égale à la densité métrique `c³` de Gate569.
+  Cette densité métrique transporte exactement la mesure vers le quotient
+  dans les cartes stéréographiques décalées, y compris à travers la couture.
+- Limite : transporter cette égalité depuis les cartes stéréographiques vers
+  les cartes holonomes de Gate566, puis appliquer Stokes et la séparation de
+  Gate567 aux dix générateurs. Les dix annulations ne sont pas encore acquises.
+- Validation : Lean ciblé sans avertissement, mono-thread, priorité haute,
+  plafond 4096 Mo et réserve système surveillée de 8192 Mo ; `.olean` généré.
+  Pic observé de l'arbre Lean/Lake : 3677 Mo, mémoire libre minimale : 19045 Mo.
+- Porte terminale : aucune ; 443e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-STEREOGRAPHIC-COORDINATE-TRANSPORT` — Gate 571
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/COORDONNÉES/MESURE-T03`.
+- Gate : `P0EFTJanusCanonicalStereographicCoordinateTransport4D`.
+- Résultat : la mesure canonique de l'image de tout sous-ensemble mesurable
+  d'une bande stéréographique est exactement l'intégrale de la densité
+  métrique. Cette égalité est transportée par tout changement de coordonnées
+  différentiable et injectif sur un domaine local mesurable, dont l'image
+  reste dans la bande. Le vrai déterminant de sa différentielle intervient.
+  La congruence de la matrice lorentzienne produit `diag(c² I₃, -1)` donne
+  ensuite une formule entièrement métrique : l'intégrande est la racine
+  du déterminant absolu de la matrice transformée. Aucun inverse global
+  ni hypothèse d'égalité de mesures supplémentaire n'est requis.
+- Limite : construire ces changements de coordonnées pour les cartes
+  holonomes concrètes de Gate566 et identifier leur matrice métrique
+  intrinsèque à cette congruence. Puis appliquer Gate567 aux dix générateurs.
+  Cette instanciation géométrique et les dix annulations restent ouvertes.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve système surveillée de 8192 Mo.
+  Pic observé Lean/Lake : 3647 Mo ; mémoire libre minimale : 19114 Mo.
+- Porte terminale : aucune ; 444e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-HOLONOMIC-STEREOGRAPHIC-OVERLAP` — Gate 572
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/ATLAS/TRANSITION-T03`.
+- Gate : `P0EFTJanusCanonicalHolonomicStereographicOverlap4D`.
+- Résultat : l'inverse local de chaque `SmoothHolonomicFrameChart4`
+  construit une transition stéréographique → holonome sur un domaine ouvert.
+  La transition est lisse, injective et représente exactement les mêmes
+  points physiques. La couverture stéréographique concrète garantit qu'un
+  tel domaine contient un antécédent de toute coordonnée de toute carte
+  holonome. La règle de chaîne identifie aussi exactement les différentielles
+  des deux cartes sur ce domaine ; aucun contrat de transition n'est supposé.
+- Limite : établir la non-dégénérescence et l'inverse lisse du raccord dans
+  le sens holonome → stéréographique requis par Gate571, puis identifier
+  la métrique intrinsèque au produit stéréographique et transporter sa
+  densité. Les dix annulations de Gate566–567 restent ouvertes.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve système surveillée de 8192 Mo.
+  Pic observé Lean/Lake : 3839 Mo ; mémoire libre minimale : 18296 Mo.
+- Porte terminale : aucune ; 445e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-HOLONOMIC-STEREOGRAPHIC-INVERSE` — Gate 573
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/ATLAS/INVERSE-T03`.
+- Gate : `P0EFTJanusCanonicalHolonomicStereographicInverse4D`.
+- Résultat : le difféomorphisme local stéréographique existant fournit
+  l'inverse lisse du raccord de Gate572. Autour de chaque coordonnée de
+  chaque carte holonome, un domaine ouvert porte une transition injective
+  vers la bande mesurée. L'égalité des points physiques et la règle de
+  chaîne inverse sont prouvées sur ce domaine.
+- Limite : identifier le tenseur intrinsèque au produit stéréographique,
+  puis transporter sa densité dans les coordonnées holonomes. Les dix
+  annulations de Gate566–567 et la fermeture de `T03` restent ouvertes.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve système surveillée de 8192 Mo.
+  Pic observé Lean/Lake : 3651 Mo ; mémoire libre minimale : 18447 Mo.
+- Porte terminale : aucune ; 446e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-STEREOGRAPHIC-INTRINSIC-METRIC` — Gate 574
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/ATLAS/INTRINSIC-METRIC-T03`.
+- Gate : `P0EFTJanusCanonicalStereographicIntrinsicMetric4D`.
+- Résultat : la carte stéréographique décalée possède un relèvement explicite
+  au revêtement. La dérivée de son immersion ambiante et la descente du
+  tenseur donnent exactement `c² ⟪u_spatial,v_spatial⟫ - u_t v_t`, avec
+  `c = 4/(‖x‖²+4)`. Le raccord inverse Gate573 identifie alors tous les
+  coefficients de `localMetricMatrix` intrinsèque à ce produit transporté.
+  Aucune hypothèse d'accord métrique n'est ajoutée.
+- Limite : réindexer les bases pour identifier les déterminants, puis
+  appliquer le transport exact de mesure et obtenir les dix annulations.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve système surveillée de 8192 Mo.
+  Pic observé Lean/Lake : 3675 Mo ; mémoire libre minimale : 18510 Mo.
+- Porte terminale : aucune ; 447e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-HOLONOMIC-EXACT-COORDINATE-VOLUME` — Gate 575
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/ATLAS/EXACT-MEASURE-T03`.
+- Gate : `P0EFTJanusCanonicalHolonomicExactCoordinateVolume4D`.
+- Résultat : l'identification linéaire des coordonnées holonomes, avec le
+  temps en premier, préserve exactement Lebesgue. Gate571 se transporte
+  ainsi vers chaque voisinage concret de Gate573 : tout sous-ensemble
+  mesurable a pour volume physique l'intégrale du déterminant métrique
+  stéréographique transporté, sans constante de comparaison ni hypothèse
+  d'égalité des mesures.
+- Limite : identifier ce déterminant à celui de la matrice intrinsèque
+  Gate574, puis déduire les dix annulations faibles et pointwise.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve système surveillée de 8192 Mo.
+  Pic observé Lean/Lake : 3659 Mo ; mémoire libre minimale : 18539 Mo.
+- Porte terminale : aucune ; 448e support pour `T03`, compteur `2/14`.
+
+### `P-T03-CANONICAL-HOLONOMIC-INTRINSIC-METRIC-VOLUME` — Gate 576
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/ATLAS/INTRINSIC-MEASURE-T03`.
+- Gate : `P0EFTJanusCanonicalHolonomicIntrinsicMetricVolume4D`.
+- Résultat : la base produit stéréographique et la base holonome diffèrent
+  par la permutation du temps. L'égalité des matrices réindexées et de
+  leurs déterminants identifie la densité exacte Gate575 au
+  `localMetricVolumeFactor` intrinsèque. Autour de toute coordonnée de toute
+  carte holonome, un ouvert injectif vérifie, pour chaque sous-ensemble
+  mesurable, l'égalité exacte entre son volume physique et l'intégrale de
+  ce facteur contre Lebesgue. Le raccord métrique–mesure de Gate566–567
+  est ainsi prouvé sans hypothèse de comparaison supplémentaire.
+- Limite : pousser les tests lisses compacts locaux au quotient par la
+  carte, les prolonger par zéro, puis transporter leurs dérivées et leurs
+  intégrales réelles. La nullité globale est disponible dans
+  `canonicalTenFlowVectorField_testDerivative_integral_eq_zero` ; la
+  séparation doit utiliser la version sur ouvert de Mathlib, car les
+  voisinages mesurés sont locaux. Le changement de normalisation
+  Lebesgue/`Measure.addHaar` ne concerne que la nullité des intégrales.
+  Les dix annulations et la fermeture de `T03` restent ouvertes.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve système surveillée de 8192 Mo.
+  Pic observé Lean/Lake : 3898 Mo ; mémoire libre minimale : 18296 Mo.
+  Audit Program P/P-F et vérification des diffs : réussis.
+- Porte terminale : aucune ; 449e support pour `T03`, compteur `2/14`.
+
+### `P-T03-HOLONOMIC-COMPACT-TEST-PUSHFORWARD` — Gate 577
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/GLOBAL/TEST-TRANSPORT-T03`.
+- Gate : `P0EFTJanusHolonomicCompactTestPushforward4D`.
+- Résultat : tout test lisse compact supporté dans la cible de l'inverse
+  holonome se pousse en un scalaire global lisse par prolongement par zéro.
+  Son support reste dans l'image compacte du support initial. Son advection
+  se tire exactement en `fderiv test` appliqué au champ coordonné ; elle
+  s'annule hors de l'image du support, y compris à la frontière de la carte.
+- Limite : transporter l'intégrale réelle de cette advection et appliquer
+  la séparation sur le voisinage mesuré.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve surveillée de 8192 Mo.
+  Pic Lean/Lake : 3873 Mo ; mémoire libre minimale : 17823 Mo.
+- Porte terminale : aucune ; 450e support pour `T03`, compteur `2/14`.
+
+### `P-T03-HOLONOMIC-LOCAL-DIVERGENCE-OPEN-SEPARATION` — Gate 578
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/ANALYSIS/SEPARATION-T03`.
+- Gate : `P0EFTJanusHolonomicLocalDivergenceOpenSeparation4D`.
+- Résultat : les tests lisses compacts supportés dans un ouvert suffisent
+  à séparer la divergence pondérée sur cet ouvert. La nullité de leurs
+  intégrales d'advection contre Lebesgue implique la nullité pointwise de
+  la divergence ; Stokes Gate567 et la séparation locale sont réutilisés.
+  La normalisation de `Measure.addHaar` ne change pas la nullité intégrale.
+- Limite : fournir les pairings locaux nuls des dix générateurs canoniques.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve surveillée de 8192 Mo.
+  Pic Lean/Lake : 3837 Mo ; mémoire libre minimale : 17888 Mo.
+- Porte terminale : aucune ; 451e support pour `T03`, compteur `2/14`.
+
+### `P-T03-HOLONOMIC-INTRINSIC-VOLUME-INTEGRAL-TRANSPORT` — Gate 579
+
+- État : `DONE` (2026-09-05). Portée : `LOCAL/MEASURE/REAL-INTEGRAL-T03`.
+- Gate : `P0EFTJanusHolonomicIntrinsicVolumeIntegralTransport4D`.
+- Résultat : les volumes exacts Gate576 donnent le pushforward de la mesure
+  coordonnée restreinte, puis le transport des intégrales réelles de tout
+  intégrande continu avec le facteur métrique intrinsèque. Le voisinage
+  peut être choisi dans la cible de l'inverse holonome de Gate577 ; aucune
+  injectivité de la carte hors de ce voisinage n'est supposée.
+- Limite : appliquer ce transport aux tests de Gate577 puis Gate578 aux
+  dix générateurs pour supprimer l'hypothèse finie de Gate565.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve surveillée de 8192 Mo.
+  Pic Lean/Lake : 3685 Mo ; mémoire libre minimale : 18004 Mo.
+- Porte terminale : aucune ; 452e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-GENERATORS-DIVERGENCE-ZERO` — Gate 580
+
+- État : `DONE` (2026-09-05). Portée : `GLOBAL/STOKES/EINSTEIN-HILBERT-T03`.
+- Gate : `P0EFTJanusRegularFrameCanonicalGeneratorsDivergenceZero4D`.
+- Résultat : le transport des tests et de leurs intégrales, puis la
+  séparation locale, annulent les dix résidus de Gate564 en jauge de volume
+  canonique. Les divergences régulière et canonique sont égales sur tout
+  champ lisse. Le défaut de Palatini est donc nul pour toute variation
+  métrique lisse, et la dérivée EH à volume variable devient exactement le
+  pairage avec le tenseur d'Einstein invariant. L'hypothèse `hGenerators`
+  de Gate565 est supprimée par une preuve ; la condition géométrique
+  `RegularGeneralMetricInCanonicalVolumeGauge` est conservée.
+- Limite : les deux blocs EH du résidu métrique total existant restent à
+  volume fixé. Il faut y conserver la correction de volume de Gate547 lors
+  du raccord à cette formule invariante, puis identifier/séparer les résidus
+  métriques totaux et les raccorder au système full-BRST à quatorze composantes.
+  La jauge au point de base ne prouve pas sa conservation sur les variations.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve surveillée de 8192 Mo.
+  Pic Lean/Lake : 3878 Mo ; mémoire libre minimale : 17836 Mo.
+  Audit Program P/P-F : réussi ; aucun trou de preuve dans les nouveaux modules.
+- Porte terminale : aucune ; 453e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-METRIC-INVARIANT-EINSTEIN-VOLUME-CORRECTION` — Gate 581
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/PAIRED/METRIC-T03`.
+- Gate : `P0EFTJanusPairedStrongMetricInvariantEinsteinVolumeCorrection4D`.
+- Résultat : au centre de la carte forte, les deux dérivées EH à volume
+  fixé sont leurs pairages Einstein invariants moins la correction exacte
+  de volume de Gate547. Cette identité est raccordée à l'opérateur Euler
+  total dans une direction métrique authentique ; les contributions
+  d'interaction et de Maxwell sont conservées.
+- Hypothèses : compatibilité des deux bases et jauge de volume canonique
+  aux seules métriques de base. Aucune conservation de jauge sur la variation.
+- Limite : résultat à `point = 0`. Il reste à identifier la somme au pairage
+  des deux résidus métriques ponctuels (séparation déjà disponible), puis
+  démontrer le recentrage et raccorder le système full-BRST.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve surveillée de 8192 Mo.
+  Pic Lean/Lake : 3933 Mo ; mémoire libre minimale : 17759 Mo.
+- Porte terminale : aucune ; 454e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FIXED-VOLUME-EINSTEIN-HILBERT-RICCI-PAIRING` — Gate 582
+
+- État : `DONE` (2026-09-05). Portée : `BASE/METRIC/EXACT-VOLUME-T03`.
+- Gate : `P0EFTJanusFixedVolumeEinsteinHilbertRicciPairing4D`.
+- Résultat : la correction de volume est l'intégrale du lagrangien scalaire
+  multiplié par la demi-trace métrique de la variation, sans jauge supposée.
+  Sous jauge canonique de la métrique de base, sa soustraction du pairage
+  Einstein laisse exactement l'intégrale de `(1/(2κ)) δg⁻¹ : Ric` contre
+  le volume métrique. Les termes en courbure scalaire et en constante
+  cosmologique s'annulent. La dérivée réelle à volume fixé est ainsi
+  identifiée à ce pairage, dont la définition ne contient pas `Λ`.
+- Limite : cette identification au point de base ne fournit pas encore
+  les deux résidus métriques totaux de l'action forte. Il faut y réunir les
+  contributions d'interaction et de Maxwell, utiliser la séparation déjà
+  disponible, puis démontrer le recentrage et le raccord full-BRST.
+- Validation : Lean ciblé sans avertissement, `.olean` généré ; mono-thread,
+  priorité haute, plafond 4096 Mo et réserve surveillée de 8192 Mo.
+  Pic Lean/Lake : 3883 Mo ; mémoire libre minimale : 17773 Mo.
+  Façade raccordée par import et contrôlée par l'audit, sans compilation globale.
+- Porte terminale : aucune ; 455e support pour `T03`, compteur `2/14`.
 
 ## 7. Les 14 portes terminales fixes
 

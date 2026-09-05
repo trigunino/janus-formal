@@ -93,7 +93,9 @@ theorem regularIntrinsicMaxwellEulerCoefficient_eq_weightedStrongResidual
   rw [regularMaxwellEulerCoefficient_eq_jacobian_mul_holonomic_add_correction,
     regularHolonomicMaxwellEulerCoefficient_eq_volume_mul_raisedDivergence]
   simp_rw [← regularLocalMaxwellDivergenceComponent_eq_coefficient]
-  rfl
+  unfold regularFrameMaxwellStrongResidual
+    regularFrameMaxwellJacobianCorrection
+  ring
 
 /-- If the frame Jacobian is locally constant at a point, the stored-action
 Euler equations there are equivalent to the intrinsic Maxwell equations. -/

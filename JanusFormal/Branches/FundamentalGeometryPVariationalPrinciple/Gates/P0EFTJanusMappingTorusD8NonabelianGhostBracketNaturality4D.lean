@@ -261,7 +261,7 @@ theorem coverRadialMap_isLocalDiffeomorph :
     (nonzeroInclusion_isLocalDiffeomorph
       (coverRadialDiffeomorph period hPeriod point))
 
-private def euclideanSpatialRotation (axis : Fin 3) :
+def euclideanSpatialRotation (axis : Fin 3) :
     EuclideanR4 →L[Real] EuclideanR4 :=
   (EuclideanSpace.equiv (Fin 4) Real).symm.toContinuousLinearMap.comp
     ((ambientSpatialRotation axis).comp
@@ -324,7 +324,7 @@ private theorem coverRadialMap_comp_rotationCurve
   simp only [coverSpatialRotationCurve, coverSpatialRotationFlow]
   rw [sphereSpatialRotationFlow_coe]
 
-private theorem coverRadialMap_mfderiv_rotation
+theorem coverRadialMap_mfderiv_rotation
     (axis : Fin 3) (point : EffectiveCover period hPeriod) :
     mfderiv coverModelWithCorners 𝓘(Real, EuclideanR4)
         (coverRadialMap period hPeriod) point

@@ -23,6 +23,8 @@ namespace JanusFormal
 namespace P0EFTJanusMappingTorusGlobalGeneralMetricDeDonder4D
 
 set_option autoImplicit false
+set_option maxHeartbeats 2000000
+set_option synthInstance.maxHeartbeats 200000
 noncomputable section
 
 open scoped Manifold ContDiff
@@ -458,6 +460,8 @@ theorem globalGeneralMetricDeDonder_add
       globalGeneralMetricDeDonder period hPeriod metric first +
         globalGeneralMetricDeDonder period hPeriod metric second := by
   unfold globalGeneralMetricDeDonder generalMetricDeDonderTraceCorrection
+  have hTensor : (first + second).tensor = first.tensor + second.tensor := rfl
+  rw [hTensor]
   rw [globalDivergence_add, traceDifferential_add]
   module
 
@@ -468,6 +472,8 @@ theorem globalGeneralMetricDeDonder_smul
     globalGeneralMetricDeDonder period hPeriod metric (scalar • tensor) =
       scalar • globalGeneralMetricDeDonder period hPeriod metric tensor := by
   unfold globalGeneralMetricDeDonder generalMetricDeDonderTraceCorrection
+  have hTensor : (scalar • tensor).tensor = scalar • tensor.tensor := rfl
+  rw [hTensor]
   rw [globalDivergence_smul, traceDifferential_smul]
   module
 

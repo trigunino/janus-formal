@@ -321,6 +321,13 @@ def ambientSpatialRotation (axis : Fin 3) : R4Point →L[Real] R4Point :=
   (![rotationOneLinear, rotationTwoLinear, rotationThreeLinear] axis)
     |>.toContinuousLinearMap
 
+theorem ambientSpatialRotation_apply (axis : Fin 3) (point : R4Point) :
+    ambientSpatialRotation axis point = match axis with
+    | 0 => ![0, 0, -point 3, point 2]
+    | 1 => ![0, point 3, 0, -point 1]
+    | 2 => ![0, -point 2, point 1, 0] := by
+  fin_cases axis <;> rfl
+
 /-- Structure constants for Mathlib's convention
 `[V,W] = DW(V) - DV(W)`.  They are minus the usual epsilon tensor for the
 chosen `eᵢ × x` generators. -/
