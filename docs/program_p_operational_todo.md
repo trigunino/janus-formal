@@ -90,19 +90,264 @@ carte ultérieure les ferme. L'arriéré actif est formé uniquement des cartes
 dont l'état n'est pas `DONE`, des verrous globaux de la section 6 et des portes
 terminales de la section 7.
 
-### Point de reprise `T03` au 2026-09-05
+### Point de reprise `T03` au 2026-09-07
 
 Les Gates577–580 ferment le transport des tests et l'annulation des dix
 résidus de divergence ; le défaut de Palatini est nul en jauge de volume
 canonique. Gate581 raccorde les deux blocs EH corrigés à l'opérateur métrique
 total au centre de la carte. Gate582 identifie chaque dérivée EH à volume
-fixé au pairage Ricci : le terme cosmologique s'annule exactement.
+fixé au pairage Ricci : le terme cosmologique s'annule exactement. Gate583
+construit les deux résidus Ricci lisses et prouve leur pairage intégré.
+Gates585–586 construisent les deux tenseurs lisses d'interaction à partir
+de l'équation de Sylvester exacte ; Gate588 raccorde leur pairage intégré
+à la dérivée forte authentique au centre. Gates584/587 conservent dans la
+variation Maxwell le stress, la correction de volume et la variation de
+jauge induite.
 
-Prochaine obligation : identifier la somme Ricci + interaction + Maxwell
-au pairage des deux résidus métriques lisses. La séparation est déjà prouvée
-dans `P0EFTJanusProgramPRegularGeneralMetricC2PairedMetricResidualTestSeparation4D`.
-Le recentrage hors `point = 0` et le raccord au système full-BRST à quatorze
-composantes restent à démontrer. `T03` reste ouverte ; compteur global `2/14`.
+Gates589–594 construisent le résidu Maxwell complet : stress, correction
+positive de volume et courant canonique sur la jauge induite. Gate595
+raccorde les deux secteurs pondérés aux vraies dérivées fortes. Gate596
+identifie l’opérateur métrique total au centre au pairage du résidu concret
+`(interaction + Ricci) + Maxwell`, puis sépare les deux équations tensorielles.
+Ce résultat utilise la compatibilité des bases et leurs jauges de volume canonique.
+
+Gates597–601 retirent cette restriction : la dérivée EH à volume stocké
+est Ricci + Palatini, et deux intégrations par parties sur les coefficients
+lisses du premier jet réel produisent le tenseur du reste de Palatini.
+Gate602 raccorde ce résidu EH complet aux vrais blocs forts et prouve
+la séparation métrique totale au centre sans `hPlusGauge` ni `hMinusGauge`.
+La compatibilité des bases `hBase` reste nécessaire au domaine d’interaction.
+
+Gates603–607 prouvent le recentrage géométrique et les identités exactes
+des actions EH et Maxwell sur les points lisses voisins, en conservant le
+volume stocké et le vrai transport des coefficients de jauge. Pour
+l’interaction, Gate606 identifie exactement la valeur au nouveau centre.
+Gate608 transporte la vraie dérivée EH en tout point lisse admissible :
+son pairage utilise le résidu complet Ricci + Palatini, sans jauge de volume.
+Gates609/611 inversent le transport C² de jauge et calculent sa vitesse
+complète. Gate613 transporte la vraie dérivée métrique Maxwell vers la
+vraie dérivée conjointe au nouveau centre, avec cette vitesse de jauge.
+Gates610/612 établissent le calcul du commutateur ; Gate614 le raccorde aux
+vraies équations C² et prouve l’égalité des dérivées natives intégrées
+d’interaction, sur les mêmes deux tests métriques lisses.
+
+Gates615–616 construisent la vitesse de jauge lisse et identifient exactement
+son relèvement à la vraie vitesse C². Gate617 représente la dérivée
+d’interaction par ses deux tenseurs hors centre en tout point physique
+admissible, avec les autres champs libres. Gate618 représente la dérivée
+Maxwell hors centre par le résidu métrique centré et le courant canonique
+sur cette vitesse lisse, sans supposer son annulation.
+
+Gates619–620 représentent cette contribution de jauge par un tenseur lisse
+et obtiennent le résidu Maxwell hors centre complet. Gate621 identifie les
+quatre vrais blocs forts EH/Maxwell aux dérivées natives au point courant,
+avec les coefficients de jauge base + perturbation.
+Gate622 assemble les cinq blocs métriques : en tout point physique
+admissible, la vraie équation métrique est exactement l’annulation des deux
+tenseurs `(interaction + EH complet) + Maxwell complet`, sans jauge de volume.
+Gate623 remplace le représentant métrique abstrait dans les données PDE
+canoniques et identifie la vraie équation Euler forte au système physique
+à huit composantes, sous `hBase`, `hPoint` et poids Maxwell non nuls.
+Les slots normal/diffeomorphisme sont encore les dégénérescences de
+projection de l’action minimale ; ils ne sont pas des équations full-BRST.
+
+Gate624 extrait le socle C² sans hypothèses quadratiques homogènes et
+l’instancie sur le vrai datum zéro de la famille forte. Gate628 construit
+son graphe couplé aux difféomorphismes, sa vraie dérivée et sa régularité C².
+Gates625–627 reconstruisent les projections L² du potentiel et du vrai
+Lorenz à métrique fixée ; la règle de Leibniz globale est prouvée.
+Gates629–630 utilisent la densité des coefficients lisses pour obtenir
+l’insertion continue du potentiel pur dans le graphe abélien fermé.
+Gates631–632 transportent les coefficients totaux mobiles vers les repères
+fixes : l’entrée C² du graphe est exactement le potentiel du datum courant.
+Gate633 calcule le défaut intégrable d’action BRST sous changement de
+métrique, avec les deux contributions Lorenz et Faddeev–Popov.
+Gates634–638 lèvent le verrou analytique de ces deux opérateurs : la trace
+covariante intrinsèque est exprimée dans un repère fixe indépendant de la
+métrique ; les expressions complétées Lorenz/FP sont conjointement lisses
+et coïncident exactement avec les vrais opérateurs à la métrique variée.
+FP emploie directement le second jet du fantôme, sans troisième dérivée.
+
+Gates639–641 portent ces caractéristiques dans L² et construisent l’action
+BRST abélienne complète, lisse à métrique variable avec B, cbar et c indépendants.
+Sur les lifts lisses, elle égale exactement l’action intrinsèque et l’ancien
+graphe fixe augmenté du défaut métrique explicite. Gate642 donne sa vraie
+dérivée en cinq contributions, dont les deux variations métriques Lorenz/FP.
+Gates643–644 assemblent les métriques variées et les potentiels totaux
+transportés : l’action C² obtenue est exactement le BRST du datum courant.
+Gate645 la raccorde au modèle physique brut avec sa norme forte d’origine,
+prouve la dérivée Euler par somme/chaîne et l’égalité à l’action abélienne
+gauge-fixed Candidate-A à mesure canonique sur les lifts lisses. Les nouvelles
+coordonnées non minimales sont des champs totaux ; leur zéro signifie B=cbar=c=0.
+
+Gate646 calcule le défaut exact des actions BRST difféomorphes lisses sur
+une mesure canonique commune : le ratio de volume mobile, g(B,B), De Donder
+et FP sont conservés, avec les deux poids Einstein et le triplet non minimal
+diagonal partagé. Gate647 construit les caractéristiques De Donder C⁰/L²
+conjointement lisses. Gates648–650 identifient leur divergence tensorielle
+et leur gradient de trace aux vrais objets intrinsèques dans un repère fixe
+indépendant de la métrique. Gate651 prouve l’accord De Donder complet dans
+C⁰ et L² à toute variation lisse admissible. Gate652 factorise exactement
+cet opérateur par le premier jet tensoriel, via une extraction linéaire continue.
+
+Gates653–657 construisent le premier jet de Lie_c g à partir des seuls
+seconds jets de g et c, le composent avec De Donder et prouvent l’accord
+exact avec le vrai FP difféomorphe dans C⁰ et L². Gates658 et 660 réalisent
+le volume canonique positif comme application C² sur le domaine admissible
+complet, avec accord lisse exact. Gates659 et 661 transportent un seul
+fantôme C² vers les deux repères et identifient les deux FP mobiles au même
+fantôme géométrique diagonal.
+
+Gates662–667 assemblent la vraie action full-BRST mobile sur la norme forte
+d’origine : volume, DgH(B) − g(B,B)/2 − FPg(c)(cbar), les deux poids Einstein
+et un seul triplet non minimal géométrique sont conservés. L’action est C²,
+son Euler est sa vraie dérivée et l’accord SAME-ACTION porte sur le datum
+courant à mesure canonique. Gate670 développe la première variation avec
+dρ, les dérivées conjointes de De Donder/FP et tous les termes métriques et
+non minimaux. Gate668 classe les fibres physiques, fournit leurs transitions
+affines et un atlas couvrant l’image admissible de cette famille. Gate671
+étend l’invariance de l’action et d’Euler au full-BRST avec les mêmes champs
+non minimaux complétés.
+
+La couverture brute reste une obligation distincte. Ces familles exigent
+`RegularGeneralLorentzMetric.frameEquiv`, donc quatre sections globales
+formant une base ; aucun habitant de ce type n’a été trouvé dans le dépôt.
+Le constructeur de métrique variée exige déjà une telle base. Le no-go de
+`AntiPeriodicFrameDeterminant` existe, mais aucun pont depuis
+`RegularGeneralLorentzMetric` n’est établi ici : ne pas affirmer son
+inhabitabilité formelle. La famille redondante `finiteSmoothTangentFrame`
+est, elle, effectivement construite. Gate673 y réalise les contractions
+covectorielle et métrique exactes sans `frameEquiv`.
+
+Gates674–680 portent les coefficients vectoriels C², les contractions
+métriques inverses et la trace tensorielle sur la famille redondante.
+La cible relative C² est maintenant exactement l’encodage de
+sharp(g₊+h₊)∘(g₋+h₋) sur les métriques lisses réalisant ces tenseurs.
+Sa branche de racine sur la strate Sylvester-régulière conserve le centre
+et satisfait son équation. Le déterminant étendu et les traces redondantes
+retrouvent le vrai potentiel β₀…β₄ dans toute base ponctuelle.
+L’action BRST lisse est exactement reconstruite, avec les vrais opérateurs
+et le même volume ; la lecture bornée des coefficients non minimaux C²
+se raccorde à ses caractéristiques C⁰. Les transitions redondantes ne sont
+pas déclarées inversibles sur tous les coefficients.
+
+Gates681–695 réalisent maintenant la dépendance conjointe de De Donder et
+FP depuis les métriques et champs C² redondants. La connexion de Koszul,
+la trace et son gradient coïncident avec leurs opérateurs intrinsèques.
+Le premier jet de Cartan conserve les dérivées des crochets et n’exige
+aucun troisième jet du fantôme. Le vrai volume canonique mobile entre
+dans l’action BRST difféomorphe C², avec le même triplet B, antighost,
+ghost et la vraie dérivée de Fréchet. L’accord avec l’action lisse est
+exact sur les lifts admissibles. Le module sectoriel conserve un tenseur
+de jauge indépendant, identifié ensuite à la variation métrique par Gate696.
+Gate683 fournit aussi un datum bulk EH/Maxwell sans `frameEquiv`, avec
+les poids de volume exacts et l’accord aux deux actions stockées.
+
+Gates696–704 assemblent la contribution de jauge full-BRST et l’interaction sur une seule
+paire de variations métriques. Chaque tenseur de jauge difféomorphe est
+exactement la variation de son secteur ; un seul triplet B, antighost,
+ghost est transporté vers les deux métriques, avec les poids Einstein.
+Lorenz et FP abéliens sont réalisés dans la même famille finie, pour les
+deux composantes de jauge. Leurs potentiels et leurs deux triplets non
+minimaux restent indépendants. Le secteur abélien conserve sa mesure
+canonique fixe, tandis que le secteur difféomorphe conserve ses volumes
+mobiles. La somme est C² et son Euler est la vraie dérivée de Fréchet,
+avec accord exact aux deux actions intrinsèques sur les lifts admissibles.
+La projection covectorielle C² de Gate701 précède Lorenz : elle est
+idempotente et fixe les vrais potentiels. Gate699 prouve que deux paquets
+représentant le même potentiel ont exactement la même action.
+
+Gates702–703 évaluent directement le potentiel spectral sur la branche de
+racine C² redondante, ajoutent le complément `I-P` dans le déterminant et
+retrouvent au centre le potentiel Candidate-A dans toute base ponctuelle.
+Le volume canonique de la métrique plus fournit alors une densité et une
+action d’interaction C² sur un domaine ouvert contenant zéro. Gate704 somme
+cette interaction avec la contribution full-BRST de jauge sur le même couple
+de variations et expose sa vraie dérivée de Fréchet.
+
+Gates705–708 réalisent les deux jets de connexion, Riemann, Ricci et la
+courbure scalaire dans la famille finie redondante. Le volume canonique donne
+une action Einstein–Hilbert C², d’abord par secteur puis pour deux fonds
+indépendants. Cette paire gravitationnelle est assemblée avec la contribution
+full-BRST de jauge et possède une vraie dérivée de Fréchet. Gate708 recentre
+affinement le secteur moins par l’encodage exact de `minusMetric - plusMetric`
+et somme, sur un seul domaine ouvert, Einstein–Hilbert, full-BRST et
+interaction spectrale.
+
+Prochaine obligation : prouver l’accord de la courbure complétée avec la
+courbure intrinsèque sur les lifts lisses. Ajouter Maxwell et
+compléter la migration du datum d’action (potentiels
+intrinsèques à la place des coefficients à quatre indices, interaction,
+matière, multiplicateurs et frontières), réaliser conjointement la courbure C²,
+puis établir la couverture et le système local par composantes. La
+courbure intrinsèque lisse existe déjà. Il faut aussi décoder la racine C² en
+géométrie lisse : C² ne fournit pas automatiquement un rootOperator C∞.
+La portée analytique prévue est déjà la strate Sylvester-régulière ;
+l’obstruction matricielle Gate669 hors de cette strate ne la bloque pas.
+Le fond de jauge doit rester commun lors des changements de carte.
+Fichiers de départ : `P0EFTJanusFiniteFramePairedRelativeC2Root4D`,
+`P0EFTJanusFiniteFramePairedC2FullBRSTGaugeAction4D`,
+`P0EFTJanusFiniteFrameCovectorC2Projection4D`,
+`P0EFTJanusFiniteFramePairedC2PhysicalAction4D`,
+`P0EFTJanusFrameFreeCovariantActionData4D`,
+`P0EFTJanusFiniteFrameIntrinsicSpectralPotential4D`,
+`P0EFTJanusProgramPGeneralMetricC2RelativeEndomorphism4D`,
+`P0EFTJanusProgramPGlobalCandidateAC2FiniteFrameSylvesterLocalRoot4D`,
+`P0EFTJanusPairedStrongFullBRSTSmoothAgreement4D` et
+`P0EFTJanusPairedStrongFullBRSTFiberDescent4D`.
+`T03` reste ouverte ; compteur global `2/14`.
+
+Validation 603–708 : modules, façade et audit verts, aucun `sorryAx`.
+Les sept théorèmes publics audités de Gate708 ne dépendent que de
+`propext`, `Classical.choice` et `Quot.sound`.
+EH conserve le certificat `native_decide` préexistant du cardinal des dix
+flots. La représentation complète Maxwell de Gate618 utilise également
+ce certificat via les intégrations par parties, outre les axiomes logiques
+usuels de Lean. Les autres premières vérifications 615–617 ne dépendent
+que de `propext`, `Classical.choice` et `Quot.sound`. Les neuf théorèmes
+audités du lot 624–630, les huit du lot 631–633 et les huit du lot 634–638
+ne dépendent également que de ces trois axiomes. Les seize théorèmes audités
+du lot 639–645, les quatorze du lot 646–652, les seize du lot 653–661 et
+les vingt-deux du lot 662–673, les cinquante-six du lot 674–680 et les
+quatre-vingt-seize du lot 681–695 et les cinquante-deux du lot 696–701 ne
+dépendent eux aussi que de ces trois axiomes.
+Lean : `-MemoryMB 8192`, réserve système 8192 Mo, un thread, priorité haute ;
+jusqu’à 16 Go autorisés par l’utilisateur. Pic des compilations réussies
+observées : 5138 Mo. Réutiliser les lemmes de volume : le dépliage direct
+des métriques imbriquées avait atteint le plafond du noyau à 12 Go.
+Lot 662–673 : douze modules sans avertissement, façade et vingt-deux
+théorèmes audités ; pic 4353 Mo, mémoire libre minimale 17389 Mo.
+Lot 674–680 : sept modules sans avertissement et cinquante-six théorèmes
+audités, uniquement `propext`, `Classical.choice` et `Quot.sound`.
+Façade compilée sans avertissement (4367 Mo, libre minimale 17327 Mo).
+Dernières compilations des sept modules : pic 5066 Mo, libre minimale
+16732 Mo ; audit d’intégrité vert et `.olean` vérifiés à jour.
+Les essais de trace ont été arrêtés préventivement (pic observé 8632 Mo,
+mémoire libre minimale 13173 Mo). Déclarer la dimension finie sur
+`TangentSpace` après l’instance `ChartedSpace` et isoler l’algèbre de trace
+évite le développement coûteux des instances ; la trace finale compile à
+3683 Mo. Ne pas résoudre cette erreur en augmentant la limite mémoire.
+Lot 681–695 : quinze modules sans avertissement et quatre-vingt-seize
+théorèmes audités, uniquement `propext`, `Classical.choice` et `Quot.sound`.
+Dernières compilations des modules : pic 4131 Mo, libre minimale 17818 Mo.
+Façade sans avertissement : pic 4492 Mo, libre minimale 17437 Mo.
+Audit d’intégrité vert, compteur terminal inchangé `2/14`.
+Lot 696–701 : six modules sans avertissement et cinquante-deux théorèmes
+audités, uniquement `propext`, `Classical.choice` et `Quot.sound`.
+Modules : pic 4170 Mo, libre minimale 17633 Mo ; façade : pic 4209 Mo,
+libre minimale 17560 Mo. Garde 8192 Mo, un thread, priorité haute.
+Pour la régularité de l’action abélienne, laisser les compositions Lorenz/FP
+et la somme inférées évite le dépliage coûteux de leurs expressions.
+Lot 702–704 : trois modules sans avertissement ; pic 3976 Mo, libre minimale
+17651 Mo. Le lot ajoute le potentiel spectral C², l’action d’interaction et
+son raccord à la contribution full-BRST de jauge. Façade : pic 4495 Mo,
+libre minimale 17080 Mo. Les douze théorèmes publics audités ne dépendent
+que de `propext`, `Classical.choice` et `Quot.sound`.
+Lot 705–707 : trois modules sans avertissement ; pic 3920 Mo, libre minimale
+17504 Mo. Le lot ajoute la courbure C², l’action Einstein–Hilbert appariée et
+son assemblage avec le full-BRST de jauge. Façade : pic 4481 Mo, libre minimale
+16925 Mo. Les quatorze théorèmes publics audités ne dépendent que de `propext`,
+`Classical.choice` et `Quot.sound`.
 
 ## 2. Protocole de travail
 
@@ -10407,6 +10652,1289 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   Pic Lean/Lake : 3883 Mo ; mémoire libre minimale : 17773 Mo.
   Façade raccordée par import et contrôlée par l'audit, sans compilation globale.
 - Porte terminale : aucune ; 455e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-FIXED-VOLUME-RICCI-RESIDUAL` — Gate 583
+
+- État : `DONE` (2026-09-05). Portée : `BASE/PAIRED/METRIC-T03`.
+- Gate : `P0EFTJanusRegularFrameFixedVolumeRicciResidual4D`.
+- Résultat : reconstruction d'un tenseur symétrique depuis des coefficients
+  lisses, puis du résidu Ricci pondéré `−ρ Ric_sym/(2κ)`. Les deux dérivées EH
+  à volume fixé sont exactement le pairage canonique de ces deux résidus avec
+  les tests métriques physiques. La jauge canonique est requise aux bases.
+  Le lemme général de contraction de vitesse inverse est ajouté au module
+  `P0EFTJanusProgramPRegularGeneralMetricC2EinsteinHilbertInvariantResidual4D`.
+- Limite : interaction et Maxwell restent à joindre à ces résidus.
+- Validation : les deux modules compilés sans avertissement ; dernier pic
+  Lean/Lake 3894 Mo, mémoire libre minimale 15926 Mo. Priorité haute,
+  mono-thread, plafond Lean 4096 Mo, réserve surveillée 8192 Mo.
+- Porte terminale : aucune ; 456e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-MAXWELL-METRIC-TRANSPORT-DERIVATIVE` — Gate 584
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/C2/GAUGE-COEFFICIENTS-T03`.
+- Gate : `P0EFTJanusPairedStrongMaxwellMetricTransportDerivative4D`.
+- Résultat : la dérivée de la racine identité vaut `½ id`. Celle du transport
+  du repère mobile induit `δa = ½ Hᵀa`, même à coefficients de jauge indépendants
+  fixés. Les dérivées de Fréchet sont prouvées sur les cœurs C² réels.
+- Limite : cette variation induite doit être conservée dans la dérivée de
+  l'action Maxwell forte ; son annulation exige les équations Maxwell.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3892 Mo,
+  mémoire libre minimale 17889 Mo. Même garde mémoire et priorité que Gate583.
+- Porte terminale : aucune ; 457e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-INTERACTION-METRIC-CENTER-SYLVESTER` — Gate 585
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/INTERACTION/C2-T03`.
+- Gate : `P0EFTJanusPairedInteractionMetricCenterSylvester4D`.
+- Résultat : pour `C = g₊⁻¹(g₋−g₊)` dans le repère de base plus, la vitesse
+  relative est `C*(−H₊/2) + (H₋−H₊) + (−H₊/2)*C`. La dérivée de racine
+  satisfait exactement l'équation de Sylvester correspondante, dans C² et
+  en chaque point, sur les tests métriques authentiques. La compatibilité
+  existante des bases fournit l'admissibilité du centre.
+- Limite : les deux tenseurs d'interaction restent à reconstruire à partir
+  du covecteur spectral. Le volume de cette action reste fixé.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4155 Mo,
+  mémoire libre minimale 15292 Mo. Même garde mémoire et priorité que Gate583.
+- Porte terminale : aucune ; 458e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-INTERACTION-SMOOTH-METRIC-RESIDUAL` — Gate 586
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/INTERACTION/TENSEURS-T03`.
+- Gate : `P0EFTJanusPairedInteractionSmoothMetricResidual4D`.
+- Résultat : l'inverse de Sylvester est lisse et les deux covecteurs
+  spectraux ont des représentants tensoriels lisses explicites. Leur pairage
+  invariant restitue chaque variation métrique dans le repère plus, avec le
+  facteur exact `−interactionScale * plusBase.volume`.
+- Limite : raccord intégré à la dérivée forte traité séparément.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4223 Mo,
+  mémoire libre minimale 15927 Mo. Preuve de lissité simplifiée après arrêt
+  au plafond mémoire ; plafond 4096 Mo conservé, un thread, priorité haute.
+- Porte terminale : aucune ; 459e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-MAXWELL-METRIC-CENTER-FIRST-VARIATION` — Gate 587
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/MAXWELL/DERIVEE-T03`.
+- Gate : `P0EFTJanusStrongMaxwellMetricCenterFirstVariation4D`.
+- Résultat : la dérivée métrique de l'action Maxwell à repère mobile vaut
+  le pairage du stress, plus la correction positive `∫¼ δρ·F²`, plus la
+  dérivée de jauge sur la vitesse induite `½Hᵀa`. Aucune équation Maxwell
+  ni annulation de courant n'est supposée.
+- Limite : convertir le terme de jauge en résidu intrinsèque et raccorder
+  les deux secteurs pondérés de l'opérateur fort.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4159 Mo,
+  mémoire libre minimale 15825 Mo. Même garde mémoire et priorité que Gate583.
+- Porte terminale : aucune ; 460e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-INTERACTION-RESIDUAL-PAIRING` — Gate 588
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/INTERACTION/ACTION-FORTE-T03`.
+- Gate : `P0EFTJanusPairedStrongInteractionResidualPairing4D`.
+- Résultat : sous la compatibilité existante des bases, la dérivée du bloc
+  d'interaction fort au centre est exactement le pairage canonique intégré
+  des deux tenseurs construits en Gate586, sur les tests métriques réels.
+  Le facteur de volume fixé reste présent ; aucune égalité de résidu
+  ni stationnarité n'est supposée.
+- Limite : Maxwell doit encore être converti en résidu intrinsèque et
+  assemblé avec Ricci/interactions avant la séparation métrique totale.
+- Validation : Lean sans avertissement, `.olean` généré ; racines gardées
+  opaques à l'élaboration pour éviter les réductions coûteuses. Norme de
+  Frobenius limitée aux matrices réelles ; pic arbre 4171 Mo, mémoire libre
+  minimale 18054 Mo. Budget de calcul revenu à 1,2 million de heartbeats ;
+  garde 4096 Mo, un thread, priorité haute et réserve mémoire inchangés.
+- Porte terminale : aucune ; 461e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FIXED-VOLUME-MAXWELL-STRESS-RESIDUAL` — Gate 589
+
+- État : `DONE` (2026-09-05). Portée : `MAXWELL/STRESS/VOLUME-T03`.
+- Gate : `P0EFTJanusFixedVolumeMaxwellStressResidual4D`.
+- Résultat : Le tenseur lisse `volume/2·T + volume·F²/8·g` représente exactement la dérivée Maxwell à potentiel et volume fixés. La demi-trace de la direction C² réelle donne le pairage métrique.
+- Limite : assemblage du résidu Maxwell complet et raccord des secteurs forts.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4123 Mo,
+  mémoire libre minimale 17721 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 462e support pour `T03`, compteur `2/14`.
+
+### `P-T03-METRIC-INDUCED-SMOOTH-GAUGE-VELOCITY` — Gate 590
+
+- État : `DONE` (2026-09-05). Portée : `MAXWELL/JAUGE-INDUITE-T03`.
+- Gate : `P0EFTJanusMetricInducedSmoothGaugeVelocity4D`.
+- Résultat : Le potentiel lisse construit a pour coefficients `½Hᵀa`. Son image C² égale la vitesse de jauge réellement induite par la métrique.
+- Limite : assemblage du résidu Maxwell complet et raccord des secteurs forts.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3871 Mo,
+  mémoire libre minimale 17823 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 463e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-COEFFICIENT-MAXWELL-INTRINSIC-FIRST-VARIATION` — Gate 591
+
+- État : `DONE` (2026-09-05). Portée : `MAXWELL/RESIDU-INTRINSEQUE-T03`.
+- Gate : `P0EFTJanusGaugeCoefficientMaxwellIntrinsicFirstVariation4D`.
+- Résultat : La dérivée native en coefficients est la première variation intrinsèque pour toute mesure finie, puis le pairage du résidu Maxwell pour la mesure canonique. Aucune stationnarité supposée.
+- Limite : assemblage du résidu Maxwell complet et raccord des secteurs forts.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3895 Mo,
+  mémoire libre minimale 17712 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 464e support pour `T03`, compteur `2/14`.
+
+### `P-T03-METRIC-INDUCED-MAXWELL-RESIDUAL` — Gate 592
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/METRIQUE-T03`.
+- Gate : `P0EFTJanusMetricInducedMaxwellResidual4D`.
+- Résultat : Tenseur lisse représentant exactement le courant canonique sur la jauge induite ; aucun volume supplémentaire ni stationnarité supposée.
+- Limite : Assemblage métrique total et séparation, établis en Gate596 ; extension hors du centre restante.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4105 Mo,
+  mémoire libre minimale 17845 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 465e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-MAXWELL-CENTER-FIRST-VARIATION` — Gate 593
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/METRIQUE-T03`.
+- Gate : `P0EFTJanusPairedStrongMaxwellCenterFirstVariation4D`.
+- Résultat : Raccord des vraies dérivées fortes Maxwell ± aux variations natives complètes, avec couplages et potentiels reconstruits depuis les coefficients réels.
+- Limite : Assemblage métrique total et séparation, établis en Gate596 ; extension hors du centre restante.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3924 Mo,
+  mémoire libre minimale 17996 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 466e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STRONG-MAXWELL-METRIC-RESIDUAL` — Gate 594
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/METRIQUE-T03`.
+- Gate : `P0EFTJanusStrongMaxwellMetricResidual4D`.
+- Résultat : Résidu métrique Maxwell complet : stress, correction positive de volume et jauge induite. Son intégrale canonique égale la dérivée native authentique.
+- Limite : Assemblage métrique total et séparation, établis en Gate596 ; extension hors du centre restante.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3870 Mo,
+  mémoire libre minimale 18052 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 467e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-MAXWELL-RESIDUAL-PAIRING` — Gate 595
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/METRIQUE-T03`.
+- Gate : `P0EFTJanusPairedStrongMaxwellResidualPairing4D`.
+- Résultat : La somme des dérivées fortes Maxwell ± égale le pairage canonique de deux résidus lisses pondérés, sans hypothèse de stationnarité.
+- Limite : Assemblage métrique total et séparation, établis en Gate596 ; extension hors du centre restante.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3870 Mo,
+  mémoire libre minimale 18008 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 468e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-METRIC-CENTER-TOTAL-RESIDUAL` — Gate 596
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/METRIQUE-T03`.
+- Gate : `P0EFTJanusPairedStrongMetricCenterTotalResidual4D`.
+- Résultat : L’opérateur fort sur les tests métriques au centre égale le pairage du résidu concret `(interaction + Ricci) + Maxwell`. Sa stationnarité métrique équivaut à l’annulation des deux tenseurs, sous compatibilité des bases et leurs jauges de volume canonique.
+- Limite : Retirer les jauges de volume via le reste de Palatini pondéré, transporter l’action hors du centre et raccorder full-BRST.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3904 Mo,
+  mémoire libre minimale 18094 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 469e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FIXED-VOLUME-EINSTEIN-HILBERT-WEIGHTED-PALATINI` — Gate 597
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/VOLUME-GENERAL-T03`.
+- Gate : `P0EFTJanusFixedVolumeEinsteinHilbertWeightedPalatini4D`.
+- Résultat : La dérivée EH native à volume fixé est le pairage Ricci pondéré par le volume stocké plus la divergence de Palatini exacte. Le terme cosmologique ne contribue pas. Aucune jauge de volume requise.
+- Limite : Assemblage sans jauge de volume établi en Gate602 ; transport hors du centre restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3889 Mo,
+  mémoire libre minimale 17725 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 470e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-PALATINI-CURRENT-LINEAR-COEFFICIENTS` — Gate 598
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/VOLUME-GENERAL-T03`.
+- Gate : `P0EFTJanusSmoothPalatiniCurrentLinearCoefficients4D`.
+- Résultat : Le courant Palatini réel est développé sur les 16 valeurs et 64 dérivées premières des composantes du test. Les coefficients lisses sont obtenus par une application linéaire explicite issue des variations inverse, Koszul et Christoffel, avec anholonomie.
+- Limite : Assemblage sans jauge de volume établi en Gate602 ; transport hors du centre restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3890 Mo,
+  mémoire libre minimale 17625 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 471e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-CANONICAL-FORMAL-ADJOINT` — Gate 599
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/VOLUME-GENERAL-T03`.
+- Gate : `P0EFTJanusRegularFrameCanonicalFormalAdjoint4D`.
+- Résultat : L’adjoint d’une dérivée dans le repère régulier est la divergence canonique opposée du coefficient multiplié par le vecteur du repère. L’identité intégrale vient de Stokes ; reconstruction lisse des tenseurs depuis leurs coefficients covariants.
+- Limite : Assemblage sans jauge de volume établi en Gate602 ; transport hors du centre restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3883 Mo,
+  mémoire libre minimale 17714 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 472e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STORED-VOLUME-PALATINI-CURRENT-WEIGHT` — Gate 600
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/VOLUME-GENERAL-T03`.
+- Gate : `P0EFTJanusStoredVolumePalatiniCurrentWeight4D`.
+- Résultat : La première intégration par parties transforme le reste Palatini en courant pondéré par c·traceΓ + adjoint(c), où c=volume_stocké/(2κ). Aucun reste, signe ou facteur de densité supprimé.
+- Limite : Assemblage sans jauge de volume établi en Gate602 ; transport hors du centre restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3877 Mo,
+  mémoire libre minimale 17614 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 473e support pour `T03`, compteur `2/14`.
+
+### `P-T03-STORED-VOLUME-PALATINI-METRIC-RESIDUAL` — Gate 601
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/VOLUME-GENERAL-T03`.
+- Gate : `P0EFTJanusStoredVolumePalatiniMetricResidual4D`.
+- Résultat : La seconde intégration par parties sur le premier jet réel représente tout le reste de Palatini par un tenseur lisse. Le résidu EH complet, Ricci stocké + Palatini, représente la vraie dérivée sans hypothèse de jauge de volume.
+- Limite : Assemblage sans jauge de volume établi en Gate602 ; transport hors du centre restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3879 Mo,
+  mémoire libre minimale 17703 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 474e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-METRIC-CENTER-GENERAL-VOLUME` — Gate 602
+
+- État : `DONE` (2026-09-05). Portée : `CENTRE/VOLUME-GENERAL-T03`.
+- Gate : `P0EFTJanusPairedStrongMetricCenterGeneralVolume4D`.
+- Résultat : Le vrai opérateur métrique total au centre est le pairage du résidu concret interaction + EH complet + Maxwell. Sa stationnarité métrique équivaut à l’annulation des deux tenseurs. Les hypothèses hPlusGauge/hMinusGauge ont disparu ; seule la compatibilité des bases hBase reste, outre les données structurelles.
+- Limite : Transport de la même action hors du centre et raccord full-BRST.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3906 Mo,
+  mémoire libre minimale 17636 Mo. Garde 4096 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 475e support pour `T03`, compteur `2/14`.
+
+### `P-T03-LORENTZ-CHART-AFFINE-RECENTER-GEOMETRY` — Gate 603
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusLorentzChartAffineRecenterGeometry4D`.
+- Résultat : Le recentrage affine représente exactement la même métrique musicale et conserve le volume stocké. Les deux domaines restent admissibles le long du même test lisse près de zéro.
+- Limite : Géométrie des cartes ; le transport des actions et de leurs dérivées exige des identités supplémentaires.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3906 Mo,
+  mémoire libre minimale 17881 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 476e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-GAUGE-COEFFICIENT-TRANSITION` — Gate 604
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusRegularFrameGaugeCoefficientTransition4D`.
+- Résultat : Le changement de coefficients entre repères est une équivalence linéaire inversible, avec composition exacte. Il conserve le potentiel intrinsèque et s’écrit Cᵀ·a.
+- Limite : La dépendance métrique du changement de repère doit être conservée lors de la dérivation.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3847 Mo,
+  mémoire libre minimale 18207 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 477e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MOBILE-MAXWELL-ACTION-RECENTER` — Gate 605
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusMobileMaxwellActionRecenter4D`.
+- Résultat : Les véritables actions Maxwell coïncident aux points lisses voisins des deux cartes après transport exact des coefficients de jauge ; métrique physique et volume stocké sont préservés.
+- Limite : Dérivée du transport de jauge hors centre et raccord au résidu restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3859 Mo,
+  mémoire libre minimale 19403 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 478e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-INTERACTION-RECENTER-VALUE` — Gate 606
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedInteractionRecenterValue4D`.
+- Résultat : Au point admissible, la matrice relative native est exactement celle du nouveau centre. La racine sélectionnée, la densité et la valeur de l’action d’interaction coïncident.
+- Limite : Égalité aux deux points indiqués ; aucune égalité de germes ou de dérivées n’est encore déduite.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3886 Mo,
+  mémoire libre minimale 18722 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 479e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FIXED-VOLUME-EINSTEIN-HILBERT-ACTION-RECENTER` — Gate 607
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFixedVolumeEinsteinHilbertActionRecenter4D`.
+- Résultat : La courbure scalaire, la densité et la véritable action Einstein–Hilbert coïncident dans les deux cartes sur leur intersection lisse, volume stocké et terme cosmologique compris.
+- Limite : Le transport de la dérivée est établi en Gate608.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3835 Mo,
+  mémoire libre minimale 18473 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 480e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FIXED-VOLUME-EINSTEIN-HILBERT-DERIVATIVE-RECENTER` — Gate 608
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFixedVolumeEinsteinHilbertDerivativeRecenter4D`.
+- Résultat : L’égalité locale des véritables actions transporte la dérivée native depuis tout déplacement lisse admissible vers le nouveau centre. Le pairage du résidu EH complet, Ricci stocké + Palatini, représente donc la dérivée hors centre sans jauge de volume.
+- Limite : Secteur EH et directions lisses ; assemblage avec Maxwell, interaction et système full-BRST restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4146 Mo,
+  mémoire libre minimale 18249 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 481e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-COEFFICIENT-RECENTER-ROOT-TRANSPORT` — Gate 609
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusGaugeCoefficientRecenterRootTransport4D`.
+- Résultat : Le transport réel des coefficients satisfait une identité exacte dans le cœur C² avec les trois racines de cartes. La dérivée du transport par racine à un point admissible quelconque est celle de la véritable branche.
+- Limite : Inversion et dérivation de la transition complète en Gate611.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3880 Mo,
+  mémoire libre minimale 19010 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 482e support pour `T03`, compteur `2/14`.
+
+### `P-T03-INTERACTION-SPECTRAL-COMMUTATOR-REDUCTION` — Gate 610
+
+- État : `DONE` (2026-09-06). Portée : `POINTWISE`.
+- Gate : `P0EFTJanusInteractionSpectralCommutatorReduction4D`.
+- Résultat : La dérivée du vrai potentiel spectral annule tout commutateur matriciel, via une courbe exponentielle de repères inversibles. L’injectivité de Sylvester transporte cette annulation aux vitesses de racine.
+- Limite : Réduction matricielle ; l’identité concrète des vitesses relatives est établie en Gate612, son raccord C² natif reste nécessaire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3586 Mo,
+  mémoire libre minimale 18688 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 483e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-COEFFICIENT-RECENTER-DERIVATIVE` — Gate 611
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusGaugeCoefficientRecenterDerivative4D`.
+- Résultat : L’identité C² de transport est inversée dans l’ordre exact des racines. La vraie dérivée de la transition sur une ligne métrique conserve la variation de la racine ancienne et celle de la racine inverse nouvelle.
+- Limite : La vitesse est un paquet C² ; aucune lissité C∞ ni représentation tensorielle de cette vitesse hors centre n’est déduite.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3906 Mo,
+  mémoire libre minimale 18406 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 484e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-RELATIVE-VELOCITY-COMMUTATOR` — Gate 612
+
+- État : `DONE` (2026-09-06). Portée : `POINTWISE`.
+- Gate : `P0EFTJanusPairedRelativeVelocityCommutator4D`.
+- Résultat : Les équations différentiées de carré et d’inverse imposent exactement le commutateur entre la vitesse relative originale et celle du centre. La dérivée spectrale est donc préservée sous ces identités algébriques concrètes.
+- Limite : Spécialisation aux évaluations et directions des véritables cartes C² nécessaire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3585 Mo,
+  mémoire libre minimale 18759 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 485e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MOBILE-MAXWELL-DERIVATIVE-RECENTER` — Gate 613
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusMobileMaxwellDerivativeRecenter4D`.
+- Résultat : Le vrai germe d’action Maxwell transporte la dérivée métrique native en tout point lisse admissible vers la dérivée conjointe métrique + jauge au nouveau centre. La vitesse C² complète des coefficients est conservée, sans hypothèse de stationnarité.
+- Limite : Le transport différentiel est exact ; restent la représentation lisse de la vitesse de jauge hors centre et l’assemblage des résidus full-BRST.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4222 Mo,
+  mémoire libre minimale 18274 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 486e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-INTERACTION-DERIVATIVE-RECENTER` — Gate 614
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedInteractionDerivativeRecenter4D`.
+- Résultat : Les véritables équations C² de Leibniz et Sylvester produisent le commutateur des deux cartes. Les dérivées spectrales ponctuelles puis les dérivées natives intégrées d’interaction coïncident sur les mêmes deux tests métriques lisses, avec le volume stocké conservé.
+- Limite : Transport de la dérivée native ; assemblage des trois secteurs hors centre et raccord full-BRST restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4174 Mo,
+  mémoire libre minimale 18274 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 487e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-IDENTITY-ROOT-VELOCITY` — Gate 615
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusSmoothIdentityRootVelocity4D`.
+- Résultat : L’inverse lisse de la famille de Sylvester construit la vitesse de racine. Son relèvement coïncide avec la vraie dérivée dans tous les jets C², par unicité de Sylvester.
+- Limite : Lissité de la vitesse ; son emploi dans les actions et résidus nécessite les raccords suivants.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3881 Mo,
+  mémoire libre minimale 19349 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 488e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SMOOTH-MAXWELL-RECENTER-GAUGE-VELOCITY` — Gate 616
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusSmoothMaxwellRecenterGaugeVelocity4D`.
+- Résultat : Un potentiel de jauge réellement lisse représente exactement la vitesse C² complète de la transition Maxwell, y compris la variation du nouveau repère.
+- Limite : Représentation de la vitesse ; sa contribution au résidu métrique reste à assembler.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3881 Mo,
+  mémoire libre minimale 19327 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 489e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-INTERACTION-OFF-CENTER-RESIDUAL` — Gate 617
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedInteractionOffCenterResidual4D`.
+- Résultat : La vraie dérivée d’interaction, native puis forte, est le pairage des deux tenseurs lisses au point reconstruit. Le raccord vaut en tout point physique admissible ; les autres composantes physiques restent libres.
+- Limite : Secteur interaction ; assemblage métrique total et raccord full-BRST restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4028 Mo,
+  mémoire libre minimale 19137 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 490e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MOBILE-MAXWELL-OFF-CENTER-FIRST-VARIATION` — Gate 618
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusMobileMaxwellOffCenterFirstVariation4D`.
+- Résultat : La vraie dérivée métrique Maxwell hors centre est la somme du résidu métrique complet au nouveau centre et du courant canonique pairé à la vitesse lisse exacte de jauge.
+- Limite : Aucune stationnarité Maxwell supposée ; la contribution de jauge doit encore être représentée par un tenseur métrique.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4135 Mo,
+  mémoire libre minimale 19090 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 491e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MAXWELL-RECENTER-GAUGE-METRIC-RESIDUAL` — Gate 619
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusMaxwellRecenterGaugeMetricResidual4D`.
+- Résultat : Le courant canonique pairé à la véritable vitesse de jauge de recentrage est exactement le pairage d’un tenseur métrique lisse construit par l’inverse de Sylvester.
+- Limite : Contribution supplémentaire Maxwell ; assemblage avec le résidu centré dans Gate620.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3908 Mo,
+  mémoire libre minimale 18835 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 492e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MOBILE-MAXWELL-OFF-CENTER-METRIC-RESIDUAL` — Gate 620
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusMobileMaxwellOffCenterMetricResidual4D`.
+- Résultat : Le résidu Maxwell métrique complet, somme du tenseur centré et de la contribution de jauge de recentrage, représente la vraie dérivée native à tout déplacement lisse admissible.
+- Limite : Secteur Maxwell ; raccord aux blocs forts et assemblage total dans Gates621–623.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3895 Mo,
+  mémoire libre minimale 18772 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 493e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-OFF-CENTER-ACTION-DERIVATIVES` — Gate 621
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongOffCenterActionDerivatives4D`.
+- Résultat : Les quatre blocs forts EH et Maxwell, évalués en tout point physique admissible sur les tests métriques, sont exactement les dérivées natives correspondantes. Maxwell conserve les coefficients de jauge base + variation du point.
+- Limite : Ponts différentiels sectoriels, sans hBase ; leur assemblage total conserve la compatibilité des bases du domaine d’interaction.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4177 Mo,
+  mémoire libre minimale 18496 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 494e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-METRIC-OFF-CENTER-TOTAL-RESIDUAL` — Gate 622
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongMetricOffCenterTotalResidual4D`.
+- Résultat : En tout point physique admissible, les cinq blocs métriques de la vraie action forte sont le pairage du résidu concret (interaction + EH complet) + Maxwell complet pondéré. La stationnarité métrique équivaut exactement à l’annulation de ses deux tenseurs.
+- Limite : Compatibilité des bases hBase et admissibilité du point ; les autres champs sont libres, aucune jauge de volume ni stationnarité Maxwell ajoutée. Système full-BRST global restant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3921 Mo,
+  mémoire libre minimale 18058 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 495e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-TENSOR-COMPONENTWISE-PDE` — Gate 623
+
+- État : `DONE` (2026-09-06). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongTensorComponentwisePDE4D`.
+- Résultat : Le représentant métrique de Riesz est remplacé par le vrai résidu tensoriel hors centre dans les données PDE canoniques. L’annulation de l’opérateur fort authentique équivaut au système physique concret à huit composantes, en tout point admissible.
+- Limite : hBase, hPoint et deux poids Maxwell non nuls. Les slots normal/diffeomorphisme restent les dégénérescences de projection déjà prouvées ; ni les quatorze composantes full-BRST ni l’atlas couvert ne sont établis.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3875 Mo,
+  mémoire libre minimale 18436 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 496e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-SAME-ACTION-CHART-DATA` — Gate 624
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongSameActionChartData4D`.
+- Résultat : Le socle C² de carte est extrait sans imposer de formes quadratiques homogènes. La famille forte est réindexée sur son vrai datum zéro, avec la même norme, la même action Candidate-A et la même dérivée Euler.
+- Limite : L’origine physique est celle de la famille ; hBase ne suffit pas à identifier une géométrie fournie indépendamment. Le raccord full-BRST et l’atlas restent à construire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3910 Mo,
+  mémoire libre minimale 19260 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 497e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-C2-ABELIAN-OFF-SHELL-GRAPH-BRIDGE` — Gate 625
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusGaugeC2AbelianOffShellGraphBridge4D`.
+- Résultat : Les coefficients de jauge complétés C² reconstruisent par une application linéaire continue le potentiel intrinsèque dans L², avec accord exact sur les coefficients lisses dans deux repères réguliers fixes.
+- Limite : Ce module établit la seule projection potentiel ; la caractéristique Lorenz et l’appartenance au graphe sont traitées ensuite.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4108 Mo,
+  mémoire libre minimale 19010 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 498e support pour `T03`, compteur `2/14`.
+
+### `P-T03-LORENZ-SMOOTH-SCALAR-LEIBNIZ` — Gate 626
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusLorenzSmoothScalarLeibniz4D`.
+- Résultat : La règle de Leibniz est prouvée pour le vrai codifférentiel de Lorenz global : δg(f A) = f δg(A) + df(g♯A), par composante intrinsèque.
+- Limite : Identité sur les champs lisses ; aucun opérateur de Lorenz borné n’est supposé.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3665 Mo,
+  mémoire libre minimale 19737 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 499e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-C2-LORENZ-FEATURE` — Gate 627
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusRegularFrameC2LorenzFeature4D`.
+- Résultat : Le Lorenz du potentiel reconstruit est développé dans le repère régulier. Cette formule construit une application linéaire continue des coefficients C² vers C⁰ puis L², égale au vrai Lorenz sur les lifts lisses.
+- Limite : Métrique régulière fixée ; le secteur fantôme Faddeev–Popov et la dépendance métrique mobile ne sont pas couverts par ce seul module.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3874 Mo,
+  mémoire libre minimale 19384 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 500e support pour `T03`, compteur `2/14`.
+
+### `P-T03-SAME-ACTION-DIFFEOMORPHISM-BRST-GRAPH-CHART` — Gate 628
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusSameActionDiffeomorphismBRSTGraphChart4D`.
+- Résultat : Le nouveau socle de carte C² porte le graphe fidèle du secteur BRST des difféomorphismes : projections physiques, domaine ouvert, vraie action couplée, dérivée Euler et régularité C² sont établis.
+- Limite : Le secteur BRST difféomorphe emploie la métrique de base fixe, tandis que l’action physique suit le datum. Ni l’accord à métrique BRST mobile, ni le raccord abélien complet, ni l’atlas couvert ne sont établis.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4109 Mo,
+  mémoire libre minimale 19304 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 501e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-C2-SMOOTH-COEFFICIENT-DENSITY` — Gate 629
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusGaugeC2SmoothCoefficientDensity4D`.
+- Résultat : Les vrais champs lisses de coefficients de jauge ont une image dense dans le noyau C² complété, pour un secteur et pour la paire. Toute famille de huit scalaires lisses est empaquetée dans un champ GaugeFiber.
+- Limite : Densité des coefficients ; aucune fermeture globale de T03.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3839 Mo,
+  mémoire libre minimale 19334 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 502e support pour `T03`, compteur `2/14`.
+
+### `P-T03-GAUGE-C2-OFF-SHELL-GRAPH-EMBEDDING` — Gate 630
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusGaugeC2OffShellGraphEmbedding4D`.
+- Résultat : La reconstruction C² du potentiel et de son vrai Lorenz appartient au graphe abélien fermé par densité. L’application linéaire continue obtenue coïncide exactement avec l’insertion off-shell lisse et conserve ses projections potentiel et Lorenz.
+- Limite : Insertion du potentiel pur à métriques fixes, champs non minimaux nuls ; le transport mobile, les autres slots BRST et l’action totale restent à assembler.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3870 Mo,
+  mémoire libre minimale 19315 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 503e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MOBILE-GAUGE-SAME-POTENTIAL-L2-INPUT` — Gate 631
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedMobileGaugeSamePotentialL2Input4D`.
+- Résultat : Le transport conjoint C² des coefficients totaux, base + perturbation, réexprime les deux potentiels mobiles dans les repères fixes. La reconstruction L² est exactement celle du datum de la famille physique.
+- Limite : L’accord porte sur le potentiel intrinsèque et le paquet C² transporté ; il n’identifie pas Lorenz à métrique fixe et mobile.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3908 Mo,
+  mémoire libre minimale 19127 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 504e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MOBILE-GAUGE-OFF-SHELL-GRAPH-INPUT` — Gate 632
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedMobileGaugeOffShellGraphInput4D`.
+- Résultat : Le potentiel physique mobile entre dans le graphe abélien fixé par une application C² non linéaire. Sa valeur sur chaque point physique admissible est exactement l’insertion du potentiel du datum, et sa projection Lorenz est le vrai Lorenz fixé de ce potentiel.
+- Limite : Les slots non minimaux sont nuls dans cette insertion. La métrique du graphe reste celle des bases ; une correction est nécessaire pour l’action BRST à métrique mobile.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3930 Mo,
+  mémoire libre minimale 18977 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 505e support pour `T03`, compteur `2/14`.
+
+### `P-T03-ABELIAN-BRST-METRIC-CHANGE-DEFECT` — Gate 633
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusAbelianBRSTMetricChangeDefect4D`.
+- Résultat : À champs physiques/non minimaux et volume canonique fixés, le défaut exact d’action BRST sous changement de métrique est l’intégrale de B·(δg−δref)A + cbar·(FPg−FPref)c. Cette densité est intégrable et l’égalité des deux actions équivaut à l’annulation de son intégrale.
+- Limite : Identité lisse exacte ; il reste à réaliser ces deux différences comme applications C² sur le même domaine fixe, puis à différencier l’action corrigée.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3682 Mo,
+  mémoire libre minimale 19348 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 506e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-LORENZ-COVARIANT-TRACE` — Gate 634
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusRegularFrameLorenzCovariantTrace4D`.
+- Résultat : Le vrai Lorenz intrinsèque est exactement la contraction par la matrice de Gram inverse de la dérivée covariante des coefficients du potentiel. Le repère régulier de référence et la métrique fournie sont indépendants.
+- Limite : Identité lisse globale exprimée dans tout représentant holonome ; les applications complétées et leur accord sont établis dans les modules suivants.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3869 Mo,
+  mémoire libre minimale 18988 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 507e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-LORENZ-FP-FEATURES` — Gate 635
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2LorenzFPFeatures4D`.
+- Résultat : Les expressions en repère fixe de Lorenz et Faddeev–Popov sont conjointement lisses sur le produit du domaine métrique C² ouvert et des noyaux de champs complétés. FP lit directement le second jet du fantôme.
+- Limite : Ce module construit les expressions analytiques ; leur identité avec les opérateurs intrinsèques est distincte et fournie par Gates636/638.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3914 Mo,
+  mémoire libre minimale 18880 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 508e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-LORENZ-SMOOTH-AGREEMENT` — Gate 636
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2LorenzSmoothAgreement4D`.
+- Résultat : L’expression Lorenz complétée coïncide exactement avec le vrai codifférentiel de la métrique variée sur tout lift lisse admissible. Le repère de coefficients reste fixe, avec accord explicite des matrices inverses et des coefficients de connexion.
+- Limite : Variation admissible et métrique lisse réalisant le tenseur affine ; le couplage avec les slots BRST indépendants reste à assembler.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3880 Mo,
+  mémoire libre minimale 18988 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 509e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-EXACT-GAUGE-COEFFICIENTS` — Gate 637
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusRegularFrameExactGaugeCoefficients4D`.
+- Résultat : Les coefficients de la jauge exacte dc dans le repère fixe sont les dérivées premières du fantôme. Leurs dérivées ordonnées sont exactement les dérivées secondes correspondantes.
+- Limite : Identités lisses ; elles permettent l’accord FP sans imposer un troisième jet au domaine complété.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3891 Mo,
+  mémoire libre minimale 18921 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 510e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-FP-SMOOTH-AGREEMENT` — Gate 638
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2FPSmoothAgreement4D`.
+- Résultat : L’expression FP complétée sur les seconds jets du fantôme est exactement le vrai opérateur δg d à la métrique variée. L’accord emploie directement la formule intrinsèque de Lorenz et les coefficients de dc.
+- Limite : Il reste à assembler les caractéristiques variables Lorenz/FP avec B, cbar et c, obtenir l’action BRST corrigée C² et sa vraie dérivée, puis traiter le secteur difféomorphe et l’atlas.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3880 Mo,
+  mémoire libre minimale 19078 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 511e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-LORENZ-FP-L2-FEATURES` — Gate 639
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2LorenzFPL2Features4D`.
+- Résultat : Les caractéristiques conjointes Lorenz et Faddeev–Popov passent continûment de C⁰ au vrai L² physique, avec accord exact sur les champs lisses à métrique variée.
+- Limite : Caractéristiques des deux opérateurs ; le couplage des champs non minimaux est traité ensuite.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3861 Mo,
+  mémoire libre minimale 18851 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 512e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-ABELIAN-BRST-ACTION` — Gate 640
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricAbelianBRSTAction4D`.
+- Résultat : L’action abélienne complète est lisse sur le domaine métrique ouvert avec potentiel, B, cbar et c indépendants. Elle conserve les trois termes d’origine, dont −B²/2, et possède une vraie dérivée de Fréchet.
+- Limite : Domaine de coefficients complétés ; le raccord au datum physique mobile est distinct.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3881 Mo,
+  mémoire libre minimale 18828 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 513e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-ABELIAN-BRST-SAME-ACTION` — Gate 641
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricAbelianBRSTSameAction4D`.
+- Résultat : Sur les lifts lisses admissibles, l’action complétée est exactement l’action BRST abélienne intrinsèque à métriques variées. Elle égale aussi l’ancien graphe à métriques fixes plus son défaut métrique explicite.
+- Limite : Accord à la mesure canonique intrinsèque, avec les mêmes champs non minimaux complets.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4074 Mo,
+  mémoire libre minimale 18542 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 514e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-ABELIAN-BRST-FIRST-VARIATION` — Gate 642
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricAbelianBRSTFirstVariation4D`.
+- Résultat : La vraie dérivée BRST est développée en cinq contributions. Les variations de Lorenz et FP conservent leurs termes métriques ; les dérivées de B, cbar et c sont indépendantes.
+- Limite : Secteur abélien ; ce calcul ne fournit pas la variation du secteur difféomorphe mobile.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4149 Mo,
+  mémoire libre minimale 18498 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 515e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MOBILE-ABELIAN-BRST-ACTION` — Gate 643
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedMobileAbelianBRSTAction4D`.
+- Résultat : L’entrée conjointe transporte les potentiels totaux dans les repères fixes et conserve les métriques variées. Sa composition avec l’action BRST complétée est C², avec vraie dérivée par la règle de chaîne.
+- Limite : Le domaine reste celui des coefficients physiques paired et des champs non minimaux complétés.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3927 Mo,
+  mémoire libre minimale 18696 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 516e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MOBILE-ABELIAN-BRST-SAME-ACTION` — Gate 644
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedMobileAbelianBRSTSameAction4D`.
+- Résultat : Sur toute direction physique admissible et tous champs non minimaux lisses, l’action mobile est exactement le BRST abélien utilisant les métriques et potentiels du datum courant.
+- Limite : Mesure canonique intrinsèque ; aucune identification avec un BRST difféomorphe à métrique mobile.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4122 Mo,
+  mémoire libre minimale 18501 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 517e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-ABELIAN-GAUGE-FIXED-ACTION` — Gate 645
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongAbelianGaugeFixedAction4D`.
+- Résultat : Le modèle physique brut garde sa norme forte et sa famille d’origine. L’ajout des champs non minimaux indépendants porte une action C² avec vraie dérivée Euler, égale à l’action abélienne gauge-fixed d’origine sur les lifts lisses à mesure canonique.
+- Limite : Les coordonnées non minimales sont des champs totaux. Le secteur difféomorphe mobile et l’atlas couvert restent à construire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4181 Mo,
+  mémoire libre minimale 18399 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 518e support pour `T03`, compteur `2/14`.
+
+### `P-T03-DIFFEOMORPHISM-BRST-METRIC-CHANGE-DEFECT` — Gate 646
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusDiffeomorphismBRSTMetricChangeDefect4D`.
+- Résultat : Le défaut exact des actions BRST difféomorphes lisses est réécrit sur la mesure canonique. Il conserve le ratio de volume mobile, les termes De Donder/FP et le pairage métrique g(B,B), puis les deux poids Einstein avec le même triplet non minimal.
+- Limite : Comparaison des actions lisses existantes ; ce module ne construit pas encore leurs opérateurs complétés à métrique mobile.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3751 Mo,
+  mémoire libre minimale 18840 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 519e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-DE-DONDER-FEATURES` — Gate 647
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2DeDonderFeatures4D`.
+- Résultat : L’expression De Donder en repère fixe est conjointement lisse du domaine métrique C² et des coefficients tensoriels C² vers C⁰ puis L². Elle inclut les deux corrections de connexion et la dérivée de la métrique inverse dans la trace.
+- Limite : Expression analytique ; son accord intrinsèque est établi séparément. Les coefficients tensoriels sont indépendants et non contraints.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3874 Mo,
+  mémoire libre minimale 18714 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 520e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-SYMMETRIC-TENSOR-DIVERGENCE` — Gate 648
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusRegularFrameSymmetricTensorDivergence4D`.
+- Résultat : La divergence intrinsèque d’un tenseur symétrique est exactement la contraction inverse-Gram des dérivées de ses coefficients avec les deux corrections de connexion. Le repère régulier de référence et la métrique fournie sont indépendants.
+- Limite : Identité lisse de la divergence ; le demi-gradient de trace doit être ajouté pour De Donder complet.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3873 Mo,
+  mémoire libre minimale 18725 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 521e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-METRIC-TENSOR-TRACE` — Gate 649
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusRegularFrameMetricTensorTrace4D`.
+- Résultat : La vraie trace tr(g⁻¹H) égale la contraction des coefficients de H par la matrice de Gram inverse dans tout repère régulier indépendant. Son différentiel intrinsèque est identifié à la dérivée locale de cette même formule.
+- Limite : Identités intrinsèques ; l’accord avec les jets complétés est distinct.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3866 Mo,
+  mémoire libre minimale 18726 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 522e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-TENSOR-TRACE-SMOOTH-AGREEMENT` — Gate 650
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2TensorTraceSmoothAgreement4D`.
+- Résultat : La formule complétée du gradient de trace, avec dérivée de l’inverse métrique et dérivée tensorielle, est exactement le différentiel intrinsèque sur les lifts lisses à toute variation métrique admissible, pas seulement à zéro.
+- Limite : La formule utilise le premier jet tensoriel ; le raccord De Donder complet l’assemble avec la divergence.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3891 Mo,
+  mémoire libre minimale 18560 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 523e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-DE-DONDER-SMOOTH-AGREEMENT` — Gate 651
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2DeDonderSmoothAgreement4D`.
+- Résultat : Les caractéristiques complétées C⁰ et L² de De Donder sont exactement les composantes de la vraie une-forme globale DgH à métrique variée, avec divergence et correction de trace conservées.
+- Limite : L’accord porte sur De Donder. La composition FP Dg(Lie_c g), les pairages mobiles de l’action et l’atlas couvert restent à construire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4107 Mo,
+  mémoire libre minimale 18568 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 524e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-DE-DONDER-FIRST-JET` — Gate 652
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricDeDonderFirstJet4D`.
+- Résultat : De Donder se factorise exactement par les valeurs et premières dérivées tensorielles en C⁰. L’extraction depuis les coefficients C² est linéaire continue et l’expression à métrique variable est conjointement lisse.
+- Limite : Cette factorisation prépare FP avec les seuls seconds jets de g et c ; elle ne construit pas encore le premier jet de Lie_c g.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3868 Mo,
+  mémoire libre minimale 18786 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 525e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-METRIC-CARTAN-COEFFICIENTS` — Gate 653
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusRegularFrameMetricCartanCoefficients4D`.
+- Résultat : Formule intrinsèque de Lie_c H dans le repère régulier fixe, avec les deux corrections de crochet et reconstruction exacte d’un fantôme lisse quelconque.
+- Limite : Raccord géométrique lisse ; la réalisation complétée et son accord sont séparés.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4091 Mo,
+  mémoire libre minimale 17527 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 526e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-CARTAN-FIRST-JET` — Gate 654
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2CartanFirstJet4D`.
+- Résultat : Valeurs et premier jet de Lie_c g construits avec les seconds jets ordonnés de g et c ; dépendance conjointement lisse sur les espaces C².
+- Limite : Expression analytique ; son identification intrinsèque utilise le raccord lisse.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4112 Mo,
+  mémoire libre minimale 17508 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 527e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-DIFFEOMORPHISM-FP-FEATURES` — Gate 655
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2DiffeomorphismFPFeatures4D`.
+- Résultat : Composition du premier jet de Cartan avec De Donder mobile ; caractéristiques FP dans C⁰ et L² conjointement lisses sur le domaine admissible.
+- Limite : L’accord avec le FP intrinsèque et l’assemblage diagonal sont des obligations distinctes.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3863 Mo,
+  mémoire libre minimale 17813 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 528e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-CARTAN-SMOOTH-JET` — Gate 656
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2CartanSmoothJet4D`.
+- Résultat : Le jet de Cartan complété égale exactement le premier jet du vrai tenseur lisse Lie_c g, pour toute métrique affine lisse ; aucun troisième jet n’est demandé aux variables complétées.
+- Limite : Accord de jets ; la composition FP et le BRST complet restent distincts.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4037 Mo,
+  mémoire libre minimale 17735 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 529e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-C2-DIFFEOMORPHISM-FP-SMOOTH-AGREEMENT` — Gate 657
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricC2DiffeomorphismFPSmoothAgreement4D`.
+- Résultat : Accord exact C⁰, ponctuel et L² du FP complété avec globalGeneralMetricDiffeomorphismFaddeevPopovLinearMap à toute métrique lisse admissible, pour le fantôme géométrique donné.
+- Limite : Le raccord SAME-ACTION full-BRST requiert encore volume/pairages mobiles, assemblage diagonal et atlas couvert.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3851 Mo,
+  mémoire libre minimale 17961 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 530e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-CANONICAL-VOLUME-RATIO` — Gate 658
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricCanonicalVolumeRatio4D`.
+- Résultat : Ratio de volume positif sur le domaine C² admissible complet ; la valeur absolue du radical non nul est localement lisse par multiplication par un signe continu fixe.
+- Limite : L’identification au vrai ratio canonique sur les lifts lisses est prouvée séparément.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3740 Mo,
+  mémoire libre minimale 17954 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 531e support pour `T03`, compteur `2/14`.
+
+### `P-T03-REGULAR-FRAME-DIFFEOMORPHISM-GHOST-TRANSITION` — Gate 659
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusRegularFrameDiffeomorphismGhostTransition4D`.
+- Résultat : Transport linéaire continu des coefficients C² d’un fantôme entre repères réguliers, accord lisse exact et transport simultané vers les deux secteurs.
+- Limite : Le même fantôme est conservé ; l’action full-BRST diagonale doit encore être assemblée.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3861 Mo,
+  mémoire libre minimale 17871 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 532e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-CANONICAL-VOLUME-SMOOTH-AGREEMENT` — Gate 660
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricCanonicalVolumeSmoothAgreement4D`.
+- Résultat : Le volume C² positif égale exactement le ratio canonique de toute métrique affine lisse admissible, par déterminant relatif et congruence des densités.
+- Limite : Le volume et les caractéristiques FP doivent encore entrer dans l’action full-BRST commune.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4136 Mo,
+  mémoire libre minimale 17666 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 533e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-VARIABLE-METRIC-DIFFEOMORPHISM-FP` — Gate 661
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedVariableMetricDiffeomorphismFP4D`.
+- Résultat : Les deux opérateurs FP mobiles sont conjointement lisses en L², alimentés par un seul fantôme C² transporté ; accord exact avec le même fantôme géométrique lisse dans les deux secteurs.
+- Limite : Support diagonal FP ; l’action/dérivée full-BRST et l’atlas couvert restent à assembler.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4118 Mo,
+  mémoire libre minimale 17673 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 534e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-DIFFEOMORPHISM-BRST-ACTION` — Gate 662
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricDiffeomorphismBRSTAction4D`.
+- Résultat : L’action BRST difféomorphe mobile conserve le volume canonique, De Donder, le carré métrique de B et FP avec les champs tensoriel, B, antighost et ghost indépendants. Elle est C² sur le domaine métrique ouvert et possède sa vraie dérivée de Fréchet.
+- Limite : Action complétée à une métrique ; accord intrinsèque et insertion physique établis séparément.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3904 Mo,
+  mémoire libre minimale 17965 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 535e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-DIFFEOMORPHISM-BRST-SMOOTH-AGREEMENT` — Gate 663
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricDiffeomorphismBRSTSmoothAgreement4D`.
+- Résultat : Les contractions en repère régulier donnent exactement la densité et l’action BRST intrinsèques à la métrique variée, avec le vrai volume et les champs non minimaux complets.
+- Limite : Accord sur les lifts lisses admissibles ; le raccord diagonal utilise un triplet géométrique partagé.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4114 Mo,
+  mémoire libre minimale 17690 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 536e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MOBILE-DIFFEOMORPHISM-BRST-ACTION` — Gate 664
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedMobileDiffeomorphismBRSTAction4D`.
+- Résultat : Les deux métriques alimentent une action BRST diagonale C² avec les poids Einstein d’origine et un seul triplet non minimal transporté. H est extrait des variations métriques existantes, sans duplication du degré de liberté métrique.
+- Limite : Le fond de jauge reste celui de cette famille ; les transitions entre fonds indépendants ne sont pas prouvées.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3899 Mo,
+  mémoire libre minimale 17971 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 537e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-MOBILE-DIFFEOMORPHISM-BRST-SMOOTH-AGREEMENT` — Gate 665
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedMobileDiffeomorphismBRSTSmoothAgreement4D`.
+- Résultat : L’action diagonale complétée égale la vraie variation BRST de la fermion de jauge à métriques variées. B, antighost et ghost sont les mêmes champs géométriques dans les deux secteurs.
+- Limite : Accord sur la famille à fond de jauge fixé ; aucune couverture d’autres branches de racine.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3895 Mo,
+  mémoire libre minimale 17915 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 538e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-FULL-BRST-ACTION` — Gate 666
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongFullBRSTAction4D`.
+- Résultat : La norme forte physique et le domaine d’origine sont conservés. L’action physique avec BRST abélien et difféomorphe mobile est C² ; son opérateur Euler est la vraie dérivée, avec les contributions métriques et non minimales.
+- Limite : Construction sur la famille forte existante ; l’accord lisse exact est séparé de la couverture globale.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4180 Mo,
+  mémoire libre minimale 17591 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 539e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-FULL-BRST-SMOOTH-AGREEMENT` — Gate 667
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongFullBRSTSmoothAgreement4D`.
+- Résultat : L’action full-BRST sur la norme forte égale exactement l’action abélienne gauge-fixed du datum courant plus le vrai BRST diagonal difféomorphe, aux mêmes métriques et champs, sur chaque direction lisse admissible.
+- Limite : Mesure canonique et fond de jauge de la famille fixés. Cet accord ne fournit pas un atlas sur toutes les configurations brutes.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4144 Mo,
+  mémoire libre minimale 17637 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 540e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-PHYSICAL-FIBER-TRANSITION` — Gate 668
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongPhysicalFiberTransition4D`.
+- Résultat : Les fibres du vrai datum physique sont classifiées par les directions effacées. Une translation affine dans la norme forte préserve l’action ; les covecteurs Euler coïncident. Un atlas concret couvre l’image admissible entière de la famille.
+- Limite : Atlas physique de cette famille, sans ajout des slots non minimaux full-BRST ni couverture d’autres branches de racine.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3941 Mo,
+  mémoire libre minimale 17830 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 541e support pour `T03`, compteur `2/14`.
+
+### `P-T03-MIXED-ROOT-METRIC-CHART-OBSTRUCTION` — Gate 669
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusMixedRootMetricChartObstruction4D`.
+- Résultat : À la racine matricielle diag(-1,1,1,1), une direction de métrique η-symétrique n’appartient pas à l’image de Sylvester. Aucun sélecteur local différentiable de racine ne peut suivre cette direction en passant par cette racine.
+- Limite : Obstruction matricielle seulement, hors de la strate Sylvester-régulière déjà prévue pour l’analyse. Ce résultat ne bloque pas la fermeture de T03 sur cette strate.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3602 Mo,
+  mémoire libre minimale 18216 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 542e support pour `T03`, compteur `2/14`.
+
+### `P-T03-VARIABLE-METRIC-DIFFEOMORPHISM-BRST-FIRST-VARIATION` — Gate 670
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusVariableMetricDiffeomorphismBRSTFirstVariation4D`.
+- Résultat : La première variation explicite conserve dρ, les dérivées conjointes de De Donder et FP, la variation de g(B,B) et les deux champs du pairage fantôme. L’intégrale canonique de cette densité égale la vraie dérivée de Fréchet.
+- Limite : Les dérivées des caractéristiques géométriques sont les fderiv effectives sur le noyau indépendant complet ; leur développement local par composantes est distinct.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3935 Mo,
+  mémoire libre minimale 17819 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 543e support pour `T03`, compteur `2/14`.
+
+### `P-T03-PAIRED-STRONG-FULL-BRST-FIBER-DESCENT` — Gate 671
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusPairedStrongFullBRSTFiberDescent4D`.
+- Résultat : Une translation affine explicite conserve le domaine fort et les projections des deux secteurs BRST. La vraie action full-BRST et son covecteur Euler coïncident entre représentants du même datum physique ayant les mêmes champs non minimaux complétés.
+- Limite : Descente dans l’image de la famille à fond de jauge fixé ; les cartes autour d’autres racines régulières restent à raccorder.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4212 Mo,
+  mémoire libre minimale 17502 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 544e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-LOCAL-ROOT-EXACT-CENTER` — Gate 672
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameLocalRootExactCenter4D`.
+- Résultat : L’inverse local C² réellement construit envoie zéro sur son centre. La branche intrinsèque en repère fini conserve donc exactement la racine stockée de toute géométrie Sylvester-régulière.
+- Limite : Égalité de centrage ; il reste à composer la branche avec la vraie variation métrique relative puis à reconstruire le datum SAME-ACTION. La strate régulière est la portée analytique déjà prévue.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3729 Mo,
+  mémoire libre minimale 18065 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 545e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-BRST-PAIRING` — Gate 673
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameBRSTPairing4D`.
+- Résultat : Les contractions covecteur-vecteur et métrique-vecteurs sont reconstruites exactement dans une famille finie génératrice redondante. Le théorème principal utilise finiteSmoothTangentFrame effectivement construit sur le quotient, sans frameEquiv ni hypothèse de repère global.
+- Limite : Identités lisses ; les caractéristiques De Donder/FP, l’action C² complétée et les données d’action doivent encore être portées sur ce modèle redondant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3907 Mo,
+  mémoire libre minimale 18000 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 546e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-DIFFEOMORPHISM-C2-CORE` — Gate 674
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameDiffeomorphismC2Core4D`.
+- Résultat : Les vrais champs vectoriels lisses sont reconstruits par leurs coefficients duaux dans la famille finie génératrice. Leur lift C² et le transport rectangulaire des coefficients sont linéaires continus, avec accord exact et conservation du même triplet BRST géométrique.
+- Limite : Le transport sur les coefficients redondants complets n’est pas déclaré inversible ; aucune base globale n’est supposée.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3738 Mo,
+  mémoire libre minimale 18043 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 547e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-METRIC-CONTRACTION` — Gate 675
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameMetricContraction4D`.
+- Résultat : Toute covecteur est reconstruit par la famille duale. La contraction métrique inverse est une somme finie exacte ; ses coefficients duaux sont de vrais champs scalaires lisses, pour une référence et une métrique indépendantes.
+- Limite : Régularité spatiale des coefficients pour une métrique lisse fournie ; le calcul conjoint en métrique C² reste distinct.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3688 Mo,
+  mémoire libre minimale 18065 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 548e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-RELATIVE-C2-ROOT` — Gate 676
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedRelativeC2Root4D`.
+- Résultat : Les deux variations métriques partagent le même coin projecteur. La cible relative C² résout (I+A₊)R=R₀+A₋ et égale exactement l’encodage de sharp(g₊+h₊)∘(g₋+h₋) sur les métriques lisses réalisant ces tenseurs. La branche Sylvester-régulière est C², satisfait son équation et conserve la racine stockée au centre.
+- Limite : Le décodage en géométrie lisse et l’admissibilité Lorentz de toutes les variations restent à construire ; une racine C² n’est pas automatiquement un rootOperator C∞.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 5066 Mo,
+  mémoire libre minimale 16732 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 549e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-METRIC-TENSOR-TRACE` — Gate 677
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameMetricTensorTrace4D`.
+- Résultat : La trace intrinsèque tr(g⁻¹H) égale la contraction double finie par les coefficients métriques inverses duaux. Son différentiel est la dérivée de cette même expression, sans base tangentielle globale.
+- Limite : Le premier jet complété et la dépendance métrique conjointe de De Donder restent à réaliser.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3683 Mo,
+  mémoire libre minimale 18107 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 550e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-DIFFEOMORPHISM-BRST-DENSITY` — Gate 678
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameDiffeomorphismBRSTDensity4D`.
+- Résultat : Les vrais De Donder, FP, g(B,B) et volume donnent une densité finie exactement égale à la densité BRST intrinsèque. L’action est indépendante de la famille et de la référence de coefficients ; la famille construite finiteSmoothTangentFrame réalise cet accord.
+- Limite : La régularité C∞ du polynôme C⁰ porte sur des caractéristiques indépendantes ; elle ne suppose pas leur réalisation conjointe depuis les métriques C².
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3751 Mo,
+  mémoire libre minimale 18069 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 551e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-INTRINSIC-SPECTRAL-POTENTIAL` — Gate 679
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameIntrinsicSpectralPotential4D`.
+- Résultat : Le déterminant de I−P+encode(L) égale le déterminant intrinsèque de L et la trace est préservée. Le potentiel β₀…β₄ dans le coin redondant est exactement matrixSpectralPotential dans toute base ponctuelle de la fibre.
+- Limite : Une base ponctuelle ne fournit aucune base globale ; la composition du potentiel avec la branche métrique et le datum d’action reste distincte.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3686 Mo,
+  mémoire libre minimale 18062 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 552e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-DIFFEOMORPHISM-BRST-SMOOTH-FEATURES` — Gate 680
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameDiffeomorphismBRSTSmoothFeatures4D`.
+- Résultat : Les caractéristiques C⁰ sont réalisées à partir des vrais opérateurs lisses. La lecture bornée des champs non minimaux C² s’y raccorde exactement ; l’intégrale canonique du polynôme est la vraie action BRST sur les lifts lisses.
+- Limite : De Donder et FP restent des entrées opérateur indépendantes de la preuve de régularité complétée ; leur réalisation conjointe métrique C²→C⁰ reste ouverte.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3772 Mo,
+  mémoire libre minimale 18033 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 553e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-COVARIANT-TENSOR-DIVERGENCE` — Gate 681
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameCovariantTensorDivergence4D`.
+- Résultat : La divergence tensorielle intrinsèque égale la contraction finie redondante des premiers jets, avec les deux corrections de connexion. La reconstruction est exacte dans toute carte holonome.
+- Limite : Identité lisse ; la réalisation conjointe complétée est fournie ensuite.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3946 Mo,
+  mémoire libre minimale 18060 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 554e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-SCALAR-C2-DERIVATIVES` — Gate 682
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameScalarC2Derivatives4D`.
+- Résultat : Les dérivées premières et secondes ordonnées suivant les générateurs sont des applications linéaires continues C²→C⁰, exactes sur les champs lisses C∞. Le calcul conserve les dérivées des coefficients duaux.
+- Limite : Deux jets seulement ; aucune identification des fantômes C∞ avec les anciens fantômes analytiques ω.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3709 Mo,
+  mémoire libre minimale 18058 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 555e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FRAME-FREE-COVARIANT-ACTION-DATA` — Gate 683
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFrameFreeCovariantActionData4D`.
+- Résultat : Un vrai datum bulk EH/Maxwell utilise les métriques de Lorentz générales et les potentiels intrinsèques. Sa conversion depuis le datum historique conserve exactement les actions stockées avec leurs poids de volume.
+- Limite : Migration du bulk seulement ; interaction, matière, multiplicateurs et frontières du datum complet restent à porter.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3867 Mo,
+  mémoire libre minimale 17818 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 556e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-INVERSE-METRIC-COEFFICIENTS` — Gate 684
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2InverseMetricCoefficients4D`.
+- Résultat : Les coefficients duaux de la vraie métrique inverse dépendent conjointement et régulièrement de la variation métrique C² sur son domaine ouvert. Leur équation et leur accord lisse exact sont établis.
+- Limite : Aucune inversion de la matrice de Gram redondante ; la métrique lisse réalisant le tenseur affine est explicitement donnée dans l’accord.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3954 Mo,
+  mémoire libre minimale 17837 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 557e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-METRIC-TENSOR-COEFFICIENTS` — Gate 685
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2MetricTensorCoefficients4D`.
+- Résultat : Une application linéaire continue extrait les vrais coefficients tensoriels depuis l’encodage relatif C². Les coefficients de la métrique affine sont globalement lisses et exacts sur les lifts lisses.
+- Limite : Lecture des coefficients ; courbure et admissibilité Lorentz globale restent distinctes.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3742 Mo,
+  mémoire libre minimale 17975 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 558e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-METRIC-TENSOR-TRACE` — Gate 686
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2MetricTensorTrace4D`.
+- Résultat : La trace et son gradient C⁰ sont conjointement lisses en métrique et tenseur C². Ils coïncident avec tr(g⁻¹H) et son vrai différentiel intrinsèque à toute métrique affine admissible.
+- Limite : Le gradient est un premier jet ; le calcul ne requiert pas de troisième dérivée tensorielle.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3989 Mo,
+  mémoire libre minimale 18037 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 559e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-KOSZUL-COEFFICIENTS` — Gate 687
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameKoszulCoefficients4D`.
+- Résultat : Les coefficients lisses des crochets et de Koszul reconstruisent la vraie connexion de Levi-Civita dans la famille génératrice redondante. Leur accord avec la connexion holonome est exact.
+- Limite : Le relèvement utilise les coefficients métriques inverses duaux, sans base globale ni inverse de Gram redondant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3983 Mo,
+  mémoire libre minimale 17954 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 560e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-KOSZUL-CONNECTION` — Gate 688
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2KoszulConnection4D`.
+- Résultat : Les valeurs et premiers jets de la métrique C² construisent conjointement les coefficients de Koszul et de connexion en C⁰. La dépendance est lisse sur le domaine métrique ouvert et l’accord avec la vraie connexion est prouvé.
+- Limite : La connexion est réalisée ; sa dérivée nécessaire à la courbure reste distincte.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3894 Mo,
+  mémoire libre minimale 18024 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 561e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-DE-DONDER` — Gate 689
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2DeDonder4D`.
+- Résultat : Le vrai opérateur De Donder est réalisé conjointement depuis la métrique et le tenseur C² vers C⁰. Les deux termes de connexion et le demi-gradient de trace sont conservés, avec accord intrinsèque en tout point du quotient.
+- Limite : La couverture ponctuelle des opérateurs n’est pas un atlas SAME-ACTION de toutes les configurations physiques.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4131 Mo,
+  mémoire libre minimale 17834 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 562e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-FIRST-JET-LEIBNIZ` — Gate 690
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2FirstJetLeibniz4D`.
+- Résultat : La règle de Leibniz est étendue à tous les champs C² complétés par densité. Elle factorise exactement le gradient de trace par les valeurs et premiers jets du tenseur et de l’inverse métrique.
+- Limite : Identité sur le noyau complété entier ; aucune hypothèse de régularité spatiale supérieure à C².
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3745 Mo,
+  mémoire libre minimale 18245 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 563e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-CARTAN-FIRST-JET` — Gate 691
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2CartanFirstJet4D`.
+- Résultat : La valeur et le premier jet du vrai Lie_c g sont construits conjointement à partir des deux jets C² de g et c. Les dérivées des coefficients de crochet sont conservées et le même fantôme géométrique est reconstruit.
+- Limite : Aucun troisième jet de c ; l’identification vaut pour les coefficients canoniques du fantôme lisse donné.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3991 Mo,
+  mémoire libre minimale 17997 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 564e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-DE-DONDER-FIRST-JET` — Gate 692
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2DeDonderFirstJet4D`.
+- Résultat : De Donder se factorise exactement par le paquet des valeurs et premiers jets tensoriels C⁰. L’expression reste conjointe en métrique et paquet, avec dérivée de l’inverse métrique et accord lisse intrinsèque.
+- Limite : Cette factorisation permet la composition FP sans reconstruire un tenseur de Cartan C² exigeant un troisième jet.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3896 Mo,
+  mémoire libre minimale 18083 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 565e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-DIFFEOMORPHISM-FP` — Gate 693
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2DiffeomorphismFP4D`.
+- Résultat : La composition effective de De Donder avec le premier jet de Cartan réalise FP conjointement en métrique et fantôme C² sur le domaine ouvert. Elle égale le vrai opérateur intrinsèque pour le même fantôme lisse.
+- Limite : La densité/action BRST doit encore assembler ce FP avec le vrai volume mobile et les champs non minimaux.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3881 Mo,
+  mémoire libre minimale 18039 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 566e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-CANONICAL-VOLUME` — Gate 694
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2CanonicalVolume4D`.
+- Résultat : Le volume canonique mobile est réalisé comme une fonction C² positive sur le domaine relatif ouvert. Le déterminant redondant retrouve le déterminant intrinsèque, puis les rapports de volumes holonomes donnent l’accord lisse exact et la valeur au centre.
+- Limite : La métrique lisse affine et l’appartenance au domaine volume sont explicites ; la réalisation de toutes les variations comme métriques Lorentz reste distincte.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4004 Mo,
+  mémoire libre minimale 17951 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 567e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-DIFFEOMORPHISM-BRST-ACTION` — Gate 695
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2DiffeomorphismBRSTAction4D`.
+- Résultat : La métrique, le tenseur de jauge et le triplet non minimal C² alimentent les vrais volume, De Donder, pairage métrique et FP. Leur action BRST intégrée est C², sa dérivée Euler est la vraie dérivée de Fréchet, et elle égale exactement l’action intrinsèque lisse pour les mêmes champs géométriques.
+- Limite : Action à un secteur avec tenseur de jauge indépendant ; le raccord diagonal au datum physique, le BRST abélien redondant et l’atlas SAME-ACTION complet restent à construire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3916 Mo,
+  mémoire libre minimale 18016 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 568e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-DIFFEOMORPHISM-BRST-ACTION` — Gate 696
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedDiffeomorphismBRSTAction4D`.
+- Résultat : Les deux actions difféomorphes partagent un seul triplet non minimal transporté. Chaque tenseur de jauge est exactement la variation métrique du même secteur. L’action avec ses poids Einstein est C² et possède sa vraie dérivée ; son accord diagonal intrinsèque est exact.
+- Limite : Raccord apparié métrique/BRST à fond de jauge fixé ; le datum physique complet et son atlas restent distincts.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4164 Mo,
+  mémoire libre minimale 17763 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 569e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-LORENZ-COVARIANT-TRACE` — Gate 697
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameLorenzCovariantTrace4D`.
+- Résultat : Le vrai Lorenz intrinsèque est exactement la contraction finie redondante des dérivées des coefficients du potentiel, avec correction de Levi-Civita. L’identité est globale grâce aux cartes holonomes existantes.
+- Limite : Les coefficients du potentiel sont ceux du vrai covecteur lisse ; le traitement des tuples redondants arbitraires exige leur projection canonique.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3878 Mo,
+  mémoire libre minimale 18054 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 570e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-ABELIAN-OPERATORS` — Gate 698
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2AbelianOperators4D`.
+- Résultat : Lorenz et FP abéliens à deux composantes sont conjointement lisses depuis la métrique et les coefficients C² vers C⁰. Les accords avec les vrais opérateurs lisses sont prouvés, FP utilisant seulement deux jets du même fantôme.
+- Limite : La formule de Lorenz porte sur des coefficients covectoriels ; leur projection physique sur les tuples redondants arbitraires est effectuée par l’action.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3898 Mo,
+  mémoire libre minimale 18060 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 571e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-ABELIAN-BRST-ACTION` — Gate 699
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2AbelianBRSTAction4D`.
+- Résultat : L’action abélienne conserve les potentiels, B, antighost et ghost indépendants, les trois termes BRST et la mesure canonique d’origine. Elle est conjointement lisse, avec vraie dérivée, et égale exactement l’action abélienne appariée sur les lifts lisses admissibles. La projection covectorielle précède Lorenz ; l’action est identique pour deux paquets de coefficients ayant le même potentiel reconstruit.
+- Limite : Contribution abélienne à métriques variables ; l’action physique et sa couverture ne sont pas supposées régulières par ce raccord.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3921 Mo,
+  mémoire libre minimale 18061 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 572e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-FULL-BRST-GAUGE-ACTION` — Gate 700
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2FullBRSTGaugeAction4D`.
+- Résultat : Les contributions abélienne et difféomorphe sont assemblées sur une seule paire de variations métriques, sans tenseur de jauge supplémentaire. Les champs non minimaux et les vrais potentiels sont conservés ; la contribution complète de jauge est C², avec vraie dérivée Euler et SAME-ACTION intrinsèque.
+- Limite : Contribution de jauge full-BRST seulement. Il reste à construire la même action physique C², le datum complet, le décodage lisse de la racine et l’atlas.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4170 Mo,
+  mémoire libre minimale 17633 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 573e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-COVECTOR-C2-PROJECTION` — Gate 701
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameCovectorC2Projection4D`.
+- Résultat : Une projection linéaire continue des coefficients covectoriels C² reconstruit leurs coefficients physiques dans la famille redondante. Elle est idempotente et fixe exactement les lifts des vrais potentiels lisses.
+- Limite : Cette projection concerne les potentiels abéliens ; elle ne déclare aucun transport rectangulaire inversible sur tous les coefficients.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3983 Mo,
+  mémoire libre minimale 17970 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 574e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-SPECTRAL-INTERACTION` — Gate 702
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2SpectralInteraction4D`.
+- Résultat : Le polynôme spectral est défini directement dans l’algèbre C² sur la racine redondante, avec `I-P` sur le complément. Il est C∞ dans la matrice, C² sur la branche appariée et égale au centre le vrai potentiel Candidate-A dans toute base ponctuelle.
+- Limite : Aucun décodage C∞ de la racine C² ni accord hors centre avec un rootOperator lisse n’est affirmé.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3942 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 575e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-INTERACTION-ACTION` — Gate 703
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2InteractionAction4D`.
+- Résultat : Le volume canonique mobile de la métrique plus multiplie le potentiel spectral sur un domaine ouvert contenant zéro. La densité et l’action intégrée sont C² et retrouvent au centre le volume relatif canonique et le potentiel physique.
+- Limite : L’accord au centre est exprimé relativement à la mesure canonique intrinsèque ; les secteurs bulk restent séparés.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3976 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 576e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-GAUGE-INTERACTION-ACTION` — Gate 704
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2GaugeInteractionAction4D`.
+- Résultat : La contribution full-BRST de jauge et l’interaction spectrale utilisent la même paire de variations métriques. Leur somme est C² sur un domaine ouvert et son opérateur Euler est sa vraie dérivée de Fréchet.
+- Limite : Les actions Einstein-Hilbert, Maxwell et les autres composantes du datum complet ne sont pas encore raccordées à ce même modèle C² redondant.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3927 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 577e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-SCALAR-CURVATURE` — Gate 705
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ScalarCurvature4D`.
+- Résultat : Les dérivées secondes métriques et premières de l’inverse construisent la dérivée de la connexion, puis Riemann, Ricci et la courbure scalaire dans la famille finie redondante. La dépendance au cœur métrique est C² sur le domaine ouvert et n’emploie aucun troisième jet.
+- Limite : L’accord avec la courbure intrinsèque sur les lifts lisses reste à prouver.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3887 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 578e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-EINSTEIN-HILBERT-ACTION` — Gate 706
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2EinsteinHilbertAction4D`.
+- Résultat : Le volume canonique et la courbure scalaire complétée donnent une densité et une action Einstein–Hilbert C² avec vraie dérivée. Deux secteurs munis de fonds et repères finis indépendants sont assemblés sur leur domaine produit ouvert.
+- Limite : L’accord lisse de la courbure, donc l’accord physique de cette action, reste séparé.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3916 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 579e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-EINSTEIN-BRST-ACTION` — Gate 707
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2EinsteinBRSTAction4D`.
+- Résultat : Les deux termes Einstein–Hilbert et la contribution full-BRST de jauge utilisent le même modèle apparié à fonds plus et moins distincts. Leur somme est C² et son Euler est sa vraie dérivée de Fréchet.
+- Limite : L’interaction vit encore dans les coordonnées de racine appariées ; le transport affine exact vers ce modèle à deux fonds reste à construire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3920 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 580e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-ACTION` — Gate 708
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalAction4D`.
+- Résultat : Le fond moins est encodé exactement comme `minusMetric - plusMetric` dans la carte commune basée sur `plusMetric`. Le recentrage affine conserve tous les champs de jauge et assemble Einstein–Hilbert apparié, full-BRST et interaction spectrale dans une seule action C² avec vraie dérivée de Fréchet.
+- Limite : L’accord intrinsèque de la courbure reste à prouver. L’inclusion du centre moins dans la branche locale de volume est une hypothèse explicite.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3930 Mo. Garde 8192 Mo, un thread, priorité haute.
+- Porte terminale : aucune ; 581e support pour `T03`, compteur `2/14`.
 
 ## 7. Les 14 portes terminales fixes
 

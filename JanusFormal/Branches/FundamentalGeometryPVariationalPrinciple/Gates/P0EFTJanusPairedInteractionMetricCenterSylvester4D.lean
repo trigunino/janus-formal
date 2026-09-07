@@ -14,6 +14,7 @@ namespace JanusFormal
 namespace P0EFTJanusPairedInteractionMetricCenterSylvester4D
 
 set_option autoImplicit false
+set_option maxRecDepth 2048
 set_option maxHeartbeats 1200000
 set_option synthInstance.maxHeartbeats 600000
 
@@ -51,6 +52,7 @@ open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalAdmissibleDoma
 open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalAdmissibleLocalActionFamily4D
 open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalInteractionC24D
 open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalLLC0FirstJetProjection4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalNineBlockC24D
 open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLocalEuler4D
 open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongMetricTotalEulerReduction4D
 open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongInteractionDerivative4D
@@ -132,8 +134,8 @@ theorem regularGeneralMetricC2PairedRelativeMatrixDerivative_zero_apply
     regularGeneralMetricC2PairedRelativeRightProductDerivative,
     regularGeneralMetricC2PairedAffineRelativeMatrix,
     regularGeneralMetricC2PairedAffineRelativeMatrixDerivative,
-    ContinuousLinearMap.add_apply, ContinuousLinearMap.comp_apply,
-    ContinuousLinearMap.flip_apply, ContinuousLinearMap.zero_apply,
+    add_apply, ContinuousLinearMap.comp_apply,
+    ContinuousLinearMap.flip_apply, Prod.fst_zero, Prod.snd_zero,
     regularGeneralMetricC2PairedRelativePlusProjection_apply,
     regularGeneralMetricC2PairedRelativeCrossProjection_apply, zero_add, add_zero]
   change _ = pairedInteractionMetricCenterVelocity period hPeriod plusBase minusBase
@@ -156,14 +158,10 @@ theorem regularGeneralMetricC2PairedRelativeRootDerivative_zero_sylvester
           plusBase minusBase 0 hZero direction) =
       pairedInteractionMetricCenterVelocity period hPeriod plusBase minusBase
         direction.2.1 direction.2.2 := by
-  have hSylvester := c2IdentityRootDerivative_sylvester period hPeriod
-    (regularGeneralMetricC2PairedRelativeMatrix period hPeriod plusBase minusBase 0)
-    hZero.2.2.2.1
-    (regularGeneralMetricC2PairedRelativeMatrixDerivative period hPeriod
-      plusBase minusBase 0 hZero.2.1 direction)
-  exact hSylvester.trans
-    (regularGeneralMetricC2PairedRelativeMatrixDerivative_zero_apply
-      period hPeriod plusBase minusBase hZero.2.1 direction)
+  unfold regularGeneralMetricC2PairedRelativeRootDerivative
+    regularGeneralMetricC2PairedRelativeRoot
+  rw [ContinuousLinearMap.comp_apply, c2IdentityRootDerivative_sylvester,
+    regularGeneralMetricC2PairedRelativeMatrixDerivative_zero_apply]
 
 section StrongMetricTest
 variable {couplings : GlobalCandidateAActionCouplings}
@@ -176,17 +174,7 @@ variable {couplings : GlobalCandidateAActionCouplings}
     period hPeriod couplings.matterMassSquared)
   (plusBase minusBase : RegularGeneralLorentzMetric period hPeriod)
 
-local instance : NormedAddCommGroup
-    (GlobalMinimalPhysicalFieldTangent period hPeriod configuration.physical) :=
-  globalMinimalPhysicalPairedMetricGaugeLLStrongNormedAddCommGroup period hPeriod
-    configuration data analysis realization plusBase minusBase
-    (canonicalDivergenceFreeLLFrame period hPeriod)
-local instance : NormedSpace Real
-    (GlobalMinimalPhysicalFieldTangent period hPeriod configuration.physical) :=
-  globalMinimalPhysicalPairedMetricGaugeLLStrongNormedSpace period hPeriod
-    configuration data analysis realization plusBase minusBase
-    (canonicalDivergenceFreeLLFrame period hPeriod)
-
+include configuration in
 /-- The pre-existing compatibility of the two base metrics supplies the
 centre hypothesis used below; no new root admissibility is assumed. -/
 theorem pairedStrongInteraction_zero_mem_lorentzMatrixDomain
@@ -207,6 +195,12 @@ theorem pairedStrongInteraction_relativeMatrixDerivative_zero
     (hZero : (0 : RelativeCore period hPeriod plusBase minusBase) ∈
       regularGeneralMetricC2PairedRelativeMatrixDomain period hPeriod plusBase minusBase)
     (test : GlobalMinimalPhysicalMetricTest period hPeriod) :
+    letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedAddCommGroup period hPeriod
+      configuration data analysis realization plusBase minusBase
+      (canonicalDivergenceFreeLLFrame period hPeriod)
+    letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedSpace period hPeriod
+      configuration data analysis realization plusBase minusBase
+      (canonicalDivergenceFreeLLFrame period hPeriod)
     let projection := globalMinimalPhysicalPairedMetricGaugeLLStrongMetricCLM
       period hPeriod configuration data analysis realization plusBase minusBase
     let direction := regularGeneralMetricC2PairedMinimalPhysicalStrongMetricDirection
@@ -217,6 +211,12 @@ theorem pairedStrongInteraction_relativeMatrixDerivative_zero
         (regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .plus))
         (regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .minus) -
           regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .plus)) := by
+  letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedAddCommGroup period hPeriod
+    configuration data analysis realization plusBase minusBase
+    (canonicalDivergenceFreeLLFrame period hPeriod)
+  letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedSpace period hPeriod
+    configuration data analysis realization plusBase minusBase
+    (canonicalDivergenceFreeLLFrame period hPeriod)
   dsimp only
   rw [regularGeneralMetricC2PairedRelativeMatrixDerivative_zero_apply,
     regularGeneralMetricC2PairedMinimalPhysicalStrongInteractionMetricCore_plus,
@@ -228,6 +228,12 @@ theorem pairedStrongInteraction_rootDerivative_zero_sylvester
     (hZero : (0 : RelativeCore period hPeriod plusBase minusBase) ∈
       regularGeneralMetricC2PairedLorentzMatrixDomain period hPeriod plusBase minusBase)
     (test : GlobalMinimalPhysicalMetricTest period hPeriod) :
+    letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedAddCommGroup period hPeriod
+      configuration data analysis realization plusBase minusBase
+      (canonicalDivergenceFreeLLFrame period hPeriod)
+    letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedSpace period hPeriod
+      configuration data analysis realization plusBase minusBase
+      (canonicalDivergenceFreeLLFrame period hPeriod)
     let projection := globalMinimalPhysicalPairedMetricGaugeLLStrongMetricCLM
       period hPeriod configuration data analysis realization plusBase minusBase
     let direction := regularGeneralMetricC2PairedMinimalPhysicalStrongMetricDirection
@@ -240,6 +246,12 @@ theorem pairedStrongInteraction_rootDerivative_zero_sylvester
         (regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .plus))
         (regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .minus) -
           regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .plus)) := by
+  letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedAddCommGroup period hPeriod
+    configuration data analysis realization plusBase minusBase
+    (canonicalDivergenceFreeLLFrame period hPeriod)
+  letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedSpace period hPeriod
+    configuration data analysis realization plusBase minusBase
+    (canonicalDivergenceFreeLLFrame period hPeriod)
   dsimp only
   rw [regularGeneralMetricC2PairedRelativeRootDerivative_zero_sylvester,
     regularGeneralMetricC2PairedMinimalPhysicalStrongInteractionMetricCore_plus,
@@ -251,6 +263,12 @@ theorem pairedStrongInteraction_rootDerivative_zero_sylvester_pointwise
       regularGeneralMetricC2PairedLorentzMatrixDomain period hPeriod plusBase minusBase)
     (test : GlobalMinimalPhysicalMetricTest period hPeriod)
     (point : EffectiveQuotient period hPeriod) :
+    letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedAddCommGroup period hPeriod
+      configuration data analysis realization plusBase minusBase
+      (canonicalDivergenceFreeLLFrame period hPeriod)
+    letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedSpace period hPeriod
+      configuration data analysis realization plusBase minusBase
+      (canonicalDivergenceFreeLLFrame period hPeriod)
     let projection := globalMinimalPhysicalPairedMetricGaugeLLStrongMetricCLM
       period hPeriod configuration data analysis realization plusBase minusBase
     let direction := regularGeneralMetricC2PairedMinimalPhysicalStrongMetricDirection
@@ -266,11 +284,17 @@ theorem pairedStrongInteraction_rootDerivative_zero_sylvester_pointwise
           (regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .plus))
           (regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .minus) -
             regularGeneralMetricC2VariationMatrix period hPeriod plusBase (test .plus))) point := by
+  letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedAddCommGroup period hPeriod
+    configuration data analysis realization plusBase minusBase
+    (canonicalDivergenceFreeLLFrame period hPeriod)
+  letI := globalMinimalPhysicalPairedMetricGaugeLLStrongNormedSpace period hPeriod
+    configuration data analysis realization plusBase minusBase
+    (canonicalDivergenceFreeLLFrame period hPeriod)
   have hEquation := pairedStrongInteraction_rootDerivative_zero_sylvester
     period hPeriod configuration data analysis realization plusBase minusBase hZero test
   have hValue := congrArg
     (fun matrix => c2FiniteMatrixValueAt period hPeriod 4 matrix point) hEquation
-  simpa only [c2FiniteMatrixSylvester, ContinuousLinearMap.add_apply,
+  simpa only [c2FiniteMatrixSylvester, add_apply,
     ContinuousLinearMap.flip_apply, c2FiniteMatrixValueAt_add,
     c2FiniteMatrixValueAt_product] using hValue
 
