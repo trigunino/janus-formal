@@ -278,17 +278,24 @@ du premier jet inverse, des dérivées de Koszul et Christoffel, puis des
 coefficients Riemann, Ricci et de leur contraction scalaire dans le repère
 fini redondant.
 
-Prochaine obligation : identifier la contraction scalaire lisse en repère
-fini à la courbure intrinsèque globale. Ajouter Maxwell et
-compléter la migration du datum d’action (potentiels
-intrinsèques à la place des coefficients à quatre indices, interaction,
-matière, multiplicateurs et frontières), réaliser conjointement la courbure C²,
-puis établir la couverture et le système local par composantes. La
-courbure intrinsèque lisse existe déjà. Il faut aussi décoder la racine C² en
-géométrie lisse : C² ne fournit pas automatiquement un rootOperator C∞.
-La portée analytique prévue est déjà la strate Sylvester-régulière ;
-l’obstruction matricielle Gate669 hors de cette strate ne la bloque pas.
-Le fond de jauge doit rester commun lors des changements de carte.
+Gates784–786 ajoutent le vrai paquet LL C⁰ de premier jet direct/PT à l’action
+physique finie, calculent sa dérivée nulle au paquet zéro et conservent le
+critère central complet. Les valeurs GHY et de bord nul Candidate-A sont aussi
+intégrées comme constantes, sans modifier l’Euler.
+
+Gates787–799 raccordent le graphe SpinC lisse et le premier jet LL à l’action
+globale, rendent le courant GHY indépendant et mobile, extraient les trois
+équations LL lisses de la stationnarité, puis ajoutent la reparamétrisation des
+générateurs nuls sans double comptage des termes de bord.
+
+Prochaine obligation : coupler le courant GHY à la métrique induite du bulk et
+établir la condition Robin/Israel, rendre variables la position et la géométrie
+des faces nulles, puis obtenir les réciproques LL par densité ou surjectivité des
+tests lisses. Il reste enfin à assembler ces blocs sur les fonds couplés et
+full-BRST arbitraires et à établir la couverture par changements de carte. La
+portée analytique reste la strate Sylvester-régulière ; l’obstruction
+matricielle Gate669 hors de cette strate ne la bloque pas. Le fond de jauge doit
+rester commun lors des changements de carte.
 Fichiers de départ : `P0EFTJanusFiniteFramePairedRelativeC2Root4D`,
 `P0EFTJanusFiniteFramePairedC2FullBRSTGaugeAction4D`,
 `P0EFTJanusFiniteFrameCovectorC2Projection4D`,
@@ -301,7 +308,7 @@ Fichiers de départ : `P0EFTJanusFiniteFramePairedRelativeC2Root4D`,
 `P0EFTJanusPairedStrongFullBRSTFiberDescent4D`.
 `T03` reste ouverte ; compteur global `2/14`.
 
-Validation 603–747 : modules, façade et audit verts, aucun `sorryAx`.
+Validation 603–799 : modules, façade et audit verts, aucun `sorryAx`.
 Les sept théorèmes publics audités de Gate708 ne dépendent que de
 `propext`, `Classical.choice` et `Quot.sound`.
 Les huit théorèmes publics audités des Gates709–711 ont la même dépendance.
@@ -12312,6 +12319,474 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : Le bloc spectral à volume gelé doit encore être raccordé à la dérivée régulière via la dérivée de la racine de Sylvester sur les lifts lisses.
 - Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3927 Mo.
 - Porte terminale : aucune ; 620e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-RELATIVE-C2-ROOT-DERIVATIVE-AT-CENTER` — Gate 748
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedRelativeC2RootDerivativeAtCenter4D`.
+- Résultat : La dérivée de Fréchet de la racine finie au centre est construite et satisfait l’équation de Sylvester dont le second membre est la dérivée de la cible relative.
+- Limite : Le second membre doit encore être calculé explicitement puis raccordé à la dérivée régulière sur les lifts lisses.
+- Validation : Lean sans avertissement, `.olean` généré.
+- Porte terminale : aucune ; 621e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-RELATIVE-C2-TARGET-DERIVATIVE-AT-CENTER` — Gate 749
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedRelativeC2TargetDerivativeAtCenter4D`.
+- Résultat : La dérivée de la cible au centre est explicitée par `P (-A₊ R₀² + A₋) P`, et la dérivée de la racine satisfait l’équation de Sylvester explicite correspondante.
+- Limite : Le raccord de cette équation à la dérivée régulière reste à prouver sur le sous-cœur lisse commun.
+- Validation : Lean sans avertissement, `.olean` généré.
+- Porte terminale : aucune ; 622e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-SPECTRAL-POTENTIAL-DERIVATIVE-AT-CENTER` — Gate 750
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2SpectralPotentialDerivativeAtCenter4D`.
+- Résultat : La dérivée du potentiel spectral C² au centre reçoit une formule ponctuelle exacte : le covecteur spectral est évalué sur la vitesse de racine finie décodée.
+- Limite : Le raccord de cette vitesse au commutateur régulier reste à prouver sur le sous-cœur lisse commun.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3953 Mo.
+- Porte terminale : aucune ; 623e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-ROOT-DERIVATIVE-POINTWISE-SYLVESTER` — Gate 751
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2RootDerivativePointwiseSylvester4D`.
+- Résultat : La vitesse de racine finie satisfait l’équation de Sylvester ponctuelle en `Matrix4`, avec cible explicite décodée et projection redondante éliminée.
+- Limite : La comparaison de cette équation au commutateur du chart régulier reste à prouver sur le sous-cœur lisse commun.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3895 Mo.
+- Porte terminale : aucune ; 624e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-ROOT-DERIVATIVE-SYLVESTER-BRIDGE` — Gate 752
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2RootDerivativeSylvesterBridge4D`.
+- Résultat : Un pont pointwise valable pour toute frame identifie le covecteur spectral C² fini à la dérivée paired régulière. Le défaut de Sylvester est le commutateur `[B, A/2]`, annulé par le covecteur spectral ; la régularité intrinsèque de Sylvester est dérivée du chart sans hypothèse séparée.
+- Limite : Il reste à raccorder le bloc d’action à volume gelé et son intégrale, puis à réintroduire le volume mobile.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4187 Mo.
+- Porte terminale : aucune ; 625e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-FROZEN-INTERACTION-DERIVATIVE-BRIDGE` — Gate 753
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2FrozenInteractionDerivativeBridge4D`.
+- Résultat : La vraie dérivée de Fréchet du bloc fini à volume gelé est construite et explicitée comme une intégrale. Sur tout lift lisse commun en jauge de volume canonique, sa densité, son action et son Euler au centre coïncident avec la dérivée d’action paired régulière.
+- Limite : Il reste à réintroduire le défaut de volume mobile déjà calculé, puis à assembler l’opérateur d’Euler-Lagrange fini complet.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4178 Mo.
+- Porte terminale : aucune ; 626e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-MOBILE-INTERACTION-DERIVATIVE-BRIDGE` — Gate 754
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2MobileInteractionDerivativeBridge4D`.
+- Résultat : Au centre, sur tout lift lisse commun en jauge de volume canonique, le vrai Euler d'interaction fini à volume mobile est exactement la dérivée d'action paired régulière à volume gelé augmentée de la dérivée explicite du défaut de volume.
+- Limite : Le défaut de volume doit encore être identifié à un résidu tensoriel lisse du secteur plus, puis raccordé à l'opérateur strong et assemblé dans l'Euler fini complet.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3945 Mo.
+- Porte terminale : aucune ; 627e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-CANONICAL-VOLUME-DERIVATIVE-BRIDGE` — Gate 755
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2CanonicalVolumeDerivativeBridge4D`.
+- Résultat : Sur tout lift métrique lisse dans une frame redondante, la trace C² finie évaluée est la trace intrinsèque de l'endomorphisme levé. La dérivée du volume canonique au centre coïncide point par point avec la demi-trace régulière, indépendamment de la frame.
+- Limite : Il reste à identifier le potentiel spectral central fini au potentiel régulier, puis à représenter leur produit avec la dérivée de volume par un résidu tensoriel lisse.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3896 Mo.
+- Porte terminale : aucune ; 628e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-SPECTRAL-POTENTIAL-VALUE-BRIDGE` — Gate 756
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2SpectralPotentialValueBridge4D`.
+- Résultat : Au centre du chart, la valeur du potentiel spectral dans toute frame finie redondante coïncide point par point avec celle du potentiel paired régulier sur la racine sélectionnée.
+- Limite : Il reste à combiner ce potentiel central avec la demi-trace du volume pour construire le résidu tensoriel explicite du défaut de volume.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3880 Mo.
+- Porte terminale : aucune ; 629e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-VOLUME-DEFECT-RESIDUAL-BRIDGE` — Gate 757
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2VolumeDefectResidualBridge4D`.
+- Résultat : Sur les lifts lisses communs, la dérivée explicite du défaut de volume mobile est exactement le pairing du résidu tensoriel pur du secteur plus ; le secteur moins est nul.
+- Limite : Il reste à assembler ce résidu mobile avec le résidu d'interaction historique à volume fixé, puis à raccorder leur somme au vrai Euler fini.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4157 Mo.
+- Porte terminale : aucune ; 630e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-MOBILE-INTERACTION-RESIDUAL-BRIDGE` — Gate 758
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2MobileInteractionResidualBridge4D`.
+- Résultat : Au centre, sur tout lift métrique lisse commun, le vrai Euler d'interaction fini à volume mobile est exactement le pairing avec un unique résidu métrique régulier complet, somme du résidu spectral historique et de la correction tensorielle de volume du secteur plus.
+- Limite : Ce résultat ferme seulement le bloc d'interaction sur les directions métriques lisses. `T03` exige encore les raccords strong des blocs Einstein–Hilbert et BRST, l'ajout des blocs Maxwell, matière, multiplicateurs et frontière absents de l'action finie, puis l'extension et le recollage sur le tangent physique complet.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3884 Mo.
+- Porte terminale : aucune ; 631e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-PROJECTED-SCALAR-GLOBAL-AGREEMENT` — Gate 759
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ProjectedScalarGlobalAgreement4D`.
+- Résultat : La couverture holonome canonique transforme l'accord local de la courbure scalaire projetée en une égalité globale point par point, ainsi qu'en l'égalité de son représentant C⁰ avec la courbure scalaire générale.
+- Limite : L'Euler Einstein–Hilbert fini doit encore être transporté vers la dérivée et le résidu regular strong ; les autres secteurs de `T03` restent inchangés.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4070 Mo.
+- Porte terminale : aucune ; 632e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-EINSTEIN-HILBERT-FROZEN-VOLUME-DECOMPOSITION` — Gate 760
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2EinsteinHilbertFrozenVolumeDecomposition4D`.
+- Résultat : L'action Einstein–Hilbert finie à volume mobile est séparée exactement en un bloc à volume gelé au centre et un défaut de volume. La même identité est prouvée pour leurs vraies dérivées de Fréchet sur le domaine admissible, et les deux blocs sont `C²`.
+- Limite : Il reste à calculer les dérivées centrales du bloc gelé et du défaut de volume, puis à identifier leur somme à la dérivée et au résidu Einstein–Hilbert regular strong.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4123 Mo.
+- Porte terminale : aucune ; 633e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-FROZEN-EINSTEIN-HILBERT-DERIVATIVE-BRIDGE` — Gate 761
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2FrozenEinsteinHilbertDerivativeBridge4D`.
+- Résultat : Sur tout lift métrique lisse en jauge de volume canonique, le bloc Einstein–Hilbert fini à volume gelé coïncide localement avec l'action régulière correspondante. Son vrai Euler au centre est la dérivée regular fixed-volume et son pairing est le résidu tensoriel de Ricci à volume stocké.
+- Limite : Le défaut dû au volume mobile doit encore recevoir sa dérivée et son résidu explicites, puis être réassemblé avec ce bloc gelé avant le raccord des deux secteurs Einstein–Hilbert.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4097 Mo.
+- Porte terminale : aucune ; 634e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-EINSTEIN-HILBERT-VOLUME-DEFECT-DERIVATIVE` — Gate 762
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2EinsteinHilbertVolumeDefectDerivative4D`.
+- Résultat : Le défaut de volume Einstein–Hilbert possède une densité C⁰ exacte et une vraie dérivée de Fréchet au centre. Son Euler est explicitement l'intégrale de la dérivée du volume canonique multipliée par le facteur scalaire central d'Einstein–Hilbert.
+- Limite : Cette dérivée doit encore être transportée sur les lifts lisses vers sa correction tensorielle regular strong, puis réassemblée avec le résidu du bloc à volume gelé.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4157 Mo.
+- Porte terminale : aucune ; 635e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-EINSTEIN-HILBERT-VOLUME-RESIDUAL-BRIDGE` — Gate 763
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2EinsteinHilbertVolumeResidualBridge4D`.
+- Résultat : Sur tout lift métrique lisse en jauge de volume canonique, le facteur scalaire central et la demi-trace du volume transforment la dérivée, puis le vrai Euler, du défaut Einstein–Hilbert fini en pairing avec une correction tensorielle regular explicite.
+- Limite : Cette correction de volume doit encore être additionnée au résidu du bloc Einstein–Hilbert gelé afin d'obtenir le résidu mobile complet, puis les deux secteurs doivent être assemblés.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4143 Mo.
+- Porte terminale : aucune ; 636e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-MOBILE-EINSTEIN-HILBERT-RESIDUAL-BRIDGE` — Gate 764
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2MobileEinsteinHilbertResidualBridge4D`.
+- Résultat : Le résidu Einstein–Hilbert regular à volume mobile additionne exactement le résidu de Ricci à volume stocké et la correction tensorielle de volume. Sur tout lift métrique lisse admissible, son pairing est le vrai Euler Einstein–Hilbert fini au centre.
+- Limite : Le raccord est fermé pour un secteur métrique ; il reste à assembler les secteurs plus et moins, puis à les combiner avec les contributions BRST et d'interaction dans l'Euler physique fini.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3899 Mo.
+- Porte terminale : aucune ; 637e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-EINSTEIN-HILBERT-DERIVATIVE-RECENTER` — Gate 765
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2EinsteinHilbertDerivativeRecenter4D`.
+- Résultat : Deux charts Einstein–Hilbert finis centrés sur des métriques lisses différentes représentent le même germe d'action après recentrage. L'Euler fini hors centre se transporte vers l'Euler central du nouveau chart et, sur les directions lisses, vers le pairing avec son résidu regular mobile.
+- Limite : Le raccord Einstein–Hilbert doit encore être assemblé pour les deux secteurs métriques, puis combiné avec les Eulers BRST et d'interaction dans le système physique.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4161 Mo.
+- Porte terminale : aucune ; 638e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-MOBILE-EINSTEIN-HILBERT-RESIDUAL-BRIDGE` — Gate 766
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2MobileEinsteinHilbertResidualBridge4D`.
+- Résultat : Au centre physique et sur toute paire de lifts métriques lisses, le vrai Euler Einstein–Hilbert fini apparié est exactement le pairing avec la paire de résidus regular à volume mobile des secteurs plus et moins.
+- Limite : Ce raccord ferme le bloc gravitationnel métrique ; il reste à lui ajouter les contributions métriques BRST et le résidu d'interaction mobile dans l'Euler physique fini.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4054 Mo.
+- Porte terminale : aucune ; 639e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-PHYSICAL-METRIC-RESIDUAL-BRIDGE` — Gate 767
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2PhysicalMetricResidualBridge4D`.
+- Résultat : Au centre physique et sur toute paire de lifts métriques lisses, le vrai Euler métrique physique fini est exactement le pairing avec la somme des résidus regular mobiles Einstein–Hilbert et d'interaction, plus la restriction métrique exacte de l'Euler full-BRST fini.
+- Limite : Le terme métrique full-BRST reste à annuler au centre des champs ou à transporter vers un résidu regular ; les autres secteurs de `T03` restent inchangés.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3905 Mo.
+- Porte terminale : aucune ; 640e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-FULL-BRST-METRIC-CENTER-VANISHING` — Gate 768
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2FullBRSTMetricCenterVanishing4D`.
+- Résultat : Lorsque tous les champs de jauge et non minimaux sont nuls, les actions BRST abélienne, difféomorphe et full-BRST finies s'annulent sur toute fibre métrique. La restriction métrique de l'Euler full-BRST s'annule donc au centre, et le vrai Euler métrique physique fini sur les lifts lisses est exactement le pairing avec le résidu regular mobile Einstein–Hilbert–interaction.
+- Limite : Le résultat reste centré sur des champs de jauge nuls et sur les directions métriques lisses ; `T03` exige encore les autres slots physiques, les fonds de champs non nuls et les secteurs absents de l'action finie.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3940 Mo.
+- Porte terminale : aucune ; 641e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-PHYSICAL-METRIC-STATIONARITY-RESIDUAL` — Gate 769
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2PhysicalMetricStationarityResidual4D`.
+- Résultat : Au centre physique avec champs de jauge nuls, l'annulation du vrai Euler métrique physique fini est équivalente à l'annulation de l'unique paire de résidus tensoriels regular mobiles Einstein–Hilbert–interaction. La séparation par les tests lisses et leur densité étendent l'équivalence à tout le cœur métrique fini.
+- Limite : Cette stationnarité ne couvre encore que le slot métrique au centre et à champs de jauge nuls ; les autres slots physiques, les fonds non nuls et les secteurs absents de l'action finie restent à raccorder pour fermer `T03`.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3913 Mo.
+- Porte terminale : aucune ; 642e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-FIELDS-CENTER-REDUCTION` — Gate 770
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalFieldsCenterReduction4D`.
+- Résultat : L'action BRST abélienne finie est paire sous inversion simultanée de tous ses champs. Par unicité de la dérivée de Fréchet, son Euler de champs s'annule donc au zéro dans chaque secteur et dans la paire. Au centre physique, tout le bloc abélien s'annule et la stationnarité de l'ensemble des champs est équivalente à celle du seul bloc non minimal difféomorphe.
+- Limite : Le slot Nakanishi–Lautrup difféomorphe conserve en général la condition de De Donder du centre métrique moins ; il reste à expliciter cette première variation. L'action physique finie ne contient toujours aucun terme Maxwell ou matière.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3937 Mo.
+- Porte terminale : aucune ; 643e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-DIFFEOMORPHISM-BRST-CENTER-EULER` — Gate 771
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2DiffeomorphismBRSTCenterEuler4D`.
+- Résultat : La ligne exacte du champ auxiliaire Nakanishi–Lautrup est calculée dans l'action difféomorphe finie. Au zéro des champs non minimaux, l'Euler complet sur une variation `(B, c̄, c)` est exactement l'intégrale du pairing entre la condition de De Donder finie et `B`; les composantes antighost et ghost s'annulent séparément.
+- Limite : Le résultat est mono-secteur ; il reste à transporter les coefficients depuis le paquet diagonal, appliquer les poids cinétiques plus/moins et spécialiser le centre physique.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3997 Mo.
+- Porte terminale : aucune ; 644e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-DIFFEOMORPHISM-CENTER-EULER` — Gate 772
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalDiffeomorphismCenterEuler4D`.
+- Résultat : Au centre physique, le secteur plus de l'Euler difféomorphe s'annule et le secteur moins est exactement le pairing De Donder fini transporté, multiplié par son poids cinétique non nul. Sa nullité équivaut donc à l'annulation de ce pairing sur tout coefficient auxiliaire transporté.
+- Limite : Le transport dans la frame redondante n'est pas l'identité sur tous les coefficients. Le passage à une condition forte globale exige le pont par relèvements lisses.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4160 Mo.
+- Porte terminale : aucune ; 645e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-PHYSICAL-STATIONARITY-RESIDUAL` — Gate 773
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2PhysicalStationarityResidual4D`.
+- Résultat : Au centre régulier, la stationnarité complète de l'action physique C² finie est équivalente à deux conditions explicites : annulation du résidu métrique mobile Einstein–Hilbert–interaction et annulation du pairing De Donder moins sur tout coefficient auxiliaire transporté. Le bloc abélien disparaît exactement.
+- Limite : Le pairing difféomorphe est encore exprimé dans la frame finie redondante. Maxwell, matière, LL et frontière ne figurent toujours pas dans cette action physique finie.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3900 Mo.
+- Porte terminale : aucune ; 646e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-C2-PHYSICAL-DIFFEOMORPHISM-DE-DONDER-RESIDUAL` — Gate 774
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularC2PhysicalDiffeomorphismDeDonderResidual4D`.
+- Résultat : Le pairing auxiliaire fini est identifié exactement au pairing du De Donder intrinsèque sur tout champ vectoriel lisse. La positivité du volume et la génération finie séparent la 1-forme ; la stationnarité physique au centre équivaut donc au résidu métrique mobile nul et à l'équation globale de De Donder du tenseur relatif moins.
+- Limite : Ce critère concerne l'action C² finie actuelle, qui ne contient encore que Einstein–Hilbert, BRST et interaction. Maxwell, matière, LL et frontière restent à intégrer dans la même action.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3945 Mo.
+- Porte terminale : aucune ; 647e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-MAXWELL-CURVATURE` — Gate 775
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2MaxwellCurvature4D`.
+- Résultat : La courbure de jauge abélienne est construite dans la frame finie à partir des jets C², puis raccordée à sa complétion lisse projetée.
+- Limite : Cette porte construit le bloc cinématique Maxwell sans encore l'insérer dans l'action physique.
+- Validation : Lean sans avertissement, `.olean` généré.
+- Porte terminale : aucune ; 648e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-MAXWELL-PAIRING` — Gate 776
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2MaxwellPairing4D`.
+- Résultat : La contraction Maxwell C⁰ dépend C∞ des données C² et satisfait les identités exactes au potentiel nul et par changement de signe.
+- Limite : Le pairing reste à identifier à la contraction intrinsèque globale.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4097 Mo.
+- Porte terminale : aucune ; 649e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-MAXWELL-INTRINSIC-BRIDGE` — Gate 777
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2MaxwellIntrinsicBridge4D`.
+- Résultat : La courbure de Cartan en frame finie et sa contraction redondante sont identifiées exactement à la courbure locale et au pairing Maxwell intrinsèque global.
+- Limite : Le pont porte sur le secteur Maxwell seul.
+- Validation : Lean sans avertissement, `.olean` généré.
+- Porte terminale : aucune ; 650e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-MOBILE-MAXWELL-ACTION` — Gate 778
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2MobileMaxwellAction4D`.
+- Résultat : La densité et l'action Maxwell à volume mobile sont C² sur leur domaine, avec Euler et assemblage pondéré des secteurs plus et moins.
+- Limite : Cette action appariée n'est pas encore composée avec le recentrage physique.
+- Validation : Lean sans avertissement, `.olean` généré.
+- Porte terminale : aucune ; 651e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-ACTION` — Gate 779
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellAction4D`.
+- Résultat : L'action physique finie est augmentée des deux blocs Maxwell pondérés après projection et recentrage, avec régularité C² et dérivée de Fréchet.
+- Limite : Maxwell est évalué autour du potentiel de fond nul ; matière, LL et frontière restent absents.
+- Validation : Lean sans avertissement, `.olean` généré.
+- Porte terminale : aucune ; 652e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-CENTER-EULER` — Gate 780
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellCenterEuler4D`.
+- Résultat : Au potentiel nul, l'Euler Maxwell mobile s'annule dans chaque secteur. L'Euler de l'action physique augmentée coïncide donc au centre avec l'Euler antérieur, et sa nullité reste équivalente au résidu métrique mobile et au De Donder global.
+- Limite : L'ajout de Maxwell ne ferme pas `T03` ; matière, LL, frontière et raccord same-action complet restent à traiter.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4258 Mo.
+- Porte terminale : aucune ; 653e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-EULER-DECOMPOSITION` — Gate 781
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellEulerDecomposition4D`.
+- Résultat : L'Euler Maxwell apparié est la somme pondérée exacte des Eulers des deux secteurs. À tout point admissible, l'Euler physique augmenté est l'ancien Euler physique plus l'Euler Maxwell apparié composé avec la projection finie.
+- Limite : Cette décomposition ne fournit pas encore le raccord strong du secteur Maxwell hors du potentiel nul.
+- Validation : Lean sans avertissement.
+- Porte terminale : aucune ; 654e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-ACTION` — Gate 782
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterAction4D`.
+- Résultat : Le cœur physique Maxwell est produit avec le graphe fermé SpinC exact. La somme des actions est C² sur son domaine ouvert, possède une dérivée de Fréchet et coïncide exactement avec le terme matière global Candidate-A sur tout état spectral fini.
+- Limite : L'accord de valeur avec l'action lisse globale est établi sur le cœur spectral fini ; un fond SpinC général demanderait une réalisation dans le graphe et un recentrage affine.
+- Validation : Lean sans avertissement.
+- Porte terminale : aucune ; 655e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-CENTER-EULER` — Gate 783
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterCenterEuler4D`.
+- Résultat : À tout point admissible, l'Euler produit se décompose en l'Euler physique Maxwell et la forme du graphe SpinC. Au centre de matière nul, cette forme s'annule ; la stationnarité reste donc équivalente au critère antérieur, résidu métrique mobile nul et De Donder global nul.
+- Limite : Le résultat est centré sur un état SpinC nul. `T03` reste ouverte : LL, frontière, fonds de matière non nuls et raccord same-action complet restent à intégrer.
+- Validation : Lean sans avertissement.
+- Porte terminale : aucune ; 656e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-ACTION` — Gate 784
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLAction4D`.
+- Résultat : Le cœur physique Maxwell–SpinC est produit avec le paquet LL C⁰ de premier jet direct/PT. La somme est C² sur son domaine ouvert, possède une dérivée de Fréchet et coïncide, sur tout paquet LL lisse, avec le terme LL global Candidate-A.
+- Limite : La dérivée LL n’est pas encore identifiée à l’Euler fort hors du paquet zéro.
+- Validation : Lean sans avertissement.
+- Porte terminale : aucune ; 657e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-CENTER-EULER` — Gate 785
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCenterEuler4D`.
+- Résultat : Tous les monômes de la densité LL ont une dérivée nulle au paquet zéro. L’Euler produit se décompose à tout point admissible et, au centre LL nul, sa stationnarité est équivalente au critère antérieur : résidu métrique mobile nul et De Donder global nul.
+- Limite : Le raccord à l’Euler LL fort hors du paquet zéro et les fonds SpinC non nuls restent ouverts.
+- Validation : Lean sans avertissement.
+- Porte terminale : aucune ; 658e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-FIXED-BOUNDARY-ACTION` — Gate 786
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryAction4D`.
+- Résultat : Les valeurs GHY et de bord nul Candidate-A sont ajoutées à l’action finie en les tenant fixes. L’action reste C², son Euler coïncide partout avec l’Euler LL, et sa spécialisation lisse contient exactement les termes globaux LL, GHY et bord nul ; le critère central est préservé.
+- Limite : Les données de bord sont figées ; aucune équation issue de leur variation n’est encore dérivée.
+- Validation : Lean sans avertissement.
+- Porte terminale : aucune ; 659e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-NONZERO-SPINC-EULER` — Gate 787
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLNonzeroSpinCEuler4D`.
+- Résultat : Pour tout état du graphe SpinC et au paquet LL nul, l’Euler à bord figé se décompose exactement en secteurs Maxwell et SpinC. Sa nullité équivaut au résidu métrique mobile nul, au De Donder global nul et au résidu spectral SpinC maximal nul.
+- Limite : Le paquet LL reste nul et les données de bord restent figées ; le raccord explicite aux configurations SpinC lisses reste à établir.
+- Validation : Lean sans avertissement.
+- Porte terminale : aucune ; 660e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-SMOOTH-SPINC-EULER` — Gate 788
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLSmoothSpinCEuler4D`.
+- Résultat : Le graphe de Green SpinC lisse et le paquet LL lisse donnent exactement les valeurs globales matière, LL, GHY et bord nul ; à LL nul, le critère résiduel métrique–De Donder–SpinC est préservé.
+- Limite : Le bord reste figé et le critère d’Euler porte encore sur le paquet LL nul.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4095 Mo.
+- Porte terminale : aucune ; 661e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-SMOOTH-FIRST-VARIATION` — Gate 789
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLSmoothFirstVariation4D`.
+- Résultat : La dérivée LL C⁰ sur paquets et directions lisses égale `fullLLEuler`; sa nullité implique toutes les équations faibles LL lisses.
+- Limite : L’implication reste à sens unique, sans réciproque sur l’espace LL complété.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3936 Mo.
+- Porte terminale : aucune ; 662e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-PRODUCT-EULER` — Gate 790
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYProductEuler4D`.
+- Résultat : Un produit indépendant bulk-LL × courant GHY positif porte un domaine ouvert, une action C² et des Eulers de frontière et total.
+- Limite : Le courant frontière n’est pas encore raccordé aux coordonnées métriques ; le bord nul reste figé.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4026 Mo.
+- Porte terminale : aucune ; 663e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-EULER-SPLIT` — Gate 791
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEulerSplit4D`.
+- Résultat : La dérivée de Fréchet se scinde exactement en Eulers bulk et GHY, et sa nullité équivaut à la stationnarité des deux facteurs.
+- Limite : Les facteurs restent indépendants, sans loi de raccord Robin/Israel.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4286 Mo.
+- Porte terminale : aucune ; 664e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-SMOOTH-BRIDGE` — Gate 792
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYSmoothBridge4D`.
+- Résultat : Sur un déplacement normal lisse, la valeur GHY mobile égale exactement le terme GHY global Candidate-A.
+- Limite : Le pont porte sur la valeur, sans identification de la dérivée frontière.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4158 Mo.
+- Porte terminale : aucune ; 665e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-RESIDUAL-SYSTEM` — Gate 793
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYResidualSystem4D`.
+- Résultat : À LL nul, la stationnarité équivaut à l’annulation des résidus métrique, De Donder et SpinC ainsi que de l’Euler GHY indépendant.
+- Limite : L’Euler frontière n’est pas encore identifié à une condition géométrique physique.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4035 Mo.
+- Porte terminale : aucune ; 666e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-SMOOTH-SPINC-SAME-ACTION` — Gate 794
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYSmoothSpinCSameAction4D`.
+- Résultat : Le ledger same-action lisse contient exactement une fois les termes Maxwell fini, matière SpinC, LL, GHY et bord nul Candidate-A.
+- Limite : L’identité porte sur la valeur, sans couplage dérivé métrique–frontière.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4224 Mo.
+- Porte terminale : aucune ; 667e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-SMOOTH-LL-DERIVATIVE` — Gate 795
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYSmoothLLDerivative4D`.
+- Résultat : L’Euler mobile GHY sur toute direction LL pure lisse égale `fullLLEuler`.
+- Limite : Le résultat reste directionnel, sans réciproque sur l’espace LL complété.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4277 Mo.
+- Porte terminale : aucune ; 668e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-SMOOTH-LL-RESIDUAL-PAIRINGS` — Gate 796
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYSmoothLLResidualPairings4D`.
+- Résultat : Les directions LL pures auxiliaire-métrique et mesure donnent les pairings des résidus forts ; la direction champ donne le pairing résiduel LL faible.
+- Limite : Les tests restent lisses et l’équation du champ reste faible, sans fermeture pointwise.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4224 Mo.
+- Porte terminale : aucune ; 669e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-STATIONARY-LL-SYSTEM` — Gate 797
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYStationaryLLSystem4D`.
+- Résultat : La stationnarité totale implique séparément, pour tout test lisse, les équations LL auxiliaire-métrique, mesure et champ.
+- Limite : Le sens réciproque et le passage général aux équations fortes restent ouverts.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4230 Mo.
+- Porte terminale : aucune ; 670e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-NULL-REPARAMETRIZATION-ACTION` — Gate 798
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullReparametrizationAction4D`.
+- Résultat : Un Hilbert de normalisations par face nulle étend le domaine produit ; l’action C² additionne bulk, un terme GHY et les termes nuls face par face sans doublon, et se réduit à l’action mobile GHY sous le contrat d’intégrabilité.
+- Limite : Seules les normalisations des générateurs varient ; la position et la géométrie intrinsèque des faces restent fixes.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4059 Mo.
+- Porte terminale : aucune ; 671e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-NULL-REPARAMETRIZATION-EULER` — Gate 799
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullReparametrizationEuler4D`.
+- Résultat : Sous le même contrat d’intégrabilité, l’Euler étendu est l’Euler de Gate790 composé avec `fst`, annule les directions nulles pures, a le même critère de stationnarité et préserve la valeur GHY lisse.
+- Limite : Aucune nouvelle équation physique de bord nul n’est obtenue ; la portée reste la reparamétrisation des générateurs.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4305 Mo.
+- Porte terminale : aucune ; 672e support pour `T03`, compteur `2/14`.
 
 ## 7. Les 14 portes terminales fixes
 

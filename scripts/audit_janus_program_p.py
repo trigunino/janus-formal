@@ -12324,6 +12324,524 @@ PROGRAM_P_GATES = {
             "theorem pairedFiniteFrameC2InteractionVolumeDefectEuler_zero_eq_explicit",
         ),
     ),
+    "P0EFTJanusFiniteFramePairedRelativeC2RootDerivativeAtCenter4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pairedFiniteFrameRelativeC2TargetDerivativeAtZero",
+            "theorem pairedFiniteFrameRelativeC2Target_hasFDerivAt_zero",
+            "def pairedFiniteFrameMetricC2RootDerivativeAtZero",
+            "theorem pairedFiniteFrameMetricC2Root_hasFDerivAt_zero",
+            "theorem pairedFiniteFrameMetricC2RootDerivativeAtZero_sylvester",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedRelativeC2TargetDerivativeAtCenter4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pairedFiniteFrameRelativeC2TargetLinearizationAtZero",
+            "theorem pairedFiniteFrameRelativeC2Target_hasFDerivAt_zero_explicit",
+            "theorem pairedFiniteFrameRelativeC2TargetDerivativeAtZero_eq_linearization",
+            "theorem pairedFiniteFrameRelativeC2TargetDerivativeAtZero_apply",
+            "theorem pairedFiniteFrameMetricC2RootDerivativeAtZero_sylvester_explicit",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2SpectralPotentialDerivativeAtCenter4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameC2MatrixValueAtCLM",
+            "theorem finiteFrameC2MatrixValueAtCLM_apply",
+            "def finiteFrameDecodeMatrixAtCLM",
+            "theorem finiteFrameDecodeMatrixAtCLM_apply",
+            "def finiteFrameC2CornerMatrixAtCLM",
+            "theorem finiteFrameC2CornerMatrixAtCLM_apply",
+            "theorem c2FiniteFrameCorner_valueAt",
+            "theorem finiteFrameC2SpectralPotential_valueAt_corner",
+            "theorem finiteFrameMatrixDecodeAt_mul_of_corner",
+            "theorem finiteFrameC2CornerMatrixAtCLM_sylvester",
+            "theorem finiteFrameC2CornerMatrixAtCLM_candidateRoot",
+            "theorem finiteFrameC2CornerMatrixAtCLM_projection",
+            "def pairedFiniteFrameC2SpectralPotentialDerivativeAtZero",
+            "def pairedFiniteFrameMetricC2RootMatrixDerivativeAtZero",
+            "theorem pairedFiniteFrameMetricC2RootMatrixDerivativeAtZero_apply",
+            "theorem pairedFiniteFrameC2SpectralPotential_hasFDerivAt_zero",
+            "theorem pairedFiniteFrameC2SpectralPotentialDerivativeAtZero_valueAt",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2RootDerivativePointwiseSylvester4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pairedFiniteFrameRelativeC2TargetMatrixDerivativeAtZero",
+            "theorem pairedFiniteFrameRelativeC2TargetMatrixDerivativeAtZero_apply",
+            "theorem pairedFiniteFrameMetricC2RootMatrixDerivativeAtZero_sylvester",
+            "theorem pairedFiniteFrameMetricC2RootMatrixDerivativeAtZero_sylvester_explicit",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2RootDerivativeSylvesterBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameDecodedSmoothLiftMatrixAt_regularMetricBasis",
+            "theorem finiteFrameCandidateRootMatrix_eq_regularPairedRoot_zero",
+            "theorem regularGeneralMetricC2LorentzChartGeometry_intrinsicSylvester_bijective",
+            "theorem finiteFrameC2CornerProductMatrixAt",
+            "theorem finiteFrameC2CornerNegProductAddMatrixAt",
+            "theorem pairedFiniteFrameRelativeC2TargetMatrixDerivativeAtZero_smooth_lifts",
+            "theorem regularPairedRelativeRoot_zero_square",
+            "theorem matrixFiniteTarget_eq_centerTarget_add_commutator",
+            "theorem pairedFiniteFrameRelativeC2TargetMatrixDerivativeAtZero_smooth_lifts_commutator",
+            "theorem regularPairedRelativeRootDerivative_zero_sylvester_pointwise",
+            "theorem pairedFiniteFrameMetricC2RootMatrixDerivativeAtZero_sylvester_smooth_lifts_commutator",
+            "theorem pairedFiniteFrameMetricC2RootMatrixDerivativeAtZero_spectral_smooth_lifts",
+            "theorem pairedFiniteFrameC2SpectralPotentialDerivativeAtZero_smooth_lifts_regular",
+            "theorem pairedFiniteFrameC2SpectralPotentialDerivativeAtZero_smooth_lifts_regular_of_chart",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2FrozenInteractionDerivativeBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pairedFiniteFrameC2FrozenVolumeInteractionDensityDerivativeAtZero",
+            "theorem pairedFiniteFrameC2FrozenVolumeInteractionDensity_hasFDerivAt_zero",
+            "theorem pairedFiniteFrameC2FrozenVolumeInteractionDensityDerivativeAtZero_valueAt",
+            "def pairedFiniteFrameC2FrozenVolumeInteractionActionDerivativeAtZero",
+            "theorem pairedFiniteFrameC2FrozenVolumeInteractionAction_hasFDerivAt_zero",
+            "theorem pairedFiniteFrameC2FrozenVolumeInteractionEuler_zero_eq_explicit",
+            "theorem pairedFiniteFrameC2FrozenVolumeInteractionActionDerivativeAtZero_apply",
+            "theorem pairedFiniteFrameC2FrozenVolumeInteractionDensityDerivativeAtZero_smooth_lifts_regular",
+            "theorem pairedFiniteFrameC2FrozenVolumeInteractionActionDerivativeAtZero_smooth_lifts_regular",
+            "theorem pairedFiniteFrameC2FrozenVolumeInteractionEuler_zero_smooth_lifts_regular",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2MobileInteractionDerivativeBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem pairedFiniteFrameC2InteractionEuler_zero_smooth_lifts_regular_add_volumeDefect",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2CanonicalVolumeDerivativeBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem c2FiniteMatrixTrace_smoothToGeneralMetricRelativeC2Core_valueAt",
+            "theorem finiteFrameCanonicalVolumeC0DerivativeAtZero_smooth_lift_regular",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2SpectralPotentialValueBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem pairedFiniteFrameC2SpectralPotential_zero_regular_valueAt",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2VolumeDefectResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pairedInteractionMobileVolumeCoefficient",
+            "def pairedInteractionMobileVolumeResidualPair",
+            "theorem pairedInteractionMobileVolumeResidualPair_plus_pairing",
+            "theorem pairedFiniteFrameC2InteractionVolumeDefectDerivativeAtZero_apply",
+            "theorem pairedFiniteFrameC2InteractionVolumeDefectDerivativeAtZero_smooth_lifts_eq_metricResidualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2MobileInteractionResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def pairedInteractionMobileSmoothMetricResidualPair",
+            "theorem pairedInteractionMobileSmoothMetricResidualPair_pairing",
+            "theorem pairedFiniteFrameC2InteractionEuler_zero_smooth_lifts_eq_mobileMetricResidualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2ProjectedScalarGlobalAgreement4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameSmoothProjectedScalarCurvature_eq_global",
+            "theorem finiteFrameProjectedScalarCurvatureC0_smooth_eq_global",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2EinsteinHilbertFrozenVolumeDecomposition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameC2FrozenVolumeEinsteinHilbertDensity",
+            "def finiteFrameC2FrozenVolumeEinsteinHilbertAction",
+            "def finiteFrameC2EinsteinHilbertVolumeDefectAction",
+            "theorem finiteFrameC2EinsteinHilbertAction_eq_frozen_add_volumeDefect",
+            "theorem finiteFrameC2FrozenVolumeEinsteinHilbertAction_contDiffOn_two",
+            "theorem finiteFrameC2EinsteinHilbertVolumeDefectAction_contDiffOn_two",
+            "def finiteFrameC2FrozenVolumeEinsteinHilbertEuler",
+            "theorem finiteFrameC2FrozenVolumeEinsteinHilbertAction_hasFDerivAt_zero",
+            "def finiteFrameC2EinsteinHilbertVolumeDefectEuler",
+            "theorem finiteFrameC2EinsteinHilbertEuler_eq_frozen_add_volumeDefect",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2FrozenEinsteinHilbertDerivativeBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameC2FrozenVolumeEinsteinHilbertDensity_smooth_regular",
+            "theorem finiteFrameC2FrozenVolumeEinsteinHilbertAction_smooth_regular",
+            "theorem finiteFrameC2FrozenVolumeEinsteinHilbertAction_line_eventuallyEq_regular",
+            "theorem finiteFrameC2FrozenVolumeEinsteinHilbertEuler_zero_smooth_regularDerivative",
+            "theorem finiteFrameC2FrozenVolumeEinsteinHilbertEuler_zero_smooth_eq_storedVolumeResidualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2EinsteinHilbertVolumeDefectDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameC2EinsteinHilbertScalarFactor",
+            "def finiteFrameC2EinsteinHilbertVolumeDefectDensity",
+            "def finiteFrameC2EinsteinHilbertVolumeDefectDerivativeAtZero",
+            "theorem finiteFrameC2EinsteinHilbertVolumeDefectAction_eq_integral",
+            "theorem finiteFrameC2EinsteinHilbertVolumeDefectAction_hasFDerivAt_zero",
+            "theorem finiteFrameC2EinsteinHilbertVolumeDefectEuler_zero_eq_explicit",
+            "theorem finiteFrameC2EinsteinHilbertVolumeDefectDerivativeAtZero_apply",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2EinsteinHilbertVolumeResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameEinsteinHilbertMobileVolumeCoefficient",
+            "def finiteFrameEinsteinHilbertMobileVolumeResidual",
+            "theorem finiteFrameEinsteinHilbertMobileVolumeResidual_pairing",
+            "theorem finiteFrameC2EinsteinHilbertScalarFactor_zero_smooth_regular",
+            "theorem finiteFrameC2EinsteinHilbertVolumeDefectDerivativeAtZero_smooth_lift_eq_residualPairing",
+            "theorem finiteFrameC2EinsteinHilbertVolumeDefectEuler_zero_smooth_lift_eq_residualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2MobileEinsteinHilbertResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def regularFrameMobileEinsteinHilbertResidual",
+            "theorem regularFrameMobileEinsteinHilbertResidual_pairing",
+            "theorem finiteFrameC2EinsteinHilbertEuler_zero_smooth_lift_eq_mobileResidualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2EinsteinHilbertDerivativeRecenter4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameC2EinsteinHilbertAction_smooth_eq_global",
+            "theorem finiteFrameC2EinsteinHilbertAction_line_eventuallyEq_recenter",
+            "theorem finiteFrameC2EinsteinHilbertEuler_smooth_recenter",
+            "theorem finiteFrameC2EinsteinHilbertEuler_smooth_recenter_eq_mobileResidualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2MobileEinsteinHilbertResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def regularFramePairedMobileEinsteinHilbertResidual",
+            "theorem finiteFramePairedC2EinsteinHilbertEuler_physicalCenter_smooth_lifts_eq_residualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2PhysicalMetricResidualBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def regularFramePairedMobileEinsteinHilbertInteractionResidual",
+            "theorem regularFramePairedMobileEinsteinHilbertInteractionResidual_pairing",
+            "theorem finiteFramePairedC2PhysicalMetricEuler_zero_smooth_lifts_eq_residualPairing_add_fullBRST",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2FullBRSTMetricCenterVanishing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameC2AbelianBRSTAction_zero_fields",
+            "theorem finiteFramePairedC2AbelianBRSTAction_zero_fields",
+            "theorem finiteFrameC2DiffeomorphismBRSTAction_zero_nonminimal",
+            "theorem finiteFramePairedDiffeomorphismBRSTAction_zero_nonminimal",
+            "theorem finiteFramePairedC2FullBRSTGaugeAction_zero_fields",
+            "theorem finiteFramePairedC2FullBRSTGaugeEuler_zero_fields_metric_apply",
+            "theorem finiteFramePairedC2PhysicalMetricEuler_zero_smooth_lifts_eq_residualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2PhysicalMetricStationarityResidual4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMetricEuler_zero_iff_residual",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalFieldsCenterReduction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameC2AbelianLorenzComponentExpression_neg",
+            "theorem finiteFrameC2AbelianFPComponentExpression_neg",
+            "theorem finiteFrameC2AbelianBRSTAction_neg_fields",
+            "theorem finiteFrameC2AbelianBRSTEuler_zero_fields_apply_fields",
+            "theorem finiteFramePairedC2AbelianBRSTEuler_zero_fields_apply_fields",
+            "theorem finiteFramePairedC2PhysicalAbelianFieldsEuler_zero",
+            "theorem finiteFramePairedC2PhysicalFieldsEuler_zero_iff_diffeomorphism",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2DiffeomorphismBRSTCenterEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameC2DiffeomorphismBRSTNakanishiLautrupDensity",
+            "def finiteFrameC2DiffeomorphismBRSTNakanishiLautrupAction",
+            "theorem finiteFrameC2DiffeomorphismBRSTDensity_nakanishiLautrup_line",
+            "theorem finiteFrameC2DiffeomorphismBRSTAction_nakanishiLautrup_line",
+            "theorem finiteFrameC2DiffeomorphismBRSTEuler_zero_nonminimal_apply_nakanishiLautrup",
+            "theorem finiteFrameC2DiffeomorphismBRSTAction_zero_B_antighost",
+            "theorem finiteFrameC2DiffeomorphismBRSTAction_zero_B_ghost",
+            "theorem finiteFrameC2DiffeomorphismBRSTEuler_zero_nonminimal_apply_antighost",
+            "theorem finiteFrameC2DiffeomorphismBRSTEuler_zero_nonminimal_apply_ghost",
+            "theorem finiteFrameC2DiffeomorphismBRSTEuler_zero_nonminimal_apply",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalDiffeomorphismCenterEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameC2DeDonderCoefficient_zero_tensor",
+            "theorem finiteFrameC2DiffeomorphismBRSTNakanishiLautrupAction_zero_tensor",
+            "theorem finiteFrameDiffeomorphismNonminimalC2Transition_fst",
+            "theorem finiteFramePairedDiffeomorphismBRSTEuler_zero_nonminimal_apply",
+            "theorem finiteFramePairedC2PhysicalDiffeomorphismFieldsEuler_zero_apply",
+            "theorem finiteFramePairedC2PhysicalDiffeomorphismFieldsEuler_zero_iff_deDonderPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2PhysicalStationarityResidual4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalEuler_zero_iff_residual_and_deDonderPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameRegularC2PhysicalDiffeomorphismDeDonderResidual4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameSmoothCovectorCoefficient",
+            "theorem finiteFrameSmoothCovector_weightedPairing_zero_iff",
+            "theorem finiteFrameC2DiffeomorphismBRSTNakanishiLautrupAction_smooth_vector",
+            "theorem finiteFrameC2DiffeomorphismBRSTNakanishiLautrupAction_transition_zero_iff_globalDeDonder",
+            "theorem finiteFramePairedC2PhysicalDiffeomorphismFieldsEuler_zero_iff_globalDeDonder",
+            "theorem finiteFramePairedC2PhysicalEuler_zero_iff_residual_and_globalDeDonder",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2MaxwellCurvature4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameSmoothGaugeCurvatureCoefficient",
+            "theorem finiteFrameGaugeCurvatureC0Coefficient_smooth",
+            "theorem finiteFrameProjectedGaugeCurvatureC0Coefficient_smooth",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2MaxwellPairing4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameMaxwellPairingC0",
+            "theorem finiteFrameMaxwellPairingC0_contDiffOn",
+            "theorem finiteFrameMaxwellPairingC0_zero",
+            "theorem finiteFrameMaxwellPairingC0_neg",
+            "theorem finiteFrameMaxwellPairingC0_smooth",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2MaxwellIntrinsicBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameSmoothGaugeCurvatureCoefficient_eq_local",
+            "theorem finiteFrameSmoothMaxwellPairing_eq_global",
+            "theorem finiteFrameMaxwellPairingC0_smooth_intrinsic",
+        ),
+    ),
+    "P0EFTJanusFiniteFrameC2MobileMaxwellAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFrameC2MobileMaxwellAction",
+            "theorem finiteFrameC2MobileMaxwellAction_contDiffOn_two",
+            "theorem finiteFrameC2MobileMaxwellAction_smooth",
+            "def finiteFramePairedC2MobileMaxwellAction",
+            "theorem finiteFramePairedC2MobileMaxwellAction_hasFDerivAt",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFramePairedC2PhysicalMaxwellAction",
+            "theorem finiteFramePairedC2PhysicalMaxwellAction_contDiffOn_two",
+            "def finiteFramePairedC2PhysicalMaxwellEuler",
+            "theorem finiteFramePairedC2PhysicalMaxwellAction_hasFDerivAt",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellCenterEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFrameC2MobileMaxwellEuler_zero_potential",
+            "theorem finiteFramePairedC2MobileMaxwellEuler_zero_potentials",
+            "theorem finiteFramePairedC2PhysicalMaxwellEuler_zero_eq",
+            "theorem finiteFramePairedC2PhysicalMaxwellEuler_zero_iff_residual_and_globalDeDonder",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellEulerDecomposition4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2MobileMaxwellEuler_eq_sector_eulers",
+            "theorem finiteFramePairedC2PhysicalMaxwellEuler_eq_old_add_maxwell",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev FiniteFramePairedC2PhysicalMaxwellSpinCMatterCore",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterDomain",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterDomain_isOpen",
+            "theorem zero_mem_finiteFramePairedC2PhysicalMaxwellSpinCMatterDomain",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterAction",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterAction_contDiffOn_two",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterEuler",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterAction_hasFDerivAt",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterAction_finite_matter",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterCenterEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterEuler_eq_maxwell_add_matter",
+            "theorem finiteFrameSpinCMatterGraphForm_zero",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterEuler_zero_eq_maxwell",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterEuler_zero_iff_maxwell",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterEuler_zero_iff_residual_and_globalDeDonder",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev FiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCore",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLDomain",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLDomain_isOpen",
+            "theorem zero_mem_finiteFramePairedC2PhysicalMaxwellSpinCMatterLLDomain",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLAction",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLAction_contDiffOn_two",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLEuler",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLAction_hasFDerivAt",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLAction_smooth_ll",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLAction_global_ll",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCenterEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem continuousEuclideanNormSq_hasFDerivAt_zero",
+            "theorem continuousLLDerivativeEnergy_hasFDerivAt_zero",
+            "theorem regularGeneralMetricC0LLDensity_hasFDerivAt_zero",
+            "theorem regularGeneralMetricC0LLRawAction_hasFDerivAt_zero",
+            "theorem regularGeneralMetricC0LLPTAction_hasFDerivAt_zero",
+            "theorem regularGeneralMetricC0LLPTAction_fderiv_zero",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLEuler_eq_old_add_ll",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLEuler_zero_eq_maxwellSpinCMatter",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLEuler_zero_iff_maxwellSpinCMatter",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLEuler_zero_iff_residual_and_globalDeDonder",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryAction",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryAction_contDiffOn_two",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler_eq_ll",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryAction_hasFDerivAt",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryAction_global_ll",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler_zero_iff_ll",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler_zero_iff_residual_and_globalDeDonder",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLNonzeroSpinCEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler_zeroLL_eq_maxwell_add_spinC",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler_zeroLL_iff_maxwell_and_spinCResidual",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler_zeroLL_iff_residuals_and_globalDeDonder",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLSmoothSpinCEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryAction_global_smooth_spinC_ll",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler_smoothSpinC_zeroLL_iff_maxwell_and_spinCResidual",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLFixedBoundaryEuler_smoothSpinC_zeroLL_iff_residuals_and_globalDeDonder",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLSmoothFirstVariation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem regularGeneralMetricC0LLPTAction_fderiv_apply_smooth",
+            "theorem regularGeneralMetricC0LLPTAction_fderiv_eq_zero_implies_fullLLEuler_smooth",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYProductEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev FiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYCore",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYDomain",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYDomain_isOpen",
+            "theorem zero_mem_finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYDomain",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYAction",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYAction_contDiffOn_two",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYBoundaryEuler",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEulerSplit4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYAction_hasFDerivAt",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_eq_bulk_add_ghy",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_eq_zero_iff_bulk_and_ghy",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYSmoothBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYAction_smooth_ghy",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYResidualSystem4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_zeroLL_iff_residuals_and_boundary",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYSmoothSpinCSameAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYAction_global_smooth_spinC_ll_ghy",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYSmoothLLDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_apply_pure_smooth_ll",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYSmoothLLResidualPairings4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_pure_smooth_llAuxMetric_eq_residualPairing",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_pure_smooth_llMeasure_eq_residualPairing",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_pure_smooth_llField_eq_weakResidualPairing",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYStationaryLLSystem4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def mobileGHYPureLLDirection",
+            "def mobileGHYLLVariation",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_eq_zero_implies_llAuxMetric_equation",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_eq_zero_implies_llMeasure_equation",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYEuler_eq_zero_implies_llField_equation",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullReparametrizationAction4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev FiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullCore",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullDomain",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullDomain_isOpen",
+            "theorem zero_mem_finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullDomain",
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullAction",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullAction_eq_mobileGHY",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullAction_contDiffOn_two",
+        ),
+    ),
+    "P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullReparametrizationEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullEuler",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullEuler_eq_mobileGHY_comp_fst",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullEuler_apply_pure_null_eq_zero",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullEuler_eq_zero_iff_mobileGHY",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullAction_smooth_ghy",
+        ),
+    ),
     "P0EFTJanusHolonomicCompactTestPushforward4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
