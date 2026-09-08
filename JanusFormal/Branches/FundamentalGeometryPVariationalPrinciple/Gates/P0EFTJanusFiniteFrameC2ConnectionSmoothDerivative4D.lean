@@ -98,9 +98,9 @@ theorem finiteFrameKoszulLowerC0Derivative_smooth
     ContinuousMap.sum_apply, smul_eq_mul]
   simp_rw [finiteFrameMetricC0SecondDerivative_smooth period hPeriod frame baseMetric variation metric hMetric]
   simp_rw [finiteFrameStructureMetricC0DerivativeTerm_smooth period hPeriod frame baseMetric variation metric hMetric]
-  simp only [smoothToContinuous_apply,
-    P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0FiniteMatrixProduct4D.smoothScalarFieldFinsetSum_apply,
-    smoothScalarFieldAdd_apply, smoothScalarFieldSub_apply, smul_eq_mul]
+  simp only [smoothToContinuous_apply, smoothScalarFieldSmul_toFun,
+    smoothScalarFieldAdd_apply, smoothScalarFieldSub_apply,
+    P0EFTJanusMappingTorusCanonicalPhysicalStrongH1C0FiniteMatrixProduct4D.smoothScalarFieldFinsetSum_apply]
   rfl
 
 def finiteFrameSmoothChristoffelDerivative

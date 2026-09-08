@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteFrameC2ScalarCurvature4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteFrameC2ProjectedScalarCompletion4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteFrameC2CanonicalVolume4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusFiniteFrameDiffeomorphismBRSTSmoothFeatures4D
 
@@ -28,6 +29,7 @@ open P0EFTJanusProgramPGeneralMetricC2VolumeDensity4D
 open P0EFTJanusMappingTorusIntrinsicEinsteinHilbertAction4D
 open P0EFTJanusFiniteFrameC2CanonicalVolume4D
 open P0EFTJanusFiniteFrameC2ScalarCurvature4D
+open P0EFTJanusFiniteFrameC2ProjectedScalarCompletion4D
 open P0EFTJanusFiniteFrameDiffeomorphismBRSTSmoothFeatures4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
@@ -63,7 +65,7 @@ def finiteFrameC2EinsteinHilbertDensity (couplings : EinsteinHilbertCouplings)
     (variation : Model) : C0Scalar period hPeriod :=
   finiteFrameCanonicalVolumeC0 period hPeriod frame baseMetric variation *
     ((1 / (2 * couplings.gravitationalCoupling)) •
-      (finiteFrameScalarCurvatureC0 period hPeriod frame baseMetric variation -
+      (finiteFrameProjectedScalarCurvatureC0 period hPeriod frame baseMetric variation -
         finiteFrameC0Constant period hPeriod (2 * couplings.cosmologicalConstant)))
 
 theorem finiteFrameC2EinsteinHilbertDensity_contDiffOn_two
@@ -71,7 +73,7 @@ theorem finiteFrameC2EinsteinHilbertDensity_contDiffOn_two
     ContDiffOn Real 2
       (finiteFrameC2EinsteinHilbertDensity period hPeriod frame baseMetric couplings) Domain :=
   (finiteFrameCanonicalVolumeC0_contDiffOn_two period hPeriod frame baseMetric).mul
-    (((finiteFrameScalarCurvatureC0_contDiffOn_two period hPeriod frame baseMetric).mono
+    (((finiteFrameProjectedScalarCurvatureC0_contDiffOn_two period hPeriod frame baseMetric).mono
       Set.inter_subset_left).sub contDiffOn_const |>.const_smul _)
 
 def finiteFrameC2EinsteinHilbertAction (couplings : EinsteinHilbertCouplings)

@@ -265,7 +265,7 @@ action d’interaction C² sur un domaine ouvert contenant zéro. Gate704 somme
 cette interaction avec la contribution full-BRST de jauge sur le même couple
 de variations et expose sa vraie dérivée de Fréchet.
 
-Gates705–708 réalisent les deux jets de connexion, Riemann, Ricci et la
+Gates705–711 réalisent les deux jets de connexion, Riemann, Ricci et la
 courbure scalaire dans la famille finie redondante. Le volume canonique donne
 une action Einstein–Hilbert C², d’abord par secteur puis pour deux fonds
 indépendants. Cette paire gravitationnelle est assemblée avec la contribution
@@ -273,9 +273,13 @@ full-BRST de jauge et possède une vraie dérivée de Fréchet. Gate708 recentre
 affinement le secteur moins par l’encodage exact de `minusMetric - plusMetric`
 et somme, sur un seul domaine ouvert, Einstein–Hilbert, full-BRST et
 interaction spectrale.
+Gates709–711 prouvent ensuite l’accord lisse des seconds jets métriques,
+du premier jet inverse, des dérivées de Koszul et Christoffel, puis des
+coefficients Riemann, Ricci et de leur contraction scalaire dans le repère
+fini redondant.
 
-Prochaine obligation : prouver l’accord de la courbure complétée avec la
-courbure intrinsèque sur les lifts lisses. Ajouter Maxwell et
+Prochaine obligation : identifier la contraction scalaire lisse en repère
+fini à la courbure intrinsèque globale. Ajouter Maxwell et
 compléter la migration du datum d’action (potentiels
 intrinsèques à la place des coefficients à quatre indices, interaction,
 matière, multiplicateurs et frontières), réaliser conjointement la courbure C²,
@@ -297,9 +301,33 @@ Fichiers de départ : `P0EFTJanusFiniteFramePairedRelativeC2Root4D`,
 `P0EFTJanusPairedStrongFullBRSTFiberDescent4D`.
 `T03` reste ouverte ; compteur global `2/14`.
 
-Validation 603–708 : modules, façade et audit verts, aucun `sorryAx`.
+Validation 603–747 : modules, façade et audit verts, aucun `sorryAx`.
 Les sept théorèmes publics audités de Gate708 ne dépendent que de
 `propext`, `Classical.choice` et `Quot.sound`.
+Les huit théorèmes publics audités des Gates709–711 ont la même dépendance.
+Les quatre théorèmes publics audités de Gate712 ont la même dépendance.
+Les deux théorèmes publics audités de Gate713 ont la même dépendance.
+Les deux théorèmes publics audités de Gate714 ont la même dépendance.
+Les trois théorèmes publics audités de Gate715 ont la même dépendance.
+Le théorème public audité de Gate716 a la même dépendance.
+Les deux théorèmes publics audités de Gate717 ont la même dépendance.
+Les deux théorèmes publics audités de Gate718 ont la même dépendance.
+Les trois théorèmes publics audités de Gate719, les quatre de Gate720 et les trois de Gate721 ont la même dépendance.
+Le théorème public audité de Gate722 a la même dépendance.
+Les quatre théorèmes publics audités des Gates723–726 ont la même dépendance.
+Les trois théorèmes publics audités des Gates727–728 ont la même dépendance.
+Les deux théorèmes publics audités des Gates729–730 ont la même dépendance.
+Les deux théorèmes publics audités des Gates731–732 ont la même dépendance.
+Les sept théorèmes publics audités des Gates733–737 ont la même dépendance.
+Les quatre théorèmes publics audités des Gates738–739 ont la même dépendance.
+Les quatre théorèmes publics audités de Gate740 ont la même dépendance.
+Les quatre théorèmes publics audités de Gate741 ont la même dépendance.
+Les quatre théorèmes publics audités de Gate742 ont la même dépendance.
+Les quatre théorèmes publics audités de Gate743 ont la même dépendance.
+Les deux théorèmes publics audités de Gate744 ont la même dépendance.
+Les quatre théorèmes publics audités de Gate745 ont la même dépendance.
+Les deux théorèmes publics audités de Gate746 ont la même dépendance.
+Les trois théorèmes publics audités de Gate747 ont la même dépendance.
 EH conserve le certificat `native_decide` préexistant du cardinal des dix
 flots. La représentation complète Maxwell de Gate618 utilise également
 ce certificat via les intégrations par parties, outre les axiomes logiques
@@ -11935,6 +11963,355 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : L’accord intrinsèque de la courbure reste à prouver. L’inclusion du centre moins dans la branche locale de volume est une hypothèse explicite.
 - Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3930 Mo. Garde 8192 Mo, un thread, priorité haute.
 - Porte terminale : aucune ; 581e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-CURVATURE-SMOOTH-JETS` — Gate 709
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2CurvatureSmoothJets4D`.
+- Résultat : Le second jet métrique, le premier jet de l’inverse et la dérivée du produit anholonomie–métrique coïncident exactement avec leurs valeurs lisses sur tout lift admissible.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3847 Mo.
+- Porte terminale : aucune ; 582e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-CONNECTION-SMOOTH-DERIVATIVE` — Gate 710
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ConnectionSmoothDerivative4D`.
+- Résultat : Les dérivées complétées de Koszul et Christoffel sont les expressions lisses obtenues par les vrais seconds jets et les règles de Leibniz.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3850 Mo.
+- Porte terminale : aucune ; 583e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-SCALAR-CURVATURE-SMOOTH-COEFFICIENTS` — Gate 711
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ScalarCurvatureSmoothCoefficients4D`.
+- Résultat : Riemann, Ricci et la courbure scalaire complétés coïncident sur tout lift admissible avec leurs expressions lisses dans le repère fini redondant.
+- Limite : L’identification tensorielle de cette contraction redondante à la courbure intrinsèque globale reste à prouver.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3854 Mo.
+- Porte terminale : aucune ; 584e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-CONNECTION-ACTUAL-DERIVATIVE` — Gate 712
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ConnectionActualDerivative4D`.
+- Résultat : Les jets lisses de Koszul et Christoffel sont identifiés aux vraies dérivées directionnelles dans le repère fini ; les expansions publiques nécessaires au pont tensoriel sont disponibles.
+- Limite : La contraction de Riemann dans le repère redondant reste à identifier à la courbure intrinsèque.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3905 Mo.
+- Porte terminale : aucune ; 585e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-RIEMANN-ACTUAL-DERIVATIVE` — Gate 713
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2RiemannActualDerivative4D`.
+- Résultat : Le coefficient lisse de Riemann complété est réécrit exactement avec les vraies dérivées directionnelles des coefficients de Christoffel, les produits quadratiques et la correction d’anholonomie.
+- Limite : La reconstruction de ce coefficient comme vecteur de Riemann intrinsèque reste à établir.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3819 Mo.
+- Porte terminale : aucune ; 586e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-RIEMANN-INTRINSIC-RECONSTRUCTION` — Gate 714
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2RiemannIntrinsicReconstruction4D`.
+- Résultat : Dans toute carte holonome, la somme des coefficients lisses de Riemann contre la famille finie redondante reconstruit exactement le vecteur de Riemann de la connexion de Levi-Civita du métrique lisse.
+- Limite : Il reste à transporter les traces redondantes Ricci et scalaire vers leurs contractions intrinsèques.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3859 Mo.
+- Porte terminale : aucune ; 587e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-PROJECTED-RICCI-INTRINSIC` — Gate 715
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ProjectedRicciIntrinsic4D`.
+- Résultat : La famille duale canonique est transportée dans chaque carte et calcule la trace de tout endomorphisme malgré la redondance. Appliquée au vecteur de Riemann reconstruit, elle donne exactement la forme bilinéaire de Ricci intrinsèque.
+- Limite : La diagonale brute de l’ancien coefficient Ricci n’est pas encore identifiée à cette trace projetée ; l’action doit employer la contraction projetée avant son accord intrinsèque.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3855 Mo.
+- Porte terminale : aucune ; 588e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-PROJECTED-SCALAR-INTRINSIC` — Gate 716
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ProjectedScalarIntrinsic4D`.
+- Résultat : La contraction du Ricci projeté par l’inverse métrique transporté dans la famille duale redondante est exactement la courbure scalaire intrinsèque locale.
+- Limite : Il reste à identifier le coefficient inverse transporté au coefficient inverse métrique lisse global, puis à migrer la courbure C² utilisée par l’action.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3886 Mo.
+- Porte terminale : aucune ; 589e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-PROJECTED-INVERSE-METRIC-BRIDGE` — Gate 717
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ProjectedInverseMetricBridge4D`.
+- Résultat : Le relèvement local du coefficient dual redondant coïncide avec le relèvement intrinsèque, et le coefficient inverse métrique transporté de Gate716 est exactement le coefficient inverse global déjà employé par le cœur C².
+- Limite : La courbure scalaire projetée doit encore être réécrite avec ce coefficient global puis substituée dans l’action C².
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4080 Mo.
+- Porte terminale : aucune ; 590e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-GLOBAL-INVERSE-PROJECTED-SCALAR` — Gate 718
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2GlobalInverseProjectedScalar4D`.
+- Résultat : La contraction de Ricci projetée écrite avec le coefficient inverse métrique global coïncide avec la contraction transportée de Gate716 et avec la courbure scalaire intrinsèque locale.
+- Limite : Il reste à construire sa réalisation C² différentiable puis à la substituer dans l’action d’Einstein–Hilbert.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3800 Mo.
+- Porte terminale : aucune ; 591e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-PROJECTED-RICCI-COMPLETION` — Gate 719
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ProjectedRicciCompletion4D`.
+- Résultat : Le Ricci projeté possède un champ lisse global, une réalisation C⁰ différentiable sur le domaine C² et un accord exact avec la projection locale intrinsèque.
+- Limite : La contraction scalaire et l’action doivent employer cette nouvelle réalisation.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3866 Mo.
+- Porte terminale : aucune ; 592e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-PROJECTED-SCALAR-COMPLETION` — Gate 720
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ProjectedScalarCompletion4D`.
+- Résultat : La courbure scalaire projetée est réalisée sur tout le domaine C², est deux fois différentiable et coïncide sur les métriques lisses avec la courbure scalaire intrinsèque dans chaque carte.
+- Limite : L’accord de l’action intégrée reste à certifier après substitution.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3883 Mo.
+- Porte terminale : aucune ; 593e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-PROJECTED-EINSTEIN-HILBERT-AGREEMENT` — Gate 721
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2ProjectedEinsteinHilbertAgreement4D`.
+- Résultat : L’action C² d’Einstein–Hilbert existante emploie désormais la courbure projetée. Sa densité lisse est intrinsèque dans chaque carte et son action est exactement son intégrale contre la mesure canonique.
+- Limite : Il reste à propager explicitement cet accord dans l’action appariée BRST/physique et jusqu’à son opérateur d’Euler–Lagrange complet.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3867 Mo.
+- Porte terminale : aucune ; 594e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PROJECTED-EINSTEIN-HILBERT-AGREEMENT` — Gate 722
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2ProjectedEinsteinHilbertAgreement4D`.
+- Résultat : Les deux secteurs de l’action C² d’Einstein–Hilbert appariée sont exactement les intégrales de leurs densités projetées intrinsèques sur toute paire de métriques lisses admissibles.
+- Limite : Il reste à combiner cet accord avec les termes BRST, matière et interaction, puis à identifier l’opérateur d’Euler–Lagrange complet.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3867 Mo.
+- Porte terminale : aucune ; 595e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PROJECTED-EINSTEIN-BRST-AGREEMENT` — Gate 723
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2ProjectedEinsteinBRSTAgreement4D`.
+- Résultat : L’action Einstein–BRST appariée sur le cœur lisse est exactement la somme des deux intégrales gravitationnelles projetées et des actions BRST abélienne et difféomorphique globales.
+- Limite : Le terme d’interaction de l’action physique reste à identifier intrinsèquement.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3873 Mo.
+- Porte terminale : aucune ; 596e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-INTERACTION-CENTER-AGREEMENT` — Gate 724
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2InteractionCenterAgreement4D`.
+- Résultat : Au centre du chart C², l’action d’interaction est l’intégrale du potentiel spectral de la racine intrinsèque dans toute base tangente.
+- Limite : Hors du centre, l’interaction reste représentée par sa racine C² locale.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3869 Mo.
+- Porte terminale : aucune ; 597e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PROJECTED-PHYSICAL-AGREEMENT` — Gate 725
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2ProjectedPhysicalAgreement4D`.
+- Résultat : Sur toute entrée lisse recentrée admissible, l’action physique expose exactement les contributions gravitationnelles intrinsèques et les deux contributions BRST globales, avec l’interaction C² inchangée.
+- Limite : L’accord intrinsèque de l’interaction générale reste limité au centre.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3878 Mo.
+- Porte terminale : aucune ; 598e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PROJECTED-PHYSICAL-CENTER-AGREEMENT` — Gate 726
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2ProjectedPhysicalCenterAgreement4D`.
+- Résultat : Aux métriques centrales Candidate-A, l’action physique complète est exactement la somme des deux intégrales d’Einstein–Hilbert intrinsèques, des blocs BRST globaux et de l’intégrale du potentiel spectral intrinsèque.
+- Limite : Il reste à transporter cette égalité d’action vers l’égalité de ses dérivées et l’opérateur d’Euler–Lagrange complet.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3956 Mo.
+- Porte terminale : aucune ; 599e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-DECOMPOSITION` — Gate 727
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerDecomposition4D`.
+- Résultat : Le vrai Euler de l’action physique est la somme des dérivées de Fréchet de ses blocs Einstein–BRST recentré et interaction.
+- Limite : Cette décomposition ne relie pas encore chaque dérivée à son résidu fort global.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3933 Mo.
+- Porte terminale : aucune ; 600e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-CHAIN-RULE` — Gate 728
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerChainRule4D`.
+- Résultat : Le recentrage affine a pour dérivée l’identité ; l’Euler physique est exactement l’Euler Einstein–BRST au point recentré plus l’Euler d’interaction projeté sur la paire métrique.
+- Limite : Il reste à identifier ces Eulers aux opérateurs forts existants et à couvrir les autres champs physiques.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4172 Mo.
+- Porte terminale : aucune ; 601e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-EINSTEIN-BRST-EULER-DECOMPOSITION` — Gate 729
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2EinsteinBRSTEulerDecomposition4D`.
+- Résultat : L’Euler Einstein–BRST est exactement la somme de l’Euler Einstein–Hilbert projeté sur la paire métrique et de l’Euler full-BRST.
+- Limite : L’identification de ces composantes aux résidus forts reste à établir.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4175 Mo.
+- Porte terminale : aucune ; 602e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-EINSTEIN-HILBERT-EULER-SECTORS` — Gate 730
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2EinsteinHilbertEulerSectors4D`.
+- Résultat : L’Euler Einstein–Hilbert apparié est la somme exacte des deux Eulers métriques sectoriels projetés par les deux coordonnées.
+- Limite : Le raccord à la forme intrinsèque forte doit encore être prouvé sur les lifts lisses.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4153 Mo.
+- Porte terminale : aucune ; 603e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-EXPANDED` — Gate 731
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerExpanded4D`.
+- Résultat : Le vrai Euler physique est développé explicitement en deux Eulers Einstein–Hilbert sectoriels, Euler full-BRST et Euler d’interaction, avec toutes les projections de produit.
+- Limite : Maxwell, matière, multiplicateurs et frontière ne figurent pas encore dans cette action C² migrée.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4134 Mo.
+- Porte terminale : aucune ; 604e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-FULL-BRST-EULER-DECOMPOSITION` — Gate 732
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2FullBRSTEulerDecomposition4D`.
+- Résultat : L’Euler full-BRST est exactement la somme des Eulers abélien et difféomorphique composés avec leurs projections C² concrètes.
+- Limite : Le raccord de ces Eulers aux équations fortes globales reste requis.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4186 Mo.
+- Porte terminale : aucune ; 605e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-FULLY-EXPANDED` — Gate 733
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerFullyExpanded4D`.
+- Résultat : Une seule application linéaire continue rassemble explicitement EH plus, EH moins, BRST abélien, BRST difféomorphique et interaction ; elle est égale au vrai Euler physique.
+- Limite : Cette formule reste sur le chart C² fini.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3894 Mo.
+- Porte terminale : aucune ; 606e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-SLOT-RESTRICTIONS` — Gate 734
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerSlotRestrictions4D`.
+- Résultat : Les restrictions aux variations métriques et aux variations de jauge sont calculées exactement. La direction métrique contient EH ±, BRST métrique et interaction ; la direction de jauge contient uniquement full-BRST.
+- Limite : Le résidu tensoriel fort doit encore être identifié avec la restriction métrique.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4150 Mo.
+- Porte terminale : aucune ; 607e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-GAUGE-SLOTS` — Gate 735
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerGaugeSlots4D`.
+- Résultat : Les variations pures abéliennes et difféomorphiques voient exactement leur Euler BRST respectif ; les autres blocs s’annulent par linéarité.
+- Limite : Les équations internes B, antighost et ghost restent à extraire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4152 Mo.
+- Porte terminale : aucune ; 608e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-ABELIAN-BRST-EULER-SECTORS` — Gate 736
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2AbelianBRSTEulerSectors4D`.
+- Résultat : L’Euler BRST abélien apparié se décompose exactement en ses deux Eulers sectoriels projetés.
+- Limite : Chaque Euler sectoriel doit encore être séparé entre potentiel, B, antighost et ghost.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4170 Mo.
+- Porte terminale : aucune ; 609e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-DIFFEOMORPHISM-BRST-EULER-SECTORS` — Gate 737
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedDiffeomorphismBRSTEulerSectors4D`.
+- Résultat : L’Euler BRST difféomorphique apparié est la somme des deux Eulers sectoriels tirés en arrière, avec les poids cinétiques Candidate-A exacts.
+- Limite : Le triplet non minimal partagé et les directions métriques doivent encore être extraits composante par composante.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4163 Mo.
+- Porte terminale : aucune ; 610e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-STATIONARITY-SPLIT` — Gate 738
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerStationaritySplit4D`.
+- Résultat : L’Euler physique est nul si et seulement si ses applications linéaires continues restreintes aux facteurs métrique et champs sont toutes deux nulles ; leurs valeurs concrètes sont calculées.
+- Limite : Le système reste faible sur le chart fini.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4164 Mo.
+- Porte terminale : aucune ; 611e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-EQUATIONS` — Gate 739
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerEquations4D`.
+- Résultat : La stationnarité du vrai Euler physique équivaut exactement, pour toute variation, au système métrique EH ± + BRST + interaction et au système de champs full-BRST.
+- Limite : Il reste à identifier le système métrique au résidu tensoriel fort et à compléter l’action par Maxwell, matière, multiplicateurs et frontière.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3900 Mo.
+- Porte terminale : aucune ; 612e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-EULER-THREE-BLOCK-SPLIT` — Gate 740
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalEulerThreeBlockSplit4D`.
+- Résultat : La stationnarité physique est séparée exactement en trois applications linéaires continues nulles : métrique, champs abéliens appariés et champs difféomorphiques partagés. Les deux restrictions de jauge sont identifiées à leurs Eulers BRST.
+- Limite : Les champs abéliens ± et les triplets non minimaux internes restent à séparer ; le transport vers le cœur métrique fort historique reste ouvert.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4160 Mo.
+- Porte terminale : aucune ; 613e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-PAIRED-RELATIVE-SMOOTH-CORE-BRIDGE` — Gate 741
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularPairedRelativeSmoothCoreBridge4D`.
+- Résultat : Les charts métriques fini redondant et régulier paired-relative sont reliés par les deux mêmes tenseurs lisses. La relation inclut les deux cœurs natifs, la matrice plus et la matrice croisée moins-plus ; elle est fonctionnelle dans les deux sens et raccorde les origines.
+- Limite : Le raccord porte sur les sous-cœurs lisses denses ; aucune extension canonique entre les deux complétions n’est encore prouvée.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4027 Mo.
+- Porte terminale : aucune ; 614e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-PAIRED-RELATIVE-SMOOTH-GRAPH` — Gate 742
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularPairedRelativeSmoothGraph4D`.
+- Résultat : La compatibilité lisse est fermée par addition et homothétie, définit un sous-module graphe et ses deux projections sont injectives.
+- Limite : Le graphe ne porte que sur les représentants lisses ; aucune extension aux complétions n’est encore prouvée.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4157 Mo.
+- Porte terminale : aucune ; 615e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-PAIRED-RELATIVE-SMOOTH-RANGE-EQUIVALENCE` — Gate 743
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularPairedRelativeSmoothRangeEquivalence4D`.
+- Résultat : Les projections du graphe définissent deux images lisses et une équivalence linéaire canonique entre l’image fini redondant et l’image régulière paired-relative, avec les identités directe et inverse sur chaque élément du graphe.
+- Limite : L’équivalence reste limitée aux images lisses ; son extension topologique aux complétions exige encore une isométrie ou des bornes bilatérales.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4133 Mo.
+- Porte terminale : aucune ; 616e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-REGULAR-PAIRED-RELATIVE-SMOOTH-DERIVATIVE-TRANSPORT` — Gate 744
+
+- État : `DONE` (2026-09-07). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameRegularPairedRelativeSmoothDerivativeTransport4D`.
+- Résultat : Les dérivées linéaires des deux charts se restreignent aux images lisses communes ; leur compatibilité point par point équivaut à l’égalité après transport, et leur annulation sur les deux images est équivalente.
+- Limite : Il reste à prouver la compatibilité pour les dérivées concrètes de chaque terme d’action et à étendre l’annulation depuis le cœur dense lorsque nécessaire.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3974 Mo.
+- Porte terminale : aucune ; 617e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-INTERACTION-FROZEN-VOLUME-DECOMPOSITION` — Gate 745
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2InteractionFrozenVolumeDecomposition4D`.
+- Résultat : L’interaction finie à volume mobile est séparée exactement en une action à volume gelé au centre et un défaut de volume. La même identité est prouvée pour leurs vraies dérivées de Fréchet sur le domaine admissible.
+- Limite : Le raccord au chart régulier concerne d’abord le bloc à volume gelé ; le défaut de volume doit rester une contribution métrique distincte.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3902 Mo.
+- Porte terminale : aucune ; 618e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-CANONICAL-VOLUME-DERIVATIVE-AT-CENTER` — Gate 746
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameCanonicalVolumeDerivativeAtCenter4D`.
+- Résultat : La dérivée de Fréchet du coefficient de volume canonique C⁰ au centre est construite explicitement ; elle vaut la densité de volume de base multipliée par la demi-trace de la variation métrique plus.
+- Limite : Il reste à multiplier cette dérivée par le potentiel spectral central pour expliciter le défaut de volume de l’interaction.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4098 Mo.
+- Porte terminale : aucune ; 619e support pour `T03`, compteur `2/14`.
+
+### `P-T03-FINITE-FRAME-C2-INTERACTION-VOLUME-DEFECT-DERIVATIVE` — Gate 747
+
+- État : `DONE` (2026-09-08). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFrameC2InteractionVolumeDefectDerivative4D`.
+- Résultat : Le défaut de volume de l’interaction est représenté par une densité C⁰ exacte. Sa vraie dérivée au centre est l’intégrale de la dérivée de volume en demi-trace multipliée par le potentiel spectral central et par l’échelle d’interaction.
+- Limite : Le bloc spectral à volume gelé doit encore être raccordé à la dérivée régulière via la dérivée de la racine de Sylvester sur les lifts lisses.
+- Validation : Lean sans avertissement, `.olean` généré ; pic arbre 3927 Mo.
+- Porte terminale : aucune ; 620e support pour `T03`, compteur `2/14`.
 
 ## 7. Les 14 portes terminales fixes
 
