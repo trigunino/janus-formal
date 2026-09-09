@@ -12937,6 +12937,30 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : la réalisation par des densités locales de jets reste ouverte.
 - Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
 
+### `P-T04-T03-METRIC-BOUNDARY-EULER-SPLIT` — Gate 820
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/MÉTRIQUE–BORD`.
+- Gate : `P0EFTJanusProgramPT04T03MetricBoundaryEulerSplit4D`.
+- Résultat : projections linéaires continues vers les jambes old
+  physique/Maxwell/SpinC et GHY mobile ; sur le domaine admissible de `T03`,
+  l'Euler métrique–bord est exactement leur somme sur le graphe contraint.
+- Limite : le résidu PDE fort séparant cette somme contrainte reste à
+  construire ; seule son obligation typée et son transport vers `T03` sont
+  fournis.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-CUT-BULK-LOCAL-DENSITY-STOKES-BRIDGE` — Gate 821
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/DENSITÉ-LOCALE-PARTIELLE`.
+- Gate : `P0EFTJanusProgramPT05CutBulkLocalDensityStokesBridge4D`.
+- Résultat : cochaîne locale réellement typée du courant scalaire cut-bulk et
+  de sa densité de première feuille, intégrations explicites, loi de Stokes
+  globale existante et identification de l'incidence
+  `bulk → nonNullBoundary` avec la composante `dH` de Gate 819.
+- Limite : ce secteur de courant scalaire ne fournit pas encore les densités
+  lagrangiennes de jets `T03` métrique/GHY, nulle, joint ou LL.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

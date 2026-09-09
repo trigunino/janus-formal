@@ -186,6 +186,16 @@ and its distinguished cochains evaluate to the exact `T03` action and Euler
 covector. Local jet-density cochains remain open. Thus `T04` and `T05` remain
 open and the terminal audit stays at `3/14`.
 
+Gate 820 splits the exact `T03` metric--boundary Euler covector on its
+metric-matching graph into the existing old physical/Maxwell/SpinC and mobile
+GHY contributions. It types the remaining separating strong-residual problem
+on that constrained graph but does not construct its residual. Gate 821 gives
+a genuine local cut-bulk scalar-current density, its first-sheet boundary
+density and their integrations; the existing Stokes law is exactly the
+`bulk → nonNullBoundary` component of Gate 819's `dH`. This is not yet the
+metric/GHY, null, joint or LL jet Lagrangian density system of `T03`. Hence
+`T04` and `T05` remain open and the audit stays at `3/14`.
+
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`

@@ -398,11 +398,15 @@ exacts de T03, ainsi que les quatre restrictions physiques exactes ; le bloc LL
 possède son système fort sur les relèvements lisses et la normalisation nulle
 est exactement indépendante de l'action. Gate 818 construit les résidus Riesz
 primaux des blocs position nulle et intrinsèque nulle, leur séparation pointwise
-et leurs identités de Helmholtz propres et croisées.
+et leurs identités de Helmholtz propres et croisées. Gate 820 décompose
+exactement l'Euler métrique–bord de `T03`, sur le graphe de raccord métrique et
+le domaine admissible, en contributions old physique/Maxwell/SpinC et GHY
+mobile.
 
-**Reste :** construire le résidu métrique–bord, donner les formules
-jet-géométriques locales des deux résidus nuls et raccorder ces trois blocs au
-système jet-PDE full-BRST. `T04` reste ouverte.
+**Reste :** construire le résidu PDE fort séparant cette somme contrainte
+métrique–bord, donner les formules jet-géométriques locales des deux résidus
+nuls et raccorder ces trois blocs au système jet-PDE full-BRST. L'obligation du
+premier résidu est désormais typée, mais reste inhabitée. `T04` reste ouverte.
 
 ### T05 — `variationalBicomplexObstructionVanishing`
 
@@ -412,11 +416,15 @@ cycles/frontières et l'exactitude de l'obstruction pour une donnée de premièr
 variation fournie. Gate 819 donne une réalisation cellulaire relative intégrée
 avec `dH` et `dV` non nuls : l'obstruction y est non nulle comme cochaîne mais sa
 classe est exacte, et les cochaînes distinguées s'évaluent sur l'action et
-l'Euler exacts de T03.
+l'Euler exacts de T03. Gate 821 ajoute une cochaîne locale réellement typée du
+courant scalaire cut-bulk et de sa densité de première feuille, leurs
+intégrations et la loi de Stokes identifiée à la composante
+`bulk → nonNullBoundary` du `dH` de Gate 819.
 
-**Reste :** réaliser ces cochaînes et différentielles par les densités locales
-de jets exactes de T03 et prouver les identités locales de Stokes/contact.
-`T05` reste ouverte ; audit terminal `3/14`.
+**Reste :** réaliser les secteurs métrique/GHY, nul, joint et LL par les
+densités lagrangiennes locales de jets exactes de T03, puis prouver toutes les
+identités locales de Stokes/contact. Le pont Gate 821 ne traite qu'un courant
+scalaire cut-bulk. `T05` reste ouverte ; audit terminal `3/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
