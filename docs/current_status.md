@@ -204,8 +204,9 @@ null factorization has no spacetime embedding or screen derivatives. Gate 831
 assembles these blocks with LL into a residual system exactly equivalent to
 the admissible T03 Euler equation, including the true strong LL equations on
 smooth lifts. Gate 832 restricts the exact T03 Helmholtz Jacobian symmetry to
-any pair of the four physical block injections. Local metric/boundary and null
-jet formulas are still absent, so `T04` remains open.
+any pair of the four physical block injections. Local metric/boundary formulas
+and a factorization of the null residuals through geometric jets are still
+absent, so `T04` remains open.
 
 Gates 823--824 and 826--829 realize the normalization-to-joint transgression,
 the first-sheet GHY density, the LL density, all finite null-face densities and
@@ -218,6 +219,21 @@ integrated carrier into the four Gate-819 relative-cochain slots and recovers
 the canonical bulk, GHY and faithful null action sum. This map is not linear
 and no `dH`/`dV` commutation is proved, so `T05` remains open and the terminal
 audit stays at `3/14`.
+
+Gates 834--835 prove the finite null-source-to-joint `dH` integration identity
+and its reparametrization naturality at the cellular degrees of Gate 819. They
+do not construct a global atlas transformation law or the full geometric
+bicomplex. Gate 836 supplies the genuine smooth SpinC local density and its
+integral bridge to the graph action only on the smooth image of the graph
+domain. Thus the general graph-domain density remains open.
+
+Gate 837 extracts genuine joint second jets of the faithful null embedding and
+of each ambient- and screen-metric coefficient at the T03 null component. It
+also identifies the faithful Euler covector and the two null Riesz pairings
+with derivatives of the geometric action. No differentiation under the
+null-face integral or residual factorization through those jets is proved.
+Consequently `T04` and `T05` remain open and the terminal audit stays at
+`3/14`.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

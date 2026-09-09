@@ -1,6 +1,6 @@
 # Programme P — bilan du reste à faire après la PR #60
 
-Date de référence : 2026-08-26.
+Date de référence : 2026-09-09.
 
 ## 1. Règle de lecture
 
@@ -12,13 +12,13 @@ Ce document distingue trois niveaux qui ne doivent pas être confondus :
 3. les quatorze portes terminales du registre canonique.
 
 La PR #60 poursuivait volontairement l'architecture avant le nettoyage final
-de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01` a été
-fermée séparément le 2026-08-26.
+de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01`, `T02`
+et `T03` ont depuis été fermées séparément.
 
 Le compteur officiel demeure :
 
 ```text
-1 / 14 portes terminales.
+3 / 14 portes terminales.
 ```
 
 Une porte ne peut être cochée qu'après construction de ses objets concrets,
@@ -408,13 +408,16 @@ de T03 dans un 0-jet fini explicite, avec normalisation null/joint nulle. Gate
 T03 admissible, et remplace LL par ses trois équations fortes sur les
 relèvements lisses. Gate 832 donne simultanément les dix réciprocités propres
 et croisées en restreignant le Jacobien de Helmholtz exact aux quatre
-injections physiques.
+injections physiques. Gate 837 extrait les vrais 2-jets joints de l'embedding
+fidèle et de chaque coefficient des métriques ambiante et d'écran au composant
+nul T03, puis identifie l'Euler fidèle et les pairings Riesz nuls au `fderiv`
+de l'action géométrique.
 
 **Reste :** remplacer le graphe scalaire par les formules PDE locales en jets
-métriques/GHY, donner les formules spacetime d'embedding et d'écran des
-résidus nuls, puis raccorder ces blocs et le secteur LL sur tout le domaine au
-système jet-PDE full-BRST et à ses identités de Helmholtz locales. `T04` reste
-ouverte.
+métriques/GHY, relier les jets géométriques nuls de Gate 837 aux résidus par
+différentiation sous l'intégrale et factorisation locale, puis raccorder ces
+blocs et le secteur LL sur tout le domaine au système jet-PDE full-BRST et à
+ses identités de Helmholtz locales. `T04` reste ouverte.
 
 ### T05 — `variationalBicomplexObstructionVanishing`
 
@@ -437,13 +440,20 @@ exactement aux actions existantes ; SpinC demeure une frontière intégrée typ�
 Gate 830 les rassemble dans un carrier de densités réellement stratifié avec
 intégration sectorielle. Gate 833 intègre ce carrier vers les quatre strates de
 la cochaîne relative de Gate 819 et récupère exactement la somme canonique des
-actions bulk/SpinC/LL, GHY et nulles fidèles.
+actions bulk/SpinC/LL, GHY et nulles fidèles. Gate 834 prouve la commutation
+d'intégration avec l'arête `dH` finie source nulle vers joints. Gate 835 établit
+la naturalité de reparamétrisation correspondante aux degrés cellulaires de
+Gate 819, sans transformation globale d'atlas. Gate 836 construit la vraie
+densité locale SpinC lisse et l'identifie à l'action de graphe sur la seule
+image lisse de son domaine.
 
-**Reste :** construire la densité locale SpinC, un carrier commun de jets
-stratifiés, les vrais différentiels total/contact `dH` et `dV`, leurs lois de
-bicomplexe et prouver que l'intégration de Gate 833 commute avec eux. Il faut ensuite
-dériver localement `dV L = E + dH θ` et appliquer l'exactitude de Gate 815 à la
-réalisation T03 recollée. `T05` reste ouverte ; audit terminal `3/14`.
+**Reste :** étendre la densité locale SpinC au domaine de graphe général,
+construire un carrier commun de jets stratifiés, les vrais différentiels
+total/contact `dH` et `dV`, leurs lois de bicomplexe et la naturalité globale
+d'atlas, puis prouver que l'intégration de Gate 833 commute avec eux au-delà de
+l'arête nulle de Gate 834. Il faut ensuite dériver localement
+`dV L = E + dH θ` et appliquer l'exactitude de Gate 815 à la réalisation T03
+recollée. `T05` reste ouverte ; audit terminal `3/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
@@ -636,7 +646,7 @@ dimensionnée.
 ## 8. Conclusion
 
 Programme P n'est pas « presque fini » au sens des quatorze portes : le
-compteur officiel est désormais `1/14`.
+compteur officiel est désormais `3/14`.
 
 Il est en revanche très avancé au niveau de l'infrastructure : géométrie,
 champs, action régulière, Dirac, Euler/Helmholtz chartwise et une architecture

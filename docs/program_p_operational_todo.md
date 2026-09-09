@@ -13090,6 +13090,53 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   linéaire et aucune commutation avec `dH` ou `dV` n'est encore prouvée.
 - Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
 
+### `P-T05-FINITE-NULL-HORIZONTAL-INTEGRATION-MORPHISM` — Gate 834
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/dH-NUL→JOINT`.
+- Gate : `P0EFTJanusProgramPT05FiniteNullHorizontalIntegrationMorphism4D`.
+- Résultat : la somme finie des transgressions locales nulles est envoyée par
+  le `dH` de Gate 819 sur la somme des variations d'actions de joints, avec
+  spécialisation exacte à la géométrie nulle fidèle de T03.
+- Limite : seule l'arête horizontale source nulle vers joints est traitée ; ni
+  `dH` géométrique complet ni `dV` n'est construit.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-GEOMETRIC-NULL-REPARAMETRIZATION-INTEGRATION-NATURALITY` — Gate 835
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/NATURALITÉ-NULLE`.
+- Gate :
+  `P0EFTJanusProgramPT05GeometricNullReparametrizationIntegrationNaturality4D`.
+- Résultat : la reparamétrisation des densités nulles et de joints préserve
+  leur somme intégrée ; sa variation de joint est exactement l'image `dH` de
+  Gate 834 aux degrés cellulaires de Gate 819.
+- Limite : aucune loi de transformation globale d'atlas ni bicomplexe
+  géométrique complet n'est obtenue.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-SPINC-MATTER-SMOOTH-LOCAL-DENSITY-BRIDGE` — Gate 836
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/SPINC-LISSE`.
+- Gate : `P0EFTJanusProgramPT05SpinCMatterSmoothLocalDensityBridge4D`.
+- Résultat : la densité locale SpinC lisse issue du véritable opérateur
+  `2D + m²` s'intègre en l'action lisse existante et, par le pont Green
+  géométrique, en l'action de graphe utilisée par Gate 828.
+- Limite : l'identification au domaine de graphe ne vaut que sur l'image des
+  champs SpinC lisses ; aucune surjectivité vers le graphe maximal n'est
+  prouvée.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T04-T03-FAITHFUL-NULL-GEOMETRIC-SECOND-JET` — Gate 837
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/2-JETS-NULS`.
+- Gate : `P0EFTJanusProgramPT04T03FaithfulNullGeometricSecondJet4D`.
+- Résultat : vrais 2-jets joints de l'embedding et des coefficients des
+  métriques ambiante et d'écran, centrés sur le composant physique nul T03 ;
+  l'Euler fidèle et les pairings Riesz position/écran sont reliés exactement
+  au `fderiv` de l'action géométrique.
+- Limite : aucune différentiation sous l'intégrale nulle ni factorisation des
+  résidus par ces jets n'est encore prouvée.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
