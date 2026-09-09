@@ -392,19 +392,26 @@ composantes, opérateur global recollé, domaines et termes de bord cohérents.
 ### T04 — `nonlinearHelmholtzConditionsProved`
 
 **Déjà disponible :** Helmholtz chartwise par symétrie du vrai Jacobien et
-reconstruction radiale.
+reconstruction radiale. Les Gates 813, 816 et 817 ajoutent le tour de jets
+multi-indices fini, le Helmholtz fonctionnel `C²` sur le domaine et l'atlas
+exacts de T03, ainsi que les quatre restrictions physiques exactes ; le bloc LL
+possède son système fort sur les relèvements lisses et la normalisation nulle
+est exactement indépendante de l'action.
 
-**Reste :** conditions locales non linéaires complètes sur le jet PDE global,
-y compris les directions de jauge, de métrique, de bord et les dépendances de
-haut ordre.
+**Reste :** construire les résidus jet-PDE locaux métrique–bord, position nulle
+et intrinsèque nulle, puis prouver leurs identités de Helmholtz non linéaires et
+leur raccord au système full-BRST. `T04` reste ouverte.
 
 ### T05 — `variationalBicomplexObstructionVanishing`
 
 **Déjà disponible :** obstruction fonctionnelle globale nulle sur les cartes.
+Les Gates 814–815 construisent le cœur algébrique relatif stratifié, le quotient
+cycles/frontières et l'exactitude de l'obstruction pour une donnée de première
+variation fournie.
 
-**Reste :** construire le bicomplexe variationnel horizontal/contact des
-densités locales de jets et démontrer la nullité de la classe d'obstruction
-physique.
+**Reste :** réaliser les cochaînes et différentielles avec les densités locales
+de jets exactes de T03, prouver les lois d'incidence et raccorder leur classe
+d'obstruction à l'Euler physique. `T05` reste ouverte ; audit terminal `3/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 

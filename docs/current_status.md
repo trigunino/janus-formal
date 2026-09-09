@@ -172,6 +172,14 @@ the Program-P façade and the integrity audit are green at `3/14`. Statements
 below that leave `T03` open describe historical support-gate checkpoints and
 are superseded by Gate 812.
 
+Gates 813--817 add the finite multi-index jet carrier, the relative algebraic
+bicomplex and its cycles/boundaries quotient, abstract obstruction exactness,
+functional `C²` Helmholtz symmetry on the exact `T03` domain and atlas, and the
+exact four-block local PDE frontier. Only the compatible LL block has a proved
+smooth local strong system; the metric--boundary and two physical null local
+residuals, and the physical realization of the bicomplex, remain open. Thus
+`T04` and `T05` remain open and the terminal audit stays at `3/14`.
+
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`

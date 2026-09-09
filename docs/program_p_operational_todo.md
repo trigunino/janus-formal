@@ -12898,6 +12898,24 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   pic arbre 4535 Mo ; audit intégral vert.
 - Porte terminale : `T03` fermée ; compteur `3/14`.
 
+### Supports locaux de `T04`–`T05` — Gates 813–817
+
+- État : `SUPPORT` (2026-09-09). Portée : `JET-PDE/HELMHOLTZ/BICOMPLEXE`.
+- Gates : `P0EFTJanusProgramPPhysicalMultiindexJetTower4D`,
+  `P0EFTJanusProgramPRelativeJetVariationalBicomplexCore4D`,
+  `P0EFTJanusProgramPRelativeVariationalObstructionExactness4D`,
+  `P0EFTJanusProgramPT04FullBRSTC2Helmholtz4D` et
+  `P0EFTJanusProgramPT04T03LocalJetPDEFrontier4D`.
+- Résultat : tour de jets multi-indices fini, cœur bicomplexe relatif et quotient
+  cycles/frontières ; exactitude abstraite de l'obstruction pour une vraie
+  donnée de première variation ; Helmholtz fonctionnel `C²` sur le domaine et
+  l'atlas exacts de `T03` ; frontière locale à quatre blocs avec système fort
+  LL lisse et indépendance de la normalisation nulle.
+- Limite : aucune extraction physique du bicomplexe n'est encore construite et
+  les résidus jet-PDE locaux métrique–bord, position nulle et intrinsèque nulle
+  restent ouverts.
+- Porte terminale : aucune ; `T04` et `T05` restent ouvertes, compteur `3/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
