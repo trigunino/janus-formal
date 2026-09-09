@@ -411,13 +411,16 @@ et croisées en restreignant le Jacobien de Helmholtz exact aux quatre
 injections physiques. Gate 837 extrait les vrais 2-jets joints de l'embedding
 fidèle et de chaque coefficient des métriques ambiante et d'écran au composant
 nul T03, puis identifie l'Euler fidèle et les pairings Riesz nuls au `fderiv`
-de l'action géométrique.
+de l'action géométrique. Gate 838 factorise les densités de faces et de joints
+par les valeurs de ces jets. Gate 843 prouve la différentiation dominée de chaque
+intégrale de face, leur somme finie et les formules Euler/Riesz, sous des contrats
+analytiques explicites.
 
 **Reste :** remplacer le graphe scalaire par les formules PDE locales en jets
-métriques/GHY, relier les jets géométriques nuls de Gate 837 aux résidus par
-différentiation sous l'intégrale et factorisation locale, puis raccorder ces
-blocs et le secteur LL sur tout le domaine au système jet-PDE full-BRST et à
-ses identités de Helmholtz locales. `T04` reste ouverte.
+métriques/GHY, construire géométriquement les contrats de Gate 843 et la règle
+de chaîne factorisant les dérivées ponctuelles par les vrais 2-jets, puis
+raccorder ces blocs et le secteur LL sur tout le domaine au système jet-PDE
+full-BRST et à ses identités de Helmholtz locales. `T04` reste ouverte.
 
 ### T05 — `variationalBicomplexObstructionVanishing`
 
@@ -447,13 +450,18 @@ Gate 819, sans transformation globale d'atlas. Gate 836 construit la vraie
 densité locale SpinC lisse et l'identifie à l'action de graphe sur la seule
 image lisse de son domaine.
 
-**Reste :** étendre la densité locale SpinC au domaine de graphe général,
-construire un carrier commun de jets stratifiés, les vrais différentiels
-total/contact `dH` et `dV`, leurs lois de bicomplexe et la naturalité globale
-d'atlas, puis prouver que l'intégration de Gate 833 commute avec eux au-delà de
-l'arête nulle de Gate 834. Il faut ensuite dériver localement
-`dV L = E + dH θ` et appliquer l'exactitude de Gate 815 à la réalisation T03
-recollée. `T05` reste ouverte ; audit terminal `3/14`.
+Gate 839 réunit les deux arêtes horizontales disponibles, prouve `dH² = 0` et
+leur commutation avec l'intégration. Gate 841 établit l'identité verticale et la
+première variation sur la cochaîne canonique intégrée. Gate 840 donne une densité
+spectrale exacte sur tout le graphe maximal SpinC ; Gate 842 la relève en une
+densité spacetime `L¹` sous un contrat d'extension `L²` compatible avec le cœur
+fini.
+
+**Reste :** construire l'extension `L²` de Gate 842, un carrier commun de jets
+stratifiés et les arêtes manquantes des vrais différentiels total/contact `dH`
+et `dV`, puis établir leurs lois au niveau des densités, la naturalité globale
+d'atlas, la commutation générale avec l'intégration et l'exactitude locale de la
+réalisation T03 recollée. `T05` reste ouverte ; audit terminal `3/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 

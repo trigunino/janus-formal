@@ -13137,6 +13137,66 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   résidus par ces jets n'est encore prouvée.
 - Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
 
+### `P-T04-T03-FAITHFUL-NULL-DENSITY-SECOND-JET-FACTORIZATION` — Gate 838
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/2-JETS-NULS`.
+- Gate : `P0EFTJanusProgramPT04T03FaithfulNullDensitySecondJetFactorization4D`.
+- Résultat : les densités de faces et de joints se factorisent par les valeurs
+  des jets géométriques ; le jet de l'action totale redonne l'Euler et les deux
+  pairings Riesz nuls.
+- Limite : la factorisation ne porte pas encore sur les dérivées des jets et ne
+  justifie aucune différentiation sous l'intégrale.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-AVAILABLE-STRATIFIED-HORIZONTAL-COMPLEX` — Gate 839
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/DH-DISPONIBLE`.
+- Gate : `P0EFTJanusProgramPT05AvailableStratifiedHorizontalComplex4D`.
+- Résultat : les arêtes déjà construites bulk vers bord non nul et face nulle
+  vers joints forment un opérateur gradué, vérifient `dH² = 0` et commutent avec
+  leurs intégrations géométriques.
+- Limite : les autres arêtes et le bicomplexe au niveau des densités manquent.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-SPINC-MATTER-MAXIMAL-SPECTRAL-DENSITY` — Gate 840
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/SPINC-MAXIMAL-SPECTRAL`.
+- Gate : `P0EFTJanusProgramPT05SpinCMatterMaximalSpectralDensity4D`.
+- Résultat : tout état du graphe maximal possède une densité spectrale sommable
+  dont la somme vaut l'action, avec approximation par le cœur lisse fini.
+- Limite : cette densité est spectrale, pas une densité spacetime presque partout.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-CANONICAL-VERTICAL-INTEGRATION-EVALUATION` — Gate 841
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/DV-INTEGRE`.
+- Gate : `P0EFTJanusProgramPT05CanonicalVerticalIntegrationEvaluation4D`.
+- Résultat : la cochaîne verticale intégrée vérifie `dV L = E + dH θ` et son
+  évaluation canonique commute avec la dérivée de l'action et l'Euler T03.
+- Limite : l'identité est post-intégration, pas un `dV` local sur les densités.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-SPINC-MATTER-MAXIMAL-LP-DENSITY-BRIDGE` — Gate 842
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/SPINC-MAXIMAL-LP`.
+- Gate : `P0EFTJanusProgramPT05SpinCMatterMaximalLpDensityBridge4D`.
+- Résultat : sous une extension linéaire isométrique vers `L²` compatible avec
+  le cœur fini, tout état maximal admet une densité spacetime `L¹` dont
+  l'intégrale vaut l'action de graphe.
+- Limite : l'existence de cette extension analytique reste à construire.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T04-T03-FAITHFUL-NULL-DOMINATED-INTEGRAL-VARIATION` — Gate 843
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/VARIATION-NULLE`.
+- Gate : `P0EFTJanusProgramPT04T03FaithfulNullDominatedIntegralVariation4D`.
+- Résultat : sous des contrats explicites de domination et de régularité aux
+  extrémités, la dérivée passe sous chaque intégrale de face, puis sous la somme
+  finie, et donne les formules Euler/Riesz correspondantes.
+- Limite : ces contrats et la règle de chaîne PDE par les vrais 2-jets ne sont
+  pas encore dérivés de la géométrie.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

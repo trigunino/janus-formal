@@ -235,6 +235,20 @@ null-face integral or residual factorization through those jets is proved.
 Consequently `T04` and `T05` remain open and the terminal audit stays at
 `3/14`.
 
+Gates 838 and 843 factor the faithful null face and joint densities through
+geometric jet values and prove the facewise dominated integral variation, its
+finite sum, and the resulting Euler/Riesz formulas under explicit analytic
+contracts. The remaining null work is to derive those contracts and the local
+chain rule from the geometry; the metric/GHY jet PDE and full BRST Helmholtz
+system also remain open.
+
+Gates 839--842 assemble the available horizontal edges with `dH² = 0`, prove
+their integration laws, realize the canonical post-integration vertical first
+variation, and give every maximal SpinC graph state an exact spectral density.
+An actual spacetime `L¹` density follows from a stated `L²` extension contract,
+whose existence is still open. The missing density-level bicomplex edges,
+global gluing, and local exactness keep `T05` open and the audit at `3/14`.
+
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`
