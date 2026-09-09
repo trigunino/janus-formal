@@ -414,11 +414,14 @@ nul T03, puis identifie l'Euler fidèle et les pairings Riesz nuls au `fderiv`
 de l'action géométrique. Gate 838 factorise les densités de faces et de joints
 par les valeurs de ces jets. Gate 843 prouve la différentiation dominée de chaque
 intégrale de face, leur somme finie et les formules Euler/Riesz, sous des contrats
-analytiques explicites.
+analytiques explicites. Gates 844, 848 et 851 construisent ensuite le jet joint
+de la densité, les jets des deux actions de joint et le contrat dominé complet
+par compacité locale ; les hypothèses analytiques de Gate 843 sont ainsi
+déchargées depuis la géométrie `C²`.
 
 **Reste :** remplacer le graphe scalaire par les formules PDE locales en jets
-métriques/GHY, construire géométriquement les contrats de Gate 843 et la règle
-de chaîne factorisant les dérivées ponctuelles par les vrais 2-jets, puis
+métriques/GHY, achever la règle de chaîne factorisant les résidus ponctuels par
+les vrais 2-jets, puis
 raccorder ces blocs et le secteur LL sur tout le domaine au système jet-PDE
 full-BRST et à ses identités de Helmholtz locales. `T04` reste ouverte.
 
@@ -455,13 +458,18 @@ leur commutation avec l'intégration. Gate 841 établit l'identité verticale et
 première variation sur la cochaîne canonique intégrée. Gate 840 donne une densité
 spectrale exacte sur tout le graphe maximal SpinC ; Gate 842 la relève en une
 densité spacetime `L¹` sous un contrat d'extension `L²` compatible avec le cœur
-fini.
+fini. Gates 845, 847 et 853 construisent cette extension depuis un cœur mesurable
+et réduisent l'entrée encore absente à la mesurabilité des modes signés unitaires.
+Gates 846 et 849--850 donnent le bicomplexe local de la sous-fibre nulle fixe.
+Gates 852 et 854 typent les deux incidences horizontales manquantes et étendent
+le différentiel vertical à toutes les strates fixes, avec les lois d'intégration
+et d'anticommutation correspondantes.
 
-**Reste :** construire l'extension `L²` de Gate 842, un carrier commun de jets
-stratifiés et les arêtes manquantes des vrais différentiels total/contact `dH`
-et `dV`, puis établir leurs lois au niveau des densités, la naturalité globale
-d'atlas, la commutation générale avec l'intégration et l'exactitude locale de la
-réalisation T03 recollée. `T05` reste ouverte ; audit terminal `3/14`.
+**Reste :** construire un sélecteur de jauge SpinC mesurable (ou une réalisation
+intrinsèque équivalente), les vraies restriction/Stokes bulk→nul et trace
+GHY→joint, puis établir les dérivées physiques locales, la naturalité globale
+d'atlas et l'exactitude locale de la réalisation T03 recollée. `T05` reste
+ouverte ; audit terminal `3/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 

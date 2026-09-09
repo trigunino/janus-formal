@@ -13197,6 +13197,94 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   pas encore dérivés de la géométrie.
 - Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
 
+### `P-T04-T03-FAITHFUL-NULL-GEOMETRIC-DOMINATED-JET-BRIDGE` — Gate 844
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/VARIATION-NULLE`.
+- Résultat : le `C²` géométrique construit le vrai jet joint de la densité
+  nulle fidèle et identifie sa dérivée physique à la première tranche du jet.
+- Limite : aucun résidu PDE local ni certificat terminal.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-SPINC-FINITE-CORE-LP-EXTENSION-SUPPORT` — Gate 845
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/SPINC-L²`.
+- Résultat : toute réalisation linéaire isométrique du cœur fini vers `L²`
+  s'étend au graphe maximal et fournit exactement le contrat de Gate 842.
+- Limite : la mesurabilité des coordonnées du cœur reste à établir.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-STRATIFIED-LOCAL-VERTICAL-DENSITY-COMPLEX` — Gate 846
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/dV-LOCAL`.
+- Résultat : sur la fibre nulle fixe, `dV` est défini au niveau des densités,
+  commute avec l'intégration, vérifie `dV² = 0` et l'identité mixte.
+- Limite : aucune dérivée de champs ni différentielle horizontale globale.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-SPINC-FINITE-CORE-MEASURABLE-LP-SUPPORT` — Gate 847
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/SPINC-L²`.
+- Résultat : la seule mesurabilité forte des coordonnées finies produit une
+  application `L²` linéaire isométrique et donc l'extension maximale.
+- Limite : cette mesurabilité n'est pas encore construite.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T04-T03-FAITHFUL-NULL-GEOMETRIC-ENDPOINT-JETS` — Gate 848
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/JOINTS-NULS`.
+- Résultat : les actions aux deux joints ont de vrais jets `C²`; leurs
+  hypothèses de dérivabilité disparaissent du contrat de Gate 843.
+- Limite : aucune factorisation PDE du résidu.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-FIXED-CARRIER-NULL-JOINT-LOCAL-BICOMPLEX` — Gate 849
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/NUL→JOINT`.
+- Résultat : l'arête locale nulle vers joints commute avec l'intégration et
+  anticommute avec le `dV` signé sur la sous-fibre de transgression.
+- Limite : seulement la sous-fibre de normalisation à intervalles fixes.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-FIXED-CARRIER-NULL-JOINT-HORIZONTAL-COMPLEX` — Gate 850
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/dH-LOCAL`.
+- Résultat : le sous-complexe local `nul → joint → ∅` vérifie `dH² = 0` et
+  commute avec l'intégration aux degrés de contact zéro et un.
+- Limite : les incidences bulk→nul et bord non nul→joint manquent.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T04-T03-FAITHFUL-NULL-COMPACT-DOMINATED-CONTRACT` — Gate 851
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/VARIATION-NULLE`.
+- Résultat : compacité locale et `C²` déchargent automatiquement mesurabilité,
+  majorant uniforme intégrable et contrat complet de Gate 843.
+- Limite : la règle de chaîne PDE et les blocs métrique/GHY restent ouverts.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-MISSING-HORIZONTAL-GEOMETRIC-CONTRACTS` — Gate 852
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/dH-MANQUANT`.
+- Résultat : les deux lois géométriques absentes sont typées séparément et
+  impliquent conditionnellement les carrés commutatifs et le cycle intégré.
+- Limite : restriction/Stokes bulk→nul et trace GHY→joint non construites.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-SPINC-FINITE-MODE-MEASURABLE-GAUGE-SUPPORT` — Gate 853
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/SPINC-MESURABILITÉ`.
+- Résultat : la mesurabilité SpinC du cœur entier est réduite à celle des
+  seuls modes signés unitaires, puis fournit le support `L²` de Gate 845.
+- Limite : le sélecteur de jauge `normalBundleIndexAt` reste opaque.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-FIXED-CARRIER-STRATIFIED-VERTICAL-DIFFERENTIAL` — Gate 854
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/dV-STRATIFIÉ`.
+- Résultat : un carrier fixe couvrant toutes les strates de Gate 830 porte un
+  `dV` local carré nul, compatible avec l'intégration et les cibles `dH`.
+- Limite : dérivées physiques et passage sous les intégrales restent contractuels.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

@@ -249,6 +249,16 @@ An actual spacetime `L¹` density follows from a stated `L²` extension contract
 whose existence is still open. The missing density-level bicomplex edges,
 global gluing, and local exactness keep `T05` open and the audit at `3/14`.
 
+Gates 844--854 now derive the faithful-null pointwise derivative from genuine
+joint jets, prove both endpoint jets, and construct Gate 843's complete
+dominated contract by finite-dimensional compactness. On the T05 side they
+construct the maximal `L²` extension from a measurable finite core, reduce its
+remaining gauge input to unit signed modes, and realize fixed-carrier local
+`dH`/`dV` complexes with their integration and mixed laws. T04 still lacks the
+metric/GHY jet PDE and the final local residual factorization. T05 still lacks
+the measurable SpinC gauge, the bulk-to-null and GHY-to-joint geometric traces,
+global atlas naturality and local exactness. The terminal audit remains `3/14`.
+
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`
