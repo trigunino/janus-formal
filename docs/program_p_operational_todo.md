@@ -1,6 +1,6 @@
 # Programme P — registre opérationnel canonique
 
-Date de référence : 2026-09-09.
+Date de référence : 2026-09-10.
 
 ## 1. Rôle de ce document
 
@@ -16,7 +16,7 @@ finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 En cas de contradiction entre prose et code, le type exact du théorème Lean
 compilé fait autorité.
 
-### Synthèse active au 2026-09-09
+### Synthèse active au 2026-09-10
 
 Les quatorze portes restent la mesure finale. Après les lots `T01`, `T02` et
 `T03` fermés, leur travail restant se regroupe en cinq lots ouverts :
@@ -13283,6 +13283,31 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Résultat : un carrier fixe couvrant toutes les strates de Gate 830 porte un
   `dV` local carré nul, compatible avec l'intégration et les cibles `dH`.
 - Limite : dérivées physiques et passage sous les intégrales restent contractuels.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T04-T03-FAITHFUL-NULL-DENSITY-JET-PRODUCT-RULE` — Gate 855
+
+- État : `SUPPORT` (2026-09-10). Portée : `T04/VARIATION-NULLE`.
+- Résultat : les règles exactes de chaîne et du produit factorisent le dérivé
+  fidèle nul par les vrais jets aire–expansion–inaffinité, sous l'intégrale et
+  dans les deux pairings Riesz nuls de T03.
+- Limite : les formules PDE métrique/GHY et le recollement full-BRST manquent.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-AFFINE-NULL-JOINT-LOCAL-EXACTNESS` — Gate 856
+
+- État : `SUPPORT` (2026-09-10). Portée : `T05/EXACTITUDE-LOCALE`.
+- Résultat : sur les intervalles non dégénérés, l'extension affine est un inverse
+  à droite explicite du `dH` nul→joint et prouve l'exactitude au terme joint.
+- Limite : résultat fixe et local ; les incidences bulk et GHY restent absentes.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-SPINC-INTRINSIC-L1-COMPLETION` — Gate 857
+
+- État : `SUPPORT` (2026-09-10). Portée : `T05/SPINC-L¹-MAXIMAL`.
+- Résultat : le pairing scalaire intrinsèque du cœur fini s'étend à tout le
+  graphe SpinC maximal en une classe `L¹` dont l'intégrale égale l'action exacte.
+- Limite : aucune réalisation vectorielle `L²` ni jauge mesurable n'est construite.
 - Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
 
 ## 7. Les 14 portes terminales fixes

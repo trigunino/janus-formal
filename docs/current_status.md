@@ -255,9 +255,19 @@ dominated contract by finite-dimensional compactness. On the T05 side they
 construct the maximal `L²` extension from a measurable finite core, reduce its
 remaining gauge input to unit signed modes, and realize fixed-carrier local
 `dH`/`dV` complexes with their integration and mixed laws. T04 still lacks the
-metric/GHY jet PDE and the final local residual factorization. T05 still lacks
-the measurable SpinC gauge, the bulk-to-null and GHY-to-joint geometric traces,
-global atlas naturality and local exactness. The terminal audit remains `3/14`.
+metric/GHY jet PDE and the final local residual factorization. At Gate 854,
+T05 still lacked the intrinsic SpinC completion, the bulk-to-null and
+GHY-to-joint geometric traces, global atlas naturality and local exactness.
+The terminal audit remained `3/14`.
+
+Gates 855--857 finish the faithful-null area/expansion/inaffinity product and
+chain rule through the face integrals and null Riesz pairings, prove local
+exactness at the joint by an explicit affine right inverse on nondegenerate
+intervals, and construct an intrinsic scalar `L¹` density on every maximal
+SpinC graph state whose integral is the exact graph action. T04 still lacks the
+metric/GHY jet PDE and full local BRST factorization. T05 still lacks the true
+bulk-to-null and GHY-to-joint geometric traces, global atlas naturality, and
+the physical local derivatives. The terminal audit remains `3/14`.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

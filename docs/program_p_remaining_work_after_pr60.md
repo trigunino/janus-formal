@@ -1,6 +1,6 @@
 # Programme P — bilan du reste à faire après la PR #60
 
-Date de référence : 2026-09-09.
+Date de référence : 2026-09-10.
 
 ## 1. Règle de lecture
 
@@ -417,13 +417,14 @@ intégrale de face, leur somme finie et les formules Euler/Riesz, sous des contr
 analytiques explicites. Gates 844, 848 et 851 construisent ensuite le jet joint
 de la densité, les jets des deux actions de joint et le contrat dominé complet
 par compacité locale ; les hypothèses analytiques de Gate 843 sont ainsi
-déchargées depuis la géométrie `C²`.
+déchargées depuis la géométrie `C²`. Gate 855 prouve enfin les règles exactes
+de chaîne et du produit aire–expansion–inaffinité, les transporte sous les
+intégrales et les identifie aux deux pairings Riesz nuls de T03.
 
 **Reste :** remplacer le graphe scalaire par les formules PDE locales en jets
-métriques/GHY, achever la règle de chaîne factorisant les résidus ponctuels par
-les vrais 2-jets, puis
-raccorder ces blocs et le secteur LL sur tout le domaine au système jet-PDE
-full-BRST et à ses identités de Helmholtz locales. `T04` reste ouverte.
+métriques/GHY, puis raccorder ces blocs et le secteur LL sur tout le domaine au
+système jet-PDE full-BRST et à ses identités de Helmholtz locales. `T04` reste
+ouverte.
 
 ### T05 — `variationalBicomplexObstructionVanishing`
 
@@ -463,12 +464,16 @@ et réduisent l'entrée encore absente à la mesurabilité des modes signés uni
 Gates 846 et 849--850 donnent le bicomplexe local de la sous-fibre nulle fixe.
 Gates 852 et 854 typent les deux incidences horizontales manquantes et étendent
 le différentiel vertical à toutes les strates fixes, avec les lois d'intégration
-et d'anticommutation correspondantes.
+et d'anticommutation correspondantes. Gate 856 donne un inverse affine explicite
+du `dH` nul→joint sur chaque intervalle non dégénéré et l'exactitude locale au
+terme joint. Gate 857 contourne l'opacité du sélecteur de jauge par le pairing
+scalaire intrinsèque : sa complétion `L¹` existe sur tout le graphe SpinC maximal
+et son intégrale est exactement l'action.
 
-**Reste :** construire un sélecteur de jauge SpinC mesurable (ou une réalisation
-intrinsèque équivalente), les vraies restriction/Stokes bulk→nul et trace
+**Reste :** construire les vraies restriction/Stokes bulk→nul et trace
 GHY→joint, puis établir les dérivées physiques locales, la naturalité globale
-d'atlas et l'exactitude locale de la réalisation T03 recollée. `T05` reste
+d'atlas et l'exactitude locale de la réalisation T03 recollée au-delà du terme
+joint fixe. `T05` reste
 ouverte ; audit terminal `3/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
