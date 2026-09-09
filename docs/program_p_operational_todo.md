@@ -10,7 +10,7 @@ mesuraient surtout l'accumulation de microlemmes. Son historique reste
 consultable dans Git.
 
 La fermeture globale est mesurée uniquement par les **14 portes terminales**
-de la section 7. État actuel : **3/14**. Une preuve locale, pointwise,
+de la section 7. État actuel : **4/14**. Une preuve locale, pointwise,
 finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 
 En cas de contradiction entre prose et code, le type exact du théorème Lean
@@ -18,8 +18,8 @@ compilé fait autorité.
 
 ### Synthèse active au 2026-09-10
 
-Les quatorze portes restent la mesure finale. Après les lots `T01`, `T02` et
-`T03` fermés, leur travail restant se regroupe en cinq lots ouverts :
+Les quatorze portes restent la mesure finale. `T01`–`T04` sont fermés ; `T05`
+et `T06` restent ouverts. Le suivi se regroupe en sept lots :
 
 1. **Validation globale (`T01`) — FERMÉE** : le certificat typé commun, sa
    complétion L2 intrinsèque et son import de façade sont verts, sans axiome
@@ -30,9 +30,10 @@ Les quatorze portes restent la mesure finale. Après les lots `T01`, `T02` et
    invariantes continues de ce degré. Son évaluation est injective et ses
    coefficients sont uniques. Le classificateur historique à six invariants
    n'est pas utilisé comme hypothèse d'exhaustivité.
-3. **Calcul variationnel global (`T03` — FERMÉE ; `T04`--`T06` ouvertes)** :
-   l'Euler global est dérivé sur l'atlas couplé ; restent Helmholtz non linéaire,
-   le bicomplexe local et la classification des lagrangiens nuls/bords.
+3. **Calcul variationnel global (`T03`, `T04` — FERMÉES ; `T05`, `T06`
+   ouvertes)** : l'Euler global et Helmholtz non linéaire sont dérivés sur
+   l'atlas couplé ; restent le bicomplexe local et la classification des
+   lagrangiens nuls/bords.
 4. **Hessien, Fredholm et déterminant (`T07`, `T12`)** : construire les trois
    données physiques restantes H10--H14 (famille locale `C²`, sept extensions
    continues, obstruction finie/coercivité), identifier la famille naturelle
@@ -13310,6 +13311,62 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : aucune réalisation vectorielle `L²` ni jauge mesurable n'est construite.
 - Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
 
+### `P-T04-T03-METRIC-BOUNDARY-GHY-DENSITY-JET-BRIDGE` — Gate 858
+
+- État : `SUPPORT` (2026-09-10). Portée : `T04/GHY-LOCAL`.
+- Résultat : les vrais seconds jets de la densité de volume induite, de la
+  courbure moyenne et de l'intégrande GHY donnent sa dérivée locale ; deux fois
+  son intégration est exactement l'Euler GHY mobile à deux feuilles.
+- Limite : l'identification au flux EH local explicite demande encore la trace
+  géométrique Candidate-A ; elle n'est pas requise par le critère terminal T04.
+- Porte terminale : aucune à ce gate.
+
+### `P-T05-HORIZONTAL-GEOMETRIC-INCIDENCE-SUPPORT` — Gate 859
+
+- État : `SUPPORT` (2026-09-10). Portée : `T05/INCIDENCES`.
+- Résultat : les interfaces linéaires minimales bulk→nul et GHY→joint induisent
+  les contrats de Gate 852, la commutation d'intégration et la cible cyclique.
+- Limite : leurs réalisations par les vraies restrictions et traces
+  géométriques ne sont pas encore construites.
+- Porte terminale : aucune ; `T05` reste ouverte.
+
+### `P-T05-SPINC-INTRINSIC-L1-VARIATION` — Gate 860
+
+- État : `SUPPORT` (2026-09-10). Portée : `T05/SPINC-dV`.
+- Résultat : la densité SpinC intrinsèque maximale possède une vraie dérivée
+  `L¹`; son intégrale est exactement le covecteur Euler de l'action de graphe.
+- Limite : résultat sectoriel SpinC, sans dV physique des autres strates.
+- Porte terminale : aucune ; `T05` reste ouverte.
+
+### `P-T05-SPINC-L1-STRATIFIED-VERTICAL-BRIDGE` — Gate 861
+
+- État : `SUPPORT` (2026-09-10). Portée : `T05/SPINC-dV-STRATIFIÉ`.
+- Résultat : le carrier stratifié contient réellement la densité SpinC `L¹` et
+  son dV ; la projection vers Gate 854 et l'intégration récupèrent exactement
+  le covecteur Euler SpinC.
+- Limite : les autres composantes physiques du dV restent nulles dans ce pont.
+- Porte terminale : aucune ; `T05` reste ouverte.
+
+### `P-T05-GHY-STRATIFIED-VERTICAL-BRIDGE` — Gate 862
+
+- État : `SUPPORT` (2026-09-10). Portée : `T05/GHY-dV-STRATIFIÉ`.
+- Résultat : le dV local GHY à deux feuilles occupe le vrai slot non nul du
+  carrier Gate 861, se projette vers Gate 854 et s'intègre exactement au jet
+  GHY à deux feuilles et à l'Euler GHY mobile.
+- Limite : aucun dV des autres secteurs ni identification EH locale n'est
+  affirmé par ce pont.
+- Porte terminale : aucune ; `T05` reste ouverte.
+
+### `P-T04-NONLINEAR-HELMHOLTZ-TERMINAL-CERTIFICATE` — Gate 863
+
+- État : `DONE` (2026-09-10). Portée : `GLOBAL/TERMINALE`.
+- Résultat : sur le carrier exact de T03, l'action est `C²`, son gradient est
+  l'Euler, le Jacobien Euler est symétrique globalement et dans chaque carte
+  translatée, avec les dix réciprocités propres et croisées des quatre blocs.
+- Limite : une représentation PDE locale métrique/GHY plus forte reste un
+  suivi distinct, hors du critère terminal Helmholtz.
+- Porte terminale : `T04` fermée ; compteur `4/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
@@ -13320,7 +13377,7 @@ un `ProgramStatus` arbitraire.
   typé et compilé sur les objets globaux communs.
 - [x] `T02` — `invariantLocalFunctionalBasisClassified`.
 - [x] `T03` — `fullEulerLagrangeOperatorDerived`.
-- [ ] `T04` — `nonlinearHelmholtzConditionsProved`.
+- [x] `T04` — `nonlinearHelmholtzConditionsProved`.
 - [ ] `T05` — `variationalBicomplexObstructionVanishing`.
 - [ ] `T06` — `nullLagrangiansAndBoundaryTermsClassified`.
 - [ ] `T07` — `anomalyConstraintsApplied`.
@@ -13354,7 +13411,7 @@ Cette carte améliore la fiabilité du suivi mais ne ferme aucune porte
 scientifique.
 
 Validation : l'audit lit exclusivement la section fixe `T01–T14`, impose le
-dénominateur `14`, affiche le décompte terminal `3/14` et rejette toute porte
+dénominateur `14`, affiche le décompte terminal `4/14` et rejette toute porte
 cochée sans `TerminalGateEvidence`. Chaque évidence doit fournir module,
 façade, théorème pleinement qualifié, portée et fragment de type ; le module
 doit être importé, sans placeholder, et le théorème ne peut pas être un simple
@@ -13362,7 +13419,10 @@ contrat `ProgramStatus`. Le certificat global typé `T01`, sa complétion L2
 intrinsèque et son intégration à la façade ont été revérifiés verts le
 2026-08-26. Le certificat borné global `T02` a été ajouté et revérifié le
 2026-08-29. Le certificat global `T03` a été compilé, importé et audité le
-2026-09-09 ; `T01`, `T02` et `T03` sont les trois portes terminales fermées.
+2026-09-09. Le certificat Helmholtz global/chartwise `T04` et ses réciprocités
+sur quatre blocs ont été compilés, importés et audités le 2026-09-10 ;
+`T01`–`T04` sont les quatre portes terminales fermées, tandis que `T05` et
+`T06` restent ouvertes.
 
 Mise à jour : `P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` ferme le
 paquetage global lisse, la linéarité réelle et l'intégrabilité de l'onde
@@ -13482,5 +13542,5 @@ variation diagonale en zéro est donc exactement le Hessien symétrique certifi�
 - le paquet spectral exige encore les différences actual/reference, les
   frontières filtrées, les moyennes de slices et leurs identités de
   semi-groupes. Les frontends Bochner fixes ne prouvent pas encore ce pont ; le
-  décompte terminal actuel est désormais `3/14`, par fermeture indépendante de
-  `T01`, `T02` et `T03`.
+  décompte terminal actuel est désormais `4/14`, par fermeture indépendante de
+  `T01`–`T04`.

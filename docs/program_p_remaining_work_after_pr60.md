@@ -12,13 +12,13 @@ Ce document distingue trois niveaux qui ne doivent pas être confondus :
 3. les quatorze portes terminales du registre canonique.
 
 La PR #60 poursuivait volontairement l'architecture avant le nettoyage final
-de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01`, `T02`
-et `T03` ont depuis été fermées séparément.
+de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01`–`T04`
+ont depuis été fermées séparément ; `T05` et `T06` restent ouvertes.
 
 Le compteur officiel demeure :
 
 ```text
-3 / 14 portes terminales.
+4 / 14 portes terminales.
 ```
 
 Une porte ne peut être cochée qu'après construction de ses objets concrets,
@@ -66,8 +66,9 @@ la porte terminale correspondante. En particulier :
 
 - `EULER-GLOBAL-01` ne construit pas encore un atlas normé couvrant toutes les
   valeurs brutes du tangent global ;
-- `HELMHOLTZ-GLOBAL-01` est une reconstruction sur les cartes régulières, pas
-  le théorème local complet du bicomplexe variationnel ;
+- `HELMHOLTZ-GLOBAL-01` ferme désormais le critère terminal fonctionnel global
+  et chartwise de `T04` ; la représentation PDE locale métrique/GHY reste un
+  suivi plus fort hors de ce critère ;
 - `VARCOH-GLOBAL-01` concerne les fonctionnelles globales chartwise, pas la
   cohomologie horizontale locale des densités de jets ;
 - `DIRAC-GLOBAL-01` ferme le Dirac physique, pas son identification automatique
@@ -383,11 +384,8 @@ d'isotropie et preuve d'exhaustion.
 
 ### T03 — `fullEulerLagrangeOperatorDerived`
 
-**Déjà disponible :** véritable Euler des neuf blocs sur toute carte régulière
-commune fournie.
-
-**Reste :** atlas physique couvrant le tangent brut, système local par
-composantes, opérateur global recollé, domaines et termes de bord cohérents.
+**Fermé le 2026-09-09 :** Gate 812 assemble le certificat Euler global typé
+sur le carrier couplé full-BRST et son atlas couvert exact.
 
 ### T04 — `nonlinearHelmholtzConditionsProved`
 
@@ -421,10 +419,14 @@ déchargées depuis la géométrie `C²`. Gate 855 prouve enfin les règles exac
 de chaîne et du produit aire–expansion–inaffinité, les transporte sous les
 intégrales et les identifie aux deux pairings Riesz nuls de T03.
 
-**Reste :** remplacer le graphe scalaire par les formules PDE locales en jets
-métriques/GHY, puis raccorder ces blocs et le secteur LL sur tout le domaine au
-système jet-PDE full-BRST et à ses identités de Helmholtz locales. `T04` reste
-ouverte.
+Gate 858 ajoute les vrais jets locaux de l'intégrande GHY et identifie deux fois
+leur intégration à l'Euler GHY mobile à deux feuilles. Gate 863 ferme `T04` par le
+certificat Helmholtz global/chartwise de l'action et de l'Euler exacts de T03,
+avec les dix réciprocités propres et croisées des quatre blocs physiques.
+
+**Fermé le 2026-09-10.** La représentation PDE locale métrique/GHY et son
+raccord au système jet-PDE full-BRST restent un suivi plus fort hors du critère
+terminal.
 
 ### T05 — `variationalBicomplexObstructionVanishing`
 
@@ -470,11 +472,19 @@ terme joint. Gate 857 contourne l'opacité du sélecteur de jauge par le pairing
 scalaire intrinsèque : sa complétion `L¹` existe sur tout le graphe SpinC maximal
 et son intégrale est exactement l'action.
 
-**Reste :** construire les vraies restriction/Stokes bulk→nul et trace
-GHY→joint, puis établir les dérivées physiques locales, la naturalité globale
-d'atlas et l'exactitude locale de la réalisation T03 recollée au-delà du terme
-joint fixe. `T05` reste
-ouverte ; audit terminal `3/14`.
+Gate 859 isole les supports linéaires minimaux que doivent réaliser les vraies
+incidences bulk→nul et GHY→joint. Gates 860–861 construisent la vraie variation
+SpinC `L¹` sur le graphe maximal, l'installent dans le carrier stratifié et
+retrouvent exactement son covecteur Euler après intégration. Gate 862 installe
+de même le dV local GHY à deux feuilles et l'intègre exactement au jet et à
+l'Euler GHY mobiles.
+
+**Reste :** construire les réalisations géométriques effectives des supports
+de Gate 859 ; compléter le dV des autres secteurs et leurs différentiations
+sous les intégrales ; prouver `dH`, les lois mixtes et les carrés sans
+hypothèses ; établir la naturalité et le recollement d'atlas ; puis démontrer
+l'exactitude et l'annulation globales. `T05` reste ouverte ; audit terminal
+`4/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
@@ -483,7 +493,7 @@ résidus de bord explicites.
 
 **Reste :** théorème d'exhaustion des lagrangiens nuls et des termes de bord
 admissibles, compatible avec la gorge non orientable, les joints, le BRST et le
-bicomplexe local.
+bicomplexe local. `T06` reste ouverte.
 
 ### T07 — `anomalyConstraintsApplied`
 
@@ -667,7 +677,8 @@ dimensionnée.
 ## 8. Conclusion
 
 Programme P n'est pas « presque fini » au sens des quatorze portes : le
-compteur officiel est désormais `3/14`.
+compteur officiel est désormais `4/14`. `T01`–`T04` sont fermées ; `T05` et
+`T06` restent ouvertes.
 
 Il est en revanche très avancé au niveau de l'infrastructure : géométrie,
 champs, action régulière, Dirac, Euler/Helmholtz chartwise et une architecture
