@@ -2112,8 +2112,10 @@ remains under `DIRAC/BRST/HESSIAN/QUILLEN/ANOMALY-GLOBAL-01`;
 `SCHEME-GLOBAL-01` and `MICRO-GLOBAL-01` additionally require a selecting
 microscopic law and finite-part data, while `SCALE-GLOBAL-01` requires an independent
 dimensionful anchor and a selected stable vacuum.
-The former cross-representation foundation work is closed by `T01`; the
-stronger local forms of `T03`–`T06` remain open.
+The former cross-representation foundation work is closed by `T01`. Terminal
+gate `T03` is closed by its typed global full Euler--Lagrange certificate;
+refinements beyond the terminal `T03` contract and terminal gates `T04`–`T06`
+remain open.
 
 ## 13. Honest conclusion
 

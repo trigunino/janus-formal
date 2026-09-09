@@ -47,13 +47,13 @@ Program P-E was advanced again and merged into `main` through PR 10 on
 
 ## 2. Validation
 
-The currently checked-out branch is `dev-branch`, at
+The T03 closure implementation on `dev-branch` is recorded at
 
 ```text
-9a8b540d01d339c756d69202033a22ed49a38334.
+433c4eae43480635b60ef5ef6cf1636306468450.
 ```
 
-The local worktree contains the later Program-P gates described below. On
+The branch contains the later Program-P gates described below. On
 28 July 2026, the complete Program-P façade compiled `10039/10039` jobs and
 `scripts/audit_janus_program_p.py` passed with terminal count `0/14`.
 
@@ -161,9 +161,17 @@ complete degree-at-most-four class is assembled with injective evaluation and
 unique scalar reconstruction. On 29 August 2026 the global terminal `T02`
 certificate fixed this degree-at-most-four class as the explicitly bounded
 admissible class and assembled bundle smoothness, transition invariance,
-evaluation injectivity, reconstruction and unique coefficients. The integrity
-audit is therefore green at `2/14`. Degree five and general smooth invariant
-functionals remain stronger targets outside the bounded `T02` contract.
+evaluation injectivity, reconstruction and unique coefficients. At that
+checkpoint, the integrity audit was green at `2/14`. Degree five and general
+smooth invariant functionals remain stronger targets outside the bounded `T02`
+contract.
+
+On 9 September 2026, Gate 812 closed terminal gate `T03` with a typed global
+full Euler--Lagrange certificate on the coupled full-BRST field core. The gate,
+the Program-P façade and the integrity audit are green at `3/14`. Statements
+below that leave `T03` open describe historical support-gate checkpoints and
+are superseded by Gate 812.
+
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`
