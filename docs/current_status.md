@@ -196,6 +196,29 @@ density and their integrations; the existing Stokes law is exactly the
 metric/GHY, null, joint or LL jet Lagrangian density system of `T03`. Hence
 `T04` and `T05` remain open and the audit stays at `3/14`.
 
+Gates 822 and 825 now supply a primal scalar-graph Riesz representation of the
+metric--boundary covector and an exact finite zero-jet factorization of the
+null-position, null-screen and normalization residuals. The scalar graph is a
+functional Hilbert carrier rather than a metric/boundary jet formula, and the
+null factorization has no spacetime embedding or screen derivatives. Gate 831
+assembles these blocks with LL into a residual system exactly equivalent to
+the admissible T03 Euler equation, including the true strong LL equations on
+smooth lifts. Gate 832 restricts the exact T03 Helmholtz Jacobian symmetry to
+any pair of the four physical block injections. Local metric/boundary and null
+jet formulas are still absent, so `T04` remains open.
+
+Gates 823--824 and 826--829 realize the normalization-to-joint transgression,
+the first-sheet GHY density, the LL density, all finite null-face densities and
+joints, the faithful T03 null model, and the EH/BRST/interaction/Maxwell/LL bulk
+density sum. Their integrations agree with the existing actions and enter the
+corresponding Gate-819 strata. Gate 830 assembles these objects in one genuinely
+stratified density carrier and gives its sectorwise integrators. The SpinC
+graph action still lacks a general continuous local density. Gate 833 maps the
+integrated carrier into the four Gate-819 relative-cochain slots and recovers
+the canonical bulk, GHY and faithful null action sum. This map is not linear
+and no `dH`/`dV` commutation is proved, so `T05` remains open and the terminal
+audit stays at `3/14`.
+
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`

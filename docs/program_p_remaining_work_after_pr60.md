@@ -401,12 +401,20 @@ primaux des blocs position nulle et intrinsèque nulle, leur séparation pointwi
 et leurs identités de Helmholtz propres et croisées. Gate 820 décompose
 exactement l'Euler métrique–bord de `T03`, sur le graphe de raccord métrique et
 le domaine admissible, en contributions old physique/Maxwell/SpinC et GHY
-mobile.
+mobile. Gate 822 représente leur somme contrainte par un résidu Riesz primal
+sur un graphe scalaire Hilbert fermé. Gate 825 factorise les trois résidus nuls
+de T03 dans un 0-jet fini explicite, avec normalisation null/joint nulle. Gate
+831 assemble ces blocs avec LL en un système exactement équivalent à l'Euler
+T03 admissible, et remplace LL par ses trois équations fortes sur les
+relèvements lisses. Gate 832 donne simultanément les dix réciprocités propres
+et croisées en restreignant le Jacobien de Helmholtz exact aux quatre
+injections physiques.
 
-**Reste :** construire le résidu PDE fort séparant cette somme contrainte
-métrique–bord, donner les formules jet-géométriques locales des deux résidus
-nuls et raccorder ces trois blocs au système jet-PDE full-BRST. L'obligation du
-premier résidu est désormais typée, mais reste inhabitée. `T04` reste ouverte.
+**Reste :** remplacer le graphe scalaire par les formules PDE locales en jets
+métriques/GHY, donner les formules spacetime d'embedding et d'écran des
+résidus nuls, puis raccorder ces blocs et le secteur LL sur tout le domaine au
+système jet-PDE full-BRST et à ses identités de Helmholtz locales. `T04` reste
+ouverte.
 
 ### T05 — `variationalBicomplexObstructionVanishing`
 
@@ -421,10 +429,21 @@ courant scalaire cut-bulk et de sa densité de première feuille, leurs
 intégrations et la loi de Stokes identifiée à la composante
 `bulk → nonNullBoundary` du `dH` de Gate 819.
 
-**Reste :** réaliser les secteurs métrique/GHY, nul, joint et LL par les
-densités lagrangiennes locales de jets exactes de T03, puis prouver toutes les
-identités locales de Stokes/contact. Le pont Gate 821 ne traite qu'un courant
-scalaire cut-bulk. `T05` reste ouverte ; audit terminal `3/14`.
+Gates 823–824 et 826–829 ajoutent la transgression nulle vers les joints, la
+densité GHY, la densité LL, l'agrégat des vraies faces nulles et de leurs joints,
+sa spécialisation au modèle fidèle T03, puis la somme locale EH/BRST/
+interaction/Maxwell/LL du bulk. Toutes les intégrations annoncées sont reliées
+exactement aux actions existantes ; SpinC demeure une frontière intégrée typée.
+Gate 830 les rassemble dans un carrier de densités réellement stratifié avec
+intégration sectorielle. Gate 833 intègre ce carrier vers les quatre strates de
+la cochaîne relative de Gate 819 et récupère exactement la somme canonique des
+actions bulk/SpinC/LL, GHY et nulles fidèles.
+
+**Reste :** construire la densité locale SpinC, un carrier commun de jets
+stratifiés, les vrais différentiels total/contact `dH` et `dV`, leurs lois de
+bicomplexe et prouver que l'intégration de Gate 833 commute avec eux. Il faut ensuite
+dériver localement `dV L = E + dH θ` et appliquer l'exactitude de Gate 815 à la
+réalisation T03 recollée. `T05` reste ouverte ; audit terminal `3/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 

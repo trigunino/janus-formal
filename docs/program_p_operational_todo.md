@@ -12961,6 +12961,135 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   lagrangiennes de jets `T03` métrique/GHY, nulle, joint ou LL.
 - Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
 
+### `P-T04-T03-METRIC-BOUNDARY-SCALAR-GRAPH-RIESZ-RESIDUAL` — Gate 822
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/RÉSIDU-GRAPHE`.
+- Gate : `P0EFTJanusProgramPT04T03MetricBoundaryScalarGraphRieszResidual4D`.
+- Résultat : résidu Riesz primal sur le graphe scalaire Hilbert fermé du vrai
+  covecteur Old+GHY contraint, puis transport exact vers la restriction T03
+  aux points admissibles.
+- Limite : ce graphe fonctionnel ne donne pas encore une formule PDE locale
+  en jets métriques et de bord.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-NULL-JOINT-LOCAL-DENSITY-INCIDENCE` — Gate 823
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/NUL→JOINT`.
+- Gate : `P0EFTJanusProgramPT05NullJointLocalDensityIncidence4D`.
+- Résultat : vraie densité de transgression de normalisation nulle, FTOC sur
+  l'intervalle orienté, action de joints aux extrémités et identification
+  exacte de la composante `joint` du `dH` de Gate 819.
+- Limite : ce résultat concerne un générateur nul réduit ; il ne construit ni
+  l'Euler local complet ni les densités des autres secteurs.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-GHY-LOCAL-DENSITY-RELATIVE-BRIDGE` — Gate 824
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/GHY`.
+- Gate : `P0EFTJanusProgramPT05GHYLocalDensityRelativeBridge4D`.
+- Résultat : vraie densité GHY de première feuille, intégrale explicite égale
+  à l'action GHY existante et injection dans la strate non nulle de Gate 819.
+- Limite : aucune incidence horizontale GHY n'est encore dérivée.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T04-T03-NULL-ZERO-JET-RIESZ-FACTORIZATION` — Gate 825
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/0-JET-NUL`.
+- Gate : `P0EFTJanusProgramPT04T03NullZeroJetRieszFactorization4D`.
+- Résultat : extracteurs continus des coordonnées position/écran, assemblage
+  des résidus Riesz de Gate 818 dans le 0-jet fini exact de T03 et résidu de
+  normalisation null/joint identiquement nul.
+- Limite : aucune formule de jets spacetime, d'embedding ou d'écran n'en est
+  encore déduite.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-LL-LOCAL-DENSITY-RELATIVE-BRIDGE` — Gate 826
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/LL`.
+- Gate : `P0EFTJanusProgramPT05LLLocalDensityRelativeBridge4D`.
+- Résultat : vraie densité LL continue raw et PT, intégrales exactes aux
+  actions LL existantes et injection intégrée sur la strate `bulk` de Gate 819.
+- Limite : le complexe de Gate 819 n'a pas de strate LL séparée et aucune
+  incidence gorge–bord n'est encore prouvée.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-NULL-FACE-ACTION-DENSITY-AGGREGATE` — Gate 827
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/FACES-NULLES`.
+- Gate : `P0EFTJanusProgramPT05NullFaceActionDensityAggregate4D`.
+- Résultat : somme finie des vraies densités de faces nulles et de leurs
+  joints ; après réalisation physique, leur somme relative est exactement
+  l'action du modèle nul et sa densité remplit la strate `nullBoundary`.
+- Limite : aucun nouveau `dH`, `dV` ou morphisme d'intégration n'est construit.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-BULK-ACTION-LOCAL-DENSITY-BRIDGE` — Gate 828
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/BULK`.
+- Gate : `P0EFTJanusProgramPT05BulkActionLocalDensityBridge4D`.
+- Résultat : assemblage et intégration exacts des densités EH, BRST,
+  interaction, Maxwell et LL de l'action bulk T03, puis injection `.bulk` de
+  l'évaluation totale.
+- Limite : l'action SpinC reste une frontière intégrée typée, faute de densité
+  locale continue générale dans l'API actuelle.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-T03-FAITHFUL-NULL-DENSITY-BRIDGE` — Gate 829
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/NUL-FIDÈLE-T03`.
+- Gate : `P0EFTJanusProgramPT05T03FaithfulNullDensityBridge4D`.
+- Résultat : spécialisation de Gate 827 à la réalisation nulle fidèle de T03 ;
+  densités plus joints égalent exactement l'action du modèle T03 et l'action
+  géométrique mobile relative.
+- Limite : les différentiels locaux de contact et l'incidence complète restent
+  ouverts.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T05-GEOMETRIC-STRATIFIED-DENSITY-COCHAIN` — Gate 830
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/COCHAÎNE-STRATIFIÉE`.
+- Gate : `P0EFTJanusProgramPT05GeometricStratifiedDensityCochain4D`.
+- Résultat : carrier réellement stratifié pour les densités spacetime, gorge,
+  GHY, faces nulles et joints, avec intégrateurs sectoriels exacts vers les
+  actions bulk/LL/GHY/nulles existantes.
+- Limite : SpinC demeure une frontière de graphe hors densité ; `dH`, `dV`,
+  leurs lois et le morphisme vers Gate 819 restent à construire.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
+### `P-T04-T03-ADMISSIBLE-FOUR-BLOCK-RESIDUAL-SYSTEM` — Gate 831
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/SYSTÈME-RÉSIDUEL-T03`.
+- Gate : `P0EFTJanusProgramPT04T03AdmissibleFourBlockResidualSystem4D`.
+- Résultat : sur le domaine admissible, l'équation d'Euler T03 est équivalente
+  au système assemblé métrique–bord, LL, position nulle, écran nul et
+  normalisation ; sur les relèvements LL lisses, la composante LL devient son
+  véritable système fort à trois équations.
+- Limite : le bloc métrique–bord reste un graphe scalaire et la forme forte LL
+  n'est disponible que sur les relèvements lisses.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T04-T03-FOUR-BLOCK-HELMHOLTZ-RECIPROCITY` — Gate 832
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/HELMHOLTZ-BLOCS-T03`.
+- Gate : `P0EFTJanusProgramPT04T03FourBlockHelmholtzReciprocity4D`.
+- Résultat : la symétrie exacte du Jacobien T03 de Gate 816 est restreinte à
+  toute paire d'injections linéaires continues ; les quatre injections de
+  Gate 817 donnent ainsi les dix paires propres et croisées.
+- Limite : il s'agit du Jacobien fonctionnel de Fréchet, pas encore des
+  identités de Helmholtz locales écrites dans les jets géométriques.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-GEOMETRIC-DENSITY-INTEGRATION-TO-RELATIVE-COCHAIN` — Gate 833
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/INTÉGRATION-STRATIFIÉE`.
+- Gate : `P0EFTJanusProgramPT05GeometricDensityIntegrationToRelativeCochain4D`.
+- Résultat : intégration du carrier géométrique de Gate 830 vers les quatre
+  strates de la cochaîne relative de Gate 819, avec égalités exactes aux
+  actions bulk/SpinC/LL, GHY et nulles fidèles, puis à leur somme canonique.
+- Limite : SpinC reste une action frontière intégrée ; l'application n'est pas
+  linéaire et aucune commutation avec `dH` ou `dV` n'est encore prouvée.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
