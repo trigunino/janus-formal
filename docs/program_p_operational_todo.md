@@ -12916,6 +12916,27 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   restent ouverts.
 - Porte terminale : aucune ; `T04` et `T05` restent ouvertes, compteur `3/14`.
 
+### `P-T04-T03-NULL-FACE-RIESZ-LOCAL-RESIDUAL` — Gate 818
+
+- État : `SUPPORT` (2026-09-09). Portée : `T04/RÉSIDUS-NULS`.
+- Gate : `P0EFTJanusProgramPT04T03NullFaceRieszLocalResidual4D`.
+- Résultat : résidus Riesz primaux des blocs position nulle et intrinsèque nulle,
+  séparation composante par composante, et identités de Helmholtz propres et
+  croisées sur le vrai Euler `T03`.
+- Limite : les formules jet-géométriques de ces résidus et le bloc
+  métrique–bord restent ouverts.
+- Porte terminale : aucune ; `T04` reste ouverte, compteur `3/14`.
+
+### `P-T05-EXACT-T03-RELATIVE-VARIATIONAL-REALIZATION` — Gate 819
+
+- État : `SUPPORT` (2026-09-09). Portée : `T05/BICOMPLEXE-RELATIF-INTÉGRÉ`.
+- Gate : `P0EFTJanusProgramPT05ExactT03RelativeVariationalRealization4D`.
+- Résultat : réalisation cellulaire relative avec `dH` et `dV` non nuls ; son
+  obstruction est une cochaîne non nulle dont la classe est une frontière, et
+  ses cochaînes distinguées s'évaluent sur l'action et l'Euler exacts de `T03`.
+- Limite : la réalisation par des densités locales de jets reste ouverte.
+- Porte terminale : aucune ; `T05` reste ouverte, compteur `3/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

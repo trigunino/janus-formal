@@ -396,22 +396,27 @@ reconstruction radiale. Les Gates 813, 816 et 817 ajoutent le tour de jets
 multi-indices fini, le Helmholtz fonctionnel `C²` sur le domaine et l'atlas
 exacts de T03, ainsi que les quatre restrictions physiques exactes ; le bloc LL
 possède son système fort sur les relèvements lisses et la normalisation nulle
-est exactement indépendante de l'action.
+est exactement indépendante de l'action. Gate 818 construit les résidus Riesz
+primaux des blocs position nulle et intrinsèque nulle, leur séparation pointwise
+et leurs identités de Helmholtz propres et croisées.
 
-**Reste :** construire les résidus jet-PDE locaux métrique–bord, position nulle
-et intrinsèque nulle, puis prouver leurs identités de Helmholtz non linéaires et
-leur raccord au système full-BRST. `T04` reste ouverte.
+**Reste :** construire le résidu métrique–bord, donner les formules
+jet-géométriques locales des deux résidus nuls et raccorder ces trois blocs au
+système jet-PDE full-BRST. `T04` reste ouverte.
 
 ### T05 — `variationalBicomplexObstructionVanishing`
 
 **Déjà disponible :** obstruction fonctionnelle globale nulle sur les cartes.
 Les Gates 814–815 construisent le cœur algébrique relatif stratifié, le quotient
 cycles/frontières et l'exactitude de l'obstruction pour une donnée de première
-variation fournie.
+variation fournie. Gate 819 donne une réalisation cellulaire relative intégrée
+avec `dH` et `dV` non nuls : l'obstruction y est non nulle comme cochaîne mais sa
+classe est exacte, et les cochaînes distinguées s'évaluent sur l'action et
+l'Euler exacts de T03.
 
-**Reste :** réaliser les cochaînes et différentielles avec les densités locales
-de jets exactes de T03, prouver les lois d'incidence et raccorder leur classe
-d'obstruction à l'Euler physique. `T05` reste ouverte ; audit terminal `3/14`.
+**Reste :** réaliser ces cochaînes et différentielles par les densités locales
+de jets exactes de T03 et prouver les identités locales de Stokes/contact.
+`T05` reste ouverte ; audit terminal `3/14`.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
