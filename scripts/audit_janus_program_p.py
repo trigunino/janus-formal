@@ -114,6 +114,22 @@ TERMINAL_GATE_EVIDENCE: dict[str, TerminalGateEvidence] = {
             "ProgramPT02InvariantLocalFunctionalBasisCertificate4D"
         ),
     ),
+    "T03": TerminalGateEvidence(
+        module=Path(
+            "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/"
+            "P0EFTJanusProgramPT03FullEulerLagrangeTerminalCertificate4D.lean"
+        ),
+        facade=Path(
+            "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+        ),
+        theorem=(
+            "JanusFormal."
+            "P0EFTJanusProgramPT03FullEulerLagrangeTerminalCertificate4D."
+            "program_p_t03_full_euler_lagrange_terminal_gate"
+        ),
+        scope="GLOBAL",
+        expected_type_fragment="ProgramPT03FullEulerLagrangeCertificate4D",
+    ),
 }
 GATE_ROOT = Path(
     "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates"
@@ -12840,6 +12856,15 @@ PROGRAM_P_GATES = {
             "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullEuler_apply_pure_null_eq_zero",
             "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullEuler_eq_zero_iff_mobileGHY",
             "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullAction_smooth_ghy",
+        ),
+    ),
+    "P0EFTJanusProgramPT03FullEulerLagrangeTerminalCertificate4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLCompatibleLLEuler_eq_fderiv",
+            "theorem finiteFramePairedC2PhysicalMaxwellSpinCMatterLLCompatibleLLEuler_smooth_eq_zero_iff_strong",
+            "structure ProgramPT03FullEulerLagrangeCertificate4D",
+            "theorem program_p_t03_full_euler_lagrange_terminal_gate",
         ),
     ),
     "P0EFTJanusHolonomicCompactTestPushforward4D.lean": (

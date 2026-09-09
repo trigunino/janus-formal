@@ -1,6 +1,6 @@
 # Programme P — registre opérationnel canonique
 
-Date de référence : 2026-08-26.
+Date de référence : 2026-09-09.
 
 ## 1. Rôle de ce document
 
@@ -10,16 +10,16 @@ mesuraient surtout l'accumulation de microlemmes. Son historique reste
 consultable dans Git.
 
 La fermeture globale est mesurée uniquement par les **14 portes terminales**
-de la section 7. État actuel : **2/14**. Une preuve locale, pointwise,
+de la section 7. État actuel : **3/14**. Une preuve locale, pointwise,
 finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 
 En cas de contradiction entre prose et code, le type exact du théorème Lean
 compilé fait autorité.
 
-### Synthèse active au 2026-08-26
+### Synthèse active au 2026-09-09
 
-Les quatorze portes restent la mesure finale. Après les lots `T01` et `T02`
-fermés, leur travail restant se regroupe en cinq lots ouverts :
+Les quatorze portes restent la mesure finale. Après les lots `T01`, `T02` et
+`T03` fermés, leur travail restant se regroupe en cinq lots ouverts :
 
 1. **Validation globale (`T01`) — FERMÉE** : le certificat typé commun, sa
    complétion L2 intrinsèque et son import de façade sont verts, sans axiome
@@ -30,9 +30,9 @@ fermés, leur travail restant se regroupe en cinq lots ouverts :
    invariantes continues de ce degré. Son évaluation est injective et ses
    coefficients sont uniques. Le classificateur historique à six invariants
    n'est pas utilisé comme hypothèse d'exhaustivité.
-3. **Calcul variationnel global (`T03`--`T06`)** : promouvoir les résultats
-   chartwise vers l'atlas physique brut, puis fermer Euler global, Helmholtz
-   non linéaire, bicomplexe local et classification des lagrangiens nuls/bords.
+3. **Calcul variationnel global (`T03` — FERMÉE ; `T04`--`T06` ouvertes)** :
+   l'Euler global est dérivé sur l'atlas couplé ; restent Helmholtz non linéaire,
+   le bicomplexe local et la classification des lagrangiens nuls/bords.
 4. **Hessien, Fredholm et déterminant (`T07`, `T12`)** : construire les trois
    données physiques restantes H10--H14 (famille locale `C²`, sept extensions
    continues, obstruction finie/coercivité), identifier la famille naturelle
@@ -90,7 +90,7 @@ carte ultérieure les ferme. L'arriéré actif est formé uniquement des cartes
 dont l'état n'est pas `DONE`, des verrous globaux de la section 6 et des portes
 terminales de la section 7.
 
-### Point de reprise `T03` au 2026-09-07
+### Fermeture de `T03` au 2026-09-09
 
 Les Gates577–580 ferment le transport des tests et l'annulation des dix
 résidus de divergence ; le défaut de Palatini est nul en jauge de volume
@@ -288,27 +288,20 @@ globale, rendent le courant GHY indépendant et mobile, extraient les trois
 équations LL lisses de la stationnarité, puis ajoutent la reparamétrisation des
 générateurs nuls sans double comptage des termes de bord.
 
-Prochaine obligation : coupler le courant GHY à la métrique induite du bulk et
-établir la condition Robin/Israel, rendre variables la position et la géométrie
-des faces nulles, puis obtenir les réciproques LL par densité ou surjectivité des
-tests lisses. Il reste enfin à assembler ces blocs sur les fonds couplés et
-full-BRST arbitraires et à établir la couverture par changements de carte. La
-portée analytique reste la strate Sylvester-régulière ; l’obstruction
-matricielle Gate669 hors de cette strate ne la bloque pas. Le fond de jauge doit
-rester commun lors des changements de carte.
-Fichiers de départ : `P0EFTJanusFiniteFramePairedRelativeC2Root4D`,
-`P0EFTJanusFiniteFramePairedC2FullBRSTGaugeAction4D`,
-`P0EFTJanusFiniteFrameCovectorC2Projection4D`,
-`P0EFTJanusFiniteFramePairedC2PhysicalAction4D`,
-`P0EFTJanusFrameFreeCovariantActionData4D`,
-`P0EFTJanusFiniteFrameIntrinsicSpectralPotential4D`,
-`P0EFTJanusProgramPGeneralMetricC2RelativeEndomorphism4D`,
-`P0EFTJanusProgramPGlobalCandidateAC2FiniteFrameSylvesterLocalRoot4D`,
-`P0EFTJanusPairedStrongFullBRSTSmoothAgreement4D` et
-`P0EFTJanusPairedStrongFullBRSTFiberDescent4D`.
-`T03` reste ouverte ; compteur global `2/14`.
+Gates800–809 ajoutent le système Euler arbitraire, le graphe métrique bulk–GHY,
+la complétion LL compatible et une réalisation physique fidèle des faces
+nulles. Gates810–811 construisent le cœur Euler couplé puis son atlas couvert,
+avec action et covecteur indépendants de la carte. Gate812 assemble ces objets
+dans le certificat terminal typé `ProgramPT03FullEulerLagrangeCertificate4D`.
+L'annulation de l'Euler y équivaut aux blocs métrique–GHY, LL compatible et
+physiques nuls ; sur les paquets LL lisses, le bloc LL équivaut au système fort.
 
-Validation 603–799 : modules, façade et audit verts, aucun `sorryAx`.
+`T03` est fermée ; compteur global `3/14`. La portée analytique reste la strate
+Sylvester-régulière et la réalisation nulle fidèle est une donnée géométrique
+typée explicite.
+
+Validation 603–812 : modules gardés, façade et audit verts ; l'audit terminal
+affiche `3/14`.
 Les sept théorèmes publics audités de Gate708 ne dépendent que de
 `propext`, `Classical.choice` et `Quot.sound`.
 Les huit théorèmes publics audités des Gates709–711 ont la même dépendance.
@@ -4020,10 +4013,9 @@ Portée exacte des fermetures et frontières globales :
   de schéma effectives. Sans donnée microscopique supplémentaire,
   `SCHEME-GLOBAL-01` est impossible à déduire des hypothèses actuelles.
 
-Ces distinctions expliquent pourquoi les portes terminales plus fortes
-`T03`–`T06` restent décochées ci-dessous : elles exigent encore l'atlas
-physique brut, le système local par composantes et le bicomplexe local, pas
-seulement leur fermeture fonctionnelle chartwise.
+Ces distinctions expliquent pourquoi les portes terminales `T04`–`T06` restent
+décochées ci-dessous : elles exigent encore Helmholtz non linéaire, le
+bicomplexe local et la classification des lagrangiens nuls et de bord.
 
 `MICRO-GLOBAL-01` et `SCALE-GLOBAL-01` sont actuellement
 `BLOQUÉ-PHYSIQUE`. Aucun LLM ne doit les rendre vrais par définition ou par
@@ -12788,6 +12780,124 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Validation : Lean sans avertissement, `.olean` généré ; pic arbre 4305 Mo.
 - Porte terminale : aucune ; 672e support pour `T03`, compteur `2/14`.
 
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-NULL-FULL-EULER-SYSTEM` — Gate 800
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullFullEulerSystem4D`.
+- Résultat : À tout point admissible, l'annulation de l'Euler est équivalente aux blocs physique–Maxwell–SpinC, LL, GHY indépendant et normalisation nulle.
+- Limite : Le courant GHY reste indépendant et aucun mode physique de face nulle ne varie encore.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 673e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-COUPLED-GHY-METRIC-GRAPH` — Gate 801
+
+- État : `DONE` (2026-09-09). Portée : `SECTORIEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCoupledGHYMetricGraph4D`.
+- Résultat : Le courant métrique GHY `C³` et la métrique bulk `C²` partagent leur image métrique dans un noyau linéaire fermé ; l'action et son Euler se restreignent à ce graphe.
+- Limite : L'identification géométrique Robin/Israel du covecteur de bord est plus forte que ce raccord métrique.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 674e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-SMOOTH-RESIDUAL-EQUIVALENCE` — Gate 802
+
+- État : `DONE` (2026-09-09). Portée : `CONDITIONNEL`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLSmoothResidualEquivalence4D`.
+- Résultat : Sous densité de l'image des trois jets LL lisses, leur système résiduel détecte exactement l'annulation du covecteur complété.
+- Limite : La densité dans le produit LL brut est une hypothèse et Gate803 montre qu'elle est fausse pour ce produit.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 675e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-SMOOTH-DENSITY-OBSTRUCTION` — Gate 803
+
+- État : `DONE` (2026-09-09). Portée : `GLOBALE/ANALYTIQUE`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLSmoothDensityObstruction4D`.
+- Résultat : Une relation PT fermée sépare un paquet du produit LL brut de toute image de coefficients lisses ; cette image n'y est donc pas dense.
+- Limite : Le résultat impose de remplacer le produit brut par sa complétion compatible.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 676e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-COMPATIBLE-COMPLETION` — Gate 804
+
+- État : `DONE` (2026-09-09). Portée : `GLOBALE/ANALYTIQUE`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCompatibleCompletion4D`.
+- Résultat : L'espace LL corrigé est la fermeture de l'image lisse directe/PT ; son inclusion est continue, son image lisse est dense et l'action LL s'y restreint.
+- Limite : Cette complétion exclut volontairement les paquets bruts incompatibles détectés par Gate803.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 677e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-COMPATIBLE-STRONG-RESIDUAL-SYSTEM` — Gate 805
+
+- État : `DONE` (2026-09-09). Portée : `GLOBALE/ANALYTIQUE`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCompatibleStrongResidualSystem4D`.
+- Résultat : Sur tout paquet LL lisse compatible, la stationnarité équivaut sans hypothèse de densité supplémentaire aux deux résidus algébriques ponctuels et à l'équation différentielle LL forte PT-symétrique.
+- Limite : L'énoncé fort vise les représentants LL lisses de la complétion.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 678e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-FRAME-PAIRED-C2-PHYSICAL-MAXWELL-SPINC-MATTER-LL-MOBILE-GHY-NULL-PHYSICAL-PRODUCT-EULER` — Gate 806
+
+- État : `DONE` (2026-09-09). Portée : `FINITE-MODE`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLMobileGHYNullPhysicalProductEuler4D`.
+- Résultat : Des coordonnées finies de position et de métrique d'écran portent une action `C²`; l'Euler total se sépare en système antérieur et Euler physique nul, lui-même scindé en deux blocs.
+- Limite : Le modèle d'action physique nul reste fourni comme donnée typée.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 679e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-NULL-FACE-PHYSICAL-ACTION-REALIZATION` — Gate 807
+
+- État : `DONE` (2026-09-09). Portée : `FINITE-MODE/CONDITIONNEL`.
+- Gate : `P0EFTJanusFiniteNullFacePhysicalActionRealization4D`.
+- Résultat : Une réalisation typée relie les coordonnées position–écran aux données d'action nulles existantes et produit un modèle normalisé dont action et Euler sont les dérivées attendues.
+- Limite : La carte vers les données réduites n'est pas encore construite depuis une géométrie mobile.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 680e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-NULL-FACE-MOBILE-GEOMETRIC-REALIZATION` — Gate 808
+
+- État : `DONE` (2026-09-09). Portée : `FINITE-MODE`.
+- Gate : `P0EFTJanusFiniteNullFaceMobileGeometricRealization4D`.
+- Résultat : Une face mobile contient explicitement plongement, fonction définissante nulle, métrique ambiante, écran, générateur, expansion, inaffinité et joints ; ces données réalisent l'action finie existante.
+- Limite : La projection canonique oublie une partie de cette géométrie et n'est pas injective sans fidélité supplémentaire.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 681e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FINITE-NULL-FACE-MOBILE-CANONICAL-FAITHFULNESS` — Gate 809
+
+- État : `DONE` (2026-09-09). Portée : `FINITE-MODE/CONDITIONNEL`.
+- Gate : `P0EFTJanusFiniteNullFaceMobileCanonicalFaithfulness4D`.
+- Résultat : Le noyau d'indiscernabilité de la projection mobile est explicite ; fidélité, injectivité et récupération sont reliées et donnent une réalisation d'action fidèle conservant action et Euler.
+- Limite : La loi de récupération fidèle est une donnée géométrique explicite, non une conséquence des seules données réduites.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 682e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-COMPATIBLE-COUPLED-GHY-NULL-PHYSICAL-EULER-CORE` — Gate 810
+
+- État : `DONE` (2026-09-09). Portée : `GLOBALE`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCompatibleCoupledGHYNullPhysicalEulerCore4D`.
+- Résultat : Le cœur full-BRST fini, le graphe métrique bulk–GHY, la complétion LL et les modes nuls forment un domaine ouvert avec une action dont la dérivée est l'Euler à quatre blocs.
+- Limite : La couverture et la covariance entre cartes sont établies séparément par Gate811.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 683e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-COMPATIBLE-COUPLED-GHY-NULL-PHYSICAL-COVERED-ATLAS` — Gate 811
+
+- État : `DONE` (2026-09-09). Portée : `GLOBALE`.
+- Gate : `P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCompatibleCoupledGHYNullPhysicalCoveredAtlas4D`.
+- Résultat : Les cartes de translation couvrent le carrier admissible ; leurs transitions ont dérivée identité, satisfont le cocycle et préservent action, Euler et criticité à quatre blocs.
+- Limite : La construction reste sur la strate régulière et utilise la réalisation nulle fidèle fournie.
+- Validation : Lean gardé validé.
+- Porte terminale : aucune ; 684e support pour `T03`, compteur historique `2/14`.
+
+### `P-T03-FULL-EULER-LAGRANGE-TERMINAL-CERTIFICATE` — Gate 812
+
+- État : `DONE` (2026-09-09). Portée : `GLOBALE`.
+- Gate : `P0EFTJanusProgramPT03FullEulerLagrangeTerminalCertificate4D`.
+- Résultat : Le certificat typé identifie le cœur full-BRST, le domaine ouvert non vide, la compatibilité bulk–GHY, la densité LL corrigée, la fidélité nulle, l'Euler comme dérivée, la couverture d'atlas, sa covariance et le système LL fort lisse.
+- Limite : La strate Sylvester-régulière et la réalisation nulle fidèle restent des données géométriques explicites du théorème.
+- Validation : Lean gardé sans avertissement, pic arbre 4557 Mo ; façade verte,
+  pic arbre 4535 Mo ; audit intégral vert.
+- Porte terminale : `T03` fermée ; compteur `3/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
@@ -12797,7 +12907,7 @@ un `ProgramStatus` arbitraire.
 - [x] `T01` — Revalider toutes les fondations et pairings par un certificat
   typé et compilé sur les objets globaux communs.
 - [x] `T02` — `invariantLocalFunctionalBasisClassified`.
-- [ ] `T03` — `fullEulerLagrangeOperatorDerived`.
+- [x] `T03` — `fullEulerLagrangeOperatorDerived`.
 - [ ] `T04` — `nonlinearHelmholtzConditionsProved`.
 - [ ] `T05` — `variationalBicomplexObstructionVanishing`.
 - [ ] `T06` — `nullLagrangiansAndBoundaryTermsClassified`.
@@ -12832,14 +12942,15 @@ Cette carte améliore la fiabilité du suivi mais ne ferme aucune porte
 scientifique.
 
 Validation : l'audit lit exclusivement la section fixe `T01–T14`, impose le
-dénominateur `14`, affiche le décompte terminal `2/14` et rejette toute porte
+dénominateur `14`, affiche le décompte terminal `3/14` et rejette toute porte
 cochée sans `TerminalGateEvidence`. Chaque évidence doit fournir module,
 façade, théorème pleinement qualifié, portée et fragment de type ; le module
 doit être importé, sans placeholder, et le théorème ne peut pas être un simple
 contrat `ProgramStatus`. Le certificat global typé `T01`, sa complétion L2
 intrinsèque et son intégration à la façade ont été revérifiés verts le
 2026-08-26. Le certificat borné global `T02` a été ajouté et revérifié le
-2026-08-29 ; `T01` et `T02` sont les deux portes terminales fermées.
+2026-08-29. Le certificat global `T03` a été compilé, importé et audité le
+2026-09-09 ; `T01`, `T02` et `T03` sont les trois portes terminales fermées.
 
 Mise à jour : `P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` ferme le
 paquetage global lisse, la linéarité réelle et l'intégrabilité de l'onde
@@ -12959,5 +13070,5 @@ variation diagonale en zéro est donc exactement le Hessien symétrique certifi�
 - le paquet spectral exige encore les différences actual/reference, les
   frontières filtrées, les moyennes de slices et leurs identités de
   semi-groupes. Les frontends Bochner fixes ne prouvent pas encore ce pont ; le
-  décompte terminal actuel est néanmoins `2/14`, par fermeture indépendante de
-  `T01` et `T02`.
+  décompte terminal actuel est désormais `3/14`, par fermeture indépendante de
+  `T01`, `T02` et `T03`.
