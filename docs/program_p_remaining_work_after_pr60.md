@@ -675,13 +675,18 @@ les contractions non-Euler, et toute densité homogène non constante dans le
 noyau d'Euler est un vrai différentiel horizontal après normalisation par son
 degré. L'assemblage du polynôme T02 inhomogène et le sens réciproque sûr restent
 à fermer.
+Gate 925 combine trois dilatations du courant de Gate924 par une quadrature
+radiale exacte en degrés un à quatre. Pour toute fonctionnelle T02 admissible,
+l'annulation globale du covecteur d'Euler sur J⁴ fournit maintenant un courant
+J³ explicite dont le différentiel horizontal est la densité locale moins son
+terme constant. Le sens réciproque exige encore une soundness d'Euler pour ces
+courants J³.
 Ces résultats
-ne classifient ni le noyau polynomial T02 non linéaire
+ne donnent pas encore la classification bidirectionnelle du noyau polynomial T02
 général ni une action BV physique covariante complète.
 
-**Reste :** classifier le noyau d'Euler de la classe polynomiale non triviale
-sur `J⁴` et prouver son homotopie algébrique
-`ker Euler = constantes + image dH`, construire le carrier local covariant
+**Reste :** prouver le sens réciproque de soundness pour compléter sur `J⁴`
+l'homotopie algébrique `ker Euler = constantes + image dH`, construire le carrier local covariant
 commun contenant les densités physiques complètes, puis étendre le pont
 intégré compatible à Stokes au-delà du secteur scalaire normal et y relever
 la classification. Il faut enfin transporter l'action de deck canonique dans

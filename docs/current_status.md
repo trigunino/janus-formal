@@ -470,10 +470,16 @@ radial direction with the correct half-weights, builds an explicit J³ current,
 and proves that every nonconstant homogeneous Euler-null density is its
 horizontal differential after division by the degree. The complete inhomogeneous
 T02 polynomial and the converse soundness statement still remain.
+Gate 925 combines three scaled copies of Gate924's current with an exact
+degree-four radial quadrature. For every admissible T02 functional, global
+vanishing of the genuine J⁴ Euler covector now gives an explicit J³ current
+whose horizontal differential equals the local density minus its constant
+term. A general Euler-soundness theorem for these J³ currents is still needed
+for the reverse implication.
 These results cover
-neither the general nonlinear T02 polynomial kernel
+neither the full two-sided nonlinear T02 polynomial classification
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
-its algebraic homotopy are classified, and until a common covariant local
+the reverse horizontal-exactness implication are classified, and until a common covariant local
 carrier has a Stokes-compatible integrated chain map beyond the scalar normal
 sector, the supplied moving-frame conjugation is identified with the actual
 varying-frame jets, and the nonlinear physical BV/BRST action is constructed.
