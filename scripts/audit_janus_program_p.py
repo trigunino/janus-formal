@@ -27580,6 +27580,20 @@ PROGRAM_P_GATES = {
             "theorem programPT06T02RankOne_divergenceRepresentative_deck_invariant",
         ),
     ),
+    "P0EFTJanusProgramPT06MovingFrameRankOneChannel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06ActualPhysicalMovingLLScalarChannel",
+            "theorem programPT06ActualPhysicalMovingLLScalarChannel_ne_zero",
+            "theorem programPT06ActualPhysicalMovingLLScalarChannel_deck_invariant",
+            "theorem programPT06ActualPhysicalMovingLLScalarChannel_jet_deck_invariant",
+            "theorem programPT06ActualPhysicalMovingLLScalarizeJet_deck_invariant",
+            "def programPT06ActualPhysicalMovingLLRankOneDensity",
+            "theorem programPT06ActualPhysicalMovingLLRankOneDensity_deck_invariant",
+            "theorem programPT06SecondOrderLocalEuler_movingLLRankOne_deck_invariant",
+            "theorem programPT06MovingLLRankOne_divergenceRepresentative_deck_invariant",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

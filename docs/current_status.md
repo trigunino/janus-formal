@@ -410,7 +410,12 @@ a Cartan hypothesis. Gate 913 selects an explicit nonzero real LL channel on
 the eleven-field physical value product, proves it fixed by the canonical
 deck action coefficientwise on J⁰–J⁴, and proves fixed-frame naturality of the
 rank-one density, Euler expression, and divergence representative. It does
-not identify this fixed-frame action with T02 `coordChange`.
+not identify this fixed-frame action with T02 `coordChange`. Gate 914 pulls
+that nonzero LL channel through every supplied pointwise moving
+trivialization and proves naturality of the channel, all finite jet
+coefficients, the rank-one density, Euler expression, and divergence
+representative under Gate902's conjugated action. This prolongation is still
+spatially frozen and is not the derivative-corrected T02 `coordChange`.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

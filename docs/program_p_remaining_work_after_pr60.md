@@ -615,7 +615,12 @@ sélectionne un canal LL réel explicite et non nul dans le produit physique des
 onze champs, le prouve fixé coefficient par coefficient par l'action deck
 canonique sur J⁰–J⁴, puis établit la naturalité en frame fixe de la densité
 rang-un, d'Euler et de son représentant divergence. Elle n'identifie pas cette
-action figée au `coordChange` T02. Ces résultats
+action figée au `coordChange` T02. Gate 914 transporte ce canal LL non nul par
+toute trivialisation mobile ponctuelle fournie et prouve la naturalité du
+canal, de tous les coefficients de jet finis, de la densité rang-un, d'Euler
+et du représentant divergence sous l'action conjuguée Gate902. La
+prolongation reste spatialement figée et n'est pas le `coordChange` T02 avec
+corrections de dérivées. Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 
