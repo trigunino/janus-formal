@@ -632,6 +632,12 @@ fonctionnelle rang-un T02 admissible, puis transporte le critère exact
 d'obstruction Euler et le représentant constante plus `dH`. La construction
 de ces données depuis l'atlas physique avec corrections de dérivées reste
 ouverte.
+Gate 917 traite le déterminant cubique du Hessien scalaire dans les trois
+directions. Trois identités de Piola explicites annulent son Euler Gate880 et
+un courant de cofacteurs de première ligne sur J² a pour vrai différentiel
+Gate879 ce déterminant, après annulation de tous les termes J³. Il s'agit du
+seul déterminant Hessien scalaire 3×3, pas d'une classification des polynômes
+multifield généraux de second jet.
 Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.

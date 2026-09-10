@@ -427,6 +427,12 @@ it derives the two Gate910 transition witnesses, constructs an admissible T02
 rank-one functional, and transfers the exact Euler obstruction criterion and
 constant-plus-`dH` representative. Construction of those compatibility data
 from the derivative-corrected physical atlas remains open.
+Gate 917 treats the cubic determinant of the scalar three-direction Hessian.
+Three explicit Piola identities prove its Gate880 Euler expression vanishes,
+and a first-row cofactor current on J² has genuine Gate879 differential equal
+to the determinant after all J³ terms cancel. This is the unique scalar 3×3
+Hessian determinant, not a classification of general multifield second-jet
+polynomials.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
