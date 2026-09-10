@@ -713,6 +713,10 @@ pour une constante plus le `dH` d'un courant J³ lisse, avec le courant radial
 canonique comme témoin explicite. Gate 943 prouve aussi l'invariance de la
 divergence représentée sous le vrai changement de carte T02 avec corrections
 de dérivées ; le recollement du courant J³ lui-même reste ouvert.
+Gate 944 construit une trace linéaire GHY-vers-joints sur tout carrier fini
+non vide et prouve sa loi intégrée. Elle répartit la valeur GHY déjà intégrée
+et ne remplace donc pas une restriction locale géométrique de codimension
+deux. L'incidence bulk-vers-faces nulles reste sans habitant géométrique.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.

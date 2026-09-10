@@ -507,10 +507,13 @@ exactly when the density is its prescribed constant plus `dH` of a smooth J³
 current, with the canonical radial current as an explicit witness. Gate 943
 also proves invariance of that represented divergence under the genuine
 derivative-corrected T02 chart change. It does not yet glue the J³ current.
+Gate 944 constructs a linear reduced GHY-to-joint trace on every nonempty
+finite face carrier and proves its integrated trace law. This trace distributes
+the integrated GHY value; it is not a local codimension-two restriction.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal
-sector, the supplied moving-frame conjugation is identified with the actual
+sector, including the still-missing bulk-to-null incidence; the supplied moving-frame conjugation is identified with the actual
 varying-frame jets, and the nonlinear physical BV/BRST action is constructed.
 
 Given a
