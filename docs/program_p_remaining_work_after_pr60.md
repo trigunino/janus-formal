@@ -686,7 +686,13 @@ isole aussi les données non circulaires du sens réciproque : factorisation
 exacte du `dH` sur J⁴ par une densité J², rétraction par extension nulle,
 régularité C³ de la divergence et transfert des trois premières dérivées de
 Fréchet itérées. Le télescopage d'Euler d'ordre supérieur reste à établir et
-n'est pas supposé dans cette gate.
+n'est pas supposé dans cette gate. Gate 927 construit le carrier à plafond
+fixe requis pour ce calcul : restrictions, shifts tronqués commutatifs sur J⁸,
+dérivées totales itérées et multi-indices, partielles verticales et somme
+d'Euler d'ordre fini. Gate 928 dérive exactement une dérivée totale et prouve
+la commutation des opérateurs totaux dans cet ambient sous régularité C². Ces
+deux gates fournissent des entrées effectives du télescopage, sans encore
+conclure `Euler (dH current) = 0` pour un courant J³.
 Ces résultats
 ne donnent pas encore la classification bidirectionnelle du noyau polynomial T02
 général ni une action BV physique covariante complète.

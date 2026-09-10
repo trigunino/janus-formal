@@ -481,7 +481,13 @@ packages the non-circular data needed for the reverse direction: exact
 factorization of a J⁴ current divergence through J², a canonical zero-extension
 retraction, C³ regularity of the divergence, and transfer of the first three
 iterated derivatives. The remaining step is the higher-order Euler telescoping
-identity; Gate926 does not assume or claim its conclusion.
+identity; Gate926 does not assume or claim its conclusion. Gate 927 builds the
+fixed finite-jet carrier for that calculation: restriction maps, commuting
+truncated shifts on J⁸, iterated and multi-index total derivatives, vertical
+partials, and the generic finite-order Euler sum. Gate 928 derives the full
+first derivative of a total derivative and proves that the fixed-ambient total
+derivatives commute under C² regularity. These are genuine inputs to the
+telescoping proof, but they do not yet assert Euler soundness for a J³ current.
 These results cover
 neither the full two-sided nonlinear T02 polynomial classification
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
