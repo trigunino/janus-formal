@@ -661,6 +661,13 @@ ponts physiques et Finsupp-J² réels de T02. Chaque ordre fini est identifié a
 vrai `iteratedFDeriv`, avec formule explicite par injections et spécialisations
 aux ordres deux, trois et quatre. La formule d'Euler complète et la
 classification de son noyau restent à établir.
+Gate 922 développe l'opérateur d'Euler général de Gate880 sur J⁴ en
+contractions exactes D¹, D² et D³. La seconde dérivée totale contient le terme
+de chaîne d'ordre trois et la dérivée de la translation formelle du jet. Gate
+923 spécialise cette identité à toute fonctionnelle T02 admissible de degré au
+plus quatre avec les dérivées réelles des Gates882 et 921. La formule complète
+est calculée, mais son noyau polynomial et son courant d'homotopie restent à
+classifier.
 Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.

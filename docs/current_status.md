@@ -457,6 +457,13 @@ derivative with the genuine `iteratedFDeriv`, gives the explicit injection
 formula, and exposes the second, third, and fourth derivatives needed by the
 Euler calculation. It does not yet compute that Euler formula or classify its
 kernel.
+Gate 922 expands the general Gate880 second-order Euler operator on J⁴ into
+its exact D¹, D², and D³ contractions. The iterated total derivative includes
+both the third-derivative chain-rule term and the derivative of the formal jet
+translation. Gate 923 specializes this identity to the complete admissible
+T02 degree-at-most-four local Lagrangian using Gates882 and 921. This computes
+the full Euler expression but does not yet solve its polynomial kernel or
+construct the required homotopy current.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

@@ -27616,6 +27616,24 @@ PROGRAM_P_GATES = {
             "theorem programPT06T02FinsuppSecondJetFourthFrechetDerivative_eq_iteratedFDeriv",
         ),
     ),
+    "P0EFTJanusProgramPT06SecondOrderEulerHigherFrechetFormula4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06SecondOrderEulerHigherFrechetDerivative",
+            "theorem programPT06TruncateThroatSpatialTotalDerivative",
+            "theorem programPT06TruncateThroatSpatialMultiindexJet_trans",
+            "theorem programPT06ThroatSpatialVerticalPartialDerivative_eq_higherFrechet",
+            "theorem programPT06SecondOrderLocalEulerFirstTotalTerm_eq_higherFrechet",
+            "theorem programPT06SecondOrderLocalEulerSecondTotalTerm_eq_higherFrechet",
+            "theorem programPT06SecondOrderLocalEuler_eq_higherFrechet",
+        ),
+    ),
+    "P0EFTJanusProgramPT06T02SecondOrderEulerHigherFrechetFormula4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem programPT06SecondOrderLocalEuler_t02FinsuppDegreeFour_formula",
+        ),
+    ),
     "P0EFTJanusProgramPT06MultifieldGradientJacobianMinorNullLagrangian4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
