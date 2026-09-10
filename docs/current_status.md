@@ -382,6 +382,17 @@ Gate899's one-dimensional null-generator realization is independent of which
 formal `Fin 3` coordinate is assigned to that parameter, preserving the T05
 Stokes and Gate819 incidence identities. This remains the same scalar
 null-to-joint geometry, not a tangential three-dimensional Stokes theorem.
+Gate 906 classifies the autonomous scalar first-order quadratic kernel with
+all three spatial directions and mixed symmetric gradient coefficients,
+including an explicit constant-plus-`dH` decomposition. Gate 907 lifts the
+directed converse to a rank-one channel of the fixed T02 physical model fiber;
+it does not construct an invariant T02 admissible functional or prove deck
+compatibility.
+Gate 908 gives a finite-dimensional multifield converse for an arbitrary
+linear value term, one normalized value square, and every Gate898 finite-rank
+bilinear current. These remain first-order quadratic subclasses; they do not
+cover arbitrary cross-channel quadratic forms, second-jet dependence, or the
+complete T02 degree-four polynomial carrier.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

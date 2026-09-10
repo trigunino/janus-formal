@@ -27479,6 +27479,43 @@ PROGRAM_P_GATES = {
             "theorem programPT06DirectionalNullJointJetLocalDensity_dH_joint",
         ),
     ),
+    "P0EFTJanusProgramPT06ScalarMultidirectionalQuadraticExactness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06ScalarMultidirectionalQuadraticDensity4D",
+            "def programPT06ScalarMultidirectionalQuadraticDensityEvaluation",
+            "theorem programPT06SecondOrderLocalEuler_scalarMultidirectionalQuadratic_formula",
+            "theorem programPT06SecondOrderLocalEuler_scalarMultidirectionalQuadratic_explicit",
+            "theorem programPT06_scalarMultidirectionalQuadratic_euler_eq_zero_iff",
+            "theorem programPT06ScalarMultidirectionalQuadratic_eq_constant_add_divergences",
+            "theorem programPT06_scalarMultidirectionalQuadratic_euler_eq_zero_iff_divergence_form",
+        ),
+    ),
+    "P0EFTJanusProgramPT06T02RankOneDirectedQuadraticExactness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06T02RankOneDirectedQuadraticDensity4D",
+            "def programPT06T02RankOneDirectedQuadraticDensityEvaluation",
+            "theorem programPT06SecondOrderLocalEuler_t02RankOneDirectedQuadratic_formula",
+            "theorem programPT06T02RankOne_channel_surjective",
+            "theorem programPT06_t02RankOneDirectedQuadratic_euler_eq_zero_iff",
+            "theorem programPT06T02RankOneDirectedQuadratic_eq_constant_add_divergences",
+            "theorem programPT06_t02RankOneDirectedQuadratic_euler_eq_zero_iff_divergence_form",
+        ),
+    ),
+    "P0EFTJanusProgramPT06MultifieldFirstOrderQuadraticKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06MultifieldFirstOrderQuadraticDensity4D",
+            "def programPT06MultifieldFirstOrderQuadraticDensityEvaluation",
+            "theorem programPT06SecondOrderLocalEuler_multifieldFirstOrderQuadratic_formula",
+            "theorem programPT06_multifieldFirstOrderQuadratic_euler_eq_zero_iff",
+            "def programPT06MultifieldFirstOrderQuadraticKernelCurrent",
+            "theorem programPT06MultifieldFirstOrderQuadratic_eq_constant_add_dH",
+            "theorem programPT06_multifieldFirstOrderQuadratic_euler_eq_zero_iff_divergence_form",
+            "def programPT06MultifieldFirstOrderQuadraticOfFiniteRank",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

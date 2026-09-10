@@ -586,7 +586,18 @@ gate ne construit donc pas ces certificats et ne classifie pas le noyau. Gate
 905 montre que la réalisation unidimensionnelle du générateur nul de Gate899
 ne dépend pas du choix de la coordonnée formelle `Fin 3`, tout en conservant
 Stokes T05 et l'incidence Gate819. Cela reste la même géométrie scalaire
-nulle-vers-joints, sans théorème de Stokes tangentiel tridimensionnel. Ces résultats
+nulle-vers-joints, sans théorème de Stokes tangentiel tridimensionnel. Gate
+906 classifie ensuite le noyau quadratique scalaire autonome dans les trois
+directions, coefficients gradient-gradient mixtes symétriques compris, avec
+une décomposition explicite constante plus `dH`. Gate 907 relève la
+réciproque dirigée sur un canal rang-un de la fibre modèle physique T02 fixe,
+sans construire de fonctionnelle admissible T02 invariante ni prouver la
+compatibilité deck. Gate
+908 obtient une réciproque multifield de dimension finie pour un terme valeur
+linéaire arbitraire, un carré valeur normalisé et tous les courants bilinéaires
+de rang fini Gate898. Ces sous-classes restent quadratiques de premier ordre;
+elles n'incluent ni toutes les formes croisées entre canaux, ni la dépendance
+au second jet, ni le carrier polynomial T02 complet de degré quatre. Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 
