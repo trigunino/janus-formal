@@ -27553,6 +27553,33 @@ PROGRAM_P_GATES = {
             "theorem programPT06ScalarHessianMinorCurrentDH_eq_density",
         ),
     ),
+    "P0EFTJanusProgramPT06MultifieldJacobianMinorNullLagrangian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06MultifieldJacobianMinorData4D",
+            "def programPT06MultifieldJacobianMinorCurrentComponent",
+            "def programPT06MultifieldJacobianMinorCurrentDivergence",
+            "def programPT06MultifieldJacobianMinorDensityEvaluation",
+            "theorem programPT06MultifieldJacobianMinorCurrentDivergence_eq_density",
+            "theorem programPT06MultifieldJacobianMinorDensityEvaluation_hasFDerivAt",
+            "theorem programPT06SecondOrderLocalEuler_multifieldJacobianMinor_eq_zero",
+            "theorem programPT06SecondOrderLocalEuler_multifieldJacobianMinorDivergence_eq_zero",
+        ),
+    ),
+    "P0EFTJanusProgramPT06CanonicalFixedFrameRankOneChannel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06ActualPhysicalCanonicalLLScalarChannel",
+            "theorem programPT06ActualPhysicalCanonicalLLScalarChannel_ne_zero",
+            "theorem programPT06ActualPhysicalCanonicalLLScalarChannel_deck_invariant",
+            "theorem programPT06ActualPhysicalCanonicalLLScalarChannel_jet_deck_invariant",
+            "theorem programPT06ActualPhysicalCanonicalLLScalarizeJet_deck_invariant",
+            "def programPT06ActualPhysicalCanonicalLLRankOneDensity",
+            "theorem programPT06T02RankOneDirectedQuadraticDensity_deck_invariant",
+            "theorem programPT06SecondOrderLocalEuler_t02RankOne_deck_invariant",
+            "theorem programPT06T02RankOne_divergenceRepresentative_deck_invariant",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

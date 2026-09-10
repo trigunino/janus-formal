@@ -608,7 +608,14 @@ précédentes restent quadratiques de premier ordre et Gate911 ne couvre que les
 mineurs hessiens scalaires individuels; elles n'incluent ni toutes les formes
 gradient-gradient croisées entre canaux, ni la dépendance générale au second
 jet au-delà de ces mineurs, ni le carrier polynomial T02 complet de degré
-quatre. Ces résultats
+quatre. Gate 912 réalise un vrai mineur jacobien multifield
+`α(u_i)β(u_j) - α(u_j)β(u_i)` comme différentiel Gate879 d'un courant explicite
+de premier ordre et prouve directement son annulation par Gate880. Gate 913
+sélectionne un canal LL réel explicite et non nul dans le produit physique des
+onze champs, le prouve fixé coefficient par coefficient par l'action deck
+canonique sur J⁰–J⁴, puis établit la naturalité en frame fixe de la densité
+rang-un, d'Euler et de son représentant divergence. Elle n'identifie pas cette
+action figée au `coordChange` T02. Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 

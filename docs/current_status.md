@@ -402,7 +402,15 @@ the third-order terms cancelled formally. The preceding converse results
 remain first-order quadratic subclasses, while Gate911 covers only individual
 scalar Hessian minors; they do not cover arbitrary cross-channel gradient
 quadratic forms, general second-jet dependence, or the
-complete T02 degree-four polynomial carrier.
+complete T02 degree-four polynomial carrier. Gate 912 realizes a genuine
+multifield Jacobian minor
+`α(u_i)β(u_j) - α(u_j)β(u_i)` as the Gate879 differential of an explicit
+first-order current and proves its Gate880 Euler expression vanishes without
+a Cartan hypothesis. Gate 913 selects an explicit nonzero real LL channel on
+the eleven-field physical value product, proves it fixed by the canonical
+deck action coefficientwise on J⁰–J⁴, and proves fixed-frame naturality of the
+rank-one density, Euler expression, and divergence representative. It does
+not identify this fixed-frame action with T02 `coordChange`.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
