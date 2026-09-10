@@ -464,6 +464,12 @@ translation. Gate 923 specializes this identity to the complete admissible
 T02 degree-at-most-four local Lagrangian using Gates882 and 921. This computes
 the full Euler expression but does not yet solve its polynomial kernel or
 construct the required homotopy current.
+Gate 924 proves the radial Cartan identity for every C³ second-order local
+function on the genuine Finsupp jet tower. It reconstructs the symmetric J²
+radial direction with the correct half-weights, builds an explicit J³ current,
+and proves that every nonconstant homogeneous Euler-null density is its
+horizontal differential after division by the degree. The complete inhomogeneous
+T02 polynomial and the converse soundness statement still remain.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

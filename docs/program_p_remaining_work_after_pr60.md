@@ -668,6 +668,13 @@ de chaîne d'ordre trois et la dérivée de la translation formelle du jet. Gate
 plus quatre avec les dérivées réelles des Gates882 et 921. La formule complète
 est calculée, mais son noyau polynomial et son courant d'homotopie restent à
 classifier.
+Gate 924 établit l'identité de Cartan radiale pour toute fonction locale C³
+d'ordre deux sur la vraie tour Finsupp. La décomposition radiale symétrique de
+J² utilise les demi-poids hors diagonale, un courant explicite sur J³ absorbe
+les contractions non-Euler, et toute densité homogène non constante dans le
+noyau d'Euler est un vrai différentiel horizontal après normalisation par son
+degré. L'assemblage du polynôme T02 inhomogène et le sens réciproque sûr restent
+à fermer.
 Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
