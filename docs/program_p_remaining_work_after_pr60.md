@@ -573,7 +573,12 @@ et le carrier T02 complet restent hors de cette sous-classe. Gate 902 conjugue
 l'action deck physique complète de la frame fixe par des trivialisations
 linéaires ponctuelles fournies, avec lois de groupe et naturalité des jets
 coefficientiels. Cette prolongation est spatialement gelée et n'est pas encore
-identifiée aux transitions à termes dérivés de l'atlas géométrique. Ces résultats
+identifiée aux transitions à termes dérivés de l'atlas géométrique. Gate 903
+dérive ensuite les quatre covecteurs gauge depuis des jets de ghosts
+scalaires d'un ordre supérieur, prouve les lois décalées de troncature et de
+dérivée totale, puis construit un morphisme de complexes exact vers Gate900.
+Le modèle reste en frame fixe, réel ordinaire, sans ghosts grassmanniens ni
+BRST difféomorphisme non linéaire. Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 
@@ -583,7 +588,7 @@ sur `J⁴` et prouver son homotopie algébrique
 commun contenant les densités physiques complètes, puis étendre le pont
 intégré compatible à Stokes au-delà du secteur scalaire normal et y relever
 la classification. Il faut enfin transporter l'action de deck canonique dans
-les vrais jets des trivialisations mobiles et construire le BV/BRST non
+les vrais jets des trivialisations mobiles et construire le BV/BRST physique non
 trivial sur tous les champs physiques.
 `T06` reste ouverte.
 

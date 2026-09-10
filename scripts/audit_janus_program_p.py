@@ -27432,6 +27432,25 @@ PROGRAM_P_GATES = {
             "theorem programPT06ActualPhysicalMovingFrameJetDeckAction_commutes_totalDerivative",
         ),
     ),
+    "P0EFTJanusProgramPT06FullPhysicalScalarGhostBRSTJetComplex4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06ScalarGhostSpatialDC",
+            "theorem programPT06ScalarGhostSpatialDC_commutes_truncation",
+            "theorem programPT06ScalarGhostSpatialDC_commutes_totalDerivative",
+            "def programPT06PairedAbelianScalarGhostDC",
+            "theorem programPT06PairedAbelianScalarGhostDC_commutes_truncation",
+            "theorem programPT06PairedAbelianScalarGhostDC_commutes_totalDerivative",
+            "def programPT06ScalarGhostPhysicalGaugeVariation",
+            "def programPT06FullPhysicalScalarGhostJetBRST",
+            "theorem programPT06FullPhysicalScalarGhostJetBRST_square_zero",
+            "theorem programPT06FullPhysicalScalarGhostJetBRST_nonzero_on_dc",
+            "theorem programPT06FullPhysicalScalarGhostJetBRST_commutes_truncation",
+            "theorem programPT06FullPhysicalScalarGhostJetBRST_commutes_totalDerivative",
+            "def programPT06FullPhysicalScalarGhostGate900Realization",
+            "theorem programPT06FullPhysicalScalarGhostGate900Realization_chainMap",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

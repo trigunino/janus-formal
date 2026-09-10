@@ -368,13 +368,18 @@ mixed directions or the complete T02 carrier. Gate 902 conjugates the full
 fixed-frame physical deck action through arbitrary supplied pointwise linear
 trivialisations, including the group laws and coefficientwise jet naturality.
 Its jet prolongation is spatially frozen and is not yet identified with the
-derivative-corrected transitions of the geometric atlas. These results cover
+derivative-corrected transitions of the geometric atlas. Gate 903 derives the
+four Abelian gauge covectors from scalar ghost jets one order higher, proves
+the shifted truncation and total-derivative laws, and gives an exact chain map
+to Gate900's physical gauge-gradient complex. This remains a fixed-frame,
+ordinary real-linear model without Grassmann ghosts or nonlinear
+diffeomorphism BRST. These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
 its algebraic homotopy are classified, and until a common covariant local
 carrier has a Stokes-compatible integrated chain map beyond the scalar normal
 sector, the supplied moving-frame conjugation is identified with the actual
-varying-frame jets, and the complete physical BV/BRST action is constructed.
+varying-frame jets, and the nonlinear physical BV/BRST action is constructed.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
