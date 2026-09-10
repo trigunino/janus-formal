@@ -486,7 +486,16 @@ fixed finite-jet carrier for that calculation: restriction maps, commuting
 truncated shifts on J⁸, iterated and multi-index total derivatives, vertical
 partials, and the generic finite-order Euler sum. Gate 928 derives the full
 first derivative of a total derivative and proves that the fixed-ambient total
-derivatives commute under C² regularity. These are genuine inputs to the
+derivatives commute under C² regularity. Gate 929 independently expands the
+first three Frechet derivatives of a J³-current divergence on J⁴, including
+every derivative of the linear jet shift. Gates 930--933 prove the vertical
+Cartan identity, identify its shifted coordinate with the exact multi-index
+predecessor, derive the resulting commutator, and show that the canonical
+multi-index derivative word is invariant under reordering and coordinate
+addition. Gate 934 proves generic lift naturality for Frechet, vertical, and
+total derivatives between finite jet orders. Gate 935 constructs the exact
+successor and low-order equivalences that reindex the two finite sums in the
+Euler cancellation. These are genuine inputs to the
 telescoping proof, but they do not yet assert Euler soundness for a J³ current.
 These results cover
 neither the full two-sided nonlinear T02 polynomial classification

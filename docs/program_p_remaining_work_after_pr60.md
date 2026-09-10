@@ -690,8 +690,17 @@ n'est pas supposé dans cette gate. Gate 927 construit le carrier à plafond
 fixe requis pour ce calcul : restrictions, shifts tronqués commutatifs sur J⁸,
 dérivées totales itérées et multi-indices, partielles verticales et somme
 d'Euler d'ordre fini. Gate 928 dérive exactement une dérivée totale et prouve
-la commutation des opérateurs totaux dans cet ambient sous régularité C². Ces
-deux gates fournissent des entrées effectives du télescopage, sans encore
+la commutation des opérateurs totaux dans cet ambient sous régularité C². Gate
+929 calcule aussi, par une route directe indépendante, les trois premières
+dérivées de Fréchet de la divergence d'un courant J³ sur J⁴, avec tous les
+termes provenant du shift linéaire. Gates 930--933 prouvent l'identité verticale
+de Cartan, reconnaissent exactement son prédécesseur multi-indice, donnent le
+commutateur prêt à télescoper et rendent `D^α` invariant par permutation et
+ajout d'une coordonnée. Gate 934 établit enfin la naturalité générique des
+lifts de fonctions locales pour les dérivées de Fréchet, verticales et totales.
+Gate 935 construit les équivalences exactes de successeur et de partie d'ordre
+bas qui réindexent les deux sommes finies de l'annulation d'Euler. Ces gates
+fournissent des entrées effectives du télescopage, sans encore
 conclure `Euler (dH current) = 0` pour un courant J³.
 Ces résultats
 ne donnent pas encore la classification bidirectionnelle du noyau polynomial T02
