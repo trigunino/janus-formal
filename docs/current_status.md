@@ -433,6 +433,11 @@ and a first-row cofactor current on J² has genuine Gate879 differential equal
 to the determinant after all J³ terms cancel. This is the unique scalar 3×3
 Hessian determinant, not a classification of general multifield second-jet
 polynomials.
+Gate 918 closes the finite real span of all three Gate911 scalar 2×2 Hessian
+minors. It sums their explicit J² currents, proves the genuine Gate879
+differential equals the summed density, proves Gate880 vanishes, and exposes
+addition, scaling, and single-generator embeddings. It adds closure under
+finite linear combinations, not new multifield generators.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

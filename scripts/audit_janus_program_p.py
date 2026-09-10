@@ -27566,6 +27566,22 @@ PROGRAM_P_GATES = {
             "theorem programPT06ScalarHessianDeterminantCurrentDH_eq_density",
         ),
     ),
+    "P0EFTJanusProgramPT06FiniteSpanScalarHessianMinorNullLagrangian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06FiniteSpanScalarHessianMinorData4D",
+            "def programPT06ScalarHessianMinorCurrentComponent",
+            "def programPT06ScalarHessianMinorCurrentDivergence",
+            "def programPT06FiniteSpanScalarHessianMinorCurrentComponent",
+            "def programPT06FiniteSpanScalarHessianMinorCurrentDivergence",
+            "def programPT06FiniteSpanScalarHessianMinorDensityEvaluation",
+            "theorem programPT06FiniteSpanScalarHessianMinorCurrentDivergence_eq_density",
+            "theorem programPT06SecondOrderLocalEuler_finiteSpanScalarHessianMinor_eq_zero",
+            "def programPT06FiniteSpanScalarHessianMinorScale",
+            "def programPT06FiniteSpanScalarHessianMinorAdd",
+            "def programPT06FiniteSpanScalarHessianMinorOfGenerator",
+        ),
+    ),
     "P0EFTJanusProgramPT06MultifieldJacobianMinorNullLagrangian4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

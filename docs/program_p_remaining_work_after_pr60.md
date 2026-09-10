@@ -638,6 +638,11 @@ un courant de cofacteurs de première ligne sur J² a pour vrai différentiel
 Gate879 ce déterminant, après annulation de tous les termes J³. Il s'agit du
 seul déterminant Hessien scalaire 3×3, pas d'une classification des polynômes
 multifield généraux de second jet.
+Gate 918 ferme le span réel fini des trois mineurs hessiens scalaires 2×2 de
+Gate911. Elle somme leurs courants J² explicites, prouve que le vrai
+différentiel Gate879 est la densité sommée, annule Gate880 et expose addition,
+multiplication scalaire et plongement d'un générateur. Elle ajoute la clôture
+par combinaisons linéaires finies, pas de nouveaux générateurs multifield.
 Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
