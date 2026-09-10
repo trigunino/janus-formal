@@ -291,7 +291,7 @@ exactness remain stronger follow-up work outside the terminal T05 criterion.
 The local metric/GHY PDE representation likewise remains stronger follow-up
 work outside the terminal T04 criterion.
 
-Gates 866--886 start `T06`. They prove `ker Euler = image dH` for every
+Gates 866--895 start `T06`. They prove `ker Euler = image dH` for every
 horizontal density in the integrated relative carrier of T05, classify the
 zero-Frechet-derivative members of T02's independent degree-at-most-four
 invariant second-jet class by a unique constant, and place the actual GHY and
@@ -324,11 +324,34 @@ jet tower only on the reduced `(II, F)` carrier, not on the complete
 eleven-component physical carrier. Gate 886 maps continuous `J²` densities,
 including the T02 family, along a fixed-frame section into the integrated T05
 relative carrier and gives its zero-integral criterion; it proves no Stokes
-identification between local `dH` and relative boundaries. `T06` remains open
-until the nontrivial polynomial Euler kernel and its algebraic homotopy are
-classified, and until a common covariant local carrier containing the complete
-physical densities has a Stokes-compatible integrated chain map and carries
-the complete physical deck and BV/BRST actions.
+identification between local `dH` and relative boundaries. Gates 887--889
+prolong the nonzero finite metric-BV differential through the genuine jet
+tower, prove generic affine second-order BRST naturality, and realize the exact
+affine complex on that finite physical metric-BV submodel. Gate 890 supplies
+the first genuinely nonlinear family: directed rank-one quadratic value
+currents have an explicit quadratic `dH` density annihilated by Gate880 Euler.
+Gate 891 specializes the exact affine classification to the actual physical
+T02 value fiber when the quadratic, cubic and quartic coefficients vanish.
+Gate 892 upgrades the exact reduced `(II, F)` deck involution to
+coefficientwise linear equivalences on the algebraic jet tower and, after its
+finite fixed-frame coefficient projection, to continuous linear equivalences
+on `J²` and `J⁴`. Every invariant bounded linear `J²` density then has an
+equivariant Gate880 Euler covector and a deck-stable Euler-zero locus. This
+still supplies no deck action on the complete eleven-component carrier. Gate
+893 gives an exact local-to-integrated Stokes bridge for the canonical scalar
+cut-bulk current in the chosen collar-normal direction; it does not cover
+tangential currents or the null and joint strata. Gate 894 prolongs a deck
+action to all eleven physical value components and their jets, conditional on
+supplied fixed-frame gauge and metric representations. Gate 895 places those
+eleven values and the finite metric-BV phase in one affine exact jet complex,
+but its nonzero BV differential acts only on the finite metric summand and
+vanishes on the embedded physical fields. These results cover neither the
+general nonlinear T02 polynomial kernel nor a covariant full physical BV
+action. `T06` remains open until the nontrivial polynomial Euler kernel and
+its algebraic homotopy are classified, and until a common covariant local
+carrier has a Stokes-compatible integrated chain map beyond the scalar normal
+sector, an unconditional physical deck action, and the complete physical
+BV/BRST action.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

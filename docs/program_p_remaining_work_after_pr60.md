@@ -498,7 +498,7 @@ recollée. Ces objectifs ne sont pas déclarés fermés.
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
 **Déjà disponible :** plusieurs transgressions, GHY, faces nulles, joints et
-résidus de bord explicites. Gates 866–886 classifient exactement les
+résidus de bord explicites. Gates 866–895 classifient exactement les
 lagrangiens nuls et primitives dans le carrier relatif intégré de T05,
 classifient par constantes la classe indépendante de jets invariants de T02,
 et appliquent l'équivalence relative aux vrais paquets GHY/nul/joint et au
@@ -530,15 +530,38 @@ deck physique uniquement sur le carrier réduit `(II, F)`, pas sur les onze
 composantes physiques. Gate 886 intègre les densités locales continues sur
 `J²`, dont la famille T02, le long d'une section à frame fixe dans le carrier
 relatif T05 ; aucun théorème de Stokes reliant `dH` local aux bords relatifs
-n'est prouvé.
+n'est prouvé. Gates 887–889 prolongent le différentiel métrique-BV fini non
+nul sur la vraie tour de jets, prouvent la naturalité BRST affine générique,
+puis réalisent le complexe affine exact sur ce sous-modèle physique fini.
+Gate 890 donne la première famille vraiment non linéaire : la divergence des
+courants-valeurs quadratiques dirigés de rang un est quadratique et annulée
+par l'Euler de Gate 880. Gate 891 spécialise l'exactitude affine au vrai fibre
+de valeurs physique T02 lorsque les coefficients quadratique, cubique et
+quartique sont nuls. Gate 892 renforce l'involution de deck réduite `(II, F)`
+en équivalences linéaires coefficientielles sur la tour algébrique puis, après
+projection finie dans une frame fixe, en équivalences linéaires continues sur
+`J²` et `J⁴`. Toute densité linéaire bornée `J²` invariante a alors un
+covecteur d'Euler Gate880 équivariant et un lieu Euler-nul stable par deck.
+Cette action ne porte toujours pas sur les onze composantes physiques. Gate
+893 fournit un pont de Stokes local-vers-intégré exact pour le courant
+scalaire cut-bulk canonique dans la seule direction normale du collier ; il ne
+couvre ni les courants tangentiels ni les strates nulles et de joints. Gate
+894 prolonge une action de deck aux onze composantes physiques et à leurs jets,
+conditionnellement à la donnée d'actions fixes sur les fibres gauge et
+métrique. Gate 895 place les onze valeurs physiques et la phase métrique-BV
+finie dans un même complexe affine exact, mais son différentiel BV non nul
+n'agit que sur le sommant métrique fini et s'annule sur les champs physiques
+plongés. Ces résultats ne classifient ni le noyau polynomial T02 non linéaire
+général ni une action BV physique covariante complète.
 
 **Reste :** classifier le noyau d'Euler de la classe polynomiale non triviale
 sur `J⁴` et prouver son homotopie algébrique
 `ker Euler = constantes + image dH`, construire le carrier local covariant
-commun contenant les densités physiques complètes, puis établir son pont
-intégré compatible à Stokes et y relever la classification. Il faut enfin
-prolonger et prouver la naturalité sous le deck non orientable sur le carrier
-physique complet et sous le BV/BRST physique.
+commun contenant les densités physiques complètes, puis étendre le pont
+intégré compatible à Stokes au-delà du secteur scalaire normal et y relever
+la classification. Il faut enfin construire sans donnée conditionnelle
+l'action de deck non orientable et le BV/BRST non trivial sur tous les champs
+physiques.
 `T06` reste ouverte.
 
 ### T07 — `anomalyConstraintsApplied`
