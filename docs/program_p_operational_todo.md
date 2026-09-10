@@ -13428,12 +13428,63 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État : `SUPPORT` (2026-09-10). Portée : `T06/LOCAL-AFFINE-ORDRE-1`.
 - Résultat : sur la tour locale multi-indices 4D, l'évaluation de `dH` est la
   divergence totale formelle avant intégration et le noyau de l'Euler affine
-  vaut exactement les constantes plus l'image de `dH`. Un différentiel BRST
-  linéaire de carré nul commute avec ce `dH` et reste de carré nul sur les
-  densités.
+  vaut exactement les constantes plus l'image de `dH`. Un différentiel
+  linéaire de type BRST et de carré nul commute avec ce `dH` et reste de carré
+  nul sur les densités.
 - Limite : le carrier est autonome, affine et d'ordre un. Il ne contient pas
   encore la densité Candidate A non linéaire complète et n'est pas relié à la
   classe de jets de gorge T02 ni aux actions deck/BRST physiques.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-THROAT-SPATIAL-MULTIINDEX-SECOND-JET-BRIDGE` — Gate 870
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/JETS-GORGE-ORDRE-2`.
+- Résultat : après choix d'une base, les coefficients d'ordre zéro, un et deux,
+  avec paire d'indices spatiaux non ordonnée, ont des extractions mixtes
+  symétriques et sont linéairement équivalents à
+  `FramedSecondOrderJet ThroatCoverCoordinates Fiber`. Le pont agit sur le
+  fibre de valeurs et évite les jets de jets.
+- Limite : le produit des onze jets physiques T02 n'est pas encore assemblé
+  en une seule tour; aucune covariance, extraction depuis les sections ni
+  opérateur d'Euler polynomial n'est défini ici.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-STRATIFIED-NULL-BOUNDARY-NORMAL-FORM` — Gate 871
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/T02-T05-JOINT`.
+- Résultat : pour le prédicat nul conjonctif sur le produit indépendant de la
+  classe locale exhaustive T02 et des quatre strates relatives T05, la nullité
+  équivaut à une unique forme normale constituée d'une constante locale et
+  d'une primitive relative normalisée. Seule la composante locale conserve sa
+  vraie invariance de transition.
+- Limite : les deux composantes ne portent aucune condition de compatibilité
+  et la composante relative reste cellulaire et intégrée; ce produit n'est pas
+  encore un carrier de densités locales commun.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-AFFINE-LOCAL-NATURALITY` — Gate 872
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/NATURALITÉ-AFFINE`.
+- Résultat : tout endomorphisme linéaire continu du fibre induit des
+  applications sur les jets, courants et densités affines; elles sont
+  naturelles pour les dérivées totales, `dH` et l'Euler. Si l'endomorphisme
+  commute au différentiel de type BRST, les applications induites sur les
+  densités commutent également.
+- Limite : aucune action deck ou BV/BRST physique complète n'est encore
+  construite sur le carrier Candidate A; le point de base et les indices
+  horizontaux sont fixes.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-PHYSICAL-STRATIFIED-NORMAL-FORM-BRIDGE` — Gate 873
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/BORDS-PHYSIQUES-JOINTS`.
+- Résultat : les vraies densités GHY et nul/joint fidèles sont plongées dans le
+  produit hybride avec composante T02 nulle et possèdent une forme normale
+  unique. Pour le paquet physique complet bulk/SpinC/LL/GHY/nul/joint, être un
+  terme de bord équivaut à l'existence de cette forme normale unique.
+- Limite : l'injection choisit la densité locale T02 nulle et conserve la
+  composante relative intégrée; elle ne constitue pas le relèvement local
+  injectif encore requis.
 - Porte terminale : aucune ; `T06` reste ouverte.
 
 ## 7. Les 14 portes terminales fixes

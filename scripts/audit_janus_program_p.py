@@ -27024,6 +27024,54 @@ PROGRAM_P_GATES = {
             "theorem programPT06AffineDensityBRST_square_zero",
         ),
     ),
+    "P0EFTJanusProgramPT06ThroatSpatialMultiindexSecondJetBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06ThroatSpatialTotalDerivative",
+            "theorem programPT06ThroatSpatialTotalDerivative_comm",
+            "def programPT06ThroatSpatialSecondJetToFramed",
+            "def programPT06FramedSecondJetToThroatSpatial",
+            "theorem programPT06FramedSecondJetToThroatSpatial_toFramed",
+            "theorem programPT06ThroatSpatialSecondJetToFramed_toSpatial",
+            "def programPT06ThroatSpatialSecondJetFramedLinearEquiv",
+        ),
+    ),
+    "P0EFTJanusProgramPT06StratifiedNullBoundaryNormalForm4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06StratifiedNullBoundaryPacket4D",
+            "def IsStratifiedVariationallyNull",
+            "def IsStratifiedBoundaryNormalForm",
+            "theorem stratifiedVariationallyNull_iff_existsUnique_boundaryNormalForm",
+            "theorem stratifiedPacket_localDensity_transitionInvariant",
+            "def relativeDensityPacket",
+            "theorem relativeDensityPacket_null_iff_boundary",
+        ),
+    ),
+    "P0EFTJanusProgramPT06AffineLocalNaturality4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06AffineJetAction",
+            "theorem programPT06AffineJetAction_commutes_totalDerivative",
+            "def programPT06AffineCurrentAction",
+            "def programPT06AffineDensityAction",
+            "theorem programPT06AffineDensityAction_evaluation",
+            "theorem programPT06AffineDensityAction_commutes_localDH",
+            "theorem programPT06AffineLocalEuler_natural",
+            "theorem programPT06AffineDensityAction_commutes_BRST",
+        ),
+    ),
+    "P0EFTJanusProgramPT06PhysicalStratifiedNormalFormBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06CanonicalGHYStratifiedPacket",
+            "theorem programPT06CanonicalGHYStratifiedPacket_existsUnique_normalForm",
+            "def programPT06FaithfulNullJointStratifiedPacket",
+            "theorem programPT06FaithfulNullJointStratifiedPacket_existsUnique_normalForm",
+            "def programPT06T03FaithfulGeometricStratifiedPacket",
+            "theorem programPT06T03FaithfulGeometricDensity_boundary_iff_existsUnique_normalForm",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

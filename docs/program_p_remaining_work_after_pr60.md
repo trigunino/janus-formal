@@ -498,19 +498,27 @@ recollée. Ces objectifs ne sont pas déclarés fermés.
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
 **Déjà disponible :** plusieurs transgressions, GHY, faces nulles, joints et
-résidus de bord explicites. Gates 866–869 classifient exactement les
+résidus de bord explicites. Gates 866–873 classifient exactement les
 lagrangiens nuls et primitives dans le carrier relatif intégré de T05,
 classifient par constantes la classe indépendante de jets invariants de T02,
 et appliquent l'équivalence relative aux vrais paquets GHY/nul/joint et au
 paquet physique intégré complet. Gate 869 fournit en outre un calcul local
 avant intégration sur la tour de jets multi-indices 4D : pour les densités
 autonomes affines d'ordre un, le noyau d'Euler est exactement la somme des
-constantes et des divergences horizontales, avec compatibilité BRST linéaire.
+constantes et des divergences horizontales, avec un différentiel linéaire de
+type BRST. Gate 870 relie exactement, après choix d'une base, les coefficients
+multi-indices spatiaux symétriques aux vrais jets encadrés T02. Gates 871–873
+forment le produit hybride indépendant T02/T05, le classifient pour son
+prédicat nul conjonctif, y plongent les familles physiques de bord avec
+composante T02 nulle, et établissent la naturalité à base fixe du complexe
+affine sous les applications linéaires qui commutent au différentiel.
 
 **Reste :** construire le carrier local covariant commun et son véritable
 Euler au-delà du sous-espace affine, relier sans jets-de-jets la classe de
-gorge T02 à ce carrier, relever la classification intégrée vers celui-ci,
-puis prouver sa naturalité sous le deck non orientable et le BRST physique.
+gorge T02 complète à une tour des valeurs physiques, relever la classification
+intégrée vers ce carrier, puis prolonger et prouver la naturalité sous le deck
+non orientable et le BV/BRST physique. Les carriers actuels ne possèdent pas
+encore ces deux actions physiques communes.
 `T06` reste ouverte.
 
 ### T07 — `anomalyConstraintsApplied`
