@@ -291,7 +291,7 @@ exactness remain stronger follow-up work outside the terminal T05 criterion.
 The local metric/GHY PDE representation likewise remains stronger follow-up
 work outside the terminal T04 criterion.
 
-Gates 866--895 start `T06`. They prove `ker Euler = image dH` for every
+Gates 866--900 start `T06`. They prove `ker Euler = image dH` for every
 horizontal density in the integrated relative carrier of T05, classify the
 zero-Frechet-derivative members of T02's independent degree-at-most-four
 invariant second-jet class by a unique constant, and place the actual GHY and
@@ -345,13 +345,27 @@ action to all eleven physical value components and their jets, conditional on
 supplied fixed-frame gauge and metric representations. Gate 895 places those
 eleven values and the finite metric-BV phase in one affine exact jet complex,
 but its nonzero BV differential acts only on the finite metric summand and
-vanishes on the embedded physical fields. These results cover neither the
-general nonlinear T02 polynomial kernel nor a covariant full physical BV
-action. `T06` remains open until the nontrivial polynomial Euler kernel and
+vanishes on the embedded physical fields. Gate 896 derives the missing gauge
+and metric representations from the identity linear part of the canonical
+fixed-product-frame deck translation and thereby makes the eleven-component
+value and jet actions unconditional in that frame. It does not yet prove the
+same statement in arbitrary moving trivialisations. Gate 897 proves directly
+that the genuine horizontal derivative of any directed `C²` value potential
+is killed by Gate880 Euler, including every diagonal polynomial of degree at
+most four. Gate 898 closes this soundness result under finite-rank bilinear
+currents in all three directions. Gate 899 realizes the canonical null-face
+normalization transgression as a genuine local jet divergence and transports
+its Stokes identity to the Gate819 joint incidence. Gate 900 adds four formal
+Abelian ghost gradients to the complete physical/BV value carrier; its
+nonzero square-zero differential lands in the four actual gauge slots,
+retains the finite metric-BV differential, and commutes with jet truncation
+and total derivatives. The gradients are not yet derived from scalar-ghost
+jets. These results cover neither the general nonlinear T02 polynomial kernel
+nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
 its algebraic homotopy are classified, and until a common covariant local
 carrier has a Stokes-compatible integrated chain map beyond the scalar normal
-sector, an unconditional physical deck action, and the complete physical
-BV/BRST action.
+sector, a moving-frame covariant deck action, and the complete physical BV/BRST
+action.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

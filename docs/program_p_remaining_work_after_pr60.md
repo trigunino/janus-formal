@@ -498,7 +498,7 @@ recollée. Ces objectifs ne sont pas déclarés fermés.
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
 **Déjà disponible :** plusieurs transgressions, GHY, faces nulles, joints et
-résidus de bord explicites. Gates 866–895 classifient exactement les
+résidus de bord explicites. Gates 866–900 classifient exactement les
 lagrangiens nuls et primitives dans le carrier relatif intégré de T05,
 classifient par constantes la classe indépendante de jets invariants de T02,
 et appliquent l'équivalence relative aux vrais paquets GHY/nul/joint et au
@@ -551,7 +551,21 @@ conditionnellement à la donnée d'actions fixes sur les fibres gauge et
 métrique. Gate 895 place les onze valeurs physiques et la phase métrique-BV
 finie dans un même complexe affine exact, mais son différentiel BV non nul
 n'agit que sur le sommant métrique fini et s'annule sur les champs physiques
-plongés. Ces résultats ne classifient ni le noyau polynomial T02 non linéaire
+plongés. Gate 896 construit canoniquement les actions gauge et métrique à
+partir de la partie linéaire identité de la translation deck dans la frame
+produit fixe, ce qui rend l'action sur les onze valeurs et leurs jets
+inconditionnelle dans cette frame; la covariance en trivialisation mobile
+reste ouverte. Gate 897 prouve que le `dH` véritable de tout potentiel de
+valeur `C²`, notamment des polynômes diagonaux de degré au plus quatre, est
+annulé par l'Euler Gate880. Gate 898 étend ce résultat aux sommes bilinéaires
+de rang fini dans les trois directions. Gate 899 réalise aussi la
+transgression canonique face nulle-vers-joints dans le calcul local de jets et
+la relie au `dH` intégré Gate819. Gate 900 ajoute quatre gradients de ghosts
+abéliens formels au carrier physique/BV complet; le différentiel carré-zéro
+non nul agit sur les quatre vrais slots gauge et sur le BV métrique fini, puis
+se prolonge aux jets en commutant aux troncatures et dérivées totales. Ces
+gradients ne proviennent pas encore de jets de ghosts scalaires. Ces résultats
+ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 
 **Reste :** classifier le noyau d'Euler de la classe polynomiale non triviale
@@ -559,9 +573,9 @@ sur `J⁴` et prouver son homotopie algébrique
 `ker Euler = constantes + image dH`, construire le carrier local covariant
 commun contenant les densités physiques complètes, puis étendre le pont
 intégré compatible à Stokes au-delà du secteur scalaire normal et y relever
-la classification. Il faut enfin construire sans donnée conditionnelle
-l'action de deck non orientable et le BV/BRST non trivial sur tous les champs
-physiques.
+la classification. Il faut enfin transporter l'action de deck canonique dans
+les trivialisations mobiles et construire le BV/BRST non trivial sur tous les
+champs physiques.
 `T06` reste ouverte.
 
 ### T07 — `anomalyConstraintsApplied`
