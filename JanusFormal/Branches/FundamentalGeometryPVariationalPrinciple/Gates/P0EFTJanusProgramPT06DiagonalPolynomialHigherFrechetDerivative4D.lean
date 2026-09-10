@@ -242,6 +242,25 @@ def programPT06DiagonalLinearHomogeneousForm
       linear field := by
   rfl
 
+/-- A diagonal polynomial through degree four is globally smooth. -/
+theorem programPT06DiagonalPolynomialEvaluation_contDiff
+    (polynomial : ProgramPT06DiagonalPolynomialUpToFour4D FieldFiber) :
+    ContDiff Real ∞ (programPT06DiagonalPolynomialEvaluation polynomial) := by
+  have hConstant : ContDiff Real ∞
+      (programPT06DiagonalConstantTerm polynomial.constant :
+        FieldFiber → Real) :=
+    contDiff_const
+  have hLinear : ContDiff Real ∞
+      (programPT06DiagonalLinearTerm polynomial.linear) :=
+    polynomial.linear.contDiff
+  have hQuadratic :=
+    programPT06DiagonalHomogeneousTerm_contDiff polynomial.quadratic
+  have hCubic :=
+    programPT06DiagonalHomogeneousTerm_contDiff polynomial.cubic
+  have hQuartic :=
+    programPT06DiagonalHomogeneousTerm_contDiff polynomial.quartic
+  exact ((((hConstant.add hLinear).add hQuadratic).add hCubic).add hQuartic)
+
 /-- Uniform order-`k` derivative assembled from all five homogeneous
 components of a Gate876 polynomial. -/
 def programPT06DiagonalPolynomialHigherDerivative

@@ -656,6 +656,11 @@ Gate879 les densités mineures, et un calcul direct des slots pondérés annule
 leur expression d'Euler Gate880, y compris dans la spécialisation scalaire de
 Gate911. Elle traite un mineur décomposable à la fois et ne classifie pas le
 noyau d'Euler complet du second ordre.
+Gate 921 transporte tout le calcul des dérivées supérieures de Gate919 par les
+ponts physiques et Finsupp-J² réels de T02. Chaque ordre fini est identifié au
+vrai `iteratedFDeriv`, avec formule explicite par injections et spécialisations
+aux ordres deux, trois et quatre. La formule d'Euler complète et la
+classification de son noyau restent à établir.
 Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.

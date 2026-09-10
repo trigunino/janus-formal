@@ -451,6 +451,12 @@ equal to the minor densities, and a direct weighted-slot calculation proves
 their Gate880 Euler expressions vanish, including the scalar Gate911
 specialization. It treats one decomposable minor at a time and does not
 classify the full second-order Euler kernel.
+Gate 921 pulls Gate919's complete higher-derivative calculus through the
+actual T02 physical and Finsupp-J² bridges. It identifies every finite-order
+derivative with the genuine `iteratedFDeriv`, gives the explicit injection
+formula, and exposes the second, third, and fourth derivatives needed by the
+Euler calculation. It does not yet compute that Euler formula or classify its
+kernel.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

@@ -27585,6 +27585,7 @@ PROGRAM_P_GATES = {
     "P0EFTJanusProgramPT06DiagonalPolynomialHigherFrechetDerivative4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (
+            "theorem programPT06DiagonalPolynomialEvaluation_contDiff",
             "def programPT06DiagonalHomogeneousHigherDerivative",
             "theorem programPT06DiagonalHomogeneousHigherDerivative_apply",
             "theorem programPT06DiagonalHomogeneousHigherDerivative_eq_iteratedFDeriv",
@@ -27595,6 +27596,24 @@ PROGRAM_P_GATES = {
             "theorem programPT06DiagonalPolynomialHigherDerivative_apply",
             "theorem programPT06DiagonalPolynomialHigherDerivative_eq_iteratedFDeriv",
             "theorem programPT06DiagonalPolynomialFourthDerivative_eq_iteratedFDeriv",
+        ),
+    ),
+    "P0EFTJanusProgramPT06T02FinsuppSecondJetHigherFrechetDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem programPT06T02DegreeFourEvaluation_contDiff",
+            "def programPT06T02PhysicalHigherFrechetDerivative",
+            "theorem programPT06T02PhysicalHigherFrechetDerivative_eq_iteratedFDeriv",
+            "def programPT06T02FinsuppSecondJetHigherFrechetDerivative",
+            "theorem programPT06T02FinsuppSecondJetHigherFrechetDerivative_injection_formula",
+            "theorem programPT06T02FinsuppSecondJetHigherFrechetDerivative_eq_iteratedFDeriv",
+            "theorem programPT06T02FinsuppSecondJetLocalLagrangian_contDiff",
+            "def programPT06T02FinsuppSecondJetSecondFrechetDerivative",
+            "theorem programPT06T02FinsuppSecondJetSecondFrechetDerivative_eq_iteratedFDeriv",
+            "def programPT06T02FinsuppSecondJetThirdFrechetDerivative",
+            "theorem programPT06T02FinsuppSecondJetThirdFrechetDerivative_eq_iteratedFDeriv",
+            "def programPT06T02FinsuppSecondJetFourthFrechetDerivative",
+            "theorem programPT06T02FinsuppSecondJetFourthFrechetDerivative_eq_iteratedFDeriv",
         ),
     ),
     "P0EFTJanusProgramPT06MultifieldGradientJacobianMinorNullLagrangian4D.lean": (
