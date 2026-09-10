@@ -146,6 +146,24 @@ TERMINAL_GATE_EVIDENCE: dict[str, TerminalGateEvidence] = {
         scope="GLOBAL",
         expected_type_fragment="ProgramPT04NonlinearHelmholtzCertificate4D",
     ),
+    "T05": TerminalGateEvidence(
+        module=Path(
+            "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates/"
+            "P0EFTJanusProgramPT05VariationalBicomplexObstructionTerminalCertificate4D.lean"
+        ),
+        facade=Path(
+            "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean"
+        ),
+        theorem=(
+            "JanusFormal."
+            "P0EFTJanusProgramPT05VariationalBicomplexObstructionTerminalCertificate4D."
+            "program_p_t05_variational_bicomplex_obstruction_terminal_gate"
+        ),
+        scope="GLOBAL",
+        expected_type_fragment=(
+            "ProgramPT05VariationalBicomplexObstructionTerminalCertificate4D"
+        ),
+    ),
 }
 GATE_ROOT = Path(
     "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple/Gates"

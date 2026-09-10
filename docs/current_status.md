@@ -269,22 +269,27 @@ metric/GHY jet PDE and full local BRST factorization. T05 still lacks the true
 bulk-to-null and GHY-to-joint geometric traces, global atlas naturality, and
 the physical local derivatives. The terminal audit remains `3/14`.
 
-On 10 September 2026, Gates 858--862 added genuine GHY density jets, isolated
+On 10 September 2026, Gates 858--864 added genuine GHY density jets, isolated
 the still-missing geometric incidence realizations, differentiated the maximal
-SpinC density in `L¹`, installed that SpinC derivative in the stratified
-carrier, and installed the two-sheet GHY derivative in its non-null slot. The
-SpinC and GHY integrations recover their exact Euler covectors. Gate 863 then
-closed `T04` globally: the exact T03 action is `C²`, its gradient is the Euler
-covector, its Jacobian is Helmholtz-symmetric globally and in every translated
-chart, and all ten diagonal/crossed reciprocities of the four physical blocks
-hold.
-The stronger local metric/GHY PDE representation remains follow-up work outside
-the terminal T04 criterion. The façade and audit are green at `4/14`:
-`T01`--`T04` are closed, while `T05` and `T06` remain open. T05 still requires
-actual geometric realizations of the Gate-859 supports, physical `dV` for the
-other sectors and differentiation under their integrals, unconditional
-`dH`/mixed/square laws, atlas naturality and gluing, and global
-exactness/vanishing.
+SpinC density in `L¹`, and installed the SpinC, two-sheet GHY, faithful-null
+and joint derivatives in stratified carriers. Their integrations recover the
+corresponding exact Euler covectors; Gate 864 identifies the integrated
+null/joint dV with the `fderiv` of the faithful null action. Gate 863 closed
+`T04` globally by the exact Helmholtz certificate.
+
+Gate 865 closes `T05` on the concrete Gate-819 relative bicomplex: `dH` and
+`dV` are nonzero, their square, mixed and incidence laws hold, and the genuine
+first variation has an explicitly nonzero obstruction cochain which is a
+horizontal boundary and therefore has zero class. Its distinguished cochains
+evaluate to the exact T03 action and Euler covector, with Euler equal to the
+action gradient on the domain. The façade and audit are green at `5/14`:
+`T01`--`T05` are closed and `T06`--`T14` remain open.
+
+The actual Gate-859 geometric supports, dV for the other local sectors, the
+complete physical local bicomplex, atlas naturality/gluing and glued local
+exactness remain stronger follow-up work outside the terminal T05 criterion.
+The local metric/GHY PDE representation likewise remains stronger follow-up
+work outside the terminal T04 criterion.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

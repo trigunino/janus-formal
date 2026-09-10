@@ -12,13 +12,13 @@ Ce document distingue trois niveaux qui ne doivent pas être confondus :
 3. les quatorze portes terminales du registre canonique.
 
 La PR #60 poursuivait volontairement l'architecture avant le nettoyage final
-de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01`–`T04`
-ont depuis été fermées séparément ; `T05` et `T06` restent ouvertes.
+de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01`–`T05`
+ont depuis été fermées séparément ; `T06`–`T14` restent ouvertes.
 
 Le compteur officiel demeure :
 
 ```text
-4 / 14 portes terminales.
+5 / 14 portes terminales.
 ```
 
 Une porte ne peut être cochée qu'après construction de ses objets concrets,
@@ -479,12 +479,21 @@ retrouvent exactement son covecteur Euler après intégration. Gate 862 installe
 de même le dV local GHY à deux feuilles et l'intègre exactement au jet et à
 l'Euler GHY mobiles.
 
-**Reste :** construire les réalisations géométriques effectives des supports
-de Gate 859 ; compléter le dV des autres secteurs et leurs différentiations
-sous les intégrales ; prouver `dH`, les lois mixtes et les carrés sans
-hypothèses ; établir la naturalité et le recollement d'atlas ; puis démontrer
-l'exactitude et l'annulation globales. `T05` reste ouverte ; audit terminal
-`4/14`.
+Gate 864 installe le vrai dV fidèle nul/joint et identifie son intégration au
+`fderiv` de l'action géométrique nulle. Gate 865 assemble le bicomplexe relatif
+concret de Gate 819 : `dH` et `dV` sont non nuls, les carrés, la loi mixte et
+l'incidence sont prouvés, et la vraie première variation a une obstruction
+cochaîne explicitement non nulle mais égale à une frontière horizontale, donc
+de classe nulle. Ses cochaînes s'évaluent sur l'action et l'Euler exacts de T03,
+avec Euler égal au gradient sur le domaine.
+
+**Fermé le 2026-09-10.** Gate 865 ferme `T05` ; audit terminal `5/14`.
+
+**Suivi plus fort hors critère terminal :** réaliser géométriquement les
+supports de Gate 859, compléter le dV des autres secteurs et leurs
+différentiations sous les intégrales, construire le bicomplexe local physique
+complet, puis établir la naturalité/recollement d'atlas et l'exactitude locale
+recollée. Ces objectifs ne sont pas déclarés fermés.
 
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
@@ -653,10 +662,10 @@ isométrie cinq secteurs
 → complexification et accord Quillen de la ligne de Fredholm.
 ```
 
-### Phase 2 — T03 à T06
+### Phase 2 — T06 et suivi local de T03–T05
 
-Construire l'atlas brut du tangent, le système Euler local complet, le
-bicomplexe variationnel et la classification exhaustive des bords.
+Poursuivre l'atlas brut du tangent et le bicomplexe physique local, puis fermer
+la classification exhaustive des bords.
 
 ### Phase 3 — T02, T07 et T11
 
@@ -677,8 +686,8 @@ dimensionnée.
 ## 8. Conclusion
 
 Programme P n'est pas « presque fini » au sens des quatorze portes : le
-compteur officiel est désormais `4/14`. `T01`–`T04` sont fermées ; `T05` et
-`T06` restent ouvertes.
+compteur officiel est désormais `5/14`. `T01`–`T05` sont fermées ;
+`T06`–`T14` restent ouvertes.
 
 Il est en revanche très avancé au niveau de l'infrastructure : géométrie,
 champs, action régulière, Dirac, Euler/Helmholtz chartwise et une architecture
@@ -689,7 +698,7 @@ La difficulté résiduelle n'est plus principalement l'absence de wrappers. Elle
 se concentre sur trois noyaux scientifiques :
 
 ```text
-1. globaliser le calcul variationnel local et son bicomplexe ;
+1. compléter le bicomplexe physique local et son recollement ;
 2. habiter les estimations analytiques du Hessien/Fredholm physique et
    identifier sa ligne complexifiée à la ligne de Quillen ;
 3. fournir la loi microscopique qui sélectionne normalisations, schéma, vide et

@@ -10,7 +10,7 @@ mesuraient surtout l'accumulation de microlemmes. Son historique reste
 consultable dans Git.
 
 La fermeture globale est mesurée uniquement par les **14 portes terminales**
-de la section 7. État actuel : **4/14**. Une preuve locale, pointwise,
+de la section 7. État actuel : **5/14**. Une preuve locale, pointwise,
 finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 
 En cas de contradiction entre prose et code, le type exact du théorème Lean
@@ -18,8 +18,8 @@ compilé fait autorité.
 
 ### Synthèse active au 2026-09-10
 
-Les quatorze portes restent la mesure finale. `T01`–`T04` sont fermés ; `T05`
-et `T06` restent ouverts. Le suivi se regroupe en sept lots :
+Les quatorze portes restent la mesure finale. `T01`–`T05` sont fermés ;
+`T06`–`T14` restent ouverts. Le suivi se regroupe en sept lots :
 
 1. **Validation globale (`T01`) — FERMÉE** : le certificat typé commun, sa
    complétion L2 intrinsèque et son import de façade sont verts, sans axiome
@@ -30,10 +30,9 @@ et `T06` restent ouverts. Le suivi se regroupe en sept lots :
    invariantes continues de ce degré. Son évaluation est injective et ses
    coefficients sont uniques. Le classificateur historique à six invariants
    n'est pas utilisé comme hypothèse d'exhaustivité.
-3. **Calcul variationnel global (`T03`, `T04` — FERMÉES ; `T05`, `T06`
-   ouvertes)** : l'Euler global et Helmholtz non linéaire sont dérivés sur
-   l'atlas couplé ; restent le bicomplexe local et la classification des
-   lagrangiens nuls/bords.
+3. **Calcul variationnel global (`T03`–`T05` — FERMÉES ; `T06` ouverte)** :
+   l'Euler global, Helmholtz non linéaire et l'obstruction du bicomplexe
+   relatif sont dérivés ; reste la classification des lagrangiens nuls/bords.
 4. **Hessien, Fredholm et déterminant (`T07`, `T12`)** : construire les trois
    données physiques restantes H10--H14 (famille locale `C²`, sept extensions
    continues, obstruction finie/coercivité), identifier la famille naturelle
@@ -4014,9 +4013,9 @@ Portée exacte des fermetures et frontières globales :
   de schéma effectives. Sans donnée microscopique supplémentaire,
   `SCHEME-GLOBAL-01` est impossible à déduire des hypothèses actuelles.
 
-Ces distinctions expliquent pourquoi les portes terminales `T04`–`T06` restent
-décochées ci-dessous : elles exigent encore Helmholtz non linéaire, le
-bicomplexe local et la classification des lagrangiens nuls et de bord.
+Ces distinctions expliquent l'ancien blocage de `T04`–`T06`. `T04` et `T05`
+sont désormais fermées par leurs certificats globaux ; `T06` reste décochée
+jusqu'à la classification des lagrangiens nuls et de bord.
 
 `MICRO-GLOBAL-01` et `SCALE-GLOBAL-01` sont actuellement
 `BLOQUÉ-PHYSIQUE`. Aucun LLM ne doit les rendre vrais par définition ou par
@@ -13367,6 +13366,29 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   suivi distinct, hors du critère terminal Helmholtz.
 - Porte terminale : `T04` fermée ; compteur `4/14`.
 
+### `P-T05-FAITHFUL-NULL-STRATIFIED-VERTICAL-BRIDGE` — Gate 864
+
+- État : `SUPPORT` (2026-09-10). Portée : `T05/NUL-dV-STRATIFIÉ`.
+- Résultat : le vrai dV des densités fidèles nulles et de joints est installé
+  dans le carrier stratifié ; son intégration est exactement le `fderiv` de
+  l'action géométrique nulle fidèle.
+- Limite : les autres slots verticaux sont nuls dans ce pont.
+- Porte terminale : aucune.
+
+### `P-T05-VARIATIONAL-BICOMPLEX-OBSTRUCTION-TERMINAL-CERTIFICATE` — Gate 865
+
+- État : `DONE` (2026-09-10). Portée : `GLOBALE/TERMINALE`.
+- Résultat : le bicomplexe relatif concret de Gate 819 a des `dH` et `dV`
+  non nuls, satisfait les carrés, la loi mixte et l'incidence, et porte une
+  vraie première variation. Son obstruction est explicitement non nulle comme
+  cochaîne mais est une frontière horizontale, donc sa classe est nulle. Les
+  cochaînes s'évaluent sur l'action et l'Euler exacts de T03, avec
+  Euler = gradient sur le domaine.
+- Limite : les supports géométriques de Gate 859, les dV des autres secteurs,
+  le bicomplexe local physique complet, la naturalité/recollement d'atlas et
+  l'exactitude locale recollée restent un suivi plus fort hors critère terminal.
+- Porte terminale : `T05` fermée ; compteur `5/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
@@ -13378,7 +13400,7 @@ un `ProgramStatus` arbitraire.
 - [x] `T02` — `invariantLocalFunctionalBasisClassified`.
 - [x] `T03` — `fullEulerLagrangeOperatorDerived`.
 - [x] `T04` — `nonlinearHelmholtzConditionsProved`.
-- [ ] `T05` — `variationalBicomplexObstructionVanishing`.
+- [x] `T05` — `variationalBicomplexObstructionVanishing`.
 - [ ] `T06` — `nullLagrangiansAndBoundaryTermsClassified`.
 - [ ] `T07` — `anomalyConstraintsApplied`.
 - [ ] `T08` — `parentBulkOrMicroscopicSelectionPrincipleDerived`.
@@ -13411,7 +13433,7 @@ Cette carte améliore la fiabilité du suivi mais ne ferme aucune porte
 scientifique.
 
 Validation : l'audit lit exclusivement la section fixe `T01–T14`, impose le
-dénominateur `14`, affiche le décompte terminal `4/14` et rejette toute porte
+dénominateur `14`, affiche le décompte terminal `5/14` et rejette toute porte
 cochée sans `TerminalGateEvidence`. Chaque évidence doit fournir module,
 façade, théorème pleinement qualifié, portée et fragment de type ; le module
 doit être importé, sans placeholder, et le théorème ne peut pas être un simple
@@ -13420,9 +13442,10 @@ intrinsèque et son intégration à la façade ont été revérifiés verts le
 2026-08-26. Le certificat borné global `T02` a été ajouté et revérifié le
 2026-08-29. Le certificat global `T03` a été compilé, importé et audité le
 2026-09-09. Le certificat Helmholtz global/chartwise `T04` et ses réciprocités
-sur quatre blocs ont été compilés, importés et audités le 2026-09-10 ;
-`T01`–`T04` sont les quatre portes terminales fermées, tandis que `T05` et
-`T06` restent ouvertes.
+sur quatre blocs ont été compilés, importés et audités le 2026-09-10. Le
+certificat d'obstruction du bicomplexe relatif `T05` a ensuite été compilé,
+importé et audité ; `T01`–`T05` sont les cinq portes terminales fermées,
+tandis que `T06`–`T14` restent ouvertes.
 
 Mise à jour : `P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` ferme le
 paquetage global lisse, la linéarité réelle et l'intégrabilité de l'onde
@@ -13542,5 +13565,5 @@ variation diagonale en zéro est donc exactement le Hessien symétrique certifi�
 - le paquet spectral exige encore les différences actual/reference, les
   frontières filtrées, les moyennes de slices et leurs identités de
   semi-groupes. Les frontends Bochner fixes ne prouvent pas encore ce pont ; le
-  décompte terminal actuel est désormais `4/14`, par fermeture indépendante de
-  `T01`–`T04`.
+  décompte terminal actuel est désormais `5/14`, par fermeture indépendante de
+  `T01`–`T05`.
