@@ -360,12 +360,21 @@ Abelian ghost gradients to the complete physical/BV value carrier; its
 nonzero square-zero differential lands in the four actual gauge slots,
 retains the finite metric-BV differential, and commutes with jet truncation
 and total derivatives. The gradients are not yet derived from scalar-ghost
-jets. These results cover neither the general nonlinear T02 polynomial kernel
+jets. Gate 901 gives the first nonlinear converse: for the six-parameter
+directed scalar quadratic family it computes Euler exactly, proves that its
+kernel is precisely the constant plus affine and quadratic horizontal
+divergences, and supplies the explicit decomposition. It does not include
+mixed directions or the complete T02 carrier. Gate 902 conjugates the full
+fixed-frame physical deck action through arbitrary supplied pointwise linear
+trivialisations, including the group laws and coefficientwise jet naturality.
+Its jet prolongation is spatially frozen and is not yet identified with the
+derivative-corrected transitions of the geometric atlas. These results cover
+neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
 its algebraic homotopy are classified, and until a common covariant local
 carrier has a Stokes-compatible integrated chain map beyond the scalar normal
-sector, a moving-frame covariant deck action, and the complete physical BV/BRST
-action.
+sector, the supplied moving-frame conjugation is identified with the actual
+varying-frame jets, and the complete physical BV/BRST action is constructed.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

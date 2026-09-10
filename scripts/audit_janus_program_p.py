@@ -27404,6 +27404,34 @@ PROGRAM_P_GATES = {
             "theorem programPT06FullPhysicalGaugeGradientJetBRST_ghostJet",
         ),
     ),
+    "P0EFTJanusProgramPT06ScalarDirectedQuadraticExactness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06ScalarDirectedQuadraticDensity4D",
+            "def programPT06ScalarDirectedQuadraticDensityEvaluation",
+            "theorem programPT06ScalarDirectedQuadraticDensityEvaluation_hasFDerivAt",
+            "theorem programPT06SecondOrderLocalEuler_scalarDirectedQuadratic_formula",
+            "theorem programPT06_scalarDirectedQuadratic_euler_eq_zero_iff",
+            "def programPT06ScalarDirectedQuadraticAffineCurrent",
+            "def programPT06ScalarDirectedQuadraticNonlinearCurrent",
+            "theorem programPT06ScalarDirectedQuadratic_eq_constant_add_divergences",
+            "theorem programPT06_scalarDirectedQuadratic_euler_eq_zero_iff_divergence_form",
+        ),
+    ),
+    "P0EFTJanusProgramPT06MovingFrameDeckConjugation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06MovingPhysicalTrivialization4D",
+            "def programPT06ActualPhysicalMovingFrameValueDeckAction",
+            "theorem programPT06ActualPhysicalMovingFrameValueDeckAction_toFixed",
+            "theorem programPT06ActualPhysicalMovingFrameValueDeckAction_add",
+            "theorem programPT06ActualPhysicalMovingFrameValueDeckAction_inverse_left",
+            "def programPT06ActualPhysicalMovingFrameJetDeckAction",
+            "theorem programPT06ActualPhysicalMovingFrameJetDeckAction_toFixed",
+            "theorem programPT06ActualPhysicalMovingFrameJetDeckAction_commutes_truncation",
+            "theorem programPT06ActualPhysicalMovingFrameJetDeckAction_commutes_totalDerivative",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

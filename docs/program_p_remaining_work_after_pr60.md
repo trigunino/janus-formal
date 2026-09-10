@@ -564,7 +564,16 @@ la relie au `dH` intégré Gate819. Gate 900 ajoute quatre gradients de ghosts
 abéliens formels au carrier physique/BV complet; le différentiel carré-zéro
 non nul agit sur les quatre vrais slots gauge et sur le BV métrique fini, puis
 se prolonge aux jets en commutant aux troncatures et dérivées totales. Ces
-gradients ne proviennent pas encore de jets de ghosts scalaires. Ces résultats
+gradients ne proviennent pas encore de jets de ghosts scalaires. Gate 901
+donne la première réciproque non linéaire : sur la famille quadratique
+scalaire dirigée à six paramètres, elle calcule Euler exactement, caractérise
+son noyau comme constantes plus divergences horizontales affines et
+quadratiques, et construit la décomposition explicite. Les directions mixtes
+et le carrier T02 complet restent hors de cette sous-classe. Gate 902 conjugue
+l'action deck physique complète de la frame fixe par des trivialisations
+linéaires ponctuelles fournies, avec lois de groupe et naturalité des jets
+coefficientiels. Cette prolongation est spatialement gelée et n'est pas encore
+identifiée aux transitions à termes dérivés de l'atlas géométrique. Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 
@@ -574,8 +583,8 @@ sur `J⁴` et prouver son homotopie algébrique
 commun contenant les densités physiques complètes, puis étendre le pont
 intégré compatible à Stokes au-delà du secteur scalaire normal et y relever
 la classification. Il faut enfin transporter l'action de deck canonique dans
-les trivialisations mobiles et construire le BV/BRST non trivial sur tous les
-champs physiques.
+les vrais jets des trivialisations mobiles et construire le BV/BRST non
+trivial sur tous les champs physiques.
 `T06` reste ouverte.
 
 ### T07 — `anomalyConstraintsApplied`
