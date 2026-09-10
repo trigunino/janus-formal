@@ -27451,6 +27451,34 @@ PROGRAM_P_GATES = {
             "theorem programPT06FullPhysicalScalarGhostGate900Realization_chainMap",
         ),
     ),
+    "P0EFTJanusProgramPT06C2FirstOrderCurrentEulerSoundness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06C2FirstOrderCurrentComponent4D",
+            "def programPT06C2FirstOrderCurrentComponentOfContDiff",
+            "structure ProgramPT06DirectedC2FirstOrderCurrent4D",
+            "def programPT06DirectedC2FirstOrderCurrentDivergence",
+            "theorem programPT06DirectedC2FirstOrderCurrentDivergence_eq_density",
+            "theorem programPT06DirectedC2FirstOrderDensityEvaluation_hasFDerivAt",
+            "theorem programPT06DirectedC2FirstOrderDensityVerticalPartialZero",
+            "structure ProgramPT06DirectedC2FirstOrderCartanRegularity4D",
+            "theorem programPT06SecondOrderLocalEuler_directedC2FirstOrderDensity_eq_zero",
+            "theorem programPT06SecondOrderLocalEuler_directedC2FirstOrderDivergence_eq_zero",
+        ),
+    ),
+    "P0EFTJanusProgramPT06DirectionalNullJointJetStokesBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06DirectionalValueAffineCurrent",
+            "def programPT06DirectionalNullJointSecondJet",
+            "theorem programPT06DirectionalNullJointAffineDivergence_eq_density",
+            "theorem programPT06DirectionalNullJointAffineDivergence_euler_eq_zero",
+            "def programPT06DirectionalNullJointJetLocalDensityCochain",
+            "theorem programPT06DirectionalNullJointJetLocalDensityCochain_eq_geometric",
+            "theorem programPT06DirectionalNullJointJetLocalDensity_stokes",
+            "theorem programPT06DirectionalNullJointJetLocalDensity_dH_joint",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

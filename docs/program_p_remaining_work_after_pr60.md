@@ -578,7 +578,15 @@ dérive ensuite les quatre covecteurs gauge depuis des jets de ghosts
 scalaires d'un ordre supérieur, prouve les lois décalées de troncature et de
 dérivée totale, puis construit un morphisme de complexes exact vers Gate900.
 Le modèle reste en frame fixe, réel ordinaire, sans ghosts grassmanniens ni
-BRST difféomorphisme non linéaire. Ces résultats
+BRST difféomorphisme non linéaire. Gate 904 autorise un composant de courant
+dirigé à dépendre de tout le premier jet, prouve son vrai `dH` Gate879 et
+l'annulation par Euler Gate880 sous des certificats explicites de Cartan et de
+commutation aux ordres supérieurs. `C²` seul ne fournit pas ces dérivées; la
+gate ne construit donc pas ces certificats et ne classifie pas le noyau. Gate
+905 montre que la réalisation unidimensionnelle du générateur nul de Gate899
+ne dépend pas du choix de la coordonnée formelle `Fin 3`, tout en conservant
+Stokes T05 et l'incidence Gate819. Cela reste la même géométrie scalaire
+nulle-vers-joints, sans théorème de Stokes tangentiel tridimensionnel. Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 

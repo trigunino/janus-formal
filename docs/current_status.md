@@ -373,7 +373,16 @@ four Abelian gauge covectors from scalar ghost jets one order higher, proves
 the shifted truncation and total-derivative laws, and gives an exact chain map
 to Gate900's physical gauge-gradient complex. This remains a fixed-frame,
 ordinary real-linear model without Grassmann ghosts or nonlinear
-diffeomorphism BRST. These results cover
+diffeomorphism BRST. Gate 904 allows a directed current component to depend on
+the complete first jet, proves its genuine Gate879 chain-rule density, and
+annuls Gate880 Euler under explicit higher Cartan derivative and commutation
+certificates. Bare `C²` does not supply those higher derivatives, and the gate
+does not derive the certificates or classify the kernel. Gate 905 shows that
+Gate899's one-dimensional null-generator realization is independent of which
+formal `Fin 3` coordinate is assigned to that parameter, preserving the T05
+Stokes and Gate819 incidence identities. This remains the same scalar
+null-to-joint geometry, not a tangential three-dimensional Stokes theorem.
+These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
 its algebraic homotopy are classified, and until a common covariant local
