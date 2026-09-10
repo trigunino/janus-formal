@@ -606,7 +606,8 @@ indice des familles et application effective des contraintes — T07.
 La reconstruction Helmholtz sur espaces de configurations et cartes régulières
 est avancée.
 
-**Reste :** le problème inverse local PDE complet : T03--T06.
+**Suivi plus fort hors portes terminales T03--T05 :** construire le problème
+inverse local PDE complet. La seule porte de ce bloc encore ouverte est T06.
 
 ### P-D
 
@@ -662,7 +663,7 @@ isométrie cinq secteurs
 → complexification et accord Quillen de la ligne de Fredholm.
 ```
 
-### Phase 2 — T06 et suivi local de T03–T05
+### Phase 2 — T06 et renforcements locaux hors critères T03–T05
 
 Poursuivre l'atlas brut du tangent et le bicomplexe physique local, puis fermer
 la classification exhaustive des bords.
