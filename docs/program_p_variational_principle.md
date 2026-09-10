@@ -2114,8 +2114,8 @@ microscopic law and finite-part data, while `SCALE-GLOBAL-01` requires an indepe
 dimensionful anchor and a selected stable vacuum.
 The former cross-representation foundation work is closed by `T01`. Terminal
 gate `T03` is closed by its typed global full Euler--Lagrange certificate;
-refinements beyond the terminal `T03` contract and terminal gates `T04`–`T06`
-remain open.
+`T04` and `T05` are also closed by their typed terminal certificates. Stronger
+local refinements remain follow-up work, and terminal gate `T06` remains open.
 
 ## 13. Honest conclusion
 

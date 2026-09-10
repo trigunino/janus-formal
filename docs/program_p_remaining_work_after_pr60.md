@@ -498,11 +498,20 @@ recollée. Ces objectifs ne sont pas déclarés fermés.
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
 **Déjà disponible :** plusieurs transgressions, GHY, faces nulles, joints et
-résidus de bord explicites.
+résidus de bord explicites. Gates 866–869 classifient exactement les
+lagrangiens nuls et primitives dans le carrier relatif intégré de T05,
+classifient par constantes la classe indépendante de jets invariants de T02,
+et appliquent l'équivalence relative aux vrais paquets GHY/nul/joint et au
+paquet physique intégré complet. Gate 869 fournit en outre un calcul local
+avant intégration sur la tour de jets multi-indices 4D : pour les densités
+autonomes affines d'ordre un, le noyau d'Euler est exactement la somme des
+constantes et des divergences horizontales, avec compatibilité BRST linéaire.
 
-**Reste :** théorème d'exhaustion des lagrangiens nuls et des termes de bord
-admissibles, compatible avec la gorge non orientable, les joints, le BRST et le
-bicomplexe local. `T06` reste ouverte.
+**Reste :** construire le carrier local covariant commun et son véritable
+Euler au-delà du sous-espace affine, relier sans jets-de-jets la classe de
+gorge T02 à ce carrier, relever la classification intégrée vers celui-ci,
+puis prouver sa naturalité sous le deck non orientable et le BRST physique.
+`T06` reste ouverte.
 
 ### T07 — `anomalyConstraintsApplied`
 

@@ -291,6 +291,18 @@ exactness remain stronger follow-up work outside the terminal T05 criterion.
 The local metric/GHY PDE representation likewise remains stronger follow-up
 work outside the terminal T04 criterion.
 
+Gates 866--869 start `T06`. They prove `ker Euler = image dH` for every
+horizontal density in the integrated relative carrier of T05, classify the
+zero-Frechet-derivative members of T02's independent degree-at-most-four
+invariant second-jet class by a unique constant, and place the actual GHY and
+faithful null/joint density families in the relative boundary class. Gate 869
+also constructs a pre-integration four-dimensional jet calculation for
+autonomous affine first-order densities: its local Euler kernel is exactly
+constants plus horizontal divergences, and its square-zero linear BRST
+differential commutes with `dH`. `T06` remains open until these results are
+extended and joined on one local covariant carrier containing the complete
+physical densities, with deck and BRST naturality for the variational maps.
+
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate
 external-normal contract assembles the true `BulkPhysicalSecondOrderJet`

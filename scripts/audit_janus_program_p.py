@@ -26980,6 +26980,50 @@ PROGRAM_P_GATES = {
             "theorem concreteMatterLine_contDiff_two_of_pointwiseCompletion",
         ),
     ),
+    "P0EFTJanusProgramPT06RelativeNullLagrangianClassification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def IsRelativeNullLagrangian",
+            "def IsRelativeBoundaryTerm",
+            "theorem isRelativeNullLagrangian_iff_components",
+            "theorem isRelativeBoundaryTerm_iff_components",
+            "theorem horizontalDensity_null_iff_boundary",
+            "theorem isClosedRelativeBoundaryPrimitive_iff_components",
+            "theorem relativeBoundaryTerm_existsUnique_normalizedPrimitive",
+        ),
+    ),
+    "P0EFTJanusProgramPT06InvariantJetNullDensityClassification4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06ConstantInvariantJetDensity",
+            "def IsInvariantJetVariationallyNull",
+            "theorem programPT06InvariantJetDensity_transitionInvariant",
+            "theorem invariantJetVariationallyNull_iff_existsUnique_constant",
+        ),
+    ),
+    "P0EFTJanusProgramPT06PhysicalBoundaryDensityClassificationBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "theorem programPT06CanonicalGHYBoundaryDensity_boundary_and_null",
+            "theorem programPT06CanonicalGHYPrimitive_nonNull_eq_action",
+            "theorem programPT06T03FaithfulGeometricDensity_null_iff_boundary",
+            "theorem programPT06FaithfulNullJointBoundaryDensity_boundary_and_null",
+            "theorem programPT06FaithfulNullJointBoundaryDensity_joint_eq_actionChanges",
+        ),
+    ),
+    "P0EFTJanusProgramPT06AffineLocalVariationalComplex4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06AffineCurrentLocalDH",
+            "def programPT06AffineLocalEuler",
+            "def programPT06AffineAugmentedDH",
+            "theorem programPT06AffineCurrentLocalDH_evaluation",
+            "theorem programPT06_affineLocalEuler_ker_eq_augmentedDH_range",
+            "structure ProgramPT06SquareZeroFieldDifferential4D",
+            "theorem programPT06AffineBRST_commutes_localDH",
+            "theorem programPT06AffineDensityBRST_square_zero",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

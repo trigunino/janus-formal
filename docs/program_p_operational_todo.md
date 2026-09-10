@@ -13389,6 +13389,53 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   l'exactitude locale recollée restent un suivi plus fort hors critère terminal.
 - Porte terminale : `T05` fermée ; compteur `5/14`.
 
+### `P-T06-RELATIVE-NULL-LAGRANGIAN-CLASSIFICATION` — Gate 866
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/COCHAÎNES-RELATIVES`.
+- Résultat : dans tout le carrier horizontal de Gate 819, nullité
+  variationnelle équivaut exactement à l'image de `dH`; le noyau des
+  primitives de bord est calculé et chaque terme de bord possède un primitif
+  normalisé unique.
+- Limite : le carrier de Gate 819 est cellulaire et intégré (`Real × Real`),
+  pas encore le carrier local covariant physique.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-INVARIANT-JET-NULL-DENSITY-CLASSIFICATION` — Gate 867
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/JETS-INVARIANTS-BORNÉS`.
+- Résultat : sur la classe indépendante de T02, contenant toutes les fonctions
+  polynomiales invariantes de degré au plus quatre du vrai second jet physique,
+  dérivée de Fréchet verticale nulle équivaut à un représentant constant
+  unique; la descente par les transitions est conservée.
+- Limite : cette dérivée de fibre n'est pas encore l'opérateur d'Euler local
+  modulo dérivées totales, et la base de T02 est la gorge.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-PHYSICAL-BOUNDARY-DENSITY-CLASSIFICATION-BRIDGE` — Gate 868
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/GHY-NUL-JOINT`.
+- Résultat : les vraies densités GHY et la transgression fidèle faces
+  nulles/joints sont envoyées dans l'image de `dH`, donc dans la classe nulle
+  relative. Le paquet intégré complet bulk/SpinC/LL/GHY/nul/joint satisfait
+  aussi l'équivalence exhaustive de Gate 866.
+- Limite : aucune action deck ou BRST n'agit encore sur le carrier classifié;
+  l'intégration géométrique n'a pas encore de relèvement local injectif
+  commutant à `dH` et `dV`.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-AFFINE-LOCAL-VARIATIONAL-COMPLEX` — Gate 869
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/LOCAL-AFFINE-ORDRE-1`.
+- Résultat : sur la tour locale multi-indices 4D, l'évaluation de `dH` est la
+  divergence totale formelle avant intégration et le noyau de l'Euler affine
+  vaut exactement les constantes plus l'image de `dH`. Un différentiel BRST
+  linéaire de carré nul commute avec ce `dH` et reste de carré nul sur les
+  densités.
+- Limite : le carrier est autonome, affine et d'ordre un. Il ne contient pas
+  encore la densité Candidate A non linéaire complète et n'est pas relié à la
+  classe de jets de gorge T02 ni aux actions deck/BRST physiques.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
