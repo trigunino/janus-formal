@@ -681,6 +681,12 @@ l'annulation globale du covecteur d'Euler sur J⁴ fournit maintenant un courant
 J³ explicite dont le différentiel horizontal est la densité locale moins son
 terme constant. Le sens réciproque exige encore une soundness d'Euler pour ces
 courants J³.
+Gate 926 prouve que chaque composante de ce courant canonique est C∞. Elle
+isole aussi les données non circulaires du sens réciproque : factorisation
+exacte du `dH` sur J⁴ par une densité J², rétraction par extension nulle,
+régularité C³ de la divergence et transfert des trois premières dérivées de
+Fréchet itérées. Le télescopage d'Euler d'ordre supérieur reste à établir et
+n'est pas supposé dans cette gate.
 Ces résultats
 ne donnent pas encore la classification bidirectionnelle du noyau polynomial T02
 général ni une action BV physique covariante complète.

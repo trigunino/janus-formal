@@ -476,6 +476,12 @@ vanishing of the genuine J⁴ Euler covector now gives an explicit J³ current
 whose horizontal differential equals the local density minus its constant
 term. A general Euler-soundness theorem for these J³ currents is still needed
 for the reverse implication.
+Gate 926 proves every component of that canonical current is C∞. It also
+packages the non-circular data needed for the reverse direction: exact
+factorization of a J⁴ current divergence through J², a canonical zero-extension
+retraction, C³ regularity of the divergence, and transfer of the first three
+iterated derivatives. The remaining step is the higher-order Euler telescoping
+identity; Gate926 does not assume or claim its conclusion.
 These results cover
 neither the full two-sided nonlinear T02 polynomial classification
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
