@@ -27542,6 +27542,17 @@ PROGRAM_P_GATES = {
             "theorem programPT06T02InvariantRankOne_eq_constant_add_divergences_of_euler",
         ),
     ),
+    "P0EFTJanusProgramPT06ScalarHessianMinorNullLagrangian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06ScalarHessianMinor4D",
+            "def programPT06ScalarHessianMinorDensityEvaluation",
+            "theorem programPT06ScalarHessianMinorDensityEvaluation_hasFDerivAt",
+            "theorem programPT06SecondOrderLocalEuler_scalarHessianMinor_eq_zero",
+            "def programPT06ScalarHessianMinorCurrentDH",
+            "theorem programPT06ScalarHessianMinorCurrentDH_eq_density",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

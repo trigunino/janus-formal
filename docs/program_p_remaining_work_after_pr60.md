@@ -600,9 +600,15 @@ bilinéaire valeur-valeur continue symétrique arbitraire et montre qu'Euler
 détecte toute la forme. Gate 910 réalise la famille rang-un comme vraie
 fonctionnelle admissible T02 et transporte sa classification Gate880, sous
 deux témoins explicites d'invariance de transition T02; elle ne construit pas
-de canal invariant non nul. Ces sous-classes restent quadratiques de premier ordre;
-elles n'incluent ni toutes les formes gradient-gradient croisées entre canaux, ni la dépendance
-au second jet, ni le carrier polynomial T02 complet de degré quatre. Ces résultats
+de canal invariant non nul. Gate 911 prouve que chaque mineur hessien scalaire
+à deux directions `u_ii u_jj - u_ij²` est annulé par Gate880 et construit un
+courant d'ordre deux dont le vrai différentiel Gate879 est exactement cette
+densité, après annulation formelle des termes d'ordre trois. Les réciproques
+précédentes restent quadratiques de premier ordre et Gate911 ne couvre que les
+mineurs hessiens scalaires individuels; elles n'incluent ni toutes les formes
+gradient-gradient croisées entre canaux, ni la dépendance générale au second
+jet au-delà de ces mineurs, ni le carrier polynomial T02 complet de degré
+quatre. Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 

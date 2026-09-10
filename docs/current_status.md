@@ -395,8 +395,13 @@ continuous symmetric value-value bilinear form and proves that Euler detects
 the whole form. Gate 910 realizes the rank-one family as an actual admissible
 T02 functional and transfers its Gate880 classification, conditional on two
 explicit T02 transition-invariance witnesses; it does not construct a
-nonzero invariant channel. These remain first-order quadratic subclasses; they do not
-cover arbitrary cross-channel gradient quadratic forms, second-jet dependence, or the
+nonzero invariant channel. Gate 911 proves that every scalar two-direction
+Hessian minor `u_ii u_jj - u_ij²` is killed by Gate880 and gives an explicit
+order-two current whose genuine Gate879 differential is that density, with
+the third-order terms cancelled formally. The preceding converse results
+remain first-order quadratic subclasses, while Gate911 covers only individual
+scalar Hessian minors; they do not cover arbitrary cross-channel gradient
+quadratic forms, general second-jet dependence, or the
 complete T02 degree-four polynomial carrier.
 These results cover
 neither the general nonlinear T02 polynomial kernel
