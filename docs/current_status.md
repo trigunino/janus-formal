@@ -291,7 +291,7 @@ exactness remain stronger follow-up work outside the terminal T05 criterion.
 The local metric/GHY PDE representation likewise remains stronger follow-up
 work outside the terminal T04 criterion.
 
-Gates 866--883 start `T06`. They prove `ker Euler = image dH` for every
+Gates 866--886 start `T06`. They prove `ker Euler = image dH` for every
 horizontal density in the integrated relative carrier of T05, classify the
 zero-Frechet-derivative members of T02's independent degree-at-most-four
 invariant second-jet class by a unique constant, and place the actual GHY and
@@ -318,10 +318,17 @@ operator on `J⁴`. Gate 878 computes the actual T02 degree-four Frechet
 derivative, and Gate 882 pulls both its local Lagrangian and derivative back to
 the genuine Finsupp `J²`. Gate 883 proves only the sound implication that an
 affine horizontal-current divergence has zero Euler expression; it proves no
-converse. `T06` remains open until the nontrivial polynomial Euler kernel and
-its algebraic homotopy are classified, and until a common covariant local
-carrier containing the complete physical densities is connected to the
-integrated relative complex and carries the physical deck and BV/BRST actions.
+converse. Gate 884 proves the exact converse only for autonomous affine
+second-order densities. Gate 885 prolongs the actual deck action through the
+jet tower only on the reduced `(II, F)` carrier, not on the complete
+eleven-component physical carrier. Gate 886 maps continuous `J²` densities,
+including the T02 family, along a fixed-frame section into the integrated T05
+relative carrier and gives its zero-integral criterion; it proves no Stokes
+identification between local `dH` and relative boundaries. `T06` remains open
+until the nontrivial polynomial Euler kernel and its algebraic homotopy are
+classified, and until a common covariant local carrier containing the complete
+physical densities has a Stokes-compatible integrated chain map and carries
+the complete physical deck and BV/BRST actions.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

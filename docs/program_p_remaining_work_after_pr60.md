@@ -498,7 +498,7 @@ recollée. Ces objectifs ne sont pas déclarés fermés.
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
 **Déjà disponible :** plusieurs transgressions, GHY, faces nulles, joints et
-résidus de bord explicites. Gates 866–883 classifient exactement les
+résidus de bord explicites. Gates 866–886 classifient exactement les
 lagrangiens nuls et primitives dans le carrier relatif intégré de T05,
 classifient par constantes la classe indépendante de jets invariants de T02,
 et appliquent l'équivalence relative aux vrais paquets GHY/nul/joint et au
@@ -524,16 +524,21 @@ locales, puis construisent l'opérateur d'Euler d'ordre deux sur `J⁴`. Gate 87
 calcule le véritable dérivé de Fréchet de la famille T02 de degré quatre et
 Gate 882 le transporte, avec le lagrangien local, sur le vrai `J²` Finsupp.
 Gate 883 établit seulement le sens sûr « divergence horizontale d'un courant
-affine implique Euler nul » ; aucune réciproque n'est prouvée.
+affine implique Euler nul ». Gate 884 établit la réciproque exacte uniquement
+pour les densités autonomes affines d'ordre deux. Gate 885 prolonge l'action de
+deck physique uniquement sur le carrier réduit `(II, F)`, pas sur les onze
+composantes physiques. Gate 886 intègre les densités locales continues sur
+`J²`, dont la famille T02, le long d'une section à frame fixe dans le carrier
+relatif T05 ; aucun théorème de Stokes reliant `dH` local aux bords relatifs
+n'est prouvé.
 
 **Reste :** classifier le noyau d'Euler de la classe polynomiale non triviale
 sur `J⁴` et prouver son homotopie algébrique
 `ker Euler = constantes + image dH`, construire le carrier local covariant
-commun contenant les densités physiques complètes, puis raccorder ce carrier
-au complexe relatif intégré et y relever la classification. Il faut enfin
-prolonger et prouver la naturalité sous le deck non orientable et le BV/BRST
-physique. Les carriers actuels ne possèdent pas encore ces deux actions
-physiques communes.
+commun contenant les densités physiques complètes, puis établir son pont
+intégré compatible à Stokes et y relever la classification. Il faut enfin
+prolonger et prouver la naturalité sous le deck non orientable sur le carrier
+physique complet et sous le BV/BRST physique.
 `T06` reste ouverte.
 
 ### T07 — `anomalyConstraintsApplied`

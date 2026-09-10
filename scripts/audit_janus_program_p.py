@@ -27168,6 +27168,36 @@ PROGRAM_P_GATES = {
             "theorem programPT06SecondOrderLocalEuler_horizontalDivergence_eq_zero",
         ),
     ),
+    "P0EFTJanusProgramPT06AffineSecondOrderExactness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06AffineSecondOrderLocalDH",
+            "def programPT06AffineSecondOrderLocalEuler",
+            "theorem programPT06_affineSecondOrderLocalEuler_ker_eq_augmentedDH_range",
+            "theorem programPT06SecondOrderLocalEuler_affine_eq_zero_iff",
+        ),
+    ),
+    "P0EFTJanusProgramPT06ActualReducedDeckJetProlongation4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06ActualOrientedGaussReducedDeckAction",
+            "def programPT06ActualOrientedGaussReducedJetDeckAction",
+            "theorem programPT06ActualOrientedGaussReducedJetDeckAction_involutive",
+            "theorem programPT06ActualOrientedGaussReducedJetDeckAction_commutes_totalDerivative",
+            "theorem programPT06ActualOrientedGaussReducedJetDeckAction_J4_to_J2",
+        ),
+    ),
+    "P0EFTJanusProgramPT06T02LocalDensityRelativeIntegrationBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06FinsuppSecondJetLocalDensityIntegral",
+            "def programPT06FinsuppSecondJetLocalDensityIntegratedRelativeCochain",
+            "theorem programPT06FinsuppSecondJetLocalDensityIntegratedRelative_horizontal",
+            "theorem programPT06FinsuppSecondJetLocalDensityIntegratedRelative_actionSum",
+            "def programPT06T02FinsuppSecondJetIntegratedRelativeCochain",
+            "theorem programPT06T02FinsuppSecondJetIntegratedRelative_null_iff_integral_zero",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {
