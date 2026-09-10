@@ -291,7 +291,7 @@ exactness remain stronger follow-up work outside the terminal T05 criterion.
 The local metric/GHY PDE representation likewise remains stronger follow-up
 work outside the terminal T04 criterion.
 
-Gates 866--876 start `T06`. They prove `ker Euler = image dH` for every
+Gates 866--883 start `T06`. They prove `ker Euler = image dH` for every
 horizontal density in the integrated relative carrier of T05, classify the
 zero-Frechet-derivative members of T02's independent degree-at-most-four
 invariant second-jet class by a unique constant, and place the actual GHY and
@@ -310,11 +310,18 @@ equivalence from its symmetric spatial second jet to T02's assembled framed
 second-jet fiber. Gate 875 supplies a genuine `Fin 3 →₀ Nat` tower through
 `J⁴`, with finite truncations and commuting total derivatives. Gate 876 proves
 the explicit Frechet derivative of every diagonal continuous multilinear
-polynomial through degree four. `T06` remains open until these pieces carry
-the actual T02 local Euler and its algebraic homotopy, and until the integrated
-relative component is replaced by a common covariant local carrier containing
-the complete physical densities, with the physical deck and BV/BRST actions
-prolonged to that carrier.
+polynomial through degree four. Gates 877--881 identify the genuine Finsupp
+`J²` with the symmetric and physical T02 second-jet presentations, upgrade
+that bridge to a continuous linear equivalence, define vertical and total
+derivatives on local functions, and construct the explicit second-order Euler
+operator on `J⁴`. Gate 878 computes the actual T02 degree-four Frechet
+derivative, and Gate 882 pulls both its local Lagrangian and derivative back to
+the genuine Finsupp `J²`. Gate 883 proves only the sound implication that an
+affine horizontal-current divergence has zero Euler expression; it proves no
+converse. `T06` remains open until the nontrivial polynomial Euler kernel and
+its algebraic homotopy are classified, and until a common covariant local
+carrier containing the complete physical densities is connected to the
+integrated relative complex and carries the physical deck and BV/BRST actions.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

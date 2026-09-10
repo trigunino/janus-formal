@@ -498,7 +498,7 @@ recollée. Ces objectifs ne sont pas déclarés fermés.
 ### T06 — `nullLagrangiansAndBoundaryTermsClassified`
 
 **Déjà disponible :** plusieurs transgressions, GHY, faces nulles, joints et
-résidus de bord explicites. Gates 866–876 classifient exactement les
+résidus de bord explicites. Gates 866–883 classifient exactement les
 lagrangiens nuls et primitives dans le carrier relatif intégré de T05,
 classifient par constantes la classe indépendante de jets invariants de T02,
 et appliquent l'équivalence relative aux vrais paquets GHY/nul/joint et au
@@ -517,15 +517,23 @@ au niveau des fibres modèles, au produit des seconds jets encadrés T02. Gate
 875 fournit la tour multi-indices spatiale véritable de `J⁰` à `J⁴`, ses
 troncatures finies et ses dérivées totales commutatives. Gate 876 calcule les
 dérivées de Fréchet explicites des polynômes diagonaux multilinéaires de degré
-au plus quatre.
+au plus quatre. Gates 877–881 identifient exactement le vrai `J²` Finsupp aux
+présentations symétrique et physique T02, renforcent ce pont en équivalence
+linéaire continue, définissent les dérivées verticales et totales des fonctions
+locales, puis construisent l'opérateur d'Euler d'ordre deux sur `J⁴`. Gate 878
+calcule le véritable dérivé de Fréchet de la famille T02 de degré quatre et
+Gate 882 le transporte, avec le lagrangien local, sur le vrai `J²` Finsupp.
+Gate 883 établit seulement le sens sûr « divergence horizontale d'un courant
+affine implique Euler nul » ; aucune réciproque n'est prouvée.
 
-**Reste :** construire le carrier local covariant commun et son véritable
-Euler polynomial sur `J⁴`, prouver son homotopie algébrique
-`ker Euler = constantes + image dH`, raccorder exactement la présentation
-ordre deux de T02 à la nouvelle tour Finsupp, relever la classification
-intégrée vers ce carrier, puis prolonger et prouver la naturalité sous le deck
-non orientable et le BV/BRST physique. Les carriers actuels ne possèdent pas
-encore ces deux actions physiques communes.
+**Reste :** classifier le noyau d'Euler de la classe polynomiale non triviale
+sur `J⁴` et prouver son homotopie algébrique
+`ker Euler = constantes + image dH`, construire le carrier local covariant
+commun contenant les densités physiques complètes, puis raccorder ce carrier
+au complexe relatif intégré et y relever la classification. Il faut enfin
+prolonger et prouver la naturalité sous le deck non orientable et le BV/BRST
+physique. Les carriers actuels ne possèdent pas encore ces deux actions
+physiques communes.
 `T06` reste ouverte.
 
 ### T07 — `anomalyConstraintsApplied`

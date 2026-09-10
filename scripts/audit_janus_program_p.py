@@ -27107,6 +27107,67 @@ PROGRAM_P_GATES = {
             "theorem programPT06DiagonalPolynomialEvaluation_fderiv",
         ),
     ),
+    "P0EFTJanusProgramPT06ThroatSpatialFinsuppSecondJetBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatSpatialTruncatedIndexTwoEquiv",
+            "def throatSpatialFinsuppSecondJetEquiv",
+            "def programPT06ActualPhysicalValueProductFinsuppSecondJetEquiv",
+        ),
+    ),
+    "P0EFTJanusProgramPT06T02DegreeFourFrechetDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06T02DegreeFourDiagonalPolynomial",
+            "def programPT06T02DegreeFourFrechetDerivative",
+            "theorem programPT06T02DegreeFourEvaluation_hasFDerivAt",
+            "theorem programPT06T02DegreeFourEvaluation_fderiv",
+        ),
+    ),
+    "P0EFTJanusProgramPT06LocalFunctionTotalDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06ThroatSpatialJetCoordinateInjection",
+            "def programPT06ThroatSpatialVerticalPartialDerivative",
+            "def programPT06ThroatSpatialLocalFunctionTotalDerivative",
+            "theorem programPT06ThroatSpatialLocalFunctionTotalDerivative_eq_of_hasFDerivAt",
+        ),
+    ),
+    "P0EFTJanusProgramPT06SecondOrderLocalEuler4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06SecondOrderLocalEuler",
+            "theorem programPT06SecondOrderLocalEuler_formula",
+            "theorem programPT06SecondOrderLocalEuler_constant",
+            "theorem programPT06SecondOrderLocalEuler_linear",
+        ),
+    ),
+    "P0EFTJanusProgramPT06ActualPhysicalFinsuppSecondJetLinearBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def throatSpatialFinsuppSecondJetLinearEquiv",
+            "def programPT06ActualPhysicalValueProductFinsuppSecondJetLinearEquiv",
+            "def programPT06ActualPhysicalValueProductFinsuppSecondJetContinuousLinearEquiv",
+        ),
+    ),
+    "P0EFTJanusProgramPT06T02FinsuppSecondJetFrechetDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06T02FinsuppSecondJetLocalLagrangian",
+            "def programPT06T02FinsuppSecondJetFrechetDerivative",
+            "theorem programPT06T02FinsuppSecondJetLocalLagrangian_hasFDerivAt",
+            "theorem programPT06T02FinsuppSecondJetLocalLagrangian_fderiv",
+        ),
+    ),
+    "P0EFTJanusProgramPT06HorizontalDivergenceEulerSoundness4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06AffineHorizontalCurrent4D",
+            "def programPT06AffineHorizontalCurrentDivergence",
+            "theorem programPT06AffineHorizontalCurrentDivergence_eq_linearMap",
+            "theorem programPT06SecondOrderLocalEuler_horizontalDivergence_eq_zero",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {
