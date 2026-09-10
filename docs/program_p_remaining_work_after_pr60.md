@@ -625,6 +625,13 @@ jacobiens multifield de Gate912 : le courant pondéré a pour vrai différentiel
 Gate879 la densité pondérée, la densité et sa divergence sont annulées par
 Gate880, et la représentation est stable par addition et multiplication
 scalaire. Elle ne classifie pas tous les lagrangiens nuls de premier ordre.
+Gate 916 regroupe des relèvements de cartes, leurs windings de transition et
+une équation brute d'entrelacement Gate881/902. À partir de ces données de
+compatibilité d'atlas, elle déduit les deux témoins Gate910, construit une
+fonctionnelle rang-un T02 admissible, puis transporte le critère exact
+d'obstruction Euler et le représentant constante plus `dH`. La construction
+de ces données depuis l'atlas physique avec corrections de dérivées reste
+ouverte.
 Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.

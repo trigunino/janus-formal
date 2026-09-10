@@ -421,6 +421,12 @@ minors: the weighted current has genuine Gate879 differential equal to the
 weighted density, both its density and divergence are killed by Gate880, and
 the representation is stable under addition and scalar multiplication. It
 does not classify every first-order null Lagrangian.
+Gate 916 packages explicit chart lifts, transition windings, and a raw
+Gate881/902 intertwining equation. From those atlas-level compatibility data
+it derives the two Gate910 transition witnesses, constructs an admissible T02
+rank-one functional, and transfers the exact Euler obstruction criterion and
+constant-plus-`dH` representative. Construction of those compatibility data
+from the derivative-corrected physical atlas remains open.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

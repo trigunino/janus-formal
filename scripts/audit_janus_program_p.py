@@ -27615,6 +27615,23 @@ PROGRAM_P_GATES = {
             "theorem programPT06MovingLLRankOne_divergenceRepresentative_deck_invariant",
         ),
     ),
+    "P0EFTJanusProgramPT06T02MovingFrameRankOneCompatibility4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06T02MovingFrameJetCompatibility4D",
+            "theorem programPT06T02MovingLLScalarCoordinate_transitionInvariant",
+            "def programPT06T02MovingFrameRankOneDensity",
+            "theorem programPT06T02MovingFrameRankOneLinear_transitionInvariant",
+            "theorem programPT06T02MovingFrameRankOneQuadratic_transitionInvariant",
+            "def programPT06T02MovingFrameInvariantRankOneData",
+            "def programPT06T02MovingFrameInvariantRankOneFunctional",
+            "theorem programPT06T02MovingFrameInvariantRankOneFunctional_transitionInvariant",
+            "theorem programPT06T02MovingFrameInvariantRankOneLocalLagrangian_eq",
+            "theorem programPT06SecondOrderLocalEuler_t02MovingFrameInvariantRankOne_formula",
+            "theorem programPT06_t02MovingFrameInvariantRankOne_euler_eq_zero_iff",
+            "theorem programPT06T02MovingFrameInvariantRankOne_eq_constant_add_divergences_of_euler",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {
