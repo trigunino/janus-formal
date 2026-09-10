@@ -291,7 +291,7 @@ exactness remain stronger follow-up work outside the terminal T05 criterion.
 The local metric/GHY PDE representation likewise remains stronger follow-up
 work outside the terminal T04 criterion.
 
-Gates 866--873 start `T06`. They prove `ker Euler = image dH` for every
+Gates 866--876 start `T06`. They prove `ker Euler = image dH` for every
 horizontal density in the integrated relative carrier of T05, classify the
 zero-Frechet-derivative members of T02's independent degree-at-most-four
 invariant second-jet class by a unique constant, and place the actual GHY and
@@ -305,10 +305,16 @@ Gates 871--873 give the independent hybrid product of the T02 and T05 carriers
 a unique normalized form for its conjunctive nullity predicate, embed the
 physical boundary families with zero T02 component, and prove fixed-base
 naturality of the affine local complex under commuting linear maps. `T06`
-remains open
-until the integrated relative component is replaced by a common covariant
-local carrier containing the complete physical densities, with the physical
-deck and BV/BRST actions prolonged to that carrier.
+Gate 874 assembles the exact eleven-component physical value product and an
+equivalence from its symmetric spatial second jet to T02's assembled framed
+second-jet fiber. Gate 875 supplies a genuine `Fin 3 →₀ Nat` tower through
+`J⁴`, with finite truncations and commuting total derivatives. Gate 876 proves
+the explicit Frechet derivative of every diagonal continuous multilinear
+polynomial through degree four. `T06` remains open until these pieces carry
+the actual T02 local Euler and its algebraic homotopy, and until the integrated
+relative component is replaced by a common covariant local carrier containing
+the complete physical densities, with the physical deck and BV/BRST actions
+prolonged to that carrier.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

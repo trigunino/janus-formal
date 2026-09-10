@@ -13444,9 +13444,9 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   symétriques et sont linéairement équivalents à
   `FramedSecondOrderJet ThroatCoverCoordinates Fiber`. Le pont agit sur le
   fibre de valeurs et évite les jets de jets.
-- Limite : le produit des onze jets physiques T02 n'est pas encore assemblé
-  en une seule tour; aucune covariance, extraction depuis les sections ni
-  opérateur d'Euler polynomial n'est défini ici.
+- Limite : ce gate sectoriel n'assemble pas encore le produit des onze jets;
+  aucune covariance, extraction depuis les sections ni opérateur d'Euler
+  polynomial n'est défini ici. Gate 874 traite ensuite l'assemblage des fibres.
 - Porte terminale : aucune ; `T06` reste ouverte.
 
 ### `P-T06-STRATIFIED-NULL-BOUNDARY-NORMAL-FORM` — Gate 871
@@ -13485,6 +13485,38 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : l'injection choisit la densité locale T02 nulle et conserve la
   composante relative intégrée; elle ne constitue pas le relèvement local
   injectif encore requis.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-ACTUAL-PHYSICAL-VALUE-PRODUCT-SECOND-JET-BRIDGE` — Gate 874
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/JETS-PHYSIQUES-ASSEMBLÉS`.
+- Résultat : le produit exact des onze fibres de valeurs gauge, LL, métriques
+  et SpinC est construit. Son second jet spatial symétrique est équivalent au
+  produit des onze seconds jets encadrés constituant le vrai fibre T02; chaque
+  composante provient de l'équivalence linéaire de Gate 870.
+- Limite : l'équivalence globale est au niveau des fibres modèles et ne prouve
+  ni naturalité de changement de carte ni extraction depuis les sections.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-THROAT-SPATIAL-FINSUPP-JET-TOWER` — Gate 875
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/TOUR-J0-J4`.
+- Résultat : les multi-indices véritables `Fin 3 →₀ Nat` donnent des types
+  tronqués finis à tout ordre, en particulier `J⁰`–`J⁴`, avec troncatures,
+  extractions, structure de `JetTower` et dérivées totales commutatives.
+- Limite : le raccord exact de `J²` à la présentation symétrique de Gate 870
+  et l'Euler polynomial ne sont pas encore fournis dans ce gate.
+- Porte terminale : aucune ; `T06` reste ouverte.
+
+### `P-T06-DIAGONAL-POLYNOMIAL-FRECHET-DERIVATIVE` — Gate 876
+
+- État : `SUPPORT` (2026-09-10). Portée : `T06/DÉRIVÉE-POLYNOMIALE`.
+- Résultat : la dérivée de Fréchet d'une forme multilinéaire continue sur la
+  diagonale est la somme de toutes les insertions d'une variation. Les degrés
+  zéro à quatre sont assemblés et la formule explicite du polynôme total est
+  prouvée égale à `fderiv`.
+- Limite : résultat générique, pas encore instancié sur la structure imbriquée
+  T02 et distinct de l'opérateur d'Euler local avec dérivées totales.
 - Porte terminale : aucune ; `T06` reste ouverte.
 
 ## 7. Les 14 portes terminales fixes

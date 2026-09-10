@@ -27072,6 +27072,41 @@ PROGRAM_P_GATES = {
             "theorem programPT06T03FaithfulGeometricDensity_boundary_iff_existsUnique_normalForm",
         ),
     ),
+    "P0EFTJanusProgramPT06ActualPhysicalValueProductSecondJetBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06ThroatSpatialSecondJetProdLinearEquiv",
+            "abbrev ActualPhysicalValueProductFiber",
+            "abbrev ActualPhysicalSpatialSecondJetProductFiber",
+            "def programPT06ActualPhysicalValueProductSpatialSecondJetSplitEquiv",
+            "def programPT06ActualPhysicalSpatialSecondJetProductFramedEquiv",
+            "def programPT06ActualPhysicalValueProductSecondJetEquiv",
+        ),
+    ),
+    "P0EFTJanusProgramPT06ThroatSpatialFinsuppJetTower4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev ThroatSpatialMultiIndex",
+            "abbrev ThroatSpatialMultiindexJet4",
+            "def truncateThroatSpatialMultiindexJet",
+            "structure ThroatSpatialMultiindexJetExtraction",
+            "def ThroatSpatialMultiindexJetExtraction.jetTower",
+            "def throatSpatialTotalDerivative",
+            "theorem throatSpatialTotalDerivative_comm",
+        ),
+    ),
+    "P0EFTJanusProgramPT06DiagonalPolynomialFrechetDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "abbrev ProgramPT06ContinuousHomogeneousForm4D",
+            "def programPT06DiagonalHomogeneousDerivative",
+            "theorem programPT06DiagonalHomogeneousTerm_hasFDerivAt",
+            "structure ProgramPT06DiagonalPolynomialUpToFour4D",
+            "def programPT06DiagonalPolynomialDerivative",
+            "theorem programPT06DiagonalPolynomialEvaluation_hasFDerivAt",
+            "theorem programPT06DiagonalPolynomialEvaluation_fderiv",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {
