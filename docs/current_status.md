@@ -501,12 +501,15 @@ identity `Euler₄(D_i C) = 0` for every smooth scalar J³ current component.
 Gate 939 assembles the three directions and proves
 `Euler₄(dH C) = 0` for every smooth J³ current. Gate 940 identifies exactly
 the generic order-two Euler operator with the weighted Gate880 formula. The
-remaining local step is naturality under the J²-to-J⁴ density lift.
-These results cover
-neither the full two-sided nonlinear T02 polynomial classification
-nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and
-the reverse horizontal-exactness implication are classified, and until a common covariant local
-carrier has a Stokes-compatible integrated chain map beyond the scalar normal
+J²-to-J⁴ lift naturality and reverse soundness are proved by Gate 941. Gate
+942 then closes the two-sided T02 degree-four kernel theorem: Gate880 vanishes
+exactly when the density is its prescribed constant plus `dH` of a smooth J³
+current, with the canonical radial current as an explicit witness. Gate 943
+also proves invariance of that represented divergence under the genuine
+derivative-corrected T02 chart change. It does not yet glue the J³ current.
+This closes the two-sided degree-four T02 polynomial kernel. It does not yet
+supply a covariant full physical BV action. `T06` remains open until a common
+covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal
 sector, the supplied moving-frame conjugation is identified with the actual
 varying-frame jets, and the nonlinear physical BV/BRST action is constructed.
 

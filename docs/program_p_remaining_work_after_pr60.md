@@ -704,15 +704,20 @@ alimentent Gates 936--938, qui ferment le télescopage signé, la linéarité de
 l'Euler multi-indice et l'identité directionnelle complète
 `Euler₄(D_i C) = 0` pour toute composante lisse d'un courant J³. Gate 939
 effectue ensuite la somme des trois directions et prouve
-`Euler₄(dH C) = 0` pour tout courant J³ lisse. Gate 940 identifie ensuite exactement l'Euler
-multi-indice d'ordre deux à la formule pondérée Gate880 ; il reste la
-naturality de cet Euler sous le lift de densité J² vers J⁴.
-Ces résultats
-ne donnent pas encore la classification bidirectionnelle du noyau polynomial T02
-général ni une action BV physique covariante complète.
+`Euler₄(dH C) = 0` pour tout courant J³ lisse. Gate 940 identifie ensuite
+exactement l'Euler multi-indice d'ordre deux à la formule pondérée Gate880.
+Gate 941 prouve sa naturality sous le lift de densité J² vers J⁴ et le sens
+réciproque de soundness. Gate 942 ferme alors le
+noyau T02 de degré quatre dans les deux sens : Gate880 s'annule exactement
+pour une constante plus le `dH` d'un courant J³ lisse, avec le courant radial
+canonique comme témoin explicite. Gate 943 prouve aussi l'invariance de la
+divergence représentée sous le vrai changement de carte T02 avec corrections
+de dérivées ; le recollement du courant J³ lui-même reste ouvert.
+La classification bidirectionnelle du noyau polynomial T02 de degré au plus
+quatre est donc fermée. Une action BV physique covariante complète manque
+encore.
 
-**Reste :** prouver le sens réciproque de soundness pour compléter sur `J⁴`
-l'homotopie algébrique `ker Euler = constantes + image dH`, construire le carrier local covariant
+**Reste :** construire le carrier local covariant
 commun contenant les densités physiques complètes, puis étendre le pont
 intégré compatible à Stokes au-delà du secteur scalaire normal et y relever
 la classification. Il faut enfin transporter l'action de deck canonique dans
