@@ -27516,6 +27516,32 @@ PROGRAM_P_GATES = {
             "def programPT06MultifieldFirstOrderQuadraticOfFiniteRank",
         ),
     ),
+    "P0EFTJanusProgramPT06MultifieldSymmetricValueQuadraticKernel4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06MultifieldSymmetricValueQuadraticDensity4D",
+            "def programPT06MultifieldSymmetricValueQuadraticDensityEvaluation",
+            "theorem programPT06SecondOrderLocalEuler_multifieldSymmetricValueQuadratic_formula",
+            "theorem programPT06_multifieldSymmetricValueQuadratic_euler_eq_zero_iff",
+            "def programPT06MultifieldSymmetricValueQuadraticKernelCurrent",
+            "theorem programPT06MultifieldSymmetricValueQuadratic_eq_constant_add_dH",
+            "theorem programPT06_multifieldSymmetricValueQuadratic_euler_eq_zero_iff_divergence_form",
+            "def programPT06MultifieldSymmetricValueQuadraticOfGate908",
+        ),
+    ),
+    "P0EFTJanusProgramPT06T02InvariantRankOneQuadraticBridge4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06T02InvariantRankOneQuadraticData4D",
+            "def programPT06T02InvariantRankOneQuadraticFunctional",
+            "theorem programPT06T02InvariantRankOneQuadraticFunctional_transitionInvariant",
+            "theorem programPT06T02InvariantRankOneQuadraticFunctional_evaluation",
+            "theorem programPT06T02InvariantRankOneLocalLagrangian_eq",
+            "theorem programPT06SecondOrderLocalEuler_t02InvariantRankOne_eq",
+            "theorem programPT06_t02InvariantRankOne_euler_eq_zero_iff",
+            "theorem programPT06T02InvariantRankOne_eq_constant_add_divergences_of_euler",
+        ),
+    ),
 }
 
 PROGRAM_P_D10_BRIDGE_GATES = {

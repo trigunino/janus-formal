@@ -595,8 +595,13 @@ sans construire de fonctionnelle admissible T02 invariante ni prouver la
 compatibilité deck. Gate
 908 obtient une réciproque multifield de dimension finie pour un terme valeur
 linéaire arbitraire, un carré valeur normalisé et tous les courants bilinéaires
-de rang fini Gate898. Ces sous-classes restent quadratiques de premier ordre;
-elles n'incluent ni toutes les formes croisées entre canaux, ni la dépendance
+de rang fini Gate898. Gate 909 remplace ce carré unique par une forme
+bilinéaire valeur-valeur continue symétrique arbitraire et montre qu'Euler
+détecte toute la forme. Gate 910 réalise la famille rang-un comme vraie
+fonctionnelle admissible T02 et transporte sa classification Gate880, sous
+deux témoins explicites d'invariance de transition T02; elle ne construit pas
+de canal invariant non nul. Ces sous-classes restent quadratiques de premier ordre;
+elles n'incluent ni toutes les formes gradient-gradient croisées entre canaux, ni la dépendance
 au second jet, ni le carrier polynomial T02 complet de degré quatre. Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.

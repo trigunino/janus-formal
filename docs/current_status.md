@@ -390,8 +390,13 @@ it does not construct an invariant T02 admissible functional or prove deck
 compatibility.
 Gate 908 gives a finite-dimensional multifield converse for an arbitrary
 linear value term, one normalized value square, and every Gate898 finite-rank
-bilinear current. These remain first-order quadratic subclasses; they do not
-cover arbitrary cross-channel quadratic forms, second-jet dependence, or the
+bilinear current. Gate 909 replaces that single square by an arbitrary
+continuous symmetric value-value bilinear form and proves that Euler detects
+the whole form. Gate 910 realizes the rank-one family as an actual admissible
+T02 functional and transfers its Gate880 classification, conditional on two
+explicit T02 transition-invariance witnesses; it does not construct a
+nonzero invariant channel. These remain first-order quadratic subclasses; they do not
+cover arbitrary cross-channel gradient quadratic forms, second-jet dependence, or the
 complete T02 degree-four polynomial carrier.
 These results cover
 neither the general nonlinear T02 polynomial kernel
