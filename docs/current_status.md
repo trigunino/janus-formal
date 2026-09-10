@@ -495,8 +495,12 @@ multi-index derivative word is invariant under reordering and coordinate
 addition. Gate 934 proves generic lift naturality for Frechet, vertical, and
 total derivatives between finite jet orders. Gate 935 constructs the exact
 successor and low-order equivalences that reindex the two finite sums in the
-Euler cancellation. These are genuine inputs to the
-telescoping proof, but they do not yet assert Euler soundness for a J³ current.
+Euler cancellation. Gates 936--938 prove the signed finite-sum cancellation,
+the linear laws of the generic Euler operator, and the full directional
+identity `Euler₄(D_i C) = 0` for every smooth scalar J³ current component.
+Gate 939 assembles the three directions and proves
+`Euler₄(dH C) = 0` for every smooth J³ current. The remaining local step is to
+identify the generic order-two Euler operator with Gate880.
 These results cover
 neither the full two-sided nonlinear T02 polynomial classification
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

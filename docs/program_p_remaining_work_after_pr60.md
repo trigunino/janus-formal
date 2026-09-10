@@ -700,8 +700,12 @@ ajout d'une coordonnée. Gate 934 établit enfin la naturalité générique des
 lifts de fonctions locales pour les dérivées de Fréchet, verticales et totales.
 Gate 935 construit les équivalences exactes de successeur et de partie d'ordre
 bas qui réindexent les deux sommes finies de l'annulation d'Euler. Ces gates
-fournissent des entrées effectives du télescopage, sans encore
-conclure `Euler (dH current) = 0` pour un courant J³.
+alimentent Gates 936--938, qui ferment le télescopage signé, la linéarité de
+l'Euler multi-indice et l'identité directionnelle complète
+`Euler₄(D_i C) = 0` pour toute composante lisse d'un courant J³. Gate 939
+effectue ensuite la somme des trois directions et prouve
+`Euler₄(dH C) = 0` pour tout courant J³ lisse ; seul le raccord à Gate880 reste
+dans cette étape locale.
 Ces résultats
 ne donnent pas encore la classification bidirectionnelle du noyau polynomial T02
 général ni une action BV physique covariante complète.
