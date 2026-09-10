@@ -285,6 +285,14 @@ def programPT06ScalarHessianMinorDensityEvaluation
         secondOrderSecondProjection minor.second minor.second jet -
       secondOrderSecondProjection minor.first minor.second jet ^ 2
 
+@[simp] theorem programPT06ScalarHessianMinorDensityEvaluation_apply
+    (minor : ProgramPT06ScalarHessianMinor4D) (jet : SecondJet) :
+    programPT06ScalarHessianMinorDensityEvaluation minor jet =
+      jet (programPT06SecondOrderSecondMultiIndex minor.first minor.first) *
+          jet (programPT06SecondOrderSecondMultiIndex minor.second minor.second) -
+        jet (programPT06SecondOrderSecondMultiIndex minor.first minor.second) ^ 2 := by
+  rfl
+
 private def programPT06ScalarHessianMinorDensityDerivative
     (minor : ProgramPT06ScalarHessianMinor4D) (jet : SecondJet) :
     ContinuousLinearMap (RingHom.id Real) SecondJet Real :=

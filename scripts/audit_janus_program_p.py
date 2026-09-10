@@ -27582,6 +27582,36 @@ PROGRAM_P_GATES = {
             "def programPT06FiniteSpanScalarHessianMinorOfGenerator",
         ),
     ),
+    "P0EFTJanusProgramPT06DiagonalPolynomialHigherFrechetDerivative4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "def programPT06DiagonalHomogeneousHigherDerivative",
+            "theorem programPT06DiagonalHomogeneousHigherDerivative_apply",
+            "theorem programPT06DiagonalHomogeneousHigherDerivative_eq_iteratedFDeriv",
+            "theorem programPT06DiagonalHomogeneousSecondDerivative_eq_iteratedFDeriv",
+            "theorem programPT06DiagonalHomogeneousThirdDerivative_eq_iteratedFDeriv",
+            "theorem programPT06DiagonalHomogeneousFourthDerivative_eq_iteratedFDeriv",
+            "def programPT06DiagonalPolynomialHigherDerivative",
+            "theorem programPT06DiagonalPolynomialHigherDerivative_apply",
+            "theorem programPT06DiagonalPolynomialHigherDerivative_eq_iteratedFDeriv",
+            "theorem programPT06DiagonalPolynomialFourthDerivative_eq_iteratedFDeriv",
+        ),
+    ),
+    "P0EFTJanusProgramPT06MultifieldGradientJacobianMinorNullLagrangian4D.lean": (
+        "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
+        (
+            "structure ProgramPT06MultifieldGradientJacobianMinorData4D",
+            "def programPT06MultifieldGradientJacobianMinorDensityEvaluation",
+            "def programPT06MultifieldGradientJacobianMinorCurrentComponent",
+            "def programPT06MultifieldGradientJacobianMinorCurrentDH",
+            "theorem programPT06MultifieldGradientJacobianMinorCurrentDH_eq_density",
+            "theorem programPT06SecondOrderLocalEuler_multifieldGradientJacobianMinor_eq_zero",
+            "def programPT06MultifieldGradientJacobianOfScalarHessianMinor",
+            "theorem programPT06MultifieldGradientJacobian_scalarHessianMinor_density",
+            "theorem programPT06MultifieldGradientJacobian_scalarHessianMinor_currentDH",
+            "theorem programPT06SecondOrderLocalEuler_gradientJacobian_scalarSpecialization_eq_zero",
+        ),
+    ),
     "P0EFTJanusProgramPT06MultifieldJacobianMinorNullLagrangian4D.lean": (
         "JanusFormal/Branches/FundamentalGeometryPVariationalPrinciple.lean",
         (

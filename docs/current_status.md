@@ -438,6 +438,19 @@ minors. It sums their explicit J² currents, proves the genuine Gate879
 differential equals the summed density, proves Gate880 vanishes, and exposes
 addition, scaling, and single-generator embeddings. It adds closure under
 finite linear combinations, not new multifield generators.
+Gate 919 upgrades Gate876's diagonal degree-at-most-four polynomial calculus
+from the first derivative to arbitrary finite fiberwise Frechet order. For
+each homogeneous form it identifies the higher derivative with an explicit
+sum over injections of labelled variations into distinct slots, specializes
+orders two, three, and four, and assembles the full polynomial. These are
+fiberwise formulas only; Gate919 does not yet derive the T02 Euler formula or
+classify its kernel.
+Gate 920 adds multifield gradient-Jacobian minors depending on second
+derivatives. Their explicit J² currents have genuine Gate879 differential
+equal to the minor densities, and a direct weighted-slot calculation proves
+their Gate880 Euler expressions vanish, including the scalar Gate911
+specialization. It treats one decomposable minor at a time and does not
+classify the full second-order Euler kernel.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

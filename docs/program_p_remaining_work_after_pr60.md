@@ -643,6 +643,19 @@ Gate911. Elle somme leurs courants J² explicites, prouve que le vrai
 différentiel Gate879 est la densité sommée, annule Gate880 et expose addition,
 multiplication scalaire et plongement d'un générateur. Elle ajoute la clôture
 par combinaisons linéaires finies, pas de nouveaux générateurs multifield.
+Gate 919 étend le calcul polynomial diagonal de degré au plus quatre de Gate876
+de la dérivée première à tout ordre de Frechet fibrewise fini. Pour chaque
+forme homogène, elle identifie la dérivée supérieure à une somme explicite sur
+les injections des variations étiquetées dans des slots distincts, spécialise
+les ordres deux, trois et quatre, puis assemble le polynôme complet. Ces
+formules restent fibrewise : Gate919 ne donne pas encore la formule Euler T02
+ni la classification de son noyau.
+Gate 920 ajoute les mineurs gradient-jacobiens multifield dépendant des
+dérivées secondes. Leurs courants J² explicites ont pour vrai différentiel
+Gate879 les densités mineures, et un calcul direct des slots pondérés annule
+leur expression d'Euler Gate880, y compris dans la spécialisation scalaire de
+Gate911. Elle traite un mineur décomposable à la fois et ne classifie pas le
+noyau d'Euler complet du second ordre.
 Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
