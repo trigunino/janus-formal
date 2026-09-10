@@ -620,7 +620,12 @@ toute trivialisation mobile ponctuelle fournie et prouve la naturalité du
 canal, de tous les coefficients de jet finis, de la densité rang-un, d'Euler
 et du représentant divergence sous l'action conjuguée Gate902. La
 prolongation reste spatialement figée et n'est pas le `coordChange` T02 avec
-corrections de dérivées. Ces résultats
+corrections de dérivées. Gate 915 ferme le span réel fini des mineurs
+jacobiens multifield de Gate912 : le courant pondéré a pour vrai différentiel
+Gate879 la densité pondérée, la densité et sa divergence sont annulées par
+Gate880, et la représentation est stable par addition et multiplication
+scalaire. Elle ne classifie pas tous les lagrangiens nuls de premier ordre.
+Ces résultats
 ne classifient ni le noyau polynomial T02 non linéaire
 général ni une action BV physique covariante complète.
 

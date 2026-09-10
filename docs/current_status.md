@@ -416,6 +416,11 @@ trivialization and proves naturality of the channel, all finite jet
 coefficients, the rank-one density, Euler expression, and divergence
 representative under Gate902's conjugated action. This prolongation is still
 spatially frozen and is not the derivative-corrected T02 `coordChange`.
+Gate 915 closes the finite real span of the Gate912 multifield Jacobian
+minors: the weighted current has genuine Gate879 differential equal to the
+weighted density, both its density and divergence are killed by Gate880, and
+the representation is stable under addition and scalar multiplication. It
+does not classify every first-order null Lagrangian.
 These results cover
 neither the general nonlinear T02 polynomial kernel
 nor a covariant full physical BV action. `T06` remains open until the nontrivial polynomial Euler kernel and

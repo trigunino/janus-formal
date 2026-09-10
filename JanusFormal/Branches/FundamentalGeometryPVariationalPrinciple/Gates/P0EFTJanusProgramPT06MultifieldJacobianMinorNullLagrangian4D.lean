@@ -235,6 +235,27 @@ def programPT06MultifieldJacobianMinorCurrentComponent
   else
     0
 
+/-- Every component of the explicit Jacobian-minor current is smooth. -/
+theorem programPT06MultifieldJacobianMinorCurrentComponent_differentiable
+    (data : ProgramPT06MultifieldJacobianMinorData4D Fiber)
+    (direction : Fin 3) :
+    Differentiable Real
+      (programPT06MultifieldJacobianMinorCurrentComponent data direction) := by
+  by_cases hFirst : direction = data.firstDirection
+  · subst direction
+    simp only [programPT06MultifieldJacobianMinorCurrentComponent, if_pos]
+    exact (firstOrderAlphaValue data).differentiable.mul
+      (firstOrderBetaFirst data data.secondDirection).differentiable
+  · by_cases hSecond : direction = data.secondDirection
+    · subst direction
+      simp only [programPT06MultifieldJacobianMinorCurrentComponent,
+        hFirst, if_false, if_pos]
+      exact ((firstOrderAlphaValue data).differentiable.mul
+        (firstOrderBetaFirst data data.firstDirection).differentiable).neg
+    · simp only [programPT06MultifieldJacobianMinorCurrentComponent,
+        hFirst, hSecond, if_false]
+      fun_prop
+
 private def programPT06JacobianMinorPositiveCurrentDerivative
     (data : ProgramPT06MultifieldJacobianMinorData4D Fiber)
     (jet : FirstJet (Fiber := Fiber)) :
@@ -499,6 +520,16 @@ theorem programPT06MultifieldJacobianMinorDensityEvaluation_hasFDerivAt
   simp [programPT06JacobianMinorDensityDerivative]
   ring
 
+/-- The Jacobian-minor density is differentiable on the whole second-jet
+space. -/
+theorem programPT06MultifieldJacobianMinorDensityEvaluation_differentiable
+    (data : ProgramPT06MultifieldJacobianMinorData4D Fiber) :
+    Differentiable Real
+      (programPT06MultifieldJacobianMinorDensityEvaluation data) :=
+  fun jet =>
+    (programPT06MultifieldJacobianMinorDensityEvaluation_hasFDerivAt
+      data jet).differentiableAt
+
 private def programPT06JacobianMinorFirstPartialAtFirst
     (data : ProgramPT06MultifieldJacobianMinorData4D Fiber) :
     SecondJet (Fiber := Fiber) →L[Real] (Fiber →L[Real] Real) :=
@@ -511,7 +542,8 @@ private def programPT06JacobianMinorFirstPartialAtSecond
   (secondOrderAlphaFirst data data.firstDirection).smulRight data.beta -
     (secondOrderBetaFirst data data.firstDirection).smulRight data.alpha
 
-private theorem programPT06JacobianMinorVerticalPartialZero
+/-- The minor has no value-slot vertical derivative. -/
+theorem programPT06JacobianMinorVerticalPartialZero
     (data : ProgramPT06MultifieldJacobianMinorData4D Fiber) :
     programPT06SecondOrderLocalVerticalPartialZero
         (programPT06MultifieldJacobianMinorDensityEvaluation data) = 0 := by
@@ -616,7 +648,28 @@ private theorem programPT06JacobianMinorVerticalPartialOne_other
     secondOrderBetaFirst, secondOrderFirstProjection,
     hIndexFirst, hIndexSecond]
 
-private theorem programPT06JacobianMinorVerticalPartialTwo
+/-- Every order-one vertical partial of the minor is differentiable. -/
+theorem programPT06JacobianMinorVerticalPartialOne_differentiable
+    (data : ProgramPT06MultifieldJacobianMinorData4D Fiber)
+    (direction : Fin 3) :
+    Differentiable Real
+      (programPT06SecondOrderLocalVerticalPartialOne
+        (programPT06MultifieldJacobianMinorDensityEvaluation data)
+        direction) := by
+  by_cases hFirst : direction = data.firstDirection
+  · subst direction
+    rw [programPT06JacobianMinorVerticalPartialOne_first]
+    exact (programPT06JacobianMinorFirstPartialAtFirst data).differentiable
+  · by_cases hSecond : direction = data.secondDirection
+    · subst direction
+      rw [programPT06JacobianMinorVerticalPartialOne_second]
+      exact (programPT06JacobianMinorFirstPartialAtSecond data).differentiable
+    · rw [programPT06JacobianMinorVerticalPartialOne_other
+          data direction hFirst hSecond]
+      fun_prop
+
+/-- The first-order minor has no second-jet vertical derivative. -/
+theorem programPT06JacobianMinorVerticalPartialTwo
     (data : ProgramPT06MultifieldJacobianMinorData4D Fiber)
     (first second : Fin 3) :
     programPT06SecondOrderLocalVerticalPartialTwo
@@ -683,7 +736,8 @@ private theorem programPT06JacobianMinorFirstPartialCancellation
     secondOrderFirstProjection_totalDerivative,
     thirdOrderSecondMultiIndex_comm]
 
-private theorem programPT06JacobianMinorEulerFirstSum
+/-- The three first-total-derivative Euler contributions cancel. -/
+theorem programPT06JacobianMinorEulerFirstSum
     (data : ProgramPT06MultifieldJacobianMinorData4D Fiber)
     (jet : ThirdJet (Fiber := Fiber)) :
     (∑ direction : Fin 3,
