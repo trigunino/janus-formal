@@ -623,9 +623,12 @@ that packaging. It establishes continuity only in the jet variable at each
 fixed base point. Gate 979 proves that the actual reverse base-chart and
 forward covariant rank-two metric-frame D³ coefficient fields are locally
 `C∞` on every double metric-atlas overlap. This supplies regularity of the two
-new third-order coefficients only; joint continuity of the J³ coordinate-change
-family, the topological or smooth bundle core, section extraction and current
-descent remain open.
+new third-order coefficients. Gate 980 combines the five lower-order coefficient
+continuities with Gate 979's two D³ fields and the generic semidirect-continuity
+theorem. The restricted metric J³ continuous-linear coordinate-change family
+is continuous, and its totalized form is `ContinuousOn` every double overlap.
+A topological or smooth bundle core, section extraction and current descent
+remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

@@ -839,9 +839,13 @@ continuité dans la variable jet à point de base fixé. Gate 979 prouve que les
 champs réels de coefficients D³ de la carte de base inverse et de la transition
 de repère métrique covariante de rang deux directe sont localement `C∞` sur
 chaque recouvrement double de l'atlas métrique. Elle fournit seulement la
-régularité des deux nouveaux coefficients d'ordre trois ; la continuité jointe
-de la famille de changements de coordonnées J³, le core de bundle topologique
-ou lisse, l'extraction de sections et la descente du courant restent ouverts.
+régularité des deux nouveaux coefficients d'ordre trois. Gate 980 combine la
+continuité des cinq coefficients d'ordre inférieur avec les deux champs D³ de
+Gate 979 et le théorème générique de continuité du transport semidirect. La
+famille restreinte de changements de coordonnées métriques J³ linéaires
+continus est continue, et sa forme totalisée est `ContinuousOn` sur chaque
+recouvrement double. Le core de bundle topologique ou lisse, l'extraction de
+sections et la descente du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
