@@ -515,6 +515,19 @@ cocycle and exact truncation to the genuine derivative-corrected T02 J² chart
 change, and glues the canonical radial-current representatives for this lift.
 The lift is still selected from Gate916/902 coefficient data; it is not yet a
 geometrically derived third-jet atlas prolongation.
+Gate 946 exposes the genuine third Frechet derivative of the actual throat
+base-chart transition and proves its two adjacent trilinear symmetries from
+the existing smooth atlas. This is the required geometric base coefficient;
+the physical J³ carrier, fiber-transition derivatives, cocycle and current
+descent remain to be constructed.
+Gate 947 identifies the centered throat restriction of the actual global
+Abelian `d c` with the derivative of the actual scalar-ghost representative.
+Its gauge value and first derivative are the first- and second-derivative
+slots of that scalar ghost's J². This analytic pre-bridge remains centered,
+limited to one ordinary real-valued component and physical order one; it is
+not yet connected to the paired/graded carrier or Gate903's formal BRST slot.
+Moving-chart covariance, the nonlinear/full BV action and a T02-compatible
+scalar-ghost J³ extraction needed at order two remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal

@@ -722,6 +722,19 @@ cocycle, sa troncature exacte vers le vrai changement de carte T02 sur J² et le
 recollement des représentants du courant radial canonique sous ce transport.
 Ce prolongement reste choisi dans les données de coefficients Gates916/902 :
 il n'est pas encore dérivé d'un atlas géométrique de troisièmes jets.
+Gate 946 construit le vrai troisième dérivé de Frechet de la transition des
+cartes de base de la gorge et prouve ses deux symétries trilinéaires adjacentes
+depuis l'atlas lisse existant. C'est le coefficient géométrique de base requis,
+mais le carrier physique J³, les dérivées des transitions de fibre, leur
+cocycle et la descente du courant restent à construire.
+Gate 947 identifie la restriction centrée à la gorge du vrai `d c` abélien
+global avec la dérivée du représentant réel du fantôme scalaire. La valeur et
+la première dérivée du jet de jauge coïncident avec les slots de dérivées une
+et deux du J² scalaire. Ce prépont analytique reste centré, limité à une
+composante réelle ordinaire et à l'ordre physique un ; il n'est pas encore
+raccordé au carrier pairé/gradué ni au slot BRST formel de Gate903. La
+covariance sous cartes mobiles, l'action BV non linéaire/complète et une
+extraction J³ du fantôme compatible T02 requise à l'ordre deux restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
