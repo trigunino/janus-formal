@@ -603,7 +603,12 @@ the genuine third derivative of the covariant rank-two metric frame
 transition, proves both adjacent derivative symmetries, and proves its
 vanishing on self transitions. Gate 973 proves local `C∞` regularity of the
 reverse base-chart and forward SpinC fiber D³ coefficient fields on every
-double SpinC atlas overlap.
+double SpinC atlas overlap. Gate 974 extends the actual metric J² semidirect
+change with the genuine D³ coefficients of the reverse base-chart transition
+and the forward covariant rank-two frame transition. The resulting pointwise
+algebraic framed J³ transport truncates exactly to the existing metric J²
+transport. Its cocycle, groupoid, atlas, base-point continuity, bundle,
+section extraction and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

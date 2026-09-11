@@ -816,7 +816,13 @@ dérivée troisième de la transition de repère métrique covariante de rang de
 prouve ses deux symétries adjacentes et son annulation sur les transitions
 identiques. Gate 973 prouve la régularité locale `C∞` des champs de coefficients
 D³ de la carte de base inverse et de la transition de fibre SpinC directe sur
-chaque recouvrement double SpinC.
+chaque recouvrement double SpinC. Gate 974 prolonge le changement semidirect
+métrique J² réel par les vrais coefficients D³ de la transition de carte de
+base inverse et de la transition de repère covariante de rang deux. Le transport
+J³ encadré algébrique ponctuel obtenu se tronque exactement vers le transport
+métrique J² existant. Son cocycle, son groupoïde, son atlas, sa continuité en
+base, son bundle, son extraction de sections et sa descente du courant restent
+ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
