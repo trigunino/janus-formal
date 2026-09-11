@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationSetoid4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPActualThroatGaugeSecondOrderJetTransitionSmoothRegularity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPActualThroatGaugeCombinedFrameBaseChartSecondOrderGroupoid4D
 
 /-!
 # Third derivative of the actual throat gauge covector transition
@@ -33,6 +34,7 @@ open P0EFTJanusProgramPActualThroatGaugeZeroOrderTransitionCocycle4D
 open P0EFTJanusProgramPActualThroatGaugeChartwiseFirstOrderOverlap4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetTransitionSmoothRegularity4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetPresentationSetoid4D
+open P0EFTJanusProgramPActualThroatGaugeCombinedFrameBaseChartSecondOrderGroupoid4D
 
 attribute [local instance 1001]
   NormedAddCommGroup.toAddCommGroup AddCommGroup.toAddCommMonoid
@@ -259,6 +261,44 @@ theorem throatGaugeCovectorTargetTransitionThirdDerivativeAt_swap_second_third
   rw [hSecondThird, hThirdSecond] at hApplied
   simpa only [throatGaugeCovectorTargetTransitionThirdDerivativeAt,
     transition, coordinate] using hApplied
+
+/-- The genuine third derivative of a repeated-frame transition vanishes. -/
+@[simp]
+theorem throatGaugeCovectorTargetTransitionThirdDerivativeAt_self
+    {current : EffectiveThroat period hPeriod}
+    (presentation : GaugePresentationAt period hPeriod current)
+    (first second third : ThroatCoverCoordinates) :
+    throatGaugeCovectorTargetTransitionThirdDerivativeAt period hPeriod
+        presentation presentation first second third = 0 := by
+  let transition :=
+    throatGaugeCovectorTransitionCenteredChart period hPeriod
+      presentation.frameAnchor presentation.frameAnchor
+        presentation.chartAnchor
+  let coordinate :=
+    extChartAt throatCoverModelWithCorners presentation.chartAnchor current
+  have hFirstDerivative :
+      fderiv Real transition =ᶠ[𝓝 coordinate]
+        fun _ => (0 : CovectorTransitionFirstDerivative) := by
+    filter_upwards [
+      (throatGaugeCovectorTransitionCenteredChart_self_eventuallyEq
+        period hPeriod presentation.frameAnchor presentation.chartAnchor
+          current presentation.frame_mem presentation.chart_mem).fderiv
+            (𝕜 := Real)] with nearby hNearby
+    simpa [transition, coordinate] using hNearby
+  have hSecondDerivative :
+      fderiv Real (fderiv Real transition) =ᶠ[𝓝 coordinate]
+        fun _ => (0 : CovectorTransitionSecondDerivative) := by
+    filter_upwards [hFirstDerivative.fderiv (𝕜 := Real)]
+      with nearby hNearby
+    simpa using hNearby
+  have hThirdDerivative :
+      fderiv Real (fderiv Real (fderiv Real transition)) coordinate = 0 :=
+    (hSecondDerivative.fderiv_eq (𝕜 := Real)).trans
+      (hasFDerivAt_const (𝕜 := Real) (x := coordinate)
+        (c := (0 : CovectorTransitionSecondDerivative))).fderiv
+  simp only [throatGaugeCovectorTargetTransitionThirdDerivativeAt]
+  rw [hThirdDerivative]
+  simp
 
 end
 end P0EFTJanusProgramPActualThroatGaugeCovectorTransitionThirdDerivative4D

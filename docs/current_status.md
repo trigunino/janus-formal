@@ -543,8 +543,13 @@ with the exact five-term third-order composition law. Gate 953 constructs the
 generic 15-term third-order semidirect chain/Leibniz transport and its exact J²
 truncation. Gate 954 instantiates that transport with the actual reverse-base
 and forward-covector D³ coefficients. Its truncation is definitionally the
-existing actual J² gauge transport; the fiber cocycle, J³ groupoid and descent
-remain open.
+existing actual J² gauge transport. Gate 955 proves the generic identity and
+composition criterion for this J³ transport and packages each change as a real
+linear map. Gate 956 derives the full 15-term D³ cocycle of the actual varying
+covector transition from its overlap germ. Gate 957 combines the actual base
+and fiber cocycles to prove exact identity, composition and inverse laws for
+the throat gauge J³ transport. Quotient/vector-bundle descent and descent of
+the physical multifield current remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal

@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransport4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFramedThirdOrderJetConstantFiberBaseChange4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFramedThirdOrderJetLinearStructure4D
 
 /-!
 # Generic semidirect transport of framed third-order jets
@@ -234,6 +235,53 @@ theorem transport_toFramedSecondOrderJet
     (change.transport jet).toFramedSecondOrderJet =
       change.toFramedSecondOrderJetSemidirectChange.transport
         jet.toFramedSecondOrderJet :=
+  rfl
+
+/-- The third-order semidirect transport is linear in the source jet. -/
+def toLinearMap
+    [FiniteDimensional Real X]
+    (change : FramedThirdOrderJetSemidirectChange X V) :
+    FramedThirdOrderJet X V →ₗ[Real] FramedThirdOrderJet X V where
+  toFun := change.transport
+  map_add' left right := by
+    apply FramedThirdOrderJet.ext_components
+    · simpa only [transport_toFramedSecondOrderJet,
+        FramedThirdOrderJet.add_toFramedSecondOrderJet,
+        FramedSecondOrderJetSemidirectChange.toLinearMap_apply] using
+        change.toFramedSecondOrderJetSemidirectChange.toLinearMap.map_add
+          left.toFramedSecondOrderJet right.toFramedSecondOrderJet
+    · ext first second third
+      simp only [transport, transportThirdDerivative_apply,
+        transportThirdDerivativeFormula,
+        FramedThirdOrderJet.add_value,
+        FramedThirdOrderJet.add_firstDerivative,
+        FramedThirdOrderJet.add_secondDerivative,
+        FramedThirdOrderJet.add_thirdDerivative, add_apply, map_add]
+      abel
+  map_smul' scalar jet := by
+    apply FramedThirdOrderJet.ext_components
+    · simpa only [transport_toFramedSecondOrderJet,
+        FramedThirdOrderJet.smul_toFramedSecondOrderJet,
+        FramedSecondOrderJetSemidirectChange.toLinearMap_apply,
+        RingHom.id_apply] using
+        change.toFramedSecondOrderJetSemidirectChange.toLinearMap.map_smul
+          scalar jet.toFramedSecondOrderJet
+    · ext first second third
+      simp only [transport, transportThirdDerivative_apply,
+        transportThirdDerivativeFormula,
+        FramedThirdOrderJet.smul_value,
+        FramedThirdOrderJet.smul_firstDerivative,
+        FramedThirdOrderJet.smul_secondDerivative,
+        FramedThirdOrderJet.smul_thirdDerivative,
+        smul_apply, map_smul, RingHom.id_apply]
+      module
+
+@[simp]
+theorem toLinearMap_apply
+    [FiniteDimensional Real X]
+    (change : FramedThirdOrderJetSemidirectChange X V)
+    (jet : FramedThirdOrderJet X V) :
+    change.toLinearMap jet = change.transport jet :=
   rfl
 
 @[simp]

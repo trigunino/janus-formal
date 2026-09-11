@@ -299,6 +299,20 @@ theorem FramedThirdOrderJet.smul_thirdDerivative
     (scalar • jet).thirdDerivative = scalar • jet.thirdDerivative :=
   rfl
 
+@[simp]
+theorem FramedThirdOrderJet.add_toFramedSecondOrderJet
+    (first second : FramedThirdOrderJet Base Fiber) :
+    (first + second).toFramedSecondOrderJet =
+      first.toFramedSecondOrderJet + second.toFramedSecondOrderJet := by
+  apply FramedSecondOrderJet.ext_components <;> rfl
+
+@[simp]
+theorem FramedThirdOrderJet.smul_toFramedSecondOrderJet
+    (scalar : Real) (jet : FramedThirdOrderJet Base Fiber) :
+    (scalar • jet).toFramedSecondOrderJet =
+      scalar • jet.toFramedSecondOrderJet := by
+  apply FramedSecondOrderJet.ext_components <;> rfl
+
 end
 end P0EFTJanusProgramPFramedThirdOrderJetConstantFiberBaseChange4D
 end JanusFormal

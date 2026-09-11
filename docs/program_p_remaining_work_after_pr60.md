@@ -750,8 +750,14 @@ avec la loi de composition exacte à cinq termes. Gate 953 construit le
 transport semidirect générique d'ordre trois par la formule chaîne/Leibniz à
 quinze termes et sa troncature J² exacte. Gate 954 l'instancie avec les vrais
 coefficients D³ de base inverse et de fibre covectorielle directe. Sa
-troncature est définitionnellement le transport de jauge J² existant ; le
-cocycle de fibre, le groupoïde J³ et la descente restent ouverts.
+troncature est définitionnellement le transport de jauge J² existant. Gate 955
+prouve le critère générique d'identité et de composition de ce transport J³ et
+le conditionne en application linéaire réelle. Gate 956 dérive du germe de
+recouvrement le cocycle D³ complet à quinze termes de la transition
+covectorielle mobile réelle. Gate 957 assemble les cocycles réels de base et
+de fibre et prouve les lois exactes d'identité, de composition et d'inverse du
+transport de jauge J³. La descente quotient/bundle et celle du courant physique
+multichamp restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
