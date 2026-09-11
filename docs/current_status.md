@@ -613,8 +613,12 @@ the actual covariant rank-two metric frame transition on valid triple
 overlaps. Gate 976 combines the reverse-base and forward metric-frame
 coefficient laws to prove exact identity, composition and both inverse laws
 for the pointwise framed metric J³ transport, including its real-linear-map
-packaging. Totalized coordinate changes, base-point continuity, a bundle core,
-section extraction and current descent remain open.
+packaging. Gate 977 installs this transport on every double overlap of the
+existing metric frame/chart cover and totalizes it by the identity away from
+the overlap. It proves exact identity, composition and both inverse laws,
+together with exact pointwise truncation to the metric J² coordinate change.
+This remains algebraic coordinate-change data; continuity, smoothness, a
+bundle core, section extraction and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

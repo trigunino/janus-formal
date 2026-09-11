@@ -827,9 +827,13 @@ covariante de rang deux sur les recouvrements triples valides. Gate 976 combine
 les lois des coefficients de carte de base inverse et de repère métrique direct
 pour prouver l'identité, la composition et les deux lois d'inverse exactes du
 transport métrique J³ encadré ponctuel, y compris son conditionnement en
-application réelle linéaire. Les changements de coordonnées totalisés, la
-continuité en base, le core de bundle, l'extraction de sections et la descente
-du courant restent ouverts.
+application réelle linéaire. Gate 977 installe ce transport sur chaque
+recouvrement double de la couverture métrique repère/carte existante et le
+totalise par l'identité hors recouvrement. Elle prouve l'identité, la
+composition et les deux lois d'inverse exactes, ainsi que la troncature
+ponctuelle exacte vers le changement de coordonnées métrique J². Ces données
+restent algébriques ; la continuité, la lissité, le core de bundle,
+l'extraction de sections et la descente du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
