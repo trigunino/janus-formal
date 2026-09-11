@@ -610,9 +610,11 @@ algebraic framed J³ transport truncates exactly to the existing metric J²
 transport. Gate 975 isolates a reusable third-order continuous-linear-map
 Leibniz rule and applies it to derive the complete fifteen-term D³ cocycle for
 the actual covariant rank-two metric frame transition on valid triple
-overlaps. This remains coefficient-level descent; the metric J³ transport
-groupoid, coordinate-change atlas, continuity, bundle, section extraction and
-current descent remain open.
+overlaps. Gate 976 combines the reverse-base and forward metric-frame
+coefficient laws to prove exact identity, composition and both inverse laws
+for the pointwise framed metric J³ transport, including its real-linear-map
+packaging. Totalized coordinate changes, base-point continuity, a bundle core,
+section extraction and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

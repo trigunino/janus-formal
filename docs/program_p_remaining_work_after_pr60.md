@@ -823,10 +823,13 @@ J³ encadré algébrique ponctuel obtenu se tronque exactement vers le transport
 métrique J² existant. Gate 975 isole une règle de Leibniz générique au troisième
 ordre pour les applications linéaires continues et l'applique pour dériver le
 cocycle D³ complet à quinze termes de la vraie transition de repère métrique
-covariante de rang deux sur les recouvrements triples valides. Cette descente
-reste au niveau du coefficient ; le groupoïde du transport métrique J³,
-l'atlas de changements de coordonnées, la continuité, le bundle, l'extraction
-de sections et la descente du courant restent ouverts.
+covariante de rang deux sur les recouvrements triples valides. Gate 976 combine
+les lois des coefficients de carte de base inverse et de repère métrique direct
+pour prouver l'identité, la composition et les deux lois d'inverse exactes du
+transport métrique J³ encadré ponctuel, y compris son conditionnement en
+application réelle linéaire. Les changements de coordonnées totalisés, la
+continuité en base, le core de bundle, l'extraction de sections et la descente
+du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
