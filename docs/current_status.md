@@ -510,6 +510,11 @@ derivative-corrected T02 chart change. It does not yet glue the J³ current.
 Gate 944 constructs a linear reduced GHY-to-joint trace on every nonempty
 finite face carrier and proves its integrated trace law. This trace distributes
 the integrated GHY value; it is not a local codimension-two restriction.
+Gate 945 lifts Gate916's compatible moving-frame action to J³, proves its
+cocycle and exact truncation to the genuine derivative-corrected T02 J² chart
+change, and glues the canonical radial-current representatives for this lift.
+The lift is still selected from Gate916/902 coefficient data; it is not yet a
+geometrically derived third-jet atlas prolongation.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal

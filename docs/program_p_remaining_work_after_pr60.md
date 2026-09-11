@@ -717,6 +717,11 @@ Gate 944 construit une trace linéaire GHY-vers-joints sur tout carrier fini
 non vide et prouve sa loi intégrée. Elle répartit la valeur GHY déjà intégrée
 et ne remplace donc pas une restriction locale géométrique de codimension
 deux. L'incidence bulk-vers-faces nulles reste sans habitant géométrique.
+Gate 945 prolonge à J³ l'action mobile compatible fournie à Gate916, prouve son
+cocycle, sa troncature exacte vers le vrai changement de carte T02 sur J² et le
+recollement des représentants du courant radial canonique sous ce transport.
+Ce prolongement reste choisi dans les données de coefficients Gates916/902 :
+il n'est pas encore dérivé d'un atlas géométrique de troisièmes jets.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
