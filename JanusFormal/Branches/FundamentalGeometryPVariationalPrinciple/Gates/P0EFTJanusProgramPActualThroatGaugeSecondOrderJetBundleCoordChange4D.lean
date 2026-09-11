@@ -228,7 +228,7 @@ theorem throatGaugeSecondOrderJetBundleCoordChange_inverse_comp
 
 /-! ## Continuity on overlaps -/
 
-private theorem bundleChangeOnOverlap_baseFirst_continuous
+theorem bundleChangeOnOverlap_baseFirst_continuous
     (first second : BundleIndex period hPeriod) :
     Continuous (fun point :
       ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
@@ -255,7 +255,7 @@ private theorem bundleChangeOnOverlap_baseFirst_continuous
   simpa [throatGaugeSecondOrderJetBundleChangeOnOverlap,
     zeroThroatGaugeSecondOrderJetPresentationAt] using hContinuous
 
-private theorem bundleChangeOnOverlap_baseSecond_continuous
+theorem bundleChangeOnOverlap_baseSecond_continuous
     (first second : BundleIndex period hPeriod) :
     Continuous (fun point :
       ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
@@ -285,7 +285,7 @@ private theorem bundleChangeOnOverlap_baseSecond_continuous
   simpa [throatGaugeSecondOrderJetBundleChangeOnOverlap,
     zeroThroatGaugeSecondOrderJetPresentationAt] using hContinuous
 
-private theorem bundleChangeOnOverlap_fiberValue_continuous
+theorem bundleChangeOnOverlap_fiberValue_continuous
     (first second : BundleIndex period hPeriod) :
     Continuous (fun point :
       ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
@@ -316,7 +316,7 @@ private theorem bundleChangeOnOverlap_fiberValue_continuous
   convert hEffective.comp continuousAt_subtype_val using 1
   rfl
 
-private theorem bundleChangeOnOverlap_fiberFirst_continuous
+theorem bundleChangeOnOverlap_fiberFirst_continuous
     (first second : BundleIndex period hPeriod) :
     Continuous (fun point :
       ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
@@ -346,7 +346,7 @@ private theorem bundleChangeOnOverlap_fiberFirst_continuous
   simpa [throatGaugeSecondOrderJetBundleChangeOnOverlap,
     zeroThroatGaugeSecondOrderJetPresentationAt] using hContinuous
 
-private theorem bundleChangeOnOverlap_fiberSecond_continuous
+theorem bundleChangeOnOverlap_fiberSecond_continuous
     (first second : BundleIndex period hPeriod) :
     Continuous (fun point :
       ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦

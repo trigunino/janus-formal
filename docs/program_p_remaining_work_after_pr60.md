@@ -792,23 +792,35 @@ applique ces résultats à l'atlas de jauge réel : la famille restreinte au
 recouvrement est continue et le changement de coordonnées J³ totalisé est
 `ContinuousOn` sur chaque recouvrement double. Gate 966 utilise cette
 continuité et les lois exactes du groupoïde pour construire le
-`VectorBundleCore` topologique J³ de jauge sur l'atlas existant. Elle ne
-construit pas de bundle lisse. Gate 967 construit les changements de
-coordonnées algébriques du produit J³ LL réel pour les composantes métrique,
-mesure et champ LL, prouve leurs lois d'identité et de composition, puis leur
-troncature exacte composante par composante vers le changement de coordonnées
-du core produit LL J² existant. Elle ne prouve ni continuité ni core de bundle
-LL J³.
+`VectorBundleCore` topologique J³ de jauge sur l'atlas existant. Ce core sert de
+support à la mise à niveau lisse de Gate 971. Gate 967 sépare de la construction
+LL la couche J³ réutilisable à fibre constante : elle exprime la règle de chaîne
+générique en applications réelles linéaires, la spécialise
+aux changements de coordonnées totalisés des vraies cartes inverses de gorge,
+prouve identité et composition sur les recouvrements, puis la troncature exacte
+vers le changement J² à fibre constante existant. Gate 968 emploie cette couche
+pour construire les changements de coordonnées algébriques du produit J³ LL
+réel pour les composantes métrique, mesure et champ LL, prouve leurs lois
+d'identité et de composition, puis leur troncature exacte composante par
+composante vers le changement de coordonnées du core produit LL J² existant.
+Elle ne prouve ni continuité, ni core de bundle LL J³, ni extraction des jets
+troisièmes des sections LL. Gate 969 prouve que, pour des modèles de base et de
+fibre de dimension finie, une famille `C^n` des sept coefficients génériques
+semidirects induit une famille `C^n` de transports J³ encadrés linéaires
+continus. Gate 970 applique ce résultat et la régularité D³ des coefficients
+réels : le transport J³ de jauge totalisé et son changement de coordonnées
+linéaire continu sont `C∞` sur chaque recouvrement double. Gate 971 relève le
+core topologique de Gate 966 en core `IsContMDiff` et prouve que sa famille de
+fibres associée forme un `ContMDiffVectorBundle ∞`.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** rendre lisse le bundle J³ de jauge ; contrôler à D³ les
-transitions métriques et SpinC ; construire l'atlas géométrique physique
-complet et la descente du courant multichamp ; étendre le pont intégré
-compatible à Stokes au-delà du secteur scalaire normal, avec l'incidence
-bulk-to-null encore manquante ; puis construire le BV/BRST physique non
-trivial sur tous les champs physiques.
+**Reste :** contrôler à D³ les transitions métriques et SpinC ; construire
+l'atlas géométrique physique complet et la descente du courant multichamp ;
+étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
+avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
+physique non trivial sur tous les champs physiques.
 `T06` reste ouverte ; le compteur terminal officiel reste `5/14`.
 
 ### T07 — `anomalyConstraintsApplied`

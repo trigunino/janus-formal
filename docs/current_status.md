@@ -581,19 +581,31 @@ fiber coefficient fields. Gate 965 applies these results to the actual gauge
 atlas: the restricted overlap family is continuous and the totalized J³
 coordinate change is `ContinuousOn` every double overlap. Gate 966 uses this
 continuity and the exact groupoid laws to build the topological gauge J³
-`VectorBundleCore` over the existing cover. It does not construct a smooth
-vector bundle. Gate 967 builds the algebraic actual LL J³ product coordinate
-changes for the metric, measure and LL-field components, proves their identity
-and composition laws, and proves exact componentwise truncation to the existing
-LL J² product core coordinate change. It does not prove continuity or build an
-LL J³ bundle core.
+`VectorBundleCore` over the existing cover. Gate 967 separates the reusable
+constant-fiber J³ layer from the LL construction: it packages the generic
+constant-fiber chain rule as real-linear maps, specializes it to totalized
+actual reverse throat-chart coordinate changes, proves identity and
+composition on overlaps, and proves exact truncation to the existing
+constant-fiber J² coordinate change. Gate 968 uses this layer to build the
+algebraic actual LL J³ product coordinate changes for the metric, measure and
+LL-field components, proves their identity and composition laws, and proves
+exact componentwise truncation to the existing LL J² product core coordinate
+change. It does not prove continuity, construct an LL J³ bundle core, or
+extract third jets of the LL sections. Gate 969 proves that, on
+finite-dimensional base and fiber models, a `C^n` family of the seven generic
+semidirect coefficients induces a `C^n` family of continuous linear framed J³
+transports. Gate 970 applies that theorem and the actual D³ coefficient
+regularity: both the totalized gauge J³ transport and its continuous-linear
+coordinate change are `C∞` on every double overlap. Gate 971 upgrades the
+topological core of Gate 966 to an `IsContMDiff` core and proves that its
+associated fiber family is a `ContMDiffVectorBundle ∞`.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-gauge J³ bundle is made smooth; the metric and SpinC transitions are controlled
-through D³; the complete physical geometric atlas and multifield-current
-descent are constructed; and the nonlinear physical BV/BRST action is built.
+metric and SpinC transitions are controlled through D³; the complete physical
+geometric atlas and multifield-current descent are constructed; and the
+nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
 
 Given a

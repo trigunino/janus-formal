@@ -10,20 +10,16 @@ continuous family of continuous linear maps on framed third jets.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPFramedThirdOrderJetSemidirectTransportContinuity4D
-
-set_option autoImplicit false
-set_option synthInstance.maxHeartbeats 400000
-
-noncomputable section
 
 open P0EFTJanusProgramPPhysicalSecondOrderJetCarrier4D
-open P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransport4D
 open P0EFTJanusProgramPFramedThirdOrderJetConstantFiberBaseChange4D
 open P0EFTJanusProgramPFramedThirdOrderJetSemidirectTransport4D
 
-attribute [local instance 1001]
-  NormedAddCommGroup.toAddCommGroup AddCommGroup.toAddCommMonoid
+namespace P0EFTJanusProgramPFramedThirdOrderJetSemidirectTransport4D.FramedThirdOrderJetSemidirectChange
+
+set_option autoImplicit false
+
+noncomputable section
 
 variable
     {X V : Type*}
@@ -32,18 +28,32 @@ variable
     [FiniteDimensional Real X] [FiniteDimensional Real V]
 
 /-- Continuous-linear packaging of third-order semidirect transport. -/
-def framedThirdOrderJetSemidirectContinuousLinearMap
+def toContinuousLinearMap
     (change : FramedThirdOrderJetSemidirectChange X V) :
     FramedThirdOrderJet X V →L[Real] FramedThirdOrderJet X V :=
   LinearMap.toContinuousLinearMap change.toLinearMap
 
 @[simp]
-theorem framedThirdOrderJetSemidirectContinuousLinearMap_apply
+theorem toContinuousLinearMap_apply
     (change : FramedThirdOrderJetSemidirectChange X V)
     (jet : FramedThirdOrderJet X V) :
-    framedThirdOrderJetSemidirectContinuousLinearMap change jet =
-      change.transport jet :=
+    change.toContinuousLinearMap jet = change.transport jet :=
   rfl
+
+end
+end P0EFTJanusProgramPFramedThirdOrderJetSemidirectTransport4D.FramedThirdOrderJetSemidirectChange
+
+namespace P0EFTJanusProgramPFramedThirdOrderJetSemidirectTransportContinuity4D
+
+set_option autoImplicit false
+set_option synthInstance.maxHeartbeats 400000
+
+noncomputable section
+
+open P0EFTJanusProgramPFramedSecondOrderJetSemidirectTransport4D
+
+attribute [local instance 1001]
+  NormedAddCommGroup.toAddCommGroup AddCommGroup.toAddCommMonoid
 
 variable
     {Parameter X V : Type*}
@@ -140,7 +150,7 @@ theorem continuous_semidirectTransport
     (hFiberSecond : Continuous (fun point ↦ (change point).fiberSecond))
     (hFiberThird : Continuous (fun point ↦ (change point).fiberThird)) :
     Continuous (fun point ↦
-      framedThirdOrderJetSemidirectContinuousLinearMap (change point)) := by
+      (change point).toContinuousLinearMap) := by
   rw [continuous_clm_apply]
   intro jet
   have hLowerMap : Continuous (fun point ↦
@@ -149,17 +159,15 @@ theorem continuous_semidirectTransport
       (fun point ↦ (change point).toFramedSecondOrderJetSemidirectChange)
       hBaseFirst hBaseSecond hFiberValue hFiberFirst hFiberSecond
   have hLowerJet : Continuous (fun point ↦
-      (framedThirdOrderJetSemidirectContinuousLinearMap
-        (change point) jet).toFramedSecondOrderJet) := by
-    simpa only [framedThirdOrderJetSemidirectContinuousLinearMap_apply,
+      ((change point).toContinuousLinearMap jet).toFramedSecondOrderJet) := by
+    simpa only [FramedThirdOrderJetSemidirectChange.toContinuousLinearMap_apply,
       FramedThirdOrderJetSemidirectChange.transport_toFramedSecondOrderJet,
       FramedSecondOrderJetSemidirectChange.toContinuousLinearMap_apply] using
       hLowerMap.clm_apply
         (continuous_const : Continuous
           (fun _ : Parameter ↦ jet.toFramedSecondOrderJet))
   have hThirdDerivative : Continuous (fun point ↦
-      (framedThirdOrderJetSemidirectContinuousLinearMap
-        (change point) jet).thirdDerivative) := by
+      ((change point).toContinuousLinearMap jet).thirdDerivative) := by
     rw [continuous_clm_apply]
     intro first
     rw [continuous_clm_apply]
@@ -472,33 +480,33 @@ theorem continuous_semidirectTransport
     framedSecondOrderJetLinearIsometryEquivSymmetricSubmodule X V
   have hLowerSubtype : Continuous (fun point ↦
       componentEquiv
-        (framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).toFramedSecondOrderJet) :=
+        ((change point).toContinuousLinearMap jet).toFramedSecondOrderJet) :=
     componentEquiv.continuous.comp hLowerJet
   have hLowerComponents : Continuous (fun point ↦
       (componentEquiv
-        (framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).toFramedSecondOrderJet).1) :=
+        ((change point).toContinuousLinearMap jet).toFramedSecondOrderJet).1) :=
     continuous_subtype_val.comp hLowerSubtype
   have hValue : Continuous (fun point ↦
-      (framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).value) := by
+      ((change point).toContinuousLinearMap jet).value) := by
     convert hLowerComponents.fst using 1
     funext point
     rfl
   have hFirstDerivative : Continuous (fun point ↦
-      (framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).firstDerivative) := by
+      ((change point).toContinuousLinearMap jet).firstDerivative) := by
     convert hLowerComponents.snd.fst using 1
     funext point
     rfl
   have hSecondDerivative : Continuous (fun point ↦
-      (framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).secondDerivative) := by
+      ((change point).toContinuousLinearMap jet).secondDerivative) := by
     convert hLowerComponents.snd.snd using 1
     funext point
     rfl
   apply continuous_induced_rng.mpr
   change Continuous (fun point ↦
-    ((framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).value,
-      (framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).firstDerivative,
-      (framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).secondDerivative,
-      (framedThirdOrderJetSemidirectContinuousLinearMap (change point) jet).thirdDerivative))
+    (((change point).toContinuousLinearMap jet).value,
+      ((change point).toContinuousLinearMap jet).firstDerivative,
+      ((change point).toContinuousLinearMap jet).secondDerivative,
+      ((change point).toContinuousLinearMap jet).thirdDerivative))
   exact hValue.prodMk
     (hFirstDerivative.prodMk (hSecondDerivative.prodMk hThirdDerivative))
 

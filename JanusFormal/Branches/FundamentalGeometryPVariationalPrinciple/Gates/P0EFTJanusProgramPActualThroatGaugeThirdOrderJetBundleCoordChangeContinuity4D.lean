@@ -37,6 +37,7 @@ open P0EFTJanusProgramPActualThroatGaugeZeroOrderOverlapDataSmoothness4D
 open P0EFTJanusProgramPActualThroatGaugeZeroOrderTransitionCocycle4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetSemidirectTransport4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetTransitionSmoothRegularity4D
+open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChange4D
 open P0EFTJanusProgramPActualThroatConstantFiberThirdOrderJetBaseChange4D
 open P0EFTJanusProgramPActualThroatGaugeCovectorTransitionThirdDerivative4D
 open P0EFTJanusProgramPActualThroatGaugeThirdOrderJetSemidirectTransport4D
@@ -138,27 +139,13 @@ private theorem bundleChangeOnOverlap_baseFirst_continuous
       ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
         (throatGaugeThirdOrderJetBundleChangeOnOverlap period hPeriod
           first second point).baseFirst) := by
-  have hContinuous : Continuous (fun point :
-      ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
-        fderiv Real
-          (throatGaugeBaseChartTransition period hPeriod second.2 first.2)
-          (extChartAt throatCoverModelWithCorners second.2 point)) := by
-    apply continuous_iff_continuousAt.mpr
-    intro point
-    have hEffective : ContinuousAt (fun current :
-        EffectiveThroat period hPeriod ↦
-          fderiv Real
-            (throatGaugeBaseChartTransition period hPeriod second.2 first.2)
-            (extChartAt throatCoverModelWithCorners second.2 current)) point :=
-      (throatGaugeBaseChartTransition_fderiv_contDiffAt_infty period hPeriod
-        second.2 first.2 point point.property.2.2
-          point.property.1.2).continuousAt.comp
-        (continuousAt_extChartAt' point.property.2.2)
-    convert hEffective.comp continuousAt_subtype_val using 1
-    rfl
-  simpa [throatGaugeThirdOrderJetBundleChangeOnOverlap,
-    throatGaugeThirdOrderJetSemidirectChangeAt,
-    zeroThroatGaugeSecondOrderJetPresentationAt] using hContinuous
+  change Continuous (fun point :
+      ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
+        (throatGaugeSecondOrderJetBundleChangeOnOverlap period hPeriod
+          first second point).baseFirst)
+  exact
+    P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChange4D.bundleChangeOnOverlap_baseFirst_continuous
+      period hPeriod first second
 
 private theorem bundleChangeOnOverlap_baseSecond_continuous
     (first second : BundleIndex period hPeriod) :
@@ -166,30 +153,13 @@ private theorem bundleChangeOnOverlap_baseSecond_continuous
       ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
         (throatGaugeThirdOrderJetBundleChangeOnOverlap period hPeriod
           first second point).baseSecond) := by
-  have hContinuous : Continuous (fun point :
-      ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
-        fderiv Real
-          (fderiv Real
-            (throatGaugeBaseChartTransition period hPeriod second.2 first.2))
-          (extChartAt throatCoverModelWithCorners second.2 point)) := by
-    apply continuous_iff_continuousAt.mpr
-    intro point
-    have hEffective : ContinuousAt (fun current :
-        EffectiveThroat period hPeriod ↦
-          fderiv Real
-            (fderiv Real
-              (throatGaugeBaseChartTransition period hPeriod
-                second.2 first.2))
-            (extChartAt throatCoverModelWithCorners second.2 current)) point :=
-      (throatGaugeBaseChartTransition_secondFDeriv_contDiffAt_infty
-        period hPeriod second.2 first.2 point point.property.2.2
-          point.property.1.2).continuousAt.comp
-        (continuousAt_extChartAt' point.property.2.2)
-    convert hEffective.comp continuousAt_subtype_val using 1
-    rfl
-  simpa [throatGaugeThirdOrderJetBundleChangeOnOverlap,
-    throatGaugeThirdOrderJetSemidirectChangeAt,
-    zeroThroatGaugeSecondOrderJetPresentationAt] using hContinuous
+  change Continuous (fun point :
+      ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
+        (throatGaugeSecondOrderJetBundleChangeOnOverlap period hPeriod
+          first second point).baseSecond)
+  exact
+    P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChange4D.bundleChangeOnOverlap_baseSecond_continuous
+      period hPeriod first second
 
 private theorem bundleChangeOnOverlap_baseThird_continuous
     (first second : BundleIndex period hPeriod) :
@@ -232,30 +202,13 @@ private theorem bundleChangeOnOverlap_fiberValue_continuous
       ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
         (throatGaugeThirdOrderJetBundleChangeOnOverlap period hPeriod
           first second point).fiberValue) := by
-  apply continuous_iff_continuousAt.mpr
-  intro point
-  have hOverlap :
-      (trivializationAt ThroatCoverCoordinates
-          (ThroatTangentFiber period hPeriod) first.1).baseSet ∩
-        (trivializationAt ThroatCoverCoordinates
-          (ThroatTangentFiber period hPeriod) second.1).baseSet ∈
-        𝓝 (point : EffectiveThroat period hPeriod) :=
-    ((trivializationAt ThroatCoverCoordinates
-        (ThroatTangentFiber period hPeriod) first.1).open_baseSet.inter
-      (trivializationAt ThroatCoverCoordinates
-        (ThroatTangentFiber period hPeriod) second.1).open_baseSet).mem_nhds
-          ⟨point.property.1.1, point.property.2.1⟩
-  have hEffective :=
-    ((throatGaugeCovectorTrivializationTransitionAt_contMDiffOn
-      period hPeriod first.1 second.1).contMDiffAt hOverlap).continuousAt
-  change ContinuousAt (fun nearby :
-      ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
-        (throatGaugeCovectorTrivializationTransitionAt period hPeriod
-          first.1 second.1 nearby :
-            FramedCovector ThroatCoverCoordinates →L[Real]
-              FramedCovector ThroatCoverCoordinates)) point
-  convert hEffective.comp continuousAt_subtype_val using 1
-  rfl
+  change Continuous (fun point :
+      ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
+        (throatGaugeSecondOrderJetBundleChangeOnOverlap period hPeriod
+          first second point).fiberValue)
+  exact
+    P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChange4D.bundleChangeOnOverlap_fiberValue_continuous
+      period hPeriod first second
 
 private theorem bundleChangeOnOverlap_fiberFirst_continuous
     (first second : BundleIndex period hPeriod) :
@@ -263,30 +216,13 @@ private theorem bundleChangeOnOverlap_fiberFirst_continuous
       ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
         (throatGaugeThirdOrderJetBundleChangeOnOverlap period hPeriod
           first second point).fiberFirst) := by
-  have hContinuous : Continuous (fun point :
-      ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
-        fderiv Real
-          (throatGaugeCovectorTransitionCenteredChart period hPeriod
-            first.1 second.1 second.2)
-          (extChartAt throatCoverModelWithCorners second.2 point)) := by
-    apply continuous_iff_continuousAt.mpr
-    intro point
-    have hEffective : ContinuousAt (fun current :
-        EffectiveThroat period hPeriod ↦
-          fderiv Real
-            (throatGaugeCovectorTransitionCenteredChart period hPeriod
-              first.1 second.1 second.2)
-            (extChartAt throatCoverModelWithCorners second.2 current)) point :=
-      (throatGaugeCovectorTransitionCenteredChart_fderiv_contDiffAt_infty
-        period hPeriod first.1 second.1 second.2 point
-          ⟨point.property.1.1, point.property.2.1⟩
-          point.property.2.2).continuousAt.comp
-        (continuousAt_extChartAt' point.property.2.2)
-    convert hEffective.comp continuousAt_subtype_val using 1
-    rfl
-  simpa [throatGaugeThirdOrderJetBundleChangeOnOverlap,
-    throatGaugeThirdOrderJetSemidirectChangeAt,
-    zeroThroatGaugeSecondOrderJetPresentationAt] using hContinuous
+  change Continuous (fun point :
+      ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
+        (throatGaugeSecondOrderJetBundleChangeOnOverlap period hPeriod
+          first second point).fiberFirst)
+  exact
+    P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChange4D.bundleChangeOnOverlap_fiberFirst_continuous
+      period hPeriod first second
 
 private theorem bundleChangeOnOverlap_fiberSecond_continuous
     (first second : BundleIndex period hPeriod) :
@@ -294,33 +230,13 @@ private theorem bundleChangeOnOverlap_fiberSecond_continuous
       ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
         (throatGaugeThirdOrderJetBundleChangeOnOverlap period hPeriod
           first second point).fiberSecond) := by
-  have hContinuous : Continuous (fun point :
-      ThroatGaugeThirdOrderJetBundleOverlap period hPeriod first second ↦
-        fderiv Real
-          (fderiv Real
-            (throatGaugeCovectorTransitionCenteredChart period hPeriod
-              first.1 second.1 second.2))
-          (extChartAt throatCoverModelWithCorners second.2 point)) := by
-    apply continuous_iff_continuousAt.mpr
-    intro point
-    have hEffective : ContinuousAt (fun current :
-        EffectiveThroat period hPeriod ↦
-          fderiv Real
-            (fderiv Real
-              (throatGaugeCovectorTransitionCenteredChart period hPeriod
-                first.1 second.1 second.2))
-            (extChartAt throatCoverModelWithCorners second.2 current)) point :=
-      (throatGaugeCovectorTransitionCenteredChart_secondFDeriv_contDiffAt_infty
-        period hPeriod first.1 second.1 second.2 point
-          ⟨point.property.1.1, point.property.2.1⟩
-          point.property.2.2).continuousAt.comp
-        (continuousAt_extChartAt' point.property.2.2)
-    convert hEffective.comp continuousAt_subtype_val using 1
-    rfl
-  simpa [throatGaugeThirdOrderJetBundleChangeOnOverlap,
-    throatGaugeThirdOrderJetSemidirectChangeAt,
-    throatGaugeCovectorTargetTransitionSecondDerivativeAt,
-    zeroThroatGaugeSecondOrderJetPresentationAt] using hContinuous
+  change Continuous (fun point :
+      ThroatGaugeSecondOrderJetBundleOverlap period hPeriod first second ↦
+        (throatGaugeSecondOrderJetBundleChangeOnOverlap period hPeriod
+          first second point).fiberSecond)
+  exact
+    P0EFTJanusProgramPActualThroatGaugeSecondOrderJetBundleCoordChange4D.bundleChangeOnOverlap_fiberSecond_continuous
+      period hPeriod first second
 
 private theorem bundleChangeOnOverlap_fiberThird_continuous
     (first second : BundleIndex period hPeriod) :
