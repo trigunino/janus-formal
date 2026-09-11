@@ -617,8 +617,11 @@ packaging. Gate 977 installs this transport on every double overlap of the
 existing metric frame/chart cover and totalizes it by the identity away from
 the overlap. It proves exact identity, composition and both inverse laws,
 together with exact pointwise truncation to the metric J² coordinate change.
-This remains algebraic coordinate-change data; continuity, smoothness, a
-bundle core, section extraction and current descent remain open.
+Gate 978 packages every metric J³ coordinate map as a continuous linear map
+and lifts identity, composition, both inverse laws and exact J² truncation to
+that packaging. It establishes continuity only in the jet variable at each
+fixed base point; joint continuity on overlaps, a topological or smooth bundle
+core, section extraction and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
