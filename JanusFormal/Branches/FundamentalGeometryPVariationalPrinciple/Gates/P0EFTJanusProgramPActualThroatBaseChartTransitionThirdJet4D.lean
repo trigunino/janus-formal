@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPActualThroatGaugeSecondOrderJetTransitionSmoothRegularity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionSecondOrderGroupoid4D
 
 /-!
 # Third derivative of the actual throat base-chart transition
@@ -26,6 +27,7 @@ open P0EFTJanusMappingTorusSmoothAtlasFrontier
 open P0EFTJanusMappingTorusSmoothQuotientManifold
 open P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionGerm4D
 open P0EFTJanusProgramPActualThroatGaugeSecondOrderJetTransitionSmoothRegularity4D
+open P0EFTJanusProgramPActualThroatGaugeBaseChartTransitionSecondOrderGroupoid4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -201,6 +203,44 @@ theorem throatGaugeBaseChartTransitionThirdDerivativeAt_swap_second_third
   rw [hSecondThird, hThirdSecond] at hApplied
   simpa only [throatGaugeBaseChartTransitionThirdDerivativeAt,
     transition, coordinate] using hApplied
+
+/-- The genuine third derivative of a base-chart self-transition vanishes. -/
+@[simp]
+theorem throatGaugeBaseChartTransitionThirdDerivativeAt_self
+    (center current : EffectiveThroat period hPeriod)
+    (hCenter : current ∈
+      (extChartAt throatCoverModelWithCorners center).source)
+    (first second third : ThroatCoverCoordinates) :
+    throatGaugeBaseChartTransitionThirdDerivativeAt period hPeriod
+        center center current first second third = 0 := by
+  let transition :=
+    throatGaugeBaseChartTransition period hPeriod center center
+  let coordinate :=
+    extChartAt throatCoverModelWithCorners center current
+  have hFirstDerivative :
+      fderiv Real transition =ᶠ[𝓝 coordinate]
+        fun _ => ContinuousLinearMap.id Real ThroatCoverCoordinates := by
+    filter_upwards [
+      (throatGaugeBaseChartTransition_self_eventuallyEq period hPeriod
+        center current hCenter).fderiv (𝕜 := Real)] with nearby hNearby
+    simpa [transition, coordinate] using hNearby
+  have hSecondDerivative :
+      fderiv Real (fderiv Real transition) =ᶠ[𝓝 coordinate]
+        fun _ =>
+          (0 : ThroatCoverCoordinates →L[Real]
+            ThroatCoverCoordinates →L[Real] ThroatCoverCoordinates) := by
+    filter_upwards [hFirstDerivative.fderiv (𝕜 := Real)]
+      with nearby hNearby
+    simpa using hNearby
+  have hThirdDerivative :
+      fderiv Real (fderiv Real (fderiv Real transition)) coordinate = 0 :=
+    (hSecondDerivative.fderiv_eq (𝕜 := Real)).trans
+      (hasFDerivAt_const (𝕜 := Real) (x := coordinate)
+        (c := (0 : ThroatCoverCoordinates →L[Real]
+          ThroatCoverCoordinates →L[Real] ThroatCoverCoordinates))).fderiv
+  simp only [throatGaugeBaseChartTransitionThirdDerivativeAt]
+  rw [hThirdDerivative]
+  simp
 
 end
 end P0EFTJanusProgramPActualThroatBaseChartTransitionThirdJet4D

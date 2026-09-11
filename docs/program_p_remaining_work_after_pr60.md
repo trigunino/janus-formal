@@ -735,6 +735,23 @@ composante réelle ordinaire et à l'ordre physique un ; il n'est pas encore
 raccordé au carrier pairé/gradué ni au slot BRST formel de Gate903. La
 covariance sous cartes mobiles, l'action BV non linéaire/complète et une
 extraction J³ du fantôme compatible T02 requise à l'ordre deux restent ouverts.
+Gate 948 définit un carrier J³ encadré symétrique et la formule exacte à cinq
+termes de son changement de base à fibre constante, avec troncature J²,
+identité et composition conditionnelle. Il s'agit encore d'une construction
+générique à fibre fixe. Gate 949 l'instancie avec les vrais coefficients de la
+transition inverse des cartes de gorge jusqu'à D³, puis prouve la troncature
+J² exacte et l'identité complète des auto-transitions.
+Gate 950 munit ce carrier J³ de sa structure vectorielle réelle composante par
+composante, sans revendiquer de structure normée ou complète. Gate 951 expose
+le vrai coefficient D³ de la transition directe des repères covectoriels de
+gorge et prouve ses deux symétries adjacentes depuis la régularité lisse.
+Gate 952 dérive du germe de transition le vrai cocycle D³ des cartes de base,
+avec la loi de composition exacte à cinq termes. Gate 953 construit le
+transport semidirect générique d'ordre trois par la formule chaîne/Leibniz à
+quinze termes et sa troncature J² exacte. Gate 954 l'instancie avec les vrais
+coefficients D³ de base inverse et de fibre covectorielle directe. Sa
+troncature est définitionnellement le transport de jauge J² existant ; le
+cocycle de fibre, le groupoïde J³ et la descente restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.

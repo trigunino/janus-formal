@@ -528,6 +528,23 @@ limited to one ordinary real-valued component and physical order one; it is
 not yet connected to the paired/graded carrier or Gate903's formal BRST slot.
 Moving-chart covariance, the nonlinear/full BV action and a T02-compatible
 scalar-ghost J³ extraction needed at order two remain open.
+Gate 948 defines a symmetric framed J³ carrier and its exact five-term
+constant-fiber base-change formula, with J² truncation, identity and
+conditional composition. It is a generic fixed-fiber construction rather
+than a physical atlas. Gate 949 instantiates its reverse base coefficients
+with the actual throat transition through D³, proves exact J² truncation and
+the full self-transition identity.
+Gate 950 equips this J³ carrier with its componentwise real vector-space
+structure. It does not assert a normed or complete structure. Gate 951 exposes
+the genuine D³ coefficient of the forward throat covector-frame transition
+and proves both adjacent symmetries from smoothness.
+Gate 952 derives the actual throat base D³ cocycle from the transition germ,
+with the exact five-term third-order composition law. Gate 953 constructs the
+generic 15-term third-order semidirect chain/Leibniz transport and its exact J²
+truncation. Gate 954 instantiates that transport with the actual reverse-base
+and forward-covector D³ coefficients. Its truncation is definitionally the
+existing actual J² gauge transport; the fiber cocycle, J³ groupoid and descent
+remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal
