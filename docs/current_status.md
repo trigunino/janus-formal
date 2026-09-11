@@ -620,8 +620,12 @@ together with exact pointwise truncation to the metric J² coordinate change.
 Gate 978 packages every metric J³ coordinate map as a continuous linear map
 and lifts identity, composition, both inverse laws and exact J² truncation to
 that packaging. It establishes continuity only in the jet variable at each
-fixed base point; joint continuity on overlaps, a topological or smooth bundle
-core, section extraction and current descent remain open.
+fixed base point. Gate 979 proves that the actual reverse base-chart and
+forward covariant rank-two metric-frame D³ coefficient fields are locally
+`C∞` on every double metric-atlas overlap. This supplies regularity of the two
+new third-order coefficients only; joint continuity of the J³ coordinate-change
+family, the topological or smooth bundle core, section extraction and current
+descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

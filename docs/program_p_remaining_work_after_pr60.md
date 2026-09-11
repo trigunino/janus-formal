@@ -835,9 +835,13 @@ ponctuelle exacte vers le changement de coordonnées métrique J². Gate 978
 conditionne chaque changement de coordonnées métrique J³ en application
 linéaire continue et relève dans ce conditionnement l'identité, la composition,
 les deux lois d'inverse et la troncature J² exacte. Elle établit seulement la
-continuité dans la variable jet à point de base fixé ; la continuité jointe sur
-les recouvrements, le core de bundle topologique ou lisse, l'extraction de
-sections et la descente du courant restent ouverts.
+continuité dans la variable jet à point de base fixé. Gate 979 prouve que les
+champs réels de coefficients D³ de la carte de base inverse et de la transition
+de repère métrique covariante de rang deux directe sont localement `C∞` sur
+chaque recouvrement double de l'atlas métrique. Elle fournit seulement la
+régularité des deux nouveaux coefficients d'ordre trois ; la continuité jointe
+de la famille de changements de coordonnées J³, le core de bundle topologique
+ou lisse, l'extraction de sections et la descente du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
