@@ -567,8 +567,14 @@ Gate 960 installs the actual gauge J³ linear transport on every overlap of the
 existing gauge cover, totalizes it away from overlaps, proves identity,
 composition and both inverse laws, and proves exact pointwise truncation to the
 gauge J² bundle coordinate change. This is still an algebraic `LinearMap`
-atlas: a normed topology, continuity of the J³ changes and a
-`VectorBundleCore` have not yet been supplied.
+atlas. Gate 961 equips every framed J³ carrier with the component-induced norm
+and real normed-space structure, and proves finite dimensionality and
+completeness when the base and fiber are finite-dimensional. Continuity of the
+varying J³ changes and a `VectorBundleCore` have not yet been supplied. Gate
+962 packages every actual gauge J³ coordinate map as a continuous linear map
+and lifts identity, composition, inverse and exact J² truncation to that
+packaging. It proves continuity in the jet variable for each fixed base point;
+joint continuity as the base point varies remains open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal

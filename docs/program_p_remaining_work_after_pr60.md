@@ -776,8 +776,15 @@ Gate 960 installe le transport linéaire J³ réel de jauge sur chaque recouvrem
 de l'atlas de jauge existant, le totalise hors recouvrement, prouve identité,
 composition et les deux lois d'inverse, puis prouve sa troncature point par
 point exacte vers le changement de coordonnées du bundle J² de jauge. Cet
-atlas reste algébrique en `LinearMap` : il manque encore une topologie normée,
-la continuité des changements J³ et un `VectorBundleCore`.
+atlas reste algébrique en `LinearMap`. Gate 961 munit tout carrier J³ encadré
+de la norme induite par ses composantes
+et de sa structure d'espace normé réel, puis prouve sa dimension finie et sa
+complétude quand la base et la fibre sont de dimension finie. La continuité des
+changements J³ variables et un `VectorBundleCore` manquent encore. Gate 962
+conditionne chaque changement de coordonnées J³ réel de jauge en application
+linéaire continue et y relève identité, composition, inverse et troncature J²
+exacte. Cela prouve la continuité dans la variable jet à point de base fixé ; la
+continuité jointe lorsque le point de base varie reste ouverte.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
