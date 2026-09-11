@@ -548,8 +548,19 @@ composition criterion for this J³ transport and packages each change as a real
 linear map. Gate 956 derives the full 15-term D³ cocycle of the actual varying
 covector transition from its overlap germ. Gate 957 combines the actual base
 and fiber cocycles to prove exact identity, composition and inverse laws for
-the throat gauge J³ transport. Quotient/vector-bundle descent and descent of
-the physical multifield current remain open.
+the throat gauge J³ transport. Gate 958 gives an exact real-linear equivalence
+between the genuine degree-at-most-three spatial multi-index carrier and the
+symmetric framed J³ carrier, and proves that its cubic truncation is the
+existing spatial-to-framed J² bridge. Gate 959 applies this equivalence to the
+complete eleven-component value product: it conjugates Gate 945's selected J³
+change to a framed carrier, proves identity, composition and exact truncation
+to the actual T02 J² change, and transports the selected radial-current
+representatives with their chart-change law. This removes the carrier-format
+mismatch for the selected/frozen lift; it does not derive a genuine
+eleven-field geometric D³ atlas. Only the gauge-covector factor currently has
+an actual D³ overlap groupoid. Metric and SpinC fiber-transition derivatives,
+their D³ cocycles, quotient/vector-bundle descent and genuine multifield
+current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal

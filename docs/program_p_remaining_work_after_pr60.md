@@ -756,8 +756,20 @@ le conditionne en application linéaire réelle. Gate 956 dérive du germe de
 recouvrement le cocycle D³ complet à quinze termes de la transition
 covectorielle mobile réelle. Gate 957 assemble les cocycles réels de base et
 de fibre et prouve les lois exactes d'identité, de composition et d'inverse du
-transport de jauge J³. La descente quotient/bundle et celle du courant physique
-multichamp restent ouvertes.
+transport de jauge J³. Gate 958 construit une équivalence réelle linéaire
+exacte entre le carrier spatial multi-indice de degré au plus trois et le
+carrier J³ encadré symétrique, puis identifie exactement sa troncature cubique
+avec le pont spatial-vers-encadré J² existant. Gate 959 applique cette
+équivalence au produit complet des onze composantes : elle conjugue le
+changement J³ sélectionné de Gate 945 sur un carrier encadré, prouve identité,
+composition et troncature exacte vers le vrai changement T02 sur J², puis
+transporte les représentants sélectionnés du courant radial et leur loi de
+changement de carte. Cela résout l'écart de format des carriers pour le
+prolongement sélectionné/figé, sans construire un atlas D³ géométrique réel
+des onze champs. Seul le facteur covectoriel de jauge possède actuellement un
+groupoïde de recouvrement D³ réel. Les dérivées D³ des transitions de fibre
+métriques et SpinC, leurs cocycles, la descente quotient/bundle et la descente
+du courant multichamp sous l'atlas géométrique réel restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
