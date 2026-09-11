@@ -569,17 +569,31 @@ composition and both inverse laws, and proves exact pointwise truncation to the
 gauge J² bundle coordinate change. This is still an algebraic `LinearMap`
 atlas. Gate 961 equips every framed J³ carrier with the component-induced norm
 and real normed-space structure, and proves finite dimensionality and
-completeness when the base and fiber are finite-dimensional. Continuity of the
-varying J³ changes and a `VectorBundleCore` have not yet been supplied. Gate
-962 packages every actual gauge J³ coordinate map as a continuous linear map
+completeness when the base and fiber are finite-dimensional. Gate 962 packages
+every actual gauge J³ coordinate map as a continuous linear map
 and lifts identity, composition, inverse and exact J² truncation to that
 packaging. It proves continuity in the jet variable for each fixed base point;
-joint continuity as the base point varies remains open.
+joint continuity as the base point varies is supplied next. Gate 963 proves
+that the genuine base-transition and covector-frame D³ coefficient fields are
+locally `C∞` on every valid overlap. Gate 964 proves that a generic J³
+semidirect transport depends continuously on its seven continuous base and
+fiber coefficient fields. Gate 965 applies these results to the actual gauge
+atlas: the restricted overlap family is continuous and the totalized J³
+coordinate change is `ContinuousOn` every double overlap. Gate 966 uses this
+continuity and the exact groupoid laws to build the topological gauge J³
+`VectorBundleCore` over the existing cover. It does not construct a smooth
+vector bundle. Gate 967 builds the algebraic actual LL J³ product coordinate
+changes for the metric, measure and LL-field components, proves their identity
+and composition laws, and proves exact componentwise truncation to the existing
+LL J² product core coordinate change. It does not prove continuity or build an
+LL J³ bundle core.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
-covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal
-sector, including the still-missing bulk-to-null incidence; the supplied moving-frame conjugation is identified with the actual
-varying-frame jets, and the nonlinear physical BV/BRST action is constructed.
+covariant local carrier has a Stokes-compatible integrated chain map beyond the
+scalar normal sector, including the still-missing bulk-to-null incidence; the
+gauge J³ bundle is made smooth; the metric and SpinC transitions are controlled
+through D³; the complete physical geometric atlas and multifield-current
+descent are constructed; and the nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
 
 Given a

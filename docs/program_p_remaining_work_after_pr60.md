@@ -779,21 +779,35 @@ point exacte vers le changement de coordonnées du bundle J² de jauge. Cet
 atlas reste algébrique en `LinearMap`. Gate 961 munit tout carrier J³ encadré
 de la norme induite par ses composantes
 et de sa structure d'espace normé réel, puis prouve sa dimension finie et sa
-complétude quand la base et la fibre sont de dimension finie. La continuité des
-changements J³ variables et un `VectorBundleCore` manquent encore. Gate 962
+complétude quand la base et la fibre sont de dimension finie. Gate 962
 conditionne chaque changement de coordonnées J³ réel de jauge en application
 linéaire continue et y relève identité, composition, inverse et troncature J²
 exacte. Cela prouve la continuité dans la variable jet à point de base fixé ; la
-continuité jointe lorsque le point de base varie reste ouverte.
+continuité jointe lorsque le point de base varie est fournie ensuite. Gate 963
+prouve que les champs de coefficients D³ des vraies transitions de base et de
+repère covectoriel sont localement `C∞` sur chaque recouvrement valide. Gate 964
+prouve qu'une famille générique de transports semidirects J³ dépend continûment
+de ses sept champs de coefficients continus de base et de fibre. Gate 965
+applique ces résultats à l'atlas de jauge réel : la famille restreinte au
+recouvrement est continue et le changement de coordonnées J³ totalisé est
+`ContinuousOn` sur chaque recouvrement double. Gate 966 utilise cette
+continuité et les lois exactes du groupoïde pour construire le
+`VectorBundleCore` topologique J³ de jauge sur l'atlas existant. Elle ne
+construit pas de bundle lisse. Gate 967 construit les changements de
+coordonnées algébriques du produit J³ LL réel pour les composantes métrique,
+mesure et champ LL, prouve leurs lois d'identité et de composition, puis leur
+troncature exacte composante par composante vers le changement de coordonnées
+du core produit LL J² existant. Elle ne prouve ni continuité ni core de bundle
+LL J³.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire le carrier local covariant
-commun contenant les densités physiques complètes, puis étendre le pont
-intégré compatible à Stokes au-delà du secteur scalaire normal et y relever
-la classification. Il faut enfin transporter l'action de deck canonique dans
-les vrais jets des trivialisations mobiles et construire le BV/BRST physique non
+**Reste :** rendre lisse le bundle J³ de jauge ; contrôler à D³ les
+transitions métriques et SpinC ; construire l'atlas géométrique physique
+complet et la descente du courant multichamp ; étendre le pont intégré
+compatible à Stokes au-delà du secteur scalaire normal, avec l'incidence
+bulk-to-null encore manquante ; puis construire le BV/BRST physique non
 trivial sur tous les champs physiques.
 `T06` reste ouverte ; le compteur terminal officiel reste `5/14`.
 
