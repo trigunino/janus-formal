@@ -854,14 +854,16 @@ métrique J² avec les champs `baseThird` et `fiberThird` de Gate 979 au moyen d
 théorème générique de lissité du transport semidirect J³. Elle prouve que le
 transport métrique J³ totalisé et les changements de coordonnées linéaires
 continus concrets sont `ContMDiffOn` d'ordre `∞` sur chaque recouvrement double.
-Le core topologique n'est pas encore enregistré comme lisse ; l'extraction de
-sections et la descente du courant restent ouvertes.
+Gate 983 enregistre le core topologique métrique J³ comme `IsContMDiff` d'ordre
+`∞` et prouve que sa famille de fibres associée forme un
+`ContMDiffVectorBundle ∞`. La structure de bundle métrique J³ lisse est ainsi
+complète ; l'extraction de sections et la descente du courant restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** assembler les coefficients D³ métriques et SpinC en atlas J³
-complets ; construire
+**Reste :** assembler les coefficients D³ SpinC en atlas J³ complet ; extraire
+la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST

@@ -635,15 +635,18 @@ combines the five lower-order `C∞` coefficient fields of the metric J² atlas
 with Gate 979's `baseThird` and `fiberThird` fields through the generic J³
 semidirect-smoothness theorem. It proves that both the totalized metric J³
 transport and the concrete continuous-linear coordinate changes are
-`ContMDiffOn` of order `∞` on every double overlap. The topological core is not
-yet registered as smooth; section extraction and current descent remain open.
+`ContMDiffOn` of order `∞` on every double overlap. Gate 983 registers the
+topological metric J³ core as `IsContMDiff` of order `∞` and proves that its
+associated fiber family is a `ContMDiffVectorBundle ∞`. This completes the
+smooth metric J³ bundle structure; section extraction and current descent
+remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-metric and SpinC D³ coefficients must still be assembled into complete J³
-atlases; the complete physical geometric atlas and multifield-current descent
-are constructed; and the
+SpinC D³ coefficients are assembled into a complete J³ atlas; the metric J³
+section, complete physical geometric atlas and multifield-current descent are
+constructed; and the
 nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
 
