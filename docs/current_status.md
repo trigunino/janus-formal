@@ -518,8 +518,9 @@ geometrically derived third-jet atlas prolongation.
 Gate 946 exposes the genuine third Frechet derivative of the actual throat
 base-chart transition and proves its two adjacent trilinear symmetries from
 the existing smooth atlas. This is the required geometric base coefficient;
-the physical J³ carrier, fiber-transition derivatives, cocycle and current
-descent remain to be constructed.
+a geometrically prolonged J³ atlas for the complete physical carrier, the
+remaining fiber-transition derivatives and cocycles, and current descent
+remain to be constructed.
 Gate 947 identifies the centered throat restriction of the actual global
 Abelian `d c` with the derivative of the actual scalar-ghost representative.
 Its gauge value and first derivative are the first- and second-derivative
@@ -550,22 +551,30 @@ covector transition from its overlap germ. Gate 957 combines the actual base
 and fiber cocycles to prove exact identity, composition and inverse laws for
 the throat gauge J³ transport. Gate 958 gives an exact real-linear equivalence
 between the genuine degree-at-most-three spatial multi-index carrier and the
-symmetric framed J³ carrier, and proves that its cubic truncation is the
-existing spatial-to-framed J² bridge. Gate 959 applies this equivalence to the
+symmetric framed J³ carrier, and proves that Gate 875 truncation followed by
+the explicit framed J² reconstruction defined there equals framed truncation.
+Gate 959 applies this equivalence to the
 complete eleven-component value product: it conjugates Gate 945's selected J³
 change to a framed carrier, proves identity, composition and exact truncation
 to the actual T02 J² change, and transports the selected radial-current
 representatives with their chart-change law. This removes the carrier-format
 mismatch for the selected/frozen lift; it does not derive a genuine
-eleven-field geometric D³ atlas. Only the gauge-covector factor currently has
-an actual D³ overlap groupoid. Metric and SpinC fiber-transition derivatives,
-their D³ cocycles, quotient/vector-bundle descent and genuine multifield
-current descent remain open.
+eleven-field geometric D³ atlas. A separate gauge-covector sector currently
+has an actual D³ overlap groupoid. The remaining physical fiber-transition D³
+coefficients and cocycles, quotient/vector-bundle descent and genuine
+multifield current descent remain open.
+Gate 960 installs the actual gauge J³ linear transport on every overlap of the
+existing gauge cover, totalizes it away from overlaps, proves identity,
+composition and both inverse laws, and proves exact pointwise truncation to the
+gauge J² bundle coordinate change. This is still an algebraic `LinearMap`
+atlas: a normed topology, continuity of the J³ changes and a
+`VectorBundleCore` have not yet been supplied.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the scalar normal
 sector, including the still-missing bulk-to-null incidence; the supplied moving-frame conjugation is identified with the actual
 varying-frame jets, and the nonlinear physical BV/BRST action is constructed.
+The official terminal count stays `5/14`.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

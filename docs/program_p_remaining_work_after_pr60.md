@@ -725,8 +725,9 @@ il n'est pas encore dérivé d'un atlas géométrique de troisièmes jets.
 Gate 946 construit le vrai troisième dérivé de Frechet de la transition des
 cartes de base de la gorge et prouve ses deux symétries trilinéaires adjacentes
 depuis l'atlas lisse existant. C'est le coefficient géométrique de base requis,
-mais le carrier physique J³, les dérivées des transitions de fibre, leur
-cocycle et la descente du courant restent à construire.
+mais un atlas J³ géométriquement prolongé du carrier physique complet, les
+dérivées et cocycles restants des transitions de fibre et la descente du
+courant restent à construire.
 Gate 947 identifie la restriction centrée à la gorge du vrai `d c` abélien
 global avec la dérivée du représentant réel du fantôme scalaire. La valeur et
 la première dérivée du jet de jauge coïncident avec les slots de dérivées une
@@ -758,18 +759,25 @@ covectorielle mobile réelle. Gate 957 assemble les cocycles réels de base et
 de fibre et prouve les lois exactes d'identité, de composition et d'inverse du
 transport de jauge J³. Gate 958 construit une équivalence réelle linéaire
 exacte entre le carrier spatial multi-indice de degré au plus trois et le
-carrier J³ encadré symétrique, puis identifie exactement sa troncature cubique
-avec le pont spatial-vers-encadré J² existant. Gate 959 applique cette
+carrier J³ encadré symétrique, puis prouve que la troncature Gate875 suivie de
+la reconstruction J² encadrée explicite définie dans cette gate coïncide avec
+la troncature encadrée. Gate 959 applique cette
 équivalence au produit complet des onze composantes : elle conjugue le
 changement J³ sélectionné de Gate 945 sur un carrier encadré, prouve identité,
 composition et troncature exacte vers le vrai changement T02 sur J², puis
 transporte les représentants sélectionnés du courant radial et leur loi de
 changement de carte. Cela résout l'écart de format des carriers pour le
 prolongement sélectionné/figé, sans construire un atlas D³ géométrique réel
-des onze champs. Seul le facteur covectoriel de jauge possède actuellement un
-groupoïde de recouvrement D³ réel. Les dérivées D³ des transitions de fibre
-métriques et SpinC, leurs cocycles, la descente quotient/bundle et la descente
-du courant multichamp sous l'atlas géométrique réel restent ouvertes.
+des onze champs. Un secteur covectoriel de jauge séparé possède actuellement
+un groupoïde de recouvrement D³ réel. Les autres coefficients et cocycles D³
+des transitions de fibre physiques, la descente quotient/bundle et la descente
+du courant multichamp sous l'atlas géométrique réel restent ouverts.
+Gate 960 installe le transport linéaire J³ réel de jauge sur chaque recouvrement
+de l'atlas de jauge existant, le totalise hors recouvrement, prouve identité,
+composition et les deux lois d'inverse, puis prouve sa troncature point par
+point exacte vers le changement de coordonnées du bundle J² de jauge. Cet
+atlas reste algébrique en `LinearMap` : il manque encore une topologie normée,
+la continuité des changements J³ et un `VectorBundleCore`.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -780,7 +788,7 @@ intégré compatible à Stokes au-delà du secteur scalaire normal et y relever
 la classification. Il faut enfin transporter l'action de deck canonique dans
 les vrais jets des trivialisations mobiles et construire le BV/BRST physique non
 trivial sur tous les champs physiques.
-`T06` reste ouverte.
+`T06` reste ouverte ; le compteur terminal officiel reste `5/14`.
 
 ### T07 — `anomalyConstraintsApplied`
 
