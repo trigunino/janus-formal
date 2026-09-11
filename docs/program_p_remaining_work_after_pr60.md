@@ -811,12 +811,18 @@ continus. Gate 970 applique ce résultat et la régularité D³ des coefficients
 réels : le transport J³ de jauge totalisé et son changement de coordonnées
 linéaire continu sont `C∞` sur chaque recouvrement double. Gate 971 relève le
 core topologique de Gate 966 en core `IsContMDiff` et prouve que sa famille de
-fibres associée forme un `ContMDiffVectorBundle ∞`.
+fibres associée forme un `ContMDiffVectorBundle ∞`. Gate 972 construit la vraie
+dérivée troisième de la transition de repère métrique covariante de rang deux,
+prouve ses deux symétries adjacentes et son annulation sur les transitions
+identiques. Gate 973 prouve la régularité locale `C∞` des champs de coefficients
+D³ de la carte de base inverse et de la transition de fibre SpinC directe sur
+chaque recouvrement double SpinC.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** contrôler à D³ les transitions métriques et SpinC ; construire
+**Reste :** assembler les coefficients D³ métriques et SpinC en atlas J³
+complets ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST

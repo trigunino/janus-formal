@@ -598,13 +598,19 @@ transports. Gate 970 applies that theorem and the actual D³ coefficient
 regularity: both the totalized gauge J³ transport and its continuous-linear
 coordinate change are `C∞` on every double overlap. Gate 971 upgrades the
 topological core of Gate 966 to an `IsContMDiff` core and proves that its
-associated fiber family is a `ContMDiffVectorBundle ∞`.
+associated fiber family is a `ContMDiffVectorBundle ∞`. Gate 972 constructs
+the genuine third derivative of the covariant rank-two metric frame
+transition, proves both adjacent derivative symmetries, and proves its
+vanishing on self transitions. Gate 973 proves local `C∞` regularity of the
+reverse base-chart and forward SpinC fiber D³ coefficient fields on every
+double SpinC atlas overlap.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-metric and SpinC transitions are controlled through D³; the complete physical
-geometric atlas and multifield-current descent are constructed; and the
+metric and SpinC D³ coefficients must still be assembled into complete J³
+atlases; the complete physical geometric atlas and multifield-current descent
+are constructed; and the
 nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
 
