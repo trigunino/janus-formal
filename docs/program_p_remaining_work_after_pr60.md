@@ -844,8 +844,12 @@ continuité des cinq coefficients d'ordre inférieur avec les deux champs D³ de
 Gate 979 et le théorème générique de continuité du transport semidirect. La
 famille restreinte de changements de coordonnées métriques J³ linéaires
 continus est continue, et sa forme totalisée est `ContinuousOn` sur chaque
-recouvrement double. Le core de bundle topologique ou lisse, l'extraction de
-sections et la descente du courant restent ouverts.
+recouvrement double. Gate 981 combine la couverture métrique ouverte
+repère/carte existante, les lois exactes du groupoïde et la continuité de Gate
+980 pour construire le `VectorBundleCore` topologique métrique J³. Ses
+ensembles de base sont ceux du core métrique J² existant et ses changements de
+coordonnées sont les applications linéaires continues de Gate 978. La lissité,
+l'extraction de sections et la descente du courant restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
