@@ -848,8 +848,14 @@ recouvrement double. Gate 981 combine la couverture métrique ouverte
 repère/carte existante, les lois exactes du groupoïde et la continuité de Gate
 980 pour construire le `VectorBundleCore` topologique métrique J³. Ses
 ensembles de base sont ceux du core métrique J² existant et ses changements de
-coordonnées sont les applications linéaires continues de Gate 978. La lissité,
-l'extraction de sections et la descente du courant restent ouvertes.
+coordonnées sont les applications linéaires continues de Gate 978. Gate 982
+combine les cinq champs de coefficients `C∞` d'ordre inférieur de l'atlas
+métrique J² avec les champs `baseThird` et `fiberThird` de Gate 979 au moyen du
+théorème générique de lissité du transport semidirect J³. Elle prouve que le
+transport métrique J³ totalisé et les changements de coordonnées linéaires
+continus concrets sont `ContMDiffOn` d'ordre `∞` sur chaque recouvrement double.
+Le core topologique n'est pas encore enregistré comme lisse ; l'extraction de
+sections et la descente du courant restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.

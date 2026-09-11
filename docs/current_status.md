@@ -630,8 +630,13 @@ is continuous, and its totalized form is `ContinuousOn` every double overlap.
 Gate 981 combines the existing open metric frame/chart cover, the exact
 groupoid laws and Gate 980 continuity to construct the topological metric J³
 `VectorBundleCore`. Its base sets are the existing metric J² base sets and its
-coordinate changes are the continuous-linear maps of Gate 978. Smoothness,
-section extraction and current descent remain open.
+coordinate changes are the continuous-linear maps of Gate 978. Gate 982
+combines the five lower-order `C∞` coefficient fields of the metric J² atlas
+with Gate 979's `baseThird` and `fiberThird` fields through the generic J³
+semidirect-smoothness theorem. It proves that both the totalized metric J³
+transport and the concrete continuous-linear coordinate changes are
+`ContMDiffOn` of order `∞` on every double overlap. The topological core is not
+yet registered as smooth; section extraction and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

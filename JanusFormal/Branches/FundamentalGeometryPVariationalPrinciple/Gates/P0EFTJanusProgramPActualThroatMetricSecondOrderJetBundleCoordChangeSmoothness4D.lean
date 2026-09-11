@@ -93,7 +93,7 @@ local instance effectiveThroatIsManifold :
       (EffectiveThroat period hPeriod) :=
   fixedThroatQuotient_isManifold period hPeriod
 
-private def bundleOverlap
+def bundleOverlap
     (first second : BundleIndex period hPeriod) :
     Set (EffectiveThroat period hPeriod) :=
   throatMetricSecondOrderJetBundleBaseSet period hPeriod first ∩
@@ -127,7 +127,7 @@ def throatMetricSecondOrderJetBundleTotalChange
     else
       identityMetricFramedSecondOrderJetSemidirectChange
 
-private theorem baseFirst_contMDiffOn
+theorem baseFirst_contMDiffOn
     (first second : BundleIndex period hPeriod) :
     ContMDiffOn throatCoverModelWithCorners
       𝓘(Real, ThroatCoverCoordinates →L[Real] ThroatCoverCoordinates) ∞
@@ -146,7 +146,7 @@ private theorem baseFirst_contMDiffOn
         hCurrent.1.2).contMDiffAt.comp current
           (contMDiffAt_extChartAt' hChart)).contMDiffWithinAt
 
-private theorem baseSecond_contMDiffOn
+theorem baseSecond_contMDiffOn
     (first second : BundleIndex period hPeriod) :
     ContMDiffOn throatCoverModelWithCorners
       𝓘(Real, ThroatCoverCoordinates →L[Real]
@@ -167,7 +167,7 @@ private theorem baseSecond_contMDiffOn
         hCurrent.1.2).contMDiffAt.comp current
           (contMDiffAt_extChartAt' hChart)).contMDiffWithinAt
 
-private theorem fiberValue_contMDiffOn
+theorem fiberValue_contMDiffOn
     (first second : BundleIndex period hPeriod) :
     ContMDiffOn throatCoverModelWithCorners 𝓘(Real, TensorEnd) ∞
       (fun current : EffectiveThroat period hPeriod ↦
@@ -179,7 +179,7 @@ private theorem fiberValue_contMDiffOn
       intro current hCurrent
       exact ⟨hCurrent.1.1, hCurrent.2.1⟩)
 
-private theorem fiberFirst_contMDiffOn
+theorem fiberFirst_contMDiffOn
     (first second : BundleIndex period hPeriod) :
     ContMDiffOn throatCoverModelWithCorners
       𝓘(Real, TensorTransitionFirstDerivative) ∞
@@ -200,7 +200,7 @@ private theorem fiberFirst_contMDiffOn
         hCurrent.2.2).contMDiffAt.comp current
           (contMDiffAt_extChartAt' hChart)).contMDiffWithinAt
 
-private theorem fiberSecond_contMDiffOn
+theorem fiberSecond_contMDiffOn
     (first second : BundleIndex period hPeriod) :
     ContMDiffOn throatCoverModelWithCorners
       𝓘(Real, ThroatCoverCoordinates →L[Real]
