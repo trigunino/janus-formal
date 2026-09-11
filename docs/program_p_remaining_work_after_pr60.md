@@ -820,9 +820,13 @@ chaque recouvrement double SpinC. Gate 974 prolonge le changement semidirect
 métrique J² réel par les vrais coefficients D³ de la transition de carte de
 base inverse et de la transition de repère covariante de rang deux. Le transport
 J³ encadré algébrique ponctuel obtenu se tronque exactement vers le transport
-métrique J² existant. Son cocycle, son groupoïde, son atlas, sa continuité en
-base, son bundle, son extraction de sections et sa descente du courant restent
-ouverts.
+métrique J² existant. Gate 975 isole une règle de Leibniz générique au troisième
+ordre pour les applications linéaires continues et l'applique pour dériver le
+cocycle D³ complet à quinze termes de la vraie transition de repère métrique
+covariante de rang deux sur les recouvrements triples valides. Cette descente
+reste au niveau du coefficient ; le groupoïde du transport métrique J³,
+l'atlas de changements de coordonnées, la continuité, le bundle, l'extraction
+de sections et la descente du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
