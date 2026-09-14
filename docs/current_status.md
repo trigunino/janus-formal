@@ -736,12 +736,22 @@ existing smooth J² representative, the reusable J³ assembler proves the whole
 local representative `ContMDiffOn` of order `∞`. The physical induced-metric
 wrapper has the same regularity. Overlap compatibility and global assembly
 remain open.
+Gate 1001 proves that actual metric J³ semidirect transport sends every
+extracted smooth tensor jet exactly to its target frame/base-chart extraction.
+The lower jet follows from exact truncation and the existing J² compatibility;
+only the third component uses the established third-order chain and Leibniz
+rules. The physical induced-metric wrapper satisfies the same law.
+Gate 1002 assembles these compatible smooth local representatives through the
+existing metric J³ `VectorBundleCore`. It defines primitive and physical global
+`C∞` sections, identifies every valid local coordinate with the genuine
+frame/base-chart extraction, proves centered formulas and truncates exactly to
+the existing metric J² sections. This completes metric J³ section extraction.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-metric J³ section, complete physical geometric atlas and multifield-current
-descent are constructed; and the nonlinear physical BV/BRST action is built.
+complete physical geometric atlas and multifield-current descent are
+constructed; and the nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
 
 Given a

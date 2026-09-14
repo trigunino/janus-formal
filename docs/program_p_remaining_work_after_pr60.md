@@ -964,12 +964,24 @@ représentant J² lisse existant, l’assembleur J³ réutilisable prouve que le
 représentant local complet est `ContMDiffOn` d’ordre `∞`. Le wrapper de métrique
 induite physique a la même régularité. La compatibilité sur les recouvrements et
 l’assemblage global restent ouverts.
+Gate 1001 prouve que le transport semidirect métrique J³ réel envoie chaque jet
+tensoriel lisse extrait vers son extraction dans la frame et la carte de base
+cibles. Le jet inférieur découle de la troncature exacte et de la compatibilité
+J² existante ; seule la composante d’ordre trois utilise les règles de chaîne et
+de Leibniz déjà établies. Le wrapper de métrique induite physique vérifie la même
+loi.
+Gate 1002 assemble ces représentants locaux lisses et compatibles au moyen du
+`VectorBundleCore` métrique J³ existant. Elle définit les sections globales
+`C∞` primitives et physiques, identifie chaque coordonnée locale valide à la
+vraie extraction frame/carte, prouve les formules centrées et se tronque
+exactement vers les sections métriques J² existantes. L’extraction de la section
+métrique J³ est ainsi complète.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** extraire la section métrique J³ ; construire
-l'atlas géométrique physique complet et la descente du courant multichamp ;
+**Reste :** construire l'atlas géométrique physique complet et la descente du
+courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
 physique non trivial sur tous les champs physiques.
