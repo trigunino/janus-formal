@@ -1042,7 +1042,10 @@ sans arguments de preuve, établit sa régularité jointe `C∞` et l'identifie 
 Gate 1017 au point représenté. Gate 1026 lit ce représentant sur le J³ physique
 formel, décharge par Gate 1025 la condition de différentiabilité jointe de Gate
 1024 et retrouve sans hypothèse externe le `dH` base-dépendant de Gate 1020.
-Restent à prouver la loi de Piola de la densité vectorielle, puis à effectuer la
+Gate 1027 construit les formes volume et flux signées normalisées, identifie la
+dérivée extérieure du flux à la divergence coordonnée et prouve la loi de
+pullback au déterminant signé. Restent son passage par signe local à la densité
+vectorielle réelle au Jacobien absolu et au transport de Cartan, puis la
 descente intégrée compatible à Stokes sur un carrier local commun.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
