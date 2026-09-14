@@ -816,10 +816,11 @@ constructs the normalized signed throat volume and flux forms, identifies their
 exterior derivative with coordinate divergence, and proves the signed
 determinant pullback law. Gate 1028 identifies that form pullback with
 `det(J)·J⁻¹` as a germ of genuine throat transitions and proves the resulting
-signed coordinate-divergence law on every overlap. The remaining current
-problem is its local-sign upgrade to the actual absolute-Jacobian vector density
-and Cartan transition, followed by Stokes-compatible integrated descent on a
-common local carrier.
+signed coordinate-divergence law on every overlap. Gate 1029 uses local
+constancy of the nonzero determinant sign to upgrade this
+to the actual `|det(J)|·J⁻¹` vector density and its absolute-divergence law.
+The remaining current problem is its Cartan transition, followed by
+Stokes-compatible integrated descent on a common local carrier.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
