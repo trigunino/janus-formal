@@ -763,6 +763,15 @@ Candidate-A global `C∞` gauge J³ sections, with exact local coordinates,
 centered formulas and truncation to the existing J² sections. Gauge J³ section
 extraction is complete; LL section extraction and multifield-current descent
 remain open.
+Gate 1010 supplies a single centered J³ extractor for every smooth fixed-fiber
+throat field and specializes it simultaneously to the three LL components.
+Gate 1011 extends this extractor to arbitrary valid base charts, proves the
+third-order transition law, totalizes the representatives and establishes
+their local `C∞` regularity. Gate 1012 assembles global smooth third-jet
+sections for the LL auxiliary metric, measure and field, with exact value,
+centered-jet and J²-truncation laws, and packages their product as smooth core
+section coordinates. LL J³ section extraction is complete; common physical
+section assembly and multifield-current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

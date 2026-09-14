@@ -993,12 +993,21 @@ trois. Gate 1009 assemble les représentants compatibles en sections gauge J³
 globales `C∞`, primitives et Candidate-A, avec coordonnées locales, formules
 centrées et troncature J² exactes. Les sections gauge J³ sont complètes ; les
 sections LL et la descente du courant multichamp restent ouvertes.
+Gate 1010 fournit un extracteur J³ centré unique pour tout champ lisse à fibre
+fixe et le spécialise aux trois composantes LL. Gate 1011 étend l’extraction à
+toute carte de base valide, prouve la loi de transition d’ordre trois, totalise
+les représentants et établit leur régularité locale `C∞`. Gate 1012 assemble
+les sections J³ globales lisses de la métrique auxiliaire, de la mesure et du
+champ LL, avec lois exactes de valeur, jet centré et troncature J², puis forme
+leurs coordonnées de section produit. Les sections LL J³ sont complètes ;
+l’assemblage de la section physique commune et la descente du courant
+multichamp restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire les sections physiques J³ LL et la descente du
-courant multichamp ;
+**Reste :** assembler la section physique J³ commune et construire la descente
+du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
 physique non trivial sur tous les champs physiques.
