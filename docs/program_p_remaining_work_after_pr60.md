@@ -952,6 +952,12 @@ coordonnée locale valide à la vraie extraction dans une trivialisation et une
 carte de base arbitraires, prouve les formules centrées et se tronque exactement
 vers les sections J² existantes. L’extraction de la section SpinC J³ est ainsi
 complète ; la descente du courant reste ouverte.
+Gate 999 applique l’extracteur J³ générique à chaque paire valide de frame
+métrique et de carte de base. Elle expose la valeur métrique réelle et ses trois
+premières dérivées de Fréchet, se tronque définitionnellement vers l’extraction
+métrique J² existante et fournit le wrapper de métrique induite physique avec sa
+troncature J² centrée. La lissité des représentants locaux, la compatibilité sur
+les recouvrements et la section métrique J³ globale restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.

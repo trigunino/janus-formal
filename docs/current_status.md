@@ -724,6 +724,12 @@ and physical global `C∞` sections, identifies every valid local coordinate wit
 the genuine arbitrary-trivialization/base-chart extraction, proves centered
 coordinate formulas and truncates exactly to the existing J² sections. This
 completes SpinC J³ section extraction; current descent remains open.
+Gate 999 applies the generic chartwise J³ extractor to every valid metric
+frame/base-chart pair. It exposes the genuine metric value and first three
+Fréchet derivatives, truncates definitionally to the existing metric J²
+extraction, and supplies the physical induced-metric wrapper with its centered
+J² truncation. Local-representative smoothness, overlap compatibility and the
+global metric J³ section remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
