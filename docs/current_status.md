@@ -647,12 +647,18 @@ this coefficient vanishes for a repeated trivialization. This remains only the
 algebraic third-order fiber coefficient; pointwise SpinC J³ transport, its
 groupoid laws, overlap coordinate changes, a bundle core, section extraction
 and current descent remain open.
+Gate 985 extends the actual SpinC J² semidirect change with the genuine D³
+coefficients of the reverse base-chart transition and the forward SpinC
+trivialization transition. The resulting pointwise algebraic framed SpinC J³
+transport truncates exactly to the existing SpinC J² transport. Its groupoid
+laws, overlap coordinate changes, a bundle core, section extraction and current
+descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-pointwise SpinC J³ transport, its groupoid laws, overlap coordinate changes, a
-bundle core and section extraction are constructed; the metric J³ section,
+SpinC J³ groupoid laws, overlap coordinate changes, a bundle core and section
+extraction are constructed; the metric J³ section,
 complete physical geometric atlas and multifield-current descent are
 constructed; and the
 nonlinear physical BV/BRST action is built.

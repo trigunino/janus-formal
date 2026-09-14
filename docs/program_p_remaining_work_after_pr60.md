@@ -866,13 +866,20 @@ encore uniquement du coefficient algébrique de fibre d’ordre trois ; le
 transport SpinC J³ ponctuel, ses lois de groupoïde, les changements de
 coordonnées sur les recouvrements, un core de bundle, l’extraction de sections
 et la descente du courant restent ouverts.
+Gate 985 prolonge le changement semidirect SpinC J² réel par les vrais
+coefficients D³ de la transition de carte de base inverse et de la transition
+directe de trivialisation SpinC. Le transport SpinC J³ encadré algébrique
+ponctuel obtenu se tronque exactement vers le transport SpinC J² existant. Ses
+lois de groupoïde, les changements de coordonnées sur les recouvrements, un
+core de bundle, l’extraction de sections et la descente du courant restent
+ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire le transport SpinC J³ ponctuel, ses lois de groupoïde,
-les changements de coordonnées sur les recouvrements et son core de bundle,
-puis en extraire les sections ; extraire la section métrique J³ ; construire
+**Reste :** prouver les lois de groupoïde du transport SpinC J³, construire les
+changements de coordonnées sur les recouvrements et son core de bundle, puis en
+extraire les sections ; extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
