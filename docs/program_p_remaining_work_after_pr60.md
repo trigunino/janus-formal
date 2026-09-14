@@ -1039,9 +1039,11 @@ Gate 1024 définit le `dH` joint porté par ces frames, retrouve Gate 1020 sous 
 condition exacte de différentiabilité jointe et prouve la naturalité scalaire
 par chaîne. Gate 1025 construit le représentant radial local à base variable
 sans arguments de preuve, établit sa régularité jointe `C∞` et l'identifie à
-Gate 1017 au point représenté. Restent à raccorder ces deux interfaces, prouver
-la loi de Piola de la densité vectorielle, puis effectuer la descente intégrée
-compatible à Stokes sur un carrier local commun.
+Gate 1017 au point représenté. Gate 1026 lit ce représentant sur le J³ physique
+formel, décharge par Gate 1025 la condition de différentiabilité jointe de Gate
+1024 et retrouve sans hypothèse externe le `dH` base-dépendant de Gate 1020.
+Restent à prouver la loi de Piola de la densité vectorielle, puis à effectuer la
+descente intégrée compatible à Stokes sur un carrier local commun.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.

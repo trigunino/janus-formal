@@ -808,10 +808,12 @@ point and Cartan frame, without asserting holonomic descent. The remaining
 Gate 1024 defines the joint frame-based `dH`, recovers Gate 1020 under its exact
 joint-differentiability condition, and proves scalar chain-rule naturality.
 Gate 1025 constructs the proof-free base-varying radial chart representative,
-proves its joint `C∞` regularity, and identifies its value with Gate 1017. The
-remaining current problem is to join these two interfaces and prove the
-vector-density Piola law, followed by Stokes-compatible integrated descent on
-a common local carrier.
+proves its joint `C∞` regularity, and identifies its value with Gate 1017. Gate
+1026 reads that representative on formal physical J³, discharges Gate 1024's
+joint differentiability condition from Gate 1025, and recovers Gate 1020's
+base-dependent `dH` without an external regularity hypothesis. The remaining
+current problem is the vector-density Piola law, followed by Stokes-compatible
+integrated descent on a common local carrier.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
