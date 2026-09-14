@@ -701,6 +701,11 @@ representative. It packages the first three genuine Fréchet derivatives,
 proves the two adjacent third-derivative symmetries once, and truncates exactly
 to the existing generic J² extractor. No overlap compatibility or global
 bundle section is asserted yet.
+Gate 995 applies that generic extractor to every valid primitive SpinC
+trivialization/base-chart pair. It exposes the genuine local SpinC J³ jet, its
+four component projections and exact J² truncation, together with the physical
+sector wrapper. Overlap compatibility, local-representative smoothness and the
+global bundle section remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

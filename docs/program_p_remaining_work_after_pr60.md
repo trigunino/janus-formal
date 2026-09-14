@@ -928,6 +928,11 @@ de coordonnées `C³`. Il conditionne les trois vraies dérivées de Fréchet,
 prouve une seule fois les deux symétries adjacentes d’ordre trois et se tronque
 exactement vers l’extracteur J² générique existant. La compatibilité sur les
 recouvrements et la section globale ne sont pas encore établies.
+Gate 995 applique cet extracteur générique à toute paire valide de
+trivialisation SpinC et de carte de base. Elle expose le vrai jet SpinC J³
+local, ses quatre projections et sa troncature J² exacte, ainsi que le wrapper
+du secteur physique. La compatibilité sur les recouvrements, la lissité des
+représentants locaux et la section globale restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
