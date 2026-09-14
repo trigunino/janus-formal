@@ -801,9 +801,12 @@ and total-derivative intertwining. It does not act on Gate 1020's base-dependent
 actual local J³ total-space coordinate formula
 and proves the exact tangent law `dΦ(v,w)=(Jv,Cw+(dC·v)j)`, exposing the base
 variation absent from frozen lifts. It does not yet prolong a non-holonomic
-Cartan frame or construct a physical J⁴ atlas. The remaining current problem
-is that Cartan-frame prolongation and its Piola law, followed by Stokes-compatible
-integrated descent on a common local carrier.
+Cartan frame or construct a physical J⁴ atlas. Gate 1023 packages such vertical
+non-holonomic frames, transports them with the inverse base Jacobian, and proves
+the exact lift intertwining. A formal J⁴ now supplies its truncated physical J³
+point and Cartan frame, without asserting holonomic descent. The remaining
+current problem is naturality of the frame-based `dH` and its Piola law,
+followed by Stokes-compatible integrated descent on a common local carrier.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

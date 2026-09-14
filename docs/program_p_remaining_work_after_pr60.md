@@ -1031,8 +1031,12 @@ transition de l'atlas physique. Gate 1022 différentie la formule locale réelle
 de coordonnées de l'espace total J³ et prouve exactement
 `dΦ(v,w)=(Jv,Cw+(dC·v)j)`, avec le terme de variation en base absent des lifts
 gelés. Elle ne prolonge pas encore un frame de Cartan non holonome et ne
-construit pas d'atlas J⁴ physique. Restent ce prolongement, sa loi de Piola,
-puis la descente intégrée compatible à Stokes sur un carrier local commun.
+construit pas d'atlas J⁴ physique. Gate 1023 forme ces frames verticaux non
+holonomes, les transporte avec le Jacobien de base inverse et prouve exactement
+l'entrelacement des lifts. Un J⁴ formel fournit désormais son point J³ physique
+tronqué et son frame Cartan, sans descente holonome revendiquée. Restent la
+naturelité du `dH` porté par ces frames, sa loi de Piola, puis la descente
+intégrée compatible à Stokes sur un carrier local commun.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
