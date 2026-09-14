@@ -894,12 +894,19 @@ de coordonnées SpinC J². Les applications restent réelles linéaires
 algébriques ; leur conditionnement linéaire continu, la continuité en point de
 base, un core de bundle, la lissité, l’extraction de sections et la descente du
 courant restent ouverts.
+Gate 989 conditionne chaque changement de coordonnées SpinC J³ en application
+linéaire continue et relève dans ce conditionnement l’identité, la composition,
+les deux lois d’inverse et la troncature J² exacte. Elle établit seulement la
+continuité dans la variable jet à point de base fixé ; la continuité en point de
+base, un core de bundle, la lissité, l’extraction de sections et la descente du
+courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** conditionner continûment et lisser les changements de coordonnées
-SpinC J³, construire leur core de bundle, puis en extraire les sections ;
+**Reste :** prouver la continuité en point de base et lisser les changements de
+coordonnées SpinC J³, construire leur core de bundle, puis en extraire les
+sections ;
 extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,

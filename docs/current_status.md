@@ -671,11 +671,16 @@ with exact pointwise truncation to the SpinC J² coordinate change. The maps are
 still algebraic real-linear maps; continuous-linear packaging, base-point
 continuity, a bundle core, smoothness, section extraction and current descent
 remain open.
+Gate 989 packages every SpinC J³ coordinate map as a continuous linear map and
+lifts identity, composition, both inverse laws and exact J² truncation to that
+packaging. It establishes continuity only in the jet variable at each fixed
+base point; base-point continuity, a bundle core, smoothness, section extraction
+and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-SpinC J³ coordinate changes are packaged continuously and smoothly, their
+SpinC J³ coordinate-change family is proved continuous and smooth, its
 bundle core and sections are constructed; the metric J³ section,
 complete physical geometric atlas and multifield-current descent are
 constructed; and the
