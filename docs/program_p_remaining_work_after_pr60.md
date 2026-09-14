@@ -880,13 +880,19 @@ sur les recouvrements triples valides. Elle fournit uniquement la loi manquante
 du coefficient de fibre d’ordre trois ; les lois de groupoïde ponctuelles SpinC
 J³, les changements de coordonnées sur les recouvrements, un core de bundle,
 l’extraction de sections et la descente du courant restent ouverts.
+Gate 987 combine les lois des coefficients de carte de base inverse et de fibre
+SpinC directe pour prouver l’identité et la composition exactes du transport
+SpinC J³ encadré ponctuel. Son conditionnement en application réelle linéaire
+satisfait l’identité, la composition et les deux lois d’inverse. Les changements
+de coordonnées sur les recouvrements, un core de bundle, l’extraction de
+sections et la descente du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** prouver les lois de groupoïde du transport SpinC J³, construire les
-changements de coordonnées sur les recouvrements et son core de bundle, puis en
-extraire les sections ; extraire la section métrique J³ ; construire
+**Reste :** construire les changements de coordonnées SpinC J³ sur les
+recouvrements et son core de bundle, puis en extraire les sections ; extraire la
+section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST

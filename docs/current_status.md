@@ -659,12 +659,17 @@ cocycle for the forward trivialization transition on valid triple overlaps.
 This supplies only the missing third-order fiber coefficient law; pointwise
 SpinC J³ groupoid laws, overlap coordinate changes, a bundle core, section
 extraction and current descent remain open.
+Gate 987 combines the reverse-base and forward SpinC-fiber coefficient laws to
+prove exact identity and composition for the pointwise framed SpinC J³
+transport. Its real-linear-map packaging satisfies identity, composition and
+both inverse laws. Overlap coordinate changes, a bundle core, section extraction
+and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-SpinC J³ groupoid laws, overlap coordinate changes, a bundle core and section
-extraction are constructed; the metric J³ section,
+SpinC J³ overlap coordinate changes, a bundle core and section extraction are
+constructed; the metric J³ section,
 complete physical geometric atlas and multifield-current descent are
 constructed; and the
 nonlinear physical BV/BRST action is built.
