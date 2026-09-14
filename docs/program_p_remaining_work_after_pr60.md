@@ -1044,9 +1044,11 @@ formel, décharge par Gate 1025 la condition de différentiabilité jointe de Ga
 1024 et retrouve sans hypothèse externe le `dH` base-dépendant de Gate 1020.
 Gate 1027 construit les formes volume et flux signées normalisées, identifie la
 dérivée extérieure du flux à la divergence coordonnée et prouve la loi de
-pullback au déterminant signé. Restent son passage par signe local à la densité
-vectorielle réelle au Jacobien absolu et au transport de Cartan, puis la
-descente intégrée compatible à Stokes sur un carrier local commun.
+pullback au déterminant signé. Gate 1028 identifie ce pullback à
+`det(J)·J⁻¹` comme germe des vraies transitions de gorge et prouve sa loi de
+divergence signée sur chaque overlap. Restent le passage par signe local à la
+densité vectorielle réelle au Jacobien absolu et au transport de Cartan, puis
+la descente intégrée compatible à Stokes sur un carrier local commun.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
