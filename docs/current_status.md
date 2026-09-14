@@ -797,9 +797,13 @@ the chartwise local `dH` and recovers Gate 1019 exactly on autonomous currents.
 Independently, Gate 1021 proves naturality of the autonomous current at frozen
 base under a supplied Gate 945 coefficientwise J³/J⁴ lift, including truncation
 and total-derivative intertwining. It does not act on Gate 1020's base-dependent
-`dH` and is not the physical atlas transition. The remaining current problem
-is the genuine Cartan J⁴ transition and its Piola law, followed by
-Stokes-compatible integrated descent on a common local carrier.
+`dH` and is not the physical atlas transition. Gate 1022 differentiates the
+actual local J³ total-space coordinate formula
+and proves the exact tangent law `dΦ(v,w)=(Jv,Cw+(dC·v)j)`, exposing the base
+variation absent from frozen lifts. It does not yet prolong a non-holonomic
+Cartan frame or construct a physical J⁴ atlas. The remaining current problem
+is that Cartan-frame prolongation and its Piola law, followed by Stokes-compatible
+integrated descent on a common local carrier.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

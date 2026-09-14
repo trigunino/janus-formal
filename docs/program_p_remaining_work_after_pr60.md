@@ -1027,9 +1027,12 @@ exactement Gate 1019 dans le cas autonome. Indépendamment, Gate 1021 prouve la
 naturelité du courant autonome à base gelée sous un lift J³/J⁴ coefficientiel
 de Gate 945 fourni, avec troncature et entrelacement des dérivées totales. Ce
 lift n'agit pas sur le `dH` base-dépendant de Gate 1020 et n'est pas la
-transition de l'atlas physique. Reste d'abord à construire la vraie transition
-Cartan J⁴ et sa loi de Piola, puis la descente intégrée compatible à Stokes sur
-un carrier local commun.
+transition de l'atlas physique. Gate 1022 différentie la formule locale réelle
+de coordonnées de l'espace total J³ et prouve exactement
+`dΦ(v,w)=(Jv,Cw+(dC·v)j)`, avec le terme de variation en base absent des lifts
+gelés. Elle ne prolonge pas encore un frame de Cartan non holonome et ne
+construit pas d'atlas J⁴ physique. Restent ce prolongement, sa loi de Piola,
+puis la descente intégrée compatible à Stokes sur un carrier local commun.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
