@@ -640,12 +640,20 @@ topological metric J³ core as `IsContMDiff` of order `∞` and proves that its
 associated fiber family is a `ContMDiffVectorBundle ∞`. This completes the
 smooth metric J³ bundle structure; section extraction and current descent
 remain open.
+Gate 984 exposes the genuine third derivative of the forward SpinC
+trivialization transition in the target base chart as a named continuous
+trilinear coefficient. It proves the two adjacent-direction symmetries and that
+this coefficient vanishes for a repeated trivialization. This remains only the
+algebraic third-order fiber coefficient; pointwise SpinC J³ transport, its
+groupoid laws, overlap coordinate changes, a bundle core, section extraction
+and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-SpinC D³ coefficients are assembled into a complete J³ atlas; the metric J³
-section, complete physical geometric atlas and multifield-current descent are
+pointwise SpinC J³ transport, its groupoid laws, overlap coordinate changes, a
+bundle core and section extraction are constructed; the metric J³ section,
+complete physical geometric atlas and multifield-current descent are
 constructed; and the
 nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.

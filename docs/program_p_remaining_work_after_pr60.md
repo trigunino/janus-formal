@@ -858,12 +858,21 @@ Gate 983 enregistre le core topologique métrique J³ comme `IsContMDiff` d'ordr
 `∞` et prouve que sa famille de fibres associée forme un
 `ContMDiffVectorBundle ∞`. La structure de bundle métrique J³ lisse est ainsi
 complète ; l'extraction de sections et la descente du courant restent ouvertes.
+Gate 984 expose comme coefficient trilinéaire continu nommé la vraie dérivée
+troisième de la transition directe de trivialisation SpinC, exprimée dans la
+carte de base cible. Elle prouve les deux symétries de directions adjacentes et
+l’annulation de ce coefficient lorsque la trivialisation est répétée. Il s’agit
+encore uniquement du coefficient algébrique de fibre d’ordre trois ; le
+transport SpinC J³ ponctuel, ses lois de groupoïde, les changements de
+coordonnées sur les recouvrements, un core de bundle, l’extraction de sections
+et la descente du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** assembler les coefficients D³ SpinC en atlas J³ complet ; extraire
-la section métrique J³ ; construire
+**Reste :** construire le transport SpinC J³ ponctuel, ses lois de groupoïde,
+les changements de coordonnées sur les recouvrements et son core de bundle,
+puis en extraire les sections ; extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
