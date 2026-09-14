@@ -653,6 +653,12 @@ trivialization transition. The resulting pointwise algebraic framed SpinC J³
 transport truncates exactly to the existing SpinC J² transport. Its groupoid
 laws, overlap coordinate changes, a bundle core, section extraction and current
 descent remain open.
+Gate 986 applies the reusable third-order continuous-linear-map Leibniz rule to
+the actual SpinC transition germ and derives the complete fifteen-term D³
+cocycle for the forward trivialization transition on valid triple overlaps.
+This supplies only the missing third-order fiber coefficient law; pointwise
+SpinC J³ groupoid laws, overlap coordinate changes, a bundle core, section
+extraction and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

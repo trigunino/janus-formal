@@ -873,6 +873,13 @@ ponctuel obtenu se tronque exactement vers le transport SpinC J² existant. Ses
 lois de groupoïde, les changements de coordonnées sur les recouvrements, un
 core de bundle, l’extraction de sections et la descente du courant restent
 ouverts.
+Gate 986 applique la règle de Leibniz réutilisable au troisième ordre pour les
+applications linéaires continues au germe réel de transition SpinC et dérive le
+cocycle D³ complet à quinze termes de la transition directe de trivialisation
+sur les recouvrements triples valides. Elle fournit uniquement la loi manquante
+du coefficient de fibre d’ordre trois ; les lois de groupoïde ponctuelles SpinC
+J³, les changements de coordonnées sur les recouvrements, un core de bundle,
+l’extraction de sections et la descente du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
