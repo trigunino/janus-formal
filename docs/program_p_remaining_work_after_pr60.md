@@ -919,12 +919,15 @@ transport SpinC J³ totalisé et les changements de coordonnées linéaires
 continus concrets sont `ContMDiffOn` d’ordre `∞` sur chaque recouvrement double.
 L’enregistrement du core lisse, l’extraction de sections et la descente du
 courant restent ouverts.
+Gate 993 enregistre le core topologique SpinC J³ comme `IsContMDiff` d’ordre
+`∞` et prouve que sa famille de fibres associée forme un
+`ContMDiffVectorBundle ∞`. La structure de bundle SpinC J³ lisse est ainsi
+complète ; l’extraction de sections et la descente du courant restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** enregistrer le core SpinC J³ comme bundle lisse, puis en extraire
-les sections ;
+**Reste :** extraire les sections du bundle SpinC J³ lisse ;
 extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,

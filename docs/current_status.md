@@ -692,13 +692,16 @@ smoothness theorem. Both the totalized SpinC J³ transport and the concrete
 continuous-linear coordinate changes are `ContMDiffOn` of order `∞` on every
 double overlap. Smooth-core registration, section extraction and current
 descent remain open.
+Gate 993 registers the topological SpinC J³ core as `IsContMDiff` of order `∞`
+and proves that its associated fiber family is a `ContMDiffVectorBundle ∞`.
+This completes the smooth SpinC J³ bundle structure; section extraction and
+current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-SpinC J³ coordinate-change family is proved continuous and smooth, its
-bundle core and sections are constructed; the metric J³ section,
-complete physical geometric atlas and multifield-current descent are
+sections of the now-complete smooth SpinC J³ bundle are extracted; the metric
+J³ section, complete physical geometric atlas and multifield-current descent are
 constructed; and the
 nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
