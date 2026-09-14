@@ -788,13 +788,18 @@ star. Gate 1016 constructs the strictly positive absolute-Jacobian density
 cocycle for genuine throat base-chart transitions. Gate 1017 vectorizes the
 radial current in the jet complex's spatial basis and proves its combined
 weight-one base/fiber chart law, including covariant evaluation on the
-physical J³ section. The remaining current problem is its Stokes-compatible
-integrated descent.
+physical J³ section. Gate 1018 proves smoothness of the transported current,
+its vector density and every fixed-base chart representative. Gate 1019 reads
+this density as a current on the formal physical J⁴ carrier and identifies its
+chartwise `dH` exactly with Gate 925's divergence and Euler-kernel
+factorization. The remaining current problem starts with covariance of this
+`dH` under genuine J⁴ transitions, followed by its Stokes-compatible integrated
+descent on a common local carrier.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-nonlinear physical BV/BRST action is built.
+nonlinear physical BV/BRST action also remains to be built.
 The official terminal count stays `5/14`.
 
 Given a

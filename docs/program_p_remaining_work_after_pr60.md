@@ -1,6 +1,6 @@
 # Programme P — bilan du reste à faire après la PR #60
 
-Date de référence : 2026-09-10.
+Date de référence : 2026-09-14.
 
 ## 1. Règle de lecture
 
@@ -1017,15 +1017,21 @@ lois ponctuelles exactes de pullback d’atlas et prouve l’indépendance de so
 1016 construit le cocycle strictement positif des poids jacobiens absolus des
 vraies transitions de cartes de base. Gate 1017 vectorise le courant radial
 dans la base spatiale du complexe de jets et prouve sa loi combinée de cartes
-base/fibre de poids un, jusque sur la section physique J³. Reste la descente
-intégrée compatible à Stokes.
+base/fibre de poids un, jusque sur la section physique J³. Gate 1018 prouve la
+régularité `C∞` du courant transporté, de sa densité vectorielle et des
+représentants à base fixée. Gate 1019 lit cette densité comme un courant sur le
+`J⁴` physique formel, puis identifie exactement son `dH` chartwise à la
+divergence de Gate 925 et à la factorisation du noyau d'Euler. Reste d'abord à
+prouver la covariance de ce `dH` sous les vraies transitions J⁴, puis sa
+descente intégrée compatible à Stokes sur un carrier local commun.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** étendre le pont intégré compatible à Stokes au-delà du secteur
-scalaire normal, avec l'incidence bulk-to-null encore manquante ; puis
-construire le BV/BRST physique non trivial sur tous les champs physiques.
+**Reste :** construire le carrier local covariant commun et étendre son pont
+intégré compatible à Stokes au-delà du secteur scalaire normal, avec
+l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST physique
+non trivial sur tous les champs physiques.
 `T06` reste ouverte ; le compteur terminal officiel reste `5/14`.
 
 ### T07 — `anomalyConstraintsApplied`
