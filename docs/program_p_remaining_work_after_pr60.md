@@ -900,13 +900,18 @@ les deux lois d’inverse et la troncature J² exacte. Elle établit seulement l
 continuité dans la variable jet à point de base fixé ; la continuité en point de
 base, un core de bundle, la lissité, l’extraction de sections et la descente du
 courant restent ouverts.
+Gate 990 combine les cinq résultats de régularité d’ordre inférieur de l’atlas
+SpinC J² avec les régularités d’ordre trois de la base et de la fibre fournies
+par Gate 973 au moyen du théorème générique de continuité du transport semidirect
+J³. La famille de changements de coordonnées SpinC J³ linéaires continus est
+donc continue sur chaque recouvrement double. Un core de bundle, la lissité,
+l’extraction de sections et la descente du courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** prouver la continuité en point de base et lisser les changements de
-coordonnées SpinC J³, construire leur core de bundle, puis en extraire les
-sections ;
+**Reste :** construire le core du bundle SpinC J³, lisser ses changements de
+coordonnées, puis en extraire les sections ;
 extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,

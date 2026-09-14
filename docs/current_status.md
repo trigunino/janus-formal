@@ -676,6 +676,11 @@ lifts identity, composition, both inverse laws and exact J² truncation to that
 packaging. It establishes continuity only in the jet variable at each fixed
 base point; base-point continuity, a bundle core, smoothness, section extraction
 and current descent remain open.
+Gate 990 combines the five lower-order SpinC J² coefficient regularity results
+with the third-order base and fiber regularity from Gate 973 through the generic
+J³ semidirect-continuity theorem. The resulting continuous-linear SpinC J³
+coordinate-change family is continuous on every double overlap. A bundle core,
+smoothness, section extraction and current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
