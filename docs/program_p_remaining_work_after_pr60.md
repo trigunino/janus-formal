@@ -1009,15 +1009,22 @@ aussi la section globale de l’espace total, prouve sa formule exacte en
 trivialisation locale et sa régularité globale `C∞`. Le bundle physique J³ et
 sa section Candidate-A canonique sont assemblés ; restent le bridge vers le
 carrier des courants et la descente du courant multichamp.
+Gate 1014 identifie exactement le vrai jet spatial J³ du produit des onze
+champs avec la fibre physique de jets encadrés par une équivalence réelle
+linéaire continue et fournit la troncature composante par composante vers J².
+Gate 1015 transporte le courant radial de Gate 925 par ce bridge, établit ses
+lois ponctuelles exactes de pullback d’atlas et prouve l’indépendance de son
+évaluation sur la section physique J³ dans chaque étoile de référence. Restent
+la covariance en densité vectorielle et la descente intégrée compatible à
+Stokes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** relier la fibre physique J³ au carrier des courants et construire
-la descente du courant multichamp ;
-étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
-avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
-physique non trivial sur tous les champs physiques.
+**Reste :** promouvoir le courant physique J³ ponctuel en densité vectorielle
+covariante ; étendre le pont intégré compatible à Stokes au-delà du secteur
+scalaire normal, avec l'incidence bulk-to-null encore manquante ; puis
+construire le BV/BRST physique non trivial sur tous les champs physiques.
 `T06` reste ouverte ; le compteur terminal officiel reste `5/14`.
 
 ### T07 — `anomalyConstraintsApplied`
