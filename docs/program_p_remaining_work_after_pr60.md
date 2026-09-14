@@ -906,12 +906,18 @@ par Gate 973 au moyen du théorème générique de continuité du transport semi
 J³. La famille de changements de coordonnées SpinC J³ linéaires continus est
 donc continue sur chaque recouvrement double. Un core de bundle, la lissité,
 l’extraction de sections et la descente du courant restent ouverts.
+Gate 991 combine la couverture ouverte SpinC trivialisation/carte de base déjà
+existante, les lois de groupoïde SpinC J³ exactes et la continuité de Gate 990
+en un `VectorBundleCore` topologique. Ses ouverts de base sont ceux de l’atlas
+SpinC J² et ses changements de coordonnées sont les applications linéaires
+continues de Gate 989. La lissité, l’extraction de sections et la descente du
+courant restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire le core du bundle SpinC J³, lisser ses changements de
-coordonnées, puis en extraire les sections ;
+**Reste :** lisser le core et les changements de coordonnées du bundle SpinC
+J³, puis en extraire les sections ;
 extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
