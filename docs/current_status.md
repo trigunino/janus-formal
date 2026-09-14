@@ -819,8 +819,12 @@ determinant pullback law. Gate 1028 identifies that form pullback with
 signed coordinate-divergence law on every overlap. Gate 1029 uses local
 constancy of the nonzero determinant sign to upgrade this
 to the actual `|det(J)|·J⁻¹` vector density and its absolute-divergence law.
-The remaining current problem is its Cartan transition, followed by
-Stokes-compatible integrated descent on a common local carrier.
+Gate 1030 identifies joint `dH` with divergence along an affine Cartan slice
+and proves its absolute Piola law under the genuine transported non-holonomic
+frame, including the radial current without an external regularity hypothesis.
+The remaining current problem is a four-dimensional bulk/null current-and-flux
+carrier, followed by geometric incidence and Stokes-compatible integrated
+descent on that common local carrier.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

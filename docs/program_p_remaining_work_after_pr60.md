@@ -1048,9 +1048,12 @@ pullback au déterminant signé. Gate 1028 identifie ce pullback à
 `det(J)·J⁻¹` comme germe des vraies transitions de gorge et prouve sa loi de
 divergence signée sur chaque overlap. Gate 1029 utilise la constance locale du
 signe du déterminant non nul pour passer à la vraie densité vectorielle
-`|det(J)|·J⁻¹` et à sa loi de divergence absolue. Restent son transport de
-Cartan, puis la descente intégrée compatible à Stokes sur un carrier local
-commun.
+`|det(J)|·J⁻¹` et à sa loi de divergence absolue. Gate 1030 identifie le `dH`
+joint à la divergence sur une tranche affine de Cartan et prouve sa loi de
+Piola absolue sous le vrai transport de frame non holonome, y compris pour le
+courant radial sans hypothèse externe de régularité. Restent un carrier 4D
+commun de courant et flux bulk/null, son incidence géométrique, puis la
+descente intégrée compatible à Stokes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
