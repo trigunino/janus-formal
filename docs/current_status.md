@@ -696,6 +696,11 @@ Gate 993 registers the topological SpinC J³ core as `IsContMDiff` of order `∞
 and proves that its associated fiber family is a `ContMDiffVectorBundle ∞`.
 This completes the smooth SpinC J³ bundle structure; section extraction and
 current descent remain open.
+Gate 994 adds a reusable chartwise J³ extractor for every `C³` coordinate
+representative. It packages the first three genuine Fréchet derivatives,
+proves the two adjacent third-derivative symmetries once, and truncates exactly
+to the existing generic J² extractor. No overlap compatibility or global
+bundle section is asserted yet.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

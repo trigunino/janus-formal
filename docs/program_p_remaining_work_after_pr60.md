@@ -923,6 +923,11 @@ Gate 993 enregistre le core topologique SpinC J³ comme `IsContMDiff` d’ordre
 `∞` et prouve que sa famille de fibres associée forme un
 `ContMDiffVectorBundle ∞`. La structure de bundle SpinC J³ lisse est ainsi
 complète ; l’extraction de sections et la descente du courant restent ouvertes.
+Gate 994 ajoute un extracteur J³ réutilisable en carte pour tout représentant
+de coordonnées `C³`. Il conditionne les trois vraies dérivées de Fréchet,
+prouve une seule fois les deux symétries adjacentes d’ordre trois et se tronque
+exactement vers l’extracteur J² générique existant. La compatibilité sur les
+recouvrements et la section globale ne sont pas encore établies.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
