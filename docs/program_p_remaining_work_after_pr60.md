@@ -958,6 +958,12 @@ premières dérivées de Fréchet, se tronque définitionnellement vers l’extr
 métrique J² existante et fournit le wrapper de métrique induite physique avec sa
 troncature J² centrée. La lissité des représentants locaux, la compatibilité sur
 les recouvrements et la section métrique J³ globale restent ouvertes.
+Gate 1000 totalise le jet métrique J³ extrait sur chaque ouvert de frame/carte.
+Son champ de troisième dérivée est `C∞` ; avec la troncature exacte vers le
+représentant J² lisse existant, l’assembleur J³ réutilisable prouve que le
+représentant local complet est `ContMDiffOn` d’ordre `∞`. Le wrapper de métrique
+induite physique a la même régularité. La compatibilité sur les recouvrements et
+l’assemblage global restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.

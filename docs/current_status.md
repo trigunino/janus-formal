@@ -730,6 +730,12 @@ Fréchet derivatives, truncates definitionally to the existing metric J²
 extraction, and supplies the physical induced-metric wrapper with its centered
 J² truncation. Local-representative smoothness, overlap compatibility and the
 global metric J³ section remain open.
+Gate 1000 totalizes the extracted metric J³ jet on each fixed frame/chart
+patch. Its third-derivative field is `C∞`; combined with exact truncation to the
+existing smooth J² representative, the reusable J³ assembler proves the whole
+local representative `ContMDiffOn` of order `∞`. The physical induced-metric
+wrapper has the same regularity. Overlap compatibility and global assembly
+remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
