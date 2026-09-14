@@ -1035,8 +1035,13 @@ construit pas d'atlas J⁴ physique. Gate 1023 forme ces frames verticaux non
 holonomes, les transporte avec le Jacobien de base inverse et prouve exactement
 l'entrelacement des lifts. Un J⁴ formel fournit désormais son point J³ physique
 tronqué et son frame Cartan, sans descente holonome revendiquée. Restent la
-naturelité du `dH` porté par ces frames, sa loi de Piola, puis la descente
-intégrée compatible à Stokes sur un carrier local commun.
+Gate 1024 définit le `dH` joint porté par ces frames, retrouve Gate 1020 sous sa
+condition exacte de différentiabilité jointe et prouve la naturalité scalaire
+par chaîne. Gate 1025 construit le représentant radial local à base variable
+sans arguments de preuve, établit sa régularité jointe `C∞` et l'identifie à
+Gate 1017 au point représenté. Restent à raccorder ces deux interfaces, prouver
+la loi de Piola de la densité vectorielle, puis effectuer la descente intégrée
+compatible à Stokes sur un carrier local commun.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
