@@ -718,14 +718,18 @@ lower jet is discharged by exact truncation and the existing J² compatibility;
 only the third component uses the established third-order chain and Leibniz
 rules. The physical sector wrapper satisfies the same law. Global section
 assembly remains open.
+Gate 998 assembles the compatible smooth local SpinC J³ representatives through
+the existing `VectorBundleCore` local-section constructor. It defines primitive
+and physical global `C∞` sections, identifies every valid local coordinate with
+the genuine arbitrary-trivialization/base-chart extraction, proves centered
+coordinate formulas and truncates exactly to the existing J² sections. This
+completes SpinC J³ section extraction; current descent remains open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-sections of the now-complete smooth SpinC J³ bundle are extracted; the metric
-J³ section, complete physical geometric atlas and multifield-current descent are
-constructed; and the
-nonlinear physical BV/BRST action is built.
+metric J³ section, complete physical geometric atlas and multifield-current
+descent are constructed; and the nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
 
 Given a

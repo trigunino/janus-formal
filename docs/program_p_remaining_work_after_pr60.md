@@ -945,13 +945,18 @@ carte de base cibles. Le jet inférieur est traité par troncature exacte et la
 compatibilité J² existante ; seule la composante d’ordre trois utilise les
 règles de chaîne et de Leibniz déjà établies. Le wrapper physique vérifie la
 même loi. Seul l’assemblage en section globale reste ouvert.
+Gate 998 assemble les représentants locaux SpinC J³ lisses et compatibles au
+moyen du constructeur de section locale du `VectorBundleCore` existant. Elle
+définit les sections globales `C∞` primitives et physiques, identifie chaque
+coordonnée locale valide à la vraie extraction dans une trivialisation et une
+carte de base arbitraires, prouve les formules centrées et se tronque exactement
+vers les sections J² existantes. L’extraction de la section SpinC J³ est ainsi
+complète ; la descente du courant reste ouverte.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** assembler les représentants SpinC J³ compatibles en sections
-globales ;
-extraire la section métrique J³ ; construire
+**Reste :** extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
