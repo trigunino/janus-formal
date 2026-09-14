@@ -886,13 +886,21 @@ SpinC J³ encadré ponctuel. Son conditionnement en application réelle linéair
 satisfait l’identité, la composition et les deux lois d’inverse. Les changements
 de coordonnées sur les recouvrements, un core de bundle, l’extraction de
 sections et la descente du courant restent ouverts.
+Gate 988 installe ce transport sur chaque recouvrement double de la couverture
+SpinC trivialisation/carte de base existante et le totalise par l’identité hors
+du recouvrement. Elle prouve l’identité, la composition et les deux lois
+d’inverse exactes, ainsi que la troncature ponctuelle exacte vers le changement
+de coordonnées SpinC J². Les applications restent réelles linéaires
+algébriques ; leur conditionnement linéaire continu, la continuité en point de
+base, un core de bundle, la lissité, l’extraction de sections et la descente du
+courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire les changements de coordonnées SpinC J³ sur les
-recouvrements et son core de bundle, puis en extraire les sections ; extraire la
-section métrique J³ ; construire
+**Reste :** conditionner continûment et lisser les changements de coordonnées
+SpinC J³, construire leur core de bundle, puis en extraire les sections ;
+extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
