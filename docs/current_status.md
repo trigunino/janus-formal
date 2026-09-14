@@ -686,6 +686,12 @@ exact SpinC J³ groupoid laws and Gate 990 continuity into a topological
 `VectorBundleCore`. Its base sets are the SpinC J² atlas base sets and its
 coordinate changes are the continuous-linear maps from Gate 989. Smoothness,
 section extraction and current descent remain open.
+Gate 992 combines the five lower-order `C∞` SpinC J² coefficient fields with
+Gate 973's third-order base and fiber fields through the generic J³ semidirect
+smoothness theorem. Both the totalized SpinC J³ transport and the concrete
+continuous-linear coordinate changes are `ContMDiffOn` of order `∞` on every
+double overlap. Smooth-core registration, section extraction and current
+descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

@@ -912,12 +912,19 @@ en un `VectorBundleCore` topologique. Ses ouverts de base sont ceux de l’atlas
 SpinC J² et ses changements de coordonnées sont les applications linéaires
 continues de Gate 989. La lissité, l’extraction de sections et la descente du
 courant restent ouvertes.
+Gate 992 combine les cinq champs de coefficients `C∞` d’ordre inférieur de
+l’atlas SpinC J² avec les champs d’ordre trois de la base et de la fibre de Gate
+973 au moyen du théorème générique de lissité du transport semidirect J³. Le
+transport SpinC J³ totalisé et les changements de coordonnées linéaires
+continus concrets sont `ContMDiffOn` d’ordre `∞` sur chaque recouvrement double.
+L’enregistrement du core lisse, l’extraction de sections et la descente du
+courant restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** lisser le core et les changements de coordonnées du bundle SpinC
-J³, puis en extraire les sections ;
+**Reste :** enregistrer le core SpinC J³ comme bundle lisse, puis en extraire
+les sections ;
 extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
