@@ -772,6 +772,13 @@ sections for the LL auxiliary metric, measure and field, with exact value,
 centered-jet and J²-truncation laws, and packages their product as smooth core
 section coordinates. LL J³ section extraction is complete; common physical
 section assembly and multifield-current descent remain open.
+Gate 1013 combines the four gauge, three LL, two metric and two SpinC packages
+into one `SmoothCoreSectionCoordinates` inhabitant of the common physical J³
+core. It also constructs the corresponding global total-space section, proves
+its exact local-trivialization formula and establishes global `C∞` regularity.
+The complete physical J³ bundle and its canonical Candidate-A section are now
+assembled; bridging this geometric fiber to the current carrier and descending
+the multifield current remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

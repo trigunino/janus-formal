@@ -1002,12 +1002,19 @@ champ LL, avec lois exactes de valeur, jet centré et troncature J², puis forme
 leurs coordonnées de section produit. Les sections LL J³ sont complètes ;
 l’assemblage de la section physique commune et la descente du courant
 multichamp restent ouverts.
+Gate 1013 combine les quatre composantes gauge, les trois LL, les deux
+métriques et les deux SpinC dans un habitant unique de
+`SmoothCoreSectionCoordinates` pour le core physique J³ commun. Elle construit
+aussi la section globale de l’espace total, prouve sa formule exacte en
+trivialisation locale et sa régularité globale `C∞`. Le bundle physique J³ et
+sa section Candidate-A canonique sont assemblés ; restent le bridge vers le
+carrier des courants et la descente du courant multichamp.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** assembler la section physique J³ commune et construire la descente
-du courant multichamp ;
+**Reste :** relier la fibre physique J³ au carrier des courants et construire
+la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST
 physique non trivial sur tous les champs physiques.
