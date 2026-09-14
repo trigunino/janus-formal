@@ -984,11 +984,20 @@ auxiliaire, mesure et champ, avec troncature exacte vers le core LL J².
 Gate 1005 assemble les onze composantes gauge, LL, métrique et SpinC dans le
 core produit physique J³ commun et lisse. L’atlas physique J³ est complet ; les
 sections gauge/LL et la descente du courant multichamp restent ouvertes.
+Gate 1006 extrait le vrai jet gauge J³ dans toute paire frame/carte de base
+valide et le tronque exactement vers l’extraction gauge J² existante. Gate 1007
+totalise ces jets sur chaque ouvert et prouve leur représentant local `C∞`.
+Gate 1008 établit leur compatibilité exacte avec le transport semidirect gauge
+J³, y compris l’expansion complète des règles de chaîne et de Leibniz d’ordre
+trois. Gate 1009 assemble les représentants compatibles en sections gauge J³
+globales `C∞`, primitives et Candidate-A, avec coordonnées locales, formules
+centrées et troncature J² exactes. Les sections gauge J³ sont complètes ; les
+sections LL et la descente du courant multichamp restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire les sections physiques J³ gauge/LL et la descente du
+**Reste :** construire les sections physiques J³ LL et la descente du
 courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST

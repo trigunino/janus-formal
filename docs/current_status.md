@@ -753,6 +753,16 @@ measure and field components, and records exact truncation to the LL J² core.
 Gate 1005 assembles the eleven gauge, LL, metric and SpinC J³ components into
 the common smooth physical product core. The physical J³ atlas is now complete;
 gauge/LL section extraction and multifield-current descent remain open.
+Gate 1006 extracts the genuine gauge J³ jet in every valid frame/base-chart
+pair and truncates exactly to the existing gauge J² extraction. Gate 1007
+totalizes these jets on each atlas patch and proves the local representative
+`C∞`. Gate 1008 proves exact compatibility with the actual gauge J³ semidirect
+transport, including the full third-derivative chain and Leibniz expansion.
+Gate 1009 assembles the compatible local representatives into primitive and
+Candidate-A global `C∞` gauge J³ sections, with exact local coordinates,
+centered formulas and truncation to the existing J² sections. Gauge J³ section
+extraction is complete; LL section extraction and multifield-current descent
+remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
