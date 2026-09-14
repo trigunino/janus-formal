@@ -746,12 +746,19 @@ existing metric J³ `VectorBundleCore`. It defines primitive and physical global
 `C∞` sections, identifies every valid local coordinate with the genuine
 frame/base-chart extraction, proves centered formulas and truncates exactly to
 the existing metric J² sections. This completes metric J³ section extraction.
+Gate 1003 upgrades the actual constant-fiber J³ chart transport to a smooth
+`VectorBundleCore`, with exact groupoid laws and reuse of the J² chart domains.
+Gate 1004 forms the smooth LL J³ core as the product of its auxiliary metric,
+measure and field components, and records exact truncation to the LL J² core.
+Gate 1005 assembles the eleven gauge, LL, metric and SpinC J³ components into
+the common smooth physical product core. The physical J³ atlas is now complete;
+gauge/LL section extraction and multifield-current descent remain open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-complete physical geometric atlas and multifield-current descent are
-constructed; and the nonlinear physical BV/BRST action is built.
+physical J³ sections and multifield-current descent are constructed; and the
+nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
 
 Given a

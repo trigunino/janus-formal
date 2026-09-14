@@ -976,11 +976,19 @@ Gate 1002 assemble ces représentants locaux lisses et compatibles au moyen du
 vraie extraction frame/carte, prouve les formules centrées et se tronque
 exactement vers les sections métriques J² existantes. L’extraction de la section
 métrique J³ est ainsi complète.
+Gate 1003 transforme le transport réel J³ à fibre constante en un
+`VectorBundleCore` lisse, sur les domaines de cartes J² existants et avec les
+lois de groupoïde exactes.
+Gate 1004 forme le core LL J³ lisse comme produit des composantes métrique
+auxiliaire, mesure et champ, avec troncature exacte vers le core LL J².
+Gate 1005 assemble les onze composantes gauge, LL, métrique et SpinC dans le
+core produit physique J³ commun et lisse. L’atlas physique J³ est complet ; les
+sections gauge/LL et la descente du courant multichamp restent ouvertes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire l'atlas géométrique physique complet et la descente du
+**Reste :** construire les sections physiques J³ gauge/LL et la descente du
 courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,
 avec l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST

@@ -294,6 +294,53 @@ theorem transport_thirdDerivative_apply
       change.transportThirdDerivativeFormula jet first second third :=
   rfl
 
+/-- Full third-derivative expansion of the semidirect third-jet transport. -/
+theorem transport_thirdDerivative_apply_expanded
+    [FiniteDimensional Real X]
+    (change : FramedThirdOrderJetSemidirectChange X V)
+    (jet : FramedThirdOrderJet X V)
+    (first second third : X) :
+    (change.transport jet).thirdDerivative first second third =
+      change.fiberValue
+          (jet.thirdDerivative
+            (change.baseFirst first)
+            (change.baseFirst second)
+            (change.baseFirst third)) +
+        change.fiberValue
+          (jet.secondDerivative
+            (change.baseSecond first second) (change.baseFirst third)) +
+        change.fiberValue
+          (jet.secondDerivative
+            (change.baseSecond first third) (change.baseFirst second)) +
+        change.fiberValue
+          (jet.secondDerivative
+            (change.baseSecond second third) (change.baseFirst first)) +
+        change.fiberValue
+          (jet.firstDerivative (change.baseThird first second third)) +
+        change.fiberFirst first
+          (jet.secondDerivative
+            (change.baseFirst second) (change.baseFirst third)) +
+        change.fiberFirst second
+          (jet.secondDerivative
+            (change.baseFirst first) (change.baseFirst third)) +
+        change.fiberFirst third
+          (jet.secondDerivative
+            (change.baseFirst first) (change.baseFirst second)) +
+        change.fiberFirst first
+          (jet.firstDerivative (change.baseSecond second third)) +
+        change.fiberFirst second
+          (jet.firstDerivative (change.baseSecond first third)) +
+        change.fiberFirst third
+          (jet.firstDerivative (change.baseSecond first second)) +
+        change.fiberSecond first second
+          (jet.firstDerivative (change.baseFirst third)) +
+        change.fiberSecond first third
+          (jet.firstDerivative (change.baseFirst second)) +
+        change.fiberSecond second third
+          (jet.firstDerivative (change.baseFirst first)) +
+        change.fiberThird first second third jet.value :=
+  rfl
+
 end FramedThirdOrderJetSemidirectChange
 
 end
