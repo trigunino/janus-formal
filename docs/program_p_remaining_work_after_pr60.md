@@ -1007,22 +1007,23 @@ métriques et les deux SpinC dans un habitant unique de
 `SmoothCoreSectionCoordinates` pour le core physique J³ commun. Elle construit
 aussi la section globale de l’espace total, prouve sa formule exacte en
 trivialisation locale et sa régularité globale `C∞`. Le bundle physique J³ et
-sa section Candidate-A canonique sont assemblés ; restent le bridge vers le
-carrier des courants et la descente du courant multichamp.
+sa section Candidate-A canonique sont assemblés.
 Gate 1014 identifie exactement le vrai jet spatial J³ du produit des onze
 champs avec la fibre physique de jets encadrés par une équivalence réelle
 linéaire continue et fournit la troncature composante par composante vers J².
 Gate 1015 transporte le courant radial de Gate 925 par ce bridge, établit ses
 lois ponctuelles exactes de pullback d’atlas et prouve l’indépendance de son
-évaluation sur la section physique J³ dans chaque étoile de référence. Restent
-la covariance en densité vectorielle et la descente intégrée compatible à
-Stokes.
+évaluation sur la section physique J³ dans chaque étoile de référence. Gate
+1016 construit le cocycle strictement positif des poids jacobiens absolus des
+vraies transitions de cartes de base. Gate 1017 vectorise le courant radial
+dans la base spatiale du complexe de jets et prouve sa loi combinée de cartes
+base/fibre de poids un, jusque sur la section physique J³. Reste la descente
+intégrée compatible à Stokes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** promouvoir le courant physique J³ ponctuel en densité vectorielle
-covariante ; étendre le pont intégré compatible à Stokes au-delà du secteur
+**Reste :** étendre le pont intégré compatible à Stokes au-delà du secteur
 scalaire normal, avec l'incidence bulk-to-null encore manquante ; puis
 construire le BV/BRST physique non trivial sur tous les champs physiques.
 `T06` reste ouverte ; le compteur terminal officiel reste `5/14`.

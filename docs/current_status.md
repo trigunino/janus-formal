@@ -777,22 +777,24 @@ into one `SmoothCoreSectionCoordinates` inhabitant of the common physical J³
 core. It also constructs the corresponding global total-space section, proves
 its exact local-trivialization formula and establishes global `C∞` regularity.
 The complete physical J³ bundle and its canonical Candidate-A section are now
-assembled; bridging this geometric fiber to the current carrier and descending
-the multifield current remain open.
+assembled.
 Gate 1014 identifies the genuine spatial J³ jet of the complete eleven-field
 value product with the assembled physical framed-J³ fiber by an exact real
 continuous-linear equivalence and supplies componentwise truncation to J².
 Gate 1015 transfers Gate 925's radial Cartan current through this bridge,
 proves the exact pointwise atlas pullback laws, and shows that evaluation on
 the canonical physical J³ section is chart-independent inside each reference
-star. The remaining current problem is its covariant vector-density and
-Stokes-compatible integrated descent.
+star. Gate 1016 constructs the strictly positive absolute-Jacobian density
+cocycle for genuine throat base-chart transitions. Gate 1017 vectorizes the
+radial current in the jet complex's spatial basis and proves its combined
+weight-one base/fiber chart law, including covariant evaluation on the
+physical J³ section. The remaining current problem is its Stokes-compatible
+integrated descent.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
 scalar normal sector, including the still-missing bulk-to-null incidence; the
-pointwise physical current is upgraded to covariant vector-density data; and
-the nonlinear physical BV/BRST action is built.
+nonlinear physical BV/BRST action is built.
 The official terminal count stays `5/14`.
 
 Given a
