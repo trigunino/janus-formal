@@ -712,6 +712,12 @@ representatives. Every primitive and physical SpinC J³ representative is now
 `ContMDiffOn` of order `∞` on its atlas patch and truncates exactly to the
 existing J² representative. Overlap compatibility and global assembly remain
 open.
+Gate 997 proves that actual SpinC J³ semidirect transport sends every extracted
+primitive jet exactly to its target trivialization/base-chart extraction. The
+lower jet is discharged by exact truncation and the existing J² compatibility;
+only the third component uses the established third-order chain and Leibniz
+rules. The physical sector wrapper satisfies the same law. Global section
+assembly remains open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

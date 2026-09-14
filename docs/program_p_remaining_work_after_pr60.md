@@ -939,12 +939,18 @@ représentants locaux SpinC réels. Chaque représentant SpinC J³ primitif et
 physique est désormais `ContMDiffOn` d’ordre `∞` sur son ouvert d’atlas et se
 tronque exactement vers le représentant J² existant. La compatibilité sur les
 recouvrements et l’assemblage global restent ouverts.
+Gate 997 prouve que le transport semidirect SpinC J³ réel envoie exactement
+chaque jet primitif extrait vers son extraction dans la trivialisation et la
+carte de base cibles. Le jet inférieur est traité par troncature exacte et la
+compatibilité J² existante ; seule la composante d’ordre trois utilise les
+règles de chaîne et de Leibniz déjà établies. Le wrapper physique vérifie la
+même loi. Seul l’assemblage en section globale reste ouvert.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** prouver la compatibilité des représentants SpinC J³ sur les
-recouvrements et les assembler en sections globales ;
+**Reste :** assembler les représentants SpinC J³ compatibles en sections
+globales ;
 extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,

@@ -585,7 +585,7 @@ private theorem third_fderiv_clm_apply_const_apply
 
 /-- Third-order Leibniz rule for a varying continuous linear map applied to a
 varying vector. -/
-private theorem third_fderiv_clm_apply_apply
+theorem third_fderiv_clm_apply_apply
     (c : X → (V →L[Real] V)) (u : X → V)
     (point first second third : X)
     (hC : ContDiffAt Real 3 c point)
