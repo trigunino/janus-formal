@@ -792,9 +792,14 @@ physical J³ section. Gate 1018 proves smoothness of the transported current,
 its vector density and every fixed-base chart representative. Gate 1019 reads
 this density as a current on the formal physical J⁴ carrier and identifies its
 chartwise `dH` exactly with Gate 925's divergence and Euler-kernel
-factorization. The remaining current problem starts with covariance of this
-`dH` under genuine J⁴ transitions, followed by its Stokes-compatible integrated
-descent on a common local carrier.
+factorization. Gate 1020 defines the explicit base-coordinate contribution to
+the chartwise local `dH` and recovers Gate 1019 exactly on autonomous currents.
+Independently, Gate 1021 proves naturality of the autonomous current at frozen
+base under a supplied Gate 945 coefficientwise J³/J⁴ lift, including truncation
+and total-derivative intertwining. It does not act on Gate 1020's base-dependent
+`dH` and is not the physical atlas transition. The remaining current problem
+is the genuine Cartan J⁴ transition and its Piola law, followed by
+Stokes-compatible integrated descent on a common local carrier.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

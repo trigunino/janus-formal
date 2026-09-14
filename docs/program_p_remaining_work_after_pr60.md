@@ -1021,9 +1021,15 @@ base/fibre de poids un, jusque sur la section physique J³. Gate 1018 prouve la
 régularité `C∞` du courant transporté, de sa densité vectorielle et des
 représentants à base fixée. Gate 1019 lit cette densité comme un courant sur le
 `J⁴` physique formel, puis identifie exactement son `dH` chartwise à la
-divergence de Gate 925 et à la factorisation du noyau d'Euler. Reste d'abord à
-prouver la covariance de ce `dH` sous les vraies transitions J⁴, puis sa
-descente intégrée compatible à Stokes sur un carrier local commun.
+divergence de Gate 925 et à la factorisation du noyau d'Euler. Gate 1020 définit
+la contribution de la coordonnée de base au `dH` local chartwise et retrouve
+exactement Gate 1019 dans le cas autonome. Indépendamment, Gate 1021 prouve la
+naturelité du courant autonome à base gelée sous un lift J³/J⁴ coefficientiel
+de Gate 945 fourni, avec troncature et entrelacement des dérivées totales. Ce
+lift n'agit pas sur le `dH` base-dépendant de Gate 1020 et n'est pas la
+transition de l'atlas physique. Reste d'abord à construire la vraie transition
+Cartan J⁴ et sa loi de Piola, puis la descente intégrée compatible à Stokes sur
+un carrier local commun.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
