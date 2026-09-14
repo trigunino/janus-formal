@@ -933,11 +933,18 @@ trivialisation SpinC et de carte de base. Elle expose le vrai jet SpinC J³
 local, ses quatre projections et sa troncature J² exacte, ainsi que le wrapper
 du secteur physique. La compatibilité sur les recouvrements, la lissité des
 représentants locaux et la section globale restent ouvertes.
+Gate 996 expose un assembleur générique de lissité à partir d’une troncature J²
+lisse et d’un champ de dérivée troisième lisse, puis l’applique aux
+représentants locaux SpinC réels. Chaque représentant SpinC J³ primitif et
+physique est désormais `ContMDiffOn` d’ordre `∞` sur son ouvert d’atlas et se
+tronque exactement vers le représentant J² existant. La compatibilité sur les
+recouvrements et l’assemblage global restent ouverts.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** extraire les sections du bundle SpinC J³ lisse ;
+**Reste :** prouver la compatibilité des représentants SpinC J³ sur les
+recouvrements et les assembler en sections globales ;
 extraire la section métrique J³ ; construire
 l'atlas géométrique physique complet et la descente du courant multichamp ;
 étendre le pont intégré compatible à Stokes au-delà du secteur scalaire normal,

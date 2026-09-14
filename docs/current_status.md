@@ -706,6 +706,12 @@ trivialization/base-chart pair. It exposes the genuine local SpinC J³ jet, its
 four component projections and exact J² truncation, together with the physical
 sector wrapper. Overlap compatibility, local-representative smoothness and the
 global bundle section remain open.
+Gate 996 exposes a reusable smoothness assembler from a smooth J² truncation
+and a smooth third-derivative field, then applies it to the actual SpinC local
+representatives. Every primitive and physical SpinC J³ representative is now
+`ContMDiffOn` of order `∞` on its atlas patch and truncates exactly to the
+existing J² representative. Overlap compatibility and global assembly remain
+open.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

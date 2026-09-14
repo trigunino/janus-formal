@@ -388,6 +388,32 @@ private theorem symmetrizedFramedThirdOrderJetFromLower_components
       hThirdSecondFirst]
     module
 
+/-- A family of framed third jets is smooth when its second-jet truncation
+and third-derivative component are smooth. -/
+theorem contMDiffOn_framedThirdOrderJet_of_truncate_and_thirdDerivative
+    {H Parameter : Type*}
+    [TopologicalSpace H]
+    {I : ModelWithCorners Real X H}
+    [TopologicalSpace Parameter] [ChartedSpace H Parameter]
+    {n : WithTop ℕ∞} {s : Set Parameter}
+    (jet : Parameter → FramedThirdOrderJet X V)
+    (hLower : ContMDiffOn I
+      𝓘(Real, FramedSecondOrderJet X V) n
+      (fun point ↦ (jet point).toFramedSecondOrderJet) s)
+    (hThird : ContMDiffOn I
+      𝓘(Real, X →L[Real] X →L[Real] X →L[Real] V) n
+      (fun point ↦ (jet point).thirdDerivative) s) :
+    ContMDiffOn I 𝓘(Real, FramedThirdOrderJet X V) n jet s := by
+  have hComponents := hLower.prodMk_space hThird
+  have hBack :=
+    (symmetrizedFramedThirdOrderJetFromLowerContinuousLinearMap
+      (X := X) (V := V)).contMDiff.comp_contMDiffOn hComponents
+  convert hBack using 1
+  funext point
+  exact
+    (symmetrizedFramedThirdOrderJetFromLower_components
+      (X := X) (V := V) (jet point)).symm
+
 /-! ## A finite-dimensional application criterion on manifolds -/
 
 private theorem contMDiffOn_clm_apply_of_finiteDimensional
