@@ -1167,8 +1167,11 @@ différentiabilité, et l'intégration sur `0 ≤ r ≤ 1` donne l'identité de 
 sur une fibre. Gate 1043 calcule la densité métrique
 `√|det g| = exp u`, l'identifie à l'aire d'écran sur la face et prouve les
 versions courant densitisé et volume métrique de cette identité fibre par
-fibre. Aucune mesure ni intégration sur la source nulle, véritable demi-collier
-à bord, support compact ou incidence mapping-torus n'est encore construit.
+fibre. Gate 1044 munit toute la source `(u,x,y)` du volume coordonné et de la
+mesure d'écran `exp(u) du dx dy`, prouve les formules d'intégrale pondérée et
+d'intégrabilité, puis intègre Gate 1043 sur la source sous un contrat explicite
+de différentiabilité et d'intégrabilité. Aucun véritable demi-collier à bord,
+support compact construit ou incidence mapping-torus n'est encore fourni.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1177,8 +1180,8 @@ encore.
 ce carrier à une hypersurface effective du bulk mapping-torus par une
 identification de ce collier explicite avec les cartes physiques, puis construire
 transport tangent et compatibilités
-métrique/volume avec les cartes physiques. Construire sa mesure d'écran, puis établir la
-covariance/recollement d'atlas du courant, du flux et
+métrique/volume avec les cartes physiques. Identifier la mesure d'écran dans
+ces cartes, puis établir la covariance/recollement d'atlas du courant, du flux et
 de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
 compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension
 deux vers les joints (Gate 944 ne fournit que la loi d'averaging intégrée), puis
