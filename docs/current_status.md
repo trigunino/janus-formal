@@ -1002,10 +1002,18 @@ the coordinate formula `div_g X = (sqrt|g|)⁻¹ ∂(sqrt|g|X)` is natural at th
 selected face point, assuming differentiability of the target densitized
 current.  The target metric field remains supplied and is neither connected
 to a physical mapping-torus metric nor glued across an atlas.
+Gate 1054 makes that target field physical.  It inverts the exact incidence
+chart, proves that the warped face coordinate returns the selected true
+mapping-torus boundary point, and evaluates a genuine
+`SmoothGeneralLorentzMetric` on the derivative frame of this inverse chart.
+The transition stays inside the valid inverse-chart target as a germ.  Under
+the still-explicit warped/physical metric congruence, Gate 1053's divergence
+naturality therefore applies to these actual physical metric coefficients.
+Existence of this physical metric-germ compatibility datum is not yet proved.
 The remaining geometric step is to construct the incidence and transition
 data with the required positive orientation, make the null geometry depend
-faithfully on the physical input, and realize Gate 1053's germ metric
-compatibility in the physical charts.  Its orientation
+faithfully on the physical input, and inhabit Gate 1054's physical metric-germ
+compatibility.  Its orientation
 and screen measure must be matched across the physical atlas, then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
 extended to coherent current/flux atlas gluing and an integrated
