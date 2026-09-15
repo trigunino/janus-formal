@@ -947,9 +947,13 @@ and integrability contract.  Gate 1045 reuses Gate 1034's finite source collar
 to make `source × [0,1]` an analytic manifold with corners, identifies its
 boundary with the `r=0` and `r=1` face ranges, embeds it as the ambient slab
 `0 ≤ z-u ≤ 1`, and restricts the affine current with lower flux `ρ` and zero
-outer value in the fixed coordinate convention.  No compact support is
-constructed, and the warped embedding is
-not yet identified with Gate 1034's conditional mapping-torus collar map.
+outer value in the fixed coordinate convention.  Gate 1046 proves that every
+differentiable compactly supported source density automatically satisfies Gate
+1044's weighted integrability contract and that its current restricted to the
+closed half-collar has compact support.  It constructs a nonzero smooth bump
+with support the radius-two closed ball and instantiates the integrated Stokes
+law for it.  The warped embedding is not yet identified with Gate 1034's
+conditional mapping-torus collar map.
 The remaining geometric step is to make the null geometry depend faithfully on
 the physical input and identify it with an actual mapping-torus bulk
 hypersurface by relating this explicit collar to the physical charts, then add

@@ -1175,10 +1175,13 @@ source fini de Gate 1034 pour donner à
 `source × [0,1]` sa structure analytique à coins, identifier exactement ses
 faces `r=0` et `r=1`, l'embarquer comme la dalle ambiante `0 ≤ z-u ≤ 1`, puis
 y restreindre le courant affine avec flux inférieur `ρ` et valeur extérieure
-nulle dans la convention coordonnée fixée. Aucun support compact n'est encore
-construit, et cet embedding warped
-n'est pas encore identifié à la carte conditionnelle du collier mapping-torus
-de Gate 1034.
+nulle dans la convention coordonnée fixée. Gate 1046 prouve que toute densité
+source différentiable à support compact satisfait automatiquement le contrat
+d'intégrabilité pondérée de Gate 1044 et que son courant restreint au
+demi-collier fermé est à support compact. Elle construit un bump lisse non nul,
+de support égal à la boule fermée de rayon deux, et instancie pour lui la loi de
+Stokes intégrée. L'embedding warped n'est pas encore identifié à la carte
+conditionnelle du collier mapping-torus de Gate 1034.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
