@@ -1180,16 +1180,21 @@ source différentiable à support compact satisfait automatiquement le contrat
 d'intégrabilité pondérée de Gate 1044 et que son courant restreint au
 demi-collier fermé est à support compact. Elle construit un bump lisse non nul,
 de support égal à la boule fermée de rayon deux, et instancie pour lui la loi de
-Stokes intégrée. L'embedding warped n'est pas encore identifié à la carte
-conditionnelle du collier mapping-torus de Gate 1034.
+Stokes intégrée. Gate 1047 spécialise enfin l'incidence conditionnelle de Gate
+1034 à cet hyperplan : sur le patch source, la face réelle du bulk mapping-torus
+a exactement l'embedding warped comme coordonnée de carte. Elle y transporte
+les formules coordonnées de courant, flux et densité métrique warped, et prouve
+l'injectivité des points de bord sélectionnés. Ce raccord reste conditionnel et
+limité à la face ; il n'identifie ni les colliers complets, ni leur normale, ni
+la métrique ou la mesure physique du mapping-torus.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** rendre la géométrie nulle fidèle à l'input physique et identifier
-ce carrier à une hypersurface effective du bulk mapping-torus par une
-identification de ce collier explicite avec les cartes physiques, puis construire
-transport tangent et compatibilités
+**Reste :** construire effectivement le datum d'incidence de Gate 1034, rendre
+la géométrie nulle fidèle à l'input physique et prolonger le raccord de face de
+Gate 1047 en une identification du collier explicite avec les cartes physiques.
+Construire ensuite le transport tangent et les compatibilités
 métrique/volume avec les cartes physiques. Identifier la mesure d'écran dans
 ces cartes, puis établir la covariance/recollement d'atlas du courant, du flux et
 de la divergence ainsi que la descente intégrée `bulk → nullBoundary`

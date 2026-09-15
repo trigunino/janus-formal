@@ -952,12 +952,16 @@ differentiable compactly supported source density automatically satisfies Gate
 1044's weighted integrability contract and that its current restricted to the
 closed half-collar has compact support.  It constructs a nonzero smooth bump
 with support the radius-two closed ball and instantiates the integrated Stokes
-law for it.  The warped embedding is not yet identified with Gate 1034's
-conditional mapping-torus collar map.
-The remaining geometric step is to make the null geometry depend faithfully on
-the physical input and identify it with an actual mapping-torus bulk
-hypersurface by relating this explicit collar to the physical charts, then add
-tangent transport and relate its metric/volume formula to the physical charts.  Its orientation
+law for it.  Gate 1047 specializes Gate 1034's conditional incidence datum to
+the warped hyperplane.  On the source patch, the true mapping-torus boundary
+point has exactly the warped embedding as its bulk-chart coordinate; the
+coordinate current, flux, and warped metric-density formulas therefore hold
+there, and the selected boundary points are injective.  This identifies only
+the zero face and remains conditional on an inhabitant of the incidence datum.
+The remaining geometric step is to construct that incidence datum, make the
+null geometry depend faithfully on the physical input, extend the face bridge
+to the full collar, then add tangent transport and relate its metric/volume
+formula to the physical charts.  Its orientation
 and screen measure must be matched across the physical atlas so that current,
 flux, divergence, and
 an integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
