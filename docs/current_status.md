@@ -924,9 +924,16 @@ a set-theoretic right inverse proves that every chart density is attained for
 the singleton face family.  No regularity is asserted anywhere for this
 extension; it supplies no screen integration, mapping-torus incidence, PT05
 restriction, or Stokes law.
+Gate 1040 extends that hyperplane to the global continuous linear collar
+`((u,x,y),r) ↦ (u,x,y,u+r)`.  Its inverse is explicit, the zero slice recovers
+Gate 1038's embedding, the defining function equals `r`, and the positive
+radial derivative is `e₃`.  The convention `-e₃` for the future `r ≥ 0` lower
+boundary differs from Gate 1039's rigging only by the tangent generator, hence
+has the same nonzero coordinate flux.  No half-collar, mapping-torus bridge,
+metric-volume identity, integration, or Stokes theorem is yet supplied.
 The remaining geometric step is to make the null geometry depend faithfully on
 the physical input and identify it with an actual mapping-torus bulk
-hypersurface through a `C³` incidence/restriction, then add
+hypersurface by relating this explicit collar to the physical charts, then add
 tangent transport and metric/volume compatibility.  Its orientation
 and screen measure must support atlas-covariant current, flux, divergence, and
 an integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two

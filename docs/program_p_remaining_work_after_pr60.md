@@ -1152,13 +1152,22 @@ flux non nul ; un inverse à droite ensembliste montre donc que toute densité d
 carte est atteinte pour la famille de faces singleton. Aucune régularité n'est
 affirmée pour cette extension, qui ne fournit ni intégration d'écran,
 ni incidence mapping-torus, ni restriction PT05, ni loi de Stokes.
+Gate 1040 prolonge cet hyperplan en un collier linéaire continu global
+`((u,x,y),r) ↦ (u,x,y,u+r)`. Son inverse est explicite, sa tranche zéro redonne
+l'embedding de Gate 1038, la fonction définissante vaut `r` et la dérivée
+radiale positive est `e₃`. La convention `-e₃` pour le futur bord inférieur du
+demi-collier `r ≥ 0` ne diffère du rigging de Gate 1039 que par le générateur
+tangent ; elle a donc le même flux coordonné non nul. Aucun demi-collier, pont
+mapping-torus, accord avec le volume métrique, intégration ou théorème de Stokes
+n'est encore fourni.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** rendre la géométrie nulle fidèle à l'input physique et identifier
 ce carrier à une hypersurface effective du bulk mapping-torus par une
-incidence/restriction `C³`, puis construire transport tangent et compatibilités
+identification de ce collier explicite avec les cartes physiques, puis construire
+transport tangent et compatibilités
 métrique/volume. Fixer son orientation et sa mesure
 d'écran, puis établir la covariance/recollement d'atlas du courant, du flux et
 de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
