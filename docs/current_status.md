@@ -970,12 +970,21 @@ pullback then preserves the face flux three-form and its scalar source-frame
 coefficient at the selected point, both against the true face coordinate and
 the warped embedding.  This remains a point-local coordinate-volume law; it
 does not establish metric-volume or four-dimensional divergence covariance.
+Gate 1050 supplies that missing ambient coordinate-divergence step.  It proves
+the generic signed four-dimensional Piola identity from exterior
+differentiation of the flux three-form, derives inverse Jacobians throughout
+Gate 1049's local transition germ, and proves differentiability of the
+transformed current from a `C¹` target current.  At the selected face point,
+divergence is multiplied by the signed transition determinant while flux is
+preserved.  For the affine collar current, these become respectively the
+signed determinant times `ρ` and the original face flux `ρ`.  This still uses
+the fixed coordinate volume rather than the physical metric volume.
 The remaining geometric step is to construct the incidence and transition
 data, make the null geometry depend faithfully on the physical input, and add
 metric/volume compatibility in the physical charts.  Its orientation
 and screen measure must be matched across the physical atlas, then Gate 1049's
-pointwise signed flux law must be extended to coherent current/flux atlas
-gluing, four-dimensional divergence covariance, and an integrated
+pointwise signed flux law and Gate 1050's coordinate-divergence law must be
+extended to coherent current/flux atlas gluing and an integrated
 `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
 `GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
 integrated averaging law).  These arrows must then join the realized

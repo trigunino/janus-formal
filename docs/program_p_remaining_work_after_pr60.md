@@ -1199,6 +1199,14 @@ sur le repère source, aussi bien contre la vraie coordonnée de face que contre
 l'embedding warped. Cette loi reste ponctuelle et fondée sur le volume
 coordonné ; elle ne fournit ni covariance du volume métrique ni loi de
 divergence de Piola en dimension quatre.
+Gate 1050 ajoute cette loi de divergence en volume coordonné. Elle prouve la
+formule de Piola signée ambiante en dimension quatre par dérivation extérieure
+de la trois-forme de flux, obtient les Jacobiennes inverses sur tout le germe de
+transition et déduit automatiquement la régularité du courant transformé d'un
+courant cible `C¹`. Au point de face, la divergence est multipliée par le
+déterminant signé tandis que le flux est préservé. Pour le courant affine, les
+deux valeurs sont le déterminant signé fois `ρ` et le flux `ρ`. La mesure reste
+le volume coordonné fixe, pas le volume métrique physique.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1208,9 +1216,9 @@ transition des Gates 1034/1048, rendre la géométrie nulle fidèle à l'input
 physique, puis établir les compatibilités métrique/volume avec les cartes
 physiques. Identifier la mesure d'écran dans
 ces cartes, puis étendre la covariance ponctuelle du flux de Gate 1049 en un
-recollement d'atlas cohérent du courant et du flux, établir la covariance de la
-divergence, ainsi que la descente intégrée `bulk → nullBoundary` compatible à
-Stokes. Prouver aussi la trace locale orientée GHY de codimension
+recollement d'atlas cohérent du courant, du flux et de la divergence signée de
+Gate 1050, ainsi que la descente intégrée `bulk → nullBoundary` compatible à
+Stokes et au volume métrique. Prouver aussi la trace locale orientée GHY de codimension
 deux vers les joints (Gate 944 ne fournit que la loi d'averaging intégrée), puis
 assembler ces flèches avec les flèches déjà réalisées `bulk → nonNullBoundary`
 et `nullBoundary → joint` en étendant le squelette intégré de Gate 1037 à un
