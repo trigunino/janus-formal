@@ -1274,6 +1274,14 @@ Gate 1060 prouve la régularité lisse du relèvement canonique de première feu
 et construit une `boundaryMap` inverse-stéréographique lisse, avec ses formules
 exactes dans le cover et le quotient. Elle ferme la partie `boundaryMap` du
 futur datum d'incidence, pas sa carte bulk adaptée.
+Gate 1061 construit le germe de coordonnée adaptée manquant. Elle inverse
+localement la vraie carte de bande tubulaire, lit les coordonnées équatoriales,
+temporelle et de latitude, puis applique le cisaillement warped. Ses domaines
+bulk et source sont ouverts, toute ancre choisie appartient au patch, et la
+première feuille canonique réelle a exactement la coordonnée `(u,x,y,u)` sur
+ce patch. La gate prouve pour l'instant la régularité et l'incidence de face ;
+le paquet de difféomorphisme local et la couverture du collier fini restent à
+établir séparément.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1281,8 +1289,9 @@ encore.
 **Reste :** la contrainte `face_coordinate` de Gate 1034 est incompatible avec
 la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
 contre rang trois pour la face warped `(u,x,y,u)`. Construire une carte physique
-locale cisaillée adaptée, raffiner autour d'elle la route des Gates 1034/1048,
-couvrir le collier fini dans une même carte valide et prouver l'orientation
+locale cisaillée adaptée, désormais amorcée par Gate 1061, puis empaqueter son
+difféomorphisme local et raffiner autour d'elle la route des Gates 1034/1048.
+Couvrir le collier fini dans une même carte valide et prouver l'orientation
 positive requise par Gate 1051. Identifier dans ces cartes la métrique induite de face, le rigging
 normalisé, l'orientation et la mesure d'écran ; une
 compatibilité sur la région intégrée reste nécessaire pour réutiliser le

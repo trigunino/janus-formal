@@ -1050,12 +1050,19 @@ Gate 1060 proves that the canonical first-sheet boundary lift is smooth for the
 installed atlases and constructs a smooth inverse-stereographic boundary map
 with exact cover and quotient formulas.  This fills the smooth `boundaryMap`
 part of a future incidence datum, but does not provide its bulk chart.
+Gate 1061 constructs the missing adapted coordinate germ.  It locally inverts
+the genuine tubular-band map, reads its equatorial, time and latitude
+coordinates, and applies the warped shear.  Its bulk and source domains are
+open, every chosen source anchor lies in its patch, and the true canonical
+first sheet has exactly the coordinate `(u,x,y,u)` throughout that patch.
+The construction currently proves smoothness and exact face incidence; its
+local-diffeomorphism package and full finite-normal coverage remain separate.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
-warped face `(u,x,y,u)` has rank three.  The next geometric step is therefore
-to construct a sheared local physical chart adapted to the warped face, refine
-the Gate 1034/1048 route around it, cover the full finite collar in one valid
-chart, and prove the required positive orientation.  The induced face metric,
+warped face `(u,x,y,u)` has rank three.  The next geometric step is to package
+Gate 1061's coordinate as a local diffeomorphism, refine the Gate 1034/1048
+route around it, cover the full finite collar in one valid chart, and prove the
+required positive orientation.  The induced face metric,
 normalized rigging, orientation and screen measure must then be matched across
 the physical atlas; regional compatibility is needed to reuse the explicit
 warped fiber integral.  Then Gate 1049's
