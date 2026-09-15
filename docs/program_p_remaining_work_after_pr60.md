@@ -1170,8 +1170,15 @@ versions courant densitisé et volume métrique de cette identité fibre par
 fibre. Gate 1044 munit toute la source `(u,x,y)` du volume coordonné et de la
 mesure d'écran `exp(u) du dx dy`, prouve les formules d'intégrale pondérée et
 d'intégrabilité, puis intègre Gate 1043 sur la source sous un contrat explicite
-de différentiabilité et d'intégrabilité. Aucun véritable demi-collier à bord,
-support compact construit ou incidence mapping-torus n'est encore fourni.
+de différentiabilité et d'intégrabilité. Gate 1045 réutilise ensuite le collier
+source fini de Gate 1034 pour donner à
+`source × [0,1]` sa structure analytique à coins, identifier exactement ses
+faces `r=0` et `r=1`, l'embarquer comme la dalle ambiante `0 ≤ z-u ≤ 1`, puis
+y restreindre le courant affine avec flux inférieur `ρ` et valeur extérieure
+nulle dans la convention coordonnée fixée. Aucun support compact n'est encore
+construit, et cet embedding warped
+n'est pas encore identifié à la carte conditionnelle du collier mapping-torus
+de Gate 1034.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.

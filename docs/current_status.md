@@ -943,8 +943,13 @@ metric-volume versions of that fiberwise Stokes identity.  Gate 1044 equips the
 whole source `(u,x,y)` with coordinate volume and the screen measure
 `exp(u) du dx dy`.  It proves the weighted-integral and integrability formulas,
 then integrates Gate 1043 over the source under an explicit differentiability
-and integrability contract.  No actual half-collar with boundary, constructed
-compact support, or mapping-torus incidence is supplied.
+and integrability contract.  Gate 1045 reuses Gate 1034's finite source collar
+to make `source × [0,1]` an analytic manifold with corners, identifies its
+boundary with the `r=0` and `r=1` face ranges, embeds it as the ambient slab
+`0 ≤ z-u ≤ 1`, and restricts the affine current with lower flux `ρ` and zero
+outer value in the fixed coordinate convention.  No compact support is
+constructed, and the warped embedding is
+not yet identified with Gate 1034's conditional mapping-torus collar map.
 The remaining geometric step is to make the null geometry depend faithfully on
 the physical input and identify it with an actual mapping-torus bulk
 hypersurface by relating this explicit collar to the physical charts, then add
