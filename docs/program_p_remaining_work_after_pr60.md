@@ -1334,8 +1334,29 @@ Gate 1073 empaquette la covariance base/fibre J³ déjà prouvée en une section
 physique globale de densités vectorielles : chaque carte simultanément valide a
 un représentant, les représentants satisfont la loi exacte de recouvrement, et
 le courant radial de Gate 942 donne une section canonique dont la valeur dans la
-carte préférée est la densité physique initiale. La régularité en base et
-l'intégration restent absentes.
+carte préférée est la densité physique initiale.
+Gate 1074 assemble les incidences locales de Gate 1070 en un atlas fourni qui
+couvre chaque point source de chaque face du même `faithful`. Il en déduit
+l'identification métrique, la nullité du générateur, son orthogonalité à l'écran
+et la métrique d'écran induite. Aucun habitant ni transition orientée cohérente
+entre patches n'est construit.
+Gate 1075 construit la mesure produit 4D du collier canonique, la pousse sur
+l'image bulk physique réelle, prouve l'intégrabilité jointe et Fubini, puis
+transporte Stokes jusqu'aux mesures-images bulk et bord. Ces mesures restent des
+pushforwards paramétrés, sans identification Hausdorff ou volume métrique
+intrinsèque.
+Gate 1076 prouve la régularité en base de l'évaluation radiale J³ sur toute
+trivialisation commune fixée, sa mesurabilité forte sur la mesure canonique
+restreinte et son intégrabilité sur tout sous-domaine compact de carte. Il
+l'identifie au représentant global de Gate 1073 et spécialise la naturalité
+Cartan--Piola à la vraie section J³ Candidate-A. Le sélecteur global de carte
+préférée n'est pas prouvé mesurable et aucune intégrale globale d'atlas n'est
+affirmée.
+Gate 1077 instancie la couche de Gate 1072 sur un collier physique mesuré fourni
+pour le même `faithful` et `plusBase`. Une formule structurelle de coaire et une
+famille linéaire de primitives locales donnent le coefficient orienté, un vrai
+opérateur linéaire T05 `GHY → joint` et son support d'intégration pour la densité
+GHY canonique. Aucun collier ou famille de primitives canonique n'est habité.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1345,22 +1366,18 @@ la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
 contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1069 contournent
 maintenant cette obstruction, couvrent le collier régional, fixent son signe de
 transition et transportent la divergence densitisée sans supposer d'isométrie.
-Construire encore l'incidence Gate 1070 pour la famille canonique, puis
-identifier le rigging normalisé, l'orientation et la mesure d'écran fidèle,
-puis construire la mesure sur l'image bulk 4D. Relier ensuite le résultat à la
-même action nulle fidèle que T03/T05 ; Gate 1073 ferme déjà l'empaquetage des
-recouvrements J³, mais sa régularité en base et son intégration restent à
-construire. Étendre ensuite la
-covariance ponctuelle du flux de Gate 1049 en un
-recollement d'atlas cohérent du courant, du flux et de la divergence signée de
-Gate 1050, ainsi que la descente intégrée `bulk → nullBoundary` compatible à
-Stokes et au volume métrique. Instancier aussi la trace locale orientée Gate
-1072 sur les vrais coins et les actions fidèles (Gate 944 ne fournit que la loi
-d'averaging intégrée), puis
-assembler ces flèches avec les flèches déjà réalisées `bulk → nonNullBoundary`
+Construire encore un habitant de l'atlas Gate 1074 pour la famille fidèle
+arbitraire, puis identifier le rigging normalisé, l'orientation, les transitions
+de courant/flux et les mesures compatibles. Gate 1075 ferme la mesure-image et
+Stokes seulement sur la première feuille canonique régionale. Gate 1076 ferme
+la régularité dans une trivialisation fixée, mais il reste à recoller une
+intégration J³ mesurable au niveau de l'atlas. Habiter aussi le collier/coaire et
+la famille linéaire de primitives de Gate 1077 pour les vrais coins et actions
+fidèles. Assembler ensuite ces flèches avec les flèches déjà réalisées
+`bulk → nonNullBoundary`
 et `nullBoundary → joint` en étendant le squelette intégré de Gate 1037 à un
 chain map local/intégré commun, avec naturalité et compatibilité à
-l'intégration.
+l'intégration et augmentation constante explicite.
 Il faudra y transporter les classifications des Gates 942 et 866 avant de
 produire le certificat terminal T06. Le BV/BRST physique non trivial reste
 supplémentaire. `T06` reste ouverte et le compteur officiel reste `5/14`.

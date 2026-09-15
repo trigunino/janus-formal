@@ -1114,32 +1114,49 @@ Gate 1073 packages the already proved J³ base/fiber covariance into a global
 physical vector-density section: every valid simultaneous chart has a
 representative, the representatives obey the exact overlap pullback law, and
 the radial Cartan current of Gate 942 gives a canonical section whose preferred
-chart value is the original physical density.  Smoothness is currently only in
-the J³ fiber; base regularity and integration are still absent.
+chart value is the original physical density.
+Gate 1074 packages Gate 1070's local incidences into a supplied atlas covering
+every source point of every face of the same faithful realization.  It derives
+pointwise metric identification, generator nullity, screen orthogonality and
+the induced screen metric.  It does not supply an inhabitant or compatible
+oriented transitions between patches.
+Gate 1075 constructs the four-dimensional coordinate product measure on the
+canonical finite collar and pushes it to the genuine physical bulk image.
+The transported integrand is measurable, jointly integrable and related by
+Fubini to Gate 1069; change of variables then gives a Stokes equality between
+the physical bulk-image and boundary-image measures.  These are parametrized
+pushforward measures, not Hausdorff or intrinsic metric-volume identifications.
+Gate 1076 proves base smoothness of the radial physical J³ evaluation on every
+fixed common trivialization, hence strong measurability on the restricted
+canonical measure and integrability on compact chart subdomains.  It identifies
+this local field with Gate 1073's global-section representative and evaluates
+Cartan--Piola naturality on the genuine Candidate-A J³ section.  The preferred
+chart selector itself is not proved globally measurable, so no global atlas
+integral is asserted.
+Gate 1077 ties Gate 1072 to a supplied measured physical collar using the same
+`faithful` realization and `plusBase`.  A structural coarea formula and a
+linear family of genuine local primitives derive the endpoint coefficient, a
+linear T05 GHY-to-joint trace operator and its integration support for the
+canonical GHY density.  No canonical collar or primitive family is claimed.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
 warped face `(u,x,y,u)` has rank three.  Gates 1064--1069 now bypass that
 obstruction, cover the regional finite collar, fix its transition orientation
 and transport the densitized divergence without assuming an isometry.  It
-remains to construct Gate 1070's incidence for the canonical family and
-identify its normalized rigging, orientation, screen measure and physical-image
-bulk measure; Gate 1070 assumes the common metric germ and proves only the
-resulting face nullity and screen identities, while Gate 1071 supplies the
-canonical first-sheet boundary-image measure.
-The construction must then be tied to the same faithful null action used by
-T03/T05.  Gate 1073 closes the abstract overlap packaging for the radial J³
-vector density; its base-smooth evaluation and integration are still needed.
-Then Gate 1049's
-pointwise signed flux law and Gate 1050's coordinate-divergence law must be
-extended to coherent current/flux atlas gluing and an integrated
-`bulk → nullBoundary` Stokes law.  A local oriented codimension-two
-`GHY(nonNull) → joint` trace must still instantiate Gate 1072 on the physical
-corner geometry and faithful actions (Gate 944 supplies only its integrated
-averaging law).  These arrows must then join the realized
+still remains to inhabit Gate 1074's atlas for the arbitrary faithful family,
+identify normalized rigging and orientation, and prove compatible transitions
+for its current, flux and measures.  Gate 1075 completes the physical-image
+bulk measure and Stokes law only for the canonical regional first sheet.
+Gate 1076 supplies fixed-trivialization base regularity, but a measurable
+atlas-level integration of the recollated J³ current remains.  Gate 1077 gives
+the physical GHY-to-joint construction from supplied collar/coarea and linear
+primitive data; canonical inhabitants tied to the faithful endpoint actions
+remain to be built.  These realized arrows must then join the
 `bulk → nonNullBoundary` and `nullBoundary → joint` arrows by upgrading Gate
 1037's integrated skeleton to a common local/integrated chain map with
-naturality and commutation with integration.  The classifications of Gates 942
-and 866 can then be transported to the terminal T06 certificate.
+naturality, commutation with integration and the explicit constant
+augmentation.  The classifications of Gates 942 and 866 can then be
+transported to the terminal T06 certificate.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
