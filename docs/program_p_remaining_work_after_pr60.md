@@ -1296,19 +1296,28 @@ et le pôle choisi restent exclus. Gate 1066 généralise le datum de transition
 Gate 1048 à la nouvelle incidence. Son inhabitant canonique a pour vraie
 transition l'identité comme germe du collier ; son Jacobien signé vaut donc
 `+1` et la direction positive du collier devient `e₃`, indépendamment du
-déterminant d'aller-retour de Gate 1062.
+déterminant d'aller-retour de Gate 1062. Gate 1067 empaquette tout le collier
+fini au-dessus de cette bande et restreint la loi de Stokes intégrée de Gate
+1044 aux densités dont le support topologique reste dans la bande ; les deux
+intégrales restreintes sont intégrables et égales à leurs versions globales.
+Gate 1068 tire toute métrique lorentzienne lisse dans une carte physique
+partielle, prouve que son déterminant coordonné est non nul et sa densité-volume
+positive, puis corrige tout courant par le rapport exact des densités warped et
+physique. Le courant densitisé et sa divergence coordonnée coïncident alors sur
+la cible de carte, en particulier sur la face révisée et tout le collier fini
+canonique.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** la contrainte `face_coordinate` de Gate 1034 est incompatible avec
 la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
-contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1066 contournent
-maintenant cette obstruction, couvrent le collier régional et fixent son signe
-de transition. Identifier dans cette carte la métrique induite de face, le rigging
-normalisé, l'orientation et la mesure d'écran ; une
-compatibilité sur la région intégrée reste nécessaire pour réutiliser le
-calcul warped explicite. Étendre ensuite le résultat aux recouvrements d'atlas
+contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1068 contournent
+maintenant cette obstruction, couvrent le collier régional, fixent son signe de
+transition et transportent la divergence densitisée sans supposer d'isométrie.
+Prouver encore que la face physique est nulle pour la métrique choisie, puis
+identifier le rigging normalisé, l'orientation, la mesure d'écran et la mesure
+sur l'image physique. Étendre ensuite le résultat aux recouvrements d'atlas
 et le relier à la même action nulle fidèle que T03/T05, puis étendre la
 covariance ponctuelle du flux de Gate 1049 en un
 recollement d'atlas cohérent du courant, du flux et de la divergence signée de

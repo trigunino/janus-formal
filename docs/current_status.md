@@ -1075,14 +1075,24 @@ screen pole are explicitly excluded.  Gate 1066 generalizes Gate 1048's
 transition datum to the new incidence and constructs its canonical inhabitant:
 the actual collar-coordinate transition is the identity as a germ.  Its true
 signed Jacobian is therefore `+1`, and the positive collar direction maps to
-`e₃`; this is independent of Gate 1062's round-trip determinant.
+`e₃`; this is independent of Gate 1062's round-trip determinant.  Gate 1067
+packages the whole finite collar over that strip and restricts Gate 1044's
+integrated warped Stokes law to densities whose topological support lies in the
+strip; both restricted integrals are integrable and equal their global
+counterparts.  Gate 1068 pulls every smooth Lorentz metric into an arbitrary
+physical partial chart, proves its coordinate determinant is nonzero and its
+volume density positive, and rescales any coordinate current by the exact
+warped-to-physical density ratio.  The resulting densitized current and its
+coordinate divergence agree with the warped ones on the chart target, with
+specializations on the revised face and the whole canonical finite collar.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
-warped face `(u,x,y,u)` has rank three.  Gates 1064--1066 now bypass that
-obstruction, cover the regional finite collar and fix its transition
-orientation.  The next step is to identify the induced face metric, normalized
-rigging, orientation and screen measure throughout the regional physical chart
-and reuse the explicit warped fiber integral.
+warped face `(u,x,y,u)` has rank three.  Gates 1064--1068 now bypass that
+obstruction, cover the regional finite collar, fix its transition orientation
+and transport the densitized divergence without assuming an isometry.  It
+remains to prove the physical face is null for the selected metric and identify
+its normalized rigging, orientation, screen measure and physical-image measure;
+Gate 1068 deliberately proves none of those stronger identifications.
 The construction must then be extended across chart overlaps and tied to the
 same faithful null action used by T03/T05.  Then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
