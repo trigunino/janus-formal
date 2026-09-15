@@ -1097,6 +1097,25 @@ Candidate-A `plusBase.metric`.  Given this datum, the faithful embedding is a
 physical chart coordinate, its ambient metric germ is the pulled-back physical
 metric, and its generator is null and screen-orthogonal while its stored screen
 metric is the physically induced one.  The datum is not claimed inhabited.
+Gate 1071 pushes the regional screen measure through the genuine first-sheet
+boundary parametrization into the mapping-torus bulk.  The parametrization is
+injective on the open fundamental strip, the affine flux has a measurable
+physical representative, and its pushforward integral equals the coordinate
+boundary integral.  Consequently Gate 1069's regional bulk term equals an
+integral on the physical boundary image.  A four-dimensional bulk-image
+measure and its Fubini formula are not yet constructed.
+Gate 1072 supplies the previously missing local analytic form of a GHY-to-joint
+trace on any measured joint carrier.  A pointwise primitive derivative gives
+the two oriented endpoint densities by the interval fundamental theorem, and
+Fubini identifies the product integral with the finite T05 joint coefficient.
+The physical corner incidence and identification with the faithful endpoint
+actions remain separate geometric inputs.
+Gate 1073 packages the already proved J³ base/fiber covariance into a global
+physical vector-density section: every valid simultaneous chart has a
+representative, the representatives obey the exact overlap pullback law, and
+the radial Cartan current of Gate 942 gives a canonical section whose preferred
+chart value is the original physical density.  Smoothness is currently only in
+the J³ fiber; base regularity and integration are still absent.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
 warped face `(u,x,y,u)` has rank three.  Gates 1064--1069 now bypass that
@@ -1104,15 +1123,19 @@ obstruction, cover the regional finite collar, fix its transition orientation
 and transport the densitized divergence without assuming an isometry.  It
 remains to construct Gate 1070's incidence for the canonical family and
 identify its normalized rigging, orientation, screen measure and physical-image
-measure; Gate 1070 assumes the common metric germ and proves only the resulting
-face nullity and screen identities.
-The construction must then be extended across chart overlaps and tied to the
-same faithful null action used by T03/T05.  Then Gate 1049's
+bulk measure; Gate 1070 assumes the common metric germ and proves only the
+resulting face nullity and screen identities, while Gate 1071 supplies the
+canonical first-sheet boundary-image measure.
+The construction must then be tied to the same faithful null action used by
+T03/T05.  Gate 1073 closes the abstract overlap packaging for the radial J³
+vector density; its base-smooth evaluation and integration are still needed.
+Then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
 extended to coherent current/flux atlas gluing and an integrated
 `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
-`GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
-integrated averaging law).  These arrows must then join the realized
+`GHY(nonNull) → joint` trace must still instantiate Gate 1072 on the physical
+corner geometry and faithful actions (Gate 944 supplies only its integrated
+averaging law).  These arrows must then join the realized
 `bulk → nonNullBoundary` and `nullBoundary → joint` arrows by upgrading Gate
 1037's integrated skeleton to a common local/integrated chain map with
 naturality and commutation with integration.  The classifications of Gates 942

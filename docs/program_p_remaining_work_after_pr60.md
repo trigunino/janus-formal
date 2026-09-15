@@ -1318,6 +1318,24 @@ fini arbitraire employé par T03/T05 et la même métrique Candidate-A
 physique, son germe métrique ambiant est le pullback physique, son générateur est
 nul et orthogonal à l'écran, et la métrique d'écran stockée est bien induite.
 Aucun habitant canonique de ce datum n'est affirmé.
+Gate 1071 pousse la mesure d'écran régionale par la vraie paramétrisation de la
+première feuille dans le mapping-torus. Cette paramétrisation est injective sur
+la bande fondamentale ouverte, le flux affine possède un représentant physique
+mesurable, et son intégrale pushforward égale l'intégrale de bord coordonnée.
+La loi Gate 1069 devient donc une égalité avec une intégrale sur l'image
+physique du bord. La mesure-image bulk 4D et sa formule de Fubini restent à
+construire.
+Gate 1072 fournit la couche analytique locale de la trace GHY vers joint sur un
+carrier mesuré : l'identité de dérivée d'une primitive donne les deux densités
+d'extrémité orientées par le théorème fondamental, puis Fubini identifie
+l'intégrale produit au coefficient de joint fini de T05. L'incidence physique
+des coins et l'identification aux actions d'extrémité fidèles restent à fournir.
+Gate 1073 empaquette la covariance base/fibre J³ déjà prouvée en une section
+physique globale de densités vectorielles : chaque carte simultanément valide a
+un représentant, les représentants satisfont la loi exacte de recouvrement, et
+le courant radial de Gate 942 donne une section canonique dont la valeur dans la
+carte préférée est la densité physique initiale. La régularité en base et
+l'intégration restent absentes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1328,14 +1346,17 @@ contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1069 contournent
 maintenant cette obstruction, couvrent le collier régional, fixent son signe de
 transition et transportent la divergence densitisée sans supposer d'isométrie.
 Construire encore l'incidence Gate 1070 pour la famille canonique, puis
-identifier le rigging normalisé, l'orientation, la mesure d'écran et la mesure
-sur l'image physique. Étendre ensuite le résultat aux recouvrements d'atlas
-et le relier à la même action nulle fidèle que T03/T05, puis étendre la
+identifier le rigging normalisé, l'orientation et la mesure d'écran fidèle,
+puis construire la mesure sur l'image bulk 4D. Relier ensuite le résultat à la
+même action nulle fidèle que T03/T05 ; Gate 1073 ferme déjà l'empaquetage des
+recouvrements J³, mais sa régularité en base et son intégration restent à
+construire. Étendre ensuite la
 covariance ponctuelle du flux de Gate 1049 en un
 recollement d'atlas cohérent du courant, du flux et de la divergence signée de
 Gate 1050, ainsi que la descente intégrée `bulk → nullBoundary` compatible à
-Stokes et au volume métrique. Prouver aussi la trace locale orientée GHY de codimension
-deux vers les joints (Gate 944 ne fournit que la loi d'averaging intégrée), puis
+Stokes et au volume métrique. Instancier aussi la trace locale orientée Gate
+1072 sur les vrais coins et les actions fidèles (Gate 944 ne fournit que la loi
+d'averaging intégrée), puis
 assembler ces flèches avec les flèches déjà réalisées `bulk → nonNullBoundary`
 et `nullBoundary → joint` en étendant le squelette intégré de Gate 1037 à un
 chain map local/intégré commun, avec naturalité et compatibilité à
