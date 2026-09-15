@@ -1159,9 +1159,15 @@ radiale positive est `e₃`. La convention `-e₃` pour le futur bord inférieur
 demi-collier `r ≥ 0` ne diffère du rigging de Gate 1039 que par le générateur
 tangent ; elle a donc le même flux coordonné non nul. Gate 1041 fixe exactement
 ce signe : deux échanges du repère tangent et l'alternance donnent le flux
-coordonné `+1`, identique pour le rigging `e₀` de Gate 1039. Aucun demi-collier, pont
-mapping-torus, accord avec le volume métrique, intégration ou théorème de Stokes
-n'est encore fourni.
+coordonné `+1`, identique pour le rigging `e₀` de Gate 1039. Gate 1042 remplace
+le choix ensembliste de Gate 1039 par le courant linéaire explicite
+`(0,(r-1)ρ(q))` dans le collier. Son flux inférieur vaut `ρ`, sa valeur en
+`r=1` est nulle, sa divergence coordonnée ambiante vaut `ρ(q)` aux points de
+différentiabilité, et l'intégration sur `0 ≤ r ≤ 1` donne l'identité de Stokes
+sur une fibre. Il ne s'agit encore que du volume coordonné et de l'intégrale en
+`r` : aucune intégration sur la source nulle, véritable demi-collier à bord,
+support compact, identité avec le volume métrique ou incidence mapping-torus
+n'est construit.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1170,8 +1176,8 @@ encore.
 ce carrier à une hypersurface effective du bulk mapping-torus par une
 identification de ce collier explicite avec les cartes physiques, puis construire
 transport tangent et compatibilités
-métrique/volume. Fixer son orientation et sa mesure
-d'écran, puis établir la covariance/recollement d'atlas du courant, du flux et
+métrique/volume. Construire sa mesure d'écran, puis établir la
+covariance/recollement d'atlas du courant, du flux et
 de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
 compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension
 deux vers les joints (Gate 944 ne fournit que la loi d'averaging intégrée), puis

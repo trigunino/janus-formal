@@ -931,8 +931,14 @@ radial derivative is `e₃`.  The convention `-e₃` for the future `r ≥ 0` lo
 boundary differs from Gate 1039's rigging only by the tangent generator, hence
 has the same nonzero coordinate flux.  Gate 1041 fixes its sign exactly:
 two tangent-frame swaps and alternation give coordinate flux `+1`; Gate 1039's
-`e₀` rigging has the same unit flux.  No half-collar, mapping-torus bridge,
-metric-volume identity, integration, or Stokes theorem is yet supplied.
+`e₀` rigging has the same unit flux.  Gate 1042 replaces Gate 1039's
+set-theoretic choice by the explicit linear collar current
+`(0,(r-1)ρ(q))`.  Its lower flux is `ρ`, its `r=1` value is zero, its ambient
+coordinate divergence is `ρ(q)` at differentiability points, and integration
+over `0 ≤ r ≤ 1` gives the corresponding one-fiber Stokes identity.  This is
+coordinate-volume and interval integration only: no null-source integration,
+actual half-collar with boundary, compact support, metric-volume identity, or
+mapping-torus incidence is supplied.
 The remaining geometric step is to make the null geometry depend faithfully on
 the physical input and identify it with an actual mapping-torus bulk
 hypersurface by relating this explicit collar to the physical charts, then add
