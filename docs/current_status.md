@@ -1017,11 +1017,21 @@ target metric density to be differentiable at the face.  Consequently every
 ordinary differentiable target current has a differentiable metric-volume
 current, and physical metric-divergence naturality follows from ordinary `C¹`
 current regularity alone.  The compatibility datum itself remains conditional.
+Gate 1056 adds the faithful physical route: it defines the collar metric as
+the actual pullback of any target metric field, then proves its pointwise
+absolute-Jacobian density law, equality of the corresponding densitized
+current with the absolute Piola pullback, and metric-divergence naturality at
+the face.  Specializing the target to Gate 1054's genuine physical metric
+coefficients needs no warped-metric compatibility.  A weaker pointwise face
+condition is enough to identify its volume density with the homogeneous screen
+area.  Reusing the fixed warped divergence still requires equality on a germ,
+and Gate 1054's stronger conditional datum is proved to supply exactly that.
 The remaining geometric step is to construct the incidence and transition
-data with the required positive orientation, make the null geometry depend
-faithfully on the physical input, and inhabit Gate 1054's physical metric-germ
-compatibility.  Its orientation
-and screen measure must be matched across the physical atlas, then Gate 1049's
+data with the required positive orientation and prove regularity of the
+physical target metric-volume current without a compatibility assumption.
+The induced face metric, normalized rigging, orientation and screen measure
+must be matched across the physical atlas; a regional compatibility is needed
+to reuse the explicit warped fiber integral.  Then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
 extended to coherent current/flux atlas gluing and an integrated
 `bulk → nullBoundary` Stokes law.  A local oriented codimension-two

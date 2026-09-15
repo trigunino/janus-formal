@@ -1242,16 +1242,26 @@ le Jacobien non nul et l'inverse local imposent la différentiabilité de la
 densité métrique cible au point de face. Tout courant cible ordinaire `C¹`
 fournit donc automatiquement le courant de volume requis, y compris pour la
 métrique physique de Gate 1054. Le datum de compatibilité reste conditionnel.
+Gate 1056 ouvre la voie physique fidèle : la métrique du collier est définie
+comme le vrai pullback d'un champ métrique cible. Sa loi de densité à Jacobien
+absolu, l'égalité du courant densitisé avec le pullback de Piola et la
+naturelleté de la divergence au point de face sont alors automatiques. La
+spécialisation aux vrais coefficients métriques de Gate 1054 ne demande aucune
+compatibilité avec la métrique warped fixe. Une condition ponctuelle plus
+faible suffit pour identifier la densité de face à l'aire d'écran ; réutiliser
+la divergence warped exige encore une égalité sur un germe, exactement celle
+fournie par le datum conditionnel plus fort de Gate 1054.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** construire effectivement les data conditionnels d'incidence et de
 transition des Gates 1034/1048 avec l'orientation positive requise par Gate
-1051, rendre la géométrie nulle fidèle à l'input physique, puis établir les
-compatibilités physiques germinales demandées par Gate 1054. Identifier
-la mesure d'écran dans
-ces cartes, puis étendre la covariance ponctuelle du flux de Gate 1049 en un
+1051, puis prouver directement la régularité du courant de volume de la
+métrique physique cible. Identifier dans ces cartes la métrique induite de
+face, le rigging normalisé, l'orientation et la mesure d'écran ; une
+compatibilité sur la région intégrée reste nécessaire pour réutiliser le
+calcul warped explicite. Étendre ensuite la covariance ponctuelle du flux de Gate 1049 en un
 recollement d'atlas cohérent du courant, du flux et de la divergence signée de
 Gate 1050, ainsi que la descente intégrée `bulk → nullBoundary` compatible à
 Stokes et au volume métrique. Prouver aussi la trace locale orientée GHY de codimension
