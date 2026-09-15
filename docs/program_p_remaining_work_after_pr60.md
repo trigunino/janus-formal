@@ -1051,17 +1051,29 @@ signe du déterminant non nul pour passer à la vraie densité vectorielle
 `|det(J)|·J⁻¹` et à sa loi de divergence absolue. Gate 1030 identifie le `dH`
 joint à la divergence sur une tranche affine de Cartan et prouve sa loi de
 Piola absolue sous le vrai transport de frame non holonome, y compris pour le
-courant radial sans hypothèse externe de régularité. Restent un carrier 4D
-commun de courant et flux bulk/null, son incidence géométrique, puis la
+courant radial sans hypothèse externe de régularité. Gate 1031 relève le
+carrier de formes différentielles dans les coordonnées ambiantes 4D existantes
+des faces nulles finies : volume coordonné signé, 3-forme de flux du courant,
+`d flux = div·volume`, pullback par l'embedding mobile et formule sur le
+générateur et les deux tangentes d'écran ; la fonctorialité donne les lois de
+composition différentiable de source et d'application ambiante, et le
+transformé de Piola signé sous Jacobiennes ambiantes inverses coïncide exactement
+avec le pullback du flux ambiant sur la face nulle. Ce carrier local ne prolonge
+pas encore le courant radial : restent son extension ambiante physique avec
+donnée transverse,
+l'incidence avec le bulk coupé, puis l'orientation/intégration d'écran et la
 descente intégrée compatible à Stokes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire le carrier local covariant commun et étendre son pont
-intégré compatible à Stokes au-delà du secteur scalaire normal, avec
-l'incidence bulk-to-null encore manquante ; puis construire le BV/BRST physique
-non trivial sur tous les champs physiques.
+**Reste :** étendre le courant radial au carrier ambiant, construire l'incidence
+bulk-to-null et son pont intégré compatible à Stokes au-delà du secteur
+scalaire normal, établir la vraie trace locale GHY vers les joints, assembler
+un chain map local/intégré commun à toutes les strates avec naturalité,
+compatibilité à l'intégration et `dH² = 0`, y transporter les classifications
+des Gates 942 et 866 et produire le certificat terminal T06. Le BV/BRST
+physique non trivial sur tous les champs reste un objectif supplémentaire.
 `T06` reste ouverte ; le compteur terminal officiel reste `5/14`.
 
 ### T07 — `anomalyConstraintsApplied`

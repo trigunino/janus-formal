@@ -822,9 +822,19 @@ to the actual `|det(J)|·J⁻¹` vector density and its absolute-divergence law.
 Gate 1030 identifies joint `dH` with divergence along an affine Cartan slice
 and proves its absolute Piola law under the genuine transported non-holonomic
 frame, including the radial current without an external regularity hypothesis.
-The remaining current problem is a four-dimensional bulk/null current-and-flux
-carrier, followed by geometric incidence and Stokes-compatible integrated
-descent on that common local carrier.
+Gate 1031 lifts the differential-form carrier to the existing four-dimensional
+finite-null-face ambient coordinates: it constructs the signed coordinate
+volume and current flux three-form, identifies its exterior derivative with
+four-coordinate divergence, pulls the flux back along the actual mobile
+null-face embedding, and evaluates it on the generator and two screen
+tangents. Pullback functoriality gives the corresponding source and ambient
+map-composition laws, while the signed Piola transform at inverse ambient
+Jacobians agrees exactly with form pullback and hence with null-face flux.
+This is only a local form carrier. The radial current still needs a physical
+ambient extension with transverse data, followed by incidence with the cut
+bulk, screen orientation/integration, Stokes-compatible integrated descent, a
+local GHY-to-joint trace, and one common stratified chain map carrying the
+existing classification to the terminal T06 certificate.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
