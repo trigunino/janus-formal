@@ -1085,14 +1085,20 @@ volume density positive, and rescales any coordinate current by the exact
 warped-to-physical density ratio.  The resulting densitized current and its
 coordinate divergence agree with the warped ones on the chart target, with
 specializations on the revised face and the whole canonical finite collar.
+Gate 1069 applies that correction to the affine collar current.  On the full
+canonical collar over the open time strip, its physical and warped densitized
+divergences agree pointwise; hence their fiber and regional bulk integrals
+agree, and Gate 1067 gives the regional physical-metric Stokes identity.
+These integrals still use the canonical coordinate measures, not a measure
+pushed to the physical image.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
-warped face `(u,x,y,u)` has rank three.  Gates 1064--1068 now bypass that
+warped face `(u,x,y,u)` has rank three.  Gates 1064--1069 now bypass that
 obstruction, cover the regional finite collar, fix its transition orientation
 and transport the densitized divergence without assuming an isometry.  It
 remains to prove the physical face is null for the selected metric and identify
 its normalized rigging, orientation, screen measure and physical-image measure;
-Gate 1068 deliberately proves none of those stronger identifications.
+Gate 1069 deliberately proves none of those stronger identifications.
 The construction must then be extended across chart overlaps and tied to the
 same faithful null action used by T03/T05.  Then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be

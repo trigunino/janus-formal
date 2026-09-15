@@ -1306,13 +1306,19 @@ positive, puis corrige tout courant par le rapport exact des densités warped et
 physique. Le courant densitisé et sa divergence coordonnée coïncident alors sur
 la cible de carte, en particulier sur la face révisée et tout le collier fini
 canonique.
+Gate 1069 applique cette correction au courant affine du collier. Sur tout le
+collier canonique au-dessus de la bande temporelle ouverte, les divergences
+densitisées physique et warped coïncident point par point ; leurs intégrales de
+fibre et bulk régionales sont donc égales, puis Gate 1067 donne la loi de Stokes
+régionale pour la métrique physique. Les mesures restent celles des coordonnées
+canoniques, sans pushforward sur l'image physique.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** la contrainte `face_coordinate` de Gate 1034 est incompatible avec
 la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
-contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1068 contournent
+contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1069 contournent
 maintenant cette obstruction, couvrent le collier régional, fixent son signe de
 transition et transportent la divergence densitisée sans supposer d'isométrie.
 Prouver encore que la face physique est nulle pour la métrique choisie, puis
