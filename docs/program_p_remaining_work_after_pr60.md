@@ -1089,12 +1089,30 @@ arbitraire, ajoute cette pente à `div₄`, et le choix `-dH` donne une divergen
 ambiante nulle au point de base en préservant
 la valeur sur la tranche zéro. Ce split régulier n'est pas encore identifié au
 vrai collier du bulk coupé ni à l'embedding d'une face nulle mobile finie.
+Gate 1034 formalise cette identification comme une donnée d'incidence `C³`
+conditionnelle. Elle envoie un ouvert non vide de la source nulle fois `[0,1]`
+dans le vrai collier fini puis dans le bulk effectif, avec tout l'intervalle
+normal fini contenu dans une carte holonome unique. La coordonnée
+obtenue est `C³` sur cet ouvert ; sa tranche zéro est l'inclusion réelle du
+bord coupé et coïncide exactement avec l'embedding mobile. Toute fonction de
+composantes d'un courant ambiant `C¹` se compose donc régulièrement avec ce
+représentant de collier. Le courant produit régulier
+de Gate 1033 fournit un tel cas, et une extension de Gate 1032 dont le courant
+est fourni `C¹` conserve sur la même tranche sa décomposition de bord et son
+flux scalaire prescrit. Lorsque ces deux courants ambiants sont fournis égaux,
+le courant régulier de Gate 1033 vérifie cette même loi exacte de flux. Aucun
+habitant de la donnée d'incidence n'est encore
+construit, et la dérivée selon la vraie normale du collier n'est pas identifiée
+à la direction transverse arbitraire de Gate 1033 ; son identité de divergence
+n'est donc pas encore transportée au bulk coupé. La donnée n'impose encore
+aucune compatibilité de métrique, volume ou conormale et ne construit pas de
+pullback tensoriel d'un champ vectoriel.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire l'incidence locale commune collier/bulk coupé--face
-nulle reliant le calcul régulier de Gate 1033 à l'interface de Gate 1032, fixer
+**Reste :** construire un habitant local de la donnée d'incidence et identifier
+la vraie normale du collier au split régulier de Gate 1033, fixer
 l'orientation et la mesure d'écran, établir la covariance d'atlas du courant
 de collier et de sa divergence, puis la descente intégrée compatible à
 Stokes, prouver la trace GHY locale de codimension deux vers les joints (Gate

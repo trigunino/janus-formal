@@ -862,8 +862,27 @@ slope `-dH` gives zero ambient divergence at the selected base point while
 preserving the zero-slice value. This regular
 split is not yet identified with the true cut-bulk collar or a finite mobile
 null-face embedding.
-The remaining geometric step is to construct that local cut-collar/null-face
-incidence, then add face orientation and screen integration, prove the
+Gate 1034 packages that missing identification as an explicit conditional
+`C³` incidence datum. It maps a nonempty open patch of the null source times
+`[0,1]` through the true finite cut collar and its existing smooth map into
+the effective bulk, with the full finite normal interval lying in one
+holonomic bulk chart. The resulting coordinate map is `C³` on that patch; its
+zero slice is the actual cut-boundary inclusion and is exactly the mobile
+null-face embedding there. Any `C¹` ambient coordinate-current component
+function composes `C¹` with this collar representative. In particular, Gate
+1033's regular product-split current does so, while a Gate-1032 extension with
+a supplied `C¹` current keeps both
+its exact boundary decomposition and prescribed scalar null flux on the same
+zero slice. When the two ambient currents are supplied equal, the regular
+Gate-1033 current obeys that same exact flux law. No inhabitant of the
+incidence datum is constructed, and the
+true collar normal derivative is not yet identified with Gate 1033's
+arbitrary transverse split, so its divergence identity has not been
+transported to the cut bulk. No metric, volume or conormal compatibility is
+part of this datum, and no tensorial vector-field pullback is claimed.
+The remaining geometric step is to construct a local inhabitant of that
+incidence datum and identify its true collar normal with the regular split,
+then add face orientation and screen integration, prove the
 collar-current/divergence atlas covariance and Stokes-compatible integrated
 descent, construct the local codimension-two GHY-to-joint trace (Gate 944
 already supplies its integrated averaging law), and assemble the common
@@ -872,7 +891,7 @@ classification to the terminal T06 certificate.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
-scalar normal sector, including the still-missing bulk-to-null incidence; the
+scalar normal sector, including an inhabited bulk-to-null incidence; the
 nonlinear physical BV/BRST action also remains to be built.
 The official terminal count stays `5/14`.
 
