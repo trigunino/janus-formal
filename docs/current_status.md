@@ -995,9 +995,16 @@ warped volume density and homogeneous screen area both equal the target
 metric density multiplied by Gate 1048's positive Jacobian density.  The
 hypothesis is not derived from the incidence or transition data and the
 supplied target matrix is not yet identified with a physical bulk metric.
+Gate 1053 strengthens that congruence to the local transition germ.  It proves
+that the warped volume-densitized ordinary vector pullback is germ-equal to
+Gate 1051's absolute Piola pullback of the target densitized current.  Hence
+the coordinate formula `div_g X = (sqrt|g|)⁻¹ ∂(sqrt|g|X)` is natural at the
+selected face point, assuming differentiability of the target densitized
+current.  The target metric field remains supplied and is neither connected
+to a physical mapping-torus metric nor glued across an atlas.
 The remaining geometric step is to construct the incidence and transition
 data with the required positive orientation, make the null geometry depend
-faithfully on the physical input, and realize Gate 1052's pointwise metric
+faithfully on the physical input, and realize Gate 1053's germ metric
 compatibility in the physical charts.  Its orientation
 and screen measure must be matched across the physical atlas, then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be

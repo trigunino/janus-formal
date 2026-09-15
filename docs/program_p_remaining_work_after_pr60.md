@@ -1222,6 +1222,13 @@ densité multipliée par le Jacobien positif vaut à la fois la densité warped 
 l'aire d'écran homogène. Cette hypothèse ne découle pas encore de l'incidence
 ou de la transition, et la matrice cible n'est pas identifiée à une métrique
 physique du bulk.
+Gate 1053 renforce cette congruence sur le germe de transition. Le courant
+ordinaire tiré en arrière puis densitisé par le volume warped y coïncide avec
+le pullback de Piola absolu du courant cible densitisé. La formule coordonnée
+`div_g X = (sqrt|g|)⁻¹ ∂(sqrt|g|X)` est donc naturelle au point de face, sous
+la régularité du courant cible déjà densitisé. Le champ métrique cible reste
+fourni et n'est relié ni à la métrique physique du mapping-torus ni à un
+recollement d'atlas.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1229,7 +1236,7 @@ encore.
 **Reste :** construire effectivement les data conditionnels d'incidence et de
 transition des Gates 1034/1048 avec l'orientation positive requise par Gate
 1051, rendre la géométrie nulle fidèle à l'input physique, puis établir les
-compatibilités ponctuelles de Gate 1052 avec les cartes physiques. Identifier
+compatibilités germinales de Gate 1053 avec les cartes physiques. Identifier
 la mesure d'écran dans
 ces cartes, puis étendre la covariance ponctuelle du flux de Gate 1049 en un
 recollement d'atlas cohérent du courant, du flux et de la divergence signée de
