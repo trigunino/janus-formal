@@ -892,15 +892,26 @@ no inhabitant, and no metric unit normal, full tangent Jacobian, volume,
 conormal, atlas-covariant vector-field transport or intrinsic divergence law
 is obtained; the actual zero face is also not yet proved to have zero
 transverse coordinate in Gate 1033's arbitrary split.
-The remaining geometric step is to construct local inhabitants of the
-incidence and normal-alignment data and extend the normal equality to the full
-tangent and volume transport, then add face orientation and screen integration,
-prove the
-collar-current/divergence atlas covariance and Stokes-compatible integrated
-descent, construct the local codimension-two GHY-to-joint trace (Gate 944
-already supplies its integrated averaging law), and assemble the common
-stratified chain map carrying the existing
-classification to the terminal T06 certificate.
+Gate 1036 isolates the support mismatch at the relative-cochain level.  The
+currently constructed canonical affine cut-bulk target realizes
+`bulk → nonNullBoundary`, while Gate 819's abstract full `dH` copies the same
+bulk component into both boundary slots.  The full cochain equals that
+non-null-only target exactly when the bulk integral vanishes; a nonzero
+integral condition witnesses failure of the equality.  This construction does
+not by itself supply the missing `bulk → nullBoundary` component.  It leaves
+open whether that component comes from an additional restriction on the same
+collar or from separate null geometry.
+The remaining geometric step is to construct an inhabited null hypersurface in
+the bulk with a `C³` incidence/restriction, generator, screen/rigging, tangent
+transport, conormal, and metric/volume compatibility.  Its orientation and
+screen measure must support atlas-covariant current, flux, divergence, and an
+integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
+`GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
+integrated averaging law).  These arrows must then join the realized
+`bulk → nonNullBoundary` and `nullBoundary → joint` arrows in a common local
+and integrated chain map that keeps the strata separate and proves naturality,
+commutation with integration, and `dH² = 0`.  The classifications of Gates 942
+and 866 can then be transported to the terminal T06 certificate.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

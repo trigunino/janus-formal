@@ -1119,22 +1119,33 @@ d'alignement, aucune normale métrique, Jacobienne tangentielle complète,
 compatibilité de volume ou conormale, covariance de champ vectoriel ni loi de
 divergence intrinsèque n'est construit. La vraie tranche zéro n'est pas encore
 prouvée de coordonnée transverse nulle dans le split arbitraire de Gate 1033.
+Gate 1036 isole le défaut de support au niveau de la cochaîne relative. La cible
+affine canonique actuellement construite réalise `bulk → nonNullBoundary`,
+tandis que le `dH` abstrait complet de Gate 819 recopie la même composante bulk
+dans les deux slots de bord. La cochaîne complète égale cette cible supportée
+seulement sur le bord non nul exactement quand l'intégrale bulk s'annule ; une
+hypothèse d'intégrale non nulle témoigne de l'échec de l'égalité. Cette
+construction ne fournit donc pas à elle seule la composante manquante
+`bulk → nullBoundary`. Elle ne décide pas si cette composante provient d'une
+restriction supplémentaire sur le même collier ou d'une géométrie nulle
+séparée.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire des habitants locaux des données d'incidence et
-d'alignement, étendre l'égalité normale au transport tangent et volumique
-complet, fixer
-l'orientation et la mesure d'écran, établir la covariance d'atlas du courant
-de collier et de sa divergence, puis la descente intégrée compatible à
-Stokes, prouver la trace GHY locale de codimension deux vers les joints (Gate
-944 fournit déjà la loi d'averaging intégrée), assembler un chain
-map local/intégré commun à toutes les strates avec naturalité, compatibilité à
-l'intégration et `dH² = 0`, y transporter les classifications des Gates 942 et
-866, puis produire le certificat terminal T06. Le BV/BRST physique non trivial
-reste supplémentaire. `T06` reste ouverte et le compteur officiel reste
-`5/14`.
+**Reste :** construire un habitant d'hypersurface nulle dans le bulk avec une
+incidence/restriction `C³`, générateur, écran/rigging, transport tangent,
+conormale et compatibilités métrique/volume. Fixer son orientation et sa mesure
+d'écran, puis établir la covariance/recollement d'atlas du courant, du flux et
+de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
+compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension
+deux vers les joints (Gate 944 ne fournit que la loi d'averaging intégrée), puis
+assembler ces flèches avec les flèches déjà réalisées `bulk → nonNullBoundary`
+et `nullBoundary → joint` dans un chain map local/intégré commun gardant les
+strates séparées, avec naturalité, compatibilité à l'intégration et `dH² = 0`.
+Il faudra y transporter les classifications des Gates 942 et 866 avant de
+produire le certificat terminal T06. Le BV/BRST physique non trivial reste
+supplémentaire. `T06` reste ouverte et le compteur officiel reste `5/14`.
 
 ### T07 — `anomalyConstraintsApplied`
 
