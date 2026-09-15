@@ -1214,6 +1214,14 @@ affine, elle vaut `|det J|ρ`. Le flux signé du pullback absolu reste exactemen
 `ρ` sous l'hypothèse explicite `det J > 0`, laquelle ne découle pas du datum de
 transition actuel. Il s'agit toujours d'un Jacobien coordonné, pas encore du
 volume métrique physique.
+Gate 1052 écrit ce Jacobien dans la base ambiante fixe et prouve la loi de
+congruence du volume métrique
+`sqrt|det(Jᵀ g J)| = |det J| sqrt|det g|`. Sous l'hypothèse ponctuelle explicite
+qu'une métrique cible fournie se tire en arrière sur la métrique warped, sa
+densité multipliée par le Jacobien positif vaut à la fois la densité warped et
+l'aire d'écran homogène. Cette hypothèse ne découle pas encore de l'incidence
+ou de la transition, et la matrice cible n'est pas identifiée à une métrique
+physique du bulk.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1221,8 +1229,8 @@ encore.
 **Reste :** construire effectivement les data conditionnels d'incidence et de
 transition des Gates 1034/1048 avec l'orientation positive requise par Gate
 1051, rendre la géométrie nulle fidèle à l'input physique, puis établir les
-compatibilités métrique/volume avec les cartes
-physiques. Identifier la mesure d'écran dans
+compatibilités ponctuelles de Gate 1052 avec les cartes physiques. Identifier
+la mesure d'écran dans
 ces cartes, puis étendre la covariance ponctuelle du flux de Gate 1049 en un
 recollement d'atlas cohérent du courant, du flux et de la divergence signée de
 Gate 1050, ainsi que la descente intégrée `bulk → nullBoundary` compatible à

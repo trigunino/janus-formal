@@ -987,10 +987,18 @@ the absolute pullback is proved under the explicit condition `det J > 0`;
 that condition is not derivable from the present transition datum.  This is
 still an absolute coordinate-Jacobian law, not physical metric-volume
 compatibility.
+Gate 1052 writes Gate 1048's Jacobian in the fixed ambient basis and proves
+the metric-volume congruence law
+`sqrt|det(Jᵀ g J)| = |det J| sqrt|det g|`.  Under an explicit point-local
+hypothesis that a supplied target metric pulls back to the warped metric, the
+warped volume density and homogeneous screen area both equal the target
+metric density multiplied by Gate 1048's positive Jacobian density.  The
+hypothesis is not derived from the incidence or transition data and the
+supplied target matrix is not yet identified with a physical bulk metric.
 The remaining geometric step is to construct the incidence and transition
 data with the required positive orientation, make the null geometry depend
-faithfully on the physical input, and add metric/volume compatibility in the
-physical charts.  Its orientation
+faithfully on the physical input, and realize Gate 1052's pointwise metric
+compatibility in the physical charts.  Its orientation
 and screen measure must be matched across the physical atlas, then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
 extended to coherent current/flux atlas gluing and an integrated
