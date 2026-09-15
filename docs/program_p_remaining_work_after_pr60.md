@@ -1129,6 +1129,13 @@ construction ne fournit donc pas à elle seule la composante manquante
 `bulk → nullBoundary`. Elle ne décide pas si cette composante provient d'une
 restriction supplémentaire sur le même collier ou d'une géométrie nulle
 séparée.
+Gate 1037 sépare ensuite les deux valeurs bulk à la source du complexe
+horizontal intégré. Le différentiel suivant s'annule exactement quand ces
+valeurs s'accordent ; leur sous-module compatible porte donc un opérateur
+gradué de carré nul qui réutilise sans changement la composante
+`nullBoundary → joint` des Gates 899/905. Le champ bulk-vers-nul de Gate 852
+fournit cette compatibilité et retrouve sa cible complétée. La source nulle reste
+toutefois contractuelle, sans construction géométrique.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1141,8 +1148,9 @@ de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
 compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension
 deux vers les joints (Gate 944 ne fournit que la loi d'averaging intégrée), puis
 assembler ces flèches avec les flèches déjà réalisées `bulk → nonNullBoundary`
-et `nullBoundary → joint` dans un chain map local/intégré commun gardant les
-strates séparées, avec naturalité, compatibilité à l'intégration et `dH² = 0`.
+et `nullBoundary → joint` en étendant le squelette intégré de Gate 1037 à un
+chain map local/intégré commun, avec naturalité et compatibilité à
+l'intégration.
 Il faudra y transporter les classifications des Gates 942 et 866 avant de
 produire le certificat terminal T06. Le BV/BRST physique non trivial reste
 supplémentaire. `T06` reste ouverte et le compteur officiel reste `5/14`.

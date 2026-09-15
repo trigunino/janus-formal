@@ -901,6 +901,14 @@ integral condition witnesses failure of the equality.  This construction does
 not by itself supply the missing `bulk → nullBoundary` component.  It leaves
 open whether that component comes from an additional restriction on the same
 collar or from separate null geometry.
+Gate 1037 gives the integrated horizontal skeleton the missing separation.  Its
+first step accepts independent non-null and null bulk values; the next
+Gate-819 differential vanishes exactly when those values agree.  Restriction
+to that compatibility submodule yields a square-zero graded operator while
+reusing Gates 899/905's null-to-joint factor unchanged.  Gate 852's
+bulk-to-null field supplies the compatibility and recovers its completed
+target.  The null source itself remains contractual rather than geometrically
+constructed.
 The remaining geometric step is to construct an inhabited null hypersurface in
 the bulk with a `C³` incidence/restriction, generator, screen/rigging, tangent
 transport, conormal, and metric/volume compatibility.  Its orientation and
@@ -908,9 +916,9 @@ screen measure must support atlas-covariant current, flux, divergence, and an
 integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
 `GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
 integrated averaging law).  These arrows must then join the realized
-`bulk → nonNullBoundary` and `nullBoundary → joint` arrows in a common local
-and integrated chain map that keeps the strata separate and proves naturality,
-commutation with integration, and `dH² = 0`.  The classifications of Gates 942
+`bulk → nonNullBoundary` and `nullBoundary → joint` arrows by upgrading Gate
+1037's integrated skeleton to a common local/integrated chain map with
+naturality and commutation with integration.  The classifications of Gates 942
 and 866 can then be transported to the terminal T06 certificate.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
