@@ -1058,23 +1058,39 @@ des faces nulles finies : volume coordonné signé, 3-forme de flux du courant,
 générateur et les deux tangentes d'écran ; la fonctorialité donne les lois de
 composition différentiable de source et d'application ambiante, et le
 transformé de Piola signé sous Jacobiennes ambiantes inverses coïncide exactement
-avec le pullback du flux ambiant sur la face nulle. Ce carrier local ne prolonge
-pas encore le courant radial : restent son extension ambiante physique avec
-donnée transverse,
-l'incidence avec le bulk coupé, puis l'orientation/intégration d'écran et la
-descente intégrée compatible à Stokes.
+avec le pullback du flux ambiant sur la face nulle. Gate 1032 choisit un split
+linéaire local arbitraire de l'espace ambiant en coordonnées de gorge et une
+coordonnée transverse, ainsi que l'équivalence de coordonnées avec le carrier
+holonome 4D du bulk. Elle construit les projections et embeddings associés,
+montre qu'un courant tangent à la gorge a un flux hypersurface ambiant nul,
+puis ajoute une composante scalaire transverse fournie. La densité radiale
+physique J³ de Gate 1030, évaluée le long d'une section J³ locale fournie, est
+retrouvée exactement par projection tangentielle sur la tranche transverse
+nulle. Sur une vraie face nulle mobile, une interface séparée demande un
+courant ambiant, une rigging transverse normalisée et leur identité de bord ;
+sous ces données, le pullback de Gate 1031 vaut exactement la densité scalaire
+prescrite, y compris avec la densité radiale de Gate 1030 comme terme tangent.
+Une rigging brute de flux non nul fournit un habitant ensembliste concret par
+normalisation et inverse de l'embedding injectif. Ses valeurs hors de la face
+sont arbitraires et aucune régularité n'est prouvée. En particulier, la valeur
+au bord ne relie pas encore le premier jet transverse ou la divergence 4D à la
+divergence de gorge et au `dH` de Gate 1030. Aucune incidence commune bulk
+coupé/face nulle, covariance d'atlas ambiant, orientation ou mesure d'écran,
+intégration, Stokes ou trace GHY vers les joints n'est construite.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** étendre le courant radial au carrier ambiant, construire l'incidence
-bulk-to-null et son pont intégré compatible à Stokes au-delà du secteur
-scalaire normal, établir la vraie trace locale GHY vers les joints, assembler
-un chain map local/intégré commun à toutes les strates avec naturalité,
-compatibilité à l'intégration et `dH² = 0`, y transporter les classifications
-des Gates 942 et 866 et produire le certificat terminal T06. Le BV/BRST
-physique non trivial sur tous les champs reste un objectif supplémentaire.
-`T06` reste ouverte ; le compteur terminal officiel reste `5/14`.
+**Reste :** construire et régulariser l'incidence commune collier/bulk
+coupé--face nulle qui habite l'interface de rigging transverse de Gate 1032,
+contrôle le premier jet transverse et identifie les divergences 4D/3D, fixer
+l'orientation et la mesure d'écran, établir la descente intégrée compatible à
+Stokes, prouver la vraie trace locale GHY vers les joints, assembler un chain
+map local/intégré commun à toutes les strates avec naturalité, compatibilité à
+l'intégration et `dH² = 0`, y transporter les classifications des Gates 942 et
+866, puis produire le certificat terminal T06. Le BV/BRST physique non trivial
+reste supplémentaire. `T06` reste ouverte et le compteur officiel reste
+`5/14`.
 
 ### T07 — `anomalyConstraintsApplied`
 

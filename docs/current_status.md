@@ -830,11 +830,33 @@ null-face embedding, and evaluates it on the generator and two screen
 tangents. Pullback functoriality gives the corresponding source and ambient
 map-composition laws, while the signed Piola transform at inverse ambient
 Jacobians agrees exactly with form pullback and hence with null-face flux.
-This is only a local form carrier. The radial current still needs a physical
-ambient extension with transverse data, followed by incidence with the cut
-bulk, screen orientation/integration, Stokes-compatible integrated descent, a
-local GHY-to-joint trace, and one common stratified chain map carrying the
-existing classification to the terminal T06 certificate.
+Gate 1032 fixes an arbitrary local linear splitting of the ambient four-space
+into the existing throat coordinates and one transverse coordinate, together
+with the coordinate equivalence to the bulk holonomic four-vector carrier. It
+defines the associated projections and zero-transverse embeddings, proves
+that a throat-tangent current has zero ambient hypersurface flux, and extends
+any throat current by a separately supplied transverse scalar component. The
+Gate-1030 radial physical J³ density, evaluated along a supplied local J³
+section, is recovered exactly by tangential projection on the zero-transverse
+slice. On an actual mobile null face, a separate extension datum supplies an
+ambient current, a normalized transverse rigging and its boundary
+decomposition; conditionally, the Gate-1031 pullback is exactly the prescribed
+scalar density, also when the tangent term is Gate 1030's radial density read
+through the explicit parameter/screen-to-throat exchange. A nonvanishing raw
+rigging yields a concrete set-theoretic inhabitant by normalization and the
+inverse of the injective face embedding. Its values away from that face are
+arbitrary and no regularity is asserted. In particular, the boundary value
+does not yet relate the ambient transverse first jet or four-divergence to
+Gate 1030's throat divergence and `dH`. No common cut-bulk/null incidence,
+ambient-atlas covariance, face orientation or measure, integration, Stokes
+law, or GHY-to-joint trace is constructed.
+The remaining geometric step is to construct and regularize a common
+cut-bulk/null incidence that inhabits the supplied transverse-rigging
+interface and controls the transverse first jet/divergence, then add face
+orientation and screen integration, prove the Stokes-compatible integrated
+descent, construct the local GHY-to-joint trace, and assemble the common
+stratified chain map carrying the existing classification to the terminal T06
+certificate.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the
