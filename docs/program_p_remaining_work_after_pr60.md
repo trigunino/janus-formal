@@ -1279,20 +1279,26 @@ localement la vraie carte de bande tubulaire, lit les coordonnées équatoriales
 temporelle et de latitude, puis applique le cisaillement warped. Ses domaines
 bulk et source sont ouverts, toute ancre choisie appartient au patch, et la
 première feuille canonique réelle a exactement la coordonnée `(u,x,y,u)` sur
-ce patch. La gate prouve pour l'instant la régularité et l'incidence de face ;
-le paquet de difféomorphisme local et la couverture du collier fini restent à
-établir séparément.
+ce patch. Gate 1062 l'empaquette en difféomorphisme local et expose son inverse
+partiel explicite. Le déterminant `1` obtenu est celui du seul aller-retour
+carte/inverse et ne fixe pas l'orientation par rapport à une autre carte. Gate
+1063 étend le représentant tubulaire à toute normale de `[0,1]`, l'identifie au
+vrai collier cut-bulk et calcule sa coordonnée `(u,x,y,u+r)` ; elle ne place pas
+encore tout ce collier dans l'unique germe bulk de Gate 1062. Gate 1064 remplace
+la carte produit incompatible de Gate 1034 par une `PartialDiffeomorph`
+physique libre, conserve un adaptateur depuis les anciens data et construit
+l'incidence canonique adaptée. Sa validité de carte est affirmée sur la face.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** la contrainte `face_coordinate` de Gate 1034 est incompatible avec
 la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
-contre rang trois pour la face warped `(u,x,y,u)`. Construire une carte physique
-locale cisaillée adaptée, désormais amorcée par Gate 1061, puis empaqueter son
-difféomorphisme local et raffiner autour d'elle la route des Gates 1034/1048.
-Couvrir le collier fini dans une même carte valide et prouver l'orientation
-positive requise par Gate 1051. Identifier dans ces cartes la métrique induite de face, le rigging
+contre rang trois pour la face warped `(u,x,y,u)`. La nouvelle incidence
+adaptée contourne cette obstruction. Couvrir maintenant le collier fini dans
+une même carte valide sur une bande temporelle fondamentale, raffiner autour
+d'elle la route de Gate 1048 et prouver le vrai signe de transition, y compris
+celui de la réassociation des paramètres. Identifier dans ces cartes la métrique induite de face, le rigging
 normalisé, l'orientation et la mesure d'écran ; une
 compatibilité sur la région intégrée reste nécessaire pour réutiliser le
 calcul warped explicite. Étendre ensuite la covariance ponctuelle du flux de Gate 1049 en un

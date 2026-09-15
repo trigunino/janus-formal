@@ -1055,14 +1055,23 @@ the genuine tubular-band map, reads its equatorial, time and latitude
 coordinates, and applies the warped shear.  Its bulk and source domains are
 open, every chosen source anchor lies in its patch, and the true canonical
 first sheet has exactly the coordinate `(u,x,y,u)` throughout that patch.
-The construction currently proves smoothness and exact face incidence; its
-local-diffeomorphism package and full finite-normal coverage remain separate.
+Gate 1062 packages this coordinate as a genuine local diffeomorphism and
+exposes its explicit inverse partial diffeomorphism.  The coordinate/inverse
+round trip has derivative identity and determinant one; this round-trip sign
+does not determine orientation relative to another chart.  Gate 1063 extends
+the tubular representative through every finite normal in `[0,1]`, proves
+equality with the true cut-bulk collar, and evaluates its band coordinate as
+`(u,x,y,u+r)`.  It does not put that whole collar inside the point-local inverse
+chart selected by Gate 1062.  Gate 1064 replaces Gate 1034's incompatible fixed
+product chart by an arbitrary physical partial diffeomorphism, preserves an
+adapter from every old datum, and constructs the canonical adapted first-sheet
+inhabitant.  Its chart-validity claim is restricted to the face.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
-warped face `(u,x,y,u)` has rank three.  The next geometric step is to package
-Gate 1061's coordinate as a local diffeomorphism, refine the Gate 1034/1048
-route around it, cover the full finite collar in one valid chart, and prove the
-required positive orientation.  The induced face metric,
+warped face `(u,x,y,u)` has rank three.  The next geometric step is to cover the
+full finite collar in one adapted chart on a valid fundamental time strip,
+refine the Gate 1048 route around the new incidence, and prove the actual
+transition orientation, including the parameter-reassociation sign.  The induced face metric,
 normalized rigging, orientation and screen measure must then be matched across
 the physical atlas; regional compatibility is needed to reuse the explicit
 warped fiber integral.  Then Gate 1049's
