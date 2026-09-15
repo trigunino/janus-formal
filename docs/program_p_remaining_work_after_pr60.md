@@ -1164,10 +1164,11 @@ le choix ensembliste de Gate 1039 par le courant linéaire explicite
 `(0,(r-1)ρ(q))` dans le collier. Son flux inférieur vaut `ρ`, sa valeur en
 `r=1` est nulle, sa divergence coordonnée ambiante vaut `ρ(q)` aux points de
 différentiabilité, et l'intégration sur `0 ≤ r ≤ 1` donne l'identité de Stokes
-sur une fibre. Il ne s'agit encore que du volume coordonné et de l'intégrale en
-`r` : aucune intégration sur la source nulle, véritable demi-collier à bord,
-support compact, identité avec le volume métrique ou incidence mapping-torus
-n'est construit.
+sur une fibre. Gate 1043 calcule la densité métrique
+`√|det g| = exp u`, l'identifie à l'aire d'écran sur la face et prouve les
+versions courant densitisé et volume métrique de cette identité fibre par
+fibre. Aucune mesure ni intégration sur la source nulle, véritable demi-collier
+à bord, support compact ou incidence mapping-torus n'est encore construit.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1176,7 +1177,7 @@ encore.
 ce carrier à une hypersurface effective du bulk mapping-torus par une
 identification de ce collier explicite avec les cartes physiques, puis construire
 transport tangent et compatibilités
-métrique/volume. Construire sa mesure d'écran, puis établir la
+métrique/volume avec les cartes physiques. Construire sa mesure d'écran, puis établir la
 covariance/recollement d'atlas du courant, du flux et
 de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
 compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension

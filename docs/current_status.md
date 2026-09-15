@@ -936,13 +936,16 @@ set-theoretic choice by the explicit linear collar current
 `(0,(r-1)ρ(q))`.  Its lower flux is `ρ`, its `r=1` value is zero, its ambient
 coordinate divergence is `ρ(q)` at differentiability points, and integration
 over `0 ≤ r ≤ 1` gives the corresponding one-fiber Stokes identity.  This is
-coordinate-volume and interval integration only: no null-source integration,
-actual half-collar with boundary, compact support, metric-volume identity, or
+coordinate-volume and interval integration only.  Gate 1043 computes the
+warped metric density `√|det g| = exp u`, identifies its face restriction with
+the homogeneous screen area, and proves both the densitized-current and scalar
+metric-volume versions of that fiberwise Stokes identity.  No null-source
+measure or integration, actual half-collar with boundary, compact support, or
 mapping-torus incidence is supplied.
 The remaining geometric step is to make the null geometry depend faithfully on
 the physical input and identify it with an actual mapping-torus bulk
 hypersurface by relating this explicit collar to the physical charts, then add
-tangent transport and metric/volume compatibility.  Its orientation
+tangent transport and relate its metric/volume formula to the physical charts.  Its orientation
 and screen measure must support atlas-covariant current, flux, divergence, and
 an integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
 `GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
