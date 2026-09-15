@@ -909,11 +909,21 @@ reusing Gates 899/905's null-to-joint factor unchanged.  Gate 852's
 bulk-to-null field supplies the compatibility and recovers its completed
 target.  The null source itself remains contractual rather than geometrically
 constructed.
-The remaining geometric step is to construct an inhabited null hypersurface in
-the bulk with a `C³` incidence/restriction, generator, screen/rigging, tangent
-transport, conormal, and metric/volume compatibility.  Its orientation and
-screen measure must support atlas-covariant current, flux, divergence, and an
-integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
+Gate 1038 proves that the mobile null-geometry structure is inhabited without
+extra assumptions.  Its explicit hyperplane `z = u` carries the Lorentz metric
+`diag(-1, exp u, exp u, 1)`, a nonzero null defining covector, a null generator,
+a positive screen metric, and unit expansion; raising the defining covector
+gives that generator.  The model is input-independent, and its joint and
+normalization data are conventional constants.  It is an ambient coordinate
+model only: no faithful action realization or joint carrier is constructed,
+and it is not yet identified with a hypersurface of the mapping-torus bulk.
+It therefore supplies no bulk-to-null restriction or Stokes law.
+The remaining geometric step is to make the null geometry depend faithfully on
+the physical input and identify it with an actual mapping-torus bulk
+hypersurface through a `C³` incidence/restriction, then add
+rigging, tangent transport, and metric/volume compatibility.  Its orientation
+and screen measure must support atlas-covariant current, flux, divergence, and
+an integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
 `GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
 integrated averaging law).  These arrows must then join the realized
 `bulk → nonNullBoundary` and `nullBoundary → joint` arrows by upgrading Gate

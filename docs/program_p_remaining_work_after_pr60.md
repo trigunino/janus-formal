@@ -1136,13 +1136,24 @@ gradué de carré nul qui réutilise sans changement la composante
 `nullBoundary → joint` des Gates 899/905. Le champ bulk-vers-nul de Gate 852
 fournit cette compatibilité et retrouve sa cible complétée. La source nulle reste
 toutefois contractuelle, sans construction géométrique.
+Gate 1038 prouve sans hypothèse que la structure de géométrie nulle mobile est
+habitée. Son hyperplan explicite `z = u` porte la métrique lorentzienne
+`diag(-1, exp u, exp u, 1)`, une conormale définissante nulle non nulle, un
+générateur nul, une métrique d'écran positive et une expansion unitaire ; le
+relèvement métrique de la conormale redonne ce générateur. Le modèle est
+indépendant de l'input, et ses données de joint et de normalisation sont des
+constantes conventionnelles. Il ne construit ni réalisation d'action fidèle ni
+carrier de joint et n'est pas encore identifié à une hypersurface du bulk
+mapping-torus. Il ne fournit donc ni restriction bulk-vers-nul ni loi de
+Stokes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire un habitant d'hypersurface nulle dans le bulk avec une
-incidence/restriction `C³`, générateur, écran/rigging, transport tangent,
-conormale et compatibilités métrique/volume. Fixer son orientation et sa mesure
+**Reste :** rendre la géométrie nulle fidèle à l'input physique et identifier
+ce carrier à une hypersurface effective du bulk mapping-torus par une
+incidence/restriction `C³`, puis construire rigging,
+transport tangent et compatibilités métrique/volume. Fixer son orientation et sa mesure
 d'écran, puis établir la covariance/recollement d'atlas du courant, du flux et
 de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
 compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension
