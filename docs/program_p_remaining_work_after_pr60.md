@@ -1251,15 +1251,22 @@ compatibilité avec la métrique warped fixe. Une condition ponctuelle plus
 faible suffit pour identifier la densité de face à l'aire d'écran ; réutiliser
 la divergence warped exige encore une égalité sur un germe, exactement celle
 fournie par le datum conditionnel plus fort de Gate 1054.
+Gate 1057 ferme directement la régularité de cette voie physique fidèle. Sur
+le domaine valide de la carte inverse, le point de carte et son repère dérivé
+sont lisses, le repère coordonné transporté est une base et la
+non-dégénérescence lorentzienne rend le déterminant métrique non nul. La
+matrice physique, `sqrt|det g|` et le courant de volume associé à tout courant
+ordinaire `C¹` sont donc différentiables à la face. La naturalité de divergence
+de Gate 1056 ne demande plus aucune hypothèse de régularité densitisée ni de
+compatibilité avec la métrique warped.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** construire effectivement les data conditionnels d'incidence et de
 transition des Gates 1034/1048 avec l'orientation positive requise par Gate
-1051, puis prouver directement la régularité du courant de volume de la
-métrique physique cible. Identifier dans ces cartes la métrique induite de
-face, le rigging normalisé, l'orientation et la mesure d'écran ; une
+1051. Identifier dans ces cartes la métrique induite de face, le rigging
+normalisé, l'orientation et la mesure d'écran ; une
 compatibilité sur la région intégrée reste nécessaire pour réutiliser le
 calcul warped explicite. Étendre ensuite la covariance ponctuelle du flux de Gate 1049 en un
 recollement d'atlas cohérent du courant, du flux et de la divergence signée de

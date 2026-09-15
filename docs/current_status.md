@@ -1026,10 +1026,17 @@ coefficients needs no warped-metric compatibility.  A weaker pointwise face
 condition is enough to identify its volume density with the homogeneous screen
 area.  Reusing the fixed warped divergence still requires equality on a germ,
 and Gate 1054's stronger conditional datum is proved to supply exactly that.
+Gate 1057 proves the missing regularity directly for the genuine physical
+metric.  On the valid inverse-chart domain, the chart point and derivative
+frame are smooth, the transported coordinate frame is a basis, and Lorentz
+nondegeneracy makes the metric determinant nonzero.  Thus the physical matrix,
+`sqrt|det g|`, and every metric-volume current built from an ordinary `C¹`
+current are differentiable at the selected face.  Gate 1056's faithful
+physical divergence naturality now follows from ordinary current regularity,
+without any warped-metric compatibility assumption.
 The remaining geometric step is to construct the incidence and transition
-data with the required positive orientation and prove regularity of the
-physical target metric-volume current without a compatibility assumption.
-The induced face metric, normalized rigging, orientation and screen measure
+data with the required positive orientation.  The induced face metric,
+normalized rigging, orientation and screen measure
 must be matched across the physical atlas; a regional compatibility is needed
 to reuse the explicit warped fiber integral.  Then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
