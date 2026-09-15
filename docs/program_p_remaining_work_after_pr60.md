@@ -1137,23 +1137,29 @@ gradué de carré nul qui réutilise sans changement la composante
 fournit cette compatibilité et retrouve sa cible complétée. La source nulle reste
 toutefois contractuelle, sans construction géométrique.
 Gate 1038 prouve sans hypothèse que la structure de géométrie nulle mobile est
-habitée. Son hyperplan explicite `z = u` porte la métrique lorentzienne
+habitée. Son hyperplan explicite `z = u` porte la métrique diagonale de signature
+lorentzienne
 `diag(-1, exp u, exp u, 1)`, une conormale définissante nulle non nulle, un
 générateur nul, une métrique d'écran positive et une expansion unitaire ; le
 relèvement métrique de la conormale redonne ce générateur. Le modèle est
 indépendant de l'input, et ses données de joint et de normalisation sont des
 constantes conventionnelles. Il ne construit ni réalisation d'action fidèle ni
 carrier de joint et n'est pas encore identifié à une hypersurface du bulk
-mapping-torus. Il ne fournit donc ni restriction bulk-vers-nul ni loi de
-Stokes.
+mapping-torus.
+Gate 1039 ajoute la restriction linéaire locale des courants ambiants vers leur
+flux scalaire tiré en arrière sur cet hyperplan. Le rigging concret `e₀` a un
+flux non nul ; un inverse à droite ensembliste montre donc que toute densité de
+carte est atteinte pour la famille de faces singleton. Aucune régularité n'est
+affirmée pour cette extension, qui ne fournit ni intégration d'écran,
+ni incidence mapping-torus, ni restriction PT05, ni loi de Stokes.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** rendre la géométrie nulle fidèle à l'input physique et identifier
 ce carrier à une hypersurface effective du bulk mapping-torus par une
-incidence/restriction `C³`, puis construire rigging,
-transport tangent et compatibilités métrique/volume. Fixer son orientation et sa mesure
+incidence/restriction `C³`, puis construire transport tangent et compatibilités
+métrique/volume. Fixer son orientation et sa mesure
 d'écran, puis établir la covariance/recollement d'atlas du courant, du flux et
 de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
 compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension

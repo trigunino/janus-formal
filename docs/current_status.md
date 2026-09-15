@@ -910,18 +910,24 @@ bulk-to-null field supplies the compatibility and recovers its completed
 target.  The null source itself remains contractual rather than geometrically
 constructed.
 Gate 1038 proves that the mobile null-geometry structure is inhabited without
-extra assumptions.  Its explicit hyperplane `z = u` carries the Lorentz metric
+extra assumptions.  Its explicit hyperplane `z = u` carries the diagonal
+Lorentz-signature metric
 `diag(-1, exp u, exp u, 1)`, a nonzero null defining covector, a null generator,
 a positive screen metric, and unit expansion; raising the defining covector
 gives that generator.  The model is input-independent, and its joint and
 normalization data are conventional constants.  It is an ambient coordinate
 model only: no faithful action realization or joint carrier is constructed,
 and it is not yet identified with a hypersurface of the mapping-torus bulk.
-It therefore supplies no bulk-to-null restriction or Stokes law.
+Gate 1039 adds the local linear restriction from ambient currents to pulled-back
+scalar flux on this hyperplane.  The concrete `e₀` rigging has nonzero flux, so
+a set-theoretic right inverse proves that every chart density is attained for
+the singleton face family.  No regularity is asserted anywhere for this
+extension; it supplies no screen integration, mapping-torus incidence, PT05
+restriction, or Stokes law.
 The remaining geometric step is to make the null geometry depend faithfully on
 the physical input and identify it with an actual mapping-torus bulk
 hypersurface through a `C³` incidence/restriction, then add
-rigging, tangent transport, and metric/volume compatibility.  Its orientation
+tangent transport and metric/volume compatibility.  Its orientation
 and screen measure must support atlas-covariant current, flux, divergence, and
 an integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
 `GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
