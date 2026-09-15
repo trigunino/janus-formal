@@ -964,12 +964,19 @@ invertible Jacobian with positive absolute determinant, and this Jacobian maps
 the warped radial vector `e₃` exactly to the true cut-bulk chart normal.  The
 datum remains conditional and point-local; it supplies no global collar,
 metric, measure, or four-dimensional Piola-divergence compatibility.
+Gate 1049 exposes the chosen local inverse and its inverse Jacobian, which maps
+the true cut-collar chart normal back to `e₃`.  The signed vector-density
+pullback then preserves the face flux three-form and its scalar source-frame
+coefficient at the selected point, both against the true face coordinate and
+the warped embedding.  This remains a point-local coordinate-volume law; it
+does not establish metric-volume or four-dimensional divergence covariance.
 The remaining geometric step is to construct the incidence and transition
 data, make the null geometry depend faithfully on the physical input, and add
 metric/volume compatibility in the physical charts.  Its orientation
-and screen measure must be matched across the physical atlas, then covariance
-of the current, flux, and divergence and an integrated `bulk → nullBoundary`
-Stokes law must be established.  A local oriented codimension-two
+and screen measure must be matched across the physical atlas, then Gate 1049's
+pointwise signed flux law must be extended to coherent current/flux atlas
+gluing, four-dimensional divergence covariance, and an integrated
+`bulk → nullBoundary` Stokes law.  A local oriented codimension-two
 `GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
 integrated averaging law).  These arrows must then join the realized
 `bulk → nonNullBoundary` and `nullBoundary → joint` arrows by upgrading Gate

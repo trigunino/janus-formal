@@ -1192,6 +1192,13 @@ Jacobien est inversible, son déterminant absolu est strictement positif, et il
 envoie exactement le radial warped `e₃` sur la normale de carte du vrai collier.
 Le datum reste conditionnel et ponctuel ; aucune compatibilité globale de
 collier, métrique, mesure ou Piola-divergence 4D n'en découle.
+Gate 1049 extrait l'inverse local choisi et son Jacobien inverse, qui ramène la
+normale du vrai collier sur `e₃`. Le pullback signé du courant densitisé préserve
+alors, au point sélectionné, la trois-forme de flux de face et son coefficient
+sur le repère source, aussi bien contre la vraie coordonnée de face que contre
+l'embedding warped. Cette loi reste ponctuelle et fondée sur le volume
+coordonné ; elle ne fournit ni covariance du volume métrique ni loi de
+divergence de Piola en dimension quatre.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1200,9 +1207,10 @@ encore.
 transition des Gates 1034/1048, rendre la géométrie nulle fidèle à l'input
 physique, puis établir les compatibilités métrique/volume avec les cartes
 physiques. Identifier la mesure d'écran dans
-ces cartes, puis établir la covariance/recollement d'atlas du courant, du flux et
-de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
-compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension
+ces cartes, puis étendre la covariance ponctuelle du flux de Gate 1049 en un
+recollement d'atlas cohérent du courant et du flux, établir la covariance de la
+divergence, ainsi que la descente intégrée `bulk → nullBoundary` compatible à
+Stokes. Prouver aussi la trace locale orientée GHY de codimension
 deux vers les joints (Gate 944 ne fournit que la loi d'averaging intégrée), puis
 assembler ces flèches avec les flèches déjà réalisées `bulk → nonNullBoundary`
 et `nullBoundary → joint` en étendant le squelette intégré de Gate 1037 à un
