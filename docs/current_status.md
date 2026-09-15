@@ -849,14 +849,26 @@ arbitrary and no regularity is asserted. In particular, the boundary value
 does not yet relate the ambient transverse first jet or four-divergence to
 Gate 1030's throat divergence and `dH`. No common cut-bulk/null incidence,
 ambient-atlas covariance, face orientation or measure, integration, Stokes
-law, or GHY-to-joint trace is constructed.
-The remaining geometric step is to construct and regularize a common
-cut-bulk/null incidence that inhabits the supplied transverse-rigging
-interface and controls the transverse first jet/divergence, then add face
-orientation and screen integration, prove the Stokes-compatible integrated
-descent, construct the local GHY-to-joint trace, and assemble the common
-stratified chain map carrying the existing classification to the terminal T06
-certificate.
+law, or local codimension-two GHY-to-joint trace is constructed.
+Gate 1033 gives the missing regular calculation in the chosen product split.
+For `C¹` throat and supplied normal components it constructs `C¹` product and
+ambient currents, identifies the coordinate divergences with intrinsic
+traces, and proves that a normal-constant extension has zero transverse first
+jet and exact `div₄ = div₃`. On Gate 1030's affine Cartan slice, Gate 1030
+discharges the radial/joint regularity and gives `div₄ = dH`; differentiability
+of the supplied normal density remains required. An affine normal profile
+realizes any constant transverse first jet, adds that slope to `div₄`, and
+slope `-dH` gives zero ambient divergence at the selected base point while
+preserving the zero-slice value. This regular
+split is not yet identified with the true cut-bulk collar or a finite mobile
+null-face embedding.
+The remaining geometric step is to construct that local cut-collar/null-face
+incidence, then add face orientation and screen integration, prove the
+collar-current/divergence atlas covariance and Stokes-compatible integrated
+descent, construct the local codimension-two GHY-to-joint trace (Gate 944
+already supplies its integrated averaging law), and assemble the common
+stratified chain map carrying the existing
+classification to the terminal T06 certificate.
 This closes the two-sided degree-four T02 polynomial kernel. It does not yet
 supply a covariant full physical BV action. `T06` remains open until a common
 covariant local carrier has a Stokes-compatible integrated chain map beyond the

@@ -1076,16 +1076,29 @@ sont arbitraires et aucune régularité n'est prouvée. En particulier, la valeu
 au bord ne relie pas encore le premier jet transverse ou la divergence 4D à la
 divergence de gorge et au `dH` de Gate 1030. Aucune incidence commune bulk
 coupé/face nulle, covariance d'atlas ambiant, orientation ou mesure d'écran,
-intégration, Stokes ou trace GHY vers les joints n'est construite.
+intégration, Stokes ou trace GHY locale de codimension deux n'est construite.
+Gate 1033 effectue le calcul régulier manquant dans le split produit choisi.
+Lorsque les composantes de gorge et normale fournies sont `C¹`, elle construit
+des courants produit et ambiant `C¹`, identifie les divergences coordonnées aux
+traces intrinsèques, puis prouve qu'une extension constante dans la normale a
+un premier jet transverse nul et vérifie `div₄ = div₃`. Sur la tranche affine
+de Cartan correcte de Gate 1030, Gate 1030 décharge la régularité radiale/jointe
+et donne `div₄ = dH`; la différentiabilité de la densité normale fournie reste
+requise. Un profil normal affine réalise un premier jet transverse constant
+arbitraire, ajoute cette pente à `div₄`, et le choix `-dH` donne une divergence
+ambiante nulle au point de base en préservant
+la valeur sur la tranche zéro. Ce split régulier n'est pas encore identifié au
+vrai collier du bulk coupé ni à l'embedding d'une face nulle mobile finie.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire et régulariser l'incidence commune collier/bulk
-coupé--face nulle qui habite l'interface de rigging transverse de Gate 1032,
-contrôle le premier jet transverse et identifie les divergences 4D/3D, fixer
-l'orientation et la mesure d'écran, établir la descente intégrée compatible à
-Stokes, prouver la vraie trace locale GHY vers les joints, assembler un chain
+**Reste :** construire l'incidence locale commune collier/bulk coupé--face
+nulle reliant le calcul régulier de Gate 1033 à l'interface de Gate 1032, fixer
+l'orientation et la mesure d'écran, établir la covariance d'atlas du courant
+de collier et de sa divergence, puis la descente intégrée compatible à
+Stokes, prouver la trace GHY locale de codimension deux vers les joints (Gate
+944 fournit déjà la loi d'averaging intégrée), assembler un chain
 map local/intégré commun à toutes les strates avec naturalité, compatibilité à
 l'intégration et `dH² = 0`, y transporter les classifications des Gates 942 et
 866, puis produire le certificat terminal T06. Le BV/BRST physique non trivial
