@@ -1312,6 +1312,12 @@ densitisées physique et warped coïncident point par point ; leurs intégrales 
 fibre et bulk régionales sont donc égales, puis Gate 1067 donne la loi de Stokes
 régionale pour la métrique physique. Les mesures restent celles des coordonnées
 canoniques, sans pushforward sur l'image physique.
+Gate 1070 isole le datum géométrique commun manquant pour le même `faithful`
+fini arbitraire employé par T03/T05 et la même métrique Candidate-A
+`plusBase.metric`. Sous ce datum, l'embedding fidèle est une coordonnée de carte
+physique, son germe métrique ambiant est le pullback physique, son générateur est
+nul et orthogonal à l'écran, et la métrique d'écran stockée est bien induite.
+Aucun habitant canonique de ce datum n'est affirmé.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
@@ -1321,7 +1327,7 @@ la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
 contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1069 contournent
 maintenant cette obstruction, couvrent le collier régional, fixent son signe de
 transition et transportent la divergence densitisée sans supposer d'isométrie.
-Prouver encore que la face physique est nulle pour la métrique choisie, puis
+Construire encore l'incidence Gate 1070 pour la famille canonique, puis
 identifier le rigging normalisé, l'orientation, la mesure d'écran et la mesure
 sur l'image physique. Étendre ensuite le résultat aux recouvrements d'atlas
 et le relier à la même action nulle fidèle que T03/T05, puis étendre la

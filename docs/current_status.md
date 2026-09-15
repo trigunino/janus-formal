@@ -1091,14 +1091,21 @@ divergences agree pointwise; hence their fiber and regional bulk integrals
 agree, and Gate 1067 gives the regional physical-metric Stokes identity.
 These integrals still use the canonical coordinate measures, not a measure
 pushed to the physical image.
+Gate 1070 isolates the exact missing common-geometry datum for the same
+arbitrary finite-face `faithful` realization used by T03/T05 and the same
+Candidate-A `plusBase.metric`.  Given this datum, the faithful embedding is a
+physical chart coordinate, its ambient metric germ is the pulled-back physical
+metric, and its generator is null and screen-orthogonal while its stored screen
+metric is the physically induced one.  The datum is not claimed inhabited.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
 warped face `(u,x,y,u)` has rank three.  Gates 1064--1069 now bypass that
 obstruction, cover the regional finite collar, fix its transition orientation
 and transport the densitized divergence without assuming an isometry.  It
-remains to prove the physical face is null for the selected metric and identify
-its normalized rigging, orientation, screen measure and physical-image measure;
-Gate 1069 deliberately proves none of those stronger identifications.
+remains to construct Gate 1070's incidence for the canonical family and
+identify its normalized rigging, orientation, screen measure and physical-image
+measure; Gate 1070 assumes the common metric germ and proves only the resulting
+face nullity and screen identities.
 The construction must then be extended across chart overlaps and tied to the
 same faithful null action used by T03/T05.  Then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
