@@ -1236,6 +1236,12 @@ de cette carte inverse. La transition reste dans la cible valide de la carte
 sur un germe. Sous la congruence warped/physique toujours explicite, la
 naturelleté de Gate 1053 concerne donc ces vrais coefficients métriques. Il
 reste à construire un habitant de ce datum de compatibilité physique.
+Gate 1055 élimine l'hypothèse supplémentaire de Gate 1053 sur la régularité du
+courant déjà densitisé. Le cocycle de volume métrique, la densité warped lisse,
+le Jacobien non nul et l'inverse local imposent la différentiabilité de la
+densité métrique cible au point de face. Tout courant cible ordinaire `C¹`
+fournit donc automatiquement le courant de volume requis, y compris pour la
+métrique physique de Gate 1054. Le datum de compatibilité reste conditionnel.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.

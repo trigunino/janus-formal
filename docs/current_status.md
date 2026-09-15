@@ -1010,6 +1010,13 @@ The transition stays inside the valid inverse-chart target as a germ.  Under
 the still-explicit warped/physical metric congruence, Gate 1053's divergence
 naturality therefore applies to these actual physical metric coefficients.
 Existence of this physical metric-germ compatibility datum is not yet proved.
+Gate 1055 removes Gate 1053's extra regularity assumption on the already
+densitized current.  The metric-volume cocycle, smooth warped density,
+nonvanishing transition Jacobian and chosen local inverse force the compatible
+target metric density to be differentiable at the face.  Consequently every
+ordinary differentiable target current has a differentiable metric-volume
+current, and physical metric-divergence naturality follows from ordinary `C¹`
+current regularity alone.  The compatibility datum itself remains conditional.
 The remaining geometric step is to construct the incidence and transition
 data with the required positive orientation, make the null geometry depend
 faithfully on the physical input, and inhabit Gate 1054's physical metric-germ
