@@ -1186,16 +1186,20 @@ a exactement l'embedding warped comme coordonnée de carte. Elle y transporte
 les formules coordonnées de courant, flux et densité métrique warped, et prouve
 l'injectivité des points de bord sélectionnés. Ce raccord reste conditionnel et
 limité à la face ; il n'identifie ni les colliers complets, ni leur normale, ni
-la métrique ou la mesure physique du mapping-torus.
+la métrique ou la mesure physique du mapping-torus. Gate 1048 encode le raccord
+suivant par un germe de transition ambiante en un point de cette face. Son
+Jacobien est inversible, son déterminant absolu est strictement positif, et il
+envoie exactement le radial warped `e₃` sur la normale de carte du vrai collier.
+Le datum reste conditionnel et ponctuel ; aucune compatibilité globale de
+collier, métrique, mesure ou Piola-divergence 4D n'en découle.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire effectivement le datum d'incidence de Gate 1034, rendre
-la géométrie nulle fidèle à l'input physique et prolonger le raccord de face de
-Gate 1047 en une identification du collier explicite avec les cartes physiques.
-Construire ensuite le transport tangent et les compatibilités
-métrique/volume avec les cartes physiques. Identifier la mesure d'écran dans
+**Reste :** construire effectivement les data conditionnels d'incidence et de
+transition des Gates 1034/1048, rendre la géométrie nulle fidèle à l'input
+physique, puis établir les compatibilités métrique/volume avec les cartes
+physiques. Identifier la mesure d'écran dans
 ces cartes, puis établir la covariance/recollement d'atlas du courant, du flux et
 de la divergence ainsi que la descente intégrée `bulk → nullBoundary`
 compatible à Stokes. Prouver aussi la trace locale orientée GHY de codimension

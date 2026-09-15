@@ -958,13 +958,18 @@ point has exactly the warped embedding as its bulk-chart coordinate; the
 coordinate current, flux, and warped metric-density formulas therefore hold
 there, and the selected boundary points are injective.  This identifies only
 the zero face and remains conditional on an inhabitant of the incidence datum.
-The remaining geometric step is to construct that incidence datum, make the
-null geometry depend faithfully on the physical input, extend the face bridge
-to the full collar, then add tangent transport and relate its metric/volume
-formula to the physical charts.  Its orientation
-and screen measure must be matched across the physical atlas so that current,
-flux, divergence, and
-an integrated `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
+Gate 1048 packages the next local compatibility as an ambient chart-transition
+germ at one face point.  The transition fixes that point, its derivative is an
+invertible Jacobian with positive absolute determinant, and this Jacobian maps
+the warped radial vector `e₃` exactly to the true cut-bulk chart normal.  The
+datum remains conditional and point-local; it supplies no global collar,
+metric, measure, or four-dimensional Piola-divergence compatibility.
+The remaining geometric step is to construct the incidence and transition
+data, make the null geometry depend faithfully on the physical input, and add
+metric/volume compatibility in the physical charts.  Its orientation
+and screen measure must be matched across the physical atlas, then covariance
+of the current, flux, and divergence and an integrated `bulk → nullBoundary`
+Stokes law must be established.  A local oriented codimension-two
 `GHY(nonNull) → joint` trace is still required (Gate 944 supplies only its
 integrated averaging law).  These arrows must then join the realized
 `bulk → nonNullBoundary` and `nullBoundary → joint` arrows by upgrading Gate
