@@ -1207,13 +1207,21 @@ courant cible `C¹`. Au point de face, la divergence est multipliée par le
 déterminant signé tandis que le flux est préservé. Pour le courant affine, les
 deux valeurs sont le déterminant signé fois `ρ` et le flux `ρ`. La mesure reste
 le volume coordonné fixe, pas le volume métrique physique.
+Gate 1051 prouve que ce déterminant non nul garde un signe strict dans un
+voisinage et en déduit la loi de Piola absolue : la divergence est multipliée
+par la densité positive `|det J|` sans choix d'orientation. Pour le courant
+affine, elle vaut `|det J|ρ`. Le flux signé du pullback absolu reste exactement
+`ρ` sous l'hypothèse explicite `det J > 0`, laquelle ne découle pas du datum de
+transition actuel. Il s'agit toujours d'un Jacobien coordonné, pas encore du
+volume métrique physique.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** construire effectivement les data conditionnels d'incidence et de
-transition des Gates 1034/1048, rendre la géométrie nulle fidèle à l'input
-physique, puis établir les compatibilités métrique/volume avec les cartes
+transition des Gates 1034/1048 avec l'orientation positive requise par Gate
+1051, rendre la géométrie nulle fidèle à l'input physique, puis établir les
+compatibilités métrique/volume avec les cartes
 physiques. Identifier la mesure d'écran dans
 ces cartes, puis étendre la covariance ponctuelle du flux de Gate 1049 en un
 recollement d'atlas cohérent du courant, du flux et de la divergence signée de

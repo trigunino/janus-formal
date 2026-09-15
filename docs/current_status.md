@@ -979,9 +979,18 @@ divergence is multiplied by the signed transition determinant while flux is
 preserved.  For the affine collar current, these become respectively the
 signed determinant times `ρ` and the original face flux `ρ`.  This still uses
 the fixed coordinate volume rather than the physical metric volume.
+Gate 1051 proves that the nonzero determinant has a constant local sign and
+derives the absolute Piola law: divergence is multiplied by Gate 1048's
+positive density `|det J|` without choosing an orientation.  For the affine
+current this gives `|det J|ρ`.  Exact preservation of the signed face flux by
+the absolute pullback is proved under the explicit condition `det J > 0`;
+that condition is not derivable from the present transition datum.  This is
+still an absolute coordinate-Jacobian law, not physical metric-volume
+compatibility.
 The remaining geometric step is to construct the incidence and transition
-data, make the null geometry depend faithfully on the physical input, and add
-metric/volume compatibility in the physical charts.  Its orientation
+data with the required positive orientation, make the null geometry depend
+faithfully on the physical input, and add metric/volume compatibility in the
+physical charts.  Its orientation
 and screen measure must be matched across the physical atlas, then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
 extended to coherent current/flux atlas gluing and an integrated
