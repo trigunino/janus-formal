@@ -1066,15 +1066,25 @@ chart selected by Gate 1062.  Gate 1064 replaces Gate 1034's incompatible fixed
 product chart by an arbitrary physical partial diffeomorphism, preserves an
 adapter from every old datum, and constructs the canonical adapted first-sheet
 inhabitant.  Its chart-validity claim is restricted to the face.
+Gate 1065 removes the remaining finite-normal coverage gap on the open
+fundamental time strip.  For each fixed stereographic pole it constructs one
+physical partial diffeomorphism whose source contains every canonical collar
+point with `0 ≤ r ≤ 1`, whose target is exactly the corresponding open warped
+strip, and whose coordinate is `(u,x,y,u+r)`.  The temporal seam and selected
+screen pole are explicitly excluded.  Gate 1066 generalizes Gate 1048's
+transition datum to the new incidence and constructs its canonical inhabitant:
+the actual collar-coordinate transition is the identity as a germ.  Its true
+signed Jacobian is therefore `+1`, and the positive collar direction maps to
+`e₃`; this is independent of Gate 1062's round-trip determinant.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
-warped face `(u,x,y,u)` has rank three.  The next geometric step is to cover the
-full finite collar in one adapted chart on a valid fundamental time strip,
-refine the Gate 1048 route around the new incidence, and prove the actual
-transition orientation, including the parameter-reassociation sign.  The induced face metric,
-normalized rigging, orientation and screen measure must then be matched across
-the physical atlas; regional compatibility is needed to reuse the explicit
-warped fiber integral.  Then Gate 1049's
+warped face `(u,x,y,u)` has rank three.  Gates 1064--1066 now bypass that
+obstruction, cover the regional finite collar and fix its transition
+orientation.  The next step is to identify the induced face metric, normalized
+rigging, orientation and screen measure throughout the regional physical chart
+and reuse the explicit warped fiber integral.
+The construction must then be extended across chart overlaps and tied to the
+same faithful null action used by T03/T05.  Then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
 extended to coherent current/flux atlas gluing and an integrated
 `bulk → nullBoundary` Stokes law.  A local oriented codimension-two

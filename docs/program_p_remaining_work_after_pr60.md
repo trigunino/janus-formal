@@ -1288,20 +1288,29 @@ encore tout ce collier dans l'unique germe bulk de Gate 1062. Gate 1064 remplace
 la carte produit incompatible de Gate 1034 par une `PartialDiffeomorph`
 physique libre, conserve un adaptateur depuis les anciens data et construit
 l'incidence canonique adaptée. Sa validité de carte est affirmée sur la face.
+Gate 1065 ferme la lacune de couverture normale sur la bande temporelle
+fondamentale ouverte : pour un pôle stéréographique fixé, une même carte
+physique contient toutes les normales `0 ≤ r ≤ 1`, a pour cible la bande warped
+ouverte correspondante et donne exactement `(u,x,y,u+r)`. La couture temporelle
+et le pôle choisi restent exclus. Gate 1066 généralise le datum de transition de
+Gate 1048 à la nouvelle incidence. Son inhabitant canonique a pour vraie
+transition l'identité comme germe du collier ; son Jacobien signé vaut donc
+`+1` et la direction positive du collier devient `e₃`, indépendamment du
+déterminant d'aller-retour de Gate 1062.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
 **Reste :** la contrainte `face_coordinate` de Gate 1034 est incompatible avec
 la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
-contre rang trois pour la face warped `(u,x,y,u)`. La nouvelle incidence
-adaptée contourne cette obstruction. Couvrir maintenant le collier fini dans
-une même carte valide sur une bande temporelle fondamentale, raffiner autour
-d'elle la route de Gate 1048 et prouver le vrai signe de transition, y compris
-celui de la réassociation des paramètres. Identifier dans ces cartes la métrique induite de face, le rigging
+contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1066 contournent
+maintenant cette obstruction, couvrent le collier régional et fixent son signe
+de transition. Identifier dans cette carte la métrique induite de face, le rigging
 normalisé, l'orientation et la mesure d'écran ; une
 compatibilité sur la région intégrée reste nécessaire pour réutiliser le
-calcul warped explicite. Étendre ensuite la covariance ponctuelle du flux de Gate 1049 en un
+calcul warped explicite. Étendre ensuite le résultat aux recouvrements d'atlas
+et le relier à la même action nulle fidèle que T03/T05, puis étendre la
+covariance ponctuelle du flux de Gate 1049 en un
 recollement d'atlas cohérent du courant, du flux et de la divergence signée de
 Gate 1050, ainsi que la descente intégrée `bulk → nullBoundary` compatible à
 Stokes et au volume métrique. Prouver aussi la trace locale orientée GHY de codimension
