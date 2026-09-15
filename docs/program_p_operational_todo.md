@@ -1,6 +1,6 @@
 # Programme P — registre opérationnel canonique
 
-Date de référence : 2026-09-10.
+Date de référence : 2026-09-15.
 
 ## 1. Rôle de ce document
 
@@ -10,16 +10,16 @@ mesuraient surtout l'accumulation de microlemmes. Son historique reste
 consultable dans Git.
 
 La fermeture globale est mesurée uniquement par les **14 portes terminales**
-de la section 7. État actuel : **5/14**. Une preuve locale, pointwise,
+de la section 7. État actuel : **6/14**. Une preuve locale, pointwise,
 finite-mode, réduite ou conditionnelle ne ferme jamais une porte globale.
 
 En cas de contradiction entre prose et code, le type exact du théorème Lean
 compilé fait autorité.
 
-### Synthèse active au 2026-09-10
+### Synthèse active au 2026-09-15
 
-Les quatorze portes restent la mesure finale. `T01`–`T05` sont fermés ;
-`T06`–`T14` restent ouverts. Le suivi se regroupe en sept lots :
+Les quatorze portes restent la mesure finale. `T01`–`T06` sont fermés ;
+`T07`–`T14` restent ouverts. Le suivi se regroupe en sept lots :
 
 1. **Validation globale (`T01`) — FERMÉE** : le certificat typé commun, sa
    complétion L2 intrinsèque et son import de façade sont verts, sans axiome
@@ -30,9 +30,10 @@ Les quatorze portes restent la mesure finale. `T01`–`T05` sont fermés ;
    invariantes continues de ce degré. Son évaluation est injective et ses
    coefficients sont uniques. Le classificateur historique à six invariants
    n'est pas utilisé comme hypothèse d'exhaustivité.
-3. **Calcul variationnel global (`T03`–`T05` — FERMÉES ; `T06` ouverte)** :
-   l'Euler global, Helmholtz non linéaire et l'obstruction du bicomplexe
-   relatif sont dérivés ; reste la classification des lagrangiens nuls/bords.
+3. **Calcul variationnel global (`T03`–`T06` — FERMÉES)** : l'Euler global,
+   Helmholtz non linéaire, l'obstruction du bicomplexe relatif et la
+   classification des lagrangiens nuls/bords sont dérivés sur leurs carriers
+   canoniques fixés.
 4. **Hessien, Fredholm et déterminant (`T07`, `T12`)** : construire les trois
    données physiques restantes H10--H14 (famille locale `C²`, sept extensions
    continues, obstruction finie/coercivité), identifier la famille naturelle
@@ -13519,6 +13520,41 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   T02 et distinct de l'opérateur d'Euler local avec dérivées totales.
 - Porte terminale : aucune ; `T06` reste ouverte.
 
+### `P-T06-EULER-RELATIVE-RADIAL-NORMAL-FORM` — Gate 1078
+
+- État : `SUPPORT` (2026-09-15). Portée : `T06/T02-T05-NORMAL-FORM`.
+- Résultat : le noyau Euler de la classe invariante T02 de degré au plus quatre
+  est transporté dans le carrier relatif intégré T05. Sa nullité équivaut à la
+  forme normale radiale physique `J³`, avec constante canonique, courant radial
+  canonique et primitives relatives normalisées uniques.
+- Limite : ce carrier commun est logique ; il ne fournit pas un morphisme de
+  complexes ni une réalisation physique intégrée du courant.
+- Porte terminale : aucune.
+
+### `P-T06-T02-PHYSICAL-COLLAR-RELATIVE-INTEGRATION` — Gate 1079
+
+- État : `SUPPORT` (2026-09-15). Portée : `T06/COLLIER-PHYSIQUE`.
+- Résultat : pour une section `J⁴` fournie sur le collier physique et
+  l'identité pointwise fournie entre son `dH` radial et l'intégrande physique,
+  la classification T02 s'intègre en un flux de bord relatif T05.
+- Limite : le prolongement global vers `J⁴` et cette identité pointwise restent
+  des données explicites ; ils ne sont pas déduits du seul objet fidèle.
+- Porte terminale : aucune.
+
+### `P-T06-NULL-LAGRANGIANS-BOUNDARY-TERMS-TERMINAL-CERTIFICATE` — Gate 1080
+
+- État : `DONE` (2026-09-15). Portée : `GLOBAL/TERMINALE`.
+- Résultat : le certificat commun ferme exhaustivement les fonctionnelles sur
+  cartes normées globales, la classe invariante T02 de degré au plus quatre et
+  le carrier relatif intégré T05. Il assemble la classification modulo
+  constante, le noyau Euler `constant + dH` avec courant radial physique `J³`,
+  la forme normale de Gate 1078, l'exactitude relative avec primitif normalisé
+  unique et les corollaires GHY/nul/joint physiques déjà construits.
+- Limite : un atlas physique global, Stokes/coaire global, le recollement des
+  collars et un complexe BV local physique complet sont des suivis plus forts
+  hors de ce critère terminal.
+- Porte terminale : `T06` fermée ; compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
@@ -13531,7 +13567,7 @@ un `ProgramStatus` arbitraire.
 - [x] `T03` — `fullEulerLagrangeOperatorDerived`.
 - [x] `T04` — `nonlinearHelmholtzConditionsProved`.
 - [x] `T05` — `variationalBicomplexObstructionVanishing`.
-- [ ] `T06` — `nullLagrangiansAndBoundaryTermsClassified`.
+- [x] `T06` — `nullLagrangiansAndBoundaryTermsClassified`.
 - [ ] `T07` — `anomalyConstraintsApplied`.
 - [ ] `T08` — `parentBulkOrMicroscopicSelectionPrincipleDerived`.
 - [ ] `T09` — `actionNormalizationDerived`.
@@ -13563,7 +13599,7 @@ Cette carte améliore la fiabilité du suivi mais ne ferme aucune porte
 scientifique.
 
 Validation : l'audit lit exclusivement la section fixe `T01–T14`, impose le
-dénominateur `14`, affiche le décompte terminal `5/14` et rejette toute porte
+dénominateur `14`, affiche le décompte terminal `6/14` et rejette toute porte
 cochée sans `TerminalGateEvidence`. Chaque évidence doit fournir module,
 façade, théorème pleinement qualifié, portée et fragment de type ; le module
 doit être importé, sans placeholder, et le théorème ne peut pas être un simple
@@ -13573,9 +13609,10 @@ intrinsèque et son intégration à la façade ont été revérifiés verts le
 2026-08-29. Le certificat global `T03` a été compilé, importé et audité le
 2026-09-09. Le certificat Helmholtz global/chartwise `T04` et ses réciprocités
 sur quatre blocs ont été compilés, importés et audités le 2026-09-10. Le
-certificat d'obstruction du bicomplexe relatif `T05` a ensuite été compilé,
-importé et audité ; `T01`–`T05` sont les cinq portes terminales fermées,
-tandis que `T06`–`T14` restent ouvertes.
+certificat d'obstruction du bicomplexe relatif `T05` a ensuite été compilé et
+importé. Le certificat de classification nul/bord `T06` a été compilé, importé
+et audité le 2026-09-15 ; `T01`–`T06` sont les six portes terminales fermées,
+tandis que `T07`–`T14` restent ouvertes.
 
 Mise à jour : `P0EFTJanusMappingTorusGlobalSmoothScalarWave4D` ferme le
 paquetage global lisse, la linéarité réelle et l'intégrabilité de l'onde
@@ -13695,5 +13732,5 @@ variation diagonale en zéro est donc exactement le Hessien symétrique certifi�
 - le paquet spectral exige encore les différences actual/reference, les
   frontières filtrées, les moyennes de slices et leurs identités de
   semi-groupes. Les frontends Bochner fixes ne prouvent pas encore ce pont ; le
-  décompte terminal actuel est désormais `5/14`, par fermeture indépendante de
-  `T01`–`T05`.
+  décompte terminal actuel est désormais `6/14`, par fermeture indépendante de
+  `T01`–`T06`.

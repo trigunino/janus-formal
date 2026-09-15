@@ -282,8 +282,8 @@ Gate 865 closes `T05` on the concrete Gate-819 relative bicomplex: `dH` and
 first variation has an explicitly nonzero obstruction cochain which is a
 horizontal boundary and therefore has zero class. Its distinguished cochains
 evaluate to the exact T03 action and Euler covector, with Euler equal to the
-action gradient on the domain. The façade and audit are green at `5/14`:
-`T01`--`T05` are closed and `T06`--`T14` remain open.
+action gradient on the domain. The façade and audit are green at `6/14`:
+`T01`--`T06` are closed and `T07`--`T14` remain open.
 
 The actual Gate-859 geometric supports, dV for the other local sectors, the
 complete physical local bicomplex, atlas naturality/gluing and glued local
@@ -1138,31 +1138,30 @@ Gate 1077 ties Gate 1072 to a supplied measured physical collar using the same
 linear family of genuine local primitives derive the endpoint coefficient, a
 linear T05 GHY-to-joint trace operator and its integration support for the
 canonical GHY density.  No canonical collar or primitive family is claimed.
+Gate 1078 places every genuine T02 Euler residual in the bulk slot of the T05
+relative carrier.  Relative nullity is exactly Euler vanishing and hence the
+explicit constant plus canonical physical radial J³ normal form, with the
+unique normalized T05 relative primitives.  This common carrier is logical;
+it does not claim a global physical Stokes chain map.
+Gate 1079 gives the conditional physical-collar realization missing between
+the formal T02 fourth jet and Gate 1075: a supplied compatible J⁴ section
+identifies the Gate-942 radial differential with the physical bulk integrand,
+integrates it to the first-sheet boundary flux, and records the constant and
+relative boundary as distinct augmented components.
+Gate 1080 closes `T06`.  Its certificate is exhaustive for global functional
+cohomology in normed charts, the invariant degree-at-most-four T02 sector, and
+the integrated T05 relative carrier; it also records the concrete GHY,
+faithful-null/joint and full integrated packet corollaries.
 The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
 chart: its spatial projection has rank two on the true throat, whereas the
 warped face `(u,x,y,u)` has rank three.  Gates 1064--1069 now bypass that
 obstruction, cover the regional finite collar, fix its transition orientation
-and transport the densitized divergence without assuming an isometry.  It
-still remains to inhabit Gate 1074's atlas for the arbitrary faithful family,
-identify normalized rigging and orientation, and prove compatible transitions
-for its current, flux and measures.  Gate 1075 completes the physical-image
-bulk measure and Stokes law only for the canonical regional first sheet.
-Gate 1076 supplies fixed-trivialization base regularity, but a measurable
-atlas-level integration of the recollated J³ current remains.  Gate 1077 gives
-the physical GHY-to-joint construction from supplied collar/coarea and linear
-primitive data; canonical inhabitants tied to the faithful endpoint actions
-remain to be built.  These realized arrows must then join the
-`bulk → nonNullBoundary` and `nullBoundary → joint` arrows by upgrading Gate
-1037's integrated skeleton to a common local/integrated chain map with
-naturality, commutation with integration and the explicit constant
-augmentation.  The classifications of Gates 942 and 866 can then be
-transported to the terminal T06 certificate.
-This closes the two-sided degree-four T02 polynomial kernel. It does not yet
-supply a covariant full physical BV action. `T06` remains open until a common
-covariant local carrier has a Stokes-compatible integrated chain map beyond the
-scalar normal sector, including an inhabited bulk-to-null incidence; the
-nonlinear physical BV/BRST action also remains to be built.
-The official terminal count stays `5/14`.
+and transport the densitized divergence without assuming an isometry.
+Inhabiting Gate 1074's atlas for every faithful family, globally measurable
+atlas integration, intrinsic physical measures, canonical collars/coarea and
+a Stokes-compatible physical chain map remain stronger follow-up outside the
+terminal criterion.  A nonlinear covariant physical BV/BRST action also
+remains follow-up work.  The official terminal count is `6/14`.
 
 Given a
 compatible `GlobalCandidateAActionData` witness and a supplied chart, a separate

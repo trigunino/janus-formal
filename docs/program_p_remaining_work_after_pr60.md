@@ -1,6 +1,6 @@
 # Programme P — bilan du reste à faire après la PR #60
 
-Date de référence : 2026-09-14.
+Date de référence : 2026-09-15.
 
 ## 1. Règle de lecture
 
@@ -12,13 +12,13 @@ Ce document distingue trois niveaux qui ne doivent pas être confondus :
 3. les quatorze portes terminales du registre canonique.
 
 La PR #60 poursuivait volontairement l'architecture avant le nettoyage final
-de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01`–`T05`
-ont depuis été fermées séparément ; `T06`–`T14` restent ouvertes.
+de l'élaboration Lean et ne fermait alors aucune porte terminale. `T01`–`T06`
+ont depuis été fermées séparément ; `T07`–`T14` restent ouvertes.
 
 Le compteur officiel demeure :
 
 ```text
-5 / 14 portes terminales.
+6 / 14 portes terminales.
 ```
 
 Une porte ne peut être cochée qu'après construction de ses objets concrets,
@@ -1357,16 +1357,29 @@ pour le même `faithful` et `plusBase`. Une formule structurelle de coaire et un
 famille linéaire de primitives locales donnent le coefficient orienté, un vrai
 opérateur linéaire T05 `GHY → joint` et son support d'intégration pour la densité
 GHY canonique. Aucun collier ou famille de primitives canonique n'est habité.
-La classification bidirectionnelle du noyau polynomial T02 de degré au plus
-quatre est donc fermée. Une action BV physique covariante complète manque
-encore.
+Gate 1078 insère chaque résidu Euler T02 véritable dans le slot bulk du carrier
+relatif T05. La nullité relative équivaut exactement à l'annulation d'Euler,
+donc à la forme normale constante plus courant radial physique J³, avec les
+primitives relatives T05 normalisées uniques. Ce carrier commun est logique et
+ne revendique pas un chain map de Stokes physique global.
+Gate 1079 réalise conditionnellement le passage du quatrième jet T02 formel au
+collier physique de Gate 1075 : une section J⁴ compatible fournie identifie le
+`dH` radial de Gate 942 à l'intégrande bulk physique, l'intègre au flux de bord
+de la première feuille et sépare l'augmentation constante du bord relatif.
+Gate 1080 produit le certificat terminal exhaustif sur la cohomologie
+fonctionnelle globale dans les cartes normées, le secteur T02 invariant de
+degré au plus quatre et le carrier relatif intégré T05. Il enregistre aussi les
+corollaires concrets GHY, nul/joint fidèle et paquet physique intégré complet.
 
-**Reste :** la contrainte `face_coordinate` de Gate 1034 est incompatible avec
-la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
+**Fermé le 2026-09-15.** Gate 1080 ferme `T06` ; audit terminal `6/14`.
+
+**Suivi plus fort hors critère terminal :** la contrainte `face_coordinate` de
+Gate 1034 est incompatible avec la carte produit fixe : sa projection spatiale
+a rang deux sur la gorge réelle,
 contre rang trois pour la face warped `(u,x,y,u)`. Gates 1064--1069 contournent
 maintenant cette obstruction, couvrent le collier régional, fixent son signe de
 transition et transportent la divergence densitisée sans supposer d'isométrie.
-Construire encore un habitant de l'atlas Gate 1074 pour la famille fidèle
+Construire un habitant de l'atlas Gate 1074 pour la famille fidèle
 arbitraire, puis identifier le rigging normalisé, l'orientation, les transitions
 de courant/flux et les mesures compatibles. Gate 1075 ferme la mesure-image et
 Stokes seulement sur la première feuille canonique régionale. Gate 1076 ferme
@@ -1377,10 +1390,8 @@ fidèles. Assembler ensuite ces flèches avec les flèches déjà réalisées
 `bulk → nonNullBoundary`
 et `nullBoundary → joint` en étendant le squelette intégré de Gate 1037 à un
 chain map local/intégré commun, avec naturalité et compatibilité à
-l'intégration et augmentation constante explicite.
-Il faudra y transporter les classifications des Gates 942 et 866 avant de
-produire le certificat terminal T06. Le BV/BRST physique non trivial reste
-supplémentaire. `T06` reste ouverte et le compteur officiel reste `5/14`.
+l'intégration et augmentation constante explicite. Ces réalisations globales
+physiques d'atlas, Stokes, coaire et BV restent hors du critère terminal T06.
 
 ### T07 — `anomalyConstraintsApplied`
 
@@ -1484,8 +1495,9 @@ indice des familles et application effective des contraintes — T07.
 La reconstruction Helmholtz sur espaces de configurations et cartes régulières
 est avancée.
 
-**Suivi plus fort hors portes terminales T03--T05 :** construire le problème
-inverse local PDE complet. La seule porte de ce bloc encore ouverte est T06.
+**Suivi plus fort hors portes terminales T03--T06 :** construire le problème
+inverse local PDE complet et les réalisations physiques globales d'atlas,
+Stokes, coaire et BV.
 
 ### P-D
 
@@ -1541,10 +1553,10 @@ isométrie cinq secteurs
 → complexification et accord Quillen de la ligne de Fredholm.
 ```
 
-### Phase 2 — T06 et renforcements locaux hors critères T03–T05
+### Phase 2 — Renforcements locaux hors critères T03–T06
 
-Poursuivre l'atlas brut du tangent et le bicomplexe physique local, puis fermer
-la classification exhaustive des bords.
+Poursuivre l'atlas brut du tangent, le bicomplexe physique local et les
+réalisations globales atlas/Stokes/coaire/BV.
 
 ### Phase 3 — T02, T07 et T11
 
@@ -1565,8 +1577,8 @@ dimensionnée.
 ## 8. Conclusion
 
 Programme P n'est pas « presque fini » au sens des quatorze portes : le
-compteur officiel est désormais `5/14`. `T01`–`T05` sont fermées ;
-`T06`–`T14` restent ouvertes.
+compteur officiel est désormais `6/14`. `T01`–`T06` sont fermées ;
+`T07`–`T14` restent ouvertes.
 
 Il est en revanche très avancé au niveau de l'infrastructure : géométrie,
 champs, action régulière, Dirac, Euler/Helmholtz chartwise et une architecture

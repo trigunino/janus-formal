@@ -417,6 +417,12 @@ a normed atlas for every raw tangent, componentwise local metric/matter PDEs,
 nonlinear diffeomorphism BRST/BV, or the full horizontal jet variational
 bicomplex.
 
+The terminal T06 classification is exhaustive on its fixed carriers: global
+normed-chart functionals, the invariant T02 class of polynomial degree at most
+four, and the integrated T05 relative carrier. A global physical atlas with
+globally glued Stokes/coarea data and a complete local physical BV complex
+remains a stronger follow-up outside that terminal criterion.
+
 ### P-C verdict
 
 P-C is the strongest inverse route. It reconstructs an action class from a compatible Euler family; it does not choose the Euler family or the surviving finite data.
@@ -2114,8 +2120,12 @@ microscopic law and finite-part data, while `SCALE-GLOBAL-01` requires an indepe
 dimensionful anchor and a selected stable vacuum.
 The former cross-representation foundation work is closed by `T01`. Terminal
 gate `T03` is closed by its typed global full Euler--Lagrange certificate;
-`T04` and `T05` are also closed by their typed terminal certificates. Stronger
-local refinements remain follow-up work, and terminal gate `T06` remains open.
+`T04` and `T05` are also closed by their typed terminal certificates. The
+typed null-Lagrangian/boundary-term certificate closes `T06` on the fixed
+global normed-chart, invariant T02 degree-at-most-four and integrated T05
+carriers. The terminal count is therefore `6/14`: `T01`--`T06` are closed and
+`T07`--`T14` remain open. Global physical atlas/Stokes/coarea and local BV
+refinements remain follow-up work outside this criterion.
 
 ## 13. Honest conclusion
 
