@@ -1259,13 +1259,31 @@ matrice physique, `sqrt|det g|` et le courant de volume associé à tout courant
 ordinaire `C¹` sont donc différentiables à la face. La naturalité de divergence
 de Gate 1056 ne demande plus aucune hypothèse de régularité densitisée ni de
 compatibilité avec la métrique warped.
+Gate 1058 identifie la géométrie nulle ponctuelle dans le pullback physique
+fidèle : le générateur et le rigging normalisé forment une paire nulle avec
+`g(N,k) = -1`, sont orthogonaux à l'écran warped de déterminant positif, et la densité de face
+orientée par le rigging est son aire homogène. Le Jacobien signé de transition
+est aussi le flux coordonné de l'opposé de la direction du facteur collier à
+vitesse unité. Sa positivité reste une condition explicite de coorientation ;
+la densité de face positive n'en fixe pas le signe.
+Gate 1059 transporte le générateur, l'écran et le rigging dans les vrais
+coefficients métriques physiques du mapping-torus. Les mêmes identités de paire
+nulle y valent et l'aire d'écran cible est `exp u`. Ces résultats restent
+conditionnels et ponctuels.
+Gate 1060 prouve la régularité lisse du relèvement canonique de première feuille
+et construit une `boundaryMap` inverse-stéréographique lisse, avec ses formules
+exactes dans le cover et le quotient. Elle ferme la partie `boundaryMap` du
+futur datum d'incidence, pas sa carte bulk adaptée.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire effectivement les data conditionnels d'incidence et de
-transition des Gates 1034/1048 avec l'orientation positive requise par Gate
-1051. Identifier dans ces cartes la métrique induite de face, le rigging
+**Reste :** la contrainte `face_coordinate` de Gate 1034 est incompatible avec
+la carte produit fixe : sa projection spatiale a rang deux sur la gorge réelle,
+contre rang trois pour la face warped `(u,x,y,u)`. Construire une carte physique
+locale cisaillée adaptée, raffiner autour d'elle la route des Gates 1034/1048,
+couvrir le collier fini dans une même carte valide et prouver l'orientation
+positive requise par Gate 1051. Identifier dans ces cartes la métrique induite de face, le rigging
 normalisé, l'orientation et la mesure d'écran ; une
 compatibilité sur la région intégrée reste nécessaire pour réutiliser le
 calcul warped explicite. Étendre ensuite la covariance ponctuelle du flux de Gate 1049 en un

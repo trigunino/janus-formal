@@ -1034,11 +1034,31 @@ nondegeneracy makes the metric determinant nonzero.  Thus the physical matrix,
 current are differentiable at the selected face.  Gate 1056's faithful
 physical divergence naturality now follows from ordinary current regularity,
 without any warped-metric compatibility assumption.
-The remaining geometric step is to construct the incidence and transition
-data with the required positive orientation.  The induced face metric,
-normalized rigging, orientation and screen measure
-must be matched across the physical atlas; a regional compatibility is needed
-to reuse the explicit warped fiber integral.  Then Gate 1049's
+Gate 1058 identifies the point-local null-face geometry in the faithful
+physical pullback: the generator and normalized rigging form a null pair with
+`g(N,k) = -1`, both are orthogonal to the warped screen with positive
+determinant, and the
+rigging-oriented face density is its homogeneous area.  It also identifies the
+signed transition Jacobian with the coordinate flux of the negative true
+unit-speed collar-factor direction.  Positivity remains an explicit
+coorientation condition; the positive face density does not choose its sign.
+Gate 1059 transports the generator, screen and rigging through the transition
+Jacobian into the genuine mapping-torus physical metric.  The same null-pair
+identities hold there and the target screen area is `exp u`.  These statements
+remain conditional and point-local.
+Gate 1060 proves that the canonical first-sheet boundary lift is smooth for the
+installed atlases and constructs a smooth inverse-stereographic boundary map
+with exact cover and quotient formulas.  This fills the smooth `boundaryMap`
+part of a future incidence datum, but does not provide its bulk chart.
+The old Gate 1034 `face_coordinate` cannot be inhabited using the fixed product
+chart: its spatial projection has rank two on the true throat, whereas the
+warped face `(u,x,y,u)` has rank three.  The next geometric step is therefore
+to construct a sheared local physical chart adapted to the warped face, refine
+the Gate 1034/1048 route around it, cover the full finite collar in one valid
+chart, and prove the required positive orientation.  The induced face metric,
+normalized rigging, orientation and screen measure must then be matched across
+the physical atlas; regional compatibility is needed to reuse the explicit
+warped fiber integral.  Then Gate 1049's
 pointwise signed flux law and Gate 1050's coordinate-divergence law must be
 extended to coherent current/flux atlas gluing and an integrated
 `bulk → nullBoundary` Stokes law.  A local oriented codimension-two
