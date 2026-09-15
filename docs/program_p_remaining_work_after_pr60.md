@@ -1157,7 +1157,9 @@ Gate 1040 prolonge cet hyperplan en un collier linéaire continu global
 l'embedding de Gate 1038, la fonction définissante vaut `r` et la dérivée
 radiale positive est `e₃`. La convention `-e₃` pour le futur bord inférieur du
 demi-collier `r ≥ 0` ne diffère du rigging de Gate 1039 que par le générateur
-tangent ; elle a donc le même flux coordonné non nul. Aucun demi-collier, pont
+tangent ; elle a donc le même flux coordonné non nul. Gate 1041 fixe exactement
+ce signe : deux échanges du repère tangent et l'alternance donnent le flux
+coordonné `+1`, identique pour le rigging `e₀` de Gate 1039. Aucun demi-collier, pont
 mapping-torus, accord avec le volume métrique, intégration ou théorème de Stokes
 n'est encore fourni.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus

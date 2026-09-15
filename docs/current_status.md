@@ -929,7 +929,9 @@ Gate 1040 extends that hyperplane to the global continuous linear collar
 Gate 1038's embedding, the defining function equals `r`, and the positive
 radial derivative is `e₃`.  The convention `-e₃` for the future `r ≥ 0` lower
 boundary differs from Gate 1039's rigging only by the tangent generator, hence
-has the same nonzero coordinate flux.  No half-collar, mapping-torus bridge,
+has the same nonzero coordinate flux.  Gate 1041 fixes its sign exactly:
+two tangent-frame swaps and alternation give coordinate flux `+1`; Gate 1039's
+`e₀` rigging has the same unit flux.  No half-collar, mapping-torus bridge,
 metric-volume identity, integration, or Stokes theorem is yet supplied.
 The remaining geometric step is to make the null geometry depend faithfully on
 the physical input and identify it with an actual mapping-torus bulk
