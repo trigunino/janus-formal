@@ -1101,18 +1101,31 @@ de Gate 1033 fournit un tel cas, et une extension de Gate 1032 dont le courant
 est fourni `C¹` conserve sur la même tranche sa décomposition de bord et son
 flux scalaire prescrit. Lorsque ces deux courants ambiants sont fournis égaux,
 le courant régulier de Gate 1033 vérifie cette même loi exacte de flux. Aucun
-habitant de la donnée d'incidence n'est encore
-construit, et la dérivée selon la vraie normale du collier n'est pas identifiée
-à la direction transverse arbitraire de Gate 1033 ; son identité de divergence
-n'est donc pas encore transportée au bulk coupé. La donnée n'impose encore
+habitant de la donnée d'incidence n'est encore construit. La donnée n'impose
 aucune compatibilité de métrique, volume ou conormale et ne construit pas de
-pullback tensoriel d'un champ vectoriel.
+pullback tensoriel d'un champ vectoriel. Gate 1035 définit la vitesse unitaire
+dans le vrai facteur normal `[0,1]`, montre que le tangent correspondant du
+collier fini est non nul et que l'isomorphisme différentiel déjà construit
+l'envoie sur un tangent non nul du bulk. Deux règles de chaîne explicites
+identifient son image par le collier source de Gate 1034 à cette vraie normale
+du bulk dans la carte holonome choisie. Une seconde donnée conditionnelle aligne
+cette normale de carte sur la direction transverse pure de Gate 1033. Sous
+cette donnée, le courant constant dans la normale a une dérivée normale nulle
+et le courant affine réalise exactement sa pente prescrite. Sans utiliser cet
+alignement, les formules de divergence coordonnée de Gate 1033 sont aussi
+évaluées sur la vraie tranche zéro de Gate 1034. Ces résultats restent des
+énoncés de composantes en coordonnées : aucun habitant de la donnée
+d'alignement, aucune normale métrique, Jacobienne tangentielle complète,
+compatibilité de volume ou conormale, covariance de champ vectoriel ni loi de
+divergence intrinsèque n'est construit. La vraie tranche zéro n'est pas encore
+prouvée de coordonnée transverse nulle dans le split arbitraire de Gate 1033.
 La classification bidirectionnelle du noyau polynomial T02 de degré au plus
 quatre est donc fermée. Une action BV physique covariante complète manque
 encore.
 
-**Reste :** construire un habitant local de la donnée d'incidence et identifier
-la vraie normale du collier au split régulier de Gate 1033, fixer
+**Reste :** construire des habitants locaux des données d'incidence et
+d'alignement, étendre l'égalité normale au transport tangent et volumique
+complet, fixer
 l'orientation et la mesure d'écran, établir la covariance d'atlas du courant
 de collier et de sa divergence, puis la descente intégrée compatible à
 Stokes, prouver la trace GHY locale de codimension deux vers les joints (Gate

@@ -875,14 +875,27 @@ a supplied `C¹` current keeps both
 its exact boundary decomposition and prescribed scalar null flux on the same
 zero slice. When the two ambient currents are supplied equal, the regular
 Gate-1033 current obeys that same exact flux law. No inhabitant of the
-incidence datum is constructed, and the
-true collar normal derivative is not yet identified with Gate 1033's
-arbitrary transverse split, so its divergence identity has not been
-transported to the cut bulk. No metric, volume or conormal compatibility is
+incidence datum is constructed. No metric, volume or conormal compatibility is
 part of this datum, and no tensorial vector-field pullback is claimed.
-The remaining geometric step is to construct a local inhabitant of that
-incidence datum and identify its true collar normal with the regular split,
-then add face orientation and screen integration, prove the
+Gate 1035 defines unit speed in the actual `[0,1]` normal factor, proves that
+the resulting finite-collar tangent is nonzero and that the existing
+finite-collar derivative isomorphism transports it to a nonzero bulk tangent.
+Two explicit chain rules identify its image through the Gate-1034 source
+collar with that genuine bulk normal in the selected holonomic chart. A second
+conditional datum aligns this true chart normal with Gate 1033's fixed pure
+transverse direction. Under that datum, the normal-constant current has zero
+derivative along the true collar normal and the affine current realizes its
+prescribed normal slope. Independently of the alignment, Gate 1033's ambient
+coordinate-divergence formulas now evaluate on Gate 1034's actual zero face.
+These are still componentwise coordinate statements: the alignment datum has
+no inhabitant, and no metric unit normal, full tangent Jacobian, volume,
+conormal, atlas-covariant vector-field transport or intrinsic divergence law
+is obtained; the actual zero face is also not yet proved to have zero
+transverse coordinate in Gate 1033's arbitrary split.
+The remaining geometric step is to construct local inhabitants of the
+incidence and normal-alignment data and extend the normal equality to the full
+tangent and volume transport, then add face orientation and screen integration,
+prove the
 collar-current/divergence atlas covariance and Stokes-compatible integrated
 descent, construct the local codimension-two GHY-to-joint trace (Gate 944
 already supplies its integrated averaging law), and assemble the common
