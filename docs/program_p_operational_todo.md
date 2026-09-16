@@ -13682,9 +13682,16 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État : `SUPPORT` (2026-09-16). Sur le cœur Candidate A pur antifantôme,
   l'auto-pairing de la Hessienne diagonale D/A/M/LL plus la forme physique à
   sept blocs vaut zéro.
-- Limite : il reste à raccorder ce calcul au Riesz augmenté sur le Hilbert
-  achevé et à construire un témoin non nul pour conclure au no-go coercif ;
-  `T12` ouverte, compteur `6/14`.
+- Limite : le raccord au Riesz est traité ci-dessous ; il manque encore un
+  témoin non nul pour conclure au no-go coercif. `T12` ouverte, `6/14`.
+
+### `P-T12-PURE-ANTIGHOST-AUGMENTED-RIESZ-ISOTROPIC` — opérateur fidèle
+
+- État : `SUPPORT` (2026-09-16). Le Riesz augmenté fidèle a un auto-pairing
+  nul sur l'image lisse de chaque cœur pur antifantôme.
+- Limite : il faut encore construire une telle image non nulle et la conserver
+  dans le projecteur D pour conclure au no-go du plancher sectoriel ; `T12`
+  ouverte, compteur `6/14`.
 
 ## 7. Les 14 portes terminales fixes
 

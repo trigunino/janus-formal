@@ -315,9 +315,9 @@ diffeomorphisme non minimal pur. Un éventuel plancher positif sur ces direction
 doit donc venir de la Hessienne BRST diagonale ; son auto-pairing antifantôme
 pur est désormais prouvé nul. Le raccord à la forme du graphe quatre facteurs
 est désormais compilé : l'auto-pairing du Hessien diagonal plus sept blocs est
-nul sur le cœur pur antifantôme. Le passage au Riesz augmenté et la preuve
-d'une direction non nulle dans le Hilbert achevé restent requis pour conclure
-formellement à une obstruction coercive H12.
+nul sur le cœur pur antifantôme. Le même auto-pairing nul est maintenant prouvé
+pour le Riesz augmenté fidèle sur son image lisse. Une image non nulle dans le
+secteur D reste à établir pour conclure formellement à l'obstruction coercive H12.
 
 ### Quillen et anomalie
 
