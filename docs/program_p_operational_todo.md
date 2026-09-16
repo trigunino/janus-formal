@@ -13565,6 +13565,18 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   reste nécessaire pour l'isométrie cinq secteurs ; `T12` reste ouverte.
 - Porte terminale : aucune ; compteur `6/14`.
 
+### `P-T12-DIAGONAL-BULK-METRIC-ABELIAN-PROJECTORS` — second sous-jalon T12
+
+- État : `SUPPORT` (2026-09-16). Portée : produit Hilbert diagonal à quatre facteurs.
+- Résultat : les projecteurs continus des graphes difféomorphisme et abélien
+  sont idempotents, orthogonaux, s'annulent en composition croisée et leur somme
+  est exactement le projecteur bulk.
+- Limite : aucun cinquième facteur frontière/BV indépendant, aucun accord avec
+  le Hessien. La route cinq secteurs doit employer le produit `WithLp 2` ;
+  l'ancienne isométrie vers un produit à norme maximum n'est pas habitable
+  avec plusieurs secteurs non nuls.
+- Porte terminale : aucune ; `T12` ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

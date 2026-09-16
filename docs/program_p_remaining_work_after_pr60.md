@@ -250,6 +250,14 @@ du cœur lisse. Le raffinement orthogonal physique du bloc bulk en métrique,
 abélien et frontière/BV, nécessaire pour obtenir cinq secteurs au total, reste
 à construire.
 
+La décomposition du bulk en ses deux facteurs Hilbert existants,
+difféomorphisme et abélien, donne maintenant des projecteurs continus
+orthogonaux dont la somme est le projecteur bulk. Cela fournit quatre facteurs
+achevés, sans créer de facteur frontière/BV indépendant. La route finale doit
+utiliser le produit cinq secteurs `WithLp 2` déjà défini : l'ancien produit
+ordinaire porte une norme maximum incompatible avec une isométrie hilbertienne
+sur plusieurs secteurs non nuls.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
