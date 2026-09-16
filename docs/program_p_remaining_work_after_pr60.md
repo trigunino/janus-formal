@@ -327,6 +327,16 @@ sur le Hilbert fidèle brut. Cela ne réfute pas le gap H12 en norme sur
 spectrale sur ce complément. Le no-go sectoriel via le projecteur D reste à
 formaliser.
 
+La route Fredholm diagonale exige aussi une vérification : le résultat SpinC
+existant porte sur `graph → L²`, tandis que H12 demande un gap du Riesz
+`graph → graph`. Sur un mode matière de poids `w`, ce Riesz a le multiplicateur
+`w/(1+w²)`, qui tend vers zéro quand `|w|` croît. Le transfert Fredholm entre
+ces deux opérateurs ne suit donc pas du résultat existant. Cela ne prouve
+aucun no-go pour la somme augmentée : les sept blocs physiques peuvent coupler
+ces modes. Le coefficient modal est désormais certifié en Lean sur le vrai
+graphe Hilbert matière ; l'absence de gap diagonal et son impact sur la somme
+augmentée restent à établir formellement.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.

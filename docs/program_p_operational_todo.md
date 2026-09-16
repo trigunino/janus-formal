@@ -13711,6 +13711,13 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   indépendante. Le projecteur D n'est pas raccordé au témoin dans ce théorème ;
   `T12` ouverte, compteur `6/14`.
 
+### `P-T12-MATTER-GRAPH-MODE-RIESZ-RATIO` — coefficient modal SpinC
+
+- État : `SUPPORT` (2026-09-16). Sur chaque mode du vrai graphe Hilbert matière,
+  la Hessienne diagonale a le coefficient de Riesz `w/(1+w²)`.
+- Limite : le no-gap du bloc diagonal n'est pas encore formalisé ; les sept
+  blocs physiques peuvent coupler les modes. `T12` ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
