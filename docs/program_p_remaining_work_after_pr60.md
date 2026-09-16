@@ -289,6 +289,12 @@ et tous ses pairings vérifient `‖⟪R_phys x,y⟫‖ ≤ C‖x‖‖y‖`. Il
 contrôler quantitativement la somme des blocs hors diagonale relativement à
 la marge sectorielle ; `T12` reste ouverte à `6/14`.
 
+La compression diagonale des quatre projecteurs est désormais prouvée
+contractante ; ainsi le reste physique hors diagonale vérifie `‖R_phys,off‖ ≤
+2C` sur le Hilbert Candidate A réel. Cette borne ne fournit pas l'inégalité
+stricte `2C < sectorFloor` requise pour H12 et ne crée pas le cinquième
+secteur frontière/BV. Le compteur reste `6/14`.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.

@@ -13623,6 +13623,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : aucun contrôle strict de la somme hors diagonale ni commutation
   sectorielle n'en découle seul ; `T12` ouverte, compteur `6/14`.
 
+### `P-T12-FOUR-SECTOR-OFF-DIAGONAL-NORM` — reste physique H12
+
+- État : `SUPPORT` (2026-09-16). La compression diagonale d'une résolution
+  auto-adjointe finie est contractante ; son reste vérifie `‖F_off‖ ≤ 2‖F‖`.
+- Résultat concret : sur les quatre secteurs Candidate A, la perturbation
+  physique issue de la borne H11 satisfait `‖R_phys,off‖ ≤ 2C`.
+- Limite : `2C < sectorFloor` n'est pas établi ; le cinquième secteur
+  frontière/BV manque encore. `T12` ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
