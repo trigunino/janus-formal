@@ -279,7 +279,8 @@ Hessien complet reste à prouver. `T12` demeure à `6/14`.
 L'embedding lisse Candidate A est maintenant identifié exactement à un
 embedding linéaire facteur par facteur D/A/matière/LL. Un lemme compilé montre
 que les quatre projecteurs respectent tout embedding de cette forme. Leur
-spécialisation individuelle sur le cœur physique reste à élaborer en Lean ;
+spécialisation individuelle sur le cœur physique est désormais prouvée pour
+D/A/matière/LL. Le commutateur avec le Riesz physique augmenté reste ouvert ;
 ce support ne change pas le compteur `6/14`.
 
 ### Quillen et anomalie

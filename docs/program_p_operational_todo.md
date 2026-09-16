@@ -13610,9 +13610,10 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État : `SUPPORT` (2026-09-16). Les quatre projecteurs respectent tout
   embedding linéaire facteur par facteur sur `WithLp 2`.
 - Résultat concret : l'embedding lisse Candidate A est exactement de cette
-  forme D/A/matière/LL.
-- Limite : les quatre accords physiques individuels ne sont pas encore
-  spécialisés en Lean ; `T12` reste ouverte, compteur `6/14`.
+  forme D/A/matière/LL ; les quatre projecteurs canoniques coïncident chacun
+  sur ce cœur avec la projection de sa coordonnée correspondante.
+- Limite : ces accords ne prouvent pas la commutation avec le Riesz physique
+  augmenté ; `T12` reste ouverte, compteur `6/14`.
 
 ## 7. Les 14 portes terminales fixes
 
