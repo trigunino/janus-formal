@@ -13715,8 +13715,8 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 
 - État : `SUPPORT` (2026-09-16). Sur chaque mode du vrai graphe Hilbert matière,
   la Hessienne diagonale a le coefficient de Riesz `w/(1+w²)`.
-- Limite : le no-gap du bloc diagonal n'est pas encore formalisé ; les sept
-  blocs physiques peuvent coupler les modes. `T12` ouverte, compteur `6/14`.
+- Limite : le no-gap du bloc diagonal est prouvé ci-dessous ; les sept blocs
+  physiques peuvent coupler les modes. `T12` ouverte, compteur `6/14`.
 
 ### `P-T12-MATTER-GRAPH-MODAL-RATIO-NO-FLOOR` — accumulation modale en zéro
 
@@ -13734,6 +13734,13 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   diagonal matière. Le Fredholm `graph → L²` ne se transfère pas en H12.
 - Limite : les sept blocs physiques du Riesz augmenté ne sont pas contrôlés
   sur ces modes ; aucun no-go H12 complet n'en découle. `T12` ouverte, `6/14`.
+
+### `P-T12-FINITE-MATTER-SEVEN-PHYSICAL-HESSIAN-ZERO` — restriction finie
+
+- État : `SUPPORT` (2026-09-16). Les sept blocs physiques sont constants sur
+  le chart fini matière ; leur Hessienne y est nulle.
+- Limite : ce chart n'est pas identifié au chart H11. Aucune annulation des
+  termes mixtes du Riesz augmenté n'en découle. `T12` ouverte, `6/14`.
 
 ## 7. Les 14 portes terminales fixes
 

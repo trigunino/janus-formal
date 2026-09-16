@@ -338,9 +338,10 @@ graphe Hilbert matière. La tour SpinC infinie et la propriété « poids propre
 prouvent maintenant en Lean que ces coefficients modaux s'approchent
 arbitrairement de zéro. Le Riesz SpinC diagonal concret est construit sur ce
 graphe et son no-gap sur le complément du noyau est prouvé. Le résultat ne
-s'étend pas encore au Riesz augmenté : il manque l'identification du chart
-matière fini au chart H11 complet et le contrôle des termes mixtes des sept
-blocs sur ces modes.
+s'étend pas encore au Riesz augmenté. Sur le chart fini matière, les sept blocs
+physiques sont maintenant prouvés constants, de Hessienne nulle. Il manque
+l'identification de cette Hessienne au chart H11 complet et le contrôle des
+termes mixtes des sept blocs sur ces modes.
 
 ### Quillen et anomalie
 
