@@ -339,9 +339,10 @@ prouvent maintenant en Lean que ces coefficients modaux s'approchent
 arbitrairement de zéro. Le Riesz SpinC diagonal concret est construit sur ce
 graphe et son no-gap sur le complément du noyau est prouvé. Le résultat ne
 s'étend pas encore au Riesz augmenté. Sur le chart fini matière, les sept blocs
-physiques sont maintenant prouvés constants, de Hessienne nulle. Il manque
-l'identification de cette Hessienne au chart H11 complet et le contrôle des
-termes mixtes des sept blocs sur ces modes.
+physiques sont maintenant prouvés constants, de Hessienne nulle ; cette
+annulation est aussi prouvée dans l'API du chart local après conversion. Il
+manque une compatibilité d'ordre deux entre cette famille finie et le `datumAt`
+du chart H11, puis le contrôle des termes mixtes des sept blocs sur ces modes.
 
 ### Quillen et anomalie
 

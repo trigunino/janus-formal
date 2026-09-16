@@ -13742,6 +13742,13 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : ce chart n'est pas identifié au chart H11. Aucune annulation des
   termes mixtes du Riesz augmenté n'en découle. `T12` ouverte, `6/14`.
 
+### `P-T12-FINITE-MATTER-LOCAL-PHYSICAL-HESSIAN-ZERO` — API locale
+
+- État : `SUPPORT` (2026-09-16). Après conversion du chart fini matière en
+  chart local, `globalCandidateALocalPhysicalHessian = 0` sur ce chart.
+- Limite : le `datumAt` du chart H11 n'est pas identifié à cette famille
+  finie ; les termes mixtes H11 restent ouverts. `T12` ouverte, `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
