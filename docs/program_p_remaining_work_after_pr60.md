@@ -334,8 +334,11 @@ existant porte sur `graph → L²`, tandis que H12 demande un gap du Riesz
 ces deux opérateurs ne suit donc pas du résultat existant. Cela ne prouve
 aucun no-go pour la somme augmentée : les sept blocs physiques peuvent coupler
 ces modes. Le coefficient modal est désormais certifié en Lean sur le vrai
-graphe Hilbert matière ; l'absence de gap diagonal et son impact sur la somme
-augmentée restent à établir formellement.
+graphe Hilbert matière. La tour SpinC infinie et la propriété « poids propre »
+prouvent maintenant en Lean que ces coefficients modaux s'approchent
+arbitrairement de zéro. Le no-gap de l'opérateur diagonal sur le complément
+de son noyau, puis l'effet des sept blocs sur la somme augmentée, restent à
+établir formellement.
 
 ### Quillen et anomalie
 

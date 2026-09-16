@@ -13718,6 +13718,13 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : le no-gap du bloc diagonal n'est pas encore formalisé ; les sept
   blocs physiques peuvent coupler les modes. `T12` ouverte, compteur `6/14`.
 
+### `P-T12-MATTER-GRAPH-MODAL-RATIO-NO-FLOOR` — accumulation modale en zéro
+
+- État : `SUPPORT` (2026-09-16). La tour SpinC infinie et le poids propre
+  mass-shift donnent des coefficients `|w/(1+w²)|` arbitrairement petits.
+- Limite : le passage au gap de l'opérateur sur `(ker R)ᗮ` et les sept blocs
+  physiques restent ouverts. `T12` ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
