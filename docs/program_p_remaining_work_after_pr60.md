@@ -343,6 +343,11 @@ physiques sont maintenant prouvés constants, de Hessienne nulle ; cette
 annulation est aussi prouvée dans l'API du chart local après conversion. Il
 manque une compatibilité d'ordre deux entre cette famille finie et le `datumAt`
 du chart H11, puis le contrôle des termes mixtes des sept blocs sur ces modes.
+Un contre-exemple Lean (`v + uv`) prouve que l'annulation sur la seule tranche
+matière ne suffit pas. Un nouveau théorème H11 montre que l'annulation de la
+composante Euler physique dans une direction matière sur un voisinage annule
+tous les termes mixtes correspondants ; cette hypothèse locale n'est pas
+encore dérivée du `datumAt` H11.
 
 ### Quillen et anomalie
 

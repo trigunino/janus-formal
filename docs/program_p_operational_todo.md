@@ -13749,6 +13749,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : le `datumAt` du chart H11 n'est pas identifié à cette famille
   finie ; les termes mixtes H11 restent ouverts. `T12` ouverte, `6/14`.
 
+### `P-T12-MATTER-MIXED-HESSIAN-CRITERION` — contrôle requis
+
+- Un contre-exemple Lean montre qu'une action nulle sur la tranche matière
+  peut garder une Hessienne mixte non nulle (`v + uv`).
+- Dans le chart local H11, si la composante Euler physique d'une direction
+  matière s'annule sur un voisinage, la Hessienne physique annule cette
+  direction contre toute autre. Il reste à établir cette annulation locale
+  pour le `datumAt` H11 concret. `T12` ouverte, `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
