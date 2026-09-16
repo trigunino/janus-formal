@@ -304,6 +304,12 @@ est nul sur une direction non nulle : il ne peut fournir le plancher diagonal
 positif du cinquième secteur. Une autre Hessienne frontière/BV, avec sa borne
 coercive et son raccord au graphe augmenté, reste à construire.
 
+Une extension Hilbert explicite garde les quatre facteurs Candidate A et ajoute
+des coordonnées finies de faces. Ses cinq projecteurs forment une résolution
+orthogonale, avec axe frontière non nul dès qu'une face non nulle existe. Cette
+construction est cinématique : elle ne fournit pas le Hessien frontière/BV ni
+son plancher positif.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.

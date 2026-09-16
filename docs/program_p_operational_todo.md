@@ -13651,6 +13651,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : ceci concerne ce modèle précis de reparamétrisation, pas toute
   extension frontière/BV possible ; `T12` reste ouverte, compteur `6/14`.
 
+### `P-T12-FIVE-SECTOR-BOUNDARY-COORDINATE-HILBERT` — extension cinématique
+
+- État : `SUPPORT` (2026-09-16). Les quatre facteurs Candidate A sont prolongés
+  par un Hilbert fini de coordonnées indexées par les faces non nulles et nulles.
+- Résultat : cinq projecteurs orthogonaux complets ; le projecteur frontière est
+  non nul si une face non nulle existe.
+- Limite : aucune identification de cette coordonnée à l'ensemble BV, aucun
+  Hessien augmenté ni borne coercive n'est construit ; `T12` ouverte, `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
