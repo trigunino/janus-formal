@@ -13774,6 +13774,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : l'hypothèse Euler H11 n'est pas déduite du chart fort géométrique.
   `T12` ouverte, `6/14`.
 
+### `P-T12-MATTER-MODE-PHYSICAL-RIESZ-ZERO` — singleton augmenté
+
+- État : `SUPPORT` (2026-09-16). Un mode SpinC pur est construit et prouvé
+  non nul dans le Hilbert augmenté ; son identité avec l'image du cœur lisse
+  fini est exacte. Sous l'hypothèse Euler locale du même chart H11, le Riesz
+  physique complet annule ce mode, y compris ses couplages hors diagonale.
+- Limite : l'hypothèse Euler H11 et l'équation propre du Riesz diagonal sur
+  ce Hilbert augmenté ne sont pas encore prouvées. `T12` ouverte, `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
