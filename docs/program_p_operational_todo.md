@@ -13722,8 +13722,18 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 
 - État : `SUPPORT` (2026-09-16). La tour SpinC infinie et le poids propre
   mass-shift donnent des coefficients `|w/(1+w²)|` arbitrairement petits.
-- Limite : le passage au gap de l'opérateur sur `(ker R)ᗮ` et les sept blocs
+- Limite : le passage au Riesz diagonal est traité ci-dessous ; les sept blocs
   physiques restent ouverts. `T12` ouverte, compteur `6/14`.
+
+### `P-T12-MATTER-GRAPH-RIESZ-NO-GAP` — obstruction du bloc diagonal
+
+- État : `SUPPORT` (2026-09-16). Le Riesz de la Hessienne SpinC isolée est
+  construit sur le vrai graphe Hilbert ; ses singletons sont des vecteurs
+  propres non nuls, et les valeurs propres non nulles s'accumulent en zéro.
+- Résultat : aucun `SelfAdjointKernelComplementGapData` n'existe pour ce Riesz
+  diagonal matière. Le Fredholm `graph → L²` ne se transfère pas en H12.
+- Limite : les sept blocs physiques du Riesz augmenté ne sont pas contrôlés
+  sur ces modes ; aucun no-go H12 complet n'en découle. `T12` ouverte, `6/14`.
 
 ## 7. Les 14 portes terminales fixes
 
