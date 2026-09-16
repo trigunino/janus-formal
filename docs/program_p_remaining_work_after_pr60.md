@@ -299,6 +299,11 @@ La référence Riesz diagonale commute avec ces projecteurs : sa somme avec le
 Riesz physique a exactement le même reste hors diagonal, donc la même borne
 `≤ 2C`. L'énoncé compilé vise cette somme explicite ; le seuil H12 reste ouvert.
 
+Pour une face nulle non vide, le Riesz concret des reparamétrisations de faces
+est nul sur une direction non nulle : il ne peut fournir le plancher diagonal
+positif du cinquième secteur. Une autre Hessienne frontière/BV, avec sa borne
+coercive et son raccord au graphe augmenté, reste à construire.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.

@@ -13642,6 +13642,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   `2C < sectorFloor` et le secteur frontière/BV restent absents ; `T12` ouverte,
   compteur `6/14`.
 
+### `P-T12-BOUNDARY-REPARAMETRIZATION-POSITIVE-GAP-NOGO` — obstruction frontière
+
+- État : `SUPPORT` (2026-09-16). Si une face nulle existe, l'espace des
+  reparamétrisations de cette face contient un vecteur non nul.
+- Résultat : son Riesz même-action étant nul, aucune constante strictement
+  positive ne peut minorer sa forme diagonale sur tout cet espace.
+- Limite : ceci concerne ce modèle précis de reparamétrisation, pas toute
+  extension frontière/BV possible ; `T12` reste ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
