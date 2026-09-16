@@ -13674,9 +13674,17 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État : `SUPPORT` (2026-09-16). La Hessienne BRST diffeomorphisme diagonale
   a un auto-pairing nul sur le cœur à fantôme et champ B nuls, pour tout
   antifantôme.
-- Limite : l'isotropie n'est pas un noyau opérateur ; le raccord compilé à la
-  Hessienne quatre facteurs et un témoin non nul dans le Hilbert achevé restent
-  à fournir avant tout no-go coercif H12. `T12` ouverte, `6/14`.
+- Limite : l'isotropie n'est pas un noyau opérateur ; le raccord au cœur quatre
+  facteurs est traité ci-dessous. `T12` ouverte, `6/14`.
+
+### `P-T12-PURE-ANTIGHOST-FULL-CORE-ISOTROPIC` — Hessienne augmentée sur le cœur
+
+- État : `SUPPORT` (2026-09-16). Sur le cœur Candidate A pur antifantôme,
+  l'auto-pairing de la Hessienne diagonale D/A/M/LL plus la forme physique à
+  sept blocs vaut zéro.
+- Limite : il reste à raccorder ce calcul au Riesz augmenté sur le Hilbert
+  achevé et à construire un témoin non nul pour conclure au no-go coercif ;
+  `T12` ouverte, compteur `6/14`.
 
 ## 7. Les 14 portes terminales fixes
 

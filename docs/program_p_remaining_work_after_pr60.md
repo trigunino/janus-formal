@@ -314,8 +314,10 @@ La forme physique à sept blocs s'annule sur tout premier argument du cœur
 diffeomorphisme non minimal pur. Un éventuel plancher positif sur ces directions
 doit donc venir de la Hessienne BRST diagonale ; son auto-pairing antifantôme
 pur est désormais prouvé nul. Le raccord à la forme du graphe quatre facteurs
-et la preuve d'une direction non nulle dans le Hilbert achevé restent requis
-pour conclure formellement à une obstruction coercive H12.
+est désormais compilé : l'auto-pairing du Hessien diagonal plus sept blocs est
+nul sur le cœur pur antifantôme. Le passage au Riesz augmenté et la preuve
+d'une direction non nulle dans le Hilbert achevé restent requis pour conclure
+formellement à une obstruction coercive H12.
 
 ### Quillen et anomalie
 
