@@ -13758,6 +13758,22 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   direction contre toute autre. Il reste à établir cette annulation locale
   pour le `datumAt` H11 concret. `T12` ouverte, `6/14`.
 
+### `P-T12-STRONG-SPINC-PHYSICAL-MIXED-HESSIAN-ZERO` — chart géométrique
+
+- État : `SUPPORT` (2026-09-16). Dans le chart fort géométrique déjà construit,
+  les sept blocs physiques ont une Hessienne mixte nulle avec toute direction
+  SpinC lisse pure, contre tout autre tangent, à chaque point admissible.
+- Limite : ce chart fort a une autre norme et une action matière translatée
+  autour du fond ; son identification au chart H11 homogène n'est pas prouvée.
+
+### `P-T12-PHYSICAL-RIESZ-CORE-EULER-ZERO` — vecteur complet
+
+- État : `SUPPORT` (2026-09-16). Dans le chart H11 exact, l'annulation locale
+  d'une composante Euler physique sur une direction de cœur implique que le
+  Riesz physique des sept blocs annule le vecteur entier du Hilbert augmenté.
+- Limite : l'hypothèse Euler H11 n'est pas déduite du chart fort géométrique.
+  `T12` ouverte, `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

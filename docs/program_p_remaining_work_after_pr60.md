@@ -348,6 +348,12 @@ matière ne suffit pas. Un nouveau théorème H11 montre que l'annulation de la
 composante Euler physique dans une direction matière sur un voisinage annule
 tous les termes mixtes correspondants ; cette hypothèse locale n'est pas
 encore dérivée du `datumAt` H11.
+Le chart fort géométrique construit annule maintenant en Lean sa Hessienne
+physique mixte contre les directions SpinC lisses. Un autre théorème montre
+que la même annulation Euler, si elle est établie pour le chart H11 exact,
+annule le vecteur complet du Riesz physique sur le cœur. Le chart fort utilise
+toutefois une norme différente et une action matière translatée autour du
+fond ; aucun raccord à la famille homogène H11 n'est encore prouvé.
 
 ### Quillen et anomalie
 
