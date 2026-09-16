@@ -13586,6 +13586,25 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   frontière/BV. Sa construction et son raccord à la Hessienne restent ouverts.
 - Porte terminale : aucune ; `T12` ouverte, compteur `6/14`.
 
+### `P-T12-FOUR-SECTOR-SELF-ADJOINT-RESOLUTION` — résolution Hilbert T12
+
+- État : `SUPPORT` (2026-09-16). Portée : graphe diagonal achevé à quatre facteurs.
+- Résultat : les projecteurs canoniques D/A/matière/LL forment une résolution
+  auto-adjointe finie et donnent la décomposition exacte du carré de la norme
+  sur le produit `WithLp 2`.
+- Limite : le cinquième secteur frontière/BV non nul exige un Hilbert augmenté ;
+  la commutation avec le Hessien n'est pas établie par cette résolution.
+- Porte terminale : aucune ; `T12` ouverte, compteur `6/14`.
+
+### `P-T12-DIAGONAL-FOUR-SECTOR-RIESZ-COMMUTATION` — Hessien diagonal T12
+
+- État : `SUPPORT` (2026-09-16). Portée : Riesz L² exact du Hessien diagonal Candidate A.
+- Résultat : cet opérateur commute avec chacun des quatre projecteurs
+  canoniques D/A/matière/LL du graphe achevé.
+- Limite : l'opérateur augmenté par la forme physique à sept blocs n'est pas
+  couvert ; aucune commutation avec ce Hessien complet n'en découle.
+- Porte terminale : aucune ; `T12` ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

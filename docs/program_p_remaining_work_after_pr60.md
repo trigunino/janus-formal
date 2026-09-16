@@ -265,6 +265,17 @@ est donc nul. Un secteur frontière/BV indépendant et non nul exige un Hilbert
 augmenté ; il ne peut pas être obtenu en renommant une coordonnée du graph
 actuel. `T12` reste ouverte.
 
+Sur ce graphe à quatre facteurs, une résolution auto-adjointe finie des
+projecteurs canoniques D/A/matière/LL est maintenant compilée. Elle établit
+aussi la décomposition pythagoricienne de la norme `WithLp 2`. Elle n'ajoute
+aucun secteur frontière/BV et ne prouve pas la commutation avec le Hessien.
+Le compteur terminal reste `6/14`.
+
+Le Riesz L² exact du Hessien diagonal Candidate A commute désormais, par un
+théorème compilé, avec chacun de ces quatre projecteurs. L'opérateur augmenté
+par la forme physique à sept blocs n'est pas couvert : la commutation avec le
+Hessien complet reste à prouver. `T12` demeure à `6/14`.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
@@ -1461,7 +1472,9 @@ avec tous les overlaps, lagrangiens nuls, normalisations et contre-termes fixés
 
 **Déjà disponible :** la plus grande partie de l'architecture dans la PR #60,
 le Dirac/Fredholm/régulateur global existant, la vraie ligne de Fredholm de la
-famille et sa frame normalisée.
+famille et sa frame normalisée, ainsi que la résolution auto-adjointe des
+quatre secteurs du graphe diagonal actuel et leur commutation avec le Riesz
+du Hessien diagonal.
 
 **Reste :** habiter les onze entrées analytiques listées plus haut, prouver
 l'accord avec l'opérateur elliptique naturel non borné, identifier la ligne
