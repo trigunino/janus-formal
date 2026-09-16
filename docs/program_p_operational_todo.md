@@ -13577,6 +13577,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   avec plusieurs secteurs non nuls.
 - Porte terminale : aucune ; `T12` ouverte, compteur `6/14`.
 
+### `P-T12-FOUR-SECTOR-BOUNDARY-NOGO` — contrainte de complétion T12
+
+- État : `SUPPORT` (2026-09-16). Portée : Hilbert diagonal actuel à quatre facteurs.
+- Résultat : les projecteurs D/A/matière/LL reconstruisent l'identité ; tout
+  cinquième projecteur frontière qui reconstruit ce même espace avec eux est nul.
+- Limite : ce no-go n'exclut pas un Hilbert augmenté avec un vrai facteur
+  frontière/BV. Sa construction et son raccord à la Hessienne restent ouverts.
+- Porte terminale : aucune ; `T12` ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

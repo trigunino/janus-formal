@@ -258,6 +258,13 @@ utiliser le produit cinq secteurs `WithLp 2` déjà défini : l'ancien produit
 ordinaire porte une norme maximum incompatible avec une isométrie hilbertienne
 sur plusieurs secteurs non nuls.
 
+Le graph Hilbert courant a désormais un no-go typé : ses quatre projecteurs
+canoniques difféomorphisme/abélien/matière/LL reconstruisent déjà l'identité.
+Tout cinquième projecteur frontière qui reconstruirait ce même espace avec eux
+est donc nul. Un secteur frontière/BV indépendant et non nul exige un Hilbert
+augmenté ; il ne peut pas être obtenu en renommant une coordonnée du graph
+actuel. `T12` reste ouverte.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
