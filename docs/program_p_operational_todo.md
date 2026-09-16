@@ -13669,6 +13669,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   directions et ne prouve pas encore le no-go coercif complet ; `T12` ouverte,
   compteur `6/14`.
 
+### `P-T12-PURE-ANTIGHOST-BRST-ISOTROPIC` — Hessienne diagonale D
+
+- État : `SUPPORT` (2026-09-16). La Hessienne BRST diffeomorphisme diagonale
+  a un auto-pairing nul sur le cœur à fantôme et champ B nuls, pour tout
+  antifantôme.
+- Limite : l'isotropie n'est pas un noyau opérateur ; le raccord compilé à la
+  Hessienne quatre facteurs et un témoin non nul dans le Hilbert achevé restent
+  à fournir avant tout no-go coercif H12. `T12` ouverte, `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

@@ -313,7 +313,9 @@ son plancher positif.
 La forme physique à sept blocs s'annule sur tout premier argument du cœur
 diffeomorphisme non minimal pur. Un éventuel plancher positif sur ces directions
 doit donc venir de la Hessienne BRST diagonale ; son auto-pairing antifantôme
-pur reste à formaliser.
+pur est désormais prouvé nul. Le raccord à la forme du graphe quatre facteurs
+et la preuve d'une direction non nulle dans le Hilbert achevé restent requis
+pour conclure formellement à une obstruction coercive H12.
 
 ### Quillen et anomalie
 
