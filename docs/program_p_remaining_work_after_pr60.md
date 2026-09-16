@@ -317,13 +317,15 @@ pur est désormais prouvé nul. Le raccord à la forme du graphe quatre facteurs
 est désormais compilé : l'auto-pairing du Hessien diagonal plus sept blocs est
 nul sur le cœur pur antifantôme. Le même auto-pairing nul est maintenant prouvé
 pour le Riesz augmenté fidèle sur son image lisse. Une image non nulle dans le
-secteur D reste à établir pour conclure formellement à l'obstruction coercive H12.
+secteur D reste à établir pour localiser l'obstruction quadratique.
 
 Un antifantôme lisse non nul est maintenant construit à partir du générateur
 temporel canonique. Son plongement non nul et l'auto-pairing nul du
 Riesz augmenté interdisent tout plancher quadratique global strictement positif
-sur le Hilbert fidèle brut. La route H12 doit traiter ces directions isotropes ;
-le no-go sectoriel via le projecteur D reste à formaliser.
+sur le Hilbert fidèle brut. Cela ne réfute pas le gap H12 en norme sur
+`(ker R)ᗮ` : il manque toujours la dimension finie du noyau et la minoration
+spectrale sur ce complément. Le no-go sectoriel via le projecteur D reste à
+formaliser.
 
 ### Quillen et anomalie
 

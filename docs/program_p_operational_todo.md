@@ -13706,10 +13706,10 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   dans le Hilbert fidèle achevé, avec auto-pairing nul pour le Riesz augmenté.
 - Résultat : aucune constante `c > 0` ne minore `⟪R x,x⟫` par `c‖x‖²` pour
   tous les vecteurs de ce Hilbert, quelle que soit l'extension physique admise.
-- Limite : le no-go vise ce plancher global sur le graphe brut ; une théorie
-  Fredholm après réduction, quotient ou traitement des directions isotropes
-  reste possible. Le projecteur D n'est pas encore raccordé au témoin dans
-  ce théorème ; `T12` ouverte, compteur `6/14`.
+- Limite : ce no-go de positivité ne réfute pas le gap H12 en **norme** sur
+  `(ker R)ᗮ` ; celui-ci exige encore un noyau fini et une estimation spectrale
+  indépendante. Le projecteur D n'est pas raccordé au témoin dans ce théorème ;
+  `T12` ouverte, compteur `6/14`.
 
 ## 7. Les 14 portes terminales fixes
 
