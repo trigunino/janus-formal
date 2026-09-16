@@ -13693,6 +13693,24 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   dans le projecteur D pour conclure au no-go du plancher sectoriel ; `T12`
   ouverte, compteur `6/14`.
 
+### `P-T12-PURE-ANTIGHOST-NONZERO-WITNESS` — direction lisse
+
+- État : `SUPPORT` (2026-09-16). Le générateur temporel canonique fournit un
+  antifantôme diffeomorphisme lisse non nul sur le quotient.
+- Limite : son image non nulle est raccordée au Riesz ci-dessous ; sa fixation
+  par le projecteur D reste à établir. `T12` ouverte, compteur `6/14`.
+
+### `P-T12-PURE-ANTIGHOST-GLOBAL-GAP-NOGO` — plancher quadratique global
+
+- État : `SUPPORT` (2026-09-16). Le témoin antifantôme a une image non nulle
+  dans le Hilbert fidèle achevé, avec auto-pairing nul pour le Riesz augmenté.
+- Résultat : aucune constante `c > 0` ne minore `⟪R x,x⟫` par `c‖x‖²` pour
+  tous les vecteurs de ce Hilbert, quelle que soit l'extension physique admise.
+- Limite : le no-go vise ce plancher global sur le graphe brut ; une théorie
+  Fredholm après réduction, quotient ou traitement des directions isotropes
+  reste possible. Le projecteur D n'est pas encore raccordé au témoin dans
+  ce théorème ; `T12` ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

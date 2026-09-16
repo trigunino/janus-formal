@@ -319,6 +319,12 @@ nul sur le cœur pur antifantôme. Le même auto-pairing nul est maintenant prou
 pour le Riesz augmenté fidèle sur son image lisse. Une image non nulle dans le
 secteur D reste à établir pour conclure formellement à l'obstruction coercive H12.
 
+Un antifantôme lisse non nul est maintenant construit à partir du générateur
+temporel canonique. Son plongement non nul et l'auto-pairing nul du
+Riesz augmenté interdisent tout plancher quadratique global strictement positif
+sur le Hilbert fidèle brut. La route H12 doit traiter ces directions isotropes ;
+le no-go sectoriel via le projecteur D reste à formaliser.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
