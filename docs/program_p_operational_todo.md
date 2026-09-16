@@ -13555,6 +13555,16 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   hors de ce critère terminal.
 - Porte terminale : `T06` fermée ; compteur `6/14`.
 
+### `P-T12-DIAGONAL-EXTENDED-BULK-HILBERT-PROJECTORS` — premier sous-jalon T12
+
+- État : `SUPPORT` (2026-09-16). Portée : produit Hilbert diagonal Candidate A.
+- Résultat : trois projecteurs continus canoniques bulk, matière et LL,
+  reconstruction sur le Hilbert achevé et accord du projecteur bulk avec celui
+  du cœur lisse dense.
+- Limite : le raffinement physique du bulk en métrique, abélien et frontière/BV
+  reste nécessaire pour l'isométrie cinq secteurs ; `T12` reste ouverte.
+- Porte terminale : aucune ; compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

@@ -243,6 +243,13 @@ habitants analytiques concrets :
 11. la complexification de la vraie ligne de Fredholm et son identification à
     la ligne analytique de Quillen.
 
+Le premier sous-jalon de l'entrée 1 est maintenant construit : les projecteurs
+continus canoniques bulk (difféomorphisme + abélien), matière et LL résolvent
+le vrai Hilbert diagonal Candidate A ; le projecteur bulk coïncide avec celui
+du cœur lisse. Le raffinement orthogonal physique du bloc bulk en métrique,
+abélien et frontière/BV, nécessaire pour obtenir cinq secteurs au total, reste
+à construire.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
