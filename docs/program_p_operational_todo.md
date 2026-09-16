@@ -13615,6 +13615,14 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : ces accords ne prouvent pas la commutation avec le Riesz physique
   augmenté ; `T12` reste ouverte, compteur `6/14`.
 
+### `P-T12-ACTUAL-PHYSICAL-RIESZ-CORE-BOUND` — borne physique H11/T12
+
+- État : `SUPPORT` (2026-09-16). Pour l'extension physique issue de la borne
+  du cœur H11, le Riesz à sept blocs vérifie `‖R_phys‖ ≤ C` et
+  `‖⟪R_phys x,y⟫‖ ≤ C‖x‖‖y‖` sur le Hilbert réel.
+- Limite : aucun contrôle strict de la somme hors diagonale ni commutation
+  sectorielle n'en découle seul ; `T12` ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

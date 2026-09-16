@@ -283,6 +283,12 @@ spécialisation individuelle sur le cœur physique est désormais prouvée pour
 D/A/matière/LL. Le commutateur avec le Riesz physique augmenté reste ouvert ;
 ce support ne change pas le compteur `6/14`.
 
+Pour l'extension physique construite à partir de la borne du cœur H11, le
+Riesz physique à sept blocs a maintenant une borne compilée `‖R_phys‖ ≤ C`
+et tous ses pairings vérifient `‖⟪R_phys x,y⟫‖ ≤ C‖x‖‖y‖`. Il reste à
+contrôler quantitativement la somme des blocs hors diagonale relativement à
+la marge sectorielle ; `T12` reste ouverte à `6/14`.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
