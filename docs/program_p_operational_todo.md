@@ -13660,6 +13660,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : aucune identification de cette coordonnée à l'ensemble BV, aucun
   Hessien augmenté ni borne coercive n'est construit ; `T12` ouverte, `6/14`.
 
+### `P-T12-PURE-NONMINIMAL-SEVEN-PHYSICAL-NULL` — directions invisibles aux sept blocs
+
+- État : `SUPPORT` (2026-09-16). Sur le cœur lisse Candidate A, toute direction
+  diffeomorphisme non minimale pure est dans le noyau gauche de la forme
+  physique à sept blocs, pour tout second argument.
+- Limite : ce résultat ne calcule pas la Hessienne diagonale BRST sur ces
+  directions et ne prouve pas encore le no-go coercif complet ; `T12` ouverte,
+  compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

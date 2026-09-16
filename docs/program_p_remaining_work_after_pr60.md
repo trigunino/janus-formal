@@ -310,6 +310,11 @@ orthogonale, avec axe frontière non nul dès qu'une face non nulle existe. Cett
 construction est cinématique : elle ne fournit pas le Hessien frontière/BV ni
 son plancher positif.
 
+La forme physique à sept blocs s'annule sur tout premier argument du cœur
+diffeomorphisme non minimal pur. Un éventuel plancher positif sur ces directions
+doit donc venir de la Hessienne BRST diagonale ; son auto-pairing antifantôme
+pur reste à formaliser.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
