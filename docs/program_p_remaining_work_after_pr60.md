@@ -276,6 +276,12 @@ théorème compilé, avec chacun de ces quatre projecteurs. L'opérateur augment
 par la forme physique à sept blocs n'est pas couvert : la commutation avec le
 Hessien complet reste à prouver. `T12` demeure à `6/14`.
 
+L'embedding lisse Candidate A est maintenant identifié exactement à un
+embedding linéaire facteur par facteur D/A/matière/LL. Un lemme compilé montre
+que les quatre projecteurs respectent tout embedding de cette forme. Leur
+spécialisation individuelle sur le cœur physique reste à élaborer en Lean ;
+ce support ne change pas le compteur `6/14`.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
