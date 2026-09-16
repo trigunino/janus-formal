@@ -13632,6 +13632,16 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : `2C < sectorFloor` n'est pas établi ; le cinquième secteur
   frontière/BV manque encore. `T12` ouverte, compteur `6/14`.
 
+### `P-T12-FULL-FOUR-SECTOR-OFF-DIAGONAL-NORM` — opérateur augmenté
+
+- État : `SUPPORT` (2026-09-16). La compression diagonale fixe tout opérateur
+  commutant avec les quatre projecteurs et respecte les sommes.
+- Résultat : le Riesz diagonal ne contribue pas au hors-diagonal de sa somme
+  avec le Riesz physique à sept blocs ; la norme de ce reste est `≤ 2C`.
+- Limite : l'énoncé compilé porte sur cette somme explicite. Le seuil strict
+  `2C < sectorFloor` et le secteur frontière/BV restent absents ; `T12` ouverte,
+  compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

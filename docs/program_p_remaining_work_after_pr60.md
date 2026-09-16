@@ -295,6 +295,10 @@ contractante ; ainsi le reste physique hors diagonale vérifie `‖R_phys,off‖
 stricte `2C < sectorFloor` requise pour H12 et ne crée pas le cinquième
 secteur frontière/BV. Le compteur reste `6/14`.
 
+La référence Riesz diagonale commute avec ces projecteurs : sa somme avec le
+Riesz physique a exactement le même reste hors diagonal, donc la même borne
+`≤ 2C`. L'énoncé compilé vise cette somme explicite ; le seuil H12 reste ouvert.
+
 ### Quillen et anomalie
 
 Les modèles de ligne, métrique, connexion, atlas et holonomie sont présents.
