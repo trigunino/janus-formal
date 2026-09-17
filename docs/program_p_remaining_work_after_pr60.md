@@ -1585,7 +1585,8 @@ physique et le paquet H12 augmenté restent ouvertes.
 Le résidu fort du slot `llField` est aussi réalisé dans L² et représente le
 Jacobi faible sur le cœur lisse. Ce cœur est dense, l'opérateur est symétrique
 et closable, et sa fermeture canonique est fermée et symétrique. Une borne
-inférieure `-C‖u‖²` est prouvée sur le cœur sans positivité de `llMeasure`.
+inférieure `-C‖u‖²` est prouvée sur le cœur sans positivité de `llMeasure` et
+s'étend maintenant au domaine fermé avec la même constante.
 Les lignes auxiliaire et mesure ont aussi des résidus L² accordés au Hessien
 sur leurs tests purs, réunis en application réelle linéaire sur le cœur LL
 complet. L'identification Sobolev H² du domaine `llField` et sa propriété

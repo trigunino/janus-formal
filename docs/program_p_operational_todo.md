@@ -13892,9 +13892,11 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 
 - État : `SUPPORT` (2026-09-17). Le vrai pairing L² du Jacobi `llField` sur
   le cœur lisse est minoré par `-C‖u‖²` pour une constante `C ≥ 0`, sans
-  supposer `llMeasure ≥ 0`. La preuve contrôle les deux termes PT.
-- Limite : cela ne prouve ni Fredholm ni compacité de résolvante ; `T12`
-  reste ouverte, `6/14`.
+  supposer `llMeasure ≥ 0`. La preuve contrôle les deux termes PT. Un lemme
+  abstrait de fermeture du graphe transporte la même borne à tout le domaine
+  du Jacobi champ fermé.
+- Limite : cela ne prouve ni auto-adjonction, ni Fredholm, ni compacité de
+  résolvante ; `T12` reste ouverte, `6/14`.
 
 ### `P-T12-LL-AUX-MEASURE-L2-ROWS` — deux lignes du Hessien LL
 
