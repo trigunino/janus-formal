@@ -1237,6 +1237,72 @@ theorem programPPrimitiveSpinCMatterGraphOperator_fredholm
     (programPPrimitiveSpinCMatterHessianFiniteZeroGap
       period hPeriod massSquared)
 
+/-- Fredholmness of the same graph-to-L² Hessian over the real scalars of
+the variational action. -/
+theorem programPPrimitiveSpinCMatterGraphOperatorRealCLM_fredholm
+    (massSquared : Real) :
+    IsClosed
+        (LinearMap.range
+          (programPPrimitiveSpinCMatterGraphOperatorRealCLM
+            period hPeriod massSquared).toLinearMap :
+          Set ProgramPPrimitiveSpinCMatterHilbert) ∧
+      FiniteDimensional Real
+        (LinearMap.ker
+          (programPPrimitiveSpinCMatterGraphOperatorRealCLM
+            period hPeriod massSquared).toLinearMap) ∧
+      FiniteDimensional Real
+        (ProgramPPrimitiveSpinCMatterHilbert ⧸
+          LinearMap.range
+            (programPPrimitiveSpinCMatterGraphOperatorRealCLM
+              period hPeriod massSquared).toLinearMap) := by
+  let complexOperator :=
+    complexDiagonalGraphOperatorCLM ProgramPPrimitiveSpinCMatterMode
+      (programPPrimitiveSpinCMatterHessianWeight
+        period hPeriod massSquared)
+  let realOperator :=
+    programPPrimitiveSpinCMatterGraphOperatorRealCLM
+      period hPeriod massSquared
+  obtain ⟨hClosed, hKernelFinite, hCokernelFinite⟩ :=
+    programPPrimitiveSpinCMatterGraphOperator_fredholm
+      period hPeriod massSquared
+  have hRange : LinearMap.range realOperator.toLinearMap =
+      (LinearMap.range complexOperator.toLinearMap).restrictScalars Real := by
+    ext output
+    rfl
+  have hKernel : LinearMap.ker realOperator.toLinearMap =
+      (LinearMap.ker complexOperator.toLinearMap).restrictScalars Real := by
+    ext state
+    rfl
+  refine ⟨?_, ?_, ?_⟩
+  · rw [hRange]
+    exact hClosed
+  · rw [hKernel]
+    letI : FiniteDimensional Complex
+        (LinearMap.ker complexOperator.toLinearMap) := hKernelFinite
+    change FiniteDimensional Real
+      (LinearMap.ker complexOperator.toLinearMap)
+    exact FiniteDimensional.complexToReal _
+  · letI : FiniteDimensional Complex
+        (ProgramPPrimitiveSpinCMatterHilbert ⧸
+          LinearMap.range complexOperator.toLinearMap) := hCokernelFinite
+    letI : FiniteDimensional Real
+        (ProgramPPrimitiveSpinCMatterHilbert ⧸
+          LinearMap.range complexOperator.toLinearMap) :=
+      FiniteDimensional.complexToReal _
+    let rangeEquiv :
+        (ProgramPPrimitiveSpinCMatterHilbert ⧸
+          LinearMap.range realOperator.toLinearMap) ≃ₗ[Real]
+          (ProgramPPrimitiveSpinCMatterHilbert ⧸
+            (LinearMap.range complexOperator.toLinearMap).restrictScalars Real) :=
+      Submodule.quotEquivOfEq _ _ hRange
+    let scalarEquiv :
+        (ProgramPPrimitiveSpinCMatterHilbert ⧸
+          (LinearMap.range complexOperator.toLinearMap).restrictScalars Real) ≃ₗ[Real]
+          (ProgramPPrimitiveSpinCMatterHilbert ⧸
+            LinearMap.range complexOperator.toLinearMap) :=
+      Submodule.Quotient.restrictScalarsEquiv Real _
+    exact (rangeEquiv.trans scalarEquiv).symm.finiteDimensional
+
 end
 end P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 end JanusFormal

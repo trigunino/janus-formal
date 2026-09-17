@@ -13859,6 +13859,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   blocs ne sont raccordés à cette réalisation. Le terminal H12 actuel porte
   sur le Riesz borné et sa projection finie ; `T12` reste ouverte, `6/14`.
 
+### `P-T12-MATTER-REAL-GRAPH-TO-L2-FREDHOLM` — réalisation réelle
+
+- État : `SUPPORT` (2026-09-17). L'opérateur matière du Hessien même-action,
+  du domaine graphe vers L² et restreint aux scalaires réels, a une image
+  fermée, un noyau réel fini et un conoyau réel fini. La preuve transporte
+  le certificat complexe existant sans hypothèse nouvelle.
+- Limite : les opérateurs LL, BRST et physiques graphe → L² du Hessien commun
+  restent à construire et raccorder ; `T12` reste ouverte, `6/14`.
+
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 
 - Le module générique `FiniteDefectCoerciveShift4D` et les cinq modules

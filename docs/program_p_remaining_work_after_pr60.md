@@ -1577,7 +1577,8 @@ analytiques listées plus haut, prouver l'accord avec l'opérateur elliptique
 naturel non borné, identifier la ligne complexifiée à la ligne de Quillen,
 puis compiler et auditer le gate terminal.
 La réalisation matière domaine-graphe → L² possède déjà un gap/Fredholm hors
-résonances, mais elle n'est pas l'entrée H12 actuelle. Le socle générique de
+résonances, avec image fermée et noyau/conoyau finis aussi sur les scalaires
+réels, mais elle n'est pas l'entrée H12 actuelle. Le socle générique de
 décalage à défaut fini et ses modules noyau, image, borne globale, inverse et
 opérateur réduit compilent désormais ; leur instanciation pour le Hessien
 physique et le paquet H12 augmenté restent ouvertes.
