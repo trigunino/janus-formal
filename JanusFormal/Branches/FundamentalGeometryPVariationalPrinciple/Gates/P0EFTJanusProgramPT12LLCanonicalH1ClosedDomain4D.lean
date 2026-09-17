@@ -117,7 +117,10 @@ theorem canonicalLLH1ToFluxL2_strong_pairing
         apply integral_congr_ae
         filter_upwards [llH1SmoothToFluxL2_ae period hPeriod data w]
           with point hPoint
-        rw [hPoint]
+        -- Use congruence rather than rewriting across the two measure aliases.
+        exact congrArg (fun value : LLFieldFiber =>
+          inner Real (llStrongJacobiToL2 period hPeriod data.fields u.toTest point)
+            value) hPoint.symm
   have hEq := (llH1SmoothEmbedding_denseRange period hPeriod data).equalizer
     (weakLLJacobiH1Extension period hPeriod data u).continuous
     (continuous_const.inner I.continuous)
@@ -158,21 +161,26 @@ theorem canonicalLLWeakL2Inverse_closed_left_inverse
         (canonicalLLClosedJacobi period hPeriod analysis x) =
       (x : CanonicalLLL2 period hPeriod analysis) := by
   let data := analysis.llH1Data period hPeriod
-  let H := CanonicalLLL2 period hPeriod analysis
-  let T := llJacobiSmoothPMap period hPeriod data.fields
-  let C := canonicalLLClosedJacobi period hPeriod analysis
-  let R := canonicalLLWeakL2Inverse period hPeriod analysis
-  let e := LinearEquiv.ofInjective (llSmoothToL2LinearMap period hPeriod)
-    (llSmoothToL2LinearMap_injective period hPeriod)
+  -- Lp is an AddSubgroup: fix its carrier type and the concrete canonical measure.
+  let H : Type := Lp LLFieldFiber (2 : ENNReal)
+    (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
+  let T : H →ₗ.[Real] H := llJacobiSmoothPMap period hPeriod data.fields
+  let C : H →ₗ.[Real] H := canonicalLLClosedJacobi period hPeriod analysis
+  let R : H →L[Real] H := canonicalLLWeakL2Inverse period hPeriod analysis
+  let e : LLWeakTestSpace period hPeriod ≃ₗ[Real] T.domain :=
+    LinearEquiv.ofInjective (llSmoothToL2LinearMap period hPeriod)
+      (llSmoothToL2LinearMap_injective period hPeriod)
   have hCore (z : T.domain) : R (T z) = (z : H) := by
     let u : LLH1Smooth period hPeriod data := ⟨e.symm z⟩
-    change (canonicalLLH1ToFluxL2 period hPeriod analysis)
-      ((canonicalLLH1ToFluxL2 period hPeriod analysis).adjoint
-        (llStrongJacobiToL2 period hPeriod data.fields u.toTest)) = _
-    rw [canonicalLLH1ToFluxL2_adjoint_strongJacobi,
-      canonicalLLH1ToFluxL2_agrees_on_smooth]
-    exact congrArg Subtype.val (e.apply_symm_apply z)
-  have hSubset : (T.graph : Set (H × H)) ⊆ {p | R p.2 = p.1} := by
+    calc
+      R (T z) = canonicalLLH1ToFluxL2 period hPeriod analysis
+          (llH1SmoothEmbedding period hPeriod data u) := by
+        exact congrArg (canonicalLLH1ToFluxL2 period hPeriod analysis)
+          (canonicalLLH1ToFluxL2_adjoint_strongJacobi period hPeriod analysis u)
+      _ = llH1SmoothToFluxL2 period hPeriod data u :=
+        canonicalLLH1ToFluxL2_agrees_on_smooth period hPeriod analysis u
+      _ = (z : H) := congrArg Subtype.val (e.apply_symm_apply z)
+  have hSubset : (T.graph : Set (H × H)) ⊆ {p : H × H | R p.2 = p.1} := by
     intro p hp
     obtain ⟨z, hz₁, hz₂⟩ := T.mem_graph_iff.mp hp
     change R p.2 = p.1
@@ -181,9 +189,8 @@ theorem canonicalLLWeakL2Inverse_closed_left_inverse
   have hClosed : IsClosed {p : H × H | R p.2 = p.1} :=
     isClosed_eq (R.continuous.comp continuous_snd) continuous_fst
   have hGraph : T.graph.topologicalClosure = C.graph :=
-    (llJacobiSmoothPMap_isClosable period hPeriod data.fields)
-      .graph_closure_eq_closure_graph
-  have hx : ((x : H), C x) ∈ closure (T.graph : Set (H × H)) := by
+    (llJacobiSmoothPMap_isClosable period hPeriod data.fields).graph_closure_eq_closure_graph
+  have hx : (x.1, C x) ∈ closure (T.graph : Set (H × H)) := by
     rw [← Submodule.topologicalClosure_coe, hGraph]
     exact C.mem_graph x
   exact (closure_minimal hSubset hClosed) hx
@@ -232,7 +239,9 @@ theorem canonicalLLClosedGraphValue_factorization
     (canonicalLLH1ToFluxL2 period hPeriod analysis).comp
         (canonicalLLClosedGraphToH1 period hPeriod analysis) =
       canonicalLLClosedGraphValue period hPeriod analysis := by
-  ext p
+  -- Stop at equality of L² vectors; recursive ext would enter Lp.ext.
+  apply ContinuousLinearMap.ext
+  intro p
   let C := canonicalLLClosedJacobi period hPeriod analysis
   obtain ⟨x, hx, hy⟩ := C.mem_graph_iff.mp p.property
   change canonicalLLWeakL2Inverse period hPeriod analysis p.1.2 = p.1.1
