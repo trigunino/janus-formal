@@ -13902,11 +13902,22 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   `‖u‖ ≤ K‖Cu‖` et a une image fermée. Pour `llMeasure` signé arbitraire,
   tout décalage scalaire `C + λI` avec `λ` au-delà de la constante de
   semi-bornitude est coercif sur le même domaine ; le décalage est fermé
-  pour tout `λ`, et son image est fermée au-delà de cette constante.
+  pour tout `λ`, et son image est fermée au-delà de cette constante. Au-dessus
+  d'un seuil, il est injectif et son inverse sur cette image est borné.
 - Limite : le contrôle de l'énergie n'est pas encore raccordé à un espace H¹
   LL avec plongement compact dans L² ; auto-adjonction, Fredholm et compacité
   de résolvante restent ouverts. La surjectivité du décalage n'est pas établie.
   `T12` reste ouverte, `6/14`.
+
+### `P-T12-LL-H1-L2-BRIDGE` — complétion énergie vers L²
+
+- État : `SUPPORT` (2026-09-17). Pour les données canoniques `GlobalAnalysisData`
+  à `llMeasure > 0`, la norme d'énergie LL contrôle la norme L² du champ
+  lisse. L'inclusion lisse se prolonge en application linéaire continue de
+  `LLH1Space` vers le L² canonique et coïncide avec l'inclusion sur le cœur.
+- Limite : l'injectivité de ce prolongement, son lien avec le domaine du
+  Jacobi L² fermé et la compacité du plongement restent à prouver ; `T12`
+  reste ouverte, `6/14`.
 
 ### `P-T12-LL-AUX-MEASURE-L2-ROWS` — deux lignes du Hessien LL
 
