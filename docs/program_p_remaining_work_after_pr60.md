@@ -1576,6 +1576,10 @@ condition spectrale terminale, puis habiter les onze entrées
 analytiques listées plus haut, prouver l'accord avec l'opérateur elliptique
 naturel non borné, identifier la ligne complexifiée à la ligne de Quillen,
 puis compiler et auditer le gate terminal.
+La réalisation matière domaine-graphe → L² possède déjà un gap/Fredholm hors
+résonances, mais elle n'est pas l'entrée H12 actuelle. Le paquet générique de
+décalage à défaut fini H12 a aussi un défaut de compilation (`Prop` avec champs
+de données), dont la correction traverse plusieurs interfaces aval.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 

@@ -13849,6 +13849,23 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   graphe actuelle ; il faut revoir l'espace/opérateur cible ou la condition
   spectrale terminale. `T12` reste ouverte, compteur `6/14`.
 
+### `P-T12-MATTER-GRAPH-TO-L2-MODAL-GAP` — comparaison des réalisations
+
+- État : `SUPPORT` (2026-09-17). Hors des modes résonants finis, le Hessien
+  matière signé réalisé du domaine à norme de graphe vers L² a une borne
+  modale positive explicite `δ/(1+δ)`. Le Riesz graphe → graphe conserve ses
+  valeurs propres `w/(1+w²)` qui tendent vers zéro.
+- Limite : le Fredholm matière graphe → L² existe déjà, mais ni LL ni les sept
+  blocs ne sont raccordés à cette réalisation. Le terminal H12 actuel porte
+  sur le Riesz borné et sa projection finie ; `T12` reste ouverte, `6/14`.
+
+### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — dette H12 existante
+
+- Le module générique `FiniteDefectCoerciveShift4D` ne compile pas tel quel :
+  sa structure en `Prop` contient des données de projection et de coercivité
+  dont Lean ne peut extraire les champs. Le passage à `Type` se propage aux
+  interfaces H12 aval ; aucune modification partielle n'a été conservée.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un
