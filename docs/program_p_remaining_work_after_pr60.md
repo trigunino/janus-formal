@@ -1584,9 +1584,11 @@ opérateur réduit compilent désormais ; leur instanciation pour le Hessien
 physique et le paquet H12 augmenté restent ouvertes.
 Le résidu fort du slot `llField` est aussi réalisé dans L² et représente le
 Jacobi faible sur le cœur lisse. Ce cœur est dense, l'opérateur est symétrique
-et closable, et sa fermeture canonique est construite. L'identification
-Sobolev H² de son domaine, sa propriété Fredholm et les deux autres slots LL
-restent à établir.
+et closable, et sa fermeture canonique est fermée et symétrique. Une borne
+inférieure `-C‖u‖²` est prouvée sur le cœur sans positivité de `llMeasure`.
+Les lignes auxiliaire et mesure ont aussi des résidus L² accordés au Hessien
+sur leurs tests purs. L'identification Sobolev H² du domaine `llField`, sa
+propriété Fredholm et l'assemblage des trois lignes LL restent à établir.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 

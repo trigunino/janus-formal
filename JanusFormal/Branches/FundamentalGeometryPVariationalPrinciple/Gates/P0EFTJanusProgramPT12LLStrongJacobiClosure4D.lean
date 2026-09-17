@@ -248,6 +248,64 @@ theorem llJacobiSmoothPMap_le_closed
       llJacobiClosedPMap period hPeriod fields :=
   (llJacobiSmoothPMap period hPeriod fields).le_closure
 
+/-- Closing the graph preserves the LL Jacobi symmetry identity. -/
+theorem llJacobiClosedPMap_symmetric
+    (fields : IndependentFields period hPeriod) :
+    (llJacobiClosedPMap period hPeriod fields).IsFormalAdjoint
+      (llJacobiClosedPMap period hPeriod fields) := by
+  let T := llJacobiSmoothPMap period hPeriod fields
+  let C := llJacobiClosedPMap period hPeriod fields
+  have hGraph : T.graph.topologicalClosure = C.graph :=
+    (llJacobiSmoothPMap_isClosable period hPeriod fields).graph_closure_eq_closure_graph
+  have hSym : T.IsFormalAdjoint T :=
+    llJacobiSmoothPMap_symmetric period hPeriod fields
+  have hFirst (x : C.domain) (y : T.domain) :
+      inner Real (C x) (y : LLFieldL2 period hPeriod) =
+        inner Real (x : LLFieldL2 period hPeriod) (T y) := by
+    have hSubset : (T.graph : Set ((LLFieldL2 period hPeriod) ×
+        LLFieldL2 period hPeriod)) ⊆
+        {p | inner Real p.2 (y : LLFieldL2 period hPeriod) =
+          inner Real p.1 (T y)} := by
+      intro p hp
+      obtain ⟨z, hz₁, hz₂⟩ := T.mem_graph_iff.mp hp
+      change inner Real p.2 (y : LLFieldL2 period hPeriod) =
+        inner Real p.1 (T y)
+      rw [← hz₁, ← hz₂]
+      exact hSym z y
+    have hClosed : IsClosed
+        {p : (LLFieldL2 period hPeriod) × LLFieldL2 period hPeriod |
+          inner Real p.2 (y : LLFieldL2 period hPeriod) =
+            inner Real p.1 (T y)} :=
+      isClosed_eq (by fun_prop) (by fun_prop)
+    have hx : ((x : LLFieldL2 period hPeriod), C x) ∈
+        closure (T.graph : Set ((LLFieldL2 period hPeriod) ×
+          LLFieldL2 period hPeriod)) := by
+      rw [← Submodule.topologicalClosure_coe, hGraph]
+      exact C.mem_graph x
+    exact (closure_minimal hSubset hClosed) hx
+  intro x y
+  have hSubset : (T.graph : Set ((LLFieldL2 period hPeriod) ×
+      LLFieldL2 period hPeriod)) ⊆
+      {p | inner Real (C x) p.1 =
+        inner Real (x : LLFieldL2 period hPeriod) p.2} := by
+    intro p hp
+    obtain ⟨z, hz₁, hz₂⟩ := T.mem_graph_iff.mp hp
+    change inner Real (C x) p.1 =
+      inner Real (x : LLFieldL2 period hPeriod) p.2
+    rw [← hz₁, ← hz₂]
+    exact hFirst x z
+  have hClosed : IsClosed
+      {p : (LLFieldL2 period hPeriod) × LLFieldL2 period hPeriod |
+        inner Real (C x) p.1 =
+          inner Real (x : LLFieldL2 period hPeriod) p.2} :=
+    isClosed_eq (by fun_prop) (by fun_prop)
+  have hy : ((y : LLFieldL2 period hPeriod), C y) ∈
+      closure (T.graph : Set ((LLFieldL2 period hPeriod) ×
+        LLFieldL2 period hPeriod)) := by
+    rw [← Submodule.topologicalClosure_coe, hGraph]
+    exact C.mem_graph y
+  exact (closure_minimal hSubset hClosed) hy
+
 end
 end P0EFTJanusProgramPT12LLStrongJacobiClosure4D
 end JanusFormal

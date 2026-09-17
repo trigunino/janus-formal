@@ -13883,10 +13883,27 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État : `SUPPORT` (2026-09-17). Le résidu du slot `llField` est linéaire sur
   le cœur lisse, dense dans le L² canonique. Son opérateur partiel est
   symétrique pour le Hessien même-action, closable, et sa fermeture canonique
-  est fermée. Ces gates sont importés par la façade.
+  est fermée et symétrique. Ces gates sont importés par la façade.
 - Limite : aucune identification Sobolev H² du domaine fermé, ni
   auto-adjonction ou propriété Fredholm, ni raccord des deux autres slots LL ;
   `T12` reste ouverte, `6/14`.
+
+### `P-T12-LL-SMOOTH-LOWER-BOUND` — borne du slot `llField`
+
+- État : `SUPPORT` (2026-09-17). Le vrai pairing L² du Jacobi `llField` sur
+  le cœur lisse est minoré par `-C‖u‖²` pour une constante `C ≥ 0`, sans
+  supposer `llMeasure ≥ 0`. La preuve contrôle les deux termes PT.
+- Limite : cela ne prouve ni Fredholm ni compacité de résolvante ; `T12`
+  reste ouverte, `6/14`.
+
+### `P-T12-LL-AUX-MEASURE-L2-ROWS` — deux lignes du Hessien LL
+
+- État : `SUPPORT` (2026-09-17). Les résidus explicites des slots
+  `llAuxMetric` et `llMeasure` ont des classes L² dont les pairings égalent
+  le Hessien même-action contre tout test pur auxiliaire/mesure du cœur LL
+  complet. Le bloc mesure–mesure reste nul.
+- Limite : la ligne `llField` avec entrées mixtes et le domaine de l'opérateur
+  LL complet ne sont pas raccordés ; `T12` reste ouverte, `6/14`.
 
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 
