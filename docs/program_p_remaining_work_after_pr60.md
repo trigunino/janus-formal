@@ -1592,7 +1592,10 @@ cadre canonique par le pairing Jacobi plus `C‖u‖²`, même si `llMeasure` ch
 de signe. Il reste à relier cette énergie à un H¹ LL compactement plongé dans
 L², puis à établir auto-adjonction et résolvante pour la réalisation fermée.
 Sous l'hypothèse supplémentaire `llMeasure > 0` partout, le Jacobi champ fermé
-admet aussi une borne coercive stricte `c‖u‖² ≤ ⟨Cu,u⟩` et est injectif.
+admet aussi une borne coercive stricte `c‖u‖² ≤ ⟨Cu,u⟩`, est injectif et a une
+image fermée, avec `‖u‖ ≤ K‖Cu‖`. Pour `llMeasure` signé arbitraire, le
+décalage `C + λI` est coercif dès que `λ` dépasse la constante de
+semi-bornitude ; sa fermeture et son image restent à établir.
 Les lignes auxiliaire et mesure ont aussi des résidus L² accordés au Hessien
 sur leurs tests purs, réunis en application réelle linéaire sur le cœur LL
 complet. L'identification Sobolev H² du domaine `llField` et sa propriété
