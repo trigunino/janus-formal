@@ -2597,6 +2597,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLFullFieldJacobiL2Core4D
 
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLFullFieldJacobiSameActionPairing4D
+
 namespace JanusFormal
 namespace JanusFundamentalGeometryPVariationalPrinciple
 

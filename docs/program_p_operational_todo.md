@@ -13912,7 +13912,9 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État : `SUPPORT` (2026-09-17). Le résidu fort de la ligne `llField` inclut
   les variations mixtes de `llAuxMetric` et `llMeasure` et possède une classe
   L². La polarisation du Hessien brut est prouvée ponctuellement et après
-  intégration sur la mesure canonique.
+  intégration sur la mesure canonique. Les trois décalages de coefficients
+  commutent avec PT ; le bloc worldvolume intégré est réduit à la moyenne de
+  ses deux orbites PT.
 - Limite : l'identité de pairing après moyenne PT, puis l'assemblage linéaire
   des trois lignes et la fermeture de leur graphe, restent à établir ; `T12`
   reste ouverte, `6/14`.

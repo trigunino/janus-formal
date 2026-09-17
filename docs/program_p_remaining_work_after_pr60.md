@@ -1592,7 +1592,8 @@ complet. L'identification Sobolev H² du domaine `llField`, sa
 propriété Fredholm et l'assemblage des trois lignes LL restent à établir.
 Le résidu champ à entrées mixtes auxiliaire/mesure est défini dans L² ; sa
 polarisation brute est prouvée ponctuellement et sous l'intégrale canonique.
-Son pairing après moyenne PT reste ouvert.
+Les décalages auxiliaire/mesure commutent avec PT et la moyenne PT du bloc
+worldvolume est prouvée. Le pairing PT complet reste ouvert.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 
