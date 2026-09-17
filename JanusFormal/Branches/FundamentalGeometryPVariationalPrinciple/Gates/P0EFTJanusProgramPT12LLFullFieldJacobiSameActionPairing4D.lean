@@ -22,14 +22,22 @@ open P0EFTJanusMappingTorusGlobalLLCovariance4D
 open P0EFTJanusMappingTorusPTSymmetricDifferentialLLWeakEquation4D
 open P0EFTJanusMappingTorusPTSymmetricDifferentialLLHessian4D
 open P0EFTJanusMappingTorusPTSymmetricDifferentialLLStrongEquation4D
+open P0EFTJanusMappingTorusPTSymmetricLLWeakEulerJacobiOperator4D
 open P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
 open P0EFTJanusMappingTorusCanonicalThroatPTMeasureInvariance4D
+open P0EFTJanusMappingTorusPTSymmetricLLH1RieszOperator4D
 open P0EFTJanusIntegratedPTDifferentialLLKineticMixedHessian4D
+open P0EFTJanusDifferentialLLKineticMixedHessianIntegrability4D
 open P0EFTJanusIntegratedPTLLMeasureFieldTwoParameter4D
 open P0EFTJanusIntegratedPTLLWorldvolumeHessian4D
 open P0EFTJanusIntegratedPTFullLLHessianAssembly4D
+open P0EFTJanusFullLLVariationalAPI4D
+open P0EFTJanusProgramPGlobalFieldSpace4D
+open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPGlobalFullLLGraphRiesz4D
+open P0EFTJanusProgramPGlobalBoundaryCompletion4D
 open P0EFTJanusProgramPT12LLStrongJacobiL2Core4D
 open P0EFTJanusProgramPT12LLFullFieldJacobiL2Core4D
 
@@ -211,6 +219,298 @@ theorem worldvolume_field_row_pt_orbit_integral
   change (∫ point, ptAverage period hPeriod raw point ∂mu) = _
   rw [integral_ptAverage_eq period hPeriod raw hRaw, hPTRaw]
   ring
+
+/-- The kinetic block is the literal average of the two raw Hessian orbits. -/
+theorem kinetic_field_row_pt_orbit_integral
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (fields : IndependentFields period hPeriod)
+    (dAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (dField testField : SmoothThroatField period hPeriod LLFieldFiber) :
+    globalPTDifferentialLLKineticMixedHessian period hPeriod frame
+        fields.llAuxMetric fields.llField dAux 0 dField testField
+        (intrinsicCanonicalThroatVolumeMeasure period hPeriod) =
+      (1 / 2 : Real) *
+        ((∫ point,
+          differentialLLKineticMixedHessianDensity period hPeriod frame
+            fields.llAuxMetric fields.llField dAux 0 dField testField point
+          ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) +
+         (∫ point,
+          differentialLLKineticMixedHessianDensity period hPeriod frame
+            (llPTPullback period hPeriod fields).llAuxMetric
+            (llPTPullback period hPeriod fields).llField
+            (differentialLLAuxMetricDirectionPT period hPeriod dAux) 0
+            (differentialLLFluxDirectionPT period hPeriod dField)
+            (differentialLLFluxDirectionPT period hPeriod testField) point
+          ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod))) := by
+  have hRaw := differentialLLKineticMixedHessianDensity_integrable
+    period hPeriod frame fields.llAuxMetric fields.llField dAux 0
+    dField testField (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
+  have hPT := differentialLLKineticMixedHessianDensity_integrable
+    period hPeriod frame
+    (llPTPullback period hPeriod fields).llAuxMetric
+    (llPTPullback period hPeriod fields).llField
+    (differentialLLAuxMetricDirectionPT period hPeriod dAux) 0
+    (differentialLLFluxDirectionPT period hPeriod dField)
+    (differentialLLFluxDirectionPT period hPeriod testField)
+    (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
+  have hZero : differentialLLAuxMetricDirectionPT period hPeriod
+      (0 : SmoothThroatField period hPeriod LLMetricFiber) = 0 := by
+    apply SmoothThroatField.ext period hPeriod LLMetricFiber
+    intro point
+    rfl
+  unfold globalPTDifferentialLLKineticMixedHessian
+    ptSymmetricDifferentialLLKineticMixedHessianDensity
+  rw [integral_const_mul]
+  rw [integral_add hRaw (by simpa only [llPTPullback, hZero] using hPT)]
+  simp only [llPTPullback, hZero]
+
+/-- The full three-slot weak field row is the PT average of the two proved
+raw finite-difference identities. -/
+theorem full_field_row_pt_weak_identity
+    (frame : SmoothThroatGeneratingFrame period hPeriod)
+    (fields : IndependentFields period hPeriod)
+    (dAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (dMeasure : SmoothThroatField period hPeriod Real)
+    (dField testField : SmoothThroatField period hPeriod LLFieldFiber) :
+    globalPTDifferentialLLKineticMixedHessian period hPeriod frame
+        fields.llAuxMetric fields.llField dAux 0 dField testField
+        (intrinsicCanonicalThroatVolumeMeasure period hPeriod) +
+      globalPTLLWorldvolumeHessian period hPeriod fields
+        { measureDirection := dMeasure, fieldDirection := dField }
+        { measureDirection := 0, fieldDirection := testField }
+        (intrinsicCanonicalThroatVolumeMeasure period hPeriod) =
+      globalPTSymmetricDifferentialLLFluxHessian period hPeriod frame fields
+          dField testField
+          (intrinsicCanonicalThroatVolumeMeasure period hPeriod) +
+        (1 / 2 : Real) *
+          (globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod frame
+              (auxPlusFields period hPeriod fields dAux) testField
+              (intrinsicCanonicalThroatVolumeMeasure period hPeriod) -
+            globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod frame
+              (auxMinusFields period hPeriod fields dAux) testField
+              (intrinsicCanonicalThroatVolumeMeasure period hPeriod)) +
+        (globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod frame
+            (measurePlusFields period hPeriod fields dMeasure) testField
+            (intrinsicCanonicalThroatVolumeMeasure period hPeriod) -
+          globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod frame
+            fields testField
+            (intrinsicCanonicalThroatVolumeMeasure period hPeriod)) := by
+  have hRaw := raw_field_row_integral period hPeriod frame fields dAux
+    dMeasure dField testField
+  have hPT := raw_field_row_integral period hPeriod frame
+    (llPTPullback period hPeriod fields)
+    (differentialLLAuxMetricDirectionPT period hPeriod dAux)
+    (throatPTPullback period hPeriod Real dMeasure)
+    (differentialLLFluxDirectionPT period hPeriod dField)
+    (differentialLLFluxDirectionPT period hPeriod testField)
+  rw [← pt_pullback_aux_plus period hPeriod fields dAux,
+    ← pt_pullback_aux_minus period hPeriod fields dAux,
+    ← pt_pullback_measure_plus period hPeriod fields dMeasure] at hPT
+  rw [kinetic_field_row_pt_orbit_integral period hPeriod frame fields dAux
+      dField testField,
+    worldvolume_field_row_pt_orbit_integral period hPeriod fields dMeasure
+      dField testField]
+  unfold globalPTSymmetricDifferentialLLFluxHessian
+    globalPTSymmetricDifferentialLLFluxFirstVariation
+  linear_combination (1 / 2 : Real) * hRaw + (1 / 2 : Real) * hPT
+
+/-- The finite-difference strong row represents the complete PT-averaged
+weak field row on the smooth core. -/
+theorem llFullFieldJacobiResidual_pairing_eq_pt_weak
+    (fields : IndependentFields period hPeriod)
+    (dAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (dMeasure : SmoothThroatField period hPeriod Real)
+    (dField testField : LLWeakTestSpace period hPeriod) :
+    (∫ point,
+      inner Real (llFullFieldJacobiResidual period hPeriod fields dAux
+        dMeasure dField point) (testField point)
+      ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) =
+      globalPTSymmetricDifferentialLLFluxHessian period hPeriod
+          (canonicalDivergenceFreeLLFrame period hPeriod) fields
+          dField testField
+          (intrinsicCanonicalThroatVolumeMeasure period hPeriod) +
+        (1 / 2 : Real) *
+          (globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod
+              (canonicalDivergenceFreeLLFrame period hPeriod)
+              (auxPlusFields period hPeriod fields dAux) testField
+              (intrinsicCanonicalThroatVolumeMeasure period hPeriod) -
+            globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod
+              (canonicalDivergenceFreeLLFrame period hPeriod)
+              (auxMinusFields period hPeriod fields dAux) testField
+              (intrinsicCanonicalThroatVolumeMeasure period hPeriod)) +
+        (globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod
+            (canonicalDivergenceFreeLLFrame period hPeriod)
+            (measurePlusFields period hPeriod fields dMeasure) testField
+            (intrinsicCanonicalThroatVolumeMeasure period hPeriod) -
+          globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod
+            (canonicalDivergenceFreeLLFrame period hPeriod)
+            fields testField
+            (intrinsicCanonicalThroatVolumeMeasure period hPeriod)) := by
+  let mu := intrinsicCanonicalThroatVolumeMeasure period hPeriod
+  let frame := canonicalDivergenceFreeLLFrame period hPeriod
+  let regularity := smoothLLStrongRegularity period hPeriod frame
+  let strong := fun f : IndependentFields period hPeriod =>
+    ptSymmetricStrongDifferentialLLEulerField period hPeriod frame regularity f
+  let pure := llStrongJacobiResidual period hPeriod fields dField
+  let plus := strong (auxPlusFields period hPeriod fields dAux)
+  let minus := strong (auxMinusFields period hPeriod fields dAux)
+  let measurePlus := strong (measurePlusFields period hPeriod fields dMeasure)
+  let base := strong fields
+  let pair := fun f : SmoothThroatField period hPeriod LLFieldFiber =>
+    fun point => inner Real (f point) (testField point)
+  have hInt (f : SmoothThroatField period hPeriod LLFieldFiber) :
+      Integrable (pair f) mu :=
+    (f.contMDiff_toFun.continuous.inner
+      testField.contMDiff_toFun.continuous).integrable_of_hasCompactSupport
+        (HasCompactSupport.of_compactSpace _)
+  have hPoint (point : EffectiveThroat period hPeriod) :
+      inner Real (llFullFieldJacobiResidual period hPeriod fields dAux
+          dMeasure dField point) (testField point) =
+        pair pure point + (1 / 2 : Real) *
+          (pair plus point - pair minus point) +
+          (pair measurePlus point - pair base point) := by
+    change inner Real
+      (pure point + (1 / 2 : Real) • (plus point - minus point) +
+        (measurePlus point - base point)) (testField point) = _
+    simp [pair, inner_add_left, inner_sub_left, real_inner_smul_left]
+  have hIntegral :
+      (∫ point, inner Real (llFullFieldJacobiResidual period hPeriod fields dAux
+        dMeasure dField point) (testField point) ∂mu) =
+      (∫ point, pair pure point ∂mu) +
+        (1 / 2 : Real) *
+          ((∫ point, pair plus point ∂mu) -
+            (∫ point, pair minus point ∂mu)) +
+        ((∫ point, pair measurePlus point ∂mu) -
+          (∫ point, pair base point ∂mu)) := by
+    calc
+      _ = ∫ point, pair pure point + (1 / 2 : Real) *
+          (pair plus point - pair minus point) +
+          (pair measurePlus point - pair base point) ∂mu := by
+        apply integral_congr_ae
+        filter_upwards [] with point
+        exact hPoint point
+      _ = _ := by
+        have hAux : Integrable (fun point => (1 / 2 : Real) *
+            (pair plus point - pair minus point)) mu :=
+          ((hInt plus).sub (hInt minus)).const_mul _
+        have hLeft : Integrable (fun point => pair pure point +
+            (1 / 2 : Real) * (pair plus point - pair minus point)) mu :=
+          (hInt pure).add hAux
+        calc
+          (∫ point, pair pure point + (1 / 2 : Real) *
+              (pair plus point - pair minus point) +
+              (pair measurePlus point - pair base point) ∂mu) =
+              (∫ point, pair pure point + (1 / 2 : Real) *
+                (pair plus point - pair minus point) ∂mu) +
+              (∫ point, pair measurePlus point - pair base point ∂mu) :=
+            integral_add hLeft ((hInt measurePlus).sub (hInt base))
+          _ = (∫ point, pair pure point ∂mu) +
+                (∫ point, (1 / 2 : Real) *
+                  (pair plus point - pair minus point) ∂mu) +
+                (∫ point, pair measurePlus point - pair base point ∂mu) := by
+            rw [integral_add (hInt pure) hAux]
+          _ = _ := by
+            rw [integral_const_mul,
+              integral_sub (hInt plus) (hInt minus),
+              integral_sub (hInt measurePlus) (hInt base)]
+  rw [hIntegral]
+  have hPure := llStrongJacobiResidual_pairing_eq_hessian period hPeriod
+    fields dField testField
+  have hPlus := canonicalDivergenceFreeLLFrame_globalIPP period hPeriod
+    (auxPlusFields period hPeriod fields dAux) regularity testField
+  have hMinus := canonicalDivergenceFreeLLFrame_globalIPP period hPeriod
+    (auxMinusFields period hPeriod fields dAux) regularity testField
+  have hMeasurePlus := canonicalDivergenceFreeLLFrame_globalIPP period hPeriod
+    (measurePlusFields period hPeriod fields dMeasure) regularity testField
+  have hBase := canonicalDivergenceFreeLLFrame_globalIPP period hPeriod
+    fields regularity testField
+  change (∫ point, pair pure point ∂mu) = _ at hPure
+  change globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod frame
+      (auxPlusFields period hPeriod fields dAux) testField mu =
+    ∫ point, pair plus point ∂mu at hPlus
+  change globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod frame
+      (auxMinusFields period hPeriod fields dAux) testField mu =
+    ∫ point, pair minus point ∂mu at hMinus
+  change globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod frame
+      (measurePlusFields period hPeriod fields dMeasure) testField mu =
+    ∫ point, pair measurePlus point ∂mu at hMeasurePlus
+  change globalPTSymmetricDifferentialLLFluxFirstVariation period hPeriod frame
+      fields testField mu = ∫ point, pair base point ∂mu at hBase
+  rw [hPure, ← hPlus, ← hMinus, ← hMeasurePlus, ← hBase]
+
+/-- Pure field test inside the faithful three-slot smooth LL core. -/
+def pureFieldTest
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {analysis : GlobalAnalysisData period hPeriod configuration}
+    (testField : LLH1Smooth period hPeriod
+      (analysis.llH1Data period hPeriod)) :
+    GlobalFullLLSmooth period hPeriod analysis :=
+  ((0, 0), testField)
+
+/-- The complete strong field row pairs to the unchanged same-action Hessian
+against every pure smooth field test. -/
+theorem llFullFieldJacobiResidual_pairing_eq_sameActionHessian
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (direction : GlobalFullLLSmooth period hPeriod analysis)
+    (testField : LLH1Smooth period hPeriod
+      (analysis.llH1Data period hPeriod)) :
+    (∫ point,
+      inner Real
+        (llFullFieldJacobiResidual period hPeriod
+          (data.boundary.llFields period hPeriod)
+          direction.1.1 direction.1.2 direction.2.toTest point)
+        (testField.toTest point)
+      ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) =
+      globalCandidateAFullLLSameActionHessian period hPeriod data
+        direction (pureFieldTest period hPeriod testField) := by
+  rw [llFullFieldJacobiResidual_pairing_eq_pt_weak period hPeriod
+    (data.boundary.llFields period hPeriod) direction.1.1 direction.1.2
+    direction.2.toTest testField.toTest]
+  rw [← full_field_row_pt_weak_identity period hPeriod
+    (canonicalDivergenceFreeLLFrame period hPeriod)
+    (data.boundary.llFields period hPeriod) direction.1.1 direction.1.2
+    direction.2.toTest testField.toTest]
+  unfold globalCandidateAFullLLSameActionHessian fullLLHessian
+    globalPTFullLLHessianForm
+  simp [pureFieldTest, fullDirectionLLVariation,
+    globalCandidateAFullLLDirection_llAuxMetric,
+    globalCandidateAFullLLDirection_llMeasure,
+    globalCandidateAFullLLDirection_llField]
+
+/-- The L² equivalence class has the same faithful same-action pairing. -/
+theorem llFullFieldJacobiToL2_pairing_eq_sameActionHessian
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (direction : GlobalFullLLSmooth period hPeriod analysis)
+    (testField : LLH1Smooth period hPeriod
+      (analysis.llH1Data period hPeriod)) :
+    (∫ point,
+      inner Real
+        (llFullFieldJacobiToL2 period hPeriod
+          (data.boundary.llFields period hPeriod)
+          direction.1.1 direction.1.2 direction.2.toTest point)
+        (testField.toTest point)
+      ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) =
+      globalCandidateAFullLLSameActionHessian period hPeriod data
+        direction (pureFieldTest period hPeriod testField) := by
+  rw [← llFullFieldJacobiResidual_pairing_eq_sameActionHessian period hPeriod
+    data analysis direction testField]
+  apply integral_congr_ae
+  filter_upwards [llFullFieldJacobiToL2_ae period hPeriod
+    (data.boundary.llFields period hPeriod) direction.1.1 direction.1.2
+    direction.2.toTest] with point hPoint
+  rw [hPoint]
 
 end
 end P0EFTJanusProgramPT12LLFullFieldJacobiSameActionPairing4D

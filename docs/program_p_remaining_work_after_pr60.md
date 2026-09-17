@@ -1593,7 +1593,9 @@ propriété Fredholm et l'assemblage des trois lignes LL restent à établir.
 Le résidu champ à entrées mixtes auxiliaire/mesure est défini dans L² ; sa
 polarisation brute est prouvée ponctuellement et sous l'intégrale canonique.
 Les décalages auxiliaire/mesure commutent avec PT et la moyenne PT du bloc
-worldvolume est prouvée. Le pairing PT complet reste ouvert.
+worldvolume est prouvée. L'IPP relie maintenant la ligne champ forte et L²
+au Hessien même-action sur les tests champ purs. La linéarité L² de cette
+ligne, l'assemblage des trois lignes et leur graphe fermé restent ouverts.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 
