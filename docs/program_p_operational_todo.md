@@ -13903,8 +13903,8 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   le Hessien même-action contre tout test pur auxiliaire/mesure du cœur LL
   complet. Leur couple forme une application réelle linéaire sur ce cœur.
   Le bloc mesure–mesure reste nul.
-- Limite : l'assemblage des trois lignes et le domaine de l'opérateur LL
-  complet ne sont pas raccordés ; `T12` reste ouverte, `6/14`.
+- Limite : le domaine de l'opérateur LL complet n'est pas encore raccordé ;
+  `T12` reste ouverte, `6/14`.
 
 ### `P-T12-LL-MIXED-FIELD-L2-ROW` — résidu champ à trois entrées
 
@@ -13916,8 +13916,12 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   ses deux orbites PT. L'identité faible PT combinée et l'IPP donnent le
   pairing du résidu fort et de sa classe L² avec le Hessien LL même-action
   contre tout test champ pur.
-- Limite : la linéarité L² de cette ligne, l'assemblage des trois lignes et
-  la fermeture de leur graphe restent à établir ; `T12` reste ouverte, `6/14`.
+- État complémentaire : la ligne champ est réelle linéaire dans L². Les trois
+  lignes forment une application linéaire vers le produit L² et leur pairing
+  reproduit le Hessien LL même-action sur tout test lisse trois slots. Ce
+  cœur est dense dans le produit L² canonique.
+- Limite : la réalisation sur un domaine d'opérateur et la fermeture de son
+  graphe restent à établir ; `T12` reste ouverte, `6/14`.
 
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 

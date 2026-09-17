@@ -1588,14 +1588,16 @@ et closable, et sa fermeture canonique est fermée et symétrique. Une borne
 inférieure `-C‖u‖²` est prouvée sur le cœur sans positivité de `llMeasure`.
 Les lignes auxiliaire et mesure ont aussi des résidus L² accordés au Hessien
 sur leurs tests purs, réunis en application réelle linéaire sur le cœur LL
-complet. L'identification Sobolev H² du domaine `llField`, sa
-propriété Fredholm et l'assemblage des trois lignes LL restent à établir.
+complet. L'identification Sobolev H² du domaine `llField` et sa propriété
+Fredholm restent à établir.
 Le résidu champ à entrées mixtes auxiliaire/mesure est défini dans L² ; sa
 polarisation brute est prouvée ponctuellement et sous l'intégrale canonique.
 Les décalages auxiliaire/mesure commutent avec PT et la moyenne PT du bloc
 worldvolume est prouvée. L'IPP relie maintenant la ligne champ forte et L²
-au Hessien même-action sur les tests champ purs. La linéarité L² de cette
-ligne, l'assemblage des trois lignes et leur graphe fermé restent ouverts.
+au Hessien même-action sur les tests champ purs. Les trois lignes forment
+une application réelle linéaire sur le cœur lisse dense dans le produit L²,
+avec pairing au Hessien même-action sur tout test lisse. La réalisation sur
+un domaine d'opérateur et son graphe fermé restent ouverts.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 
