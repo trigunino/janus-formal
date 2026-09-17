@@ -64,8 +64,9 @@ theorem energyShiftSolution_pairing (I : V →L[Real] H) (shift : Real)
     _ = energyShiftForm I shift (e.symm (I.adjoint f)) v :=
       (energyShiftForm_apply I shift _ v).symm
     _ = inner Real (e (e.symm (I.adjoint f))) v :=
-      ((energyShiftForm_coercive I shift hShift)
-        .continuousLinearEquivOfBilin_apply _ v).symm
+      (IsCoercive.continuousLinearEquivOfBilin_apply
+        (energyShiftForm_coercive I shift hShift)
+        (e.symm (I.adjoint f)) v).symm
     _ = inner Real f (I v) := by
       rw [e.apply_symm_apply, ContinuousLinearMap.adjoint_inner_left]
 
