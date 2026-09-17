@@ -13901,9 +13901,21 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État : `SUPPORT` (2026-09-17). Les résidus explicites des slots
   `llAuxMetric` et `llMeasure` ont des classes L² dont les pairings égalent
   le Hessien même-action contre tout test pur auxiliaire/mesure du cœur LL
-  complet. Le bloc mesure–mesure reste nul.
-- Limite : la ligne `llField` avec entrées mixtes et le domaine de l'opérateur
-  LL complet ne sont pas raccordés ; `T12` reste ouverte, `6/14`.
+  complet. Leur couple forme une application réelle linéaire sur ce cœur.
+  Le bloc mesure–mesure reste nul.
+- Limite : le pairing PT de la ligne `llField` avec entrées mixtes et le
+  domaine de l'opérateur LL complet ne sont pas raccordés ; `T12` reste
+  ouverte, `6/14`.
+
+### `P-T12-LL-MIXED-FIELD-L2-ROW` — résidu champ à trois entrées
+
+- État : `SUPPORT` (2026-09-17). Le résidu fort de la ligne `llField` inclut
+  les variations mixtes de `llAuxMetric` et `llMeasure` et possède une classe
+  L². La polarisation du Hessien brut est prouvée ponctuellement et après
+  intégration sur la mesure canonique.
+- Limite : l'identité de pairing après moyenne PT, puis l'assemblage linéaire
+  des trois lignes et la fermeture de leur graphe, restent à établir ; `T12`
+  reste ouverte, `6/14`.
 
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 

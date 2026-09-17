@@ -130,6 +130,156 @@ def llMeasureJacobiResidual
       (((innerSL ℝ (E := LLFieldFiber)).contMDiff.comp
         fields.llField.contMDiff_toFun).clm_apply dField.contMDiff_toFun)
 
+private theorem rawLLAuxJacobiResidual_add
+    (fields : IndependentFields period hPeriod)
+    (firstAux secondAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (firstField secondField : SmoothThroatField period hPeriod LLFieldFiber) :
+    rawLLAuxJacobiResidual period hPeriod fields
+        (firstAux + secondAux) (firstField + secondField) =
+      rawLLAuxJacobiResidual period hPeriod fields firstAux firstField +
+        rawLLAuxJacobiResidual period hPeriod fields secondAux secondField := by
+  apply SmoothThroatField.ext
+  intro point
+  change _ • (firstAux point + secondAux point) +
+      (2 * throatDerivativePairing period hPeriod
+        (canonicalDivergenceFreeLLFrame period hPeriod)
+        fields.llField (firstField + secondField) point) •
+        fields.llAuxMetric point =
+      (throatDerivativeEnergy period hPeriod
+          (canonicalDivergenceFreeLLFrame period hPeriod) fields.llField point •
+          firstAux point +
+        (2 * throatDerivativePairing period hPeriod
+          (canonicalDivergenceFreeLLFrame period hPeriod)
+          fields.llField firstField point) • fields.llAuxMetric point) +
+      (throatDerivativeEnergy period hPeriod
+          (canonicalDivergenceFreeLLFrame period hPeriod) fields.llField point •
+          secondAux point +
+        (2 * throatDerivativePairing period hPeriod
+          (canonicalDivergenceFreeLLFrame period hPeriod)
+          fields.llField secondField point) • fields.llAuxMetric point)
+  rw [P0EFTJanusMappingTorusPTSymmetricLLWeakEulerJacobiOperator4D.throatDerivativePairing_add_right]
+  simp only [mul_add, smul_add, add_smul]
+  abel
+
+private theorem rawLLAuxJacobiResidual_smul
+    (fields : IndependentFields period hPeriod)
+    (scalar : Real)
+    (dAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (dField : SmoothThroatField period hPeriod LLFieldFiber) :
+    rawLLAuxJacobiResidual period hPeriod fields
+        (scalar • dAux) (scalar • dField) =
+      scalar • rawLLAuxJacobiResidual period hPeriod fields dAux dField := by
+  apply SmoothThroatField.ext
+  intro point
+  change _ • (scalar • dAux point) +
+      (2 * throatDerivativePairing period hPeriod
+        (canonicalDivergenceFreeLLFrame period hPeriod)
+        fields.llField (scalar • dField) point) •
+        fields.llAuxMetric point =
+      scalar • (throatDerivativeEnergy period hPeriod
+          (canonicalDivergenceFreeLLFrame period hPeriod) fields.llField point •
+            dAux point +
+          (2 * throatDerivativePairing period hPeriod
+            (canonicalDivergenceFreeLLFrame period hPeriod)
+            fields.llField dField point) • fields.llAuxMetric point)
+  rw [P0EFTJanusMappingTorusPTSymmetricLLWeakEulerJacobiOperator4D.throatDerivativePairing_smul_right]
+  simp only [smul_smul, smul_add]
+  congr 1
+  · ring
+  · ring
+
+private theorem llAuxJacobiResidual_add
+    (fields : IndependentFields period hPeriod)
+    (firstAux secondAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (firstField secondField : SmoothThroatField period hPeriod LLFieldFiber) :
+    llAuxJacobiResidual period hPeriod fields
+        (firstAux + secondAux) (firstField + secondField) =
+      llAuxJacobiResidual period hPeriod fields firstAux firstField +
+        llAuxJacobiResidual period hPeriod fields secondAux secondField := by
+  have hAux : differentialLLAuxMetricDirectionPT period hPeriod
+      (firstAux + secondAux) =
+      differentialLLAuxMetricDirectionPT period hPeriod firstAux +
+        differentialLLAuxMetricDirectionPT period hPeriod secondAux := by
+    ext point
+    rfl
+  have hField : differentialLLFluxDirectionPT period hPeriod
+      (firstField + secondField) =
+      differentialLLFluxDirectionPT period hPeriod firstField +
+        differentialLLFluxDirectionPT period hPeriod secondField := by
+    ext point
+    rfl
+  have hPull (first second : SmoothThroatField period hPeriod LLMetricFiber) :
+      throatPTPullback period hPeriod LLMetricFiber (first + second) =
+        throatPTPullback period hPeriod LLMetricFiber first +
+          throatPTPullback period hPeriod LLMetricFiber second := by
+    ext point
+    rfl
+  unfold llAuxJacobiResidual
+  rw [hAux, hField,
+    rawLLAuxJacobiResidual_add period hPeriod fields,
+    rawLLAuxJacobiResidual_add period hPeriod (llPTPullback period hPeriod fields),
+    hPull]
+  simp only [smul_add]
+  abel
+
+private theorem llAuxJacobiResidual_smul
+    (fields : IndependentFields period hPeriod)
+    (scalar : Real)
+    (dAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (dField : SmoothThroatField period hPeriod LLFieldFiber) :
+    llAuxJacobiResidual period hPeriod fields
+        (scalar • dAux) (scalar • dField) =
+      scalar • llAuxJacobiResidual period hPeriod fields dAux dField := by
+  have hAux : differentialLLAuxMetricDirectionPT period hPeriod
+      (scalar • dAux) =
+      scalar • differentialLLAuxMetricDirectionPT period hPeriod dAux := by
+    ext point
+    rfl
+  have hField : differentialLLFluxDirectionPT period hPeriod
+      (scalar • dField) =
+      scalar • differentialLLFluxDirectionPT period hPeriod dField := by
+    ext point
+    rfl
+  have hPull (field : SmoothThroatField period hPeriod LLMetricFiber) :
+      throatPTPullback period hPeriod LLMetricFiber (scalar • field) =
+        scalar • throatPTPullback period hPeriod LLMetricFiber field := by
+    ext point
+    rfl
+  unfold llAuxJacobiResidual
+  rw [hAux, hField,
+    rawLLAuxJacobiResidual_smul period hPeriod fields,
+    rawLLAuxJacobiResidual_smul period hPeriod (llPTPullback period hPeriod fields),
+    hPull]
+  simp only [smul_add, smul_smul]
+  rw [mul_comm (1 / 2 : Real) scalar]
+
+private theorem llMeasureJacobiResidual_add
+    (fields : IndependentFields period hPeriod)
+    (first second : SmoothThroatField period hPeriod LLFieldFiber) :
+    llMeasureJacobiResidual period hPeriod fields (first + second) =
+      llMeasureJacobiResidual period hPeriod fields first +
+        llMeasureJacobiResidual period hPeriod fields second := by
+  apply SmoothThroatField.ext
+  intro point
+  change 2 * inner Real (fields.llField point) (first point + second point) =
+    2 * inner Real (fields.llField point) (first point) +
+      2 * inner Real (fields.llField point) (second point)
+  rw [inner_add_right]
+  ring
+
+private theorem llMeasureJacobiResidual_smul
+    (fields : IndependentFields period hPeriod)
+    (scalar : Real)
+    (direction : SmoothThroatField period hPeriod LLFieldFiber) :
+    llMeasureJacobiResidual period hPeriod fields (scalar • direction) =
+      scalar • llMeasureJacobiResidual period hPeriod fields direction := by
+  apply SmoothThroatField.ext
+  intro point
+  change 2 * inner Real (fields.llField point) (scalar • direction point) =
+    scalar * (2 * inner Real (fields.llField point) (direction point))
+  rw [real_inner_smul_right]
+  ring
+
 theorem rawLLAuxJacobiResidual_pairing
     (fields : IndependentFields period hPeriod)
     (dAux testAux : SmoothThroatField period hPeriod LLMetricFiber)
@@ -491,6 +641,135 @@ private theorem llMeasureTestToL2_ae
   (test.contMDiff_toFun.continuous.memLp_of_hasCompactSupport
     (HasCompactSupport.of_compactSpace _)).coeFn_toLp
 
+private theorem llAuxJacobiToL2_add
+    (fields : IndependentFields period hPeriod)
+    (firstAux secondAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (firstField secondField : SmoothThroatField period hPeriod LLFieldFiber) :
+    llAuxJacobiToL2 period hPeriod fields
+        (firstAux + secondAux) (firstField + secondField) =
+      llAuxJacobiToL2 period hPeriod fields firstAux firstField +
+        llAuxJacobiToL2 period hPeriod fields secondAux secondField := by
+  apply Lp.ext
+  filter_upwards
+    [llAuxJacobiToL2_ae period hPeriod fields
+      (firstAux + secondAux) (firstField + secondField),
+     llAuxJacobiToL2_ae period hPeriod fields firstAux firstField,
+     llAuxJacobiToL2_ae period hPeriod fields secondAux secondField,
+     Lp.coeFn_add (llAuxJacobiToL2 period hPeriod fields firstAux firstField)
+       (llAuxJacobiToL2 period hPeriod fields secondAux secondField)]
+    with point hSum hFirst hSecond hAdd
+  simp only [Pi.add_apply] at hAdd
+  rw [hSum, hAdd, hFirst, hSecond]
+  exact congrArg (fun field : SmoothThroatField period hPeriod LLMetricFiber =>
+    field.toFun point)
+    (llAuxJacobiResidual_add period hPeriod fields
+      firstAux secondAux firstField secondField)
+
+private theorem llAuxJacobiToL2_smul
+    (fields : IndependentFields period hPeriod)
+    (scalar : Real)
+    (dAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (dField : SmoothThroatField period hPeriod LLFieldFiber) :
+    llAuxJacobiToL2 period hPeriod fields (scalar • dAux) (scalar • dField) =
+      scalar • llAuxJacobiToL2 period hPeriod fields dAux dField := by
+  apply Lp.ext
+  filter_upwards
+    [llAuxJacobiToL2_ae period hPeriod fields (scalar • dAux) (scalar • dField),
+     llAuxJacobiToL2_ae period hPeriod fields dAux dField,
+     Lp.coeFn_smul scalar (llAuxJacobiToL2 period hPeriod fields dAux dField)]
+    with point hScaled hDirection hSmul
+  simp only [Pi.smul_apply] at hSmul
+  rw [hScaled, hSmul, hDirection]
+  exact congrArg (fun field : SmoothThroatField period hPeriod LLMetricFiber =>
+    field.toFun point)
+    (llAuxJacobiResidual_smul period hPeriod fields scalar dAux dField)
+
+private theorem llMeasureJacobiToL2_add
+    (fields : IndependentFields period hPeriod)
+    (first second : SmoothThroatField period hPeriod LLFieldFiber) :
+    llMeasureJacobiToL2 period hPeriod fields (first + second) =
+      llMeasureJacobiToL2 period hPeriod fields first +
+        llMeasureJacobiToL2 period hPeriod fields second := by
+  apply Lp.ext
+  filter_upwards
+    [llMeasureJacobiToL2_ae period hPeriod fields (first + second),
+     llMeasureJacobiToL2_ae period hPeriod fields first,
+     llMeasureJacobiToL2_ae period hPeriod fields second,
+     Lp.coeFn_add (llMeasureJacobiToL2 period hPeriod fields first)
+       (llMeasureJacobiToL2 period hPeriod fields second)]
+    with point hSum hFirst hSecond hAdd
+  simp only [Pi.add_apply] at hAdd
+  rw [hSum, hAdd, hFirst, hSecond]
+  exact congrArg (fun field : SmoothThroatField period hPeriod Real =>
+    field.toFun point)
+    (llMeasureJacobiResidual_add period hPeriod fields first second)
+
+private theorem llMeasureJacobiToL2_smul
+    (fields : IndependentFields period hPeriod)
+    (scalar : Real)
+    (direction : SmoothThroatField period hPeriod LLFieldFiber) :
+    llMeasureJacobiToL2 period hPeriod fields (scalar • direction) =
+      scalar • llMeasureJacobiToL2 period hPeriod fields direction := by
+  apply Lp.ext
+  filter_upwards
+    [llMeasureJacobiToL2_ae period hPeriod fields (scalar • direction),
+     llMeasureJacobiToL2_ae period hPeriod fields direction,
+     Lp.coeFn_smul scalar (llMeasureJacobiToL2 period hPeriod fields direction)]
+    with point hScaled hDirection hSmul
+  simp only [Pi.smul_apply] at hSmul
+  rw [hScaled, hSmul, hDirection]
+  exact congrArg (fun field : SmoothThroatField period hPeriod Real =>
+    field.toFun point)
+    (llMeasureJacobiResidual_smul period hPeriod fields scalar direction)
+
+/-- The two algebraic rows of the genuine LL Jacobi operator on the full
+smooth three-slot core. The measure input does not enter these rows. -/
+def llAuxMeasureJacobiLinearMap
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    GlobalFullLLSmooth period hPeriod analysis →ₗ[Real]
+      (Lp LLMetricFiber (2 : ENNReal)
+          (intrinsicCanonicalThroatVolumeMeasure period hPeriod) ×
+        Lp Real (2 : ENNReal)
+          (intrinsicCanonicalThroatVolumeMeasure period hPeriod)) where
+  toFun direction :=
+    (llAuxJacobiToL2 period hPeriod (data.boundary.llFields period hPeriod)
+      direction.1.1 direction.2.toTest,
+     llMeasureJacobiToL2 period hPeriod (data.boundary.llFields period hPeriod)
+       direction.2.toTest)
+  map_add' first second := by
+    apply Prod.ext
+    · change llAuxJacobiToL2 period hPeriod
+        (data.boundary.llFields period hPeriod)
+        (first.1.1 + second.1.1) (first.2.toTest + second.2.toTest) = _
+      exact llAuxJacobiToL2_add period hPeriod
+        (data.boundary.llFields period hPeriod)
+        first.1.1 second.1.1 first.2.toTest second.2.toTest
+    · change llMeasureJacobiToL2 period hPeriod
+        (data.boundary.llFields period hPeriod)
+        (first.2.toTest + second.2.toTest) = _
+      exact llMeasureJacobiToL2_add period hPeriod
+        (data.boundary.llFields period hPeriod)
+        first.2.toTest second.2.toTest
+  map_smul' scalar direction := by
+    apply Prod.ext
+    · change llAuxJacobiToL2 period hPeriod
+        (data.boundary.llFields period hPeriod)
+        (scalar • direction.1.1) (scalar • direction.2.toTest) = _
+      exact llAuxJacobiToL2_smul period hPeriod
+        (data.boundary.llFields period hPeriod)
+        scalar direction.1.1 direction.2.toTest
+    · change llMeasureJacobiToL2 period hPeriod
+        (data.boundary.llFields period hPeriod)
+        (scalar • direction.2.toTest) = _
+      exact llMeasureJacobiToL2_smul period hPeriod
+        (data.boundary.llFields period hPeriod) scalar direction.2.toTest
+
 /-- The two actual L² residual classes represent the full same-action
 Hessian on every pure smooth auxiliary-metric/measure test. -/
 theorem llAuxMeasureJacobiToL2_pairing_eq_sameActionHessian
@@ -558,6 +837,30 @@ theorem llAuxMeasureJacobiToL2_pairing_eq_sameActionHessian
     rw [hResidual, hTest]
   rw [hAux, hMeasure]
   exact llAuxMeasureJacobiResidual_pairing_eq_sameActionHessian period hPeriod
+    data analysis direction testAux testMeasure
+
+/-- The bundled linear residual has the same-action Hessian pairing on every
+pure auxiliary-metric/measure smooth test. -/
+theorem llAuxMeasureJacobiLinearMap_pairing_eq_sameActionHessian
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    {couplings : GlobalCandidateAActionCouplings}
+    {NonNullFace NullFace : Type*}
+    [Fintype NonNullFace] [Fintype NullFace]
+    (data : GlobalCandidateAActionData period hPeriod configuration couplings
+      NonNullFace NullFace)
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (direction : GlobalFullLLSmooth period hPeriod analysis)
+    (testAux : SmoothThroatField period hPeriod LLMetricFiber)
+    (testMeasure : SmoothThroatField period hPeriod Real) :
+    inner Real
+        ((llAuxMeasureJacobiLinearMap period hPeriod data analysis direction).1)
+        (llAuxTestToL2 period hPeriod testAux) +
+      inner Real
+        ((llAuxMeasureJacobiLinearMap period hPeriod data analysis direction).2)
+        (llMeasureTestToL2 period hPeriod testMeasure) =
+      globalCandidateAFullLLSameActionHessian period hPeriod data
+        direction (pureAuxMeasureTest period hPeriod testAux testMeasure) := by
+  exact llAuxMeasureJacobiToL2_pairing_eq_sameActionHessian period hPeriod
     data analysis direction testAux testMeasure
 
 end

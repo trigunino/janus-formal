@@ -1587,8 +1587,12 @@ Jacobi faible sur le cœur lisse. Ce cœur est dense, l'opérateur est symétriq
 et closable, et sa fermeture canonique est fermée et symétrique. Une borne
 inférieure `-C‖u‖²` est prouvée sur le cœur sans positivité de `llMeasure`.
 Les lignes auxiliaire et mesure ont aussi des résidus L² accordés au Hessien
-sur leurs tests purs. L'identification Sobolev H² du domaine `llField`, sa
+sur leurs tests purs, réunis en application réelle linéaire sur le cœur LL
+complet. L'identification Sobolev H² du domaine `llField`, sa
 propriété Fredholm et l'assemblage des trois lignes LL restent à établir.
+Le résidu champ à entrées mixtes auxiliaire/mesure est défini dans L² ; sa
+polarisation brute est prouvée ponctuellement et sous l'intégrale canonique.
+Son pairing après moyenne PT reste ouvert.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 
