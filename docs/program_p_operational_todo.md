@@ -13805,6 +13805,23 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   une hypothèse explicite, non construite par le bridge H13 matière/LL.
   `T12` reste ouverte, compteur `6/14`.
 
+### `P-T12-STRONG-MATTER-HESSIAN-ON-DIAGONAL-CORE` — bloc matière au centre
+
+- État : `SUPPORT` (2026-09-17). Sans hypothèse de raccord, la Hessienne
+  matière du chart fort au centre, sur toute paire du cœur diagonal lisse,
+  égale la forme matière du graphe H13. La translation du fond ne change pas
+  ce second ordre.
+- Limite : cette égalité ne contrôle pas les sept blocs physiques ; `T12`
+  reste ouverte, compteur `6/14`.
+
+### `P-T12-STRONG-LL-AT-ORIGIN-SECOND-JET` — bloc LL au centre
+
+- État : `SUPPORT` (2026-09-17). La seconde dérivée de l'action LL forte au
+  centre, sur toute paire de directions LL lisses, égale la forme LL du
+  graphe H11.
+- Limite : le raccord des sept blocs physiques et des deux charts complets
+  reste à construire ; `T12` reste ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

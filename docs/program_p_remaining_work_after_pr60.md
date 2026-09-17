@@ -1564,7 +1564,9 @@ le Dirac/Fredholm/régulateur global existant, la vraie ligne de Fredholm de la
 famille et sa frame normalisée, ainsi que la résolution auto-adjointe des
 quatre secteurs du graphe diagonal actuel et leur commutation avec le Riesz
 du Hessien diagonal. Le no-gap du Riesz augmenté est prouvé sous un raccord
-explicite des deux-jets physiques entre le chart H11 et le chart fort.
+explicite des deux-jets physiques entre le chart H11 et le chart fort. Au
+centre du chart fort, les Hessiennes matière et LL coïncident déjà, sur leurs
+cœurs lisses, avec les formes du graphe correspondantes.
 
 **Reste :** construire ou réfuter ce raccord concret (le bridge H13
 matière/LL ne contrôle pas les sept blocs physiques), habiter les onze entrées
