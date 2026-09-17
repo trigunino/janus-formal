@@ -2603,6 +2603,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLFullJacobiLinearMap4D
 
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLFullJacobiClosure4D
+
 namespace JanusFormal
 namespace JanusFundamentalGeometryPVariationalPrinciple
 
