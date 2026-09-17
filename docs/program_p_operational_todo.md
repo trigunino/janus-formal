@@ -13901,11 +13901,12 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   sur le domaine fermé. Le Jacobi champ est alors injectif, satisfait
   `‖u‖ ≤ K‖Cu‖` et a une image fermée. Pour `llMeasure` signé arbitraire,
   tout décalage scalaire `C + λI` avec `λ` au-delà de la constante de
-  semi-bornitude est coercif sur le même domaine.
+  semi-bornitude est coercif sur le même domaine ; le décalage est fermé
+  pour tout `λ`, et son image est fermée au-delà de cette constante.
 - Limite : le contrôle de l'énergie n'est pas encore raccordé à un espace H¹
   LL avec plongement compact dans L² ; auto-adjonction, Fredholm et compacité
-  de résolvante restent ouverts. La fermeture et l'image du décalage ne sont
-  pas encore établies. `T12` reste ouverte, `6/14`.
+  de résolvante restent ouverts. La surjectivité du décalage n'est pas établie.
+  `T12` reste ouverte, `6/14`.
 
 ### `P-T12-LL-AUX-MEASURE-L2-ROWS` — deux lignes du Hessien LL
 
