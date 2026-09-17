@@ -32,18 +32,61 @@ variable {E : Type*}
 operator on its complement. -/
 structure FiniteDefectCoerciveShiftData
     (operator : E →L[Real] E) : Prop where
-  projection : E →L[Real] E
-  projection_idempotent : ∀ vector,
-    projection (projection vector) = projection vector
-  projection_annihilates_operator : ∀ vector,
-    projection (operator vector) = 0
-  operator_annihilates_projection : ∀ vector,
-    operator (projection vector) = 0
-  projection_range_finite : FiniteDimensional Real projection.range
-  coercivityConstant : Real
-  coercivityConstant_pos : 0 < coercivityConstant
-  coercive_off_defect : ∀ vector, projection vector = 0 →
-    coercivityConstant * ‖vector‖ ≤ ‖operator vector‖
+  exists_data : ∃ (projection : E →L[Real] E) (coercivityConstant : Real),
+    (∀ vector, projection (projection vector) = projection vector) ∧
+    (∀ vector, projection (operator vector) = 0) ∧
+    (∀ vector, operator (projection vector) = 0) ∧
+    FiniteDimensional Real projection.range ∧
+    0 < coercivityConstant ∧
+    (∀ vector, projection vector = 0 →
+      coercivityConstant * ‖vector‖ ≤ ‖operator vector‖)
+
+def FiniteDefectCoerciveShiftData.projection
+    {operator : E →L[Real] E}
+    (data : FiniteDefectCoerciveShiftData operator) : E →L[Real] E :=
+  Classical.choose data.exists_data
+
+def FiniteDefectCoerciveShiftData.coercivityConstant
+    {operator : E →L[Real] E}
+    (data : FiniteDefectCoerciveShiftData operator) : Real :=
+  Classical.choose (Classical.choose_spec data.exists_data)
+
+theorem FiniteDefectCoerciveShiftData.projection_idempotent
+    {operator : E →L[Real] E}
+    (data : FiniteDefectCoerciveShiftData operator) :
+    ∀ vector, data.projection (data.projection vector) = data.projection vector :=
+  (Classical.choose_spec (Classical.choose_spec data.exists_data)).1
+
+theorem FiniteDefectCoerciveShiftData.projection_annihilates_operator
+    {operator : E →L[Real] E}
+    (data : FiniteDefectCoerciveShiftData operator) :
+    ∀ vector, data.projection (operator vector) = 0 :=
+  (Classical.choose_spec (Classical.choose_spec data.exists_data)).2.1
+
+theorem FiniteDefectCoerciveShiftData.operator_annihilates_projection
+    {operator : E →L[Real] E}
+    (data : FiniteDefectCoerciveShiftData operator) :
+    ∀ vector, operator (data.projection vector) = 0 :=
+  (Classical.choose_spec (Classical.choose_spec data.exists_data)).2.2.1
+
+theorem FiniteDefectCoerciveShiftData.projection_range_finite
+    {operator : E →L[Real] E}
+    (data : FiniteDefectCoerciveShiftData operator) :
+    FiniteDimensional Real data.projection.range :=
+  (Classical.choose_spec (Classical.choose_spec data.exists_data)).2.2.2.1
+
+theorem FiniteDefectCoerciveShiftData.coercivityConstant_pos
+    {operator : E →L[Real] E}
+    (data : FiniteDefectCoerciveShiftData operator) :
+    0 < data.coercivityConstant :=
+  (Classical.choose_spec (Classical.choose_spec data.exists_data)).2.2.2.2.1
+
+theorem FiniteDefectCoerciveShiftData.coercive_off_defect
+    {operator : E →L[Real] E}
+    (data : FiniteDefectCoerciveShiftData operator) :
+    ∀ vector, data.projection vector = 0 →
+      data.coercivityConstant * ‖vector‖ ≤ ‖operator vector‖ :=
+  (Classical.choose_spec (Classical.choose_spec data.exists_data)).2.2.2.2.2
 
 /-- The bounded shifted operator used in the finite-defect construction. -/
 def finiteDefectShiftedOperator
@@ -64,6 +107,7 @@ theorem operator_ker_le_projection_range
     exact sub_self _
   have hComplementOperator :
       operator (vector - data.projection vector) = 0 := by
+    change operator vector = 0 at hKernel
     rw [map_sub, hKernel, data.operator_annihilates_projection]
     exact sub_self _
   have hBound := data.coercive_off_defect
@@ -72,7 +116,7 @@ theorem operator_ker_le_projection_range
   have hNorm : ‖vector - data.projection vector‖ = 0 := by
     by_contra hNonzero
     have hNormPos : 0 < ‖vector - data.projection vector‖ :=
-      norm_pos_iff.mpr hNonzero
+      lt_of_le_of_ne (norm_nonneg _) (Ne.symm hNonzero)
     have hProductPos :
         0 < data.coercivityConstant *
           ‖vector - data.projection vector‖ :=
@@ -93,10 +137,8 @@ theorem finiteDefectShiftedOperator_injective
   let difference := first - second
   have hShiftDifference :
       finiteDefectShiftedOperator operator data difference = 0 := by
-    change
-      finiteDefectShiftedOperator operator data first -
-        finiteDefectShiftedOperator operator data second = 0
-    rw [hEqual]
+    change finiteDefectShiftedOperator operator data (first - second) = 0
+    rw [map_sub, hEqual]
     exact sub_self _
   have hProjected : data.projection difference = 0 := by
     have hProjectedShift := congrArg data.projection hShiftDifference
@@ -115,7 +157,8 @@ theorem finiteDefectShiftedOperator_injective
   rw [hOperator, norm_zero] at hBound
   have hDifferenceNorm : ‖difference‖ = 0 := by
     by_contra hNonzero
-    have hNormPos : 0 < ‖difference‖ := norm_pos_iff.mpr hNonzero
+    have hNormPos : 0 < ‖difference‖ :=
+      lt_of_le_of_ne (norm_nonneg _) (Ne.symm hNonzero)
     have hProductPos : 0 < data.coercivityConstant * ‖difference‖ :=
       mul_pos data.coercivityConstant_pos hNormPos
     exact (not_lt_of_ge hBound) hProductPos

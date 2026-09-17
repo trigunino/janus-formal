@@ -1,4 +1,4 @@
-import Mathlib.Analysis.Normed.Module.OpenMapping
+import Mathlib.Analysis.Normed.Operator.Banach
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPFiniteDefectCoerciveShift4D
 
 /-!
@@ -33,10 +33,12 @@ noncomputable def finiteDefectShiftedEquiv_of_surjective
     (hSurjective : Function.Surjective
       (finiteDefectShiftedOperator operator data)) :
     E ≃L[Real] E :=
-  ContinuousLinearMap.continuousLinearEquivOfBijective
+  ContinuousLinearEquiv.ofBijective
     (finiteDefectShiftedOperator operator data)
-    (finiteDefectShiftedOperator_bijective_of_surjective operator data
-      hSurjective)
+    (LinearMap.ker_eq_bot.mpr
+      (finiteDefectShiftedOperator_bijective_of_surjective operator data
+        hSurjective).injective)
+    (LinearMap.range_eq_top.mpr hSurjective)
 
 /-- Canonical bounded parametrix: the inverse of `H + P`. -/
 noncomputable def finiteDefectCanonicalParametrix
@@ -47,6 +49,7 @@ noncomputable def finiteDefectCanonicalParametrix
     E →L[Real] E :=
   (finiteDefectShiftedEquiv_of_surjective operator data hSurjective).symm
 
+omit [CompleteSpace E] in
 private theorem shifted_apply_sub_projection
     (operator : E →L[Real] E)
     (data : FiniteDefectCoerciveShiftData operator)
@@ -74,8 +77,8 @@ theorem finiteDefectCanonicalParametrix_operator_apply
   apply finiteDefectShiftedOperator_injective operator data
   rw [shifted_apply_sub_projection operator data vector]
   exact
-    (finiteDefectShiftedEquiv_of_surjective operator data hSurjective).
-      apply_symm_apply (operator vector)
+    (finiteDefectShiftedEquiv_of_surjective operator data hSurjective).apply_symm_apply
+      (operator vector)
 
 /-- Applying the projection to the inverse of the shifted operator recovers the
 projection of the original vector. -/
@@ -89,8 +92,8 @@ theorem projection_finiteDefectCanonicalParametrix_apply
         (finiteDefectCanonicalParametrix operator data hSurjective vector) =
       data.projection vector := by
   have hInverse :=
-    (finiteDefectShiftedEquiv_of_surjective operator data hSurjective).
-      apply_symm_apply vector
+    (finiteDefectShiftedEquiv_of_surjective operator data hSurjective).apply_symm_apply
+      vector
   have hApplied := congrArg data.projection hInverse
   change
     data.projection
@@ -113,8 +116,8 @@ theorem operator_finiteDefectCanonicalParametrix_apply
     operator (finiteDefectCanonicalParametrix operator data hSurjective vector) =
       vector - data.projection vector := by
   have hInverse :=
-    (finiteDefectShiftedEquiv_of_surjective operator data hSurjective).
-      apply_symm_apply vector
+    (finiteDefectShiftedEquiv_of_surjective operator data hSurjective).apply_symm_apply
+      vector
   change
     operator (finiteDefectCanonicalParametrix operator data hSurjective vector) +
       data.projection

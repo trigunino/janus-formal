@@ -95,7 +95,7 @@ theorem operator_norm_le_shifted
     _ ≤ ‖finiteDefectShiftedOperator operator data vector‖ +
         ‖data.projection‖ *
           ‖finiteDefectShiftedOperator operator data vector‖ :=
-      add_le_add_left (projection_norm_le_shifted operator data vector) _
+      add_le_add_right (projection_norm_le_shifted operator data vector) _
     _ = (1 + ‖data.projection‖) *
         ‖finiteDefectShiftedOperator operator data vector‖ := by ring
 
@@ -144,7 +144,7 @@ theorem finiteDefectShiftedOperator_globalLowerBound
   calc
     ‖vector‖ =
         ‖(vector - data.projection vector) + data.projection vector‖ := by
-      rw [hDecomposition]
+      exact congrArg norm hDecomposition
     _ ≤ ‖vector - data.projection vector‖ +
         ‖data.projection vector‖ := norm_add_le _ _
     _ ≤ data.coercivityConstant⁻¹ * ‖operator vector‖ +
@@ -158,13 +158,22 @@ theorem finiteDefectShiftedOperator_globalLowerBound
             ‖finiteDefectShiftedOperator operator data vector‖) +
         ‖data.projection‖ *
           ‖finiteDefectShiftedOperator operator data vector‖ := by
-      exact add_le_add_right
+      exact add_le_add_left
         (mul_le_mul_of_nonneg_left
           (operator_norm_le_shifted operator data vector)
           (inv_nonneg.mpr (le_of_lt data.coercivityConstant_pos))) _
     _ = (finiteDefectShiftControlConstant operator data : Real) *
         ‖finiteDefectShiftedOperator operator data vector‖ := by
-      rfl
+      change
+        data.coercivityConstant⁻¹ *
+            ((1 + ‖data.projection‖) *
+              ‖finiteDefectShiftedOperator operator data vector‖) +
+          ‖data.projection‖ *
+            ‖finiteDefectShiftedOperator operator data vector‖ =
+          (data.coercivityConstant⁻¹ * (1 + ‖data.projection‖) +
+            ‖data.projection‖) *
+            ‖finiteDefectShiftedOperator operator data vector‖
+      ring
 
 /-- Public checkpoint: the direct global estimate is a theorem, not an extra
 field of the finite-defect coercivity data. -/

@@ -13859,12 +13859,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   blocs ne sont raccordés à cette réalisation. Le terminal H12 actuel porte
   sur le Riesz borné et sa projection finie ; `T12` reste ouverte, `6/14`.
 
-### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — dette H12 existante
+### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 
-- Le module générique `FiniteDefectCoerciveShift4D` ne compile pas tel quel :
-  sa structure en `Prop` contient des données de projection et de coercivité
-  dont Lean ne peut extraire les champs. Le passage à `Type` se propage aux
-  interfaces H12 aval ; aucune modification partielle n'a été conservée.
+- Le module générique `FiniteDefectCoerciveShift4D` et les cinq modules
+  `KernelIdentification`, `RangeIdentification`, `GlobalLowerBound`,
+  `CoerciveShiftInverse` et `ReducedOperator` compilent sous Lean gardé.
+  La structure reste en `Prop` et porte désormais un témoin existentiel de
+  projection et de coercivité, accessible par choix classique.
+- Le paquet H12 augmenté et l'instanciation de cette coercivité pour le
+  Hessien physique restent à établir ; `T12` reste ouverte, `6/14`.
 
 ## 7. Les 14 portes terminales fixes
 
