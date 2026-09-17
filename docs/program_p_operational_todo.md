@@ -13894,9 +13894,14 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   le cœur lisse est minoré par `-C‖u‖²` pour une constante `C ≥ 0`, sans
   supposer `llMeasure ≥ 0`. La preuve contrôle les deux termes PT. Un lemme
   abstrait de fermeture du graphe transporte la même borne à tout le domaine
-  du Jacobi champ fermé.
-- Limite : cela ne prouve ni auto-adjonction, ni Fredholm, ni compacité de
-  résolvante ; `T12` reste ouverte, `6/14`.
+  du Jacobi champ fermé. Sur le cœur lisse, une estimation de Gårding contrôle
+  aussi la moitié de l'énergie des dérivées du cadre canonique par le pairing
+  Jacobi plus `C‖u‖²`, même pour `llMeasure` signé. Si `llMeasure > 0` partout,
+  une constante strictement positive minore le pairing par `c‖u‖²` jusque
+  sur le domaine fermé, ce qui rend ce Jacobi injectif.
+- Limite : le contrôle de l'énergie n'est pas encore raccordé à un espace H¹
+  LL avec plongement compact dans L² ; auto-adjonction, Fredholm et compacité
+  de résolvante restent ouverts. `T12` reste ouverte, `6/14`.
 
 ### `P-T12-LL-AUX-MEASURE-L2-ROWS` — deux lignes du Hessien LL
 

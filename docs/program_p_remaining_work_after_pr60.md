@@ -1586,7 +1586,13 @@ Le résidu fort du slot `llField` est aussi réalisé dans L² et représente le
 Jacobi faible sur le cœur lisse. Ce cœur est dense, l'opérateur est symétrique
 et closable, et sa fermeture canonique est fermée et symétrique. Une borne
 inférieure `-C‖u‖²` est prouvée sur le cœur sans positivité de `llMeasure` et
-s'étend maintenant au domaine fermé avec la même constante.
+s'étend maintenant au domaine fermé avec la même constante. Sur le cœur lisse,
+une estimation de Gårding contrôle la moitié de l'énergie des dérivées du
+cadre canonique par le pairing Jacobi plus `C‖u‖²`, même si `llMeasure` change
+de signe. Il reste à relier cette énergie à un H¹ LL compactement plongé dans
+L², puis à établir auto-adjonction et résolvante pour la réalisation fermée.
+Sous l'hypothèse supplémentaire `llMeasure > 0` partout, le Jacobi champ fermé
+admet aussi une borne coercive stricte `c‖u‖² ≤ ⟨Cu,u⟩` et est injectif.
 Les lignes auxiliaire et mesure ont aussi des résidus L² accordés au Hessien
 sur leurs tests purs, réunis en application réelle linéaire sur le cœur LL
 complet. L'identification Sobolev H² du domaine `llField` et sa propriété
