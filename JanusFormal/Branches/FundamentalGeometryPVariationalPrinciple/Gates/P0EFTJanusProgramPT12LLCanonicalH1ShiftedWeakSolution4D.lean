@@ -66,6 +66,23 @@ theorem canonicalLLShiftedWeakH1Solution_pairing
       inner Real f (canonicalLLH1ToFluxL2 period hPeriod analysis v) :=
   energyShiftSolution_pairing _ shift hShift f v
 
+/-- Perform the shifted pairing calculation on a single Hilbert-space carrier,
+without exposing any LL operator-domain or canonical-measure aliases to `rw`. -/
+private theorem energyShiftL2Solution_eq_of_adjoint_value
+    {V H : Type*}
+    [NormedAddCommGroup V] [InnerProductSpace Real V] [CompleteSpace V]
+    [NormedAddCommGroup H] [InnerProductSpace Real H] [CompleteSpace H]
+    (I : V →L[Real] H) (shift : Real) (hShift : 0 ≤ shift)
+    (x y : H) (hValue : I (I.adjoint y) = x) :
+    energyShiftL2Solution I shift hShift (y + shift • x) = x := by
+  have hSolution : I.adjoint y =
+      energyShiftSolution I shift hShift (y + shift • x) := by
+    apply energyShiftSolution_unique
+    intro v
+    rw [ContinuousLinearMap.adjoint_inner_left, hValue,
+      inner_add_left, real_inner_smul_left]
+  exact Eq.trans (congrArg I hSolution.symm) hValue
+
 /-- The weak solution is a left inverse of the SAME closed reduced Jacobi shift. -/
 theorem canonicalLLShiftedWeakL2Solution_closed_left_inverse
     {configuration : GlobalFieldConfiguration period hPeriod}
@@ -76,25 +93,16 @@ theorem canonicalLLShiftedWeakL2Solution_closed_left_inverse
         (llJacobiShiftedPMap period hPeriod
           (analysis.llH1Data period hPeriod).fields shift x) =
       (x : CanonicalLLL2 period hPeriod analysis) := by
-  let I := canonicalLLH1ToFluxL2 period hPeriod analysis
-  let C := canonicalLLClosedJacobi period hPeriod analysis
-  let u := I.adjoint (C x)
-  have hValue : I u = (x : CanonicalLLL2 period hPeriod analysis) :=
+  let H : Type := CanonicalLLL2 period hPeriod analysis
+  let I : CanonicalLLEnergy period hPeriod analysis →L[Real] H :=
+    canonicalLLH1ToFluxL2 period hPeriod analysis
+  let C : H →ₗ.[Real] H := canonicalLLClosedJacobi period hPeriod analysis
+  have hValue : I (I.adjoint (C x)) = (x : H) :=
     canonicalLLWeakL2Inverse_closed_left_inverse period hPeriod analysis x
-  have hSolution : u = energyShiftSolution I shift hShift
-      (llJacobiShiftedPMap period hPeriod
-        (analysis.llH1Data period hPeriod).fields shift x) := by
-    apply energyShiftSolution_unique
-    intro v
-    change inner Real (I.adjoint (C x)) v +
-      shift * inner Real (I u) (I v) = _
-    rw [ContinuousLinearMap.adjoint_inner_left, hValue,
-      llJacobiShiftedPMap_apply, inner_add_left, real_inner_smul_left]
-  change I (energyShiftSolution I shift hShift
-    (llJacobiShiftedPMap period hPeriod
-      (analysis.llH1Data period hPeriod).fields shift x)) = _
-  rw [← hSolution]
-  exact hValue
+  -- The shifted source is definitionally C x + shift • x. Use ordinary term
+  -- elaboration here, not a rewrite across its two dependent domain aliases.
+  exact energyShiftL2Solution_eq_of_adjoint_value I shift hShift
+    (x : H) (C x) hValue
 
 theorem canonicalLLShiftedWeakL2Solution_injective
     {configuration : GlobalFieldConfiguration period hPeriod}
