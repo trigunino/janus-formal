@@ -1598,8 +1598,8 @@ au Hessien même-action sur les tests champ purs. Les trois lignes forment
 une application réelle linéaire sur le cœur lisse dense dans le produit L²,
 avec pairing au Hessien même-action sur tout test lisse. Dans le produit
 hilbertien L², l'opérateur du cœur est symétrique et closable, avec une
-fermeture canonique prouvée fermée. Sa symétrie fermée, son domaine Sobolev
-et sa propriété Fredholm restent ouverts.
+fermeture canonique prouvée fermée et symétrique. Son domaine Sobolev et sa
+propriété Fredholm restent ouverts.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 

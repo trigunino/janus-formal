@@ -13903,8 +13903,8 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   le Hessien même-action contre tout test pur auxiliaire/mesure du cœur LL
   complet. Leur couple forme une application réelle linéaire sur ce cœur.
   Le bloc mesure–mesure reste nul.
-- Limite : la symétrie de la fermeture et son analyse spectrale restent à
-  établir ; `T12` reste ouverte, `6/14`.
+- Limite : l'identification Sobolev du domaine fermé et son analyse spectrale
+  restent à établir ; `T12` reste ouverte, `6/14`.
 
 ### `P-T12-LL-MIXED-FIELD-L2-ROW` — résidu champ à trois entrées
 
@@ -13923,9 +13923,9 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État complémentaire : l'inclusion lisse est injective ; le produit L² muni
   de la norme hilbertienne `WithLp 2` emboîtée porte un opérateur partiel à
   domaine dense, symétrique et closable. Sa fermeture canonique est fermée et
-  étend l'opérateur du cœur.
-- Limite : symétrie de l'opérateur fermé, identification Sobolev de son domaine
-  et propriété Fredholm restent à établir ; `T12` reste ouverte, `6/14`.
+  étend l'opérateur du cœur ; elle est aussi symétrique.
+- Limite : identification Sobolev de son domaine et propriété Fredholm restent
+  à établir ; `T12` reste ouverte, `6/14`.
 
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 
