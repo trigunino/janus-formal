@@ -13795,6 +13795,16 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   H11 impose des identités d'action quadratiques globales. Un raccord des
   deux-jets physiques sur le cœur est requis. `T12` ouverte, `6/14`.
 
+### `P-T12-STRONG-TO-H11-PHYSICAL-SECOND-JET` — raccord conditionnel des charts
+
+- État : `SUPPORT` (2026-09-17). Une égalité des Hessiennes physiques sur
+  toutes les paires du cœur lisse transfère l'annulation mixte du chart fort
+  au Riesz physique complet ; l'identification des modes SpinC est prouvée.
+  Le Riesz augmenté H12 n'a alors aucun gap positif sur le complément du noyau.
+- Limite : le raccord des deux-jets entre le chart H11 et le chart fort est
+  une hypothèse explicite, non construite par le bridge H13 matière/LL.
+  `T12` reste ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

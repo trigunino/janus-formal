@@ -1563,11 +1563,14 @@ avec tous les overlaps, lagrangiens nuls, normalisations et contre-termes fixés
 le Dirac/Fredholm/régulateur global existant, la vraie ligne de Fredholm de la
 famille et sa frame normalisée, ainsi que la résolution auto-adjointe des
 quatre secteurs du graphe diagonal actuel et leur commutation avec le Riesz
-du Hessien diagonal.
+du Hessien diagonal. Le no-gap du Riesz augmenté est prouvé sous un raccord
+explicite des deux-jets physiques entre le chart H11 et le chart fort.
 
-**Reste :** habiter les onze entrées analytiques listées plus haut, prouver
-l'accord avec l'opérateur elliptique naturel non borné, identifier la ligne
-complexifiée à la ligne de Quillen, puis compiler et auditer le gate terminal.
+**Reste :** construire ou réfuter ce raccord concret (le bridge H13
+matière/LL ne contrôle pas les sept blocs physiques), habiter les onze entrées
+analytiques listées plus haut, prouver l'accord avec l'opérateur elliptique
+naturel non borné, identifier la ligne complexifiée à la ligne de Quillen,
+puis compiler et auditer le gate terminal.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 
