@@ -1603,7 +1603,12 @@ son domaine reste ouverte. Sur tout fond LL
 stationnaire, le champ de fond est nul et le noyau de cet opérateur fermé
 contient le L² pur mesure entier, de dimension infinie ; la réalisation
 brute à trois slots n'est donc pas Fredholm. Le quotient LL déjà présent est
-un objet distinct, à raccorder à l'opérateur naturel et au paquet H12.
+un objet distinct, à raccorder à l'opérateur naturel et au paquet H12. À flux
+nul, le Jacobi lisse complet se décompose exactement en zéro auxiliaire/mesure
+et Jacobi fort du champ. Le produit L² auxiliaire–mesure reste dans le noyau
+fermé ; la projection champ de tout point du graphe fermé appartient au graphe
+du Jacobi champ fermé. L'inclusion réciproque des graphes et le Fredholm L²
+du quotient restent ouverts.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 

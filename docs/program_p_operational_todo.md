@@ -13940,6 +13940,19 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   sur ces fonds. Une cible réduite ou quotientée et son raccord au Hessien
   physique H12 restent à construire ; `T12` reste ouverte, `6/14`.
 
+### `P-T12-LL-ZERO-FLUX-CLOSED-REDUCTION` — pont vers le slot champ
+
+- État : `SUPPORT` (2026-09-17). À flux LL nul, le Jacobi complet sur le cœur
+  lisse vaut exactement zéro sur auxiliaire/mesure et le Jacobi fort du slot
+  champ sur la troisième sortie. Tout le produit L² auxiliaire–mesure appartient
+  au noyau de sa fermeture. Pour chaque paire de son graphe fermé, la sortie
+  auxiliaire/mesure est nulle et la paire champ appartient au graphe du Jacobi
+  champ fermé.
+- Limite : l'inclusion réciproque des graphes et l'identification du quotient
+  L² à l'opérateur champ fermé restent à prouver. Le quotient Riesz H¹ existant
+  ne fournit pas cette identification ni le Fredholm L² ; `T12` reste ouverte,
+  `6/14`.
+
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 
 - Le module générique `FiniteDefectCoerciveShift4D` et les cinq modules
