@@ -151,6 +151,27 @@ def canonicalLLWeakL2Inverse
   (canonicalLLH1ToFluxL2 period hPeriod analysis).comp
     (canonicalLLH1ToFluxL2 period hPeriod analysis).adjoint
 
+/-- A bounded left inverse on a core remains a left inverse on its graph closure.
+Keep this topological argument independent of the concrete LL measure aliases. -/
+private theorem bounded_left_inverse_of_graph_closure
+    {E : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
+    (T C : E →ₗ.[Real] E) (R : E →L[Real] E)
+    (hGraph : T.graph.topologicalClosure = C.graph)
+    (hCore : ∀ z : T.domain, R (T z) = (z : E))
+    (x : C.domain) : R (C x) = (x : E) := by
+  have hSubset : (T.graph : Set (E × E)) ⊆ {p : E × E | R p.2 = p.1} := by
+    intro p hp
+    obtain ⟨z, hz₁, hz₂⟩ := T.mem_graph_iff.mp hp
+    change R p.2 = p.1
+    rw [← hz₁, ← hz₂]
+    exact hCore z
+  have hClosed : IsClosed {p : E × E | R p.2 = p.1} :=
+    isClosed_eq (R.continuous.comp continuous_snd) continuous_fst
+  have hx : ((x : E), C x) ∈ closure (T.graph : Set (E × E)) := by
+    rw [← Submodule.topologicalClosure_coe, hGraph]
+    exact C.mem_graph x
+  exact (closure_minimal hSubset hClosed) hx
+
 /-- The bounded weak solution operator is a left inverse on the EXACT existing
 closed Jacobi domain. The proof passes to the topological graph closure. -/
 theorem canonicalLLWeakL2Inverse_closed_left_inverse
@@ -166,34 +187,30 @@ theorem canonicalLLWeakL2Inverse_closed_left_inverse
     (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
   let T : H →ₗ.[Real] H := llJacobiSmoothPMap period hPeriod data.fields
   let C : H →ₗ.[Real] H := canonicalLLClosedJacobi period hPeriod analysis
+  let I : CanonicalLLEnergy period hPeriod analysis →L[Real] H :=
+    canonicalLLH1ToFluxL2 period hPeriod analysis
   let R : H →L[Real] H := canonicalLLWeakL2Inverse period hPeriod analysis
   let e : LLWeakTestSpace period hPeriod ≃ₗ[Real] T.domain :=
     LinearEquiv.ofInjective (llSmoothToL2LinearMap period hPeriod)
       (llSmoothToL2LinearMap_injective period hPeriod)
   have hCore (z : T.domain) : R (T z) = (z : H) := by
     let u : LLH1Smooth period hPeriod data := ⟨e.symm z⟩
-    calc
-      R (T z) = canonicalLLH1ToFluxL2 period hPeriod analysis
-          (llH1SmoothEmbedding period hPeriod data u) := by
-        exact congrArg (canonicalLLH1ToFluxL2 period hPeriod analysis)
-          (canonicalLLH1ToFluxL2_adjoint_strongJacobi period hPeriod analysis u)
-      _ = llH1SmoothToFluxL2 period hPeriod data u :=
-        canonicalLLH1ToFluxL2_agrees_on_smooth period hPeriod analysis u
-      _ = (z : H) := congrArg Subtype.val (e.apply_symm_apply z)
-  have hSubset : (T.graph : Set (H × H)) ⊆ {p : H × H | R p.2 = p.1} := by
-    intro p hp
-    obtain ⟨z, hz₁, hz₂⟩ := T.mem_graph_iff.mp hp
-    change R p.2 = p.1
-    rw [← hz₁, ← hz₂]
-    exact hCore z
-  have hClosed : IsClosed {p : H × H | R p.2 = p.1} :=
-    isClosed_eq (R.continuous.comp continuous_snd) continuous_fst
+    let energy : CanonicalLLEnergy period hPeriod analysis :=
+      llH1SmoothEmbedding period hPeriod data u
+    let value : H := llH1SmoothToFluxL2 period hPeriod data u
+    -- Each equality now has the same explicit carrier H. Avoid calc/Trans
+    -- inference between the semireducible data.mu and canonical-volume aliases.
+    have hStrong : R (T z) = I energy := by
+      exact congrArg I
+        (canonicalLLH1ToFluxL2_adjoint_strongJacobi period hPeriod analysis u)
+    have hAgreement : I energy = value := by
+      exact canonicalLLH1ToFluxL2_agrees_on_smooth period hPeriod analysis u
+    have hValue : value = (z : H) := by
+      exact congrArg (fun q : T.domain => (q : H)) (e.apply_symm_apply z)
+    exact Eq.trans hStrong (Eq.trans hAgreement hValue)
   have hGraph : T.graph.topologicalClosure = C.graph :=
     (llJacobiSmoothPMap_isClosable period hPeriod data.fields).graph_closure_eq_closure_graph
-  have hx : (x.1, C x) ∈ closure (T.graph : Set (H × H)) := by
-    rw [← Submodule.topologicalClosure_coe, hGraph]
-    exact C.mem_graph x
-  exact (closure_minimal hSubset hClosed) hx
+  exact bounded_left_inverse_of_graph_closure T C R hGraph hCore x
 
 /-- Every closed-domain vector has a canonical completed-energy representative. -/
 theorem canonicalLLClosedJacobi_domain_has_energy_lift
