@@ -13915,9 +13915,10 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   à `llMeasure > 0`, la norme d'énergie LL contrôle la norme L² du champ
   lisse. L'inclusion lisse se prolonge en application linéaire continue de
   `LLH1Space` vers le L² canonique et coïncide avec l'inclusion sur le cœur.
-- Limite : l'injectivité de ce prolongement, son lien avec le domaine du
-  Jacobi L² fermé et la compacité du plongement restent à prouver ; `T12`
-  reste ouverte, `6/14`.
+  Cette application est injective et son image est dense : l'injectivité suit
+  du pairing Jacobi L² sur le cœur puis de la densité du cœur énergétique.
+- Limite : le lien avec le domaine du Jacobi L² fermé et la compacité du
+  plongement restent à prouver ; `T12` reste ouverte, `6/14`.
 
 ### `P-T12-LL-AUX-MEASURE-L2-ROWS` — deux lignes du Hessien LL
 

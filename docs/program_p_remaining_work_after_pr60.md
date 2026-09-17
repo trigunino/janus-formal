@@ -1600,8 +1600,9 @@ cette constante. Au-dessus d'un seuil, il est injectif et son inverse sur
 l'image est borné. La surjectivité du décalage reste ouverte.
 Pour les données canoniques à `llMeasure > 0`, l'inclusion lisse de la
 complétion d'énergie `LLH1Space` dans le L² du champ se prolonge en application
-linéaire continue, avec accord sur le cœur. Son injectivité, son lien avec le
-domaine du Jacobi L² fermé et sa compacité ne sont pas établis.
+linéaire continue, avec accord sur le cœur. Cette application est injective
+et d'image dense. Son lien avec le domaine du Jacobi L² fermé et sa compacité
+ne sont pas établis.
 Les lignes auxiliaire et mesure ont aussi des résidus L² accordés au Hessien
 sur leurs tests purs, réunis en application réelle linéaire sur le cœur LL
 complet. L'identification Sobolev H² du domaine `llField` et sa propriété
