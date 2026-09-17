@@ -13822,6 +13822,33 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : le raccord des sept blocs physiques et des deux charts complets
   reste à construire ; `T12` reste ouverte, compteur `6/14`.
 
+### `P-T12-STRONG-LL-HESSIAN-PROJECTION-INVARIANCE` — réduction LL du cœur
+
+- État : `SUPPORT` (2026-09-17). La Hessienne LL du chart fort ne dépend que
+  des trois composantes LL de chaque direction. Sur tout couple du cœur
+  diagonal lisse, elle égale la forme LL du graphe H13.
+- Limite : cela ne borne pas les sept blocs physiques dans la norme Hilbert
+  augmentée ; `T12` reste ouverte, compteur `6/14`.
+
+### `P-T12-STRONG-MATTER-LL-SAME-ACTION-BRIDGE` — H13 fort concret
+
+- État : `SUPPORT` (2026-09-17). Sous la compatibilité géométrique de centre
+  existante, le chart fort fournit un bridge H13 concret : cœur identité et
+  dense, accords matière et LL des Hessiennes avec leurs actions graphe pour
+  toute paire du cœur diagonal et toute base de graphe.
+- Limite : la borne bilinéaire des sept blocs physiques dans la norme Hilbert
+  augmentée n'est pas établie ; `T12` reste ouverte, compteur `6/14`.
+
+### `P-T12-STRONG-SEVEN-PHYSICAL-BOUND-NO-GAP` — obstruction H12 forte
+
+- État : `SUPPORT` (2026-09-17). Pour le chart fort centré et son bridge H13
+  concret, la seule borne H11 des sept blocs sur le cœur construit leur Riesz
+  commun. Les modes SpinC lisses annulent ce Riesz physique ; le Riesz augmenté
+  ne peut donc avoir de gap positif en norme sur le complément du noyau.
+- Conséquence : prouver cette borne ne fermerait pas le gap H12 dans la norme
+  graphe actuelle ; il faut revoir l'espace/opérateur cible ou la condition
+  spectrale terminale. `T12` reste ouverte, compteur `6/14`.
+
 ## 7. Les 14 portes terminales fixes
 
 Le compteur global utilise uniquement cette liste. Une porte exige un

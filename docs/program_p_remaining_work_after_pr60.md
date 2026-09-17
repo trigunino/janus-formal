@@ -1565,11 +1565,14 @@ famille et sa frame normalisée, ainsi que la résolution auto-adjointe des
 quatre secteurs du graphe diagonal actuel et leur commutation avec le Riesz
 du Hessien diagonal. Le no-gap du Riesz augmenté est prouvé sous un raccord
 explicite des deux-jets physiques entre le chart H11 et le chart fort. Au
-centre du chart fort, les Hessiennes matière et LL coïncident déjà, sur leurs
-cœurs lisses, avec les formes du graphe correspondantes.
+centre du chart fort, les Hessiennes matière et LL coïncident sur tout le
+cœur diagonal avec les formes du graphe correspondantes. Sous compatibilité
+de centre, elles construisent un bridge H13 concret pour ce chart.
 
-**Reste :** construire ou réfuter ce raccord concret (le bridge H13
-matière/LL ne contrôle pas les sept blocs physiques), habiter les onze entrées
+**Reste :** résoudre l'obstruction spectrale : sur le chart fort centré, toute
+borne H11 des sept blocs physiques dans la norme Hilbert actuelle exclut le
+gap H12 du Riesz augmenté. Il faut donc revoir l'espace/opérateur ou la
+condition spectrale terminale, puis habiter les onze entrées
 analytiques listées plus haut, prouver l'accord avec l'opérateur elliptique
 naturel non borné, identifier la ligne complexifiée à la ligne de Quillen,
 puis compiler et auditer le gate terminal.
