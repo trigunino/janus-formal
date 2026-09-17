@@ -134,6 +134,129 @@ theorem llStrongJacobiResidual_pairing_eq_hessian
     (smoothLLStrongRegularity period hPeriod
       (canonicalDivergenceFreeLLFrame period hPeriod)) second).symm
 
+private theorem smoothResidual_pairing_injective
+    (first second : SmoothThroatField period hPeriod LLFieldFiber)
+    (hPairing : ∀ test : LLWeakTestSpace period hPeriod,
+      (∫ point, inner Real (first point) (test point)
+        ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) =
+      ∫ point, inner Real (second point) (test point)
+        ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod)) :
+    first = second := by
+  letI : (intrinsicCanonicalThroatVolumeMeasure period hPeriod).IsOpenPosMeasure :=
+    intrinsicCanonicalThroatVolumeMeasure_isOpenPosMeasure period hPeriod
+  have hZero := (smoothLLField_pairing_detects_pointwise_zero period hPeriod
+    (first - second) (intrinsicCanonicalThroatVolumeMeasure period hPeriod)).mp
+  have hIntegrable (field test : SmoothThroatField period hPeriod LLFieldFiber) :
+      Integrable (fun point => inner Real (field point) (test point))
+        (intrinsicCanonicalThroatVolumeMeasure period hPeriod) :=
+    (field.contMDiff_toFun.continuous.inner test.contMDiff_toFun.continuous)
+      |>.integrable_of_hasCompactSupport (HasCompactSupport.of_compactSpace _)
+  apply SmoothThroatField.ext
+  intro point
+  have hPoint := hZero (by
+    intro test
+    have hApply (point) : (first - second) point = first point - second point := rfl
+    simp only [hApply, inner_sub_left]
+    rw [integral_sub (hIntegrable first test) (hIntegrable second test),
+      hPairing test, sub_self]) point
+  exact sub_eq_zero.mp hPoint
+
+/-- The same-action smooth Jacobi residual is additive in its LL direction. -/
+theorem llStrongJacobiResidual_add
+    (fields : IndependentFields period hPeriod)
+    (first second : LLWeakTestSpace period hPeriod) :
+    llStrongJacobiResidual period hPeriod fields (first + second) =
+      llStrongJacobiResidual period hPeriod fields first +
+        llStrongJacobiResidual period hPeriod fields second := by
+  apply smoothResidual_pairing_injective period hPeriod
+  intro test
+  have hApply (point) :
+      (llStrongJacobiResidual period hPeriod fields first +
+        llStrongJacobiResidual period hPeriod fields second) point =
+      llStrongJacobiResidual period hPeriod fields first point +
+        llStrongJacobiResidual period hPeriod fields second point := rfl
+  simp only [hApply, inner_add_left]
+  rw [integral_add]
+  · rw [llStrongJacobiResidual_pairing_eq_hessian,
+      llStrongJacobiResidual_pairing_eq_hessian,
+      llStrongJacobiResidual_pairing_eq_hessian]
+    exact globalPTSymmetricDifferentialLLFluxHessian_add_left period hPeriod
+      (canonicalDivergenceFreeLLFrame period hPeriod) fields first second test
+      (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
+  · exact ((llStrongJacobiResidual period hPeriod fields first).contMDiff_toFun.continuous.inner
+      test.contMDiff_toFun.continuous).integrable_of_hasCompactSupport
+        (HasCompactSupport.of_compactSpace _)
+  · exact ((llStrongJacobiResidual period hPeriod fields second).contMDiff_toFun.continuous.inner
+      test.contMDiff_toFun.continuous).integrable_of_hasCompactSupport
+        (HasCompactSupport.of_compactSpace _)
+
+/-- The same-action smooth Jacobi residual is homogeneous in its LL direction. -/
+theorem llStrongJacobiResidual_smul
+    (fields : IndependentFields period hPeriod)
+    (scalar : Real) (direction : LLWeakTestSpace period hPeriod) :
+    llStrongJacobiResidual period hPeriod fields (scalar • direction) =
+      scalar • llStrongJacobiResidual period hPeriod fields direction := by
+  apply smoothResidual_pairing_injective period hPeriod
+  intro test
+  have hApply (point) :
+      (scalar • llStrongJacobiResidual period hPeriod fields direction) point =
+      scalar • llStrongJacobiResidual period hPeriod fields direction point := rfl
+  simp only [hApply, real_inner_smul_left, integral_const_mul]
+  rw [llStrongJacobiResidual_pairing_eq_hessian,
+    llStrongJacobiResidual_pairing_eq_hessian]
+  exact globalPTSymmetricDifferentialLLFluxHessian_smul_left period hPeriod
+    (canonicalDivergenceFreeLLFrame period hPeriod) fields direction test scalar
+    (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
+
+/-- Additivity persists after taking the genuine L² equivalence class. -/
+theorem llStrongJacobiToL2_add
+    (fields : IndependentFields period hPeriod)
+    (first second : LLWeakTestSpace period hPeriod) :
+    llStrongJacobiToL2 period hPeriod fields (first + second) =
+      llStrongJacobiToL2 period hPeriod fields first +
+        llStrongJacobiToL2 period hPeriod fields second := by
+  apply Lp.ext
+  filter_upwards
+    [llStrongJacobiToL2_ae period hPeriod fields (first + second),
+      llStrongJacobiToL2_ae period hPeriod fields first,
+      llStrongJacobiToL2_ae period hPeriod fields second,
+      Lp.coeFn_add (llStrongJacobiToL2 period hPeriod fields first)
+        (llStrongJacobiToL2 period hPeriod fields second)]
+    with point hSum hFirst hSecond hAdd
+  simp only [Pi.add_apply] at hAdd
+  rw [hSum, hAdd, hFirst, hSecond]
+  exact congrArg (fun field : SmoothThroatField period hPeriod LLFieldFiber =>
+    field.toFun point)
+    (llStrongJacobiResidual_add period hPeriod fields first second)
+
+/-- Homogeneity persists after taking the genuine L² equivalence class. -/
+theorem llStrongJacobiToL2_smul
+    (fields : IndependentFields period hPeriod)
+    (scalar : Real) (direction : LLWeakTestSpace period hPeriod) :
+    llStrongJacobiToL2 period hPeriod fields (scalar • direction) =
+      scalar • llStrongJacobiToL2 period hPeriod fields direction := by
+  apply Lp.ext
+  filter_upwards
+    [llStrongJacobiToL2_ae period hPeriod fields (scalar • direction),
+      llStrongJacobiToL2_ae period hPeriod fields direction,
+      Lp.coeFn_smul scalar (llStrongJacobiToL2 period hPeriod fields direction)]
+    with point hScaled hDirection hSmul
+  simp only [Pi.smul_apply] at hSmul
+  rw [hScaled, hSmul, hDirection]
+  exact congrArg (fun field : SmoothThroatField period hPeriod LLFieldFiber =>
+    field.toFun point)
+    (llStrongJacobiResidual_smul period hPeriod fields scalar direction)
+
+/-- Linear smooth-core realization of the unchanged LL Jacobi Hessian in L². -/
+def llStrongJacobiLinearMap
+    (fields : IndependentFields period hPeriod) :
+    LLWeakTestSpace period hPeriod →ₗ[Real]
+      Lp LLFieldFiber (2 : ENNReal)
+        (intrinsicCanonicalThroatVolumeMeasure period hPeriod) where
+  toFun := llStrongJacobiToL2 period hPeriod fields
+  map_add' := llStrongJacobiToL2_add period hPeriod fields
+  map_smul' := llStrongJacobiToL2_smul period hPeriod fields
+
 /-- The pairing is unchanged when the strong residual is taken as an L²
 equivalence class. -/
 theorem llStrongJacobiToL2_pairing_eq_hessian

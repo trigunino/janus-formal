@@ -13874,8 +13874,19 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   `llAuxMetric` et `llMeasure` gelés, le résidu fort canonique définit un
   vecteur L² dont le pairing avec tout test lisse est exactement le Jacobi
   faible du Hessien même-action. Le gate est importé par la façade.
-- Limite : il manque le domaine graphe fermé, les trois slots LL et leur
-  raccord au codomaine physique commun ; `T12` reste ouverte, `6/14`.
+- Limite : il manque encore l'identification du domaine graphe naturel et le
+  raccord des trois slots LL au codomaine physique commun ; `T12` reste
+  ouverte, `6/14`.
+
+### `P-T12-LL-STRONG-JACOBI-L2-CLOSURE` — fermeture du slot LL
+
+- État : `SUPPORT` (2026-09-17). Le résidu du slot `llField` est linéaire sur
+  le cœur lisse, dense dans le L² canonique. Son opérateur partiel est
+  symétrique pour le Hessien même-action, closable, et sa fermeture canonique
+  est fermée. Ces gates sont importés par la façade.
+- Limite : aucune identification Sobolev H² du domaine fermé, ni
+  auto-adjonction ou propriété Fredholm, ni raccord des deux autres slots LL ;
+  `T12` reste ouverte, `6/14`.
 
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 
