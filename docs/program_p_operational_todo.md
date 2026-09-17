@@ -13780,8 +13780,20 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   non nul dans le Hilbert augmenté ; son identité avec l'image du cœur lisse
   fini est exacte. Sous l'hypothèse Euler locale du même chart H11, le Riesz
   physique complet annule ce mode, y compris ses couplages hors diagonale.
-- Limite : l'hypothèse Euler H11 et l'équation propre du Riesz diagonal sur
-  ce Hilbert augmenté ne sont pas encore prouvées. `T12` ouverte, `6/14`.
+- Limite : l'hypothèse Euler H11 n'est pas encore prouvée ; l'équation propre
+  diagonale est fermée ci-dessous. `T12` ouverte, `6/14`.
+
+### `P-T12-AUGMENTED-MATTER-NO-GAP-OF-EULER` — no-go conditionnel H12
+
+- État : `SUPPORT` (2026-09-17). Le singleton SpinC est vecteur propre du
+  Riesz diagonal quatre secteurs et de l'opérateur de référence H12, avec
+  valeur propre `w/(1+w²)`. Si l'Euler physique H11 s'annule localement sur
+  chaque mode SpinC `.plus`, le Riesz physique complet tue ces modes et le
+  Riesz augmenté réel ne possède aucun gap positif sur le complément du noyau.
+- Limite : l'annulation Euler H11 n'est pas dérivée du chart fort concret.
+  Celui-ci a une matière translatée et un bloc LL non quadratique, tandis que
+  H11 impose des identités d'action quadratiques globales. Un raccord des
+  deux-jets physiques sur le cœur est requis. `T12` ouverte, `6/14`.
 
 ## 7. Les 14 portes terminales fixes
 

@@ -354,12 +354,16 @@ que la même annulation Euler, si elle est établie pour le chart H11 exact,
 annule le vecteur complet du Riesz physique sur le cœur. Le chart fort utilise
 toutefois une norme différente et une action matière translatée autour du
 fond ; aucun raccord à la famille homogène H11 n'est encore prouvé.
-Le singleton SpinC est maintenant un vecteur non nul du Hilbert augmenté et
-son relèvement depuis le cœur lisse est certifié. Sous l'annulation Euler
-locale H11, le Riesz physique complet tue ce vecteur. L'équation propre du
-Riesz diagonal augmenté reste à formaliser : l'essai Lean a rencontré une
-divergence d'instances de produit scalaire `WithLp`/`actualKernel`, sans
-contre-exemple mathématique. Aucun no-gap du Riesz total n'est donc revendiqué.
+Le singleton SpinC est un vecteur non nul du Hilbert augmenté et son relèvement
+depuis le cœur lisse est certifié. Sous l'annulation Euler locale H11, le Riesz
+physique complet tue ce vecteur. Il est aussi vecteur propre du diagonal
+augmenté, de valeur propre `w/(1+w²)`. Le no-gap du Riesz total est prouvé
+conditionnellement
+à l'annulation Euler physique locale dans le chart H11 pour chaque mode pur.
+Cette hypothèse ne découle pas du chart fort : sa matière est translatée, son
+action LL est non quadratique et H11 impose des identités globales homogènes.
+Le raccord utile porte sur les deux-jets des sept blocs physiques sur le cœur
+lisse, sans identifier les actions complètes.
 
 ### Quillen et anomalie
 
