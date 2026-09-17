@@ -13945,13 +13945,12 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - État : `SUPPORT` (2026-09-17). À flux LL nul, le Jacobi complet sur le cœur
   lisse vaut exactement zéro sur auxiliaire/mesure et le Jacobi fort du slot
   champ sur la troisième sortie. Tout le produit L² auxiliaire–mesure appartient
-  au noyau de sa fermeture. Pour chaque paire de son graphe fermé, la sortie
-  auxiliaire/mesure est nulle et la paire champ appartient au graphe du Jacobi
-  champ fermé.
-- Limite : l'inclusion réciproque des graphes et l'identification du quotient
-  L² à l'opérateur champ fermé restent à prouver. Le quotient Riesz H¹ existant
-  ne fournit pas cette identification ni le Fredholm L² ; `T12` reste ouverte,
-  `6/14`.
+  au noyau de sa fermeture. Le graphe fermé complet est exactement décrit par
+  une sortie auxiliaire/mesure nulle et une paire champ appartenant au graphe
+  du Jacobi champ fermé ; les deux inclusions sont compilées.
+- Limite : le Fredholm du Jacobi champ fermé dans L² et son identification
+  Sobolev restent à prouver. Le quotient Riesz H¹ existant n'implique pas ces
+  résultats ; `T12` reste ouverte, `6/14`.
 
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 

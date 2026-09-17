@@ -1606,9 +1606,9 @@ brute à trois slots n'est donc pas Fredholm. Le quotient LL déjà présent est
 un objet distinct, à raccorder à l'opérateur naturel et au paquet H12. À flux
 nul, le Jacobi lisse complet se décompose exactement en zéro auxiliaire/mesure
 et Jacobi fort du champ. Le produit L² auxiliaire–mesure reste dans le noyau
-fermé ; la projection champ de tout point du graphe fermé appartient au graphe
-du Jacobi champ fermé. L'inclusion réciproque des graphes et le Fredholm L²
-du quotient restent ouverts.
+fermé ; le graphe fermé complet est exactement zéro sur ces deux slots plus le
+graphe du Jacobi champ fermé. Le Fredholm L² et l'identification Sobolev de
+ce Jacobi champ restent ouverts.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 
