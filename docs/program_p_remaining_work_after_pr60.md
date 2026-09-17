@@ -1582,6 +1582,9 @@ réels, mais elle n'est pas l'entrée H12 actuelle. Le socle générique de
 décalage à défaut fini et ses modules noyau, image, borne globale, inverse et
 opérateur réduit compilent désormais ; leur instanciation pour le Hessien
 physique et le paquet H12 augmenté restent ouvertes.
+Le résidu fort du slot `llField` est aussi réalisé dans L² et représente le
+Jacobi faible sur le cœur lisse ; son domaine graphe fermé et les deux autres
+slots LL restent à construire.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 

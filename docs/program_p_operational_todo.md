@@ -13868,6 +13868,15 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
 - Limite : les opérateurs LL, BRST et physiques graphe → L² du Hessien commun
   restent à construire et raccorder ; `T12` reste ouverte, `6/14`.
 
+### `P-T12-LL-STRONG-JACOBI-L2-CORE` — résidu LL lisse
+
+- État : `SUPPORT` (2026-09-17). Pour le seul slot `llField`, avec
+  `llAuxMetric` et `llMeasure` gelés, le résidu fort canonique définit un
+  vecteur L² dont le pairing avec tout test lisse est exactement le Jacobi
+  faible du Hessien même-action. Le gate est importé par la façade.
+- Limite : il manque le domaine graphe fermé, les trois slots LL et leur
+  raccord au codomaine physique commun ; `T12` reste ouverte, `6/14`.
+
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 
 - Le module générique `FiniteDefectCoerciveShift4D` et les cinq modules
