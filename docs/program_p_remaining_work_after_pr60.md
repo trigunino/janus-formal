@@ -1598,8 +1598,12 @@ au Hessien même-action sur les tests champ purs. Les trois lignes forment
 une application réelle linéaire sur le cœur lisse dense dans le produit L²,
 avec pairing au Hessien même-action sur tout test lisse. Dans le produit
 hilbertien L², l'opérateur du cœur est symétrique et closable, avec une
-fermeture canonique prouvée fermée et symétrique. Son domaine Sobolev et sa
-propriété Fredholm restent ouverts.
+fermeture canonique prouvée fermée et symétrique. L'identification Sobolev de
+son domaine reste ouverte. Sur tout fond LL
+stationnaire, le champ de fond est nul et le noyau de cet opérateur fermé
+contient le L² pur mesure entier, de dimension infinie ; la réalisation
+brute à trois slots n'est donc pas Fredholm. Le quotient LL déjà présent est
+un objet distinct, à raccorder à l'opérateur naturel et au paquet H12.
 C'est la porte aujourd'hui la plus avancée architecturalement, mais elle n'est
 pas fermée.
 

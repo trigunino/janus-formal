@@ -13924,8 +13924,21 @@ importées par la façade. Elles ne changent pas le compteur terminal `1/14`.
   de la norme hilbertienne `WithLp 2` emboîtée porte un opérateur partiel à
   domaine dense, symétrique et closable. Sa fermeture canonique est fermée et
   étend l'opérateur du cœur ; elle est aussi symétrique.
-- Limite : identification Sobolev de son domaine et propriété Fredholm restent
-  à établir ; `T12` reste ouverte, `6/14`.
+- Limite : l'identification Sobolev de son domaine reste ouverte ; sur fond
+  stationnaire, sa propriété Fredholm brute est exclue ci-dessous. `T12`
+  reste ouverte, `6/14`.
+
+### `P-T12-LL-STATIONARY-RAW-L2-NO-FREDHOLM` — noyau LL brut infini
+
+- État : `SUPPORT` (2026-09-17). La stationnarité LL ponctuelle impose
+  `llField = 0`. Toute variation lisse pure auxiliaire/mesure est alors
+  annulée par le Jacobi complet ; par densité et fermeture du graphe, tout
+  le L² pur mesure appartient au noyau de l'opérateur fermé. Le L² réel de
+  la gorge canonique est de dimension infinie, et un théorème compilé prouve
+  que ce noyau n'est pas de dimension finie sur tout fond LL stationnaire.
+- Conséquence : la réalisation LL brute à trois slots ne peut être Fredholm
+  sur ces fonds. Une cible réduite ou quotientée et son raccord au Hessien
+  physique H12 restent à construire ; `T12` reste ouverte, `6/14`.
 
 ### `P-T12-FINITE-DEFECT-PACKET-COMPILE-BLOCKER` — réparation partielle H12
 
