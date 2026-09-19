@@ -479,4 +479,3 @@ end
 end P0EFTJanusProgramPT04T03MetricBoundaryEulerSplit4D
 end JanusFormal
 
-\n
