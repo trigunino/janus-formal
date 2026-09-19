@@ -8,9 +8,15 @@ Mathlib source API reviewed at the repository's pinned revision
 ## Validation and scope
 
 This is a partial analytic support block, **not closure of terminal T12**.
-Lean proof scripts have been added, but no Lean build, GitHub Actions run,
-or other CI/CD operation was performed. Local compilation is still required.
-No workflow or dependency configuration was changed.
+The user reported a successful focused LL build (9,158 jobs), then a successful
+local facade build on 2026-09-19 (11,737 jobs), following the fixes through
+`5a4baef59a44995792144aee9cae8959aa372bbc`. This is user-reported validation of
+the user's checkout, not an independently reproduced build or a CI result.
+
+The new 2026-09-19 frame-H1/cutoff additions described below have NOT been
+compiled by the author and still require a new local build. No GitHub Actions,
+other CI/CD operation, or Lean build was run by the author. No workflow,
+build setting, or dependency configuration was changed.
 
 The LL specialization uses `GlobalAnalysisData`, hence the existing strict
 positivity assumption on `llMeasure`. Its shifted weak solutions cover
@@ -136,3 +142,91 @@ lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P
 This target imports both other new modules. Build the facade separately
 after the focused target succeeds. Neither command was run by the author
 of this support block.
+
+## 2026-09-19: concrete frame-H1 and cutoff support block
+
+Development base: `dev-branch` at
+`5a4baef59a44995792144aee9cae8959aa372bbc`.
+This is a further partial Rellich step, NOT the completed LL Rellich theorem.
+
+Two modules are added:
+
+- `P0EFTJanusProgramPT12LLCanonicalFrameH1Control4D.lean`
+- `P0EFTJanusProgramPT12LLCanonicalFrameH1Completion4D.lean`
+
+The inverse-on-range integration module imports the second one, which imports
+the first. Existing theorem statements and proof bodies remain unchanged.
+The existing facade therefore reaches both new modules transitively.
+
+### Concrete estimates, not compactness premises
+
+For the existing canonical frame `F` and canonical throat volume `mu`, define
+
+```
+S(u) = integral (norm(u)^2 + sum_i norm(D_F_i u)^2) dmu.
+```
+
+The scripts derive `S(u) <= K * norm(u)_V^2` on the actual smooth LL energy
+core from the previously established Garding and positive L2 bounds. `K` is
+background-dependent and independent of `u`. Positivity is exactly the
+existing strict positivity of `llMeasure` carried by `GlobalAnalysisData`.
+
+For each fixed smooth scalar cutoff `chi`, the scripts establish the genuine
+manifold Leibniz rule, support and topological-support containment, and
+
+```
+S(chi * u) <= B_chi * S(u) <= B_chi * K * norm(u)_V^2.
+```
+
+The cutoff coefficient bound comes from continuity and compactness of the
+actual throat. These estimates take no Rellich, chartwise compactness,
+coordinate norm-equivalence, or operator-regularity premise.
+
+### Completed first derivatives and joint approximation
+
+Each `D_F_i u` is first constructed as its genuine canonical-volume L2 class.
+The energy estimate makes the smooth map bounded, so it extends continuously
+to the SAME LL energy completion. The combined value/derivative map
+
+```
+J : V ->L L2 x (Fin F.count -> L2)
+J(u) = (I u, (D_i u)_i)
+```
+
+is injective, agrees exactly with the smooth first-jet map, and lands in the
+closure of that smooth first-jet graph. For every `u : V` and `epsilon > 0`,
+the scripts give a smooth `w` with
+
+```
+norm(w)_V <= norm(u)_V + 1,
+norm(J_smooth(w) - J(u)) < epsilon.
+```
+
+This simultaneously controls the value and every first-derivative L2
+coordinate. It is NOT second-order Jacobi graph approximation and does NOT
+prove that an arbitrary energy vector or weak solution belongs to `D(C)`.
+
+### What is still missing
+
+The repository's Euclidean fixed-support Rellich theorem is available in
+`RellichKondrachov/Analysis/FunctionalSpaces/Sobolev/Euclidean/Rellich.lean`.
+It is not silently assumed to apply to the throat. One must still construct
+localized coordinate maps with their actual derivative and volume-density
+bounds into those Euclidean supported H1 spaces, and prove the finite-chart
+reconstruction needed to obtain compactness of `canonicalLLH1ToFluxL2`.
+
+Thus `hRellich` remains outstanding in the previous compactness consequences.
+The separate weak-solution membership in the original closed Jacobi domain,
+strong shifted surjectivity, arbitrary-sign energy realization, and terminal
+T12 are also not discharged here. No new axioms or proof placeholders are
+introduced in these additions.
+
+### Focused build for these additions
+
+```powershell
+lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalFrameH1Completion4D
+```
+
+After that passes, check integration with the existing inverse-on-range
+module or the full facade. The earlier 11,737-job success does not validate
+these newly added proof scripts.
