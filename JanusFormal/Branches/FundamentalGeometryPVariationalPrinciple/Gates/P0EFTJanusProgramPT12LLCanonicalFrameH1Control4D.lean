@@ -89,11 +89,16 @@ theorem llCanonicalSmoothL2_norm_sq (field : LLWeakTestSpace period hPeriod) :
     ‖llSmoothToL2 period hPeriod field‖ ^ 2 =
       ∫ point, ‖field point‖ ^ 2
         ∂(intrinsicCanonicalThroatVolumeMeasure period hPeriod) := by
+  have hAE :
+      (llSmoothToL2 period hPeriod field :
+        EffectiveThroat period hPeriod → LLFieldFiber) =ᵐ[
+          intrinsicCanonicalThroatVolumeMeasure period hPeriod]
+        field.toFun :=
+    (smoothThroatField_memLp period hPeriod LLFieldFiber
+      (intrinsicCanonicalThroatVolumeMeasure period hPeriod) field).coeFn_toLp
   rw [← real_inner_self_eq_norm_sq, L2.inner_def]
   apply integral_congr_ae
-  filter_upwards [(smoothThroatField_memLp period hPeriod LLFieldFiber
-    (intrinsicCanonicalThroatVolumeMeasure period hPeriod) field).coeFn_toLp]
-    with point hPoint
+  filter_upwards [hAE] with point hPoint
   rw [hPoint, real_inner_self_eq_norm_sq]
 
 theorem llCanonicalFrameH1SizeSq_eq (field : LLWeakTestSpace period hPeriod) :
