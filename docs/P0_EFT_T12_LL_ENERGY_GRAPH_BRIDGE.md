@@ -149,14 +149,15 @@ Development base: `dev-branch` at
 `5a4baef59a44995792144aee9cae8959aa372bbc`.
 This is a further partial Rellich step, NOT the completed LL Rellich theorem.
 
-Two modules are added:
+Three modules are added:
 
 - `P0EFTJanusProgramPT12LLCanonicalFrameH1Control4D.lean`
 - `P0EFTJanusProgramPT12LLCanonicalFrameH1Completion4D.lean`
+- `P0EFTJanusProgramPT12LLCanonicalFiniteFiberCompactness4D.lean`
 
-The inverse-on-range integration module imports the second one, which imports
-the first. Existing theorem statements and proof bodies remain unchanged.
-The existing facade therefore reaches both new modules transitively.
+The inverse-on-range integration module imports the completion and finite-fiber
+modules; the completion module imports the control module. The existing facade
+therefore reaches all three transitively.
 
 ### Concrete estimates, not compactness premises
 
@@ -206,14 +207,22 @@ This simultaneously controls the value and every first-derivative L2
 coordinate. It is NOT second-order Jacobi graph approximation and does NOT
 prove that an arbitrary energy vector or weak solution belongs to `D(C)`.
 
+### Finite-fiber compactness reduction
+
+The LL flux fiber is exactly `EuclideanSpace Real (Fin 4)`. Pointwise
+coordinate projection and insertion on `L2` reconstruct the identity as a
+finite sum. Hence the canonical vector-valued energy embedding is compact iff
+each of its four scalar coordinate embeddings is compact. No compactness
+premise is introduced.
+
 ### What is still missing
 
 The repository's Euclidean fixed-support Rellich theorem is available in
 `RellichKondrachov/Analysis/FunctionalSpaces/Sobolev/Euclidean/Rellich.lean`.
-It is not silently assumed to apply to the throat. One must still construct
-localized coordinate maps with their actual derivative and volume-density
-bounds into those Euclidean supported H1 spaces, and prove the finite-chart
-reconstruction needed to obtain compactness of `canonicalLLH1ToFluxL2`.
+It is not silently assumed to apply to the throat. It now suffices to construct
+localized coordinate maps for the four scalar embeddings, with their actual
+derivative and volume-density bounds into Euclidean supported H1 spaces, and
+prove the finite-chart reconstruction.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
 The separate weak-solution membership in the original closed Jacobi domain,
@@ -224,7 +233,7 @@ introduced in these additions.
 ### Focused build for these additions
 
 ```powershell
-lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalFrameH1Completion4D
+lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalFiniteFiberCompactness4D
 ```
 
 After that passes, check integration with the existing inverse-on-range
