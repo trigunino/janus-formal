@@ -586,4 +586,3 @@ end P0EFTJanusProgramPT06MultifieldSymmetricValueQuadraticKernel4D
 end JanusFormal
 
 
-\n

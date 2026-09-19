@@ -985,4 +985,3 @@ end
 end P0EFTJanusProgramPT06ScalarMultidirectionalQuadraticExactness4D
 end JanusFormal
 
-\n
