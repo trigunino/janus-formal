@@ -161,8 +161,12 @@ private theorem derivative_sq_le_frameH1SizeSq
   have hTerm : ‖throatFrameDerivative period hPeriod LLFieldFiber
       (canonicalDivergenceFreeLLFrame period hPeriod) field point index‖ ^ 2 ≤
       throatDerivativeEnergy period hPeriod (canonicalDivergenceFreeLLFrame period hPeriod)
-        field point :=
-    Finset.single_le_sum (fun _ _ => sq_nonneg _) (Finset.mem_univ index)
+        field point := by
+    unfold throatDerivativeEnergy
+    exact Finset.single_le_sum
+      (fun frameIndex _ => sq_nonneg ‖throatFrameDerivative period hPeriod LLFieldFiber
+        (canonicalDivergenceFreeLLFrame period hPeriod) field point frameIndex‖)
+      (Finset.mem_univ index)
   change _ ≤ ‖field point‖ ^ 2 + _
   linarith [sq_nonneg ‖field point‖]
 
