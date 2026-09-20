@@ -14,8 +14,8 @@ local facade build on 2026-09-19 (11,737 jobs), following the fixes through
 the user's checkout, not an independently reproduced build or a CI result.
 
 A focused local build through
-`P0EFTJanusProgramPT12LLCanonicalThroatRellichCompactness4D` passed all
-9,270 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
+`P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` passed all
+9,275 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
 No workflow, build setting, or dependency configuration was changed.
 
 The LL specialization uses `GlobalAnalysisData`, hence the existing strict
@@ -268,10 +268,10 @@ exact finite-patch reconstruction of every smooth scalar coordinate are now
 proved. Completed-space factorization, compactness of every scalar coordinate,
 and Rellich compactness of the full four-component LL embedding are proved.
 
-Thus the previous `hRellich` premise is now discharged geometrically; its two
-conditional compactness consequences still need unconditional wrappers in a
-downstream non-cyclic module. The separate weak-solution membership in the
-original closed Jacobi domain,
+Thus the previous `hRellich` premise is now discharged geometrically. The
+closed-graph embedding and every nonnegative shifted weak solution operator now
+have unconditional compactness corollaries in a downstream non-cyclic module.
+The separate weak-solution membership in the original closed Jacobi domain,
 strong shifted surjectivity, arbitrary-sign energy realization, and terminal
 T12 are also not discharged here. No new axioms or proof placeholders are
 introduced in these additions.
@@ -279,8 +279,8 @@ introduced in these additions.
 ### Focused build for these additions
 
 ```powershell
-lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalThroatRellichCompactness4D
+lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D
 ```
 
-This focused target passed locally with 9,270 jobs. Downstream compactness
-wrappers and full-facade integration remain separate.
+This focused target passed locally with 9,275 jobs. Strong-domain regularity,
+surjectivity, and full-facade integration remain separate.

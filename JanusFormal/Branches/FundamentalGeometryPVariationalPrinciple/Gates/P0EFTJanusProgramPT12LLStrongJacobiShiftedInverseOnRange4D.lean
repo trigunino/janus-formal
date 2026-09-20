@@ -2,6 +2,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalH1ShiftedWeakSolution4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalFrameH1Completion4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalFiniteFiberCompactness4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalThroatRellichCompactness4D
 
 /-! Positive shifts of the closed LL Jacobi operator have bounded inverses on their ranges. -/
 
@@ -20,8 +21,13 @@ open P0EFTJanusMappingTorusCompactQuotient
 open P0EFTJanusMappingTorusSmoothThroatTrace4D
 open P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D
 open P0EFTJanusMappingTorusCanonicalVolumeH1Trace4D
+open P0EFTJanusProgramPGlobalFieldSpace4D
+open P0EFTJanusProgramPGlobalAnalysisDomain4D
 open P0EFTJanusProgramPT12LLStrongJacobiClosure4D
 open P0EFTJanusProgramPT12LLStrongJacobiClosedShift4D
+open P0EFTJanusProgramPT12LLCanonicalH1ClosedDomain4D
+open P0EFTJanusProgramPT12LLCanonicalH1ShiftedWeakSolution4D
+open P0EFTJanusProgramPT12LLCanonicalThroatRellichCompactness4D
 
 variable (period : Real) (hPeriod : period ≠ 0)
 
@@ -50,6 +56,25 @@ local instance :
 private abbrev LLFieldL2 :=
   Lp LLFieldFiber (2 : ENNReal)
     (intrinsicCanonicalThroatVolumeMeasure period hPeriod)
+
+/-- The closed reduced Jacobi graph embeds compactly into the LL L² space. -/
+theorem canonicalLLClosedGraphValue_isCompact
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (analysis : GlobalAnalysisData period hPeriod configuration) :
+    IsCompactOperator (canonicalLLClosedGraphValue period hPeriod analysis) :=
+  canonicalLLClosedGraphValue_compact_of_rellich period hPeriod analysis
+    (canonicalLLH1ToFluxL2_isCompact period hPeriod analysis)
+
+/-- Every nonnegative shifted weak LL solution operator is compact. -/
+theorem canonicalLLShiftedWeakL2Solution_isCompact
+    {configuration : GlobalFieldConfiguration period hPeriod}
+    (analysis : GlobalAnalysisData period hPeriod configuration)
+    (shift : Real) (hShift : 0 ≤ shift) :
+    IsCompactOperator
+      (canonicalLLShiftedWeakL2Solution period hPeriod analysis shift hShift) :=
+  canonicalLLShiftedWeakL2Solution_compact_of_rellich
+    period hPeriod analysis
+    (canonicalLLH1ToFluxL2_isCompact period hPeriod analysis) shift hShift
 
 /-- A sufficiently positive shift is injective and has a bounded inverse on its closed range. -/
 theorem llJacobiShiftedPMap_inverse_bound_on_closed_range
