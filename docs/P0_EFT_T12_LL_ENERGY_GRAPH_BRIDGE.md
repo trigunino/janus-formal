@@ -14,8 +14,8 @@ local facade build on 2026-09-19 (11,737 jobs), following the fixes through
 the user's checkout, not an independently reproduced build or a CI result.
 
 A focused local build through
-`P0EFTJanusProgramPT12LLCanonicalThroatSmoothRellichLocalBound4D` passed all
-9,266 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
+`P0EFTJanusProgramPT12LLCanonicalThroatSmoothRellichExtension4D` passed all
+9,267 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
 No workflow, build setting, or dependency configuration was changed.
 
 The LL specialization uses `GlobalAnalysisData`, hence the existing strict
@@ -262,8 +262,9 @@ basis. Each partition-localized LL component now has a smooth compactly
 supported Euclidean representative with its exact rank-three gradient. The
 smooth supported `H1` localizer and its uniform value-and-gradient bounds are
 now constructed from an explicit local-jet `L2` estimate and the cutoff frame-H1
-bound. Extension to the completed energy space, composition with local Rellich,
-and reconstruction as the finite sum of the four scalar embeddings remain.
+bound. Its bounded extension to the completed energy space and agreement on the
+dense smooth core are also constructed. Composition with local Rellich and
+reconstruction as the finite sum of the four scalar embeddings remain.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
 The separate weak-solution membership in the original closed Jacobi domain,
@@ -274,8 +275,8 @@ introduced in these additions.
 ### Focused build for these additions
 
 ```powershell
-lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalThroatSmoothRellichLocalBound4D
+lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalThroatSmoothRellichExtension4D
 ```
 
-This focused target passed locally with 9,266 jobs. Integration with the
-completed-energy extension and the full facade remains separate.
+This focused target passed locally with 9,267 jobs. Integration with local
+Rellich, finite reconstruction, and the full facade remains separate.
