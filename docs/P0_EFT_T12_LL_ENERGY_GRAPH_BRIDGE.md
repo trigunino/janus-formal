@@ -220,14 +220,20 @@ The pre-existing finite smooth partition of unity on the actual throat is now
 publicly reusable. Each closed partition support is compact and lies in its
 selected chart. Transport to `EuclideanSpace Real (Fin 3)` gives, on every
 patch, the unconditional compact supported Euclidean `H1 -> L2` inclusion.
+The actual compact patch is now homeomorphic to that Hilbert support through
+the quotient chart. Canonical throat volume is pulled back to the patch and
+pushed forward exactly to coordinates; the coordinate measure is finite and
+carried by the Rellich support. A continuous positive coordinate-density
+certificate now yields the required finite two-sided Lebesgue comparison.
 
 ### What is still missing
 
 The repository's Euclidean fixed-support Rellich theorem is available in
 `RellichKondrachov/Analysis/FunctionalSpaces/Sobolev/Euclidean/Rellich.lean`.
 It is not silently assumed to apply to the throat. The local compact operators
-and finite cutoffs are now constructed. It remains to prove the actual
-derivative and volume-density bounds for the localized coordinate maps, then
+and finite cutoffs are now constructed. It remains to construct the actual
+positive coordinate density and prove the derivative bounds for the localized
+coordinate maps, then
 the finite-chart reconstruction for the four scalar embeddings.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
