@@ -385,6 +385,124 @@ theorem linearPMapProd_apply
           second ⟨(WithLp.ofLp state.1).2, state.2.2⟩) :=
   rfl
 
+theorem linearPMapProd_domain_dense
+    (first : E →ₗ.[Real] E) (second : F →ₗ.[Real] F)
+    (hFirst : Dense (first.domain : Set E))
+    (hSecond : Dense (second.domain : Set F)) :
+    Dense
+      ((linearPMapProd first second).domain :
+        Set (ProductHilbert (E := E) (F := F))) := by
+  let coreEmbedding : first.domain × second.domain →
+      ProductHilbert (E := E) (F := F) :=
+    fun state => WithLp.toLp 2 ((state.1 : E), (state.2 : F))
+  have hProduct :
+      DenseRange (fun state : first.domain × second.domain =>
+        ((state.1 : E), (state.2 : F))) :=
+    hFirst.denseRange_val.prodMap hSecond.denseRange_val
+  have hEmbedding : DenseRange coreEmbedding := by
+    exact
+      (WithLp.homeomorphProd 2 E F).symm.surjective.denseRange.comp
+        hProduct (WithLp.homeomorphProd 2 E F).symm.continuous
+  rw [DenseRange] at hEmbedding
+  apply hEmbedding.mono
+  rintro state ⟨source, rfl⟩
+  change (source.1 : E) ∈ first.domain ∧
+    (source.2 : F) ∈ second.domain
+  exact ⟨source.1.2, source.2.2⟩
+
+theorem linearPMapProd_isFormalAdjoint
+    (first : E →ₗ.[Real] E) (second : F →ₗ.[Real] F)
+    (hFirst : first.IsFormalAdjoint first)
+    (hSecond : second.IsFormalAdjoint second) :
+    (linearPMapProd first second).IsFormalAdjoint
+      (linearPMapProd first second) := by
+  intro left right
+  rw [linearPMapProd_apply, linearPMapProd_apply,
+    WithLp.prod_inner_apply, WithLp.prod_inner_apply]
+  exact congrArg₂ (· + ·)
+    (hFirst
+      ⟨(WithLp.ofLp left.1).1, left.2.1⟩
+      ⟨(WithLp.ofLp right.1).1, right.2.1⟩)
+    (hSecond
+      ⟨(WithLp.ofLp left.1).2, left.2.2⟩
+      ⟨(WithLp.ofLp right.1).2, right.2.2⟩)
+
+theorem linearPMapProd_selfAdjoint
+    (first : E →ₗ.[Real] E) (second : F →ₗ.[Real] F)
+    (hFirst : IsSelfAdjoint first)
+    (hSecond : IsSelfAdjoint second) :
+    IsSelfAdjoint (linearPMapProd first second) := by
+  rw [LinearPMap.isSelfAdjoint_def]
+  have hDense := linearPMapProd_domain_dense first second
+    hFirst.dense_domain hSecond.dense_domain
+  have hFirstAdjoint : first.adjoint = first :=
+    LinearPMap.isSelfAdjoint_def.mp hFirst
+  have hSecondAdjoint : second.adjoint = second :=
+    LinearPMap.isSelfAdjoint_def.mp hSecond
+  have hFirstFormal : first.IsFormalAdjoint first := by
+    have hFormal := LinearPMap.adjoint_isFormalAdjoint hFirst.dense_domain
+    rwa [hFirstAdjoint] at hFormal
+  have hSecondFormal : second.IsFormalAdjoint second := by
+    have hFormal := LinearPMap.adjoint_isFormalAdjoint hSecond.dense_domain
+    rwa [hSecondAdjoint] at hFormal
+  have hFormal := linearPMapProd_isFormalAdjoint first second
+    hFirstFormal hSecondFormal
+  have hLe : linearPMapProd first second ≤
+      (linearPMapProd first second).adjoint :=
+    hFormal.le_adjoint hDense
+  have hReverseDomain :
+      (linearPMapProd first second).adjoint.domain ≤
+        (linearPMapProd first second).domain := by
+    intro state hState
+    have hFirstDomain :
+        (WithLp.ofLp state).1 ∈ first.adjoint.domain := by
+      apply LinearPMap.mem_adjoint_domain_of_exists
+      refine
+        ⟨(WithLp.ofLp
+          ((linearPMapProd first second).adjoint ⟨state, hState⟩)).1, ?_⟩
+      intro firstState
+      let lifted : (linearPMapProd first second).domain :=
+        ⟨WithLp.toLp 2 ((firstState : E), 0), by
+          exact ⟨firstState.2, Submodule.zero_mem _⟩⟩
+      have hAdjoint := LinearPMap.adjoint_isFormalAdjoint hDense
+        (T := linearPMapProd first second) ⟨state, hState⟩ lifted
+      have hSecondZero (hZero : (0 : F) ∈ second.domain) :
+          second ⟨0, hZero⟩ = 0 := by
+        change second (0 : second.domain) = 0
+        exact LinearPMap.map_zero second
+      simpa [lifted, linearPMapProd_apply,
+        WithLp.prod_inner_apply, hSecondZero] using hAdjoint
+    have hSecondDomain :
+        (WithLp.ofLp state).2 ∈ second.adjoint.domain := by
+      apply LinearPMap.mem_adjoint_domain_of_exists
+      refine
+        ⟨(WithLp.ofLp
+          ((linearPMapProd first second).adjoint ⟨state, hState⟩)).2, ?_⟩
+      intro secondState
+      let lifted : (linearPMapProd first second).domain :=
+        ⟨WithLp.toLp 2 (0, (secondState : F)), by
+          exact ⟨Submodule.zero_mem _, secondState.2⟩⟩
+      have hAdjoint := LinearPMap.adjoint_isFormalAdjoint hDense
+        (T := linearPMapProd first second) ⟨state, hState⟩ lifted
+      have hFirstZero (hZero : (0 : E) ∈ first.domain) :
+          first ⟨0, hZero⟩ = 0 := by
+        change first (0 : first.domain) = 0
+        exact LinearPMap.map_zero first
+      simpa [lifted, linearPMapProd_apply,
+        WithLp.prod_inner_apply, hFirstZero] using hAdjoint
+    have hFirstDomain' : (WithLp.ofLp state).1 ∈ first.domain := by
+      rw [← hFirstAdjoint]
+      exact hFirstDomain
+    have hSecondDomain' : (WithLp.ofLp state).2 ∈ second.domain := by
+      rw [← hSecondAdjoint]
+      exact hSecondDomain
+    exact ⟨hFirstDomain', hSecondDomain'⟩
+  have hDomain :
+      (linearPMapProd first second).domain =
+        (linearPMapProd first second).adjoint.domain :=
+    le_antisymm hLe.1 hReverseDomain
+  exact (LinearPMap.eq_of_le_of_domain_eq hLe hDomain).symm
+
 theorem linearPMapProd_range
     (first : E →ₗ.[Real] E) (second : F →ₗ.[Real] F) :
     LinearMap.range (linearPMapProd first second).toFun =

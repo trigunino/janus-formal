@@ -15,7 +15,7 @@ the user's checkout, not an independently reproduced build or a CI result.
 
 A focused local build through
 `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` passed all
-9,277 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
+9,403 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
 No workflow, build setting, or dependency configuration was changed.
 
 The LL specialization uses `GlobalAnalysisData`, hence the existing strict
@@ -46,6 +46,12 @@ All Lean paths have prefix
   defines the inverse-response realization on `range (I I*)`, proves it dense,
   self-adjoint, closed, bijective and Fredholm with compact inverse, and proves
   the nonnegative shifted weak solutions are genuine right inverses there.
+- `P0EFTJanusProgramPGlobalGaugeFixedSpectralFiniteCore4D.lean`
+  constructs the injective dense finite-support core of the maximal spectral
+  block and proves its exact diagonal action and pairing.
+- `P0EFTJanusProgramPGlobalGaugeFixedLLFriedrichsHessianFredholm4D.lean`
+  combines that maximal spectral operator with the reduced LL Friedrichs
+  realization into a dense self-adjoint closed Fredholm product.
 
 The existing `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D.lean`
 imports the weak-solution and adjoint modules. Its previous proof is unchanged.
@@ -283,7 +289,8 @@ residual. The canonical Friedrichs realization extends the original closed
 Jacobi graph and has compact inverse; its nonnegative shifts are surjective.
 Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The global Candidate-A
-operator family and terminal T12 are also not discharged here. No new axioms
+core pairing, the quotient of degenerate auxiliary/measure LL directions, the
+parameter family, and terminal T12 are also not discharged here. No new axioms
 or proof placeholders are introduced.
 
 ### Focused build for these additions
@@ -292,5 +299,5 @@ or proof placeholders are introduced.
 lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D
 ```
 
-This focused target passed locally with 9,277 jobs. Essential self-adjointness,
+This focused target passed locally with 9,403 jobs. Essential self-adjointness,
 strong-domain surjectivity, and terminal T12 remain separate.
