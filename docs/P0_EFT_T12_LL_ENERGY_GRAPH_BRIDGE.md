@@ -13,10 +13,10 @@ local facade build on 2026-09-19 (11,737 jobs), following the fixes through
 `5a4baef59a44995792144aee9cae8959aa372bbc`. This is user-reported validation of
 the user's checkout, not an independently reproduced build or a CI result.
 
-The new 2026-09-19 frame-H1/cutoff additions described below have NOT been
-compiled by the author and still require a new local build. No GitHub Actions,
-other CI/CD operation, or Lean build was run by the author. No workflow,
-build setting, or dependency configuration was changed.
+A focused local build through
+`P0EFTJanusProgramPT12LLCanonicalThroatSmoothRellichLocalBound4D` passed all
+9,266 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
+No workflow, build setting, or dependency configuration was changed.
 
 The LL specialization uses `GlobalAnalysisData`, hence the existing strict
 positivity assumption on `llMeasure`. Its shifted weak solutions cover
@@ -259,10 +259,11 @@ and finite cutoffs are now constructed. Exact bounded `L2` transports among
 the quotient patch, canonical coordinates, and ambient Lebesgue space are
 available, as is the derivative of the inverse Hilbert chart on its model
 basis. Each partition-localized LL component now has a smooth compactly
-supported Euclidean representative with its exact rank-three gradient. Its
-value-and-gradient bound must still be assembled into a finite-chart `H1`
-localizer, extended to the completed energy space, and reconstructed as the
-finite sum of the four scalar embeddings.
+supported Euclidean representative with its exact rank-three gradient. The
+smooth supported `H1` localizer and its uniform value-and-gradient bounds are
+now constructed from an explicit local-jet `L2` estimate and the cutoff frame-H1
+bound. Extension to the completed energy space, composition with local Rellich,
+and reconstruction as the finite sum of the four scalar embeddings remain.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
 The separate weak-solution membership in the original closed Jacobi domain,
@@ -273,9 +274,8 @@ introduced in these additions.
 ### Focused build for these additions
 
 ```powershell
-lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalFiniteFiberCompactness4D
+lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalThroatSmoothRellichLocalBound4D
 ```
 
-After that passes, check integration with the existing inverse-on-range
-module or the full facade. The earlier 11,737-job success does not validate
-these newly added proof scripts.
+This focused target passed locally with 9,266 jobs. Integration with the
+completed-energy extension and the full facade remains separate.
