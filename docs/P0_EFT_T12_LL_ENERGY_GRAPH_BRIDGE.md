@@ -258,10 +258,11 @@ It is not silently assumed to apply to the throat. The local compact operators
 and finite cutoffs are now constructed. Exact bounded `L2` transports among
 the quotient patch, canonical coordinates, and ambient Lebesgue space are
 available, as is the derivative of the inverse Hilbert chart on its model
-basis. The patchwise volume comparison and derivative bounds must still be
-assembled into smooth finite-chart `H1` localizers, extended to the completed
-energy space, and reconstructed as the finite sum of the four scalar
-embeddings.
+basis. Each partition-localized LL component now has a smooth compactly
+supported Euclidean representative with its exact rank-three gradient. Its
+value-and-gradient bound must still be assembled into a finite-chart `H1`
+localizer, extended to the completed energy space, and reconstructed as the
+finite sum of the four scalar embeddings.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
 The separate weak-solution membership in the original closed Jacobi domain,
