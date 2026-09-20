@@ -15,7 +15,7 @@ the user's checkout, not an independently reproduced build or a CI result.
 
 A focused local build through
 `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` passed all
-9,275 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
+9,276 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
 No workflow, build setting, or dependency configuration was changed.
 
 The LL specialization uses `GlobalAnalysisData`, hence the existing strict
@@ -39,9 +39,12 @@ All Lean paths have prefix
 - `P0EFTJanusProgramPT12LLCanonicalH1ShiftedWeakSolution4D.lean`
   specializes weak solutions to LL, relates them to the existing closed
   shift, and identifies the precise remaining domain-membership obligation.
+- `P0EFTJanusProgramPT12LLCanonicalH1ShiftedWeakAdjoint4D.lean`
+  proves that every nonnegative shifted weak solution lies in the Hilbert
+  adjoint domain and computes its adjoint value as `f - shift • u`.
 
 The existing `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D.lean`
-imports the new LL weak-solution module. Its previous proof is unchanged.
+imports the weak-solution and adjoint modules. Its previous proof is unchanged.
 The existing facade already imports this inverse-on-range module, so the new
 support block is reached transitively without rewriting the large facade.
 
@@ -271,10 +274,11 @@ and Rellich compactness of the full four-component LL embedding are proved.
 Thus the previous `hRellich` premise is now discharged geometrically. The
 closed-graph embedding and every nonnegative shifted weak solution operator now
 have unconditional compactness corollaries in a downstream non-cyclic module.
-The separate weak-solution membership in the original closed Jacobi domain,
-strong shifted surjectivity, arbitrary-sign energy realization, and terminal
-T12 are also not discharged here. No new axioms or proof placeholders are
-introduced in these additions.
+The weak solution is now in the adjoint domain with the expected shifted
+residual. Its membership in the original closed Jacobi domain is precisely the
+remaining essential-self-adjointness/graph-regularity step. Strong shifted
+surjectivity, arbitrary-sign energy realization, and terminal T12 are also not
+discharged here. No new axioms or proof placeholders are introduced.
 
 ### Focused build for these additions
 
@@ -282,5 +286,5 @@ introduced in these additions.
 lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D
 ```
 
-This focused target passed locally with 9,275 jobs. Strong-domain regularity,
-surjectivity, and full-facade integration remain separate.
+This focused target passed locally with 9,276 jobs. Essential self-adjointness,
+strong-domain surjectivity, and terminal T12 remain separate.
