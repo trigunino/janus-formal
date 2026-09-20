@@ -228,7 +228,8 @@ certificate now yields the required finite two-sided Lebesgue comparison.
 The finite throat generator indices, model basis, and local vectors are also
 public, and every local vector is identified with the derivative of the
 inverse preferred chart. The Lipschitz image-volume kernel now works in any
-finite rank, including the rank-three throat coordinates.
+finite rank. Its rank-three specialization now proves the two-sided measured
+stereographic comparison on every compact `ThroatCoverCoordinates` support.
 
 The weighted finite partition frame is now compared exactly with the
 canonical LL frame. Its smooth reconstruction coefficients have a uniform
