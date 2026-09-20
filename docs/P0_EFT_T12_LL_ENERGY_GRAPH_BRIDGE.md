@@ -244,18 +244,21 @@ chart directional derivatives on that patch by the canonical LL energy.
 The open fundamental throat strip is now an injective measured
 parametrization away from its null seam. Rank-three stereographic product
 charts, together with time-shifted measure-preserving copies, form a finite
-measured cover of every compact throat subset.
+measured cover of every compact throat subset. Every closed partition patch
+now has a finite compact refinement by these charts. Smooth transition maps
+on the compact overlaps give uniform Lipschitz constants, and the finite sum
+proves an unconditional two-sided comparison between canonical volume and
+Lebesgue measure on each patch.
 
 ### What is still missing
 
 The repository's Euclidean fixed-support Rellich theorem is available in
 `RellichKondrachov/Analysis/FunctionalSpaces/Sobolev/Euclidean/Rellich.lean`.
 It is not silently assumed to apply to the throat. The local compact operators
-and finite cutoffs are now constructed. It remains to compare the shifted
-measured charts with each selected quotient chart on compact overlaps and
-aggregate the finite pieces into the unconditional patchwise two-sided
-Lebesgue comparison. That comparison and the derivative bounds must then be
-assembled into the finite-chart reconstruction for the four scalar embeddings.
+and finite cutoffs are now constructed. The patchwise volume comparison and
+derivative bounds must still be assembled into smooth finite-chart `H1`
+localizers, extended to the completed energy space, and reconstructed as the
+finite sum of the four scalar embeddings.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
 The separate weak-solution membership in the original closed Jacobi domain,
