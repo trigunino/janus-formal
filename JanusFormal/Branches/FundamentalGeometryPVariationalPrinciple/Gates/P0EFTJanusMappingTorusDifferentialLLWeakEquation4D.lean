@@ -160,6 +160,104 @@ private theorem throatTangentPartition_subordinate :
       (throatTangentCover period hPeriod) :=
   (exists_finite_throat_tangent_partition period hPeriod).choose_spec
 
+/-! ## Public finite throat patches -/
+
+/-- Public finite patch index extracted from the existing throat tangent
+trivialization cover. -/
+abbrev FiniteThroatGeneratorPatch := ThroatAnchor period hPeriod
+
+/-- Open throat chart attached to one selected finite anchor. -/
+def finiteThroatGeneratorOpenPatch
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    Set (EffectiveThroat period hPeriod) :=
+  throatTangentCover period hPeriod patch
+
+theorem finiteThroatGeneratorOpenPatch_isOpen
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    IsOpen (finiteThroatGeneratorOpenPatch period hPeriod patch) :=
+  throatTangentCover_isOpen period hPeriod patch
+
+/-- The selected tangent patch is the source of its preferred base chart. -/
+theorem finiteThroatGeneratorOpenPatch_eq_chart_source
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    finiteThroatGeneratorOpenPatch period hPeriod patch =
+      (chartAt ThroatCoverModel patch.1).source := by
+  rfl
+
+/-- Smooth partition weight attached to one finite throat patch. -/
+def finiteThroatGeneratorWeight
+    (patch : FiniteThroatGeneratorPatch period hPeriod)
+    (point : EffectiveThroat period hPeriod) : Real :=
+  throatTangentPartition period hPeriod patch point
+
+theorem finiteThroatGeneratorWeight_contMDiff
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    ContMDiff throatCoverModelWithCorners 𝓘(Real, Real) ∞
+      (finiteThroatGeneratorWeight period hPeriod patch) :=
+  (throatTangentPartition period hPeriod patch).contMDiff
+
+/-- The partition weight as a genuine smooth scalar throat field. -/
+def finiteThroatGeneratorCutoff
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    SmoothThroatField period hPeriod Real where
+  toFun := finiteThroatGeneratorWeight period hPeriod patch
+  contMDiff_toFun := finiteThroatGeneratorWeight_contMDiff period hPeriod patch
+
+@[simp]
+theorem finiteThroatGeneratorCutoff_apply
+    (patch : FiniteThroatGeneratorPatch period hPeriod)
+    (point : EffectiveThroat period hPeriod) :
+    finiteThroatGeneratorCutoff period hPeriod patch point =
+      finiteThroatGeneratorWeight period hPeriod patch point :=
+  rfl
+
+theorem finiteThroatGeneratorWeight_nonneg
+    (patch : FiniteThroatGeneratorPatch period hPeriod)
+    (point : EffectiveThroat period hPeriod) :
+    0 ≤ finiteThroatGeneratorWeight period hPeriod patch point :=
+  (throatTangentPartition period hPeriod).nonneg patch point
+
+theorem finiteThroatGeneratorWeight_sum_eq_one
+    (point : EffectiveThroat period hPeriod) :
+    ∑ patch : FiniteThroatGeneratorPatch period hPeriod,
+      finiteThroatGeneratorWeight period hPeriod patch point = 1 := by
+  rw [← finsum_eq_sum_of_fintype]
+  exact (throatTangentPartition period hPeriod).sum_eq_one
+    (Set.mem_univ point)
+
+/-- Closed support of one selected throat partition weight. -/
+def finiteThroatGeneratorClosedPatch
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    Set (EffectiveThroat period hPeriod) :=
+  tsupport (finiteThroatGeneratorWeight period hPeriod patch)
+
+theorem finiteThroatGeneratorClosedPatch_isClosed
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    IsClosed (finiteThroatGeneratorClosedPatch period hPeriod patch) :=
+  isClosed_closure
+
+theorem finiteThroatGeneratorClosedPatch_isCompact
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    IsCompact (finiteThroatGeneratorClosedPatch period hPeriod patch) :=
+  (finiteThroatGeneratorClosedPatch_isClosed period hPeriod patch).isCompact
+
+theorem finiteThroatGeneratorClosedPatch_subset_openPatch
+    (patch : FiniteThroatGeneratorPatch period hPeriod) :
+    finiteThroatGeneratorClosedPatch period hPeriod patch ⊆
+      finiteThroatGeneratorOpenPatch period hPeriod patch :=
+  throatTangentPartition_subordinate period hPeriod patch
+
+/-- The finite closed partition supports cover the whole throat. -/
+theorem finiteThroatGeneratorClosedPatch_covers
+    (point : EffectiveThroat period hPeriod) :
+    ∃ patch : FiniteThroatGeneratorPatch period hPeriod,
+      point ∈ finiteThroatGeneratorClosedPatch period hPeriod patch := by
+  obtain ⟨patch, hPatch⟩ :=
+    (throatTangentPartition period hPeriod).exists_pos_of_mem
+      (Set.mem_univ point)
+  refine ⟨patch, subset_closure ?_⟩
+  exact ne_of_gt hPatch
+
 private abbrev ThroatBasisIndex :=
   Fin (Module.finrank Real ThroatCoverCoordinates)
 

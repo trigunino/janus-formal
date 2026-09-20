@@ -149,15 +149,16 @@ Development base: `dev-branch` at
 `5a4baef59a44995792144aee9cae8959aa372bbc`.
 This is a further partial Rellich step, NOT the completed LL Rellich theorem.
 
-Three modules are added:
+Four modules are added:
 
 - `P0EFTJanusProgramPT12LLCanonicalFrameH1Control4D.lean`
 - `P0EFTJanusProgramPT12LLCanonicalFrameH1Completion4D.lean`
 - `P0EFTJanusProgramPT12LLCanonicalFiniteFiberCompactness4D.lean`
+- `P0EFTJanusProgramPT12LLCanonicalThroatEuclideanRellichCore4D.lean`
 
 The inverse-on-range integration module imports the completion and finite-fiber
-modules; the completion module imports the control module. The existing facade
-therefore reaches all three transitively.
+modules; those import the control and throat Rellich modules. The existing
+facade therefore reaches all four transitively.
 
 ### Concrete estimates, not compactness premises
 
@@ -215,14 +216,19 @@ finite sum. Hence the canonical vector-valued energy embedding is compact iff
 each of its four scalar coordinate embeddings is compact. No compactness
 premise is introduced.
 
+The pre-existing finite smooth partition of unity on the actual throat is now
+publicly reusable. Each closed partition support is compact and lies in its
+selected chart. Transport to `EuclideanSpace Real (Fin 3)` gives, on every
+patch, the unconditional compact supported Euclidean `H1 -> L2` inclusion.
+
 ### What is still missing
 
 The repository's Euclidean fixed-support Rellich theorem is available in
 `RellichKondrachov/Analysis/FunctionalSpaces/Sobolev/Euclidean/Rellich.lean`.
-It is not silently assumed to apply to the throat. It now suffices to construct
-localized coordinate maps for the four scalar embeddings, with their actual
-derivative and volume-density bounds into Euclidean supported H1 spaces, and
-prove the finite-chart reconstruction.
+It is not silently assumed to apply to the throat. The local compact operators
+and finite cutoffs are now constructed. It remains to prove the actual
+derivative and volume-density bounds for the localized coordinate maps, then
+the finite-chart reconstruction for the four scalar embeddings.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
 The separate weak-solution membership in the original closed Jacobi domain,

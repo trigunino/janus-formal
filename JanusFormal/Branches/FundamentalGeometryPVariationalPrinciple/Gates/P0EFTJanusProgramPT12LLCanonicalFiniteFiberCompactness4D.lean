@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalH1L2Bridge4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLCanonicalThroatEuclideanRellichCore4D
 import Mathlib.Analysis.Normed.Operator.Compact.Basic
 
 /-! # Finite-fiber reduction of canonical LL Rellich compactness -/
