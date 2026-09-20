@@ -236,17 +236,21 @@ canonical LL frame. Its smooth reconstruction coefficients have a uniform
 bound on the compact throat, giving a single constant that controls the full
 finite-frame derivative energy by the canonical derivative energy.
 
+For each closed patch, a smooth plateau now extends every unweighted local
+chart vector to a global smooth tangent section. Canonical-frame
+reconstruction and compact coefficient bounds therefore control all inverse
+chart directional derivatives on that patch by the canonical LL energy.
+
 ### What is still missing
 
 The repository's Euclidean fixed-support Rellich theorem is available in
 `RellichKondrachov/Analysis/FunctionalSpaces/Sobolev/Euclidean/Rellich.lean`.
 It is not silently assumed to apply to the throat. The local compact operators
-and finite cutoffs are now constructed. It remains to construct the actual
-positive coordinate density and prove the derivative bounds for the localized
-coordinate maps. In particular, the unweighted local chart vectors still need
-smooth plateau extensions, since the partition weights may vanish at support
-boundaries. The resulting local bounds must then be assembled into the
-finite-chart reconstruction for the four scalar embeddings.
+and finite cutoffs are now constructed. It remains to transport the measured
+rank-three comparison through the actual quotient throat charts, thereby
+discharging the positive coordinate-density obligation. The resulting local
+measure and derivative bounds must then be assembled into the finite-chart
+reconstruction for the four scalar embeddings.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
 The separate weak-solution membership in the original closed Jacobi domain,
