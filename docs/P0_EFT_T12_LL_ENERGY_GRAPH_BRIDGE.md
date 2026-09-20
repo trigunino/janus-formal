@@ -230,6 +230,11 @@ public, and every local vector is identified with the derivative of the
 inverse preferred chart. The Lipschitz image-volume kernel now works in any
 finite rank, including the rank-three throat coordinates.
 
+The weighted finite partition frame is now compared exactly with the
+canonical LL frame. Its smooth reconstruction coefficients have a uniform
+bound on the compact throat, giving a single constant that controls the full
+finite-frame derivative energy by the canonical derivative energy.
+
 ### What is still missing
 
 The repository's Euclidean fixed-support Rellich theorem is available in
@@ -237,8 +242,10 @@ The repository's Euclidean fixed-support Rellich theorem is available in
 It is not silently assumed to apply to the throat. The local compact operators
 and finite cutoffs are now constructed. It remains to construct the actual
 positive coordinate density and prove the derivative bounds for the localized
-coordinate maps, then
-the finite-chart reconstruction for the four scalar embeddings.
+coordinate maps. In particular, the unweighted local chart vectors still need
+smooth plateau extensions, since the partition weights may vanish at support
+boundaries. The resulting local bounds must then be assembled into the
+finite-chart reconstruction for the four scalar embeddings.
 
 Thus `hRellich` remains outstanding in the previous compactness consequences.
 The separate weak-solution membership in the original closed Jacobi domain,
