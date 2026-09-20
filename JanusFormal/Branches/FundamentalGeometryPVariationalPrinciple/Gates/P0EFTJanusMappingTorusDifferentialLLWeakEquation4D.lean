@@ -268,6 +268,77 @@ private def throatTangentModelBasis :
 private abbrev ThroatGeneratorIndex :=
   ThroatAnchor period hPeriod × ThroatBasisIndex
 
+/-- Public finite basis index for the throat chart model. -/
+abbrev FiniteThroatGeneratorBasisIndex := ThroatBasisIndex
+
+/-- Public fixed basis of the three-dimensional throat chart model. -/
+def finiteThroatGeneratorModelBasis :
+    Basis FiniteThroatGeneratorBasisIndex Real ThroatCoverCoordinates :=
+  throatTangentModelBasis
+
+/-- Public index of all weighted finite throat tangent generators. -/
+abbrev FiniteThroatGeneratorIndex :=
+  FiniteThroatGeneratorPatch period hPeriod ×
+    FiniteThroatGeneratorBasisIndex
+
+/-- Unweighted local chart-frame vector on one selected throat patch. -/
+def finiteThroatGeneratorLocalVector
+    (patch : FiniteThroatGeneratorPatch period hPeriod)
+    (basisIndex : FiniteThroatGeneratorBasisIndex)
+    (point : EffectiveThroat period hPeriod) :
+    ThroatTangentFiber period hPeriod point :=
+  (throatTangentTrivialization period hPeriod patch.1).localFrame
+    finiteThroatGeneratorModelBasis basisIndex point
+
+/-- Model vector underlying one local throat generator. -/
+def finiteThroatGeneratorModelBasisVector
+    (basisIndex : FiniteThroatGeneratorBasisIndex) :
+    ThroatCoverCoordinates :=
+  finiteThroatGeneratorModelBasis basisIndex
+
+@[simp]
+theorem finiteThroatGeneratorModelBasis_apply
+    (basisIndex : FiniteThroatGeneratorBasisIndex) :
+    finiteThroatGeneratorModelBasis basisIndex =
+      finiteThroatGeneratorModelBasisVector basisIndex :=
+  rfl
+
+set_option backward.isDefEq.respectTransparency false in
+/-- On its selected patch, the unweighted throat generator is the derivative
+of the inverse preferred chart applied to its model-basis vector. -/
+theorem finiteThroatGeneratorLocalVector_eq_chartAt_inverseDerivative
+    (patch : FiniteThroatGeneratorPatch period hPeriod)
+    (basisIndex : FiniteThroatGeneratorBasisIndex)
+    (point : EffectiveThroat period hPeriod)
+    (hPoint : point ∈
+      finiteThroatGeneratorOpenPatch period hPeriod patch) :
+    finiteThroatGeneratorLocalVector
+        period hPeriod patch basisIndex point =
+      mfderivWithin
+        (modelWithCornersSelf Real ThroatCoverCoordinates)
+        throatCoverModelWithCorners
+        (extChartAt throatCoverModelWithCorners patch.1).symm
+        (Set.range throatCoverModelWithCorners)
+        (extChartAt throatCoverModelWithCorners patch.1 point)
+        (finiteThroatGeneratorModelBasisVector basisIndex) := by
+  have hChart : point ∈ (chartAt ThroatCoverModel patch.1).source := by
+    rw [← finiteThroatGeneratorOpenPatch_eq_chart_source
+      period hPeriod patch]
+    exact hPoint
+  have hBase : point ∈
+      (throatTangentTrivialization period hPeriod patch.1).baseSet := by
+    simpa [throatTangentTrivialization] using hChart
+  change
+    (throatTangentTrivialization period hPeriod patch.1).localFrame
+        throatTangentModelBasis basisIndex point = _
+  rw [Bundle.Trivialization.localFrame_apply_of_mem_baseSet _
+    throatTangentModelBasis hBase]
+  change
+    (throatTangentTrivialization period hPeriod patch.1).symmL Real point
+        (finiteThroatGeneratorModelBasisVector basisIndex) = _
+  rw [TangentBundle.symmL_trivializationAt hChart]
+  rfl
+
 private def throatGeneratorSection
     (index : ThroatGeneratorIndex period hPeriod)
     (point : EffectiveThroat period hPeriod) :
@@ -342,6 +413,12 @@ private def throatGeneratorIndexEquivFin :
       Fin (Fintype.card (ThroatGeneratorIndex period hPeriod)) :=
   Fintype.equivFin (ThroatGeneratorIndex period hPeriod)
 
+/-- Fixed enumeration of the public finite throat generator indices. -/
+def finiteThroatGeneratorIndexEquivFin :
+    FiniteThroatGeneratorIndex period hPeriod ≃
+      Fin (Fintype.card (FiniteThroatGeneratorIndex period hPeriod)) :=
+  throatGeneratorIndexEquivFin period hPeriod
+
 /-- Unconditional finite smooth tangent generators on the actual compact
 three-dimensional throat. -/
 def finiteSmoothThroatGeneratingFrame :
@@ -372,6 +449,23 @@ def finiteSmoothThroatGeneratingFrame :
   contMDiff_vector index :=
     throatGeneratorSection_contMDiff period hPeriod
       ((throatGeneratorIndexEquivFin period hPeriod).symm index)
+
+@[simp]
+theorem finiteSmoothThroatGeneratingFrame_vectorAt_generator
+    (point : EffectiveThroat period hPeriod)
+    (index : FiniteThroatGeneratorIndex period hPeriod) :
+    (finiteSmoothThroatGeneratingFrame period hPeriod).vectorAt point
+        (finiteThroatGeneratorIndexEquivFin period hPeriod index) =
+      finiteThroatGeneratorWeight period hPeriod index.1 point •
+        finiteThroatGeneratorLocalVector
+          period hPeriod index.1 index.2 point := by
+  simp [finiteSmoothThroatGeneratingFrame,
+    finiteThroatGeneratorIndexEquivFin,
+    throatGeneratorSection,
+    finiteThroatGeneratorWeight,
+    finiteThroatGeneratorLocalVector,
+    finiteThroatGeneratorModelBasis,
+    throatTangentModelBasis]
 
 universe u
 

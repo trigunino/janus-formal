@@ -225,6 +225,10 @@ the quotient chart. Canonical throat volume is pulled back to the patch and
 pushed forward exactly to coordinates; the coordinate measure is finite and
 carried by the Rellich support. A continuous positive coordinate-density
 certificate now yields the required finite two-sided Lebesgue comparison.
+The finite throat generator indices, model basis, and local vectors are also
+public, and every local vector is identified with the derivative of the
+inverse preferred chart. The Lipschitz image-volume kernel now works in any
+finite rank, including the rank-three throat coordinates.
 
 ### What is still missing
 

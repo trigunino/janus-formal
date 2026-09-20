@@ -441,6 +441,113 @@ theorem exists_stereographicConeInverse_lipschitzOn
   exact ⟨constant, neighborhood,
     mem_nhdsWithin_of_mem_nhds hNeighborhood, hLipschitz⟩
 
+theorem exists_volume_image_le_of_lipschitzOn_of_finrank
+    {dimension : Nat}
+    {Source Target : Type*}
+    [NormedAddCommGroup Source] [NormedSpace Real Source]
+    [FiniteDimensional Real Source]
+    [MeasureSpace Source] [BorelSpace Source]
+    [(volume : Measure Source).IsAddHaarMeasure]
+    [NormedAddCommGroup Target] [NormedSpace Real Target]
+    [FiniteDimensional Real Target]
+    [MeasureSpace Target] [BorelSpace Target]
+    [(volume : Measure Target).IsAddHaarMeasure]
+    (hRankSource : Module.finrank Real Source = dimension)
+    (hRankTarget : Module.finrank Real Target = dimension)
+    {map : Source → Target} {support : Set Source}
+    {constant : NNReal}
+    (hLipschitz : LipschitzOnWith constant map support) :
+    ∃ bound : ENNReal, bound ≠ ⊤ ∧
+      ∀ domain ⊆ support,
+        (volume : Measure Target) (map '' domain) ≤
+          bound * (volume : Measure Source) domain := by
+  letI :
+      (Measure.hausdorffMeasure (dimension : Real) :
+        Measure Source).IsAddHaarMeasure := by
+    simpa [hRankSource] using
+      (inferInstance :
+        (Measure.hausdorffMeasure
+          (Module.finrank Real Source) :
+          Measure Source).IsAddHaarMeasure)
+  letI :
+      (Measure.hausdorffMeasure (dimension : Real) :
+        Measure Target).IsAddHaarMeasure := by
+    simpa [hRankTarget] using
+      (inferInstance :
+        (Measure.hausdorffMeasure
+          (Module.finrank Real Target) :
+          Measure Target).IsAddHaarMeasure)
+  let sourceFactor : NNReal :=
+    addHaarScalarFactor
+      (volume : Measure Source)
+      (Measure.hausdorffMeasure dimension)
+  let targetFactor : NNReal :=
+    addHaarScalarFactor
+      (volume : Measure Target)
+      (Measure.hausdorffMeasure dimension)
+  have hSourceFactorPos : 0 < sourceFactor :=
+    addHaarScalarFactor_pos_of_isAddHaarMeasure
+      (volume : Measure Source)
+      (Measure.hausdorffMeasure dimension)
+  have hSourceFactorENNReal :
+      (sourceFactor : ENNReal) ≠ 0 := by
+    exact_mod_cast hSourceFactorPos.ne'
+  have hSourceMeasure :
+      (volume : Measure Source) =
+        sourceFactor •
+          (Measure.hausdorffMeasure dimension : Measure Source) :=
+    isAddLeftInvariant_eq_smul _ _
+  have hTargetMeasure :
+      (volume : Measure Target) =
+        targetFactor •
+          (Measure.hausdorffMeasure dimension : Measure Target) :=
+    isAddLeftInvariant_eq_smul _ _
+  let bound : ENNReal :=
+    (targetFactor : ENNReal) * (sourceFactor : ENNReal)⁻¹ *
+      (constant : ENNReal) ^ (dimension : Real)
+  refine ⟨bound, ?_, ?_⟩
+  · dsimp [bound]
+    exact ENNReal.mul_ne_top
+      (ENNReal.mul_ne_top ENNReal.coe_ne_top
+        (ENNReal.inv_ne_top.2 hSourceFactorENNReal))
+      (ENNReal.rpow_ne_top_of_nonneg (by positivity)
+        ENNReal.coe_ne_top)
+  intro domain hDomain
+  have hHausdorff :=
+    (hLipschitz.mono hDomain).hausdorffMeasure_image_le
+      (show (0 : Real) ≤ dimension by positivity)
+  rw [hTargetMeasure, hSourceMeasure,
+    Measure.smul_apply, Measure.smul_apply]
+  calc
+    (targetFactor : ENNReal) *
+        (Measure.hausdorffMeasure dimension : Measure Target)
+          (map '' domain) ≤
+      (targetFactor : ENNReal) *
+        ((constant : ENNReal) ^ (dimension : Real) *
+          (Measure.hausdorffMeasure dimension : Measure Source) domain) :=
+      mul_le_mul_left' hHausdorff _
+    _ = bound *
+        ((sourceFactor : ENNReal) *
+          (Measure.hausdorffMeasure dimension : Measure Source) domain) := by
+      dsimp [bound]
+      rw [show
+        ((targetFactor : ENNReal) *
+              (sourceFactor : ENNReal)⁻¹ *
+              (constant : ENNReal) ^ (dimension : Real)) *
+            ((sourceFactor : ENNReal) *
+              (Measure.hausdorffMeasure dimension :
+                Measure Source) domain) =
+          (targetFactor : ENNReal) *
+            (constant : ENNReal) ^ (dimension : Real) *
+            ((sourceFactor : ENNReal)⁻¹ *
+              (sourceFactor : ENNReal)) *
+            (Measure.hausdorffMeasure dimension :
+              Measure Source) domain by ac_rfl]
+      rw [ENNReal.inv_mul_cancel hSourceFactorENNReal
+        ENNReal.coe_ne_top, mul_one]
+      ac_rfl
+
+/-- Rank-four specialization retained for the spacetime cone charts. -/
 theorem exists_volume_image_le_of_lipschitzOn
     {Source Target : Type*}
     [NormedAddCommGroup Source] [NormedSpace Real Source]
@@ -459,92 +566,9 @@ theorem exists_volume_image_le_of_lipschitzOn
     ∃ bound : ENNReal, bound ≠ ⊤ ∧
       ∀ domain ⊆ support,
         (volume : Measure Target) (map '' domain) ≤
-          bound * (volume : Measure Source) domain := by
-  letI :
-      (Measure.hausdorffMeasure (4 : Real) :
-        Measure Source).IsAddHaarMeasure := by
-    simpa [hRankSource] using
-      (inferInstance :
-        (Measure.hausdorffMeasure
-          (Module.finrank Real Source) :
-          Measure Source).IsAddHaarMeasure)
-  letI :
-      (Measure.hausdorffMeasure (4 : Real) :
-        Measure Target).IsAddHaarMeasure := by
-    simpa [hRankTarget] using
-      (inferInstance :
-        (Measure.hausdorffMeasure
-          (Module.finrank Real Target) :
-          Measure Target).IsAddHaarMeasure)
-  let sourceFactor : NNReal :=
-    addHaarScalarFactor
-      (volume : Measure Source)
-      (Measure.hausdorffMeasure 4)
-  let targetFactor : NNReal :=
-    addHaarScalarFactor
-      (volume : Measure Target)
-      (Measure.hausdorffMeasure 4)
-  have hSourceFactorPos : 0 < sourceFactor :=
-    addHaarScalarFactor_pos_of_isAddHaarMeasure
-      (volume : Measure Source)
-      (Measure.hausdorffMeasure 4)
-  have hSourceFactorENNReal :
-      (sourceFactor : ENNReal) ≠ 0 := by
-    exact_mod_cast hSourceFactorPos.ne'
-  have hSourceMeasure :
-      (volume : Measure Source) =
-        sourceFactor •
-          (Measure.hausdorffMeasure 4 : Measure Source) :=
-    isAddLeftInvariant_eq_smul _ _
-  have hTargetMeasure :
-      (volume : Measure Target) =
-        targetFactor •
-          (Measure.hausdorffMeasure 4 : Measure Target) :=
-    isAddLeftInvariant_eq_smul _ _
-  let bound : ENNReal :=
-    (targetFactor : ENNReal) * (sourceFactor : ENNReal)⁻¹ *
-      (constant : ENNReal) ^ (4 : Real)
-  refine ⟨bound, ?_, ?_⟩
-  · dsimp [bound]
-    exact ENNReal.mul_ne_top
-      (ENNReal.mul_ne_top ENNReal.coe_ne_top
-        (ENNReal.inv_ne_top.2 hSourceFactorENNReal))
-      (ENNReal.rpow_ne_top_of_nonneg (by norm_num)
-        ENNReal.coe_ne_top)
-  intro domain hDomain
-  have hHausdorff :=
-    (hLipschitz.mono hDomain).hausdorffMeasure_image_le
-      (show (0 : Real) ≤ 4 by norm_num)
-  rw [hTargetMeasure, hSourceMeasure,
-    Measure.smul_apply, Measure.smul_apply]
-  calc
-    (targetFactor : ENNReal) *
-        (Measure.hausdorffMeasure 4 : Measure Target)
-          (map '' domain) ≤
-      (targetFactor : ENNReal) *
-        ((constant : ENNReal) ^ (4 : Real) *
-          (Measure.hausdorffMeasure 4 : Measure Source) domain) :=
-      mul_le_mul_left' hHausdorff _
-    _ = bound *
-        ((sourceFactor : ENNReal) *
-          (Measure.hausdorffMeasure 4 : Measure Source) domain) := by
-      dsimp [bound]
-      rw [show
-        ((targetFactor : ENNReal) *
-              (sourceFactor : ENNReal)⁻¹ *
-              (constant : ENNReal) ^ (4 : Real)) *
-            ((sourceFactor : ENNReal) *
-              (Measure.hausdorffMeasure 4 :
-                Measure Source) domain) =
-          (targetFactor : ENNReal) *
-            (constant : ENNReal) ^ (4 : Real) *
-            ((sourceFactor : ENNReal)⁻¹ *
-              (sourceFactor : ENNReal)) *
-            (Measure.hausdorffMeasure 4 :
-              Measure Source) domain by ac_rfl]
-      rw [ENNReal.inv_mul_cancel hSourceFactorENNReal
-        ENNReal.coe_ne_top, mul_one]
-      ac_rfl
+          bound * (volume : Measure Source) domain :=
+  exists_volume_image_le_of_lipschitzOn_of_finrank
+    (dimension := 4) hRankSource hRankTarget hLipschitz
 
 theorem stereographicConeMap_exists_volume_image_bound
     (pole : StandardSphere)
