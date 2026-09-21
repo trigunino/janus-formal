@@ -366,8 +366,11 @@ range, finite-dimensional kernel and cokernel, and index zero by
 self-adjointness.  The physical compact-family certificate records these
 Fredholm conclusions.  The fibres with no zero mode form an open parameter
 locus, so invertibility persists locally around every nondegenerate fibre.
+On the canonical reduced Hilbert chart, the seven-block physical extension is
+now constructed and the complete Fredholm/index-zero packet follows without
+an independent physical-extension input.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
-remains open: the physical extension is still supplied as input, full
+remains open: constructing the reduced chart from analytic closure data, full
 smooth-core/operator identification, geometric Weyl estimates, varying
 defect-space control, and the global Quillen/Bismut--Freed bridge remain.
