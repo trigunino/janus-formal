@@ -297,16 +297,22 @@ have unconditional compactness corollaries in a downstream non-cyclic module.
 The weak solution is now in the adjoint domain with the expected shifted
 residual. The canonical Friedrichs realization extends the original closed
 Jacobi graph and has compact inverse; all its nonnegative shifts are bijective
-and their ambient resolvents are compact.
+and their ambient resolvents are compact. The squared real shifts now form an
+explicit spectral--LL family on one dense common domain. Its zero fibre is the
+unshifted global Friedrichs product, every fibre is Fredholm under the existing
+D9 hypothesis, every fibre is self-adjoint and closed, and the compact LL
+resolvents vary continuously in operator norm. The preferred actual operator at
+zero is also decomposed exactly on the minimal matter--LL slice into this
+Friedrichs pairing plus the explicit local seven-block residual.
 Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The finite D9 graph,
 primitive SpinC matter graph, and reduced LL smooth core now have an exact
 separated pairing. The matter--LL slice survives the minimal physical kernel
 quotient and embeds injectively in the local chart. At the same-action bridge
 base point, that chart's local matter--LL Hessian is exactly the Friedrichs
-product pairing. Embedding D9 in a compatible gauge-fixed chart, the parameter
-family, and terminal T12 remain. No new axioms or proof placeholders are
-introduced.
+product pairing. Embedding D9 in a compatible gauge-fixed chart, identifying
+the remaining local seven-block residual, and terminal T12 remain. No new
+axioms or proof placeholders are introduced.
 
 ### Focused build for these additions
 
@@ -314,5 +320,5 @@ introduced.
 lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D
 ```
 
-This focused target passed locally with 9,906 jobs. Essential self-adjointness,
-strong-domain surjectivity, and terminal T12 remain separate.
+This focused target passed locally in a one-thread, 16 GB capped Lean run.
+Equality with the original strong domain and terminal T12 remain separate.
