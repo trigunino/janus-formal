@@ -107,7 +107,7 @@ abbrev GlobalCandidateAActualNamedKernelCoercivity4D
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] :=
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] :=
   SelfAdjointNamedKernelCoercivityData
     (globalCandidateAActualKernelOperator period hPeriod (measure := measure) configuration data
       analysis
@@ -155,7 +155,7 @@ def global_candidateA_hessian_canonicalSix_namedMode_frontier_gate
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (named : GlobalCandidateAActualNamedKernelCoercivity4D period hPeriod
       (measure := measure) configuration data analysis einsteinScale hTransverse family chartBound
         ZeroMode)
@@ -211,7 +211,7 @@ theorem global_candidateA_hessian_namedMode_kernel_synthesis
             analysis einsteinScale hTransverse family)
           (globalCandidateAActualKernelSameAction period hPeriod (measure := measure) configuration
             data analysis einsteinScale hTransverse family)))
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode]
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode]
     (named : GlobalCandidateAActualNamedKernelCoercivity4D period hPeriod
       (measure := measure) configuration data analysis einsteinScale hTransverse family chartBound
         ZeroMode) :

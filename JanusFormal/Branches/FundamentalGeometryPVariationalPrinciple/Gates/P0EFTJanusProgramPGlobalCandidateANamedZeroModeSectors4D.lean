@@ -65,7 +65,7 @@ structure CandidateASectorClassifiedNamedKernelCoercivity
     [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
     (operator : E →L[Real] E)
     (hSelfAdjoint : IsSelfAdjoint operator)
-    (ZeroMode : Type*) [Fintype ZeroMode] [DecidableEq ZeroMode] where
+    (ZeroMode : Type) [Fintype ZeroMode] [DecidableEq ZeroMode] where
   named : SelfAdjointNamedKernelCoercivityData operator hSelfAdjoint ZeroMode
   classification : CandidateAZeroModeSectorClassification ZeroMode
 
@@ -75,7 +75,7 @@ theorem CandidateASectorClassifiedNamedKernelCoercivity.kernel_finrank_eq_sum
     [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : CandidateASectorClassifiedNamedKernelCoercivity operator
       hSelfAdjoint ZeroMode) :
     Module.finrank Real operator.ker =
@@ -90,7 +90,7 @@ theorem global_candidateA_named_zero_mode_sector_gate
     [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
     {operator : E →L[Real] E}
     {hSelfAdjoint : IsSelfAdjoint operator}
-    {ZeroMode : Type*} [Fintype ZeroMode] [DecidableEq ZeroMode]
+    {ZeroMode : Type} [Fintype ZeroMode] [DecidableEq ZeroMode]
     (data : CandidateASectorClassifiedNamedKernelCoercivity operator
       hSelfAdjoint ZeroMode) :
     Nonempty (SelfAdjointKernelComplementGapData operator hSelfAdjoint) ∧
