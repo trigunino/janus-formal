@@ -380,6 +380,12 @@ Assuming intrinsic nuclear expansions for these exact logarithmic derivatives,
 their canonical trace and Bismut--Freed coefficient are now defined with
 expansion independence.  Proving that nuclearity remains open; compactness
 alone does not imply it.
+Given an existing relative heat/Mellin/zeta family whose coefficient agrees
+with that exact trace on the nondegenerate locus, the physical
+Bismut--Freed connection, parallel determinant coordinate, finite-part metric
+variation, determinant norm, and unitary phase now follow from the existing
+generic Quillen machinery.  Constructing the full physical heat/Mellin family
+and proving the coefficient agreement remain analytic inputs.
 The weakest reduced dense-core topological closure now constructs the reduced
 chart and immediately yields this canonical physical packet and its
 nondegenerate determinant line.  The closure data itself remains analytic
@@ -388,6 +394,10 @@ For D9, a time-independent inverse-square summability hypothesis now implies
 positive-time heat summability and the existing nuclear D9 heat certificate.
 This remains a D9 block result, not a heat theorem for the full physical
 perturbation.
+The D9, unconditional SpinC matter, and LL certificates are now assembled at
+one positive heat time into a single reference-D11 block packet.  It remains
+blockwise; transferring heat nuclearity through the physical compact
+perturbation still requires a Schatten/Duhamel theorem.
 On the actual augmented graph, the canonical BRST Riesz pairing and the second
 derivative of the canonical action now agree with the complete smooth-core
 Hessian.  Identifying that operator with the Friedrichs fibre still requires
