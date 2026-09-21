@@ -163,7 +163,7 @@ structure StrongToH11PhysicalSecondJet
             configuration data analysis second)
 
 /-- Dense-core Hessian cancellation determines the full physical Riesz image. -/
-private theorem physicalRiesz_core_zero_of_hessian_column_zero
+theorem physicalRiesz_core_zero_of_hessian_column_zero
     {couplings : GlobalCandidateAActionCouplings}
     {NonNullFace NullFace : Type*}
     [Fintype NonNullFace] [Fintype NullFace]
