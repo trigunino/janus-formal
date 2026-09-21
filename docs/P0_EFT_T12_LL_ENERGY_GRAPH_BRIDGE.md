@@ -382,8 +382,12 @@ For D9, a time-independent inverse-square summability hypothesis now implies
 positive-time heat summability and the existing nuclear D9 heat certificate.
 This remains a D9 block result, not a heat theorem for the full physical
 perturbation.
+On the actual augmented graph, the canonical BRST Riesz pairing and the second
+derivative of the canonical action now agree with the complete smooth-core
+Hessian.  Identifying that operator with the Friedrichs fibre still requires
+the missing graph-norm-controlled D9/physical intertwiner.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
-smooth-core/operator identification, geometric Weyl estimates, varying
+Friedrichs-to-actual graph intertwining, geometric Weyl estimates, varying
 defect-space control, and the global Quillen/Bismut--Freed bridge remain.
