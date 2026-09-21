@@ -374,6 +374,8 @@ rank-one algebraic determinant-line certificate from any chosen base point.
 There is also an explicit two-sided physical Green operator on this locus.  It
 is continuous at every nondegenerate parameter, differs compactly from the
 stabilized reference inverse, and its logarithmic derivative is compact.
+It is operator-norm differentiable there and satisfies the exact inverse
+identity `R' = -R A' R`.
 The weakest reduced dense-core topological closure now constructs the reduced
 chart and immediately yields this canonical physical packet and its
 nondegenerate determinant line.  The closure data itself remains analytic
