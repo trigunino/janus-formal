@@ -368,7 +368,9 @@ Fredholm conclusions.  The fibres with no zero mode form an open parameter
 locus, so invertibility persists locally around every nondegenerate fibre.
 On the canonical reduced Hilbert chart, the seven-block physical extension is
 now constructed and the complete Fredholm/index-zero packet follows without
-an independent physical-extension input.
+an independent physical-extension input.  Restricting to the open
+nondegenerate locus gives a zero-defect Fredholm family and a coherent
+rank-one algebraic determinant-line certificate from any chosen base point.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
