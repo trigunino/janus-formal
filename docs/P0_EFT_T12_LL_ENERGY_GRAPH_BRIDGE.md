@@ -420,17 +420,20 @@ On the actual augmented graph, the canonical BRST Riesz pairing and the second
 derivative of the canonical action now agree with the complete smooth-core
 Hessian.  Identifying that operator with the Friedrichs fibre still requires
 the missing graph-norm-controlled D9/physical intertwiner.
-The minimal required intertwiner is now typed: an ambient linear isometry,
-smooth-core domain membership, and zero-fibre operator intertwining imply the
-full Friedrichs pairing equals the canonical action second derivative.  Its
-construction remains open.  Once supplied, density of the smooth core and
-closedness of the zero fibre extend domain membership and intertwining to the
-entire actual Hilbert space along the isometric image; surjectivity remains
-separate.
+The earlier ambient-isometry intertwiner remains only a conditional packet:
+it compares the bounded graph-norm Riesz map directly with an unbounded
+Friedrichs operator and is not the canonical construction route.  The honest
+unconditional comparison is now proved on the reduced smooth matter--LL
+slice.  The Friedrichs-zero pairing minus the actual graph pairing is exactly
+the transported physical form minus the actual physical form; equality of
+the two operator pairings is equivalent to equality of those two forms.
+Extending this comparison requires that transport-form identity, a D9
+actual-to-spectral modal core map, and target L2/relative bounds for the seven
+physical blocks.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
-Friedrichs-to-actual graph intertwining, the geometric LL Weyl datum, the
+actual-to-Friedrichs common-core form matching, the geometric LL Weyl datum, the
 LL-restricted weighted nuclear estimate, varying
 defect-space control, and the physical relative nuclear heat/Duhamel
 finite-part and reality statements remain.  The generic
