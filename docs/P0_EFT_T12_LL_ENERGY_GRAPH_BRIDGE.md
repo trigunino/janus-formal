@@ -301,9 +301,16 @@ and their ambient resolvents are compact. The squared real shifts now form an
 explicit spectral--LL family on one dense common domain. Its zero fibre is the
 unshifted global Friedrichs product, every fibre is Fredholm under the existing
 D9 hypothesis, every fibre is self-adjoint and closed, and the compact LL
-resolvents vary continuously in operator norm. The preferred actual operator at
-zero is also decomposed exactly on the minimal matter--LL slice into this
-Friedrichs pairing plus the explicit local seven-block residual.
+resolvents vary continuously in operator norm. Because the shifted LL block is
+bijective, the full family's kernel and range are exactly the lifted spectral
+kernel and range; its kernel and cokernel dimensions are constant in the
+parameter. The preferred actual operator at zero is also decomposed exactly on
+the minimal matter--LL slice into this
+Friedrichs pairing plus the explicit local seven-block residual. That residual
+is now both expanded into its seven physical Hessians and identified with the
+canonical stable-physical Riesz pairing. Consequently, agreement with the zero
+Friedrichs fibre on this slice is equivalent exactly to vanishing of that Riesz
+pairing.
 Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The finite D9 graph,
 primitive SpinC matter graph, and reduced LL smooth core now have an exact
