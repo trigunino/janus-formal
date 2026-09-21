@@ -381,11 +381,19 @@ their canonical trace and Bismut--Freed coefficient are now defined with
 expansion independence.  Proving that nuclearity remains open; compactness
 alone does not imply it.
 Given an existing relative heat/Mellin/zeta family whose coefficient agrees
-with that exact trace on the nondegenerate locus, the physical
-Bismut--Freed connection, parallel determinant coordinate, finite-part metric
-variation, determinant norm, and unitary phase now follow from the existing
-generic Quillen machinery.  Constructing the full physical heat/Mellin family
-and proving the coefficient agreement remain analytic inputs.
+with that absolute trace on the nondegenerate locus, an explicitly
+absolute/reference-zero Bismut--Freed adapter now follows from the existing
+generic Quillen machinery.  It is not the physical-minus-D11 comparison.
+For the correct relative determinant, the physical-minus-D11 logarithmic
+derivative is now factored exactly as the negative two-resolvent sandwich
+`S (J (K-Q)) S V`.  A generic square-summable diagonal sandwich theorem
+constructs its nuclear expansion from two explicit l2 estimates.  Fixed-basis
+data carrying those estimates and ambient trace uniqueness now produce the
+intrinsic relative trace, and coefficient agreement with any existing
+relative heat/Mellin/zeta family gives the relative Bismut--Freed connection,
+parallel determinant, metric variation, norm, and phase.  Constructing the
+ambient basis, the missing SpinC matter Schatten estimate, and the physical
+relative heat/Mellin coefficient agreement remain analytic inputs.
 The weakest reduced dense-core topological closure now constructs the reduced
 chart and immediately yields this canonical physical packet and its
 nondegenerate determinant line.  The closure data itself remains analytic

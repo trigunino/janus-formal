@@ -1,15 +1,16 @@
-import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalNondegenerateLogarithmicTraceFrontier4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRelativeLogarithmicNuclear4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 
 /-!
-Conditional absolute/reference-zero Bismut--Freed bridge on the physical
-nondegenerate locus.  It identifies an absolute Mellin/zeta coefficient with
-the intrinsic physical logarithmic trace.  It does not identify the relative
-physical-minus-D11 determinant connection.
+# Relative physical Bismut--Freed bridge
+
+This conditional bridge identifies the Mellin/zeta connection coefficient
+with the intrinsic trace of the exact physical-minus-D11 logarithmic
+derivative on the physical nondegenerate locus.
 -/
 
 namespace JanusFormal
-namespace P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalNondegenerateBismutFreedBridge4D
+namespace P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRelativeBismutFreedBridge4D
 
 set_option autoImplicit false
 noncomputable section
@@ -37,8 +38,7 @@ open P0EFTJanusProgramPRelativeHeatFinitePartFamily4D
 open P0EFTJanusProgramPRelativeHeatMellinZetaFamily4D
 open P0EFTJanusProgramPRelativeZetaDeterminantConnection4D
 open P0EFTJanusProgramPRelativeZetaFinitePartFamily4D
-open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalNondegenerateLogarithmicTraceFrontier4D
-open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalNondegenerateLocus4D
+open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRelativeLogarithmicNuclear4D
 
 attribute [local instance]
   programPGlobalGaugeFixedSpectralHessianHilbertRealInnerProductSpace
@@ -81,55 +81,50 @@ variable (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridg
 variable (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D
   period hPeriod configuration data analysis chart sameAction)
 
-/-- An absolute physical logarithmic trace and an absolute/reference-zero
-Mellin/zeta family computing the same coefficient.  Relative comparison with
-the D11 reference is a separate bridge. -/
-structure PhysicalNondegenerateBismutFreedBridgeData
+/-- Nuclear physical-minus-D11 logarithmic trace together with the honest
+relative Mellin/zeta family computing the same Bismut--Freed coefficient. -/
+structure PhysicalRelativeBismutFreedBridgeData
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     (d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector) where
-  traceData : PhysicalNondegenerateLogarithmicTraceData
+  relativeNuclear : PhysicalRelativeLogarithmicNuclearInput4D
     period hPeriod configuration data analysis chart sameAction physical
       d9Ellipticity
   zetaFamily : RelativeHeatMellinZetaFamilyData
-  coefficient_agreement : ∀ parameter : PhysicalNondegenerateParameter
+  coefficient_agreement : ∀ parameter : PhysicalRelativeNondegenerateParameter
       period hPeriod configuration data analysis chart sameAction physical
         covector,
     relativeZetaConnectionCoefficient zetaFamily.toZetaFamily parameter.1 =
-      PhysicalNondegenerateLogarithmicTraceData.bismutFreedCoefficient
-        period hPeriod configuration data analysis chart sameAction physical
-          traceData parameter
+      relativeNuclear.bismutFreedCoefficient period hPeriod configuration data
+        analysis chart sameAction physical parameter
 
-namespace PhysicalNondegenerateBismutFreedBridgeData
+namespace PhysicalRelativeBismutFreedBridgeData
 
-/-- Physical Bismut--Freed connection on a scalar first jet. -/
+/-- Relative Bismut--Freed connection on a scalar first jet. -/
 def connectionAt
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     {d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    (bridge : PhysicalNondegenerateBismutFreedBridgeData
+    (bridge : PhysicalRelativeBismutFreedBridgeData
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity)
-    (parameter : PhysicalNondegenerateParameter
-      period hPeriod configuration data analysis chart sameAction physical
-        covector)
+    (parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+      configuration data analysis chart sameAction physical covector)
     (value derivative : Complex) : Complex :=
   derivative +
-    PhysicalNondegenerateLogarithmicTraceData.bismutFreedCoefficient
-      period hPeriod configuration data analysis chart sameAction physical
-        bridge.traceData parameter * value
+    bridge.relativeNuclear.bismutFreedCoefficient period hPeriod configuration
+      data analysis chart sameAction physical parameter * value
 
-/-- The physical trace connection is the existing zeta connection. -/
+/-- The relative physical trace connection is the zeta connection. -/
 theorem connectionAt_eq_zeta
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     {d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    (bridge : PhysicalNondegenerateBismutFreedBridgeData
+    (bridge : PhysicalRelativeBismutFreedBridgeData
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity)
-    (parameter : PhysicalNondegenerateParameter
-      period hPeriod configuration data analysis chart sameAction physical
-        covector)
+    (parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+      configuration data analysis chart sameAction physical covector)
     (value derivative : Complex) :
     bridge.connectionAt period hPeriod configuration data analysis chart
         sameAction physical parameter value derivative =
@@ -138,18 +133,17 @@ theorem connectionAt_eq_zeta
   unfold connectionAt relativeZetaConnectionAt
   rw [← bridge.coefficient_agreement parameter]
 
-/-- The physical zeta determinant is parallel for the intrinsic trace
-connection. -/
+/-- The relative zeta determinant is parallel for the intrinsic
+physical-minus-D11 trace connection. -/
 theorem determinant_parallel
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     {d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    (bridge : PhysicalNondegenerateBismutFreedBridgeData
+    (bridge : PhysicalRelativeBismutFreedBridgeData
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity)
-    (parameter : PhysicalNondegenerateParameter
-      period hPeriod configuration data analysis chart sameAction physical
-        covector) :
+    (parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+      configuration data analysis chart sameAction physical covector) :
     bridge.connectionAt period hPeriod configuration data analysis chart
         sameAction physical parameter
         (relativeHeatMellinZetaFamilyDeterminant bridge.zetaFamily parameter.1)
@@ -159,121 +153,108 @@ theorem determinant_parallel
   exact relativeZetaDeterminantCoordinate_parallel
     bridge.zetaFamily.toZetaFamily parameter.1
 
-/-- The finite-part logarithmic derivative is the physical intrinsic trace. -/
+/-- The finite-part logarithmic derivative is the intrinsic
+physical-minus-D11 logarithmic trace. -/
 theorem finitePart_logDerivative_eq_trace
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     {d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    (bridge : PhysicalNondegenerateBismutFreedBridgeData
+    (bridge : PhysicalRelativeBismutFreedBridgeData
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity)
-    (parameter : PhysicalNondegenerateParameter
-      period hPeriod configuration data analysis chart sameAction physical
-        covector) :
+    (parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+      configuration data analysis chart sameAction physical covector) :
     bridge.zetaFamily.finitePartFamily.logDerivative parameter.1 =
-      PhysicalNondegenerateLogarithmicTraceData.trace
-        period hPeriod configuration data analysis chart sameAction physical
-          bridge.traceData parameter := by
+      bridge.relativeNuclear.trace period hPeriod configuration data analysis
+        chart sameAction physical parameter := by
   calc
     bridge.zetaFamily.finitePartFamily.logDerivative parameter.1 =
         -(bridge.zetaFamily.parameterDerivative parameter.1).re :=
       bridge.zetaFamily.connection_realPart parameter.1
-    _ = -(
-        PhysicalNondegenerateLogarithmicTraceData.bismutFreedCoefficient
-          period hPeriod configuration data analysis chart sameAction physical
-            bridge.traceData parameter).re := by
+    _ = -(bridge.relativeNuclear.bismutFreedCoefficient period hPeriod
+        configuration data analysis chart sameAction physical parameter).re := by
       exact congrArg (fun value : Complex ↦ -value.re)
         (bridge.coefficient_agreement parameter)
-    _ = PhysicalNondegenerateLogarithmicTraceData.trace
-        period hPeriod configuration data analysis chart sameAction physical
-          bridge.traceData parameter := by
-      rw [PhysicalNondegenerateLogarithmicTraceData.bismutFreedCoefficient_re]
+    _ = bridge.relativeNuclear.trace period hPeriod configuration data analysis
+        chart sameAction physical parameter := by
+      rw [PhysicalRelativeLogarithmicNuclearInput4D.bismutFreedCoefficient_re]
       ring
 
-/-- Quillen metric variation expressed by the physical intrinsic trace. -/
+/-- Relative Quillen metric variation expressed by the intrinsic trace. -/
 theorem metricWeightDerivative_eq_trace
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     {d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    (bridge : PhysicalNondegenerateBismutFreedBridgeData
+    (bridge : PhysicalRelativeBismutFreedBridgeData
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity)
-    (parameter : PhysicalNondegenerateParameter
-      period hPeriod configuration data analysis chart sameAction physical
-        covector) :
+    (parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+      configuration data analysis chart sameAction physical covector) :
     relativeHeatFinitePartMetricWeightDerivative
         bridge.zetaFamily.finitePartFamily parameter.1 =
-      2 * PhysicalNondegenerateLogarithmicTraceData.trace
-          period hPeriod configuration data analysis chart sameAction physical
-            bridge.traceData parameter *
+      2 * bridge.relativeNuclear.trace period hPeriod configuration data
+          analysis chart sameAction physical parameter *
         relativeHeatFinitePartMetricWeight
           bridge.zetaFamily.finitePartFamily parameter.1 := by
   unfold relativeHeatFinitePartMetricWeightDerivative
   rw [bridge.finitePart_logDerivative_eq_trace]
 
-/-- The physical determinant coordinate has the finite-part norm. -/
+/-- The relative determinant coordinate has the finite-part norm. -/
 theorem determinant_norm_eq_finitePart
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     {d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    (bridge : PhysicalNondegenerateBismutFreedBridgeData
+    (bridge : PhysicalRelativeBismutFreedBridgeData
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity)
-    (parameter : PhysicalNondegenerateParameter
-      period hPeriod configuration data analysis chart sameAction physical
-        covector) :
+    (parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+      configuration data analysis chart sameAction physical covector) :
     ‖relativeHeatMellinZetaFamilyDeterminant bridge.zetaFamily parameter.1‖ =
       relativeHeatFinitePartDeterminantFamily
         bridge.zetaFamily.finitePartFamily parameter.1 :=
   norm_relativeHeatMellinZetaFamilyDeterminant bridge.zetaFamily parameter.1
 
-/-- The normalized physical determinant phase is unitary. -/
+/-- The normalized relative determinant phase is unitary. -/
 theorem phase_norm_one
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     {d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    (bridge : PhysicalNondegenerateBismutFreedBridgeData
+    (bridge : PhysicalRelativeBismutFreedBridgeData
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity)
-    (parameter : PhysicalNondegenerateParameter
-      period hPeriod configuration data analysis chart sameAction physical
-        covector) :
+    (parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+      configuration data analysis chart sameAction physical covector) :
     ‖relativeZetaFinitePartPhase bridge.zetaFamily.toFinitePartComparison
         parameter.1‖ = 1 :=
   relativeHeatMellinZetaFamily_phase_norm_one bridge.zetaFamily parameter.1
 
-/-- Public conditional absolute/reference-zero Bismut--Freed checkpoint. -/
+/-- Public conditional relative physical Bismut--Freed checkpoint. -/
 theorem gate
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
     {d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector}
-    (bridge : PhysicalNondegenerateBismutFreedBridgeData
+    (bridge : PhysicalRelativeBismutFreedBridgeData
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity) :
-    (∀ parameter : PhysicalNondegenerateParameter
-        period hPeriod configuration data analysis chart sameAction physical
-          covector,
+    (∀ parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+        configuration data analysis chart sameAction physical covector,
       bridge.connectionAt period hPeriod configuration data analysis chart
           sameAction physical parameter
           (relativeHeatMellinZetaFamilyDeterminant bridge.zetaFamily parameter.1)
           (relativeZetaDeterminantCoordinateDerivative
             bridge.zetaFamily.toZetaFamily parameter.1) = 0) ∧
-    (∀ parameter : PhysicalNondegenerateParameter
-        period hPeriod configuration data analysis chart sameAction physical
-          covector,
+    (∀ parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+        configuration data analysis chart sameAction physical covector,
       bridge.zetaFamily.finitePartFamily.logDerivative parameter.1 =
-        PhysicalNondegenerateLogarithmicTraceData.trace
-          period hPeriod configuration data analysis chart sameAction physical
-            bridge.traceData parameter) ∧
-    (∀ parameter : PhysicalNondegenerateParameter
-        period hPeriod configuration data analysis chart sameAction physical
-          covector,
+        bridge.relativeNuclear.trace period hPeriod configuration data analysis
+          chart sameAction physical parameter) ∧
+    (∀ parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+        configuration data analysis chart sameAction physical covector,
       ‖relativeHeatMellinZetaFamilyDeterminant bridge.zetaFamily parameter.1‖ =
         relativeHeatFinitePartDeterminantFamily
           bridge.zetaFamily.finitePartFamily parameter.1) ∧
-    (∀ parameter : PhysicalNondegenerateParameter
-        period hPeriod configuration data analysis chart sameAction physical
-          covector,
+    (∀ parameter : PhysicalRelativeNondegenerateParameter period hPeriod
+        configuration data analysis chart sameAction physical covector,
       ‖relativeZetaFinitePartPhase bridge.zetaFamily.toFinitePartComparison
           parameter.1‖ = 1) :=
   ⟨bridge.determinant_parallel,
@@ -281,8 +262,8 @@ theorem gate
     bridge.determinant_norm_eq_finitePart,
     bridge.phase_norm_one⟩
 
-end PhysicalNondegenerateBismutFreedBridgeData
+end PhysicalRelativeBismutFreedBridgeData
 end Physical
 end
-end P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalNondegenerateBismutFreedBridge4D
+end P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRelativeBismutFreedBridge4D
 end JanusFormal
