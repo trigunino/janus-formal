@@ -296,7 +296,8 @@ closed-graph embedding and every nonnegative shifted weak solution operator now
 have unconditional compactness corollaries in a downstream non-cyclic module.
 The weak solution is now in the adjoint domain with the expected shifted
 residual. The canonical Friedrichs realization extends the original closed
-Jacobi graph and has compact inverse; its nonnegative shifts are surjective.
+Jacobi graph and has compact inverse; all its nonnegative shifts are bijective
+and their ambient resolvents are compact.
 Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The finite D9 graph,
 primitive SpinC matter graph, and reduced LL smooth core now have an exact
@@ -313,5 +314,5 @@ introduced.
 lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D
 ```
 
-This focused target passed locally with 9,905 jobs. Essential self-adjointness,
+This focused target passed locally with 9,906 jobs. Essential self-adjointness,
 strong-domain surjectivity, and terminal T12 remain separate.
