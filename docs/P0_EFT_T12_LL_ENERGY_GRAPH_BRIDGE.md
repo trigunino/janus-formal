@@ -386,14 +386,20 @@ absolute/reference-zero Bismut--Freed adapter now follows from the existing
 generic Quillen machinery.  It is not the physical-minus-D11 comparison.
 For the correct relative determinant, the physical-minus-D11 logarithmic
 derivative is now factored exactly as the negative two-resolvent sandwich
-`S (J (K-Q)) S V`.  A generic square-summable diagonal sandwich theorem
-constructs its nuclear expansion from two explicit l2 estimates.  Fixed-basis
-data carrying those estimates and ambient trace uniqueness now produce the
-intrinsic relative trace, and coefficient agreement with any existing
-relative heat/Mellin/zeta family gives the relative Bismut--Freed connection,
-parallel determinant, metric variation, norm, and phase.  Constructing the
-ambient basis, the missing SpinC matter Schatten estimate, and the physical
-relative heat/Mellin coefficient agreement remain analytic inputs.
+`S (J (K-Q)) S V`.  A generic weighted-l1 diagonal sandwich theorem now
+constructs its nuclear expansion directly; the earlier l2-by-l2 theorem is a
+corollary.  A Hilbert-basis Fubini theorem supplies ambient nuclear-trace
+uniqueness.  The canonical real ambient basis is constructed from the two
+realified complex spectral copies and the LL Friedrichs basis.  On it, `S V`
+vanishes on both spectral copies and has LL coefficient
+`(2a) (lambda + a^2)^{-1}`.  The supplied LL inverse-square datum proves these
+shifted coefficients square summable.  Hence no SpinC/matter Schatten
+hypothesis is needed: the only remaining nuclearity input is square
+summability of the stabilized physical middle factor on the LL basis.
+Existing compactness does not imply that Hilbert--Schmidt estimate.  Once it
+and the physical relative heat/Mellin coefficient agreement are supplied, the
+existing adapter gives the relative Bismut--Freed connection, parallel
+determinant, metric variation, norm, and phase.
 The weakest reduced dense-core topological closure now constructs the reduced
 chart and immediately yields this canonical physical packet and its
 nondegenerate determinant line.  The closure data itself remains analytic
@@ -420,5 +426,8 @@ separate.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
-Friedrichs-to-actual graph intertwining, geometric Weyl estimates, varying
-defect-space control, and the global Quillen/Bismut--Freed bridge remain.
+Friedrichs-to-actual graph intertwining, the geometric LL Weyl datum, the
+LL-restricted physical cross-block Hilbert--Schmidt estimate, varying
+defect-space control, and the physical relative heat/Mellin coefficient
+identity remain.  The generic Quillen/Bismut--Freed machinery and its
+conditional physical relative adapter are already present.

@@ -29,45 +29,27 @@ universe u v
 variable {E : Type v}
   [NormedAddCommGroup E] [InnerProductSpace Real E] [CompleteSpace E]
 
-/-- A square-summable diagonal right factor and a square-summable family of
-left images produce an explicit nuclear rank-one expansion of `L B R`. -/
-def squareSummableDiagonalSandwichExpansion
+/-- The exact weighted `l1` condition produces an explicit nuclear rank-one
+expansion of `L B R`. -/
+def summableWeightedDiagonalSandwichExpansion
     {Index : Type u}
     (left middle right : E →L[Real] E)
     (basis : HilbertBasis Index Real E)
     (coefficient : Index → Real)
     (right_on_basis : ∀ index,
       right (basis index) = coefficient index • basis index)
-    (coefficient_squareSummable :
-      Summable (fun index => |coefficient index| ^ 2))
-    (left_image_squareSummable :
-      Summable (fun index => ‖left (middle (basis index))‖ ^ 2)) :
+    (weighted_nuclearSummable : Summable (fun index =>
+      |coefficient index| * ‖left (middle (basis index))‖)) :
     SummableRankOneOperatorExpansion
       (left.comp (middle.comp right)) := by
   let component : Index → E →L[Real] E := fun index =>
     coefficient index •
       InnerProductSpace.rankOne Real
         (left (middle (basis index))) (basis index)
-  have hCoefficientRpow :
-      Summable (fun index => |coefficient index| ^ (2 : Real)) := by
-    simpa only [Real.rpow_two] using coefficient_squareSummable
-  have hImageRpow :
-      Summable (fun index => ‖left (middle (basis index))‖ ^ (2 : Real)) := by
-    simpa only [Real.rpow_two] using left_image_squareSummable
-  have hCore : Summable (fun index =>
-      |coefficient index| * ‖left (middle (basis index))‖) :=
-    Real.summable_mul_of_Lp_Lq_of_nonneg
-      (p := (2 : Real)) (q := (2 : Real))
-      (f := fun index => |coefficient index|)
-      (g := fun index => ‖left (middle (basis index))‖)
-      Real.HolderConjugate.two_two
-      (fun index => abs_nonneg (coefficient index))
-      (fun index => norm_nonneg (left (middle (basis index))))
-      hCoefficientRpow hImageRpow
   have hNuclear : Summable (fun index =>
       |coefficient index| * ‖left (middle (basis index))‖ *
         ‖basis index‖) := by
-    apply hCore.congr
+    apply weighted_nuclearSummable.congr
     intro index
     rw [(HilbertBasis.orthonormal basis).1 index, mul_one]
   have hComponentNorm : Summable (fun index => ‖component index‖) := by
@@ -119,6 +101,57 @@ def squareSummableDiagonalSandwichExpansion
       _ = |coefficient index| * ‖left (middle (basis index))‖ *
           ‖basis index‖ := by ring
   · simpa only [component] using hOperator
+
+/-- A square-summable diagonal right factor and a square-summable family of
+left images satisfy the weighted nuclear criterion. -/
+def squareSummableDiagonalSandwichExpansion
+    {Index : Type u}
+    (left middle right : E →L[Real] E)
+    (basis : HilbertBasis Index Real E)
+    (coefficient : Index → Real)
+    (right_on_basis : ∀ index,
+      right (basis index) = coefficient index • basis index)
+    (coefficient_squareSummable :
+      Summable (fun index => |coefficient index| ^ 2))
+    (left_image_squareSummable :
+      Summable (fun index => ‖left (middle (basis index))‖ ^ 2)) :
+    SummableRankOneOperatorExpansion
+      (left.comp (middle.comp right)) := by
+  have hCoefficientRpow :
+      Summable (fun index => |coefficient index| ^ (2 : Real)) := by
+    simpa only [Real.rpow_two] using coefficient_squareSummable
+  have hImageRpow :
+      Summable (fun index => ‖left (middle (basis index))‖ ^ (2 : Real)) := by
+    simpa only [Real.rpow_two] using left_image_squareSummable
+  have hWeighted : Summable (fun index =>
+      |coefficient index| * ‖left (middle (basis index))‖) :=
+    Real.summable_mul_of_Lp_Lq_of_nonneg
+      (p := (2 : Real)) (q := (2 : Real))
+      (f := fun index => |coefficient index|)
+      (g := fun index => ‖left (middle (basis index))‖)
+      Real.HolderConjugate.two_two
+      (fun index => abs_nonneg (coefficient index))
+      (fun index => norm_nonneg (left (middle (basis index))))
+      hCoefficientRpow hImageRpow
+  exact summableWeightedDiagonalSandwichExpansion
+    left middle right basis coefficient right_on_basis hWeighted
+
+/-- Public checkpoint for the exact weighted nuclear criterion. -/
+theorem summableWeightedDiagonalSandwich_nuclear_gate
+    {Index : Type u}
+    (left middle right : E →L[Real] E)
+    (basis : HilbertBasis Index Real E)
+    (coefficient : Index → Real)
+    (right_on_basis : ∀ index,
+      right (basis index) = coefficient index • basis index)
+    (weighted_nuclearSummable : Summable (fun index =>
+      |coefficient index| * ‖left (middle (basis index))‖)) :
+    Nonempty
+      (SummableRankOneOperatorExpansion.{u, v}
+        (left.comp (middle.comp right))) :=
+  ⟨summableWeightedDiagonalSandwichExpansion
+    left middle right basis coefficient right_on_basis
+      weighted_nuclearSummable⟩
 
 /-- Public checkpoint for the square-summable diagonal sandwich
 construction. -/
