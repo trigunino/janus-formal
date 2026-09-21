@@ -362,8 +362,9 @@ The reference D11 Green operator and its finite kernel projection now
 stabilize every fibre to an invertible unbounded `LinearPMap`.  The full
 physical operator factors through this stabilization as identity plus a
 compact bounded operator.  Consequently every physical fibre has closed
-range and finite-dimensional kernel and cokernel.  The physical compact-family
-certificate now records this Fredholm theorem.
+range, finite-dimensional kernel and cokernel, and index zero by
+self-adjointness.  The physical compact-family certificate records these
+Fredholm conclusions.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: the physical extension is still supplied as input, full

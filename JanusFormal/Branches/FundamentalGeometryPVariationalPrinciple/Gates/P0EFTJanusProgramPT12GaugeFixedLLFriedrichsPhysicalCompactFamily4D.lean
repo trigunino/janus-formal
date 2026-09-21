@@ -2,6 +2,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRieszCompact4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalSelfAdjointFamily4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalFredholm4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalIndexZero4D
 
 /-!
 # Compact physical Friedrichs family packet
@@ -43,6 +44,7 @@ open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRieszTransport4D
 open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRieszCompact4D
 open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalSelfAdjointFamily4D
 open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalFredholm4D
+open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalIndexZero4D
 open P0EFTJanusGaugeGhostBlockD9UnboundedFredholm4D
 
 attribute [local instance]
@@ -171,6 +173,11 @@ structure ProgramPT12GaugeFixedLLFriedrichsPhysicalCompactFamilyCertificate4D
                 (analysis := analysis) (chart := chart)
                   (sameAction := sameAction) (physical := physical)
                     period hPeriod covector parameter).toFun)
+  fibreIndexZero : ∀ parameter,
+    (programPT12GaugeFixedLLFriedrichsFullPhysicalOperator
+      (configuration := configuration) (data := data) (analysis := analysis)
+        (chart := chart) (sameAction := sameAction) (physical := physical)
+          period hPeriod covector parameter).toFun.index = 0
   referenceFredholmIndexFamily :
     CommonDomainFredholmIndexFamilyData
       (fun parameter : Real ↦
@@ -217,6 +224,10 @@ def programPT12GaugeFixedLLFriedrichsPhysicalCompactFamily_gate
           (iota := iota) period hPeriod
   fibreFredholm :=
     programPT12GaugeFixedLLFriedrichsFullPhysicalOperator_fredholm
+      period hPeriod configuration data analysis chart sameAction physical
+        d9Ellipticity
+  fibreIndexZero :=
+    programPT12GaugeFixedLLFriedrichsFullPhysicalOperator_index_zero
       period hPeriod configuration data analysis chart sameAction physical
         d9Ellipticity
   referenceFredholmIndexFamily :=
