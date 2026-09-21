@@ -309,8 +309,8 @@ common-domain Fredholm family with constant index. Its top exterior kernel and
 cokernel powers define a rank-one algebraic determinant line with coherent
 transports and a trivialization anchored at parameter zero. Projecting the
 regularized spectral inverse off its finite kernel and pairing it with the LL
-resolvent gives
-a norm-continuous bounded Green family; both compositions are the canonical
+resolvent gives a norm-continuous bounded Green family; both compositions are
+the canonical
 range projection, and the Green family annihilates the kernel. The common-domain
 operator and Green families are differentiable, satisfy `G' = -G A' G`, and
 their logarithmic derivative `G A'` is compact. The preferred actual operator at
@@ -319,7 +319,11 @@ Friedrichs pairing plus the explicit local seven-block residual. That residual
 is now both expanded into its seven physical Hessians and identified with the
 canonical stable-physical Riesz pairing. Consequently, agreement with the zero
 Friedrichs fibre on this slice is equivalent exactly to vanishing of that Riesz
-pairing.
+pairing. Independently, the actual-Hilbert matter--LL readout and its adjoint
+transport that physical Riesz operator back to the Friedrichs carrier. This
+gives a bounded symmetric perturbation and a full Friedrichs-plus-physical
+operator on the unchanged graph domain. Identifying this adjoint pullback with
+the smooth-core residual still requires graph-norm bounds not currently present.
 Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The finite D9 graph,
 primitive SpinC matter graph, and reduced LL smooth core now have an exact
@@ -327,8 +331,9 @@ separated pairing. The matter--LL slice survives the minimal physical kernel
 quotient and embeds injectively in the local chart. At the same-action bridge
 base point, that chart's local matter--LL Hessian is exactly the Friedrichs
 product pairing. Embedding D9 in a compatible gauge-fixed chart, identifying
-the remaining local seven-block residual, and terminal T12 remain. No new
-axioms or proof placeholders are introduced.
+the transported perturbation with the smooth-core residual, proving the missing
+Weyl/heat-summability input, and terminal T12 remain. No new axioms or proof
+placeholders are introduced.
 
 ### Focused build for these additions
 
