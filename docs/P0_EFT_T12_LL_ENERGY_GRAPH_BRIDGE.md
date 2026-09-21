@@ -398,9 +398,12 @@ hypothesis is needed: the exact remaining nuclearity input is weighted-l1
 summability of the stabilized physical middle factor over the LL basis.  An
 LL image-square estimate remains a convenient sufficient condition by
 Holder.  Existing compactness implies neither condition.  Once one of them
-and the physical relative heat/Mellin coefficient agreement are supplied,
-the existing adapter gives the relative Bismut--Freed connection, parallel
-determinant, metric variation, norm, and phase.
+is supplied, a new finite-part adapter reduces the complex coefficient
+comparison to two real analytic statements: the finite-part logarithmic
+derivative equals the intrinsic relative trace on the nondegenerate locus,
+and the zeta derivative at zero is real.  These statements then give the
+relative Bismut--Freed connection, parallel determinant, metric variation,
+norm, and phase without an independent complex coefficient hypothesis.
 The weakest reduced dense-core topological closure now constructs the reduced
 chart and immediately yields this canonical physical packet and its
 nondegenerate determinant line.  The closure data itself remains analytic
@@ -429,6 +432,7 @@ This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
 Friedrichs-to-actual graph intertwining, the geometric LL Weyl datum, the
 LL-restricted weighted nuclear estimate, varying
-defect-space control, and the physical relative heat/Mellin coefficient
-identity remain.  The generic Quillen/Bismut--Freed machinery and its
-conditional physical relative adapter are already present.
+defect-space control, and the physical relative nuclear heat/Duhamel
+finite-part and reality statements remain.  The generic
+Quillen/Bismut--Freed machinery and its conditional physical relative
+adapters are already present.
