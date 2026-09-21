@@ -391,7 +391,10 @@ the missing graph-norm-controlled D9/physical intertwiner.
 The minimal required intertwiner is now typed: an ambient linear isometry,
 smooth-core domain membership, and zero-fibre operator intertwining imply the
 full Friedrichs pairing equals the canonical action second derivative.  Its
-construction remains open.
+construction remains open.  Once supplied, density of the smooth core and
+closedness of the zero fibre extend domain membership and intertwining to the
+entire actual Hilbert space along the isometric image; surjectivity remains
+separate.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
