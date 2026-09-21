@@ -364,7 +364,8 @@ physical operator factors through this stabilization as identity plus a
 compact bounded operator.  Consequently every physical fibre has closed
 range, finite-dimensional kernel and cokernel, and index zero by
 self-adjointness.  The physical compact-family certificate records these
-Fredholm conclusions.
+Fredholm conclusions.  The fibres with no zero mode form an open parameter
+locus, so invertibility persists locally around every nondegenerate fibre.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: the physical extension is still supplied as input, full
