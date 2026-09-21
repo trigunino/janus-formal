@@ -1527,11 +1527,89 @@ contraintes discrètes autorisées.
 ### T08 — `parentBulkOrMicroscopicSelectionPrincipleDerived`
 
 **Déjà disponible :** réduction de Schur/Calderón abstraite et plusieurs no-go
-de non-unicité.
+de non-unicité. Le [premier chantier T08](P0_EFT_T08_PARENT_SELECTION.md)
+classifie les parents scalaires modulo les cisaillements bulk à bord fixé :
+le couple référence/décalé est équivalent dans cette catégorie. Deux parents
+couplés et positifs ont néanmoins le même Schur statique et des réponses
+spectrales différentes à normalisation fixée.
+Les prolongements reconstruisent désormais le parent à deux secteurs depuis
+six valeurs spectrales, et toute réalisation hilbertienne réelle bornée,
+auto-adjointe et cyclique depuis ses moments, à unique isométrie près. Les
+équivalences conservant la source ou le terme spectral sont classifiées.
+Un modèle local avec auxiliaire massif prouve aussi l'obstruction à une
+réduction polynomiale exacte et une approximation avec reste contrôlé.
+Le raccord analytique résolvante–moments et la réduction observable sont
+maintenant construits : la réponse Schur complète près de l'infini détermine
+le terme direct de bord et l'action observable à unique isométrie près, sans
+cyclicité supposée du bulk initial. Une chaîne locale à deux modes est aussi
+reconstruite depuis quatre moments, dans sa classe orientée fournie.
+La reconstruction est désormais étendue aux vrais domaines non bornés via une
+résolvante réelle régulière fournie : le germe local retrouve les moments
+masqués, le terme de bord et l'équivalence des domaines/opérateurs cycliques.
+Un raccord concret transporte le domaine lagrangien du triplet de bord
+complété existant. L'existence et la sélection de ce paquet physique restent
+à dériver indépendamment de Candidate A.
+Trois vérifications de sélection précisent les libertés restantes : un modèle
+local positif conserve un paramètre libre sous recollement associatif ; les
+domaines de Robin complétés/fermés distinguent tous leurs coefficients sans
+en choisir un ; une famille `λχ` sur le vrai carrier T02 reste invariante sous
+le BRST abélien actuel et est distinguée par l'opérateur d'Euler T06.
+Ces diagnostics séparés ne construisent pas un parent Janus complet : les
+symétries non linéaires, le vide physique et la loi de bord restent à imposer.
+Les potentiels centrés quadratiques/quartiques sont maintenant inscrits dans
+T02 et raccordés à l'Euler T06. La déformation `λ(χ-v)⁴` est invisible à la
+valeur et aux deux premières dérivées au jet prescrit `χ=v`. Cela concerne
+la Hessienne locale en cette référence, pas la famille globale de T12.
+Avec le carré fixé, `(χ-v)²+λ(χ-v)⁴` exclut une absorption de `λ` par
+normalisation globale. Une valeur hors référence identifie ensuite `λ`.
+Avec un terme cinétique scalaire canonique fourni, les changements ponctuels
+C1 et courants de bord dépendant du champ sont désormais classifiés : à
+échelle absolue fixée, ils ne changent pas `λ`. Une bijection explicite aplatit
+le potentiel isolé mais change le coefficient cinétique. Une mise à l'échelle
+simultanée du champ et de l'action restaure une liberté, séparant bien T08/T09.
+Le quotient scalaire avec facteur d'action positif est maintenant classifié :
+trois classes de signe, donc seulement `λ=0` et `λ>0` pour la famille non négative.
+Le raccord local `χ=det J/ρ` est désormais covariant et différentié, y compris
+quand `ρ` varie. La surjectivité tangentielle ponctuelle aux jets inversibles
+ne garantit pas la réalisation par des champs auxiliaires globaux.
+Les potentiels `λ(χ−v)^n` sont intégrés à l'action LL globale existante et leur
+variation donne effectivement `Eχ=‖llField‖²+U′(χ)`. Dans cette action sans
+cinétique différentiel, à `χ≠0`, `λ≠0`, `n≥2`, les équations ponctuelles
+imposent `llField=0`, `χ=v`. Trois champs auxiliaires lisses globaux fournissent
+maintenant de vrais jets et leurs variations induites, avec covariance du
+rapport sous changement de triplet tangent. Une obstruction compacte est
+maintenant prouvée : tout scalaire réel lisse a un point critique, donc le
+déterminant des trois auxiliaires s'annule quelque part. Un `χ` partout non
+nul ne peut pas être réalisé par ces auxiliaires réels globaux. Une autre
+cible, un recollement local ou un traitement des zéros reste nécessaire.
+Le raccord des potentiels à l'action différentielle est aussi démontré :
+`Eχ` garde la correction `U′`, les pairings du flux et de la métrique auxiliaire
+sont conservés, et la stationnarité en flux équivaut à l'équation faible existante.
+Sur une carte auxiliaire régulière, l'identité de Piola T06 montre désormais
+que les trois équations `div(q·cof Dφ)=0` équivalent à `dq=0` : le coefficient
+est constant sur un ouvert connexe, sans valeur imposée. L'identité auxiliaire
+réalise explicitement le cas `q=1`. La variation réelle du déterminant est
+maintenant identifiée au pairing de cofacteurs : `δΦ=Σ_a dψ_a(A_a)`.
+La densité composite a pour dérivée `(F+U′)δΦ`, et la séparation ponctuelle
+divergence–Euler est démontrée sans suppression du courant de bord.
+Le raccord de cette première variation intégrée aux résidus est maintenant
+écrit en coordonnées, avec la mesure de Haar et des variations lisses à
+support compact : Stokes et le lemme fondamental donnent exactement les
+trois résidus nuls, donc `dq=0` sur le secteur régulier. Restent la construction
+d'une action locale finie, la dérivation sous son intégrale, les bords
+généraux et le transport/recollement sur le throat. La compilation finale de
+cette extension intégrée attend les dépendances en reconstruction par T12 ;
+elle ne doit pas encore être comptée comme un résultat entièrement validé.
+Priorité : réalisation compatible avec l'obstruction et variation intégrée composite, puis
+sources, bords et symétries couplées. Le cinétique existant
+agit sur `llField`, pas sur ce scalaire de mesure ; la contrainte de multiplicateur
+et les symétries couplées doivent être traitées avant toute sélection physique.
 
 **Reste :** dériver un parent bulk/jonction ou une loi microscopique concrète
 qui sélectionne l'action Candidate A. Les hypothèses actuelles sont
-insuffisantes par théorème, pas seulement par manque de Lean.
+insuffisantes par théorème, pas seulement par manque de Lean. La sélection
+physique exige des équivalences et données marquées explicites ; l'inégalité
+de coefficients ne démontre pas à elle seule l'inéquivalence des théories.
 
 ### T09 — `actionNormalizationDerived`
 

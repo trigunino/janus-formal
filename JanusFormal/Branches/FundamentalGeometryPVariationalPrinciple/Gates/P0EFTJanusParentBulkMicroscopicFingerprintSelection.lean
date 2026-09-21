@@ -202,7 +202,9 @@ def shiftedFingerprint : MicroscopicBulkFingerprint :=
 
 /-- Even an exactly known reduced target does not reconstruct its microscopic
 bulk fingerprint: distinct fingerprints have distinct parent completions with
-the same reduced potential. -/
+the same reduced potential. This is coefficient nonidentifiability, not
+inequivalence under field changes: `ParentBulkBoundaryShearEquivalence` proves
+these two completions are related by the boundary-preserving shear `x ↦ x+n`. -/
 theorem reduced_target_alone_does_not_identify_fingerprint
     (target : ReducedTwoSectorTarget) :
     parentCompletion referenceFingerprint target ≠
