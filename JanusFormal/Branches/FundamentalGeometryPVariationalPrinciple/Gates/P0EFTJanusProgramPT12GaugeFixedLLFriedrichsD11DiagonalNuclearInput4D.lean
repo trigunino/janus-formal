@@ -7,8 +7,8 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 
 The D11 variation vanishes on both realified spectral copies.  On an LL
 eigenvector it is diagonal with coefficient
-`(2 * a) * (lambda + a ^ 2)⁻¹`.  Thus only an LL-indexed square-summability
-hypothesis remains for the other side of the physical relative sandwich.
+`(2 * a) * (lambda + a ^ 2)⁻¹`.  Thus only an LL-indexed weighted summability
+hypothesis remains for the physical relative sandwich.
 -/
 
 namespace JanusFormal
@@ -378,8 +378,8 @@ variable (sameAction : ProgramPGlobalMinimalPhysicalLocalMatterLLSameActionBridg
 variable (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D
   period hPeriod configuration data analysis chart sameAction)
 
-/-- Honest remaining LL input after the D11 diagonal coefficient has been
-computed. -/
+/-- Exact LL-supported weighted nuclear input after the D11 diagonal
+coefficient has been computed. -/
 structure PhysicalRelativeLogarithmicLLDiagonalInput4D
     {iota : Type} [DecidableEq iota]
     {covector : iota → TangentVector3}
@@ -387,10 +387,51 @@ structure PhysicalRelativeLogarithmicLLDiagonalInput4D
     (LLMode : Type) [DecidableEq LLMode] where
   llSpectral : CanonicalLLFriedrichsInverseSquareData
     period hPeriod analysis LLMode
-  llImageSquareSummable : ∀ (parameter :
+  llWeightedNuclearSummable : ∀ (parameter :
       PhysicalRelativeNondegenerateParameter period hPeriod configuration data
         analysis chart sameAction physical covector),
     Summable (fun mode =>
+      |(2 * parameter.1) *
+          (llSpectral.eigenvalue mode + parameter.1 ^ 2)⁻¹| *
+        ‖programPT12GaugeFixedLLFriedrichsD11StabilizedAmbientInverse
+            period hPeriod d9Ellipticity couplings.matterMassSquared analysis
+              parameter.1
+          (programPT12GaugeFixedLLFriedrichsPhysicalRelativeLogarithmicMiddle
+            period hPeriod configuration data analysis chart sameAction physical
+              d9Ellipticity parameter.1
+            (programPT12GaugeFixedLLFriedrichsAmbientHilbertBasis
+              (iota := iota) period hPeriod analysis llSpectral (.inr mode)))‖)
+
+namespace PhysicalRelativeLogarithmicLLDiagonalInput4D
+
+/-- The convenient stronger LL image-square estimate implies the exact
+weighted nuclear input by Holder with the computed coefficient estimate. -/
+def ofLLImageSquareSummable
+    {iota : Type} [DecidableEq iota]
+    {covector : iota → TangentVector3}
+    (d9Ellipticity : D9GaugeGhostFiniteCharacteristicEllipticity covector)
+    {LLMode : Type} [DecidableEq LLMode]
+    (llSpectral : CanonicalLLFriedrichsInverseSquareData
+      period hPeriod analysis LLMode)
+    (llImageSquareSummable : ∀ (parameter :
+        PhysicalRelativeNondegenerateParameter period hPeriod configuration data
+          analysis chart sameAction physical covector),
+      Summable (fun mode =>
+        ‖programPT12GaugeFixedLLFriedrichsD11StabilizedAmbientInverse
+            period hPeriod d9Ellipticity couplings.matterMassSquared analysis
+              parameter.1
+          (programPT12GaugeFixedLLFriedrichsPhysicalRelativeLogarithmicMiddle
+            period hPeriod configuration data analysis chart sameAction physical
+              d9Ellipticity parameter.1
+            (programPT12GaugeFixedLLFriedrichsAmbientHilbertBasis
+              (iota := iota) period hPeriod analysis llSpectral (.inr mode)))‖ ^ 2)) :
+    PhysicalRelativeLogarithmicLLDiagonalInput4D
+      period hPeriod configuration data analysis chart sameAction physical
+        d9Ellipticity LLMode where
+  llSpectral := llSpectral
+  llWeightedNuclearSummable := by
+    intro parameter
+    let imageNorm : LLMode → Real := fun mode =>
       ‖programPT12GaugeFixedLLFriedrichsD11StabilizedAmbientInverse
           period hPeriod d9Ellipticity couplings.matterMassSquared analysis
             parameter.1
@@ -398,12 +439,31 @@ structure PhysicalRelativeLogarithmicLLDiagonalInput4D
           period hPeriod configuration data analysis chart sameAction physical
             d9Ellipticity parameter.1
           (programPT12GaugeFixedLLFriedrichsAmbientHilbertBasis
-            (iota := iota) period hPeriod analysis llSpectral (.inr mode)))‖ ^ 2)
+            (iota := iota) period hPeriod analysis llSpectral (.inr mode)))‖
+    have hCoefficientRpow : Summable (fun mode : LLMode =>
+        |(2 * parameter.1) *
+          (llSpectral.eigenvalue mode + parameter.1 ^ 2)⁻¹| ^
+            (2 : Real)) := by
+      simpa only [Real.rpow_two] using
+        programPT12GaugeFixedLLFriedrichsD11LLCoefficient_squareSummable
+          period hPeriod llSpectral parameter.1
+    have hImageRpow : Summable (fun mode : LLMode =>
+        imageNorm mode ^ (2 : Real)) := by
+      simpa only [Real.rpow_two, imageNorm] using
+        llImageSquareSummable parameter
+    exact Real.summable_mul_of_Lp_Lq_of_nonneg
+      (p := (2 : Real)) (q := (2 : Real))
+      (f := fun mode : LLMode =>
+        |(2 * parameter.1) *
+          (llSpectral.eigenvalue mode + parameter.1 ^ 2)⁻¹|)
+      (g := imageNorm)
+      Real.HolderConjugate.two_two
+      (fun _ => abs_nonneg _)
+      (fun _ => norm_nonneg _)
+      hCoefficientRpow hImageRpow
 
-namespace PhysicalRelativeLogarithmicLLDiagonalInput4D
-
-/-- The LL-only estimate, together with the computed D11 coefficients,
-supplies the existing weighted diagonal nuclear input. -/
+/-- The exact LL-only weighted estimate supplies the ambient diagonal nuclear
+input; both spectral copies contribute zero. -/
 def toDiagonalNuclearInput
     {iota : Type} [DecidableEq iota]
     {covector : iota → TangentVector3}
@@ -429,48 +489,13 @@ def toDiagonalNuclearInput
           parameter.1 mode
   weighted_nuclearSummable := by
     intro parameter
-    let imageNorm : LLMode → Real := fun mode =>
-      ‖programPT12GaugeFixedLLFriedrichsD11StabilizedAmbientInverse
-          period hPeriod d9Ellipticity couplings.matterMassSquared analysis
-            parameter.1
-        (programPT12GaugeFixedLLFriedrichsPhysicalRelativeLogarithmicMiddle
-          period hPeriod configuration data analysis chart sameAction physical
-            d9Ellipticity parameter.1
-          (programPT12GaugeFixedLLFriedrichsAmbientHilbertBasis
-            (iota := iota) period hPeriod analysis input.llSpectral
-              (.inr mode)))‖
-    have hCoefficientRpow : Summable (fun mode : LLMode =>
-        |(2 * parameter.1) *
-          (input.llSpectral.eigenvalue mode + parameter.1 ^ 2)⁻¹| ^
-            (2 : Real)) := by
-      simpa only [Real.rpow_two] using
-        programPT12GaugeFixedLLFriedrichsD11LLCoefficient_squareSummable
-          period hPeriod input.llSpectral parameter.1
-    have hImageRpow : Summable (fun mode : LLMode =>
-        imageNorm mode ^ (2 : Real)) := by
-      simpa only [Real.rpow_two, imageNorm] using
-        input.llImageSquareSummable parameter
-    have hLLWeighted : Summable (fun mode : LLMode =>
-        |(2 * parameter.1) *
-          (input.llSpectral.eigenvalue mode + parameter.1 ^ 2)⁻¹| *
-            imageNorm mode) :=
-      Real.summable_mul_of_Lp_Lq_of_nonneg
-        (p := (2 : Real)) (q := (2 : Real))
-        (f := fun mode : LLMode =>
-          |(2 * parameter.1) *
-            (input.llSpectral.eigenvalue mode + parameter.1 ^ 2)⁻¹|)
-        (g := imageNorm)
-        Real.HolderConjugate.two_two
-        (fun _ => abs_nonneg _)
-        (fun _ => norm_nonneg _)
-        hCoefficientRpow hImageRpow
     apply Summable.sum _
     · apply (summable_zero : Summable (fun _ :
         ProgramPGlobalGaugeFixedSpectralHessianMode iota ⊕
           ProgramPGlobalGaugeFixedSpectralHessianMode iota => (0 : Real))).congr
       intro mode
       simp [programPT12GaugeFixedLLFriedrichsD11DiagonalCoefficient]
-    · apply hLLWeighted.congr
+    · apply (input.llWeightedNuclearSummable parameter).congr
       intro mode
       rfl
 
