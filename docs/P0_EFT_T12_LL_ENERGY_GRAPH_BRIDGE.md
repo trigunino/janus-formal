@@ -328,6 +328,10 @@ smooth matter--LL slice, both readouts are explicit and agree, so the adjoint
 transport pairing is exactly the corresponding L2 readout pairing. This does
 not identify the transport itself with the smooth-core embedding; that stronger
 claim would require graph-norm bounds not currently present.
+The common dense domain, self-adjoint closed fibres, parameter derivative,
+compact physical perturbation, and reference D11 Fredholm-index family are now
+packaged in one typed certificate. Fredholm stability for the perturbed
+unbounded family remains the missing compact-perturbation theorem.
 Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The finite D9 graph,
 primitive SpinC matter graph, and reduced LL smooth core now have an exact
