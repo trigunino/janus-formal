@@ -304,8 +304,13 @@ D9 hypothesis, every fibre is self-adjoint and closed, and the compact LL
 resolvents vary continuously in operator norm. Because the shifted LL block is
 bijective, the full family's kernel and range are exactly the lifted spectral
 kernel and range; its kernel and cokernel dimensions are constant in the
-parameter. The preferred actual operator at zero is also decomposed exactly on
-the minimal matter--LL slice into this
+parameter. Canonical kernel/cokernel transports now package this as a
+common-domain Fredholm family with constant index. Projecting the regularized
+spectral inverse off its finite kernel and pairing it with the LL resolvent gives
+a norm-continuous bounded Green family; both compositions are the canonical
+range projection, and the Green family annihilates the kernel. The preferred
+actual operator at zero is also decomposed exactly on the minimal matter--LL
+slice into this
 Friedrichs pairing plus the explicit local seven-block residual. That residual
 is now both expanded into its seven physical Hessians and identified with the
 canonical stable-physical Riesz pairing. Consequently, agreement with the zero
