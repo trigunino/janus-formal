@@ -301,10 +301,11 @@ Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The finite D9 graph,
 primitive SpinC matter graph, and reduced LL smooth core now have an exact
 separated pairing. The matter--LL slice survives the minimal physical kernel
-quotient and embeds injectively in the local chart. Identifying that chart's
-local Hessian with the Friedrichs product pairing, embedding D9 in the chart,
-the parameter family, and terminal T12 remain. No new axioms or proof
-placeholders are introduced.
+quotient and embeds injectively in the local chart. At the same-action bridge
+base point, that chart's local matter--LL Hessian is exactly the Friedrichs
+product pairing. Embedding D9 in a compatible gauge-fixed chart, the parameter
+family, and terminal T12 remain. No new axioms or proof placeholders are
+introduced.
 
 ### Focused build for these additions
 
@@ -312,5 +313,5 @@ placeholders are introduced.
 lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D
 ```
 
-This focused target passed locally with 9,904 jobs. Essential self-adjointness,
+This focused target passed locally with 9,905 jobs. Essential self-adjointness,
 strong-domain surjectivity, and terminal T12 remain separate.
