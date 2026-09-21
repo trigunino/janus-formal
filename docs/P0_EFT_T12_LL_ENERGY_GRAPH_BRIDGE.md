@@ -388,6 +388,10 @@ On the actual augmented graph, the canonical BRST Riesz pairing and the second
 derivative of the canonical action now agree with the complete smooth-core
 Hessian.  Identifying that operator with the Friedrichs fibre still requires
 the missing graph-norm-controlled D9/physical intertwiner.
+The minimal required intertwiner is now typed: an ambient linear isometry,
+smooth-core domain membership, and zero-fibre operator intertwining imply the
+full Friedrichs pairing equals the canonical action second derivative.  Its
+construction remains open.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
