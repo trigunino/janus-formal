@@ -371,6 +371,9 @@ now constructed and the complete Fredholm/index-zero packet follows without
 an independent physical-extension input.  Restricting to the open
 nondegenerate locus gives a zero-defect Fredholm family and a coherent
 rank-one algebraic determinant-line certificate from any chosen base point.
+There is also an explicit two-sided physical Green operator on this locus.  It
+is continuous at every nondegenerate parameter, differs compactly from the
+stabilized reference inverse, and its logarithmic derivative is compact.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
