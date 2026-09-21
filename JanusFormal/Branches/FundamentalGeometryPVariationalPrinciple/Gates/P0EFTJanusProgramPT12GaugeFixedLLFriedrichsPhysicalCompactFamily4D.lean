@@ -152,7 +152,7 @@ structure ProgramPT12GaugeFixedLLFriedrichsPhysicalCompactFamilyCertificate4D
           couplings.matterMassSquared analysis parameter)
 
 /-- The existing D11 Fredholm family and the compact physical perturbation
-assemble into the maximal unconditional analytic packet presently available. -/
+assemble into one unconditional analytic packet. -/
 def programPT12GaugeFixedLLFriedrichsPhysicalCompactFamily_gate
     {iota : Type*} [DecidableEq iota]
     {covector : iota → TangentVector3}
