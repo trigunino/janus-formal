@@ -378,6 +378,10 @@ The weakest reduced dense-core topological closure now constructs the reduced
 chart and immediately yields this canonical physical packet and its
 nondegenerate determinant line.  The closure data itself remains analytic
 input.
+For D9, a time-independent inverse-square summability hypothesis now implies
+positive-time heat summability and the existing nuclear D9 heat certificate.
+This remains a D9 block result, not a heat theorem for the full physical
+perturbation.
 
 This closes the compact-perturbation stability obligation.  Terminal T12
 remains open: constructing the reduced chart from analytic closure data, full
