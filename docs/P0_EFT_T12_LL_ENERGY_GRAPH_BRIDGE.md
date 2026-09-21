@@ -355,3 +355,17 @@ lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P
 
 This focused target passed locally in a one-thread, 16 GB capped Lean run.
 Equality with the original strong domain and terminal T12 remain separate.
+
+## 2026-09-21: physical compact-perturbation Fredholm theorem
+
+The reference D11 Green operator and its finite kernel projection now
+stabilize every fibre to an invertible unbounded `LinearPMap`.  The full
+physical operator factors through this stabilization as identity plus a
+compact bounded operator.  Consequently every physical fibre has closed
+range and finite-dimensional kernel and cokernel.  The physical compact-family
+certificate now records this Fredholm theorem.
+
+This closes the compact-perturbation stability obligation.  Terminal T12
+remains open: the physical extension is still supplied as input, full
+smooth-core/operator identification, geometric Weyl estimates, varying
+defect-space control, and the global Quillen/Bismut--Freed bridge remain.

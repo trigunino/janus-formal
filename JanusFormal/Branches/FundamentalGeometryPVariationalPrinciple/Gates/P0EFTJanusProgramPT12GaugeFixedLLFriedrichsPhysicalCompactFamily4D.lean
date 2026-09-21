@@ -1,15 +1,15 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsFredholmIndexFamily4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRieszCompact4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalSelfAdjointFamily4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalFredholm4D
 
 /-!
 # Compact physical Friedrichs family packet
 
 The transported physical family has one dense domain, self-adjoint closed
 fibres, the proved pointwise parameter derivative, and a compact bounded
-perturbation of the reference D11 Fredholm-index family.  No Fredholm claim
-is made for the perturbed fibres: that requires a compact-perturbation
-stability theorem for the unbounded `LinearPMap` realization.
+perturbation of the reference D11 Fredholm-index family.  Stabilization by the
+finite reference kernel projection proves every perturbed fibre Fredholm.
 -/
 
 namespace JanusFormal
@@ -42,6 +42,7 @@ open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsGreenDifferentiableFamily4D
 open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRieszTransport4D
 open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRieszCompact4D
 open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalSelfAdjointFamily4D
+open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalFredholm4D
 open P0EFTJanusGaugeGhostBlockD9UnboundedFredholm4D
 
 attribute [local instance]
@@ -97,8 +98,7 @@ variable (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D
   period hPeriod configuration data analysis chart sameAction)
 
 /-- Typed analytic packet for the physical compact perturbation of the D11
-Friedrichs family.  The Fredholm field deliberately concerns only the proved
-unperturbed reference family. -/
+Friedrichs family. -/
 structure ProgramPT12GaugeFixedLLFriedrichsPhysicalCompactFamilyCertificate4D
     {iota : Type*} [DecidableEq iota]
     (covector : iota → TangentVector3) where
@@ -145,6 +145,32 @@ structure ProgramPT12GaugeFixedLLFriedrichsPhysicalCompactFamilyCertificate4D
         (configuration := configuration) (data := data) (analysis := analysis)
           (chart := chart) (sameAction := sameAction) (physical := physical)
             (iota := iota) period hPeriod)
+  fibreFredholm : ∀ parameter,
+    IsClosed
+        (LinearMap.range
+          (programPT12GaugeFixedLLFriedrichsFullPhysicalOperator
+            (configuration := configuration) (data := data)
+              (analysis := analysis) (chart := chart)
+                (sameAction := sameAction) (physical := physical)
+                  period hPeriod covector parameter).toFun :
+          Set (ProgramPGlobalGaugeFixedLLFriedrichsHessianHilbert
+            period hPeriod iota analysis)) ∧
+      FiniteDimensional Real
+        (LinearMap.ker
+          (programPT12GaugeFixedLLFriedrichsFullPhysicalOperator
+            (configuration := configuration) (data := data)
+              (analysis := analysis) (chart := chart)
+                (sameAction := sameAction) (physical := physical)
+                  period hPeriod covector parameter).toFun) ∧
+      FiniteDimensional Real
+        (ProgramPGlobalGaugeFixedLLFriedrichsHessianHilbert
+            period hPeriod iota analysis ⧸
+          LinearMap.range
+            (programPT12GaugeFixedLLFriedrichsFullPhysicalOperator
+              (configuration := configuration) (data := data)
+                (analysis := analysis) (chart := chart)
+                  (sameAction := sameAction) (physical := physical)
+                    period hPeriod covector parameter).toFun)
   referenceFredholmIndexFamily :
     CommonDomainFredholmIndexFamilyData
       (fun parameter : Real ↦
@@ -189,6 +215,10 @@ def programPT12GaugeFixedLLFriedrichsPhysicalCompactFamily_gate
       (configuration := configuration) (data := data) (analysis := analysis)
         (chart := chart) (sameAction := sameAction) (physical := physical)
           (iota := iota) period hPeriod
+  fibreFredholm :=
+    programPT12GaugeFixedLLFriedrichsFullPhysicalOperator_fredholm
+      period hPeriod configuration data analysis chart sameAction physical
+        d9Ellipticity
   referenceFredholmIndexFamily :=
     programPT12GaugeFixedLLFriedrichsD11FredholmIndexFamily_gate
       period hPeriod d9Ellipticity couplings.matterMassSquared analysis
