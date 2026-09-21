@@ -333,9 +333,10 @@ compact physical perturbation, and reference D11 Fredholm-index family are now
 packaged in one typed certificate. Fredholm stability for the perturbed
 unbounded family remains the missing compact-perturbation theorem.
 For the LL heat sector, the compact inverse now has finite-multiplicity
-eigenspaces and spectral completeness. An explicit Friedrichs eigenbasis with
-summable inverse-square eigenvalues produces the existing nuclear heat package;
-deriving that Weyl input geometrically remains open.
+eigenspaces and spectral completeness. Their orthogonal sigma sum constructs
+an explicit global Friedrichs eigenbasis unconditionally. The sole remaining
+Weyl input is inverse-square summability of its eigenvalues; that estimate
+produces the existing nuclear heat package.
 Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The finite D9 graph,
 primitive SpinC matter graph, and reduced LL smooth core now have an exact
@@ -404,6 +405,10 @@ derivative equals the intrinsic relative trace on the nondegenerate locus,
 and the zeta derivative at zero is real.  These statements then give the
 relative Bismut--Freed connection, parallel determinant, metric variation,
 norm, and phase without an independent complex coefficient hypothesis.
+A direct `HasDerivAt` theorem for the physical finite part now supplies the
+first statement by uniqueness, while canonical Schwarz reflection supplies
+the second. Constructing the physical heat/Duhamel variation and its connected
+analytic continuation remains open.
 The weakest reduced dense-core topological closure now constructs the reduced
 chart and immediately yields this canonical physical packet and its
 nondegenerate determinant line.  The closure data itself remains analytic
@@ -427,6 +432,10 @@ unconditional comparison is now proved on the reduced smooth matter--LL
 slice.  The Friedrichs-zero pairing minus the actual graph pairing is exactly
 the transported physical form minus the actual physical form; equality of
 the two operator pairings is equivalent to equality of those two forms.
+The seven-block form factors through the minimal physical Hilbert reduction,
+so this form match follows from the reduced-coordinate identity
+`P(T(Fd)) = P(Ed)`. The adjoint value readout does not imply that graph-norm
+compatibility automatically.
 Extending this comparison requires that transport-form identity, a D9
 actual-to-spectral modal core map, and target L2/relative bounds for the seven
 physical blocks.
@@ -436,6 +445,6 @@ remains open: constructing the reduced chart from analytic closure data, full
 actual-to-Friedrichs common-core form matching, the geometric LL Weyl datum, the
 LL-restricted weighted nuclear estimate, varying
 defect-space control, and the physical relative nuclear heat/Duhamel
-finite-part and reality statements remain.  The generic
+finite-part variation and connected analytic continuation remain.  The generic
 Quillen/Bismut--Freed machinery and its conditional physical relative
 adapters are already present.

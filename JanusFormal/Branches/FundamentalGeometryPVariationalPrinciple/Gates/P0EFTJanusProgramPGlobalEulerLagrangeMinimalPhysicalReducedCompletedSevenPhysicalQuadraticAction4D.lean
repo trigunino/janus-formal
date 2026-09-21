@@ -213,6 +213,33 @@ private theorem sevenPhysical_form_reduction_right
     (sevenPhysical_form_reduction_left period hPeriod configuration data analysis
       chart sameAction blocks state)
 
+/-- The completed seven-block form is unchanged by minimal physical reduction
+in its first argument. -/
+theorem globalCandidateASevenPhysicalCommonDomainExtension_of_blocks_form_reduction_left
+    (state : CommonAugmentedHilbert period hPeriod configuration data analysis) :
+    (globalCandidateASevenPhysicalCommonDomainExtension_of_blocks period hPeriod
+        configuration data analysis chart sameAction blocks).form
+        (globalCandidateAMinimalPhysicalHilbertReduction period hPeriod
+          configuration data analysis state) =
+      (globalCandidateASevenPhysicalCommonDomainExtension_of_blocks period hPeriod
+        configuration data analysis chart sameAction blocks).form state :=
+  sevenPhysical_form_reduction_left period hPeriod configuration data analysis
+    chart sameAction blocks state
+
+/-- The completed seven-block form is unchanged by minimal physical reduction
+in its second argument. -/
+theorem globalCandidateASevenPhysicalCommonDomainExtension_of_blocks_form_reduction_right
+    (state test : CommonAugmentedHilbert period hPeriod configuration data
+      analysis) :
+    (globalCandidateASevenPhysicalCommonDomainExtension_of_blocks period hPeriod
+        configuration data analysis chart sameAction blocks).form test
+        (globalCandidateAMinimalPhysicalHilbertReduction period hPeriod
+          configuration data analysis state) =
+      (globalCandidateASevenPhysicalCommonDomainExtension_of_blocks period hPeriod
+        configuration data analysis chart sameAction blocks).form test state :=
+  sevenPhysical_form_reduction_right period hPeriod configuration data analysis
+    chart sameAction blocks state test
+
 /-- Full seven-block physical Hessian restricted to the reduced completion. -/
 def globalCandidateAMinimalPhysicalReducedCompletedSevenPhysicalHessian :
     Reduced period hPeriod configuration data analysis →L[Real]
