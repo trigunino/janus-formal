@@ -136,7 +136,8 @@ theorem complexDiagonalRegularizedWeight_gap
   · rw [complexDiagonalRegularizedWeight, if_neg hZero]
     exact data.gap_le mode hZero
 
-/-- Bounded pseudoinverse multiplier, zero on the finite kernel. -/
+/-- Bounded regularized inverse; precompose with the zero-mode-complement
+projection when an operator vanishing on the finite kernel is required. -/
 def complexDiagonalGraphPseudoinverse
     (weight : Mode → Real)
     (data : ComplexDiagonalFiniteZeroGap Mode weight) :

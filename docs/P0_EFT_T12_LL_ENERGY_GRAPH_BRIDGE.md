@@ -305,12 +305,16 @@ resolvents vary continuously in operator norm. Because the shifted LL block is
 bijective, the full family's kernel and range are exactly the lifted spectral
 kernel and range; its kernel and cokernel dimensions are constant in the
 parameter. Canonical kernel/cokernel transports now package this as a
-common-domain Fredholm family with constant index. Projecting the regularized
-spectral inverse off its finite kernel and pairing it with the LL resolvent gives
+common-domain Fredholm family with constant index. Its top exterior kernel and
+cokernel powers define a rank-one algebraic determinant line with coherent
+transports and a trivialization anchored at parameter zero. Projecting the
+regularized spectral inverse off its finite kernel and pairing it with the LL
+resolvent gives
 a norm-continuous bounded Green family; both compositions are the canonical
-range projection, and the Green family annihilates the kernel. The preferred
-actual operator at zero is also decomposed exactly on the minimal matter--LL
-slice into this
+range projection, and the Green family annihilates the kernel. The common-domain
+operator and Green families are differentiable, satisfy `G' = -G A' G`, and
+their logarithmic derivative `G A'` is compact. The preferred actual operator at
+zero is also decomposed exactly on the minimal matter--LL slice into this
 Friedrichs pairing plus the explicit local seven-block residual. That residual
 is now both expanded into its seven physical Hessians and identified with the
 canonical stable-physical Riesz pairing. Consequently, agreement with the zero
