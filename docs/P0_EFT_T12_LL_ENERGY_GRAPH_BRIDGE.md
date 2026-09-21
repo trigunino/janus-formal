@@ -15,7 +15,7 @@ the user's checkout, not an independently reproduced build or a CI result.
 
 A focused local build through
 `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` passed all
-9,405 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
+9,516 jobs on 2026-09-21. No GitHub Actions or other CI/CD operation was run.
 No workflow, build setting, or dependency configuration was changed.
 
 The LL specialization uses `GlobalAnalysisData`, hence the existing strict
@@ -55,6 +55,13 @@ All Lean paths have prefix
 - `P0EFTJanusProgramPGlobalGaugeFixedLLFriedrichsSmoothCore4D.lean`
   gives this product an injective dense finite-spectral/smooth-LL core with
   exact action and pairing formulas.
+- `P0EFTJanusProgramPGlobalGaugeFixedMatterLLSmoothSlice4D.lean`
+  embeds finite primitive SpinC matter modes with zero D9 component and proves
+  that the product pairing is exactly the matter graph form plus the LL Hessian.
+- `P0EFTJanusProgramPT12LLFullSmoothReducedQuotient4D.lean`
+  quotients the full smooth LL core by its auxiliary/measure directions,
+  identifies the quotient with the reduced smooth field, and embeds it densely
+  and injectively into the canonical LL `L2` space.
 
 The existing `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D.lean`
 imports the weak-solution and adjoint modules. Its previous proof is unchanged.
@@ -302,5 +309,5 @@ or proof placeholders are introduced.
 lake build JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D
 ```
 
-This focused target passed locally with 9,405 jobs. Essential self-adjointness,
+This focused target passed locally with 9,516 jobs. Essential self-adjointness,
 strong-domain surjectivity, and terminal T12 remain separate.
