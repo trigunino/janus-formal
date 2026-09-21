@@ -321,9 +321,13 @@ canonical stable-physical Riesz pairing. Consequently, agreement with the zero
 Friedrichs fibre on this slice is equivalent exactly to vanishing of that Riesz
 pairing. Independently, the actual-Hilbert matter--LL readout and its adjoint
 transport that physical Riesz operator back to the Friedrichs carrier. This
-gives a bounded symmetric perturbation and a full Friedrichs-plus-physical
-operator on the unchanged graph domain. Identifying this adjoint pullback with
-the smooth-core residual still requires graph-norm bounds not currently present.
+gives a compact self-adjoint perturbation and a full Friedrichs-plus-physical
+family on the unchanged common graph domain. Every fibre is self-adjoint and
+closed, and its common-domain derivative is the original LL variation. On the
+smooth matter--LL slice, both readouts are explicit and agree, so the adjoint
+transport pairing is exactly the corresponding L2 readout pairing. This does
+not identify the transport itself with the smooth-core embedding; that stronger
+claim would require graph-norm bounds not currently present.
 Equality with the original closed Jacobi domain remains precisely the
 essential-self-adjointness/graph-regularity step. The finite D9 graph,
 primitive SpinC matter graph, and reduced LL smooth core now have an exact
