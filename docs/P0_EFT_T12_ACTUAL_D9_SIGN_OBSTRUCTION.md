@@ -1433,3 +1433,37 @@ les budgets. `#print axioms` confirme `propext`, `Classical.choice`,
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Cœur minimal BRST après quotient des fantômes partagés
+
+`CandidateAReducedBRSTMinimal4D` (préfixe `P0EFTJanusProgramPT12`) construit
+le minimal fermé sur le quotient hilbertien des directions fantômes
+partagées. L'image des champs lisses quotientés est un cœur d'opérateur,
+et la fermeture de la restriction lisse de l'extension réduite existante
+est exactement ce minimal. Le quotient préserve le domaine abélien.
+
+`CandidateAReducedBRSTMinimalPairing4D` prouve la conservation du pairing
+sur tout le domaine minimal, contre tout test complété. Tous les blocs
+physiques H11, y compris les termes croisés, sont conservés.
+
+`CandidateAReducedBRSTMinimalIntertwining4D` en déduit l'égalité exacte des
+sorties après projection et l'équivalence de leur annulation. Sur le cœur
+des champs réels, le pairing est celui du Riesz augmenté original.
+
+Ces résultats gardent les hypothèses existantes de métriques égales et de
+poids cinétiques opposés. Ils n'identifient pas le minimal à l'extension
+auto-adjointe : l'égalité des adjoints FP reste ouverte. Le difféomorphisme
+reste dans son Hilbert de graphe ; le passage L², le cœur LL et le raccord
+global D9 restent à établir. T12 n'est pas coché.
+
+Validation : trois gates, hub et audit des 19 déclarations publiques verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 4366, 4468, 4351 Mo ; hub 4000 Mo ; audit 3936 Mo.
+Les timeouts `whnf` ont été résolus par des lemmes de domaine et un raccord
+de pairing séparé, sans augmenter les budgets. L'audit des pairings sur
+le domaine complet et de l'entrelacement utilise seulement `propext`,
+`Classical.choice`, `Quot.sound`. Les preuves de cœur et leur spécialisation
+lisse gardent la seule dépendance native Stokes préexistante :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
