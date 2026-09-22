@@ -1401,3 +1401,35 @@ préexistante pour les preuves analytiques BRST :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Cœur minimal du BRST couplé et pairing original
+
+`CoupledBRSTCore4D` (préfixe `P0EFTJanusProgramPT12`) transporte les cœurs
+et calcule la fermeture d'une restriction du BRST couplé, en conservant
+tout le bloc physique borné, y compris les termes croisés H11.
+
+`CandidateACoupledBRSTMinimal4D` construit concrètement l'opérateur couplé
+minimal fermé. L'image simultanée des champs lisses difféomorphisme et
+abéliens est un cœur de cet opérateur. La fermeture de la restriction
+lisse de l'extension auto-adjointe existante est exactement ce minimal.
+
+`CandidateACoupledBRSTMinimalActual4D` identifie son action sur les champs
+lisses à celle de l'extension existante, puis prouve le pairing exact avec
+le Riesz augmenté original. Aucun terme physique croisé n'est supprimé.
+
+Le facteur difféomorphisme reste dans le Hilbert de graphe existant. Ces
+résultats ne prouvent pas l'auto-adjonction du minimal : l'égalité des
+adjoints FP minimal/maximal reste ouverte. Le passage difféomorphisme en
+L² canonique, le cœur LL et l'identification globale D9 restent également
+à établir. T12 n'est pas coché.
+
+Validation : trois gates, hub et audit des 12 déclarations publiques verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 2182, 4320, 4030 Mo ; hub 4003 Mo ; audit 3906 Mo.
+La limite de récursion du raccord d'action a été résolue en explicitant
+les domaines et en utilisant `LinearPMap.domRestrict_apply`, sans augmenter
+les budgets. `#print axioms` confirme `propext`, `Classical.choice`,
+`Quot.sound` et la seule dépendance native Stokes préexistante :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
