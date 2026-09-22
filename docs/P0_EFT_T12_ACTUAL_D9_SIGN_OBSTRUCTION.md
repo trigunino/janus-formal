@@ -309,6 +309,36 @@ hypothèses de cancellation ne sont pas affirmées pour le fond choisi.
 Le noyau résiduel des autres secteurs, leur réalisation BRST et la fermeture
 terminale restent ouverts ; T12 n'est pas coché.
 
+## Facteur abélien et colonne H11 sur le quotient commun
+
+`P0EFTJanusProgramPT12JointQuotientAbelianFactor4D.lean` construit la
+projection abélienne continue sur le quotient ghosts–LL et son inclusion
+linéaire isométrique. La projection est surjective et rétracte l'inclusion.
+Ces constructions ne requièrent pas les hypothèses d'annulation : elles
+utilisent seulement les coordonnées nulles des deux sous-espaces éliminés,
+puis leur fermeture. Le secteur abélien complété reste donc intact.
+
+`P0EFTJanusProgramPT12JointQuotientAbelianColumn4D.lean` établit une égalité
+de vecteurs : l'opérateur augmenté réduit appliqué à l'inclusion abélienne
+est la somme de l'inclusion du Riesz BRST signé et de la colonne physique
+H11 projetée sur le quotient. Cette colonne conserve ses composantes dans
+tous les secteurs. Son pairing contre tout représentant complété reste
+exactement `physical.form` sur les représentants initiaux.
+
+`P0EFTJanusProgramPT12JointQuotientAbelianSmoothPairing4D.lean` raccorde
+l'inclusion au cœur lisse réel. Le pairing réduit est exactement l'action
+BRST abélienne polarisée plus la Hessienne physique H11, contre tout test
+lisse global. Le champ B non nul conserve l'auto-pairing strictement négatif
+`-‖globalPairedGaugeLieL2LinearMap ... field‖²` après quotient.
+
+La descente de l'opérateur et ces pairings réduits gardent explicitement
+les hypothèses du quotient commun : flux LL nul, métriques sectorielles
+égales et somme des poids cinétiques Einstein nulle, ainsi que la carte
+forte centrée et l'extension physique déjà utilisée. L'isométrie du facteur
+abélien ne signifie pas qu'il est invariant sous H11. Aucun accord modal
+avec une cible D9 signée ni certificat Fredholm global n'est établi ici ;
+l'obstruction vers le D9 positif persiste et T12 reste ouvert.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -407,3 +437,13 @@ haute, un seul Lean et réserve de 4096 Mo. Pics échantillonnés : colonne LL
 Le hub compile à 4107 Mo. L'audit `#print axioms` des quinze théorèmes
 publics ne retourne que `propext`, `Classical.choice` et `Quot.sound`
 (3893 Mo). Aucun `sorry`, `admit` ou nouvel axiome ; `git diff --check` vert.
+
+### Facteur abélien et H11 sur le quotient commun
+
+Les trois nouveaux modules sont verts sous `run_lean_guarded`, priorité
+haute, un seul Lean et réserve de 4096 Mo. Pics échantillonnés : facteur
+isométrique 4075 Mo, colonne opérateur 4239 Mo, raccord lisse 4480 Mo.
+Le hub compile à 3962 Mo. L'audit `#print axioms` des dix-neuf théorèmes
+publics et des deux inclusions isométriques ne retourne que `propext`,
+`Classical.choice` et `Quot.sound` (3801 Mo). Aucun `sorry`, `admit` ou
+nouvel axiome ; `git diff --check` vert.
