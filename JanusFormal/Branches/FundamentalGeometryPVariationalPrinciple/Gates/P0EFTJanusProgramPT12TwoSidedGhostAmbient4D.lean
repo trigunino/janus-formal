@@ -51,6 +51,20 @@ theorem twoSidedGhostRotate_apply (scale : Real) (x : TwoSidedGhostAmbient P V) 
                 scale • (x.snd - x.fst.snd.snd.snd.snd))))),
           scale • (x.snd + x.fst.snd.snd.snd.snd)) := rfl
 
+/-- Explicit ambient coordinates, with the ghost FP feature followed by the antighost FP feature. -/
+def ghostAmbientPack (passive : P) (auxiliary anti ghost ghostFP antiFP : V) : TwoSidedGhostAmbient P V :=
+  WithLp.toLp 2 (WithLp.toLp 2 (passive, WithLp.toLp 2
+    (auxiliary, WithLp.toLp 2 (anti, WithLp.toLp 2 (ghost, ghostFP)))), antiFP)
+
+theorem twoSidedGhostRotate_features {E : Type*} [AddCommGroup E] [Module Real E]
+    (inclusion operator : E →ₗ[Real] V) (passive : P) (auxiliary : V) (anti ghost : E) :
+    twoSidedGhostRotate P V 1
+      (ghostAmbientPack P V passive auxiliary (inclusion anti) (inclusion ghost)
+        (operator ghost) (operator anti)) =
+    ghostAmbientPack P V passive auxiliary (inclusion (anti + ghost)) (inclusion (anti - ghost))
+      (operator (anti - ghost)) (operator (anti + ghost)) := by
+  rw [twoSidedGhostRotate_apply]
+  simp [ghostAmbientPack, map_add, map_sub]
 private theorem rotate_inverse (x : TwoSidedGhostAmbient P V) :
     twoSidedGhostRotate P V (1 / 2) (twoSidedGhostRotate P V 1 x) = x := by
   apply WithLp.ofLp_injective 2
