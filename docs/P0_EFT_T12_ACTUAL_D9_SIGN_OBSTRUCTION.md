@@ -415,6 +415,32 @@ non borné de Friedrichs. Cette égalité globale bornée ne fournit ni
 l'identification modale signée ni le certificat Fredholm géométrique
 terminal. T12 reste ouvert.
 
+## Cisaillement géométrique abélien sur le quotient global
+
+Le changement `B -> B + delta_g A` est désormais une équivalence linéaire
+continue du graphe abélien réel complété. Son inverse est `B -> B - delta_g A`.
+L'incrément est construit à partir des projections L2 existantes ; son carré
+est nul et il préserve le sous-espace fermé engendré par les champs lisses.
+L'accord avec le changement géométrique sur le cœur lisse est exact.
+
+Le pairing BRST transformé sépare le carré positif de Lorenz et le carré
+négatif de B. Le pairing ghost–antighost conserve le véritable opérateur
+Faddeev–Popov géométrique. Il s'agit d'une congruence d'opérateurs, sans
+prétendre à une conjugaison isométrique dans la norme L2 brute.
+
+L'incrément auxiliaire est annulé par le Riesz physique H11 sur tout le
+graphe, par annulation du tangent physique puis densité. Le cisaillement
+s'étend en une équivalence continue du quotient global ghosts–LL et
+préserve tous ses pairings H11, y compris les termes entre secteurs.
+Le pairing augmenté abélien réduit conserve exactement ce même H11 après
+séparation du carré auxiliaire, sous les hypothèses de descente déjà
+explicites (flux LL nul, métriques égales, somme des poids d'Einstein nulle).
+
+Ces résultats ne fournissent pas encore la transformation spectrale des
+opérateurs différentiels réels ni leur domaine maximal L2. L'identification
+à la référence signée et la fermeture Fredholm globale restent ouvertes.
+T12 reste non coché.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -547,4 +573,17 @@ augmenter les heartbeats.
 L'audit `#print axioms` des trente-six théorèmes publics et des trois
 inclusions isométriques ne retourne que `propext`, `Classical.choice` et
 `Quot.sound` (3902 Mo). Aucun `sorry`, `admit` ou nouvel axiome ;
+`git diff --check` vert.
+### Cisaillement abélien réel et préservation globale de H11
+
+Les cinq nouveaux modules sont verts sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : cisaillement
+abstrait 1905 Mo, réalisation géométrique 3755 Mo, pairing 3764 Mo,
+colonne H11 3975 Mo, quotient global et pairing augmenté 3981 Mo.
+La première tentative H11 a atteint la limite mémoire ; la preuve finale
+passe explicitement par l'annulation du tangent physique, sans augmenter
+le budget mémoire ni les heartbeats. Le hub compile à 4055 Mo.
+L'audit `#print axioms` des trente-deux déclarations publiques ne retourne
+que `propext`, `Classical.choice` et `Quot.sound` (3934 Mo). Aucun `sorry`,
+`admit`, nouvel axiome ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert.
