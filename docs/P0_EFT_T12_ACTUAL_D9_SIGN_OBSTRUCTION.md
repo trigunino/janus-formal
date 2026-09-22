@@ -1611,3 +1611,37 @@ Pics des gates : 3794, 3762, 3754 Mo ; hub 4132 Mo ; audit 3689 Mo.
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; Quillen, T08 et les fichiers
 externes préservés.
+
+### Adjoint de Stokes, dérivées fermées et injection H¹ scalaire en L²
+
+`CanonicalFrameDerivativeAdjoint4D` (préfixe `P0EFTJanusProgramPT12`)
+construit, pour tout repère générateur lisse fini, l'adjoint concret
+Dᵢ*φ = −div(φXᵢ) contre le volume canonique. L'identité intégrale découle
+de Stokes pour les champs de vecteurs lisses ; son pairing L² est prouvé.
+Une métrique régulière sert à la construction existante de la divergence.
+
+`CanonicalFrameDerivativeClosed4D` exclut les vecteurs verticaux dans la
+fermeture du graphe de chaque dérivée, puis construit son opérateur minimal
+fermé en L², de domaine dense et de cœur lisse, avec l'action réelle exacte.
+L'identité d'adjoint et la fermabilité ne sont pas des hypothèses ajoutées.
+
+`CanonicalScalarH1Injective4D` raccorde chaque coordonnée dérivée du graphe
+H¹ existant à cet opérateur fermé. Il en déduit l'injectivité de H¹ vers L²
+pour tout repère générateur lisse, puis pour le H¹ scalaire physique canonique.
+La complétion ne crée donc aucun vecteur H¹ scalaire non nul de valeur L² nulle.
+
+Il reste à exprimer le générateur métrique BRST dans ces coordonnées et à
+prouver son raccord d'adjoint. L'injectivité scalaire ne prouve pas seule
+la fermabilité de toute combinaison différentielle ni celle du Hessien
+BRST. Les réalisations L²/H11, les égalités d'extensions abélienne/LL et le
+raccord D9 restent ouverts ; T12 n'est pas coché.
+
+Validation : trois gates, hub et audit des 19 déclarations nommées verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3687, 3821, 3696 Mo ; hub 4010 Mo ; audit 3671 Mo.
+L'audit donne `propext`, `Classical.choice`, `Quot.sound` et, pour les preuves
+utilisant Stokes, la dépendance native préexistante :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; Quillen, T08 et les fichiers
+externes préservés.
