@@ -1028,3 +1028,40 @@ graphe/domaine minimal réel, la dépendance Stokes native préexistante
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; fichiers externes et T08 préservés.
+
+### Deux extensions ghost et critère d'unicité
+
+`P0EFTJanusProgramPT12OffDiagonalExtensionPair4D.lean` compare les blocs
+`B₁ = B(F_min, F_min†)` et `B₂ = B(A_min†, A_min)`. La spécialisation
+`P0EFTJanusProgramPT12CandidateAAbelianGhostExtensions4D.lean` construit `B₂`
+pour les métriques réelles de Candidate A, avec son domaine exact. Les deux
+blocs sont fermés, auto-adjoints et à domaine dense ; ils étendent le même
+bloc minimal `B_min = B(F_min, A_min)`. Leur intersection de graphes est
+exactement le graphe de `B_min`.
+
+Les équivalences suivantes sont prouvées : `B₁ = B₂`, `A_min = F_min†`,
+autoadjonction de `B_min`, propriété de cœur lisse pour `B₁`, et unicité
+parmi toutes les extensions auto-adjointes de `B_min`.
+`P0EFTJanusProgramPT12CandidateAAbelianGhostExtensionPairing4D.lean` prouve
+l'accord des deux actions sur tout le domaine minimal et le pairing exact
+avec le même Hessien ghost lisse. Si la propriété de cœur échoue, `B₂` est
+un témoin explicite distinct de `B₁`. Son échec n'est pas affirmé pour les
+données actuelles : ni l'égalité ni l'inégalité des extensions n'est établie.
+
+La compacité seule ne justifie pas de remplacer ce critère par une preuve
+d'autoadjonction essentielle : le théorème 5.1 de
+[Colin de Verdière–Le Bihan](https://afst.centre-mersenne.org/articles/10.5802/afst.1719/)
+donne des laplaciens lorentziens non essentiellement auto-adjoints sur des
+tores compacts de dimension deux. Il s'agit d'un repère analytique externe,
+pas d'un contre-exemple formalisé sur le quotient Janus. La condition de
+centrage de la carte forte identifie sa géométrie au centre ; elle ne fournit
+pas à elle seule l'approximation en norme de graphe manquante. T12 reste ouvert.
+
+Les trois gates, le hub et l'audit des vingt-sept déclarations publiques sont
+verts sous `run_lean_guarded`, priorité haute, un seul Lean, réserve 4096 Mo.
+Pics : 2251, 3917, 3916 Mo ; hub 3994 Mo ; audit 3897 Mo.
+L'audit retourne `propext`, `Classical.choice`, `Quot.sound` et, pour les
+résultats issus du Stokes réel, la dépendance native préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
+`git diff --check` vert. Fichiers externes et T08 préservés.
