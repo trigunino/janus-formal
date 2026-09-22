@@ -252,6 +252,33 @@ Fredholm global, ni raccord des quotients LL et ghosts avec les colonnes H11
 globales, n'en est déduit. L'obstruction BRST vers le D9 positif reste
 présente ; T12 reste ouvert.
 
+## Réalisation de Friedrichs sur le quotient LL
+
+`P0EFTJanusProgramPT12IsometricPMapTransport4D.lean` transporte un opérateur
+non borné par une isométrie linéaire surjective, avec son domaine explicite
+et son graphe. Il préserve fermeture, densité, symétrie et bijectivité ;
+l'autoadjonction est établie pour une réalisation symétrique surjective à
+domaine dense.
+
+`P0EFTJanusProgramPT12LLQuotientFriedrichsRealization4D.lean` applique ce
+transport au Friedrichs LL déjà construit, via l'isométrie concrète du
+quotient auxiliaire–mesure. Le domaine est la préimage exacte du domaine
+canonique. Cette réalisation est autoadjointe, fermée, à domaine dense,
+bijective et Fredholm. Son inverse borné compact est le transport de
+`canonicalLLWeakL2Inverse`, avec identités d'inversion des deux côtés et
+borne en norme. Aucun solveur ni intertwiner terminal n'est postulé.
+
+À flux de fond nul, le Jacobi LL quotient fermé est une restriction de
+cette réalisation. `P0EFTJanusProgramPT12LLQuotientFriedrichsSmoothPairing4D.lean`
+place chaque direction lisse complète dans son domaine et prouve le pairing
+exact avec le Hessien LL de la même action, y compris lorsque les représentants
+contiennent des composantes auxiliaire et mesure arbitraires.
+
+Ce certificat concerne le secteur LL quotient. Il ne prouve pas l'égalité
+du Jacobi minimal fermé avec son extension de Friedrichs : la densité du
+cœur pour la norme de graphe reste à établir. Les raccords BRST et H11 du
+certificat global restent ouverts ; T12 n'est pas coché.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -331,3 +358,13 @@ abstraite 1923 Mo, quotient du Jacobi LL 3892 Mo, isométrie et cœur lisse
 L'audit `#print axioms` des trente-deux théorèmes publics ne retourne que
 `propext`, `Classical.choice` et `Quot.sound` (3920 Mo). Aucun `sorry`,
 `admit` ou nouvel axiome ; `git diff --check` vert.
+
+### Réalisation de Friedrichs sur le quotient LL
+
+Les trois nouveaux modules sont verts sous `run_lean_guarded`, priorité
+haute, un seul Lean et réserve de 4096 Mo. Pics échantillonnés : transport
+isométrique 1928 Mo, réalisation quotient 3978 Mo, pairing de même action
+3895 Mo. Le hub compile à 3971 Mo. L'audit `#print axioms` des vingt-huit
+théorèmes publics ne retourne que `propext`, `Classical.choice` et
+`Quot.sound` (3893 Mo). Aucun `sorry`, `admit` ou nouvel axiome ;
+`git diff --check` vert.
