@@ -1213,3 +1213,43 @@ native Stokes préexistante
 pour les résultats utilisant le domaine fantôme réel et son auto-adjonction.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Réduction du BRST couplé et entrelacement concret
+
+`CandidateAReducedBRST4D` (préfixe `P0EFTJanusProgramPT12`) remplace le
+facteur difféomorphisme par son quotient fermé des ghosts partagés. Le
+facteur abélien mixte est conservé. La projection est continue et surjective,
+et conserve exactement la condition de domaine abélienne. Sous les
+hypothèses existantes de métriques égales et de poids cinétiques opposés,
+l'opérateur réduit est auto-adjoint. La colonne H11 complète est transportée
+vers le quotient global ghosts–LL déjà construit.
+
+`CandidateAReducedBRSTPairing4D` conserve le pairing pour chaque entrée du
+domaine non borné et chaque test complété. `QuotientPairingIntertwiner4D`
+établit que la projection composée avec son adjoint est l'identité et en
+déduit l'entrelacement d'opérateurs à partir du pairing.
+`CandidateAReducedBRSTIntertwining4D` applique ce résultat : l'opérateur réduit
+composé avec la projection égale la projection de l'opérateur couplé réel.
+L'annulation de la sortie réduite équivaut à celle de la sortie originale.
+
+`CandidateAReducedBRSTSmooth4D` fournit une réalisation lisse linéaire dense,
+contenue dans le domaine réduit, et annule les générateurs ghosts partagés.
+Le noyau de la projection est exactement le sous-espace ghost difféomorphisme
+avec composante abélienne nulle.
+
+La norme difféomorphisme reste une norme de graphe. Le raccord à la fibre
+D9/Friedrichs, les propriétés de cœur et le certificat terminal global
+restent ouverts. La présente réduction utilise le quotient ghosts–LL
+existant pour les sorties physiques ; T12 n'est pas coché.
+
+Validation : cinq gates, hub et audit des 25 déclarations publiques verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo. Pics des
+runs verts : 4309, 1905, 4318, 4302, 3995 Mo ; hub 4162 Mo ; audit 3907 Mo.
+Les réécritures de pairing ont été séparées par composante, sans augmentation
+des budgets. L'audit utilise `#print axioms` sur chaque déclaration publique
+des cinq gates. Axiomes : `propext`, `Classical.choice`, `Quot.sound`, et la
+seule dépendance native Stokes préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`
+pour l'auto-adjonction et l'appartenance des champs lisses au domaine.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
