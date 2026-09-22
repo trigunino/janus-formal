@@ -1331,3 +1331,42 @@ seule dépendance native Stokes préexistante
 pour les résultats utilisant l'auto-adjonction BRST ou le domaine lisse.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Matière en L² canonique et cœur d'opérateur
+
+`MatterCanonicalOperator4D` (préfixe `P0EFTJanusProgramPT12`) réalise le
+multiplicateur signé exact `2D + m²` des deux secteurs matière sur le Hilbert
+canonique des coefficients L². Son domaine est le domaine maximal diagonal,
+et son auto-adjonction découle du résultat diagonal réel existant. Le pairing
+des coefficients finis est exactement celui de la Hessienne matière.
+
+`MatterCanonicalCore4D` prouve `HasCore` pour l'image des coefficients finis :
+la fermeture de la restriction est l'opérateur maximal lui-même. La preuve
+utilise la densité déjà démontrée des modes finis dans le graphe complexe,
+puis identifie les graphes réel et complexe comme ensembles. Il s'agit ici
+d'une propriété de cœur d'opérateur, au-delà de la densité hilbertienne.
+
+`CandidateACanonicalMatterFourSector4D` insère cette matière L² dans le
+produit avec le BRST réduit et le LL quotienté. L'auto-adjonction conserve
+les hypothèses existantes de métriques égales et de poids opposés ; le
+domaine inclut maintenant explicitement le domaine maximal matière.
+`CandidateACanonicalMatterSmooth4D` construit une réalisation dense des mêmes
+représentants, contenue dans le domaine. `CandidateACanonicalMatterActual4D`
+conserve, à flux LL nul, l'égalité de pairing avec le Riesz augmenté original
+pour les quatre secteurs simultanément.
+
+La matière de cette nouvelle réalisation est en L² canonique. Le facteur
+difféomorphisme garde sa norme de graphe ; les propriétés de cœur globales
+BRST/LL et le raccord complet à la fibre D9/Friedrichs restent ouverts.
+Le certificat terminal n'est pas construit et T12 n'est pas coché.
+
+Validation : cinq gates, hub et audit des 21 déclarations publiques verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des runs verts : 3748, 3814, 4200, 4060, 4045 Mo ; hub 4160 Mo ; audit
+3911 Mo. Aucun budget augmenté. `#print axioms` donne seulement `propext`,
+`Classical.choice`, `Quot.sound` pour l'opérateur matière et son cœur.
+Les résultats globaux utilisant le BRST gardent la seule dépendance native
+Stokes préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
