@@ -1579,3 +1579,35 @@ pour ces 25 déclarations, sans dépendance native Stokes supplémentaire.
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; Quillen, T08 et les fichiers
 externes préservés.
+
+### Contraction du doublet BRST difféomorphisme en L²
+
+`DiffeomorphismL2Triplet4D` (préfixe `P0EFTJanusProgramPT12`) construit les
+transferts entre les trois champs du triplet comme applications linéaires
+continues sur le L² réel. Leur préservation de l'image lisse complétée et
+leurs lois de composition sont prouvées, avec la normalisation commune
+fixée précédemment.
+
+`DiffeomorphismL2Doublet4D` construit le différentiel nonminimal borné N,
+l'homotopie bornée h et le projecteur P sur antifantôme/multiplicateur.
+On a N² = h² = 0, Nh + hN = P et P² = P. L'homotopie préserve le domaine
+du différentiel BRST original Q, et Qh + hQ = P y est démontré. La composante
+doublet de chaque cycle est donc un bord explicite, de primitive hx.
+
+`DiffeomorphismDoubletGraphClosure4D` prolonge cette identité à la fermeture
+du graphe réel : (x,y) dans cette fermeture implique (hx,Px-hy) dans la même
+fermeture. Ainsi, chaque cycle du graphe complété conserve une primitive
+explicite pour sa composante doublet.
+
+La fermeture est ici une relation linéaire fermée ; son caractère univoque
+n'est pas supposé. La fermabilité du générateur métrique, le Hessien L²/H11,
+les égalités d'extensions abélienne/LL et le raccord D9 restent ouverts.
+Cette contraction du doublet ne ferme pas T12.
+
+Validation : trois gates, hub et audit des 21 déclarations nommées verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3794, 3762, 3754 Mo ; hub 4132 Mo ; audit 3689 Mo.
+`#print axioms` donne uniquement `propext`, `Classical.choice`, `Quot.sound`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; Quillen, T08 et les fichiers
+externes préservés.
