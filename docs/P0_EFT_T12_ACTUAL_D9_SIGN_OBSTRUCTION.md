@@ -469,6 +469,33 @@ qui contrôle FP(c) mais pas FP(cbar). Le domaine maximal L2, la symétrie FP
 sur le domaine retenu, le raccord spectral et la fermeture globale restent
 à construire. T12 reste non coché.
 
+## Rotation continue sur le graphe avec contrôle des deux images FP
+
+Le graphe abélien est renforcé par une seule coordonnée : FP(antighost).
+Il est défini comme la fermeture de l'image des véritables états lisses
+dans l'ancien espace de caractéristiques, augmenté de cette coordonnée L2.
+Son cœur lisse est dense et injectif ; l'espace complété est complet.
+
+La rotation ghost somme/différence agit simultanément sur les deux champs
+et sur leurs images FP. Elle préserve ce sous-espace fermé et définit une
+équivalence linéaire continue, avec inverse continu. Les deux applications
+coïncident exactement avec la rotation lisse et sa reconstruction.
+
+L'oubli de FP(antighost) est une application linéaire continue d'image dense
+vers le graphe abélien existant. Son injectivité n'est pas démontrée : aucune
+closabilité du FP réel n'est déduite de la seule fermeture des caractéristiques.
+La reconstruction signée suivie de cet oubli est elle aussi continue et dense.
+
+Par densité, la colonne physique H11 est préservée sur tout le graphe renforcé,
+contre tous les tests globaux complétés. La colonne augmentée sur le quotient
+ghosts–LL est établie avec le H11 d'origine et les hypothèses de descente déjà
+explicites. Ce résultat prolonge l'égalité auparavant disponible sur le seul
+cœur lisse, sans prétendre à une rotation bornée sur l'ancien graphe.
+
+La preuve globale de Stokes, la réalisation différentielle injective en L2,
+le domaine maximal et le raccord spectral restent à construire. Le défaut FP
+n'est pas annulé et T12 reste non coché.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -623,5 +650,17 @@ un seul Lean et réserve de 4096 Mo. Pics échantillonnés : algèbre du défaut
 3963 Mo, assemblage du cœur dense 3946 Mo. Le hub compile à 4187 Mo.
 L'audit `#print axioms` des trente-trois déclarations publiques ne retourne
 que `propext`, `Classical.choice` et `Quot.sound` (3934 Mo). Aucun `sorry`,
+`admit`, nouvel axiome ou hypothèse terminale d'intertwiner ;
+`git diff --check` vert.
+### Graphe ghost renforcé et rotation continue
+
+Les quatre nouveaux modules sont verts sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : rotation ambiante
+2195 Mo, graphe réel 3742 Mo, équivalence et oubli dense 3760 Mo, H11 et
+colonne augmentée 4229 Mo. Le dépliage géométrique initial a dépassé les
+heartbeats ; le calcul des caractéristiques a été isolé dans un lemme
+abstrait, sans augmenter les budgets. Le hub compile à 3977 Mo.
+L'audit `#print axioms` des trente-et-une déclarations publiques ne retourne
+que `propext`, `Classical.choice` et `Quot.sound` (3930 Mo). Aucun `sorry`,
 `admit`, nouvel axiome ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert.
