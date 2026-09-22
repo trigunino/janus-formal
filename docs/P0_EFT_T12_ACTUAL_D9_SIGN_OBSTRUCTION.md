@@ -187,6 +187,37 @@ d'annulation des poids restent explicites ; elles ne sont pas affirmées
 pour le fond choisi. Aucun quotient de ghosts ni certificat terminal n'est
 introduit par ces modules.
 
+## Quotient de Hilbert des ghosts et antighosts nuls
+
+`P0EFTJanusProgramPT12ClosedNullQuotient4D.lean` établit la descente d'un
+opérateur borné autoadjoint `A` par un sous-espace fermé `N ⊆ ker A`.
+L'opérateur quotient satisfait `Aq(q x) = q(A x)` et préserve exactement
+le pairing `⟨Aq(q x), q y⟩ = ⟨A x, y⟩`. Son autoadjonction est prouvée,
+et son noyau vaut l'image de `ker A` par la projection quotient.
+
+`P0EFTJanusProgramPT12DiagonalGhostHilbertQuotient4D.lean` applique cette
+construction à l'espace de Hilbert réel augmenté. Le sous-espace quotienté
+est l'adhérence de l'image des couples lisses `(ghost, antighost)`, avec
+métriques perturbées et champ B nuls. L'annulation des deux colonnes dans
+le Riesz augmenté est démontrée sous les mêmes conditions de métriques
+égales et de somme nulle des poids. La période doit seulement être non nulle
+pour cette construction, contrairement à la preuve de dimension infinie
+qui utilise sa positivité.
+
+Le cœur réel projeté est dense dans le quotient. Les deux colonnes nulles
+y deviennent zéro ; le pairing du Riesz quotient sur ce cœur est exactement
+le Hessien local gauge-fixé existant, avec toutes les contributions H11.
+L'intertwining utilise la projection quotient concrète, qui n'est pas
+injective sur l'espace initial. Il ne suppose pas le paquet terminal
+`ProgramPT12CanonicalActualFriedrichsSmoothCoreIntertwiner4D`.
+
+Cette réduction concerne le Hessien linéaire dans le régime d'annulation.
+Elle ne démontre ni une équivalence BRST non linéaire, ni la réalisation
+géométrique L² actual→D9. Le noyau résiduel est conservé explicitement :
+sa dimension finie et un gap sur son complément restent à établir. Le
+raccord au quotient LL et au certificat global reste ouvert ; T12 n'est
+pas coché.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -246,3 +277,13 @@ import direct supplémentaire et compile à 4082 Mo.
 L'audit `#print axioms` des sept théorèmes publics ne retourne que `propext`,
 `Classical.choice` et `Quot.sound` (3889 Mo). Aucun `sorry`, `admit` ou nouvel
 axiome ; `git diff --check` vert.
+
+### Quotient fermé des ghosts et antighosts
+
+Les deux nouveaux modules sont verts sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : quotient abstrait
+1929 Mo, quotient réel augmenté 4185 Mo. Le hub importe ces résultats par
+un import direct supplémentaire et compile à 4226 Mo.
+L'audit `#print axioms` des dix-sept théorèmes publics ne retourne que
+`propext`, `Classical.choice` et `Quot.sound` (3897 Mo). Aucun `sorry`,
+`admit` ou nouvel axiome ; `git diff --check` vert.
