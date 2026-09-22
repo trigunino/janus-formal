@@ -218,6 +218,40 @@ sa dimension finie et un gap sur son complément restent à établir. Le
 raccord au quotient LL et au certificat global reste ouvert ; T12 n'est
 pas coché.
 
+## Quotient du Jacobi LL non borné et raccord Friedrichs
+
+`P0EFTJanusProgramPT12ClosedNullPMapQuotient4D.lean` construit la descente
+d'un opérateur symétrique non borné par un sous-espace fermé de son noyau.
+Le graphe quotient est défini par les représentants orthogonaux. Il reste
+fermé ; son domaine est exactement l'image du domaine initial et reste
+dense. La symétrie et le pairing sont préservés, sans perdre de sortie
+non nulle de l'opérateur.
+
+`P0EFTJanusProgramPT12LLFullJacobiHilbertQuotient4D.lean` applique cette
+construction au Jacobi LL littéral à trois composantes, à flux de fond nul.
+Le sous-espace quotienté est le noyau de la projection sur le champ LL :
+il contient exactement les composantes L² auxiliaire et mesure. La preuve
+utilise leur annulation déjà établie pour le Jacobi fermé.
+
+`P0EFTJanusProgramPT12LLFullReducedQuotientCore4D.lean` identifie ce quotient
+isométriquement au L² LL canonique. Le quotient lisse auxiliaire–mesure
+existant s'y plonge injectivement avec image dense, et les deux projections
+commutent sur toute direction lisse complète. Cette identification des
+espaces ne nécessite pas l'hypothèse de flux nul.
+
+`P0EFTJanusProgramPT12LLFullReducedFriedrichsBridge4D.lean` compose ensuite
+la décomposition du graphe LL déjà prouvée avec cette isométrie. À flux nul,
+le graphe quotient est exactement conjugué au Jacobi fermé du champ LL,
+et se transporte dans le graphe du Friedrichs canonique existant. Son noyau
+est nul. Le noyau du Jacobi LL complet est donc exactement constitué des
+directions auxiliaire–mesure.
+
+Le transport vers Friedrichs est une inclusion de graphes : l'égalité des
+domaines avec cette extension n'est pas démontrée ici. Aucun certificat
+Fredholm global, ni raccord des quotients LL et ghosts avec les colonnes H11
+globales, n'en est déduit. L'obstruction BRST vers le D9 positif reste
+présente ; T12 reste ouvert.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -286,4 +320,14 @@ un seul Lean et réserve de 4096 Mo. Pics échantillonnés : quotient abstrait
 un import direct supplémentaire et compile à 4226 Mo.
 L'audit `#print axioms` des dix-sept théorèmes publics ne retourne que
 `propext`, `Classical.choice` et `Quot.sound` (3897 Mo). Aucun `sorry`,
+`admit` ou nouvel axiome ; `git diff --check` vert.
+
+### Quotient du Jacobi LL non borné
+
+Les quatre nouveaux modules sont verts sous `run_lean_guarded`, priorité
+haute, un seul Lean et réserve de 4096 Mo. Pics échantillonnés : descente
+abstraite 1923 Mo, quotient du Jacobi LL 3892 Mo, isométrie et cœur lisse
+3899 Mo, raccord Friedrichs et noyau 3896 Mo. Le hub compile à 3970 Mo.
+L'audit `#print axioms` des trente-deux théorèmes publics ne retourne que
+`propext`, `Classical.choice` et `Quot.sound` (3920 Mo). Aucun `sorry`,
 `admit` ou nouvel axiome ; `git diff --check` vert.
