@@ -496,6 +496,34 @@ La preuve globale de Stokes, la réalisation différentielle injective en L2,
 le domaine maximal et le raccord spectral restent à construire. Le défaut FP
 n'est pas annulé et T12 reste non coché.
 
+## Pairing signé sur le graphe renforcé complété
+
+`abelianTwoSidedSignedRealization` compose la reconstruction ghost continue,
+l'oubli et le cisaillement de Lorenz. Cette application continue a une image
+dense dans le graphe abélien réel ; sur les états lisses elle redonne exactement
+la reconstruction signée suivie du véritable incrément de Lorenz.
+
+Son pairing hessien est établi sur tous les vecteurs complétés : carré de
+Lorenz positif, carré B négatif, deux blocs ghosts signés et les deux termes
+mixtes du défaut FP. `twoSidedSignedGhostPairing` conserve ces derniers
+explicitement, sans supposer leur annulation.
+
+`abelianTwoSidedSignedRiesz` est la congruence `T* R T` dans la norme du
+graphe renforcé. Son pairing exact et sa symétrie sont prouvés. La colonne
+physique H11 reste celle du vecteur initial après oubli, et la colonne
+augmentée est établie dans tout le quotient commun, avec les hypothèses de
+descente existantes. Ce résultat ne donne ni une isométrie L2 ni un domaine
+maximal auto-adjoint.
+
+Le Stokes faible des dix flots canoniques existe déjà ; son identification
+avec la divergence utilisée par le FP reste à raccorder. La closabilité FP,
+l'injectivité de l'oubli et la fermeture spectrale globale restent ouvertes.
+T12 demeure non coché.
+
+Sources : `P0EFTJanusProgramPT12TwoSidedGhostPairing4D.lean`,
+`P0EFTJanusProgramPT12AbelianTwoSidedSignedPairing4D.lean` et
+`P0EFTJanusProgramPT12AbelianTwoSidedSignedPhysical4D.lean`.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -662,5 +690,17 @@ heartbeats ; le calcul des caractéristiques a été isolé dans un lemme
 abstrait, sans augmenter les budgets. Le hub compile à 3977 Mo.
 L'audit `#print axioms` des trente-et-une déclarations publiques ne retourne
 que `propext`, `Classical.choice` et `Quot.sound` (3930 Mo). Aucun `sorry`,
+`admit`, nouvel axiome ou hypothèse terminale d'intertwiner ;
+`git diff --check` vert.
+
+### Pairing signé et colonnes globales sur le graphe renforcé
+
+Les trois nouveaux modules sont verts sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : pairing abstrait
+2180 Mo, réalisation et Riesz complétés 3908 Mo, colonnes H11 et augmentée
+3939 Mo. Le hub compile à 4178 Mo. L'élaboration de l'adjoint a été résolue
+en explicitant ses espaces source et cible, sans augmenter les budgets.
+L'audit `#print axioms` des quatorze déclarations publiques ne retourne
+que `propext`, `Classical.choice` et `Quot.sound` (3907 Mo). Aucun `sorry`,
 `admit`, nouvel axiome ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert.
