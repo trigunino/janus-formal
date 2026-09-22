@@ -493,9 +493,9 @@ explicites. Ce résultat prolonge l'égalité auparavant disponible sur le seul
 cœur lisse, sans prétendre à une rotation bornée sur l'ancien graphe.
 
 Le Stokes global du FP est établi ci-dessous dans la mesure d'un métrique
-régulier. La closabilité dans le L2 canonique est établie ci-dessous ; le
-domaine maximal et le raccord spectral restent à construire. Le défaut FP
-dans le L2 canonique n'est pas annulé et T12 reste non coché.
+régulier. La closabilité et le domaine de l'adjoint Hilbert dans le L2
+canonique sont établis ci-dessous. Le raccord spectral reste à construire.
+Le défaut FP canonique n'est pas annulé et T12 reste non coché.
 
 ## Pairing signé sur le graphe renforcé complété
 
@@ -581,8 +581,9 @@ directement la régularité nécessaire, sans nouvelle hypothèse analytique.
 
 Ces résultats ne prouvent ni la surjectivité de la réalisation signée, ni
 un inverse borné, ni l'identification d'un domaine maximal auto-adjoint L2.
-Le défaut FP canonique, le raccord spectral et le certificat global restent
-à traiter ; T12 demeure non coché.
+Le défaut FP canonique et les domaines minimal/adjoint sont précisés
+ci-dessous. Le raccord spectral et le certificat global restent à traiter ;
+T12 demeure non coché.
 
 Sources : `P0EFTJanusProgramPT12FPCanonicalFormalAdjoint4D.lean`,
 `P0EFTJanusProgramPT12PairedFPCanonicalAdjoint4D.lean`,
@@ -590,6 +591,38 @@ Sources : `P0EFTJanusProgramPT12FPCanonicalFormalAdjoint4D.lean`,
 `P0EFTJanusProgramPT12PairedFPClosable4D.lean`,
 `P0EFTJanusProgramPT12AbelianTwoSidedForgetInjective4D.lean` et
 `P0EFTJanusProgramPT12CandidateAAbelianFaithfulRealization4D.lean`.
+
+## FP fermé sur L2, domaine adjoint maximal et défaut ghost exact
+
+`pairedFPDefect_eq_canonicalCorrection` identifie le défaut de symétrie au
+pairing avec `FP*formel - FP`, où `FP*formel = r FP(r⁻¹ ·)`. L'annulation
+contre tous les tests lisses équivaut à l'annulation de cette correction L2.
+Le Hessien ghost mixte réel vaut exactement un quart de ce pairing.
+La relation d'adjonction s'étend également à tout le graphe FP fermé.
+
+`candidateAFPCanonicalMinimal` réalise le véritable FP pairé de Candidate A
+comme `LinearPMap` dans le L2 canonique. Son graphe est exactement la
+fermeture de l'image lisse `(champ, FP(champ))`. Il est fermé, son domaine
+est dense, son action sur le cœur lisse est exacte et toute extension
+fermée de cette action le contient. La construction utilise l'injectivité
+du graphe déjà prouvée pour les métriques effectives de l'action.
+
+Son adjoint Hilbert est fermé et à domaine dense. Le domaine maximal de
+cet adjoint est caractérisé sans hypothèse supplémentaire : `u` y appartient
+si et seulement s'il existe `v` dans L2 tel que, pour tout test lisse `φ`,
+`⟨FP φ, u⟩ = ⟨φ, v⟩`. La valeur de l'adjoint est alors `v` ; sur les tests
+lisses, elle est exactement l'adjoint canonique pondéré construit auparavant.
+
+Ces deux domaines ne sont pas identifiés entre eux. Aucune auto-adjonction
+du FP canonique, réalisation auto-adjointe du bloc ghost complet ou propriété
+Fredholm globale n'est déduite ici. Le raccord spectral signé et les autres
+secteurs restent à traiter ; T12 demeure non coché.
+
+Sources : `P0EFTJanusProgramPT12FPCanonicalDefect4D.lean`,
+`P0EFTJanusProgramPT12ClosedFeatureOperator4D.lean`,
+`P0EFTJanusProgramPT12ClosedFeatureAdjoint4D.lean`,
+`P0EFTJanusProgramPT12CandidateAFPCanonicalClosed4D.lean` et
+`P0EFTJanusProgramPT12CandidateAFPCanonicalAdjoint4D.lean`.
 
 ## Validation
 
@@ -806,3 +839,17 @@ preuves issues du Stokes, la dépendance native préexistante
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner
 n'a été ajouté. `git diff --check` vert ; fichiers externes et T08 préservés.
+
+### Opérateur FP minimal fermé et adjoint Hilbert canonique
+
+Les cinq nouvelles gates sont vertes sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : défaut canonique
+3914 Mo, opérateur fermé abstrait 2162 Mo, domaine adjoint abstrait 2145 Mo,
+FP minimal Candidate A 3912 Mo, adjoint Candidate A 4136 Mo. Le hub compile
+à 4136 Mo et l'audit des trente-et-une déclarations publiques à 3927 Mo.
+
+Les dépendances de l'audit sont `propext`, `Classical.choice`, `Quot.sound`
+et, pour les résultats issus du Stokes, le `native_decide` préexistant
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
+`git diff --check` vert. Les fichiers externes et T08 sont préservés.
