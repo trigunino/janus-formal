@@ -1138,3 +1138,39 @@ la dépendance native de Stokes préexistante
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`
 pour l'auto-adjonction et les pairings réels. Aucun nouvel axiome, `sorry`,
 `admit` ou hypothèse terminale d'intertwiner ; `git diff --check` vert.
+
+### Raccord H11 à la réalisation abélienne mixte
+
+`AbelianPotentialGraphInclusion4D` et `CandidateAAbelianMixedPotential4D`
+(préfixe `P0EFTJanusProgramPT12`) construisent l'inclusion continue du graphe
+Lorenz et le readout physique de l'espace mixte. Les slots nonminimaux y sont
+nuls, tandis que le potentiel complété est conservé.
+
+`CandidateAAbelianMixedPhysical4D` compose ce readout avec le véritable Riesz
+physique. Sa colonne prend ses valeurs dans tout le Hilbert commun : elle
+conserve les sorties H11 vers les autres secteurs. Sur chaque état abélien
+lisse, elle égale la colonne réelle, contre tout test commun complété.
+La même égalité est prouvée après projection au quotient ghosts–LL.
+
+`CandidateAAbelianMixedH114D` construit le bloc interne par transport adjoint
+et prouve son auto-adjonction bornée ainsi que son pairing physique exact.
+`BoundedSelfAdjointPerturbation4D` prouve directement la formule de l'adjoint
+pour une perturbation bornée d'un opérateur densément défini.
+`CandidateAAbelianMixedAugmented4D` ajoute H11 au BRST abélien non borné :
+auto-adjonction, domaine inchangé, pairing lisse égal au Riesz augmenté réel.
+
+Ces résultats utilisent l'extension physique commune et le centrage fort
+existants. Ils ne construisent pas une nouvelle extension physique globale.
+Le potentiel reste en norme de graphe Lorenz ; l'identification à une cible
+D9 corrigée, la propriété de cœur des ghosts et la réalisation du secteur
+difféomorphisme restent ouvertes. T12 n'est pas coché.
+
+Validation : six gates, hub et audit des 29 déclarations publiques verts,
+Lean séquentiel gardé, priorité haute, réserve 4096 Mo. Pics des runs verts :
+3750, 3914, 3966, 2190, 4181, 4007 Mo ; hub 4006 Mo ; audit 3922 Mo.
+L'audit retourne `propext`, `Classical.choice`, `Quot.sound` ; seuls
+l'auto-adjonction et les deux pairings de l'opérateur augmenté héritent de
+la dépendance native Stokes préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; Quillen et T08 préservés.
