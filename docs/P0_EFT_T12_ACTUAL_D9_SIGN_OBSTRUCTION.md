@@ -377,6 +377,44 @@ construisent pas leur identification modale avec D9 signé. L'obstruction
 abélienne vers D9 positif demeure. L'identification modale signée et la
 fermeture Fredholm globale restent à établir. T12 n'est pas coché.
 
+## Décomposition globale du quotient de graphe et de son Riesz
+
+`P0EFTJanusProgramPT12ClosedNullFactorIsometry4D.lean` isole le transport
+isométrique d'un facteur entre quotients fermés compatibles. Ce petit
+lemme évite un timeout de dépliage des types géométriques, sans augmenter
+les limites de heartbeats.
+
+`P0EFTJanusProgramPT12JointQuotientMatterLLFactor4D.lean` construit le
+facteur matière–LL complété, quotienté par la fermeture des directions
+LL auxiliaires/mesure, avec inclusion isométrique et projection adjointe.
+`P0EFTJanusProgramPT12JointQuotientSectorDecomposition4D.lean` prouve la
+reconstruction unique de tout vecteur du quotient global par les facteurs
+difféomorphisme, abélien et matière–LL. Le produit scalaire et le carré de
+la norme sont exactement les sommes sectorielles.
+
+`P0EFTJanusProgramPT12ReducedMatterLLGraphRiesz4D.lean` extrait le bloc
+matière–LL du Riesz de graphe existant, indépendamment de l'extension
+physique. Son pairing est explicitement la somme des formes matière et
+LL réelles. Sous les données fortes centrées et le flux LL nul, il descend
+en un opérateur auto-adjoint sur le quotient sectoriel et sa colonne
+coïncide avec celle du Riesz augmenté. H11 annule ce facteur entier.
+
+`P0EFTJanusProgramPT12ThreeBlockHilbertAssembly4D.lean` isole l'assemblage
+abstrait des trois colonnes et de l'opérateur physique commun, avec le
+pairing et l'auto-adjonction de la différence de deux opérateurs.
+`P0EFTJanusProgramPT12JointQuotientGlobalRiesz4D.lean` établit l'égalité
+d'opérateurs sur tout le quotient global : Riesz augmenté = somme des trois
+blocs sectoriels inclus et projetés + H11 réduit. La somme diagonale est
+auto-adjointe ; son pairing global est explicite. H11 dépend seulement des
+deux coordonnées BRST, en conservant leurs éventuels termes croisés.
+L'assemblage garde les hypothèses d'annulation du Riesz augmenté.
+
+Le quotient matière–LL construit ici porte la norme du graphe global.
+Il n'est pas identifié au quotient LL en norme L² portant l'opérateur
+non borné de Friedrichs. Cette égalité globale bornée ne fournit ni
+l'identification modale signée ni le certificat Fredholm géométrique
+terminal. T12 reste ouvert.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -495,4 +533,18 @@ colonne opérateur 4277 Mo, raccord lisse 3995 Mo. Le hub compile à 3969 Mo.
 L'audit `#print axioms` des trente-trois théorèmes publics et des deux
 inclusions isométriques ne retourne que `propext`, `Classical.choice` et
 `Quot.sound` (3923 Mo). Aucun `sorry`, `admit` ou nouvel axiome ;
+`git diff --check` vert.
+
+### Décomposition et Riesz globaux sur le quotient de graphe
+
+Les six nouveaux modules sont verts sous `run_lean_guarded`, priorité
+haute, un seul Lean et réserve de 4096 Mo. Pics échantillonnés : isométrie
+abstraite 1921 Mo, facteur matière–LL 4334 Mo, décomposition 4328 Mo,
+Riesz matière–LL 4311 Mo, assemblage abstrait 1987 Mo, Riesz global
+4519 Mo. Le hub compile à 3981 Mo. Les timeouts de dépliage ont été
+résolus par des lemmes abstraits et des compositions explicites, sans
+augmenter les heartbeats.
+L'audit `#print axioms` des trente-six théorèmes publics et des trois
+inclusions isométriques ne retourne que `propext`, `Classical.choice` et
+`Quot.sound` (3902 Mo). Aucun `sorry`, `admit` ou nouvel axiome ;
 `git diff --check` vert.
