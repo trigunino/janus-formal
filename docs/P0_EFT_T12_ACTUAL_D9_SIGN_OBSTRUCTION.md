@@ -1174,3 +1174,42 @@ la dépendance native Stokes préexistante
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; Quillen et T08 préservés.
+
+### Opérateur BRST couplé : difféomorphisme et abélien
+
+`CoupledBRSTOperator4D` (préfixe `P0EFTJanusProgramPT12`) assemble un bloc
+borné auto-adjoint, un bloc non borné auto-adjoint et le transport adjoint
+d'une Hessienne physique commune. Le transport est la somme des deux
+inclusions : les deux termes H11 croisés sont donc conservés.
+
+`CandidateACoupledBRST4D` spécialise cet opérateur au véritable Riesz signé
+difféomorphisme et au BRST abélien mixte. Il est auto-adjoint ; son domaine
+est exactement le domaine fantôme abélien dans le deuxième facteur, sans
+restriction supplémentaire dans le graphe difféomorphisme. Sa colonne
+physique prend ses valeurs dans tout le Hilbert commun et égale la colonne
+réelle sur les états considérés.
+
+`CandidateACoupledBRSTDomainPairing4D` prouve le pairing sur tout le domaine.
+`CandidateACoupledBRSTPairing4D` et `CandidateACoupledBRSTActual4D` établissent
+l'égalité exacte avec le Riesz augmenté réel pour des entrées difféomorphisme
+complétées et des champs abéliens lisses. `CandidateACoupledBRSTSmooth4D`
+construit la réalisation linéaire injective dense des deux familles lisses,
+dont l'image est incluse dans le domaine de l'opérateur.
+
+Le secteur difféomorphisme conserve ici sa norme de graphe existante ; les
+fantômes abéliens restent en L² canonique. La densité prouvée est hilbertienne,
+pas une propriété de cœur d'opérateur. Le centrage et l'extension physique
+commune sont ceux du cadre existant. Aucun raccord D9, certificat terminal
+global ou fermeture T12 n'est revendiqué à ce stade.
+
+Validation : six gates, hub et audit des 26 déclarations publiques verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo. Pics des
+runs verts : 2178, 4047, 4302, 4010, 4175, 3984 Mo ; hub 4050 Mo ; audit
+3925 Mo. Les limites de récursion rencontrées ont été résolues par une gate
+séparée de pairing sur le domaine, sans augmentation des budgets.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound`, et la seule dépendance
+native Stokes préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`
+pour les résultats utilisant le domaine fantôme réel et son auto-adjonction.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
