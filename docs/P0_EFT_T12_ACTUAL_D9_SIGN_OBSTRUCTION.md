@@ -657,6 +657,36 @@ Sources : `P0EFTJanusProgramPT12ClosedDoubleAdjoint4D.lean`,
 `P0EFTJanusProgramPT12CandidateAAbelianGhostSelfAdjoint4D.lean` et
 `P0EFTJanusProgramPT12CandidateAAbelianGhostL2Pairing4D.lean`.
 
+## Opérateur ghost signé auto-adjoint et raccord exact du pairing
+
+`unboundedCongruence` construit `T A T` avec domaine exact `T⁻¹(D(A))`
+pour une équivalence linéaire continue `T`. Lorsque `T` est symétrique,
+son adjoint est `T A† T` ; la congruence préserve donc l'auto-adjonction,
+la fermeture et la densité du domaine. Le pairing transporté est prouvé
+sur tout le domaine, contre tout test L2.
+
+`ghostL2Reconstruction` réalise sur L2 la reconstruction déjà utilisée sur
+le cœur lisse : `(u, v) ↦ ((u+v)/2, (u-v)/2)`. Son inverse est la rotation
+somme/différence. Elle est symétrique, bornée et inversible ; le facteur
+`1/2` est conservé, sans la présenter comme une isométrie.
+
+`candidateAAbelianSignedGhostOperator` est la congruence concrète du bloc
+ghost auto-adjoint de Candidate A. Son domaine impose `(u+v)/2 ∈ D(FP†)`
+et `(u-v)/2 ∈ D(FP)`. Il est auto-adjoint, fermé et à domaine dense.
+Son pairing lisse est exactement le Hessien réel après reconstruction,
+puis la formule signée existante : différence des pairings symétrisés
+divisée par deux, plus les deux défauts FP divisés par quatre.
+
+Il s'agit d'une congruence de formes, sans identification du spectre à D9.
+La densité du cœur lisse en norme de graphe, la propriété Fredholm et le
+raccord global des secteurs BRST et H11 restent ouverts. T12 n'est pas coché.
+
+Sources : `P0EFTJanusProgramPT12UnboundedCongruence4D.lean`,
+`P0EFTJanusProgramPT12SymmetricCongruenceAdjoint4D.lean`,
+`P0EFTJanusProgramPT12GhostL2Reconstruction4D.lean`,
+`P0EFTJanusProgramPT12CandidateAAbelianSignedGhostL2Operator4D.lean` et
+`P0EFTJanusProgramPT12CandidateAAbelianSignedGhostL2Pairing4D.lean`.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -899,6 +929,21 @@ FP minimal Candidate A 3912 Mo, adjoint Candidate A 4136 Mo. Le hub compile
 
 Les dépendances de l'audit sont `propext`, `Classical.choice`, `Quot.sound`
 et, pour les résultats issus du Stokes, le `native_decide` préexistant
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
+`git diff --check` vert. Les fichiers externes et T08 sont préservés.
+
+### Congruence signée auto-adjointe sur L2
+
+Les cinq nouvelles gates sont vertes sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : congruence 2196 Mo,
+transport de l'adjoint 2180 Mo, reconstruction L2 2184 Mo, opérateur signé
+Candidate A 3917 Mo, pairing signé 3917 Mo. Le hub compile à 4092 Mo et
+l'audit des vingt-sept déclarations publiques à 3926 Mo. Aucun budget
+mémoire ou heartbeat n'a été augmenté.
+
+L'audit retourne `propext`, `Classical.choice`, `Quot.sound` et, pour les
+résultats issus du Stokes réel, le `native_decide` préexistant
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert. Les fichiers externes et T08 sont préservés.
