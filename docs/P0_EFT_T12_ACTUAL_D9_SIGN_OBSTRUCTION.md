@@ -1286,3 +1286,48 @@ sans augmentation des budgets. `#print axioms` confirme seulement `propext`,
 pour l'auto-adjonction et les résultats utilisant le domaine lisse.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Réalisation simultanée des quatre secteurs et pairing original
+
+`MatterGraphRealization4D` (préfixe `P0EFTJanusProgramPT12`) donne
+l'auto-adjonction du Riesz signé matière sur tout son Hilbert de graphe,
+ainsi que l'inclusion dense des coefficients finis et leur pairing exact.
+La matière n'est pas remplacée par zéro : seule sa colonne physique H11
+s'annule dans le cadre fort existant.
+
+`CandidateAFourSectorRealization4D` assemble ce facteur avec le BRST réduit
+et le LL quotienté. L'opérateur est auto-adjoint sous les hypothèses
+existantes de métriques égales et de poids cinétiques opposés. Son domaine
+garde exactement les conditions fantômes abéliennes et de Friedrichs LL ;
+le facteur matière n'ajoute aucune restriction dans sa norme de graphe.
+`CandidateAFourSectorSmooth4D` construit l'inclusion des quatre familles
+lisses, dense dans le Hilbert produit et contenue dans ce domaine.
+
+`CandidateAFourSectorPairing4D` prouve le pairing de la somme des secteurs.
+`OrthogonalColumnPairing4D` isole la décomposition d'un opérateur symétrique
+le long d'une colonne orthogonale invariante.
+`CandidateAFourSectorOriginalPairing4D` utilise la colonne matière–LL déjà
+établie ; `CandidateAFourSectorActual4D` compose les résultats pour identifier ce pairing,
+à flux LL nul, avec le Riesz augmenté original évalué sur les quatre
+secteurs simultanément. Les termes H11 BRST sont conservés et les termes
+croisés matière–LL/BRST sont annulés par des preuves, sans nouvelle hypothèse.
+
+La norme de graphe reste utilisée pour la matière et le difféomorphisme.
+La densité est hilbertienne, sans affirmation de cœur d'opérateur.
+Cette égalité de pairing globale sur les représentants lisses n'est pas
+encore l'identification à la fibre D9/Friedrichs ; le certificat terminal
+reste ouvert et T12 n'est pas coché.
+
+Validation : sept gates, hub et audit des 21 déclarations publiques verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des runs verts : 3796, 4355, 4172, 4037, 1906, 4139, 4041 Mo ; hub
+4084 Mo ; audit 3925 Mo. Les limites de réécriture et de récursion ont été
+résolues par séparation du pairing original et du raccord final, sans
+augmentation des budgets. Un avertissement stylistique de tactique reste
+dans `CandidateAFourSectorOriginalPairing4D` ; la compilation réussit.
+`#print axioms` confirme `propext`, `Classical.choice`, `Quot.sound` et la
+seule dépendance native Stokes préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`
+pour les résultats utilisant l'auto-adjonction BRST ou le domaine lisse.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
