@@ -1467,3 +1467,47 @@ lisse gardent la seule dépendance native Stokes préexistante :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Cœur LL quotienté et cœur minimal commun aux quatre secteurs
+
+`ClosedNullPMapCore4D` (préfixe `P0EFTJanusProgramPT12`) prouve que le cœur
+d'un opérateur fermé symétrique descend par quotient d'un sous-espace
+fermé de directions nulles. Il identifie aussi la fermeture de la
+restriction d'une extension au cœur de l'opérateur minimal.
+
+`LLReducedMinimalCore4D` applique ces résultats au LL réel à flux nul :
+les champs lisses forment un cœur du Jacobi minimal quotienté. La fermeture
+de la restriction lisse du Friedrichs quotienté est exactement ce Jacobi
+minimal. Cela ne prouve pas encore l'égalité du minimal avec Friedrichs.
+
+`ProductRestrictionClosure4D` isole la formule de fermeture d'une restriction
+produit. `CandidateABRSTLLMinimal4D` construit le produit minimal BRST–LL
+fermé et son cœur lisse commun, puis calcule la fermeture de la restriction
+de la réalisation existante.
+
+`CandidateAFourSectorMinimalCore4D` y ajoute la matière en L² canonique.
+L'image commune des champs des quatre secteurs est un cœur de ce minimal
+global fermé ; celui-ci est la fermeture calculée de la restriction de la
+réalisation globale existante. Les directions LL auxiliaires/mesure sont
+quotientées et le bloc H11 BRST complet est conservé.
+
+Les hypothèses restent métriques égales, poids opposés et flux LL nul.
+L'identification du minimal à l'extension auto-adjointe exige encore les
+égalités d'extensions BRST et LL. Le difféomorphisme reste en norme de
+graphe ; son passage L² et le raccord global D9 ne sont pas établis.
+T12 n'est pas coché.
+
+Validation : cinq gates, hub et audit des 16 déclarations publiques verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates (quotient, LL, produit, BRST–LL, quatre secteurs) : 2184,
+3921, 2145, 4328, 4314 Mo ; hub 4071 Mo ; audit 3929 Mo.
+Les timeouts du produit global ont été résolus en isolant la formule de
+fermeture, en nommant les étapes et en explicitant localement les instances
+hilbertiennes/topologiques, avec respect de la transparence rétabli pour
+les deux derniers théorèmes. Aucun budget augmenté.
+L'audit LL et des lemmes généraux donne seulement `propext`,
+`Classical.choice`, `Quot.sound`. Les résultats composés avec le BRST gardent
+la seule dépendance native Stokes préexistante :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
