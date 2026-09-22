@@ -1545,3 +1545,37 @@ la seule dépendance native Stokes préexistante pour les résultats globaux :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Cœur L² et différentiel BRST difféomorphisme
+
+`DiffeomorphismL2Core4D` (préfixe `P0EFTJanusProgramPT12`) construit une
+complétion des seules coordonnées d'ordre zéro : les deux perturbations
+métriques et un unique triplet fantôme/antifantôme/multiplicateur. La mesure
+est le volume canonique ; la normalisation des trois champs vectoriels est
+celle de la métrique plus. Les coordonnées de repère étant redondantes,
+on prend la fermeture de leur image réelle, sans supposer qu'elle remplit
+l'espace ambiant. L'inclusion lisse est injective et dense.
+
+`DiffeomorphismGraphToL24D` construit une application linéaire continue de
+l'ancien graphe différentiel vers ce L². Elle restitue exactement les
+coordonnées d'ordre zéro sur les champs lisses et son image est dense.
+Son injectivité sur le graphe complété n'est pas encore établie.
+
+`DiffeomorphismL2BRST4D` réalise le différentiel BRST diagonal original
+comme opérateur partiel en L², sur le domaine lisse dense. Ce domaine est
+invariant et le carré de l'opérateur est nul sur tout son domaine.
+La linéarité et la nilpotence sont prouvées à partir des champs originaux.
+
+Cette construction porte sur le différentiel BRST. La fermeture et la
+réalisation L² de son Hessien gauge-fixé, ainsi que le transport des colonnes
+H11 dans ce L², restent à prouver. Les égalités d'extensions abélienne/LL
+et le raccord D9 restent ouverts ; T12 n'est pas coché.
+
+Validation : trois gates, hub et audit des 25 déclarations nommées verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3745, 3763, 3966 Mo ; hub 4010 Mo ; audit 3689 Mo.
+`#print axioms` donne uniquement `propext`, `Classical.choice`, `Quot.sound`
+pour ces 25 déclarations, sans dépendance native Stokes supplémentaire.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; Quillen, T08 et les fichiers
+externes préservés.
