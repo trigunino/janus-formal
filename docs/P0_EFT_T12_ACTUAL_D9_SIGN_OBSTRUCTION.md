@@ -80,6 +80,46 @@ l'intertwining global avec le secteur LL quotienté et le certificat terminal.
 Aucune hypothèse `ProgramPT12CanonicalActualFriedrichsSmoothCoreIntertwiner4D`
 n'est ajoutée. L'obstruction vers le D9 positif reste valable.
 
+## Symbole abélien complet et norme de graphe
+
+`P0EFTJanusProgramPT12AbelianNonminimalSignedSymbol4D.lean` construit un
+changement de coordonnées inversible pour le symbole Maxwell + BRST
+nonminimal :
+
+```text
+(A, c, cbar, B) → (A.x, A.y, A.z, B − ξ·A, cbar + c, cbar − c).
+```
+
+L'inverse restitue explicitement tous les champs. Le changement respecte
+l'addition et la multiplication scalaire. Le pairing complet est exactement
+diagonal, de poids `(q, q, q, −1, q/2, −q/2)`, où `q = ‖ξ‖²`.
+Le terme physique utilisé est le symbole Maxwell `−ξ×(ξ×A)` ; l'identification
+avec le Hessien H11 géométrique global n'est pas démontrée par ce calcul.
+
+`P0EFTJanusProgramPT12AbelianMixedOrderReference4D.lean` réalise ces poids sur
+le domaine diagonal maximal, puis les duplique pour les deux secteurs
+abéliens. Les douze coordonnées complexes par mode sont conservées. La
+référence est dense, autoadjointe et fermée ; les données d'ellipticité D9
+existantes donnent un gap `min(1, gap/2)` et la propriété Fredholm. Le poids
+auxiliaire `−1` n'a jamais de zéro ; les cinq autres coordonnées s'annulent
+exactement aux modes caractéristiques. Ce résultat précise la cible
+abélienne : le double uniforme `±q` précédent ne décrit pas ce carré
+auxiliaire d'ordre zéro.
+
+`P0EFTJanusProgramPT12AbelianSignedCoordinateGraphBounds4D.lean` compare les
+tailles quadratiques avant et après ce changement, en ajoutant `|ξ·A|²` de
+chaque côté. Chacune est majorée par trois fois l'autre, uniformément en ξ.
+En revanche, aucune constante uniforme ne contrôle le changement sur la
+norme brute des coefficients : l'état `A=(1,0,0), c=cbar=B=0`, de taille
+quadratique 1, a une image de taille `1+n²` pour `ξ=(n,0,0)`.
+
+La congruence est donc contrôlée au niveau du graphe longitudinal, sans
+être une isométrie L². Le transfert de domaine géométrique, les coefficients
+variables et les autres colonnes H11 restent à traiter avant d'appliquer
+ces références à l'opérateur réel. Le bloc difféomorphisme reste lui aussi
+à identifier modalement. Aucun certificat global ni fermeture T12 n'est
+déduit de ces trois gates.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -106,3 +146,15 @@ les deux théorèmes d'assemblage/H11, les quatre propriétés du D9 signé et
 son identité de symbole. Il ne retourne que `propext`, `Classical.choice`
 et `Quot.sound` (3906 Mo). Aucun `sorry`, `admit` ou nouvel axiome dans les
 cinq modules ; `git diff --check` vert.
+
+### Symbole complet et référence abélienne d'ordre mixte
+
+Les trois modules supplémentaires sont verts sous `run_lean_guarded`, un
+seul Lean à priorité haute et réserve de 4096 Mo. Pics échantillonnés :
+symbole 3706 Mo, référence pairée 3637 Mo, bornes de graphe 3691 Mo.
+Le hub les importe via deux imports directs ; il compile à 3988 Mo.
+L'audit `#print axioms` de quatorze déclarations (équivalence, linéarité,
+pairing, zéros, gap pairé, quatre propriétés de l'opérateur, deux bornes de
+graphe, croissance du témoin et absence de borne brute) ne retourne que
+`propext`, `Classical.choice` et `Quot.sound` (3907 Mo). Aucun `sorry`,
+`admit` ou nouvel axiome ; `git diff --check` vert.
