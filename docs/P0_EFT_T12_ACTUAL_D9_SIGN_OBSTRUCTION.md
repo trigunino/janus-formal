@@ -492,9 +492,10 @@ ghosts–LL est établie avec le H11 d'origine et les hypothèses de descente d�
 explicites. Ce résultat prolonge l'égalité auparavant disponible sur le seul
 cœur lisse, sans prétendre à une rotation bornée sur l'ancien graphe.
 
-La preuve globale de Stokes, la réalisation différentielle injective en L2,
-le domaine maximal et le raccord spectral restent à construire. Le défaut FP
-n'est pas annulé et T12 reste non coché.
+Le Stokes global du FP est établi ci-dessous dans la mesure d'un métrique
+régulier. La réalisation différentielle injective en L2, le domaine maximal
+et le raccord spectral restent à construire. Le défaut FP dans le L2
+canonique n'est pas annulé et T12 reste non coché.
 
 ## Pairing signé sur le graphe renforcé complété
 
@@ -515,14 +516,49 @@ augmentée est établie dans tout le quotient commun, avec les hypothèses de
 descente existantes. Ce résultat ne donne ni une isométrie L2 ni un domaine
 maximal auto-adjoint.
 
-Le Stokes faible des dix flots canoniques existe déjà ; son identification
-avec la divergence utilisée par le FP reste à raccorder. La closabilité FP,
-l'injectivité de l'oubli et la fermeture spectrale globale restent ouvertes.
-T12 demeure non coché.
+Le raccord du Stokes canonique avec la divergence utilisée par le FP est
+établi ci-dessous dans la mesure du métrique fourni. La closabilité dans
+le L2 canonique, l'injectivité de l'oubli et la fermeture spectrale globale
+restent ouvertes. T12 demeure non coché.
 
 Sources : `P0EFTJanusProgramPT12TwoSidedGhostPairing4D.lean`,
 `P0EFTJanusProgramPT12AbelianTwoSidedSignedPairing4D.lean` et
 `P0EFTJanusProgramPT12AbelianTwoSidedSignedPhysical4D.lean`.
+
+## Stokes global du Lorenz réel et symétrie FP dans la mesure métrique
+
+Les six nouvelles gates raccordent la divergence des dix flots à l'opérateur
+différentiel réel, sans hypothèse de jauge de volume ni donnée de Green
+supplémentaire :
+
+- `canonicalCurrentDivergence_eq_local` identifie la divergence canonique à
+  la divergence pondérée locale de tout courant lisse. La décomposition
+  exacte en dix générateurs et leurs résidus déjà annulés font la preuve.
+- `metricCurrentDivergence_eq_local` transfère cette identité à la densité
+  du métrique fourni, avec son véritable rapport de volumes.
+- `localLorenz_eq_densityDivergence` utilise la dérivée du déterminant et
+  la trace de Christoffel pour identifier le Lorenz local installé.
+- `lorenzRaisedCurrent` construit le champ lisse `A♯` par reconstruction
+  dans le dual fini. Son pullback est exactement le potentiel relevé local.
+- `globalLorenz_weak_stokes` prouve l'intégration par parties globale du
+  Lorenz réel ; son intégrale sans test est également nulle.
+- `globalFP_component_green` spécialise le résultat à `δ_g d`. Le pairing
+  est l'opposé de la contraction métrique des gradients, d'où
+  `globalFP_component_metric_symmetry` pour chaque composante réelle.
+
+La mesure est explicitement `generalLorentzVolumeMeasure ... metric.metric`,
+pour un `RegularGeneralLorentzMetric` fourni. Il ne s'agit pas encore de la
+symétrie dans le L2 canonique du graphe abélien pour un métrique quelconque.
+Il reste à transporter l'adjoint avec le rapport des densités, à établir
+la closabilité FP et l'injectivité de l'oubli, puis le raccord spectral
+global. Aucun certificat terminal T12 n'est déclaré.
+
+Sources : `P0EFTJanusProgramPT12CanonicalCurrentPullback4D.lean`,
+`P0EFTJanusProgramPT12CanonicalCurrentLocalDivergence4D.lean`,
+`P0EFTJanusProgramPT12MetricCurrentLocalDivergence4D.lean`,
+`P0EFTJanusProgramPT12LorenzLocalDensity4D.lean`,
+`P0EFTJanusProgramPT12LorenzRaisedCurrent4D.lean` et
+`P0EFTJanusProgramPT12LorenzGlobalStokes4D.lean`.
 
 ## Validation
 
@@ -704,3 +740,22 @@ L'audit `#print axioms` des quatorze déclarations publiques ne retourne
 que `propext`, `Classical.choice` et `Quot.sound` (3907 Mo). Aucun `sorry`,
 `admit`, nouvel axiome ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert.
+
+### Stokes global réel du Lorenz et FP
+
+Les six nouveaux modules sont verts sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : pullback 3853 Mo,
+divergence canonique locale 3846 Mo, transfert de mesure 3858 Mo, densité
+Lorenz 3852 Mo, courant relevé 3901 Mo, Stokes global 3856 Mo. Le hub compile
+à 4194 Mo et l'audit des seize déclarations à 3918 Mo. Les difficultés de
+dépliage ont été résolues par des congruences explicites, sans augmenter
+les heartbeats ni le budget mémoire.
+
+L'audit retourne `propext`, `Classical.choice`, `Quot.sound` et, pour les
+résultats utilisant les dix flots, la dépendance existante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Elle provient du `native_decide` préexistant à la ligne 114 du module IPP,
+prouvant `Fintype.card CanonicalFlowIndex = 10`. Cet audit ne se limite donc
+pas aux trois axiomes usuels. Aucun axiome, `sorry`, `admit` ou hypothèse
+terminale d'intertwiner n'a été ajouté par les six gates ;
+`git diff --check` vert. Les fichiers externes et T08 sont préservés.
