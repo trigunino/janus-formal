@@ -1370,3 +1370,34 @@ Stokes préexistante
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Fermeture minimale du BRST abélien complet et H11
+
+`ProductClosure4D`, `ProductCore4D` et `BoundedPerturbationCore4D` (préfixe
+`P0EFTJanusProgramPT12`) transportent les fermetures de graphes et les cœurs
+d'opérateurs par produit et par perturbation bornée.
+
+`CandidateAAbelianMixedMinimal4D` construit le BRST abélien minimal fermé,
+avec potentiel, multiplicateur B, fantôme et antifantôme. L'image des champs
+lisses réels est un cœur de cet opérateur. La fermeture de la restriction
+lisse de l'extension auto-adjointe existante est exactement cet opérateur
+minimal, sans hypothèse d'égalité entre adjoints minimal et maximal.
+
+`CandidateAAbelianMixedMinimalH114D` conserve ces résultats après ajout de
+la correction physique H11 complète : fermeture, cœur lisse et calcul de
+la fermeture de la restriction de l'opérateur augmenté existant.
+
+Cela ne prouve pas encore que le minimal est auto-adjoint. L'égalité de
+l'adjoint formel minimal avec l'adjoint maximal FP reste ouverte, ainsi que
+le difféomorphisme en L² canonique, le cœur LL et le raccord global D9.
+Le certificat terminal n'est pas construit et T12 reste ouvert.
+
+Validation : cinq gates, hub et audit des 28 déclarations publiques verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 2186, 2185, 2190, 4038, 4045 Mo ; hub 4250 Mo ; audit
+3933 Mo. Aucun budget augmenté. `#print axioms` donne `propext`,
+`Classical.choice`, `Quot.sound`, avec la seule dépendance native Stokes
+préexistante pour les preuves analytiques BRST :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
