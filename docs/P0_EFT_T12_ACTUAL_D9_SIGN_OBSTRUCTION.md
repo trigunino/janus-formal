@@ -120,6 +120,39 @@ ces références à l'opérateur réel. Le bloc difféomorphisme reste lui aussi
 à identifier modalement. Aucun certificat global ni fermeture T12 n'est
 déduit de ces trois gates.
 
+## Annulation des ghosts diagonaux sur le cœur réel
+
+`P0EFTJanusProgramPT12DiagonalGhostCancellation4D.lean` traite directement
+le graphe difféomorphisme réel avec son unique triplet partagé. Sous les
+deux conditions explicites
+
+```text
+metric.plus = metric.minus
+candidateAPlusEinsteinKineticWeight + candidateAMinusEinsteinKineticWeight = 0,
+```
+
+les deux pairings sectoriels coïncident sur toute colonne ghost pur. Leur
+somme pondérée s'annule. La densité du cœur lisse étend cette annulation
+à tous les tests du graphe complété : `diagonalPureGhost_riesz_zero` est
+une égalité du Riesz réel, sans référence modale.
+
+`P0EFTJanusProgramPT12DiagonalGhostPhysicalKernel4D.lean` montre que la
+projection physique du même ghost est nulle, donc que H11 laisse la colonne
+nulle. Il étend le résultat au Riesz augmenté sur l'espace de Hilbert complet.
+`diagonalGhost_injects_into_augmented_kernel` construit une injection linéaire
+de tout l'espace des ghosts lisses dans ce noyau. En conséquence, prouver
+que ce noyau est de dimension finie dans ce régime imposerait aussi la
+dimension finie de l'espace des ghosts. Aucune preuve de dimension infinie
+de cet espace n'est ajoutée dans ces deux modules.
+
+Ce résultat est conditionnel : il n'affirme pas que le fond retenu satisfait
+ces deux égalités. Les couplages Einstein actuels imposent séparément leur
+non-nullité, pas leur positivité ; cette seule non-nullité ne suffit donc
+pas à exclure des poids opposés. Une réalisation globale doit traiter le
+couplage du triplet partagé et vérifier ses hypothèses sur le fond choisi.
+Dupliquer deux réalisations mono-métriques indépendantes ne traite pas ce
+couplage. T12 reste ouvert ; Quillen et le quotient LL sont inchangés.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -158,3 +191,13 @@ pairing, zéros, gap pairé, quatre propriétés de l'opérateur, deux bornes de
 graphe, croissance du témoin et absence de borne brute) ne retourne que
 `propext`, `Classical.choice` et `Quot.sound` (3907 Mo). Aucun `sorry`,
 `admit` ou nouvel axiome ; `git diff --check` vert.
+
+### Noyau diagonal réel et augmentation H11
+
+Les deux modules de cancellation sont compilés séquentiellement avec
+`run_lean_guarded`, priorité haute et réserve de 4096 Mo. Pics échantillonnés :
+graphe diagonal 3765 Mo, noyau augmenté et injection 4160 Mo. Le hub importe
+les deux modules par un import direct supplémentaire et compile à 3993 Mo.
+L'audit `#print axioms` des neuf théorèmes publics ne retourne que `propext`,
+`Classical.choice` et `Quot.sound` (3889 Mo). Aucun `sorry`, `admit` ou nouvel
+axiome ; `git diff --check` vert.
