@@ -482,8 +482,8 @@ et sur leurs images FP. Elle préserve ce sous-espace fermé et définit une
 coïncident exactement avec la rotation lisse et sa reconstruction.
 
 L'oubli de FP(antighost) est une application linéaire continue d'image dense
-vers le graphe abélien existant. Son injectivité n'est pas démontrée : aucune
-closabilité du FP réel n'est déduite de la seule fermeture des caractéristiques.
+vers le graphe abélien existant. Son injectivité est désormais établie pour
+les métriques régulières, via l'adjoint canonique et la closabilité ci-dessous.
 La reconstruction signée suivie de cet oubli est elle aussi continue et dense.
 
 Par densité, la colonne physique H11 est préservée sur tout le graphe renforcé,
@@ -493,9 +493,9 @@ explicites. Ce résultat prolonge l'égalité auparavant disponible sur le seul
 cœur lisse, sans prétendre à une rotation bornée sur l'ancien graphe.
 
 Le Stokes global du FP est établi ci-dessous dans la mesure d'un métrique
-régulier. La réalisation différentielle injective en L2, le domaine maximal
-et le raccord spectral restent à construire. Le défaut FP dans le L2
-canonique n'est pas annulé et T12 reste non coché.
+régulier. La closabilité dans le L2 canonique est établie ci-dessous ; le
+domaine maximal et le raccord spectral restent à construire. Le défaut FP
+dans le L2 canonique n'est pas annulé et T12 reste non coché.
 
 ## Pairing signé sur le graphe renforcé complété
 
@@ -518,8 +518,8 @@ maximal auto-adjoint.
 
 Le raccord du Stokes canonique avec la divergence utilisée par le FP est
 établi ci-dessous dans la mesure du métrique fourni. La closabilité dans
-le L2 canonique, l'injectivité de l'oubli et la fermeture spectrale globale
-restent ouvertes. T12 demeure non coché.
+le L2 canonique et l'injectivité de l'oubli sont également établies ci-dessous.
+La fermeture spectrale globale reste ouverte. T12 demeure non coché.
 
 Sources : `P0EFTJanusProgramPT12TwoSidedGhostPairing4D.lean`,
 `P0EFTJanusProgramPT12AbelianTwoSidedSignedPairing4D.lean` et
@@ -549,9 +549,9 @@ supplémentaire :
 La mesure est explicitement `generalLorentzVolumeMeasure ... metric.metric`,
 pour un `RegularGeneralLorentzMetric` fourni. Il ne s'agit pas encore de la
 symétrie dans le L2 canonique du graphe abélien pour un métrique quelconque.
-Il reste à transporter l'adjoint avec le rapport des densités, à établir
-la closabilité FP et l'injectivité de l'oubli, puis le raccord spectral
-global. Aucun certificat terminal T12 n'est déclaré.
+Le transport de l'adjoint, la closabilité FP et l'injectivité de l'oubli
+sont établis dans la section suivante. Le raccord spectral global reste
+ouvert. Aucun certificat terminal T12 n'est déclaré.
 
 Sources : `P0EFTJanusProgramPT12CanonicalCurrentPullback4D.lean`,
 `P0EFTJanusProgramPT12CanonicalCurrentLocalDivergence4D.lean`,
@@ -559,6 +559,37 @@ Sources : `P0EFTJanusProgramPT12CanonicalCurrentPullback4D.lean`,
 `P0EFTJanusProgramPT12LorenzLocalDensity4D.lean`,
 `P0EFTJanusProgramPT12LorenzRaisedCurrent4D.lean` et
 `P0EFTJanusProgramPT12LorenzGlobalStokes4D.lean`.
+
+## Adjoint canonique, closabilité FP et réalisation abélienne fidèle
+
+Avec `r` le rapport entre la mesure métrique et la mesure canonique,
+`canonicalFPFormalAdjoint` construit l'adjoint formel réel `r FP(r⁻¹ ·)`.
+Son pairing exact, composante par composante puis pour les deux secteurs,
+découle du Stokes métrique et du changement de densité déjà prouvés.
+
+`linearFeatureGraphClosure_fst_injective` établit abstraitement la closabilité
+à partir d'une famille dense de tests d'adjoint. Son application au véritable
+FP pairé montre que la fermeture du graphe dans le L2 canonique ne contient
+aucun vecteur vertical non nul.
+
+Les coordonnées antighost et FP(antighost) de tout vecteur du graphe renforcé
+appartiennent à cette fermeture. L'oubli de FP(antighost) est donc injectif,
+ainsi que `abelianTwoSidedSignedRealization`, déjà continue et d'image dense.
+`candidateAAbelianSignedRealization_injective` spécialise ce résultat aux
+données réelles de Candidate A : leurs deux métriques de gravité fournissent
+directement la régularité nécessaire, sans nouvelle hypothèse analytique.
+
+Ces résultats ne prouvent ni la surjectivité de la réalisation signée, ni
+un inverse borné, ni l'identification d'un domaine maximal auto-adjoint L2.
+Le défaut FP canonique, le raccord spectral et le certificat global restent
+à traiter ; T12 demeure non coché.
+
+Sources : `P0EFTJanusProgramPT12FPCanonicalFormalAdjoint4D.lean`,
+`P0EFTJanusProgramPT12PairedFPCanonicalAdjoint4D.lean`,
+`P0EFTJanusProgramPT12DenseAdjointGraphClosable4D.lean`,
+`P0EFTJanusProgramPT12PairedFPClosable4D.lean`,
+`P0EFTJanusProgramPT12AbelianTwoSidedForgetInjective4D.lean` et
+`P0EFTJanusProgramPT12CandidateAAbelianFaithfulRealization4D.lean`.
 
 ## Validation
 
@@ -759,3 +790,19 @@ prouvant `Fintype.card CanonicalFlowIndex = 10`. Cet audit ne se limite donc
 pas aux trois axiomes usuels. Aucun axiome, `sorry`, `admit` ou hypothèse
 terminale d'intertwiner n'a été ajouté par les six gates ;
 `git diff --check` vert. Les fichiers externes et T08 sont préservés.
+
+### Adjoint canonique et fidélité de la réalisation abélienne
+
+Les six nouveaux modules sont verts sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : adjoint composante
+4110 Mo, adjoint pairé 3854 Mo, closabilité abstraite 2154 Mo, FP réel 3889 Mo,
+oubli injectif 3968 Mo, spécialisation Candidate A 3890 Mo. Le hub compile
+à 4166 Mo et l'audit des vingt-trois déclarations publiques à 3926 Mo.
+Le timeout de simplification de la spécialisation a été résolu par transport
+explicite de l'égalité des métriques, sans augmenter les budgets.
+
+L'audit retourne `propext`, `Classical.choice`, `Quot.sound` et, pour les
+preuves issues du Stokes, la dépendance native préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner
+n'a été ajouté. `git diff --check` vert ; fichiers externes et T08 préservés.
