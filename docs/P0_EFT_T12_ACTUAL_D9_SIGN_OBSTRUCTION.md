@@ -1511,3 +1511,37 @@ la seule dépendance native Stokes préexistante :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Domaine minimal global, symétrie et raccord au Riesz original
+
+`CoreRestrictionExtension4D` (préfixe `P0EFTJanusProgramPT12`) établit
+l'inclusion de la fermeture d'une restriction dans une extension fermée,
+et la symétrie d'une restriction d'un opérateur auto-adjoint.
+
+`CandidateAFourSectorMinimalExtension4D` prouve concrètement que le minimal
+global des quatre secteurs est inclus dans la réalisation auto-adjointe
+existante. Son domaine est dense et il est symétrique. Sa fermeture et
+son cœur commun étaient déjà établis dans la gate précédente.
+
+`CandidateAFourSectorMinimalActual4D` construit les éléments du domaine
+minimal associés aux champs réels, identifie exactement leur action à
+celle de l'extension existante, puis obtient le pairing avec le Riesz
+augmenté original sur les quatre secteurs simultanément.
+
+L'auto-adjonction du minimal n'est pas déduite de sa seule symétrie.
+Les égalités d'extensions BRST et LL restent ouvertes. Pour LL, les gates
+de solution faible fournissent encore un critère d'appartenance au domaine
+minimal, pas une preuve de cette appartenance. Le difféomorphisme en L²
+canonique et le raccord global D9 restent à établir. T12 reste ouvert.
+
+Validation : trois gates, hub et audit des 9 déclarations publiques verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 1907, 4062, 4291 Mo ; hub 4009 Mo ; audit 3920 Mo.
+Les instances locales explicites du cœur global sont réutilisées ; le
+raccord d'inclusion emploie une composition d'égalité et d'ordre pour
+éviter une réécriture à travers les instances. Aucun budget augmenté.
+`#print axioms` confirme `propext`, `Classical.choice`, `Quot.sound`, avec
+la seule dépendance native Stokes préexistante pour les résultats globaux :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
