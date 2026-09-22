@@ -613,16 +613,49 @@ si et seulement s'il existe `v` dans L2 tel que, pour tout test lisse `φ`,
 `⟨FP φ, u⟩ = ⟨φ, v⟩`. La valeur de l'adjoint est alors `v` ; sur les tests
 lisses, elle est exactement l'adjoint canonique pondéré construit auparavant.
 
-Ces deux domaines ne sont pas identifiés entre eux. Aucune auto-adjonction
-du FP canonique, réalisation auto-adjointe du bloc ghost complet ou propriété
-Fredholm globale n'est déduite ici. Le raccord spectral signé et les autres
-secteurs restent à traiter ; T12 demeure non coché.
+Ces deux domaines ne sont pas identifiés entre eux. L'auto-adjonction du
+bloc ghost abélien est désormais établie ci-dessous, sans affirmer celle
+du FP canonique. Le raccord spectral signé, les autres secteurs et la
+propriété Fredholm globale restent à traiter ; T12 demeure non coché.
 
 Sources : `P0EFTJanusProgramPT12FPCanonicalDefect4D.lean`,
 `P0EFTJanusProgramPT12ClosedFeatureOperator4D.lean`,
 `P0EFTJanusProgramPT12ClosedFeatureAdjoint4D.lean`,
 `P0EFTJanusProgramPT12CandidateAFPCanonicalClosed4D.lean` et
 `P0EFTJanusProgramPT12CandidateAFPCanonicalAdjoint4D.lean`.
+
+## Réalisation auto-adjointe du bloc ghost abélien réel sur L2
+
+`closedOperator_adjoint_adjoint` prouve `F†† = F` pour un opérateur fermé
+dont le domaine et celui de l'adjoint sont denses. La preuve passe par
+le double orthogonal de son graphe dans le produit de Hilbert.
+
+`offDiagonalOperator` construit le véritable opérateur non borné
+`(a, c) ↦ (F c, G a)`, avec domaine `D(G) × D(F)` et graphe explicites.
+Son adjoint est le bloc construit à partir de `G†` et `F†`. Pour `G = F†`
+et `F` fermé, le double adjoint donne l'auto-adjonction du bloc.
+
+`candidateAAbelianGhostOperator` applique cette construction au FP minimal
+réel de Candidate A. Il est auto-adjoint, fermé et à domaine dense dans
+le L2 canonique des deux champs ghosts. Le domaine de l'antighost est
+celui de l'adjoint Hilbert maximal ; le domaine du ghost est celui du FP
+minimal fermé. Sur les champs lisses, la seconde sortie est exactement
+`r FP(r⁻¹ antighost)`, sans supposer la symétrie du FP canonique.
+
+`candidateAAbelianGhostOperator_smooth_hessian` identifie son pairing L2
+au Hessien off-shell réel sur les états ghosts purs. Les paires de champs
+lisses constituent une famille dense dans le L2 produit. Cette densité
+ne prouve pas qu'elles soient un cœur pour la norme de graphe du bloc :
+l'approximation dans le domaine de l'adjoint reste à établir.
+
+Aucune propriété Fredholm, identification spectrale à D9 ou fermeture
+globale des secteurs BRST et H11 n'en est déduite. T12 demeure non coché.
+
+Sources : `P0EFTJanusProgramPT12ClosedDoubleAdjoint4D.lean`,
+`P0EFTJanusProgramPT12OffDiagonalClosedOperator4D.lean`,
+`P0EFTJanusProgramPT12OffDiagonalSelfAdjoint4D.lean`,
+`P0EFTJanusProgramPT12CandidateAAbelianGhostSelfAdjoint4D.lean` et
+`P0EFTJanusProgramPT12CandidateAAbelianGhostL2Pairing4D.lean`.
 
 ## Validation
 
@@ -822,6 +855,22 @@ Elle provient du `native_decide` préexistant à la ligne 114 du module IPP,
 prouvant `Fintype.card CanonicalFlowIndex = 10`. Cet audit ne se limite donc
 pas aux trois axiomes usuels. Aucun axiome, `sorry`, `admit` ou hypothèse
 terminale d'intertwiner n'a été ajouté par les six gates ;
+`git diff --check` vert. Les fichiers externes et T08 sont préservés.
+
+### Bloc ghost abélien auto-adjoint sur L2
+
+Les cinq nouvelles gates sont vertes sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : double adjoint
+2153 Mo, bloc fermé 2192 Mo, auto-adjonction abstraite 2145 Mo, réalisation
+Candidate A 3911 Mo, pairing hessien 3917 Mo. Le hub compile à 4004 Mo et
+l'audit des vingt-deux déclarations publiques à 3926 Mo. Les corrections
+d'élaboration utilisent des projections et congruences explicites ; aucun
+budget n'a été augmenté.
+
+L'audit retourne `propext`, `Classical.choice`, `Quot.sound` et, pour les
+résultats dépendant du Stokes réel, le `native_decide` préexistant
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert. Les fichiers externes et T08 sont préservés.
 
 ### Adjoint canonique et fidélité de la réalisation abélienne
