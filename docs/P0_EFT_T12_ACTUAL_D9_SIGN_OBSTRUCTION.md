@@ -1105,3 +1105,36 @@ Aucun nouvel axiome, `sorry`, `admit` ou budget augmenté dans les fichiers
 retenus. Le corollaire isométrique séparé a été écarté après dépassement de
 la limite `whnf` ; la gate générale de non-existence du pairing est conservée.
 `git diff --check` vert ; fichiers externes et T08 préservés.
+
+### Réalisation constructive du BRST abélien complet
+
+Les gates `ProductClosedOperator4D`, `ProductSelfAdjoint4D` et
+`BRSTSaddleProduct4D` (préfixe `P0EFTJanusProgramPT12`) construisent le
+produit auto-adjoint du bloc potentiel–B signé et du bloc fantôme non borné.
+Pour la projection Lorenz L sur son espace de graphe, le premier bloc est
+`(A,B) ↦ (L†B, LA − B)`. Le second est
+`(cbar,c) ↦ (Fmin c, Fmin† cbar)`, sur les vrais domaines L² déjà construits.
+
+`CandidateAAbelianMixedOperator4D` spécialise cette construction aux métriques
+réelles de Candidate A. L'opérateur est auto-adjoint, fermé et de domaine
+dense. Son domaine est exactement : potentiel dans le graphe Lorenz,
+B arbitraire dans L², antighost dans dom(Fmin†), ghost dans dom(Fmin).
+`CandidateAAbelianMixedPairing4D` prouve le pairing avec la Hessienne complète
+et avec la polarisation de l'action BRST intégrée, pour tous les états lisses.
+`CandidateAAbelianMixedSmooth4D` fournit leur réalisation linéaire injective
+à image dense ; les quatre champs sont conservés, sans supprimer le carré B négatif.
+
+La norme du potentiel reste celle du graphe Lorenz. La densité démontrée
+est une densité hilbertienne, pas une propriété de cœur pour l'opérateur.
+Le raccord au D9 corrigé, les colonnes H11, le secteur difféomorphisme et le
+certificat global restent à établir ; T12 n'est pas coché. Quillen et T08
+ne sont pas modifiés.
+
+Validation : six gates, hub T12 et audit des 31 déclarations publiques verts
+sous `run_lean_guarded`, priorité haute, Lean séquentiel, réserve 4096 Mo.
+Pics des runs verts : 2181, 2188, 2183, 3926, 3984, 3947 Mo ; hub 4106 Mo ;
+audit 3894 Mo. Axiomes : `propext`, `Classical.choice`, `Quot.sound`, avec
+la dépendance native de Stokes préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`
+pour l'auto-adjonction et les pairings réels. Aucun nouvel axiome, `sorry`,
+`admit` ou hypothèse terminale d'intertwiner ; `git diff --check` vert.
