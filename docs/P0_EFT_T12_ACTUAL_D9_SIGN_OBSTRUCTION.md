@@ -279,6 +279,36 @@ du Jacobi minimal fermé avec son extension de Friedrichs : la densité du
 cœur pour la norme de graphe reste à établir. Les raccords BRST et H11 du
 certificat global restent ouverts ; T12 n'est pas coché.
 
+## Colonne LL augmentée et quotient commun ghosts–LL
+
+`P0EFTJanusProgramPT12StrongFullLLQuotientColumn4D.lean` identifie la
+colonne LL complète du Riesz augmenté au Hessien LL de même action, contre
+tout test du cœur global. Sur la carte forte centrée, l'annulation des
+sept blocs physiques déjà prouvée couvre aussi les directions auxiliaire
+et mesure. À flux nul, ce pairing est exactement celui de la réalisation
+de Friedrichs du quotient LL, avec la composante LL du test global.
+
+`P0EFTJanusProgramPT12StrongGhostLLNullSpace4D.lean` en déduit que l'adhérence
+des directions LL auxiliaire–mesure appartient au noyau du Riesz augmenté,
+à flux nul. Elle est réunie au sous-espace fermé des ghosts–antighosts par
+l'adhérence de leur somme. L'inclusion de cette somme fermée dans le noyau
+est prouvée avec les conditions explicites d'égalité des métriques et de
+somme nulle des poids d'Einstein, ainsi que les données de la carte forte.
+
+`P0EFTJanusProgramPT12StrongGhostLLHilbertQuotient4D.lean` construit le
+quotient commun dans l'espace de Hilbert réel augmenté. Le cœur projeté
+est dense ; les deux familles de directions nulles y disparaissent.
+Le Riesz descend concrètement, reste autoadjoint et conserve exactement
+le pairing augmenté, donc toutes les contributions H11. Sa colonne LL
+reste identifiée au pairing de Friedrichs LL après cette réduction commune.
+Le noyau quotient est exactement l'image du noyau initial.
+
+Il s'agit d'une descente du Riesz borné augmenté ; aucun opérateur global
+non borné actual→D9 ni certificat Fredholm global n'est déduit. Les
+hypothèses de cancellation ne sont pas affirmées pour le fond choisi.
+Le noyau résiduel des autres secteurs, leur réalisation BRST et la fermeture
+terminale restent ouverts ; T12 n'est pas coché.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -368,3 +398,12 @@ isométrique 1928 Mo, réalisation quotient 3978 Mo, pairing de même action
 théorèmes publics ne retourne que `propext`, `Classical.choice` et
 `Quot.sound` (3893 Mo). Aucun `sorry`, `admit` ou nouvel axiome ;
 `git diff --check` vert.
+
+### Colonne LL augmentée et quotient commun ghosts–LL
+
+Les trois nouveaux modules sont verts sous `run_lean_guarded`, priorité
+haute, un seul Lean et réserve de 4096 Mo. Pics échantillonnés : colonne LL
+4184 Mo, sous-espace nul commun 4432 Mo, quotient augmenté 4476 Mo.
+Le hub compile à 4107 Mo. L'audit `#print axioms` des quinze théorèmes
+publics ne retourne que `propext`, `Classical.choice` et `Quot.sound`
+(3893 Mo). Aucun `sorry`, `admit` ou nouvel axiome ; `git diff --check` vert.
