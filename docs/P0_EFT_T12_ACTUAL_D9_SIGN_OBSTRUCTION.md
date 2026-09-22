@@ -34,6 +34,14 @@ Sources : `P0EFTJanusProgramPT12D9NonnegativePairing4D.lean`,
 
 ## Conséquence pour la fermeture
 
+L'obstruction est maintenant prouvée pour la fibre complète de Friedrichs,
+augmentation H11 incluse : `no_actual_to_fullFriedrichs_sector_pairing`
+exclut toute application du cœur réel complet qui préserve les auto-pairings
+et envoie les champs Nakanishi–Lautrup purs dans le noyau du readout
+matière–LL cible. Aucune linéarité ou injectivité n'est nécessaire.
+Cette conservation du contenu sectoriel suffit à rendre la fermeture
+demandée incompatible avec la cible BRST positive actuellement installée.
+
 La réalisation sectorielle actual→D9 demandée est impossible avec le D9
 positif actuel. L'obstruction abélienne suffit à bloquer cette identification
 globale. Les constructions signées ci-dessous préparent une autre cible ;
@@ -1065,3 +1073,35 @@ résultats issus du Stokes réel, la dépendance native préexistante
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert. Fichiers externes et T08 préservés.
+
+### Obstruction globale dans la fibre complète, H11 inclus
+
+`P0EFTJanusProgramPT12SpectralBRSTNonnegative4D.lean` prouve la positivité
+du pairing spectral sur les états dont les coordonnées matière sont nulles.
+`P0EFTJanusProgramPT12FullFriedrichsBRSTNonnegative4D.lean` identifie le noyau
+du readout matière–LL et établit la positivité du pairing de l'opérateur
+complet sur ce noyau, pour chaque paramètre de la famille. Le transport
+physique et son terme H11 s'annulent sur ces états ; le slot LL est nul.
+
+`P0EFTJanusProgramPT12ActualFullFriedrichsSectorNoGo4D.lean` fournit un champ
+pairé lisse non nul et conserve le carré strictement négatif du témoin B dans
+le Riesz augmenté réel. La contradiction avec la positivité cible prouve
+`no_actual_to_fullFriedrichs_sector_pairing` à paramètre zéro. Le théorème
+porte sur tout le cœur réel et la fibre complète, avec leurs termes physiques.
+Il ne dépend ni de l'égalité minimale–maximale des ghosts, ni d'une hypothèse
+terminale d'intertwiner, ni du centrage fort.
+
+La portée est précise : la conservation exigée ici est l'annulation du
+readout matière–LL cible sur les B purs. Le théorème ne tranche pas les
+applications arbitraires qui mélangeraient ces champs aux secteurs matière
+signés. La correction de la cible BRST reste nécessaire pour le raccord
+sectoriel demandé ; T12 n'est pas coché.
+
+Les trois gates, le hub et l'audit des sept déclarations publiques sont verts
+sous `run_lean_guarded`, priorité haute, un seul Lean, réserve 4096 Mo.
+Pics des compilations vertes : 3653, 3915, 3915 Mo ; hub 4169 Mo ; audit
+3714 Mo. L'audit retourne uniquement `propext`, `Classical.choice`, `Quot.sound`.
+Aucun nouvel axiome, `sorry`, `admit` ou budget augmenté dans les fichiers
+retenus. Le corollaire isométrique séparé a été écarté après dépassement de
+la limite `whnf` ; la gate générale de non-existence du pairing est conservée.
+`git diff --check` vert ; fichiers externes et T08 préservés.
