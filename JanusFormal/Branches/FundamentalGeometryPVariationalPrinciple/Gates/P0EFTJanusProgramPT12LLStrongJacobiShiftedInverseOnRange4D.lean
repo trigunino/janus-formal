@@ -85,6 +85,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAFPCanonicalAdjoint4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAAbelianGhostL2Pairing4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAAbelianSignedGhostL2Pairing4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAAbelianGhostMinimalCore4D
 
 /-! Positive shifts of the closed LL Jacobi operator have bounded inverses on their ranges. -/
 

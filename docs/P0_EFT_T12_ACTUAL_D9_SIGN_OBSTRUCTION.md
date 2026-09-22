@@ -687,6 +687,45 @@ Sources : `P0EFTJanusProgramPT12UnboundedCongruence4D.lean`,
 `P0EFTJanusProgramPT12CandidateAAbelianSignedGhostL2Operator4D.lean` et
 `P0EFTJanusProgramPT12CandidateAAbelianSignedGhostL2Pairing4D.lean`.
 
+## Fermeture minimale réelle du bloc ghost et critère exact de cœur
+
+`closedFeatureOperator_hasCore` prouve au sens de `LinearPMap.HasCore` que
+l'image lisse est un cœur de la fermeture minimale de son graphe. Pour
+toute extension fermée compatible avec l'action lisse, cette propriété
+équivaut à l'égalité avec la fermeture minimale, via le calcul explicite
+du graphe de la restriction et de sa fermeture.
+
+`candidateAFPFormalAdjointMinimal` construit la fermeture minimale réelle
+de `r FP(r⁻¹ ·)`. Elle est fermée, à domaine dense et contenue dans
+l'adjoint Hilbert maximal `FP†`. Son action lisse et son cœur lisse sont
+établis, ainsi que le cœur lisse du FP minimal d'origine.
+
+`offDiagonalOperator_closure` calcule la fermeture du bloc en fermant ses
+deux graphes séparément. Une permutation continue des quatre coordonnées
+réduit la preuve à la fermeture d'un produit. Le critère de cœur du bloc
+se réduit alors exactement à celui de la seconde composante dès que la
+première possède déjà son cœur.
+
+`candidateAAbelianGhostMinimal` est le bloc formé du FP minimal et de
+l'adjoint formel minimal. Il est fermé, symétrique, à domaine dense et
+possède le cœur des paires de champs lisses. Il est inclus dans le bloc
+auto-adjoint construit auparavant. Le théorème
+`candidateAAbelianGhost_smoothClosure_eq_minimal` l'identifie exactement
+à la fermeture de la restriction lisse de ce bloc auto-adjoint.
+
+Le théorème `candidateAAbelianGhostOperator_hasCore_iff` isole la question
+analytique restante : le cœur lisse est un cœur du bloc auto-adjoint si
+et seulement si `candidateAFPFormalAdjointMinimal = FP†`. Cette égalité
+n'est ni prouvée ni supposée. Le cœur minimal est acquis ; son identification
+avec le domaine maximal, la propriété Fredholm et la fermeture globale
+restent ouvertes. T12 n'est pas coché.
+
+Sources : `P0EFTJanusProgramPT12ClosedFeatureCore4D.lean`,
+`P0EFTJanusProgramPT12CandidateAFPFormalAdjointCore4D.lean`,
+`P0EFTJanusProgramPT12OffDiagonalClosure4D.lean`,
+`P0EFTJanusProgramPT12OffDiagonalCore4D.lean` et
+`P0EFTJanusProgramPT12CandidateAAbelianGhostMinimalCore4D.lean`.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -944,6 +983,21 @@ mémoire ou heartbeat n'a été augmenté.
 
 L'audit retourne `propext`, `Classical.choice`, `Quot.sound` et, pour les
 résultats issus du Stokes réel, le `native_decide` préexistant
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
+`git diff --check` vert. Les fichiers externes et T08 sont préservés.
+
+### Cœur de la fermeture minimale ghost et comparaison minimale/maximale
+
+Les cinq nouvelles gates sont vertes sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : critère abstrait
+2145 Mo, adjoint formel minimal 3915 Mo, fermeture du bloc 2185 Mo,
+critère de cœur du bloc 2228 Mo, fermeture ghost réelle 3930 Mo. Le hub
+compile à 4220 Mo et l'audit des trente-quatre déclarations publiques à
+3946 Mo. Aucun budget mémoire ou heartbeat n'a été augmenté.
+
+L'audit retourne `propext`, `Classical.choice`, `Quot.sound` et, pour les
+résultats utilisant le Stokes réel, le `native_decide` préexistant
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert. Les fichiers externes et T08 sont préservés.
