@@ -441,6 +441,34 @@ opérateurs différentiels réels ni leur domaine maximal L2. L'identification
 à la référence signée et la fermeture Fredholm globale restent ouvertes.
 T12 reste non coché.
 
+## Rotation réelle des ghosts et cœur abélien signé dense
+
+La rotation `(cbar, c) -> (cbar + c, cbar - c)` est construite comme une
+équivalence linéaire du cœur BRST abélien lisse, avec inverse explicite.
+Le potentiel et le champ B restent inchangés. Le pairing réel transformé
+conserve le défaut d'adjonction de Faddeev–Popov : pour les coordonnées
+signées `(u, v)` et `(x, y)`, il vaut
+`(SymFP(u,x) - SymFP(v,y))/2 + (DefFP(u,y) + DefFP(x,v))/4`.
+
+Pour la métrique intrinsèque, `DefFP` est exactement la somme des quatre
+intégrales scalaires de densité antisymétrique déjà construites. Un test
+mixte plus/moins du véritable Hessien mesure un quart de cette somme.
+Son annulation n'est pas supposée. La réalisation L2 de FP disponible
+ailleurs reste conditionnée par des données analytiques non construites.
+
+La colonne H11 est identique pour tous les états lisses abéliens ayant le
+même potentiel, contre tous les tests globaux complétés. Cette égalité
+s'applique à la rotation ghost et descend au quotient commun ghosts–LL.
+La composition de l'inverse de cette rotation avec le cisaillement de
+Lorenz définit un cœur concret dense dans le graphe abélien réel ; chaque
+vecteur reste l'image d'un état lisse authentique. Son pairing et sa colonne
+augmentée réduite sont établis avec le même H11.
+
+La rotation ghost n'est pas déclarée continue sur l'ancien graphe complété,
+qui contrôle FP(c) mais pas FP(cbar). Le domaine maximal L2, la symétrie FP
+sur le domaine retenu, le raccord spectral et la fermeture globale restent
+à construire. T12 reste non coché.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -584,6 +612,16 @@ La première tentative H11 a atteint la limite mémoire ; la preuve finale
 passe explicitement par l'annulation du tangent physique, sans augmenter
 le budget mémoire ni les heartbeats. Le hub compile à 4055 Mo.
 L'audit `#print axioms` des trente-deux déclarations publiques ne retourne
+que `propext`, `Classical.choice` et `Quot.sound` (3934 Mo). Aucun `sorry`,
+`admit`, nouvel axiome ou hypothèse terminale d'intertwiner ;
+`git diff --check` vert.
+### Rotation ghost réelle, défaut FP et cœur signé dense
+
+Les cinq nouveaux modules sont verts sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : algèbre du défaut
+2143 Mo, rotation lisse 3746 Mo, défaut intrinsèque 3727 Mo, colonne H11
+3963 Mo, assemblage du cœur dense 3946 Mo. Le hub compile à 4187 Mo.
+L'audit `#print axioms` des trente-trois déclarations publiques ne retourne
 que `propext`, `Classical.choice` et `Quot.sound` (3934 Mo). Aucun `sorry`,
 `admit`, nouvel axiome ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert.
