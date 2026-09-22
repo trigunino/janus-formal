@@ -339,6 +339,44 @@ abélien ne signifie pas qu'il est invariant sous H11. Aucun accord modal
 avec une cible D9 signée ni certificat Fredholm global n'est établi ici ;
 l'obstruction vers le D9 positif persiste et T12 reste ouvert.
 
+## Facteur difféomorphisme réduit et opérateur H11 commun
+
+`P0EFTJanusProgramPT12JointQuotientDiffeomorphismFactor4D.lean` définit le
+quotient du graphe diagonal par la fermeture de l'image des ghosts et
+antighosts partagés. Son inclusion dans le quotient ghosts–LL est
+isométrique ; une projection continue la rétracte. Leur relation
+d'adjonction est prouvée.
+Cette construction géométrique ne requiert aucune annulation des poids.
+
+`P0EFTJanusProgramPT12ReducedDiffeomorphismSignedRiesz4D.lean` descend le
+Riesz signé réel sur ce quotient sectoriel, sous égalité des métriques et
+annulation de la somme des poids Einstein. L'opérateur est auto-adjoint,
+son pairing est inchangé et son noyau est l'image du noyau initial. Aucune
+dimension finie du noyau résiduel n'est déduite.
+
+`P0EFTJanusProgramPT12JointQuotientPhysicalRiesz4D.lean` descend séparément
+l'opérateur physique H11 complet sur le quotient commun. Sur la carte
+forte centrée, cette descente ne demande ni flux LL nul, ni égalité des
+métriques, ni annulation des poids Einstein. Elle conserve l'auto-adjonction
+et retrouve exactement la Hessienne physique sur le cœur lisse.
+
+`P0EFTJanusProgramPT12JointQuotientDiffeomorphismColumn4D.lean` établit
+l'égalité de vecteurs entre la colonne augmentée réduite et la somme du
+Riesz signé sectoriel inclus et de H11 appliqué à la même inclusion. H11
+reste un opérateur global, avec ses composantes hors du secteur source.
+La colonne abélienne précédemment construite utilise ce même H11 réduit.
+
+`P0EFTJanusProgramPT12JointQuotientDiffeomorphismSmoothPairing4D.lean`
+construit le cœur lisse sectoriel dense, annule ses ghosts et raccorde son
+inclusion au cœur réel global. Contre tout test lisse global, le pairing
+augmenté réduit est exactement l'action BRST difféomorphisme polarisée
+plus H11. Il garde les hypothèses d'annulation du quotient augmenté.
+
+Ces résultats réalisent les colonnes BRST sur les quotients réels ; ils ne
+construisent pas leur identification modale avec D9 signé. L'obstruction
+abélienne vers D9 positif demeure. L'identification modale signée et la
+fermeture Fredholm globale restent à établir. T12 n'est pas coché.
+
 ## Validation
 
 ### Pairing et obstruction vers le D9 positif
@@ -447,3 +485,14 @@ Le hub compile à 3962 Mo. L'audit `#print axioms` des dix-neuf théorèmes
 publics et des deux inclusions isométriques ne retourne que `propext`,
 `Classical.choice` et `Quot.sound` (3801 Mo). Aucun `sorry`, `admit` ou
 nouvel axiome ; `git diff --check` vert.
+
+### Facteur difféomorphisme réduit et H11 commun
+
+Les cinq nouveaux modules sont verts sous `run_lean_guarded`, priorité
+haute, un seul Lean et réserve de 4096 Mo. Pics échantillonnés : facteur
+isométrique 4306 Mo, Riesz signé réduit 4232 Mo, H11 réduit 3951 Mo,
+colonne opérateur 4277 Mo, raccord lisse 3995 Mo. Le hub compile à 3969 Mo.
+L'audit `#print axioms` des trente-trois théorèmes publics et des deux
+inclusions isométriques ne retourne que `propext`, `Classical.choice` et
+`Quot.sound` (3923 Mo). Aucun `sorry`, `admit` ou nouvel axiome ;
+`git diff --check` vert.
