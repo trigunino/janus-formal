@@ -142,8 +142,8 @@ nulle. Il étend le résultat au Riesz augmenté sur l'espace de Hilbert complet
 `diagonalGhost_injects_into_augmented_kernel` construit une injection linéaire
 de tout l'espace des ghosts lisses dans ce noyau. En conséquence, prouver
 que ce noyau est de dimension finie dans ce régime imposerait aussi la
-dimension finie de l'espace des ghosts. Aucune preuve de dimension infinie
-de cet espace n'est ajoutée dans ces deux modules.
+dimension finie de l'espace des ghosts. La preuve de dimension infinie,
+ajoutée ensuite, est décrite ci-dessous.
 
 Ce résultat est conditionnel : il n'affirme pas que le fond retenu satisfait
 ces deux égalités. Les couplages Einstein actuels imposent séparément leur
@@ -152,6 +152,40 @@ pas à exclure des poids opposés. Une réalisation globale doit traiter le
 couplage du triplet partagé et vérifier ses hypothèses sur le fond choisi.
 Dupliquer deux réalisations mono-métriques indépendantes ne traite pas ce
 couplage. T12 reste ouvert ; Quillen et le quotient LL sont inchangés.
+
+## Dimension infinie et obstruction au transport du noyau
+
+`P0EFTJanusProgramPT12ScalarFrameGhostInjection4D.lean` construit l'application
+linéaire injective `f ↦ (f X_i)_i`, où les `X_i` sont la famille finie de
+champs tangents engendrant chaque fibre déjà construite sur le quotient.
+Il n'est pas nécessaire de supposer une base globale du fibré tangent.
+Une dimension finie des ghosts impliquerait celle des champs scalaires lisses.
+
+Pour une période strictement positive,
+`P0EFTJanusProgramPT12SmoothGhostInfiniteDimension4D.lean` réfute cette
+dernière propriété. Les parties réelle et imaginaire plongent les champs
+complexes dans deux copies des champs réels ; l'injection de Fourier
+temporelle existante y réalise `Int →₀ Complex`, qui est de dimension réelle
+infinie. Les ghosts difféomorphismes lisses sont donc eux-mêmes de dimension
+réelle infinie.
+
+`P0EFTJanusProgramPT12DiagonalGhostInfiniteKernel4D.lean` compose ce résultat
+avec l'injection dans le noyau augmenté. Sous période positive, métriques
+égales et somme nulle des poids cinétiques :
+
+- `diagonalGhost_augmented_kernel_not_finiteDimensional` établit la dimension
+  infinie du noyau du Riesz réel complet, avec H11 ;
+- `diagonalGhost_no_finite_kernel_transport` exclut tout transport linéaire
+  injectif de ce noyau vers un espace de dimension finie, donc vers un noyau
+  de référence fini.
+
+Il s'agit d'une obstruction sur l'opérateur réel, indépendante du choix de
+signes de la référence D9. Une fermeture couvrant ce régime ne peut donc
+conserver simultanément le noyau réel complet, un transport injectif de
+ce noyau et un noyau cible fini. Les hypothèses d'égalité des métriques et
+d'annulation des poids restent explicites ; elles ne sont pas affirmées
+pour le fond choisi. Aucun quotient de ghosts ni certificat terminal n'est
+introduit par ces modules.
 
 ## Validation
 
@@ -199,5 +233,16 @@ Les deux modules de cancellation sont compilés séquentiellement avec
 graphe diagonal 3765 Mo, noyau augmenté et injection 4160 Mo. Le hub importe
 les deux modules par un import direct supplémentaire et compile à 3993 Mo.
 L'audit `#print axioms` des neuf théorèmes publics ne retourne que `propext`,
+`Classical.choice` et `Quot.sound` (3889 Mo). Aucun `sorry`, `admit` ou nouvel
+axiome ; `git diff --check` vert.
+
+### Dimension infinie des ghosts et du noyau réel
+
+Les trois nouveaux modules sont verts sous `run_lean_guarded`, priorité haute,
+un seul Lean et réserve de 4096 Mo. Pics échantillonnés : injection par les
+générateurs 3695 Mo, dimension infinie des ghosts 3814 Mo, noyau augmenté et
+impossibilité de transport 3844 Mo. Le hub importe ces résultats par un
+import direct supplémentaire et compile à 4082 Mo.
+L'audit `#print axioms` des sept théorèmes publics ne retourne que `propext`,
 `Classical.choice` et `Quot.sound` (3889 Mo). Aucun `sorry`, `admit` ou nouvel
 axiome ; `git diff --check` vert.
