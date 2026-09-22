@@ -1253,3 +1253,36 @@ seule dépendance native Stokes préexistante
 pour l'auto-adjonction et l'appartenance des champs lisses au domaine.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Assemblage BRST réduit et LL quotienté
+
+`CandidateABRSTLLRealization4D` (préfixe `P0EFTJanusProgramPT12`) construit
+le produit de l'opérateur BRST réduit, avec son bloc physique H11, et de la
+réalisation de Friedrichs sur le quotient LL auxiliaire/mesure. Sous les
+hypothèses existantes de métriques égales et de poids cinétiques opposés,
+ce produit est auto-adjoint. Son domaine impose exactement la condition
+fantôme abélienne et celle du Friedrichs LL. `ProductOperatorPairing4D`
+isole le pairing générique du produit pour éviter les longues réécritures.
+
+`CandidateABRSTLLSmooth4D` réalise ensemble les champs difféomorphisme,
+abéliens et LL lisses. L'image est dense dans le Hilbert produit et incluse
+dans le domaine de l'opérateur ; les représentants LL auxiliaires et mesure
+restent arbitraires avant projection. `CandidateABRSTLLPairing4D` identifie,
+à flux LL nul, le pairing lisse avec la somme du pairing augmenté réel des
+deux secteurs BRST et de la Hessienne LL complète de la même action.
+
+Cette somme garde les termes H11 entre les deux secteurs BRST. Elle ne
+constitue pas encore un transport de tout le Hilbert physique commun vers
+D9, ni une preuve de cœur d'opérateur. La matière, le raccord D9/Friedrichs
+global et le certificat terminal restent à intégrer ; T12 n'est pas coché.
+
+Validation : quatre gates, hub et audit des 11 déclarations publiques verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des runs verts : 2146, 4323, 4055, 4276 Mo ; hub 4097 Mo ; audit 3906 Mo.
+Le timeout de réécriture a été résolu par le lemme générique de pairing,
+sans augmentation des budgets. `#print axioms` confirme seulement `propext`,
+`Classical.choice`, `Quot.sound` et la dépendance native Stokes préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`
+pour l'auto-adjonction et les résultats utilisant le domaine lisse.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
