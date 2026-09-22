@@ -1001,3 +1001,30 @@ résultats utilisant le Stokes réel, le `native_decide` préexistant
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner ;
 `git diff --check` vert. Les fichiers externes et T08 sont préservés.
+
+### Conjugaison des graphes minimaux par le volume réel
+
+`P0EFTJanusProgramPT12L2VolumeMultiplier4D.lean` construit la multiplication
+bornée réelle sur L2 et son inverse. `P0EFTJanusProgramPT12PairedVolumeEquiv4D.lean`
+l'applique au rapport positif de volume des métriques réelles des deux secteurs :
+la compacité borne le rapport et son inverse. L'équivalence est symétrique pour
+le pairing canonique et transporte exactement les inclusions lisses.
+
+`P0EFTJanusProgramPT12ClosedFeatureVolumeTransport4D.lean` transporte la fermeture
+du graphe par cette équivalence. La spécialisation réelle dans
+`P0EFTJanusProgramPT12CandidateAFPVolumeGraph4D.lean` établit
+`A_min = r FP_min r⁻¹`, avec égalité des graphes et
+`D(A_min) = r D(FP_min)`, puis égalité des actions sur tout le domaine minimal.
+Ce résultat n'identifie pas `A_min` à l'adjoint maximal `FP_min†` ; cette égalité
+reste à démontrer pour le cœur ghost. T12 reste ouvert.
+
+Les quatre gates, le hub et l'audit des vingt-et-une déclarations publiques
+sont verts sous `run_lean_guarded`, priorité haute, un seul Lean, réserve
+4096 Mo. Pics échantillonnés : 2066, 3876, 2145, 4153 Mo ; hub 4033 Mo,
+audit 3893 Mo. Aucun budget n'a été augmenté.
+
+L'audit retourne les trois axiomes usuels et, pour les quatre théorèmes de
+graphe/domaine minimal réel, la dépendance Stokes native préexistante
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` vert ; fichiers externes et T08 préservés.
