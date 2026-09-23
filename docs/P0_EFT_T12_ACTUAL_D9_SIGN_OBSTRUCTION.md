@@ -2106,3 +2106,33 @@ Validation : cinq gates, audit des 31 déclarations et hub T12 verts sous
 native Stokes préexistante documentée ci-dessus. Aucun nouvel axiome,
 `sorry`/`admit`, hypothèse terminale d'intertwiner ni budget augmenté.
 `git diff --check` OK.
+
+### Cœur opératoriel et adjoint du Hessien fantôme réduit
+
+`P0EFTJanusProgramPT12HessianGhostReducedCore4D` prouve que le graphe
+réduit est exactement la fermeture du graphe lisse projeté. L'image de
+`diffeomorphismGhostPairSmooth` est donc un véritable cœur d'opérateur
+(`HasCore`), au-delà de sa densité dans le Hilbert. La réalisation réduite
+coïncide avec `closedFeatureOperator` pour cette inclusion et la sortie
+Riesz projetée concrète.
+
+`HessianGhostReducedAdjoint4D` caractérise son adjoint hilbertien par les
+tests lisses initiaux. Son graphe est exactement la restriction du graphe
+maximal complet aux deux composantes fantôme–antifantôme. Son domaine est
+exactement l'intersection du domaine maximal avec ce sous-espace : aucune
+condition supplémentaire sur la sortie n'est supposée, grâce à la
+commutation déjà prouvée de la projection avec le graphe maximal.
+
+Cela ne prouve pas l'égalité minimal = maximal ni l'auto-adjonction du
+bloc FP pondéré. Restent cette réalisation, le bloc métrique–B, les
+colonnes H11, les extensions abélienne/LL et le raccord global D9.
+T12 reste ouvert ; Quillen et T08 sont préservés.
+
+Validation : deux gates, audit des neuf déclarations et hub T12 verts
+sous `run_lean_guarded`, séquentiel, priorité haute, réserve 4096 Mo.
+Pics : 4170 Mo (cœur), 4027 Mo (adjoint), 3824 Mo (audit), 4009 Mo (hub).
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et dépendance
+native Stokes préexistante documentée ci-dessus. Aucun nouvel axiome,
+`sorry`/`admit`, hypothèse terminale d'intertwiner ni budget augmenté.
+Les conversions coûteuses sont évitées par deux attributs locaux
+`irreducible` et un petit lemme de prolongement des pairings à la fermeture.
