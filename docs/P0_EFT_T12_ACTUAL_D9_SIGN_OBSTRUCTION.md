@@ -2008,3 +2008,36 @@ hub T12 : 4009 Mo. Axiomes : `propext`, `Classical.choice`, `Quot.sound`
 et la dépendance native Stokes déjà documentée ci-dessus. Aucun nouvel
 axiome, `sorry`/`admit`, hypothèse terminale d'intertwiner ou budget
 augmenté. `git diff --check` passe.
+
+### Fermeture de l'opérateur de la forme BRST
+
+`P0EFTJanusProgramPT12HessianFormSmoothCore4D` identifie exactement la
+restriction lisse de l'opérateur de la forme au cœur du Hessien déjà
+construit. Sa fermeture redonne donc le Hessien minimal.
+
+`HessianFormClosed4D` définit la fermeture de l'opérateur de la forme et
+prouve qu'elle est fermée, densément définie et symétrique. Elle contient
+le Hessien minimal et reste contenue dans le maximal. Son action lisse
+et son pairing avec l'action BRST originale sont exacts. Le domaine de
+l'opérateur de la forme est un cœur de cette nouvelle fermeture.
+`SymmetricL2GraphClosure4D` fournit les lemmes généraux de fermeture ;
+la preuve de symétrie reprend le lemme privé déjà utilisé pour LL.
+
+`HessianFormClosedDomain4D` prouve que la restriction de cette fermeture
+au domaine différentiel commun est exactement l'opérateur de la forme.
+La fermeture n'ajoute donc aucun état dans ce domaine. Le critère de
+représentation de la forme caractérise aussi ce domaine fermé restreint.
+La restriction lisse demeure exactement le cœur initial ; avoir ce cœur
+lisse comme cœur de la nouvelle fermeture équivaut à l'égalité avec le
+Hessien minimal. Cette égalité et l'auto-adjonction ne sont pas affirmées.
+Les colonnes H11, extensions abélienne/LL et raccord global D9 restent
+à construire. T12 reste ouvert ; Quillen et T08 sont préservés.
+
+Validation : quatre modules verts sous `run_lean_guarded`, un Lean à la
+fois, priorité haute, réserve 4096 Mo. Pics : 1929 Mo (lemmes généraux),
+3886 Mo (restriction lisse), 3926 Mo (fermeture), 4136 Mo (domaines).
+Audit des 23 déclarations : 3824 Mo ; hub T12 : 4008 Mo. Dépendances
+axiomatiques : `propext`, `Classical.choice`, `Quot.sound` et l'axiome
+natif Stokes préexistant documenté ci-dessus. Aucun nouvel axiome,
+`sorry`/`admit`, hypothèse terminale d'intertwiner ni budget augmenté.
+`git diff --check` passe.
