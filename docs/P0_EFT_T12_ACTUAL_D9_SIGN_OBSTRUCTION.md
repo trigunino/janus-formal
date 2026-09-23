@@ -2766,3 +2766,41 @@ les trois déclarations L2 l'axiome Stokes natif préexistant
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit`, hypothèse terminale ou budget augmenté.
 `git diff --check` OK.
+### Tests abéliens dans le domaine de l'adjoint H11 difféomorphisme
+
+`PhysicalGaugeHessianReduction4D` transporte une égalité locale de gradients
+évalués sur un test fixe vers leurs Hessiennes. L'évaluation d'une dérivée
+à valeurs dans les applications linéaires continues est différentiée
+explicitement ; aucune permutation formelle de dérivations n'est utilisée.
+
+`StrongPhysicalGaugeGradient4D` identifie le tangent physique du cœur
+abélien à la direction de jauge pure déjà construite. Les annulations
+existantes de Candidate-A, Robin, Einstein–Hilbert plus et moins, et BV
+réduisent le gradient physique total testé aux deux gradients Maxwell,
+sur tout le domaine admissible fort.
+
+`StrongPhysicalBRSTMixedHessian4D` différentie cette identité autour du
+centre, en utilisant la régularité C2 des neuf blocs et l'ouverture du
+domaine. Le Hessien physique total sur une direction difféomorphisme et
+un test abélien coïncide exactement avec la somme Maxwell déjà bornée.
+Il possède donc le même covecteur L2 et la même borne métrique.
+
+`DiffeomorphismH11AbelianTests4D` raccorde ce calcul au H11 complet de
+l'extension physique commune déjà fixée, par son accord sur le cœur
+lisse et le pont fort concret. Pour tout état BRST abélien lisse,
+son plongement physique dans le Hilbert commun satisfait le critère
+`diffeomorphismH11MetricTestBound` et appartient au domaine de
+`diffeomorphismH11Adjoint`. La borne est construite, non postulée.
+
+Le traitement des tests métriques et la densité du domaine de l'adjoint
+restent nécessaires avant la fermabilité et le certificat global D9.
+T12 reste ouvert. Aucun intertwiner terminal n'est supposé ; Quillen,
+T08 et les fichiers externes sont préservés.
+
+Validation : quatre gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3753, 3976, 3974 et 3995 Mo.
+Audit des 14 déclarations et hub T12 verts, pics 3858 et 4022 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
+natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`
+pour les résultats utilisant la borne L2. Aucun nouvel axiome,
+`sorry`/`admit` ou budget augmenté. `git diff --check` OK.
