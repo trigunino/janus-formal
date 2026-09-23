@@ -2041,3 +2041,30 @@ axiomatiques : `propext`, `Classical.choice`, `Quot.sound` et l'axiome
 natif Stokes préexistant documenté ci-dessus. Aucun nouvel axiome,
 `sorry`/`admit`, hypothèse terminale d'intertwiner ni budget augmenté.
 `git diff --check` passe.
+
+### Décomposition orthogonale du triplet BRST dans le L² original
+
+`P0EFTJanusProgramPT12DiffeomorphismTripletAdjoint4D` prouve les
+pairings adjoints des transferts du triplet, l'idempotence des projections
+et l'orthogonalité des trois composantes. `DiffeomorphismGhostProjection4D`
+construit la projection orthogonale fantôme–antifantôme et son complément
+métrique–multiplicateur. Son image est fermée et complète ; sa restriction
+aux états lisses est explicitement identifiée aux transferts existants.
+
+`DiffeomorphismGhostL2Core4D` construit l'image lisse dense dans ce vrai
+sous-espace L² et prouve la décomposition exacte du produit scalaire et
+de la norme au carré. Aucun changement du produit scalaire ni doublement
+artificiel de l'espace total n'est utilisé.
+
+Cette décomposition porte sur l'espace de Hilbert. La commutation du
+Hessien avec ces projections et la réalisation du bloc FP pondéré avec
+son domaine d'adjoint restent à établir avant d'appliquer les théorèmes
+de blocs auto-adjoints existants. H11, les extensions abélienne/LL et le
+raccord D9 restent ouverts. T12 reste non coché ; Quillen et T08 préservés.
+
+Validation : trois gates, audit des 19 déclarations et hub T12 verts,
+`run_lean_guarded`, séquentiel, priorité haute, réserve 4096 Mo. Pics :
+3810 Mo (triplet), 3779 Mo (projection), 3765 Mo (cœur lisse), 3727 Mo
+(audit), 4008 Mo (hub). Les 19 déclarations ne dépendent que de `propext`,
+`Classical.choice` et `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit`,
+hypothèse terminale d'intertwiner ou budget augmenté. `git diff --check` OK.
