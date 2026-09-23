@@ -2835,3 +2835,32 @@ et ses consommateurs, l'axiome Stokes natif préexistant
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ou budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+## Hessien gravitationnel fort sur le cœur BRST (23 septembre 2026)
+
+`NativeEinsteinHilbertHessian4D` définit la seconde dérivée de l'action
+native à volume fixé, prouve sa symétrie par la régularité C2 existante,
+et identifie les deux Hessiens appariés par leurs projections métriques
+continues. Aucune hypothèse de représentation du Hessien n'est ajoutée.
+
+`StrongEinsteinHessianPullback4D` différentie les gradients gravitationnels
+forts effectivement définis. `StrongEinsteinActionHessian4D` utilise leur
+accord avec les gradients des blocs admissibles sur un voisinage ouvert
+du centre pour identifier les Hessiens des véritables blocs d'action.
+
+`StrongEinsteinBRSTHessian4D` spécialise ces égalités à deux états BRST
+difféomorphisme lisses plongés dans le tangent physique. Pour chaque
+secteur, le résultat est exactement le Hessien natif sur les deux
+perturbations métriques correspondantes, avec le couplage physique.
+
+Il reste à représenter ces entrées de seconde variation par des covecteurs
+L2 pour les tests métriques fixés, puis à traiter les autres blocs du
+Hessien métrique complet. La borne de première variation du gate précédent
+n'est pas utilisée comme borne de seconde variation. La densité du domaine
+adjoint H11 et le certificat global actual→D9 restent ouverts ; T12 n'est
+pas coché.
+Validation : quatre gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 4170, 4154, 4163 et 4239 Mo.
+Audit des 21 déclarations et hub T12 verts, pics 3752 et 4022 Mo.
+Les 21 déclarations ne dépendent que de `propext`, `Classical.choice`
+et `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
