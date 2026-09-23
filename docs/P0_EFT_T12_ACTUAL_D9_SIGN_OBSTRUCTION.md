@@ -2564,3 +2564,35 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
 natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit`, hypothèse d'intertwiner terminal
 ou budget augmenté. `git diff --check` OK.
+
+### Première variation Maxwell métrique complète dans le L2 réel
+
+`MaxwellStressCoefficients4D` relève les deux indices du stress Maxwell
+par l'inverse de la métrique et prouve son pairing exact avec les
+composantes du tenseur test. La contraction inverse du terme de trace
+fournit aussi la correction positive de volume. Leur combinaison est
+exactement le résidu à volume fixé ; aucun terme physique n'est omis.
+
+`FullMaxwellMetricL24D` construit son représentant dans le L2 tensoriel
+réel, puis l'ajoute au représentant du terme induit. Le pairing obtenu
+égale le `fderiv` natif complet de l'action Maxwell à repère mobile et
+volume fixé. La borne L2 est inconditionnelle, sans stationnarité.
+
+`PairedFullMaxwellL24D` transporte ce covecteur complet vers le L2 réel
+difféomorphisme, pour les deux feuillets et leurs poids. Il réutilise
+les lectures métriques déjà établies et conserve l'égalité avec la
+somme pondérée des dérivées natives.
+
+La première variation Maxwell métrique complète est donc couverte.
+Les estimations de seconde variation nécessaires à la densité du
+domaine de l'adjoint et à la fermabilité H11 restent à établir, ainsi
+que le raccord global D9. T12 reste ouvert. Quillen, T08 et les fichiers
+externes sont préservés.
+
+Validation : trois gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3889, 3896 et 3879 Mo.
+Audit des 18 déclarations et hub T12 verts, pics 3839 et 4015 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
+natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit`, hypothèse d'intertwiner terminal
+ou budget augmenté. `git diff --check` OK.
