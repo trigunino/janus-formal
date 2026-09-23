@@ -2383,3 +2383,44 @@ les budgets. Axiomes : `propext`, `Classical.choice`, `Quot.sound` et
 l'axiome Stokes natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ou intertwiner terminal supposé.
 `git diff --check` OK ; fichiers externes préservés.
+
+### Colonne complète BRST + H11 sur le cœur L2 difféomorphisme
+
+`DiffeomorphismH11MetricDependence4D` établit que la colonne physique
+complète dépend seulement de la perturbation métrique. Les transferts
+purement métriques conservent donc toutes ses composantes de sortie.
+`DiffeomorphismH11Smooth4D` expose cette colonne dans le Hilbert commun,
+avec pairing physique, symétrie sur les relevés lisses et annulation
+lorsque la perturbation métrique est nulle.
+
+`InjectiveSmoothColumn4D` transporte une application linéaire par une
+injection lisse, avec domaine, graphe et tests d'adjoint exacts.
+`DiffeomorphismH11Core4D` réalise ainsi H11 comme opérateur partiel
+densément défini du L2 réel vers le Hilbert commun complet.
+`DiffeomorphismH11Adjoint4D` caractérise son adjoint fermé et son domaine
+par les tests lisses originaux. La densité du domaine de cet adjoint,
+et donc la fermabilité de la colonne H11 L2, restent à établir.
+Aucune bornitude de H11 pour la norme L2 n'est supposée.
+
+`DiffeomorphismGraphRieszBridge4D` étend le pairing du Hessien L2 à tous
+les tests du graphe complété original. `DiffeomorphismCommonL2Column4D`
+utilise l'adjoint de la lecture commune vers L2 pour reconstruire
+exactement la colonne BRST originale dans le Hilbert commun.
+`DiffeomorphismAugmentedL2Core4D` ajoute la colonne H11 entière : sur
+chaque champ lisse original, cette somme égale, comme vecteur commun,
+`strongAugmentedRiesz` appliqué au relevé original. Le terme BRST est
+celui de la réalisation auto-adjointe L2 déjà construite.
+
+Le raccord sur le cœur est donc concret et conserve les sorties H11
+vers les autres secteurs. Il ne fournit pas encore une réalisation
+fermée de la colonne physique complète ni l'intertwining global D9.
+Le raccord abélien/LL, le quotient LL auxiliaire/mesure et le certificat
+terminal restent ouverts ; T12 n'est pas coché. Quillen et T08 sont préservés.
+
+Validation : huit gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pic maximal des passes vertes : 4263 Mo.
+Audit des 44 déclarations et hub T12 verts, pics 3949 et 4011 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
+natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ou intertwiner terminal supposé.
+Budgets inchangés ; `git diff --check` OK.
