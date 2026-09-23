@@ -2068,3 +2068,41 @@ Validation : trois gates, audit des 19 déclarations et hub T12 verts,
 (audit), 4008 Mo (hub). Les 19 déclarations ne dépendent que de `propext`,
 `Classical.choice` et `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit`,
 hypothèse terminale d'intertwiner ou budget augmenté. `git diff --check` OK.
+
+### Réduction effective du Hessien par les projections fantômes
+
+`P0EFTJanusProgramPT12HessianGhostSmooth4D` identifie la projection lisse :
+les deux métriques et B disparaissent, tandis que FP et l'antifantôme sont
+conservés. `HessianGhostCommutation4D` prouve la commutation de la forme
+et du Hessien lisse concret avec la projection fantôme–antifantôme, pour
+les deux poids cinétiques initiaux.
+
+`HessianGhostMinimal4D` prolonge cette commutation au graphe fermé minimal,
+avec appartenance au domaine projeté et valeur exacte de l'opérateur.
+`HessianGhostMaximal4D` établit les mêmes propriétés pour l'adjoint maximal
+par les tests lisses. Les projections complémentaires conservent aussi
+ces graphes et le pairing Hessien fantôme–boson s'annule.
+
+`HessianGhostReduced4D` construit un opérateur sur le véritable sous-espace
+Hilbert fantôme–antifantôme : son graphe est exactement la restriction du
+graphe minimal aux deux composantes dans ce sous-espace. Il est fermé,
+densément défini et symétrique. L'image lisse projetée appartient à son
+domaine ; sa sortie a exactement le pairing de l'action BRST initiale
+restreinte aux fantômes. La structure hilbertienne est celle induite par
+le L² original. Aucun espace auxiliaire doublé n'est identifié à l'espace
+réel.
+
+Restent la réalisation auto-adjointe du bloc FP pondéré et ses domaines,
+le bloc métrique–B, les colonnes H11, les extensions abélienne/LL et le
+raccord global D9. La commutation n'est pas encore établie ici pour la
+fermeture intermédiaire de l'opérateur de la forme. T12 reste ouvert ;
+Quillen et T08 sont préservés.
+
+Validation : cinq gates, audit des 31 déclarations et hub T12 verts sous
+`run_lean_guarded`, séquentiel, priorité haute, réserve 4096 Mo. Pics :
+4130 Mo (projection lisse), 3894 Mo (commutation lisse), 3913 Mo (minimal),
+3885 Mo (maximal), 4143 Mo (opérateur réduit), 3823 Mo (audit), 4007 Mo
+(hub). Axiomes : `propext`, `Classical.choice`, `Quot.sound` et dépendance
+native Stokes préexistante documentée ci-dessus. Aucun nouvel axiome,
+`sorry`/`admit`, hypothèse terminale d'intertwiner ni budget augmenté.
+`git diff --check` OK.
