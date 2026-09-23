@@ -2502,3 +2502,32 @@ pics 3944 et 4012 Mo. Axiomes des nouvelles déclarations : seulement
 Les lemmes de translation évitent les timeouts par un calcul séparé,
 sans augmenter les budgets. Aucun nouvel axiome, `sorry`/`admit` ou
 intertwiner terminal supposé. `git diff --check` OK.
+
+### Cœur H11 quotienté et identification de son véritable adjoint
+
+`DiffeomorphismH11QuotientCore4D` construit le cœur physique de source
+L2 réelle dense et de cible quotient commun. Son pairing avec toute
+classe de test est exactement celui de H11 avant quotient. Les sorties
+H11 sont orthogonales au sous-espace nul commun ; leur norme est donc
+conservée exactement, sans supprimer de composante physique.
+
+`DiffeomorphismH11QuotientDuality4D` prouve que l'adjoint de ce cœur est
+précisément l'opérateur fermé `diffeomorphismH11QuotientAdjoint` construit
+précédemment. L'égalité porte sur les opérateurs partiels complets et
+leurs domaines ; elle fournit aussi le pairing contre tout élément du
+domaine de l'adjoint quotienté. Aucune densité de ce dernier domaine
+n'est supposée.
+
+Le raccord cœur réel–adjoint quotienté est établi. Les estimations sur
+les tests métriques et Maxwell, nécessaires à la densité du domaine de
+l'adjoint et à la fermabilité H11, restent à prouver. Le certificat
+global D9 n'est pas encore construit ; T12 reste ouvert.
+Quillen, T08 et les fichiers externes sont préservés.
+
+Validation : deux gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3984 et 3997 Mo.
+Audit des 13 déclarations et hub T12 verts, pics 3942 et 4013 Mo.
+Axiomes : seulement `propext`, `Classical.choice`, `Quot.sound`.
+La réécriture de l'adjoint porte sur son graphe pour préserver les
+arguments de domaine dépendants. Aucun budget augmenté, nouvel axiome,
+`sorry`/`admit` ou intertwiner terminal supposé. `git diff --check` OK.
