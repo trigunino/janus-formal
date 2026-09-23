@@ -134,5 +134,3 @@ theorem weightedDeDonderActualBosonBlock_smooth_graph
   exact weightedDeDonderComponentBlock_smooth_graph period hPeriod reference metric couplings metricField auxiliaryField
 end
 end JanusFormal.P0EFTJanusProgramPT12WeightedDeDonderBlock4D
-
-

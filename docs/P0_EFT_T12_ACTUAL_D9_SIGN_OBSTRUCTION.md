@@ -2299,3 +2299,49 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
 natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` OK. Quillen, T08 et les fichiers externes préservés.
+
+### Extension auto-adjointe concrète du Hessien métrique–B
+
+`DiffeomorphismMetricProjection4D` sépare la projection métrique C = Q − E₂₂
+et la projection auxiliaire B = E₂₂ dans le sous-espace réel Q.
+`MetricBAuxiliaryIsometry4D` reconstruit Q isométriquement par addition
+des composantes métrique et B. `DiffeomorphismMetricSmooth4D` fournit
+le cœur métrique dense et vérifie ses composantes physiques originales.
+
+`WeightedDeDonderSmooth4D` extrait D₀ = B R C et sa transposée T₀ = C R B
+du Riesz lisse réel, avec les poids et signes du BRST original.
+`RectangularFeatureClosed4D` et `RectangularFeatureAdjoint4D` traitent
+la fermeture et l'adjoint entre deux Hilbert distincts.
+`WeightedDeDonderClosed4D` construit ainsi D fermé à domaine dense,
+avec un véritable cœur lisse ; D* possède un domaine dense et agit
+sur les tests B lisses par T₀.
+
+`WeightedDeDonderComponentBlock4D` prouve l'auto-adjonction de
+(x,y) ↦ (D*y,Dx) sur D(D) × D(D*). `WeightedDeDonderBlock4D` transporte
+ce bloc dans le sous-espace métrique–B réel.
+`WeightedDeDonderPairing4D` identifie son terme croisé au de Donder
+original. `WeightedDeDonderActualCore4D` prouve que son action sur
+le cœur projeté est exactement `bosonDeDonderSmoothOutput`.
+
+`WeightedDeDonderExtension4D` rétablit la masse bornée originale M.
+L'opérateur obtenu `weightedDeDonderBosonHessian` est auto-adjoint,
+fermé et prolonge le Hessien métrique–B minimal ; il est contenu dans
+son adjoint maximal. Son domaine est celui du bloc sans masse.
+Ces inclusions ne supposent ni minimal = maximal, ni auto-adjonction
+du minimal, ni intertwiner terminal.
+
+La construction métrique–B annoncée dans la section précédente est
+ainsi réalisée. Restent l'assemblage diffeomorphisme complet avec le
+bloc fantôme, les colonnes physiques H11, les secteurs abélien/LL,
+le quotient LL auxiliaire/mesure et le raccord/certificat global D9.
+T12 reste ouvert ; Quillen, T08 et les modifications externes sont préservés.
+
+Validation : douze gates vertes sous `run_lean_guarded`, un seul processus
+Lean, priorité haute, réserve 4096 Mo ; pic maximal des passes vertes :
+4153 Mo. Audit des 94 déclarations et hub T12 verts, pics 3832 et 4011 Mo.
+La vérification du domaine, initialement trop coûteuse par dépliage,
+utilise le lemme de perturbation et des instances explicites ; budgets inchangés.
+Axiomes audités : `propext`, `Classical.choice`, `Quot.sound` et l'axiome
+Stokes natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ou intertwiner terminal supposé.
+`git diff --check` OK.

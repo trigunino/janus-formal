@@ -233,4 +233,3 @@ theorem weightedDeDonderAdjoint_denseDomain :
 
 end
 end JanusFormal.P0EFTJanusProgramPT12WeightedDeDonderClosed4D
-

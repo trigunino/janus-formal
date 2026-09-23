@@ -130,4 +130,3 @@ theorem weightedDeDonderComponentBlock_smooth_graph
 
 end
 end JanusFormal.P0EFTJanusProgramPT12WeightedDeDonderComponentBlock4D
-

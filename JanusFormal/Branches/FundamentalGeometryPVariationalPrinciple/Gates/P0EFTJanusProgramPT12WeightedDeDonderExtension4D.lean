@@ -163,5 +163,3 @@ theorem weightedDeDonderBosonHessian_le_reducedAdjoint :
 
 end
 end JanusFormal.P0EFTJanusProgramPT12WeightedDeDonderExtension4D
-
-

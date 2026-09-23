@@ -76,5 +76,3 @@ theorem rectangularFeatureAdjoint_dense_domain (hTestDense : DenseRange testIncl
 
 end
 end JanusFormal.P0EFTJanusProgramPT12RectangularFeatureAdjoint4D
-
-
