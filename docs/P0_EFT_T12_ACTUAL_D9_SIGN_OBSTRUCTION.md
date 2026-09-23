@@ -1898,3 +1898,36 @@ Stokes préexistante :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; fichiers externes préservés.
+
+### Assemblage du Hessien BRST sur un domaine différentiel commun
+
+`P0EFTJanusProgramPT12DiffeomorphismMetricFlatL24D` réalise par matrices
+bornées l'abaissement métrique et les normalisations sectorielles du triplet
+partagé dans le L² original. L'accord lisse est exact, notamment pour B♭.
+
+`DiffeomorphismHessianFeatureCore4D` et `DiffeomorphismHessianFeatureClosed4D`
+(même préfixe) ferment simultanément les deux sorties De Donder et les deux
+sorties Faddeev–Popov depuis l'état BRST complet. Le domaine est dense et
+possède un véritable cœur lisse commun : les quatre sorties sont approchées
+par une même suite d'états, avec un seul triplet non minimal.
+
+`DiffeomorphismHessianL2Form4D` assemble sur ce domaine la forme symétrique
+réelle, conserve B♭, les signes des fantômes et les deux poids cinétiques
+d'Einstein. Sur les états lisses, elle égale exactement la polarisation BRST
+du fermion de jauge existant. Le terme auxiliaire symétrisé possède un
+représentant de Riesz borné sur le L² original.
+
+La fermeture prouvée concerne l'opérateur des quatre sorties différentielles.
+Elle ne démontre pas encore que la forme indéfinie représente un opérateur
+fermé/auto-adjoint sur tout le domaine requis. Restent cette réalisation et
+ses domaines d'adjoints, H11, les égalités d'extensions abélienne/LL et le
+raccord global D9. T12 reste ouvert ; Quillen et T08 sont préservés.
+
+Validation : quatre gates, audit des 38 déclarations nommées et hub T12 verts
+sous `run_lean_guarded`, un Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3887, 3892, 4191, 4159 Mo ; audit 3822 Mo ; hub 4279 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et dépendance native
+Stokes préexistante :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; fichiers externes préservés.
