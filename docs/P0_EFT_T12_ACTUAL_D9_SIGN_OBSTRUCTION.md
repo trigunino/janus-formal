@@ -2531,3 +2531,36 @@ Axiomes : seulement `propext`, `Classical.choice`, `Quot.sound`.
 La réécriture de l'adjoint porte sur son graphe pour préserver les
 arguments de domaine dépendants. Aucun budget augmenté, nouvel axiome,
 `sorry`/`admit` ou intertwiner terminal supposé. `git diff --check` OK.
+
+### Covecteurs métriques L2 et première variation Maxwell induite
+
+`RegularTensorCovectorL24D` réalise les covecteurs lisses exprimés dans
+le repère métrique comme vecteurs du L2 tensoriel réel. Le transport
+adjoint conserve exactement le pairing intégral et fournit une borne
+par la norme L2, sans dérivée de la variation test.
+
+`InducedMaxwellMetricL24D` applique cette construction au résidu Maxwell
+induit par la mobilité du repère métrique. Son pairing est exactement
+le terme `fderiv` natif déjà calculé. Il définit donc un covecteur continu
+sur le L2 tensoriel réel, sans hypothèse de stationnarité Maxwell.
+
+`PairedInducedMaxwellL24D` lit les deux composantes métriques du L2 réel
+difféomorphisme, compose ces covecteurs et incorpore leurs poids. La
+somme des deux variations induites possède ainsi une borne dans cette
+norme L2 réelle. La métrique de normalisation du L2 peut être distincte
+des deux métriques physiques de base.
+
+Cette étape concerne uniquement la première variation Maxwell induite.
+Elle ne borne pas encore les termes complets stress/volume, ni les
+secondes variations métriques et Maxwell de H11. La densité du domaine
+de l'adjoint, la fermabilité H11 et le certificat global D9 restent
+ouverts ; T12 n'est pas coché. Quillen, T08 et les fichiers externes
+sont préservés.
+
+Validation : trois gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3873, 3865 et 3873 Mo.
+Audit des 17 déclarations et hub T12 verts, pics 3843 et 4014 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
+natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit`, hypothèse d'intertwiner terminal
+ou budget augmenté. `git diff --check` OK.
