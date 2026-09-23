@@ -1722,3 +1722,42 @@ hérite en outre de l'axiome natif Stokes déjà présent :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit` ou budget augmenté.
 Hub T12 compilé : pic 4004 Mo. `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
+
+### Tenseurs symétriques L² et Cartan apparié dans les coordonnées originales
+
+`FrameTensorL2Transport4D` (préfixe `P0EFTJanusProgramPT12`) construit
+le changement borné entre les coefficients de deux familles génératrices
+finies. Les deux indices tensoriels sont reconstruits avec les coefficients
+duaux réels ; l'accord sur tout tenseur symétrique lisse est exact.
+`FrameTensorL2Equiv4D` construit les inverses sur les fermetures des images
+lisses, puis leur équivalence linéaire continue. La symétrie des coefficients
+passe à ces fermetures. Aucune densité dans l'ambient tensoriel entier ni
+isométrie des coordonnées n'est supposée.
+
+`RegularTensorL2Bridge4D` spécialise ce transport au repère régulier et à
+`globalGeneralMetricTensorFrameL2LinearMap`. Le Cartan lisse commute avec
+ce transport ; les deux sorties du domaine minimal apparié appartiennent
+aux complétions tensorielles symétriques, par fermeture du graphe commun.
+
+`PairedActualCartanClosed4D` reconstruit le graphe à partir du Cartan minimal
+régulier, via l'inverse borné du fantôme normalisé et les inverses tensoriels.
+Il fournit un opérateur fermé à domaine dense dans les anciennes coordonnées
+L² : un fantôme commun normalisé par la métrique plus et les deux complétions
+tensorielles réelles. Son action sur le domaine lisse est exactement le
+Cartan des deux métriques. Le résultat ne remplace pas le Hessien BRST par
+le différentiel de jauge.
+
+Restent le raccord au domaine du BRST complet, le certificat de cœur commun
+dans ces nouvelles présentations, le Hessien/H11, les égalités d'extensions
+abélienne/LL et D9. T12 reste ouvert. Quillen et T08 sont préservés.
+
+Validation : quatre gates et audit des 45 déclarations nommées verts sous
+`run_lean_guarded`, un Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3857, 3863, 3956, 3881 Mo ; audit 3821 Mo.
+Les transports tensoriels utilisent seulement `propext`, `Classical.choice`,
+`Quot.sound`. Les preuves dépendant de la fermeture du Cartan héritent de
+l'axiome natif Stokes préexistant :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté.
+Hub T12 compilé : pic 4004 Mo. `git diff --check` vert ; fichiers externes préservés.
