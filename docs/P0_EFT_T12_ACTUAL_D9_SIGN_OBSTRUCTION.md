@@ -2635,3 +2635,38 @@ La forme quadratique reste localement opaque dans la preuve de dérivation
 pour éviter les timeouts de réduction. Aucun budget augmenté, nouvel
 axiome, `sorry`/`admit` ou intertwiner terminal supposé.
 `git diff --check` OK.
+
+### Hessien natif Maxwell et norme métrique du critère H11
+
+`MixedPartialHessian4D` identifie la dérivée en jauge de la dérivée
+partielle métrique à l'entrée correspondante du Hessien joint véritable.
+La preuve applique les règles de chaîne et d'évaluation des applications
+linéaires continues, sans permuter formellement deux dérivations.
+
+`MaxwellNativeMixedHessian4D` définit le second `fderiv` de l'action
+Maxwell native à repère mobile sur le cœur joint métrique–jauge. Sa
+régularité C2 au centre est établie pour tout paquet de coefficients.
+La symétrie du Hessien identifie alors les deux ordres métrique–jauge
+et jauge–métrique au représentant L2 précédemment construit. Aucune
+stationnarité ni hypothèse de borne n'est introduite.
+
+`PairedMaxwellNativeHessian4D` réalise les sommes natives pondérées des
+deux feuillets par le covecteur L2 existant, dans les deux ordres. La
+borne vaut aussi dans la seule norme `diffeomorphismMetricSmooth`, en
+utilisant le transfert métrique qui conserve exactement les tenseurs
+et supprime les composantes non métriques. C'est la norme du critère
+analytique de domaine de l'adjoint H11.
+
+Le bloc mixte Maxwell est ainsi raccordé au Hessien natif, mais pas
+encore au test scalaire H11 de l'action physique totale. Ce raccord,
+les estimations métrique–métrique, la densité du domaine de l'adjoint,
+la fermabilité et le certificat global D9 restent ouverts. T12 n'est
+pas coché ; Quillen, T08 et les fichiers externes sont préservés.
+
+Validation : trois gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 1797, 4153 et 4149 Mo.
+Audit des 15 déclarations et hub T12 verts, pics 3820 et 4271 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
+natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit`, hypothèse d'intertwiner terminal
+ou budget augmenté. `git diff --check` OK.
