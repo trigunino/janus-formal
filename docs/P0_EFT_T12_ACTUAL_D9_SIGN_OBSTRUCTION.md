@@ -1867,3 +1867,34 @@ Stokes préexistante :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; fichiers externes préservés.
+
+### Faddeev–Popov apparié dans les complétions L² originales
+
+`P0EFTJanusProgramPT12FrameCovectorL2Transport4D` construit les matrices
+bornées de changement de repère des covecteurs et leur accord exact sur les
+champs lisses. `FrameCovectorL2Equiv4D` (même préfixe) les prolonge en
+équivalences continues inverses entre les complétions des images réelles.
+Les coordonnées redondantes ne sont pas assimilées à des champs indépendants.
+
+`ActualFaddeevPopovCore4D` identifie exactement l'entrée au fantôme normalisé
+original et chaque sortie à De Donder appliqué au générateur de jauge réel.
+Les deux métriques partagent la même entrée. La récupération dans le repère
+régulier est bornée et injective sur la complétion covectorielle réelle.
+`ActualFaddeevPopovClosed4D` en déduit la fermabilité, une fermeture minimale
+fermée de domaine dense, un véritable cœur lisse commun et l'action lisse
+initiale exacte dans les espaces originaux. La récupération de son graphe
+appartient au graphe minimal apparié régulier ; la surjectivité entre ces
+deux graphes n'est pas affirmée ici.
+
+Restent l'assemblage du Hessien BRST avec ses poids et son triplet partagé,
+les colonnes H11, les égalités d'extensions abélienne/LL et le raccord global
+à D9. T12 reste ouvert ; Quillen et T08 sont préservés.
+
+Validation : quatre gates, audit des 46 déclarations nommées et hub T12 verts
+sous `run_lean_guarded`, un Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3865, 3873, 3893, 3922 Mo ; audit 3821 Mo ; hub 4257 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et dépendance native
+Stokes préexistante :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; fichiers externes préservés.
