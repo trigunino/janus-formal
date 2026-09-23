@@ -2731,3 +2731,38 @@ Audit des neuf théorèmes et hub T12 verts, pics 3823 et 4117 Mo.
 Les neuf théorèmes ne dépendent que de `propext`, `Classical.choice`,
 `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit`, hypothèse terminale
 ou budget augmenté. `git diff --check` OK.
+### Couplage Maxwell des directions BRST concrètes et borne métrique L2
+
+`MaxwellPhysicalCoreProjection4D` calcule les projections Maxwell des
+directions physiques minimales, du cœur diagonal global et de ses
+inclusions difféomorphisme et abélienne. La première fournit exactement
+le tenseur métrique et une jauge nulle ; la seconde fournit une métrique
+nulle et les coefficients du potentiel dans le repère physique de `data`.
+
+`StrongMaxwellBRSTMixedHessian4D` conserve ce repère sans l'identifier
+implicitement à la base Maxwell : `maxwellGaugeRebase` reconstruit le
+potentiel dans la base choisie en préservant exactement ses coefficients
+C2. Les deux Hessiennes mixtes des blocs d'action forts, évaluées sur
+ces inclusions BRST concrètes, sont les entrées natives métrique–jauge
+avec ce transport de repère.
+
+`StrongMaxwellBRSTMixedL24D` représente leur somme par un covecteur du
+L2 réel difféomorphisme. Sa norme borne cette contribution Maxwell dans
+la seule norme `diffeomorphismMetricSmooth`, celle du critère de domaine
+de l'adjoint H11. La compatibilité de base est conservée ; aucune
+hypothèse de borne, de stationnarité ou d'intertwiner n'est ajoutée.
+
+Cette borne porte sur la contribution Maxwell mixte concrète. Le H11
+de l'action physique totale, les estimations métrique–métrique, la densité
+du domaine de l'adjoint, la fermabilité et le certificat global D9 restent
+à établir. T12 reste ouvert ; Quillen, T08 et les fichiers externes sont
+préservés.
+
+Validation : trois gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 4243, 4235 et 3997 Mo.
+Audit des 17 déclarations et hub T12 verts, pics 3919 et 4021 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound`, et uniquement pour
+les trois déclarations L2 l'axiome Stokes natif préexistant
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit`, hypothèse terminale ou budget augmenté.
+`git diff --check` OK.
