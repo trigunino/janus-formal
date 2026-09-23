@@ -2596,3 +2596,42 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
 natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit`, hypothèse d'intertwiner terminal
 ou budget augmenté. `git diff --check` OK.
+
+### Variation mixte Maxwell potentiel–métrique et borne L2
+
+`MaxwellCoefficientQuadratic4D` réalise le pairing puis l'action Maxwell
+comme applications quadratiques sur le cœur C2 des coefficients de jauge.
+Le transport du repère mobile est linéaire en ce paquet : l'action native
+transportée reste donc exactement quadratique, pour chaque variation
+métrique. L'égalité conserve les coefficients de Cartan et l'anholonomie.
+
+`QuadraticParameterDerivative4D` prouve qu'une dérivée de paramètre de
+cette famille possède une dérivée le long de toute droite du potentiel.
+Sa valeur est la polarisation : valeur en A+B moins valeur en A moins
+valeur en B. Les différentiabilités requises concernent ces trois points.
+
+`MaxwellMixedMetricL24D` les établit pour l'action native au centre de la
+carte métrique, à partir de sa régularité C2 déjà démontrée. La dérivée
+en potentiel de la première variation métrique complète est exactement
+le pairing avec la polarisation de trois représentants L2 existants.
+C'est une véritable dérivée itérée, sans hypothèse de stationnarité ni
+hypothèse de borne. Son test métrique ne requiert que la norme L2 réelle.
+
+`PairedMaxwellMixedL24D` construit le covecteur pondéré des deux feuillets
+et la même borne sur le L2 réel difféomorphisme.
+
+Cette estimation couvre le terme mixte Maxwell potentiel–métrique.
+Le raccord au test scalaire H11 complet et les estimations du bloc
+métrique–métrique restent à établir, avant la densité du domaine de
+l'adjoint, la fermabilité et le certificat global D9. T12 reste ouvert.
+Quillen, T08 et les fichiers externes sont préservés.
+
+Validation : quatre gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3880, 1848, 4110 et 3884 Mo.
+Audit des 21 déclarations et hub T12 verts, pics 3838 et 4098 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
+natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+La forme quadratique reste localement opaque dans la preuve de dérivation
+pour éviter les timeouts de réduction. Aucun budget augmenté, nouvel
+axiome, `sorry`/`admit` ou intertwiner terminal supposé.
+`git diff --check` OK.
