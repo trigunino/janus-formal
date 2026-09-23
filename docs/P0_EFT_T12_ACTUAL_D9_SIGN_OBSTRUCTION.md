@@ -2259,3 +2259,43 @@ l'axiome Stokes natif préexistant
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ou hypothèse terminale d'intertwiner.
 `git diff --check` OK. Quillen, T08 et les fichiers externes préservés.
+
+### Bloc rectangulaire et retrait exact de la masse métrique–B
+
+`RectangularOffDiagonal4D` construit les graphes, domaines et fermetures
+du bloc entre deux Hilbert distincts. `RectangularDoubleAdjoint4D`
+étend la double adjonction aux opérateurs E → F fermés, avec domaines
+denses de l'opérateur et de l'adjoint. `RectangularSelfAdjoint4D`
+prouve l'auto-adjonction de (x,y) ↦ (A*y,Ax) sur D(A) × D(A*).
+Les anciennes gates carrées sont conservées.
+
+`BosonBoundedMass4D` construit M sur le véritable sous-espace métrique–B
+par compression de la somme pondérée des `auxiliarySectorL2Riesz`.
+M est continu et auto-adjoint. Son pairing sur le cœur projeté égale
+le pairing de masse original, avec les poids cinétiques plus/minus
+et les signes initiaux.
+
+`BosonDeDonderCore4D` construit K = Hessien métrique–B minimal − M.
+K est fermé, symétrique et densément défini ; son domaine et son cœur
+lisse sont ceux du Hessien réduit. L'identité K + M = Hessien réduit
+est prouvée comme égalité d'opérateurs partiels, domaines compris.
+`BosonDeDonderPairing4D` identifie exactement son pairing lisse à la
+somme pondérée des termes ⟨D h, B k⟩ + ⟨B h, D k⟩.
+
+Prochaine construction concrète : extraire la colonne de Donder fermée
+entre les composantes métrique et B réelles, identifier son adjoint lisse,
+assembler et transporter le bloc rectangulaire, puis réintroduire M.
+Le bloc abstrait ne constitue pas encore une extension auto-adjointe
+du Hessien métrique–B réel. T12, H11 et le raccord global D9 restent ouverts.
+
+Validation : six gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 2178 Mo (bloc rectangulaire),
+2188 Mo (double adjonction), 2185 Mo (auto-adjonction), 4164 Mo (masse),
+4168 Mo (retrait et restauration), 3895 Mo (pairing).
+Les conversions d'instances et les lemmes de pairing ont été explicités
+et scindés sans augmenter les budgets.
+Audit des 33 déclarations et hub T12 verts, pics 3823 et 4010 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
+natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` OK. Quillen, T08 et les fichiers externes préservés.
