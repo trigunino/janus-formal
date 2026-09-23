@@ -1801,3 +1801,32 @@ native Stokes préexistante pour les résultats qui utilisent Cartan fermé :
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté.
 Hub T12 compilé : pic 4004 Mo. `git diff --check` vert ; fichiers externes préservés.
+
+### De Donder réel : fermeture L² et tests de l'adjoint
+
+Quatre gates `P0EFTJanusProgramPT12DeDonder{SmoothCoefficients,RowAdjoint,L2Closed,L2Adjoint}4D`
+réalisent le véritable opérateur de de Donder dans la complétion L² des
+tenseurs symétriques. La formule en repère fini est identifiée à l'opérateur
+existant, avec les termes de connexion et les dérivées des coefficients.
+L'intégration par parties construit explicitement l'adjoint des lignes.
+Elle exclut les vecteurs verticaux non nuls du graphe fermé : la fermeture
+minimale a un domaine dense, un cœur lisse et l'action lisse initiale exacte.
+
+Les tests scalaires par coordonnée appartiennent au domaine du véritable
+adjoint hilbertien. Son action est la projection orthogonale de l'adjoint
+explicite sur la complétion tensorielle réelle ; aucune conservation de la
+régularité lisse par cette projection n'est supposée.
+
+Restent notamment Faddeev–Popov, l'assemblage du Hessien BRST/H11, les
+égalités d'extensions abélienne/LL et le raccord global à D9. La fermeture
+du différentiel BRST et celle de De Donder ne constituent pas à elles seules
+la fermeture terminale du Hessien. T12 reste ouvert ; Quillen et T08 préservés.
+
+Validation des quatre gates sous `run_lean_guarded`, un Lean séquentiel,
+priorité haute, réserve 4096 Mo : pics 3858, 3855, 3878, 3863 Mo.
+Audit des 37 déclarations nommées vert, pic 3801 Mo ; hub T12 vert, pic 4007 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et dépendance native
+Stokes préexistante :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; fichiers externes préservés.
