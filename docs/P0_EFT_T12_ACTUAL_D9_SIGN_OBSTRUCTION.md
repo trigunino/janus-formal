@@ -2136,3 +2136,51 @@ native Stokes préexistante documentée ci-dessus. Aucun nouvel axiome,
 `sorry`/`admit`, hypothèse terminale d'intertwiner ni budget augmenté.
 Les conversions coûteuses sont évitées par deux attributs locaux
 `irreducible` et un petit lemme de prolongement des pairings à la fermeture.
+
+### Colonne FP pondérée fermée et bloc auto-adjoint sur la paire réelle
+
+`DiffeomorphismTripletComponent4D` construit les trois sous-espaces fermés
+images des projections Eii dans le L² original, avec transferts isométriques
+inverses Eij/Eji. `DiffeomorphismGhostPairIsometry4D` prouve l'isométrie
+surjective (x,y) ↦ x + E10 y entre deux copies de la composante fantôme E00
+et le véritable sous-espace fantôme–antifantôme. Il ne s'agit plus d'une
+identification supposée avec un espace doublé.
+
+`DiffeomorphismComponentSmooth4D` fournit les transferts lisses linéaires
+et les inclusions denses dans chaque composante. `WeightedFPSmooth4D`
+extrait du Riesz concret les colonnes A₀ = E01 R E00 et B₀ = E00 R E10,
+avec la normalisation L² initiale. Leur pairing adjoint et le pairing
+croisé de l'action BRST originale sont prouvés ; les poids cinétiques
+plus/minus et les signes sont ceux du Riesz initial.
+
+`WeightedFPClosed4D` construit A, fermeture minimale de A₀. Il est fermé,
+densément défini, avec un vrai cœur lisse. Son adjoint hilbertien A*
+est dense et vaut B₀ sur les champs lisses. `WeightedFPComponentBlock4D`
+construit le bloc (x,y) ↦ (A*y,Ax), auto-adjoint de domaine exactement
+D(A) × D(A*), avec son graphe lisse explicite.
+
+`IsometricPMapAdjoint4D` prouve que le transport isométrique commute à
+l'adjoint et préserve l'auto-adjonction, sans hypothèse de surjectivité
+de l'opérateur. `WeightedFPBlock4D` transporte ainsi ce bloc sur la paire
+fantôme réelle ; son auto-adjonction, son graphe transporté exact et son
+graphe lisse sont validés.
+
+Reste à prouver le raccord complet de ce bloc au Hessien fantôme réduit
+précédent, notamment l'annulation des colonnes diagonales et l'égalité
+sur tout le cœur projeté. L'égalité minimal = maximal n'est pas affirmée.
+Restent aussi le bloc métrique–B, les colonnes H11, les extensions
+abélienne/LL et le raccord global D9. T12 reste ouvert ; Quillen et T08
+sont préservés.
+
+Validation : huit gates, audit des 51 déclarations et hub T12 verts,
+`run_lean_guarded`, séquentiel, priorité haute, réserve 4096 Mo.
+Pics des validations réussies : 3781 Mo (composantes), 3774 Mo (isométrie),
+3970 Mo (cœurs lisses), 3896 Mo (colonne pondérée), 4151 Mo (fermeture),
+1885 Mo (transport adjoint abstrait), 4138 Mo (bloc en coordonnées),
+4140 Mo (bloc réel), 3823 Mo (audit), 4009 Mo (hub).
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et dépendance
+native Stokes préexistante. Aucun nouvel axiome, `sorry`/`admit`,
+hypothèse terminale d'intertwiner ni budget augmenté.
+Le bloc a été scindé après arrêt du garde mémoire ; les instances
+hilbertiennes explicites et les attributs locaux `irreducible` évitent
+les dépliages coûteux. `git diff --check` OK.
