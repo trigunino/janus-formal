@@ -2214,3 +2214,48 @@ Pics : 3910 Mo (diagonales), 3912 Mo (raccord lisse), 3909 Mo
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté. Quillen et T08
 préservés. Import du hub remplacé par la nouvelle gate terminale locale.
+
+### Cœur réel métrique–B, adjoint et décomposition globale des graphes
+
+`DiffeomorphismBosonL2Core4D` construit le sous-espace fermé image de
+Q = id − P_fantôme dans le L² original, sa complétude et son inclusion
+lisse dense. `HessianBosonReduced4D` restreint le Hessien minimal à cet
+espace : opérateur fermé, symétrique et densément défini, avec graphe
+lisse et pairing de l'action BRST originale. La commutation R Q = Q R
+est prouvée sur les champs lisses.
+
+`HessianBosonReducedCore4D` identifie son graphe à la fermeture du
+graphe lisse projeté et établit un véritable cœur au sens opérateur.
+`HessianBosonReducedAdjoint4D` caractérise l'adjoint par les tests lisses
+et identifie exactement son graphe et son domaine à la restriction du
+Hessien maximal original.
+
+`HessianReducedGraphSplit4D` établit les deux équivalences de graphes :
+le graphe complet minimal, respectivement maximal, se décompose en ses
+restrictions fantôme et métrique–B. La reconstruction inverse est
+prouvée par addition des deux graphes projetés.
+
+`HessianBosonForm4D` donne la formule sectorielle exacte sur le cœur :
+⟨D h, B k⟩ + ⟨B h, D k⟩ + ⟨M h, k⟩, où D est le de Donder original
+et M l'opérateur continu `auxiliarySectorL2Riesz` déjà construit.
+Les composantes FP et antifantôme projetées s'annulent ; de Donder,
+B et B abaissé sont conservés. Les signes de la masse sont inchangés.
+
+L'extension auto-adjointe du bloc métrique–B reste à construire à partir
+de cette formule et de ses domaines réels. Ni auto-adjonction du minimal,
+ni égalité minimal = maximal ne sont affirmées. Les colonnes H11,
+les extensions abélienne/LL, le quotient LL auxiliaire/mesure et le
+certificat global D9 restent ouverts. T12 n'est pas coché.
+
+Validation : six gates vertes, `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 3971 Mo (sous-espace),
+4148 Mo (restriction), 4171 Mo (cœur), 3920 Mo (adjoint),
+4125 Mo (décomposition), 3906 Mo (formule). Le timeout initial de la
+décomposition a été résolu par des projections localement `irreducible`
+et des conversions explicites, sans augmenter les budgets.
+Audit des 38 déclarations et hub T12 verts, pics respectifs 3825 et
+4010 Mo. Axiomes : `propext`, `Classical.choice`, `Quot.sound` et
+l'axiome Stokes natif préexistant
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ou hypothèse terminale d'intertwiner.
+`git diff --check` OK. Quillen, T08 et les fichiers externes préservés.
