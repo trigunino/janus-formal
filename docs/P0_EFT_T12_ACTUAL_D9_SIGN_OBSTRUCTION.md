@@ -1687,3 +1687,38 @@ native Stokes préexistante pour les résultats qui l'utilisent :
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; Quillen, T08 et les fichiers
 externes préservés.
+
+### Cœur Cartan apparié et équivalence des complétions L² du fantôme
+
+`PairedRegularFrameCartanCore4D` (préfixe `P0EFTJanusProgramPT12`)
+ferme la restriction du Cartan apparié aux coefficients lisses communs.
+La réalisation minimale est fermée, de domaine dense, possède ce véritable
+cœur d'opérateur et conserve l'action exacte des deux métriques avec un
+fantôme partagé. Elle est incluse dans l'intersection précédente des domaines
+minimaux ; l'égalité avec cette intersection n'est pas supposée.
+
+`SmoothMatrixL24D` réalise les matrices de coefficients lisses comme
+opérateurs bornés sur le L² canonique, avec accord exact sur les champs lisses.
+`RegularGhostL2Transport4D` l'applique au changement des quatre coefficients
+du repère régulier vers les anciennes coordonnées normalisées redondantes.
+`RegularGhostL2Recovery4D` construit la récupération inverse, à partir du
+pairing de repère et du vrai ratio de volume, puis prouve l'identité sur
+tout le L² des quatre coefficients par densité.
+`RegularGhostL2Equiv4D` identifie l'image fermée du transport à la fermeture
+des anciens fantômes lisses et construit l'équivalence linéaire continue
+avec inverse borné. Il ne s'agit pas d'une affirmation d'isométrie.
+
+Le transport du fantôme est donc acquis. Restent notamment le transport des
+tenseurs métriques (avec leur symétrie), le raccord du domaine Cartan apparié
+aux anciennes coordonnées complètes, le Hessien BRST/H11, les égalités
+d'extensions abélienne/LL et D9. T12 reste ouvert ; aucun intertwiner terminal
+n'est pris en hypothèse.
+
+Validation : cinq gates et audit des 34 déclarations nommées verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3856, 3765, 3853, 4002, 3880 Mo ; audit 3819 Mo.
+L'audit donne `propext`, `Classical.choice`, `Quot.sound` ; seul le cœur Cartan
+hérite en outre de l'axiome natif Stokes déjà présent :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit` ou budget augmenté.
+Hub T12 compilé : pic 4004 Mo. `git diff --check` vert ; Quillen, T08 et les fichiers externes préservés.
