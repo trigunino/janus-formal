@@ -1830,3 +1830,40 @@ Stokes préexistante :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; fichiers externes préservés.
+
+### Faddeev–Popov réel : fermeture et cœur lisse commun
+
+`P0EFTJanusProgramPT12FaddeevPopovAdjoint4D` compose les adjoints explicites
+de De Donder et de Cartan. La formule conserve les dérivées des coefficients
+et les termes de connexion ; son action est identifiée au véritable
+`globalGeneralMetricDiffeomorphismFaddeevPopovLinearMap` évalué dans le repère
+régulier. Les tests satisfont l'identité de pairing sans hypothèse terminale.
+
+`FaddeevPopovL2Core4D` et `FaddeevPopovL2Closed4D` (même préfixe) construisent
+la fermeture minimale dans le L² d'ordre zéro des quatre coefficients du
+repère régulier. L'entrée lisse est injective et dense. L'identité de pairing
+exclut les vecteurs verticaux non nuls, prouve la fermabilité, puis fournit
+un véritable cœur lisse, l'action lisse exacte et le graphe de l'adjoint
+hilbertien sur les tests scalaires par coordonnée.
+
+`PairedFaddeevPopovClosed4D` ferme simultanément les deux sorties métriques
+avec un seul fantôme. Son cœur impose une approximation lisse commune aux
+deux sorties. Il n'est pas identifié sans preuve à l'intersection des deux
+domaines minimaux séparés. La fermeture de la composition différentielle
+est démontrée directement ; aucune règle générale de fermeture des
+compositions d'opérateurs fermés n'est utilisée.
+
+Restent le transport des sorties covectorielles et de ces graphes vers les
+espaces originaux du Hessien, l'assemblage avec les poids et le triplet
+non minimal partagé, H11, les égalités d'extensions abélienne/LL et le raccord
+global à D9. Ces réalisations Faddeev–Popov ne ferment pas encore le Hessien
+BRST global. T12 reste ouvert ; Quillen et T08 sont préservés.
+
+Validation : quatre gates vertes sous `run_lean_guarded`, un Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 3863, 3883, 3929, 3887 Mo.
+Audit des 43 déclarations nommées vert, pic 3822 Mo ; hub T12 vert, pic 4007 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et dépendance native
+Stokes préexistante :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; fichiers externes préservés.
