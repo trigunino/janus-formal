@@ -2698,3 +2698,36 @@ Les égalités d'actions sont transportées par congruence explicite pour
 éviter le timeout de réécriture du Hessien ; aucun budget augmenté.
 Aucun nouvel axiome, `sorry`/`admit` ou hypothèse terminale.
 `git diff --check` OK.
+### Hessiennes des blocs Maxwell dans la véritable topologie forte
+
+`ProjectedGradientDerivative4D` différentie le gradient tiré en arrière
+par une projection linéaire continue. `PairedMaxwellCenterC24D` établit
+la régularité C2 au centre des deux actions Maxwell appariées pondérées,
+à partir de leur identification affine avec l'action native.
+
+`StrongMaxwellHessianPullback4D` applique cette dérivation aux deux
+gradients Maxwell forts effectivement utilisés : leur second jet est
+le Hessien natif pondéré, évalué sur les deux directions projetées par
+`globalMinimalPhysicalPairedMetricGaugeLLStrongOldCoreCLM`, puis par
+la projection métrique–jauge propre au feuillet.
+
+`StrongMaxwellActionHessian4D` raccorde ces expressions aux Hessiennes
+des blocs `maxwellPlus` et `maxwellMinus` de l'action physique admissible.
+L'ouverture du domaine fort et son appartenance au centre donnent
+l'égalité des gradients sur un voisinage, donc l'égalité de leurs
+secondes dérivées. Seule la compatibilité géométrique de base déjà
+requise pour ces blocs est utilisée ; aucune hypothèse d'intertwiner,
+de stationnarité ou de borne n'est ajoutée.
+
+Il reste à identifier les projections des directions H11 concrètes,
+à réunir les contributions de l'action physique totale et les bornes
+métrique–métrique, puis à établir la densité du domaine de l'adjoint,
+la fermabilité et le certificat global D9. T12 reste ouvert.
+Quillen, T08 et les fichiers externes sont préservés.
+
+Validation : quatre gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 1762, 4110, 4164 et 4149 Mo.
+Audit des neuf théorèmes et hub T12 verts, pics 3823 et 4117 Mo.
+Les neuf théorèmes ne dépendent que de `propext`, `Classical.choice`,
+`Quot.sound`. Aucun nouvel axiome, `sorry`/`admit`, hypothèse terminale
+ou budget augmenté. `git diff --check` OK.
