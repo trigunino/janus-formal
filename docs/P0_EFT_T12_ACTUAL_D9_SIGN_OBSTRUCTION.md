@@ -1931,3 +1931,45 @@ Stokes préexistante :
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; fichiers externes préservés.
+
+### Hessien BRST : opérateur L² minimal fermé et symétrique
+
+`P0EFTJanusProgramPT12SmoothMatrixL2Transpose4D` explicite le transport
+transposé des tests lisses. `HessianSmoothTestAdjoint4D` (même préfixe)
+construit les représentants L² des pairings De Donder et Faddeev–Popov sur
+tout le domaine différentiel commun, dans les coordonnées originales.
+
+`HessianSmoothRiesz4D` assemble pour chaque état lisse un vecteur L² concret,
+avec B, B♭, les adjoints différentiels, les deux poids d'Einstein et le
+triplet partagé. Son pairing égale la forme assemblée sur tout le domaine
+différentiel commun, et la polarisation BRST initiale sur les états lisses.
+Il ne s'agit pas d'une existence de Riesz ajoutée comme hypothèse.
+
+`HessianL2OperatorCore4D` prouve la linéarité de cette action et définit
+l'opérateur sur l'image lisse dense du L² original. Les pairings contre
+les tests lisses excluent une composante verticale dans la fermeture du
+graphe, ce qui prouve directement sa fermabilité.
+`HessianL2OperatorClosed4D` construit sa fermeture minimale : opérateur
+fermé, densément défini, symétrique, avec véritable cœur lisse et action
+lisse exacte. L'inclusion dans son adjoint est également établie pour la
+fermeture, via le petit lemme abstrait `SymmetricL2Closure4D`.
+Aucune préservation de la régularité lisse par les projections
+hilbertiennes n'est supposée.
+
+La réalisation minimale du Hessien de jauge fixé est donc construite.
+L'égalité avec son adjoint n'est pas prouvée. Son domaine fermé n'est pas
+identifié au domaine des quatre sorties différentielles : des compensations
+entre termes pourraient les distinguer. Restent l'extension terminale et
+ses domaines, les colonnes physiques H11, les égalités d'extensions
+abélienne/LL et le raccord global D9. T12 reste ouvert ; Quillen et T08
+sont préservés.
+
+Validation : les six modules ci-dessus passent `run_lean_guarded`
+(séquentiel, priorité haute, réserve 4096 Mo). Pics respectifs : 3694,
+3908, 3905, 3915, 1805 Mo pour le lemme abstrait et 4040 Mo pour la
+fermeture. Le hub T12 passe à 4009 Mo. L'audit des 39 déclarations publiques
+passe à 3824 Mo : seulement `propext`, `Classical.choice`, `Quot.sound` et
+l'axiome natif hérité de Stokes
+`JanusFormal.P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit`, hypothèse terminale d'intertwiner,
+ni hausse des budgets Lean. `git diff --check` passe.
