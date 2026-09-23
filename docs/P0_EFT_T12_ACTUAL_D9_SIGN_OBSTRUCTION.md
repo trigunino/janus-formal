@@ -1761,3 +1761,43 @@ l'axiome natif Stokes préexistant :
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté.
 Hub T12 compilé : pic 4004 Mo. `git diff --check` vert ; fichiers externes préservés.
+
+### Différentiel BRST diagonal complet : fermeture, cœur et contraction
+
+`DiffeomorphismL2Readouts4D` (préfixe `P0EFTJanusProgramPT12`) fournit
+les projections bornées des deux perturbations métriques et du triplet
+partagé depuis le L² original. Les sorties tensorielles restent dans leurs
+images lisses complétées ; leur récupération dans le repère régulier est
+fidèle sur ces images.
+
+`DiffeomorphismBRSTGraphRecovery4D` prouve que la fermeture du graphe du
+BRST réel conserve le graphe de Cartan apparié récupéré et les trois équations
+non minimales : sortie fantôme nulle, sortie antighost égale au multiplicateur
+d'entrée, sortie multiplicateur nulle.
+`DiffeomorphismBRSTClosed4D` en déduit l'absence de vecteurs verticaux non
+nuls, donc la fermabilité du différentiel complet dans le L² original, à
+partir du repère régulier fourni. Sa fermeture minimale est fermée, de domaine
+dense, possède le véritable cœur des états lisses et prolonge exactement
+le BRST diagonal initial. Aucun poids de graphe supplémentaire n'est ajouté
+au Hilbert de base.
+
+`DiffeomorphismBRSTClosedComplex4D` prouve l'invariance de ce domaine par Q
+et Q² = 0. L'homotopie bornée antighost/multiplicateur préserve aussi le domaine
+fermé et satisfait Qh + hQ = P_doublet. Un cycle possède donc explicitement
+la primitive h pour sa composante doublet, jusque dans le domaine fermé.
+
+Cette étape ferme le différentiel BRST de difféomorphisme et son cœur lisse.
+Elle ne démontre pas encore la réalisation du Hessien de jauge fixé ni ses
+colonnes H11. Le raccord actual→D9, les égalités d'extensions abélienne/LL,
+l'intertwining global et le certificat terminal restent ouverts. T12 n'est
+pas coché ; Quillen et T08 restent inchangés.
+
+Validation : quatre gates et audit des 30 déclarations nommées verts sous
+`run_lean_guarded`, un Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3866, 4222, 3898, 4132 Mo ; audit 3821 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound`, avec la dépendance
+native Stokes préexistante pour les résultats qui utilisent Cartan fermé :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté.
+Hub T12 compilé : pic 4004 Mo. `git diff --check` vert ; fichiers externes préservés.
