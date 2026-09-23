@@ -2804,3 +2804,34 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
 natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`
 pour les résultats utilisant la borne L2. Aucun nouvel axiome,
 `sorry`/`admit` ou budget augmenté. `git diff --check` OK.
+## Préparation des tests métriques : gravité native dans L2 (23 septembre 2026)
+
+`RaisedTensorCovectorL24D` relève les deux indices de coefficients lisses
+arbitraires, puis représente leur pairing invariant dans les coordonnées
+L2 tensorielles physiques. L'égalité et la borne sont démontrées.
+
+`StoredVolumeEinsteinHilbertL24D` construit séparément les représentants
+L2 du Ricci pondéré par le volume stocké et du terme de Palatini complet.
+La somme représente exactement la première variation native d'Einstein–Hilbert
+à volume fixé. Aucune hypothèse de jauge de volume ni de stationnarité
+n'est ajoutée ; le terme de Palatini n'est pas éliminé.
+
+`PairedEinsteinHilbertL24D` assemble les deux secteurs en un covecteur
+continu sur le L2 BRST difféomorphisme et prouve une borne utilisant
+uniquement la norme métrique. `StrongEinsteinHilbertL24D` raccorde ce
+covecteur à la somme des deux dérivées gravitationnelles fortes au centre,
+évaluées sur la direction métrique physique.
+
+Cette étape concerne la première variation. Elle ne prouve pas encore
+la borne du Hessien métrique complet ni l'appartenance des tests métriques
+au domaine de l'adjoint H11. Leur traitement, la densité du domaine de
+l'adjoint et le certificat global actual→D9 restent nécessaires. T12 reste
+ouvert ; aucun intertwiner terminal n'est supposé.
+Validation : quatre gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3892, 3941, 4062 et 3901 Mo.
+Audit des 24 déclarations et hub T12 verts, pics 3848 et 4025 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et, pour Palatini
+et ses consommateurs, l'axiome Stokes natif préexistant
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ou budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
