@@ -1973,3 +1973,38 @@ l'axiome natif hérité de Stokes
 `JanusFormal.P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit`, hypothèse terminale d'intertwiner,
 ni hausse des budgets Lean. `git diff --check` passe.
+
+### Hessien BRST : domaine maximal et opérateur de la forme
+
+`P0EFTJanusProgramPT12DenseL2AdjointGraph4D` isole le critère de graphe
+faible d'un adjoint réel densément défini. `HessianL2Adjoint4D` définit
+le Hessien maximal comme adjoint du Hessien minimal déjà construit.
+Son graphe est exactement décrit par les pairings avec les états lisses
+et leur Hessien concret. Il est fermé, densément défini et contient
+le minimal ; aucune égalité minimal/maximal n'est supposée.
+
+`HessianFormGraphTests4D` prolonge les identités contre les tests lisses
+à tous les tests du domaine différentiel commun, par continuité sur le
+graphe des quatre sorties. `HessianFormAdjoint4D` en déduit, pour tout
+état de ce domaine, l'équivalence entre appartenance au domaine maximal
+et représentation L² de la forme BRST contre tous les tests différentiels.
+Le représentant est exactement la valeur du Hessien maximal.
+
+`HessianFormOperator4D` construit l'opérateur de représentation de la
+forme : restriction du maximal à l'intersection de son domaine avec
+le domaine différentiel commun. Cet opérateur est densément défini,
+symétrique et fermable, conserve l'action lisse concrète, et son pairing
+représente la forme complète, avec les deux poids et les signes BRST.
+Sa fermeture et son éventuelle égalité avec le minimal ne sont pas
+identifiées ici. L'auto-adjonction, les colonnes physiques H11,
+les extensions abélienne/LL et le raccord global D9 restent ouverts.
+T12 n'est pas coché ; Quillen et T08 sont préservés.
+
+Validation : les cinq modules passent `run_lean_guarded`, séquentiellement,
+priorité haute, réserve 4096 Mo. Pics : 1817 Mo (lemme d'adjoint),
+4146 Mo (maximal), 4156 Mo (tests du graphe), 4102 Mo (forme/adjoint),
+3942 Mo (opérateur de la forme). Audit des 26 déclarations : 3842 Mo ;
+hub T12 : 4009 Mo. Axiomes : `propext`, `Classical.choice`, `Quot.sound`
+et la dépendance native Stokes déjà documentée ci-dessus. Aucun nouvel
+axiome, `sorry`/`admit`, hypothèse terminale d'intertwiner ou budget
+augmenté. `git diff --check` passe.
