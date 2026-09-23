@@ -2345,3 +2345,41 @@ Axiomes audités : `propext`, `Classical.choice`, `Quot.sound` et l'axiome
 Stokes natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ou intertwiner terminal supposé.
 `git diff --check` OK.
+
+### Assemblage du Hessien BRST difféomorphisme complet
+
+`DiagonalProductPMap4D` construit la somme directe d'opérateurs partiels
+sur deux Hilbert distincts, avec graphe et domaine produits exacts.
+`DiagonalProductAdjoint4D` calcule son adjoint et prouve son auto-adjonction
+lorsque les deux blocs sont auto-adjoints.
+
+`GhostBosonIsometry4D` reconstruit le champ L2 complet à partir des
+composantes fantôme et métrique–B. L'inverse est explicitement donné
+par les projections orthogonales P et Q, sans choix de nouvelles coordonnées.
+`DiffeomorphismHessianSum4D` assemble le bloc FP réel et le Hessien
+métrique–B avec masse. `DiffeomorphismHessianRealization4D` transporte
+leur somme auto-adjointe dans le Hilbert L2 complet ; son domaine est
+caractérisé par l'appartenance des deux projections aux domaines des blocs.
+
+`DiffeomorphismHessianExtension4D` établit les inclusions concrètes
+Hessien minimal ≤ réalisation auto-adjointe ≤ Hessien maximal.
+Sur le cœur lisse original, la réalisation agit exactement par
+`hessianSmoothRiesz` et son pairing est l'action polarisée BRST originale.
+Aucune égalité minimal = maximal ni hypothèse terminale d'intertwiner
+n'est introduite.
+
+L'assemblage fantôme/métrique–B annoncé précédemment est donc réalisé.
+Le raccord des colonnes physiques H11 à cette réalisation L2, le raccord
+abélien/LL, le quotient LL auxiliaire/mesure et le certificat global D9
+restent à terminer. T12 reste ouvert ; Quillen et T08 sont préservés.
+
+Validation : six gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 2178 Mo (somme directe),
+2187 Mo (adjoint), 3771 Mo (isométrie), 4052 Mo (somme réelle),
+3966 Mo (transport), 4136 Mo (raccord au cœur original).
+Audit des 34 déclarations et hub T12 verts, pics 3826 et 4010 Mo.
+Les conversions des isométries ont été rendues explicites sans augmenter
+les budgets. Axiomes : `propext`, `Classical.choice`, `Quot.sound` et
+l'axiome Stokes natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ou intertwiner terminal supposé.
+`git diff --check` OK ; fichiers externes préservés.
