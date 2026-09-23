@@ -2424,3 +2424,40 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
 natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ou intertwiner terminal supposé.
 Budgets inchangés ; `git diff --check` OK.
+
+### Adjoint H11 métrique et descente de la colonne L2 au quotient
+
+`DiffeomorphismH11AdjointMetric4D` prouve que toute sortie de l'adjoint
+H11 appartient au sous-espace métrique. Son graphe se caractérise
+exactement par cette condition et les tests transférés métriques ;
+les directions non métriques sont orthogonales à toutes ses sorties.
+
+`DiffeomorphismAugmentedL2Quotient4D` construit la colonne partielle
+à source L2 dense et à cible quotient commun fantômes/LL. Elle conserve
+la réalisation BRST auto-adjointe et toute la colonne physique H11.
+Sous les hypothèses déjà présentes de descente (`hZero`, `hMetric`,
+`hWeights`), sa valeur égale celle de `jointGhostLLRiesz` sur la source
+réduite originale. Deux représentants lisses de la même source réduite
+donnent donc exactement le même vecteur cible.
+
+`DiffeomorphismH11MetricBound4D` construit un représentant de Riesz
+métrique par prolongement des tests scalaires H11. L'appartenance au
+domaine de l'adjoint équivaut à l'existence, pour le test fixé, d'une
+borne de ces tests scalaires par la seule norme L2 du champ métrique.
+Lorsque cette borne est satisfaite, le représentant construit appartient
+au graphe de l'adjoint complet. Toutes les composantes physiques de
+sortie sont conservées dans le test scalaire.
+
+Cette estimation n'est pas encore prouvée sur un ensemble dense de
+tests communs : la fermabilité H11 reste ouverte. La descente construite
+ne confond pas le LL littéral avec la fibre de Friedrichs et ne ferme
+pas encore l'intertwining global D9. T12 reste ouvert ; Quillen, T08
+et les fichiers externes sont préservés.
+
+Validation : trois gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics des gates : 3985, 4004 et 4004 Mo.
+Audit des 16 déclarations et hub T12 verts, pics 3949 et 4011 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
+natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ou intertwiner terminal supposé.
+Budgets inchangés ; `git diff --check` OK.
