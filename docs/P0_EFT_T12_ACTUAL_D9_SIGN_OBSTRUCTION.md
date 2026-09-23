@@ -2670,3 +2670,31 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
 natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit`, hypothèse d'intertwiner terminal
 ou budget augmenté. `git diff --check` OK.
+### Transport exact des Hessiennes Maxwell sur le cœur apparié
+
+`AffineHessianPullback4D` prouve la règle de chaîne du second `fderiv`
+pour une action C2 composée avec une projection linéaire continue,
+une translation de fond et un facteur réel.
+
+`PairedMaxwellHessianPullback4D` construit les projections métrique–jauge
+plus et moins du cœur apparié. Les actions Maxwell effectivement utilisées
+sont exactement les actions natives translatées par leurs coefficients
+de fond. La reconstruction du potentiel restitue ces mêmes coefficients.
+Les deux Hessiennes pondérées au centre sont donc les Hessiennes natives
+appliquées aux deux directions projetées, pour des directions arbitraires.
+Aucune hypothèse de stationnarité, de borne ou d'intertwiner n'est ajoutée.
+
+Ce raccord atteint les blocs Maxwell sur le cœur métrique–jauge apparié.
+Le passage à la dérivée forte et au test scalaire H11 de l'action physique
+totale reste à établir, ainsi que les estimations métrique–métrique,
+la densité du domaine de l'adjoint, la fermabilité et le certificat global
+D9. T12 reste ouvert ; Quillen, T08 et les fichiers externes sont préservés.
+
+Validation : deux gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 1797 et 4170 Mo. Audit des dix
+déclarations et hub T12 verts, pics 3851 et 4243 Mo. Ces dix déclarations
+ne dépendent que de `propext`, `Classical.choice`, `Quot.sound`.
+Les égalités d'actions sont transportées par congruence explicite pour
+éviter le timeout de réécriture du Hessien ; aucun budget augmenté.
+Aucun nouvel axiome, `sorry`/`admit` ou hypothèse terminale.
+`git diff --check` OK.
