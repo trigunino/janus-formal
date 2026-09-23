@@ -2461,3 +2461,44 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et l'axiome Stokes
 natif préexistant `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ou intertwiner terminal supposé.
 Budgets inchangés ; `git diff --check` OK.
+
+### Équation de graphe et adjoint H11 sur le quotient commun
+
+`DiffeomorphismH11GraphBridge4D` identifie la colonne physique transposée
+comme la lecture difféomorphisme du Riesz physique complet. Le graphe de
+l'adjoint H11 se caractérise par l'équation exacte : l'adjoint de l'oubli
+graphe→L2 appliqué à la sortie égale cette colonne transposée du test.
+Son domaine, et la borne métrique précédente, correspondent exactement
+à l'appartenance de cette colonne à l'image de l'adjoint de l'oubli.
+
+`DiffeomorphismH11MatterLLTests4D` utilise l'annulation physique déjà
+compilée pour inclure tout le secteur matière–LL complété dans le
+domaine de l'adjoint, avec sortie nulle. Ajouter un tel test ne change
+ni le graphe de l'adjoint ni la validité de la borne métrique.
+Aucune nouvelle estimation ni hypothèse de flux nul n'est nécessaire.
+
+`ClosedRangeEquation4D` construit un opérateur partiel fermé à partir
+d'une équation entre deux applications continues, lorsque celle de
+sortie est injective. Aucune fermeture de son image n'est supposée.
+`DiffeomorphismH11QuotientAdjoint4D` applique cette construction à la
+colonne transposée, descendue par le sous-espace nul commun fantômes/LL.
+L'injectivité requise vient de la densité de l'oubli graphe→L2.
+Le graphe et le domaine de cet opérateur quotient fermé se relèvent
+exactement au graphe et au domaine de l'adjoint H11 original.
+Cette descente physique ne requiert pas `hZero`, `hMetric` ou `hWeights`.
+
+Il reste à prouver la densité du domaine de l'adjoint pour conclure à
+la fermabilité H11 sur L2 : les tests métriques et Maxwell ne sont pas
+couverts par l'annulation matière–LL. Le raccord global D9 et le
+certificat terminal restent ouverts ; T12 n'est pas coché.
+Quillen, T08 et les fichiers externes sont préservés.
+
+Validation : quatre gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 4302 Mo (équation de graphe),
+4281 Mo (tests matière–LL), 1928 Mo (construction générique),
+4402 Mo (adjoint quotient). Audit des 29 déclarations et hub T12 verts,
+pics 3944 et 4012 Mo. Axiomes des nouvelles déclarations : seulement
+`propext`, `Classical.choice`, `Quot.sound`.
+Les lemmes de translation évitent les timeouts par un calcul séparé,
+sans augmenter les budgets. Aucun nouvel axiome, `sorry`/`admit` ou
+intertwiner terminal supposé. `git diff --check` OK.
