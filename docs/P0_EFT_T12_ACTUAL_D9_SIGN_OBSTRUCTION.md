@@ -1645,3 +1645,45 @@ utilisant Stokes, la dépendance native préexistante :
 Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
 budget augmenté. `git diff --check` vert ; Quillen, T08 et les fichiers
 externes préservés.
+
+### Adjoint réel de Cartan et réalisation métrique appariée en coefficients L²
+
+`CanonicalFirstOrderColumn4D` (préfixe `P0EFTJanusProgramPT12`) construit
+les colonnes à coefficients lisses comportant deux dérivées de repère et
+un terme d'ordre zéro. Leurs adjoints concrets sont obtenus par Stokes,
+y compris les dérivées des coefficients pondérant le champ test.
+
+`RegularFrameCartanAdjoint4D` décompose exactement le Cartan intrinsèque
+L_c g en ces colonnes. Les coefficients de structure du repère non holonome
+sont conservés. Le pairing d'adjoint est prouvé pour tout fantôme lisse réel,
+via sa reconstruction dans un repère régulier fixé.
+
+`RegularFrameCartanClosed4D` travaille dans les Hilbert L² des quatre
+coefficients du fantôme et des seize coefficients du tenseur. Le pairing
+passe à la fermeture du graphe et exclut ses vecteurs verticaux non nuls.
+Il fournit donc un opérateur de Cartan fermé à domaine dense, avec l'action
+intrinsèque exacte sur les coefficients lisses, pour tout tenseur symétrique
+lisse fixé, notamment chaque métrique physique.
+
+`PairedRegularFrameCartan4D` impose simultanément les deux conditions de
+graphe fermé avec un unique fantôme en entrée. Le domaine commun est dense
+et l'opérateur apparié fermé. Sa sortie lisse est exactement celle de
+`globalCandidateADiagonalDiffeomorphismGaugeGeneratorLinearMap`, secteur
+par secteur. Aucun second triplet ni poids cinétique de remplacement.
+
+Cette réalisation utilise les coefficients du repère régulier : le transport
+borné vers les anciennes coordonnées L² normalisées reste à prouver.
+Le domaine apparié est l'intersection des deux domaines minimaux ; aucun
+cœur d'opérateur commun ni égalité avec la fermeture du graphe lisse apparié
+n'est revendiqué ici. Le Hessien BRST/H11, les égalités d'extensions
+abélienne/LL et le raccord D9 restent ouverts ; T12 n'est pas coché.
+
+Validation : quatre gates, hub et audit des 40 déclarations nommées verts
+sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 3909, 3855, 3864, 4101 Mo ; hub 4004 Mo ; audit 3806 Mo.
+L'audit donne `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance
+native Stokes préexistante pour les résultats qui l'utilisent :
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`, `admit`, hypothèse terminale d'intertwiner ou
+budget augmenté. `git diff --check` vert ; Quillen, T08 et les fichiers
+externes préservés.
