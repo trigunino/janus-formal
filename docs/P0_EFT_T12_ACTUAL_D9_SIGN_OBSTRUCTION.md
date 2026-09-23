@@ -2165,9 +2165,8 @@ de l'opérateur. `WeightedFPBlock4D` transporte ainsi ce bloc sur la paire
 fantôme réelle ; son auto-adjonction, son graphe transporté exact et son
 graphe lisse sont validés.
 
-Reste à prouver le raccord complet de ce bloc au Hessien fantôme réduit
-précédent, notamment l'annulation des colonnes diagonales et l'égalité
-sur tout le cœur projeté. L'égalité minimal = maximal n'est pas affirmée.
+Le raccord de ce bloc au Hessien fantôme réduit est établi ci-dessous.
+L'égalité minimal = maximal n'est pas affirmée.
 Restent aussi le bloc métrique–B, les colonnes H11, les extensions
 abélienne/LL et le raccord global D9. T12 reste ouvert ; Quillen et T08
 sont préservés.
@@ -2184,3 +2183,34 @@ hypothèse terminale d'intertwiner ni budget augmenté.
 Le bloc a été scindé après arrêt du garde mémoire ; les instances
 hilbertiennes explicites et les attributs locaux `irreducible` évitent
 les dépliages coûteux. `git diff --check` OK.
+
+### Raccord du bloc FP au Hessien fantôme réel
+
+`HessianGhostDiagonal4D` annule les deux colonnes diagonales du Hessien :
+les pairings fantôme–fantôme et antifantôme–antifantôme sont nuls,
+puis la densité lisse annule les projections E00 R E0j et E11 R E1j.
+
+`WeightedFPActualCore4D` combine ces annulations avec la commutation
+au projecteur fantôme. Les sorties R E0j et R E1j sont respectivement
+antifantômes et fantômes. L'isométrie d'assemblage reconstitue alors
+exactement l'entrée et le Riesz initiaux, pour tout champ du cœur
+projeté. Le graphe lisse réel appartient au bloc FP auto-adjoint.
+
+`WeightedFPExtension4D` passe à la fermeture de ce graphe et prouve :
+Hessien fantôme minimal ≤ bloc FP réel auto-adjoint ≤ Hessien fantôme
+maximal. Il s'agit d'inclusions d'opérateurs avec leurs domaines,
+pas seulement d'une égalité de pairings. Aucun intertwiner supposé.
+
+L'égalité minimal = maximal et le caractère de cœur lisse pour tout le
+bloc auto-adjoint ne sont pas affirmés. Restent notamment le secteur
+métrique–B, les colonnes H11, les extensions abélienne/LL, le quotient
+LL auxiliaire/mesure et le certificat global D9. T12 reste ouvert.
+
+Validation : trois gates, audit des 15 déclarations et hub T12 verts, sous
+`run_lean_guarded`, un seul Lean, priorité haute, réserve 4096 Mo.
+Pics : 3910 Mo (diagonales), 3912 Mo (raccord lisse), 3909 Mo
+(extension), 3824 Mo (audit), 4011 Mo (hub). Axiomes : `propext`, `Classical.choice`,
+`Quot.sound` et l'axiome natif Stokes préexistant
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté. Quillen et T08
+préservés. Import du hub remplacé par la nouvelle gate terminale locale.
