@@ -97,5 +97,32 @@ theorem projectedCore_hasCore (hDense : DenseRange samples) :
         (projectedCore_mem_domain operator hClosed samples) (projectedCore_apply operator hClosed samples)]
     exact projectedGraphSamples_closure operator hClosed samples hDense
 
+theorem projectedCore_adjoint_graph_iff (hDense : DenseRange samples)
+    (hDomain : Dense (operator.domain : Set H)) (input output : H) :
+    (input, output) ∈ operator.adjoint.graph ↔
+    ∀ test, inner Real (projectedCoreOutput operator hClosed samples test) input =
+      inner Real (projectedCoreInput operator hClosed samples test) output := by
+  rw [LinearPMap.adjoint_graph_eq_graph_adjoint hDomain, Submodule.mem_adjoint_iff]
+  constructor
+  · intro h test
+    exact sub_eq_zero.mp (h _ _ (closedGraphProjection_mem operator hClosed (samples test)))
+  · intro h first second hGraph
+    rw [← projectedGraphSamples_closure operator hClosed samples hDense] at hGraph
+    have hClosedPair : IsClosed {pair : H × H |
+        inner Real pair.2 input = inner Real pair.1 output} := by
+      apply isClosed_eq <;> fun_prop
+    exact sub_eq_zero.mpr (closure_minimal
+      (by rintro pair ⟨test, rfl⟩; exact h test) hClosedPair hGraph)
+
+/-- Tests on the projected family determine the full self-adjoint graph. -/
+theorem projectedCore_selfAdjoint_graph_iff (hDense : DenseRange samples)
+    (hDomain : Dense (operator.domain : Set H)) (hSelf : IsSelfAdjoint operator)
+    (input output : H) :
+    (input, output) ∈ operator.graph ↔
+    ∀ test, inner Real (projectedCoreOutput operator hClosed samples test) input =
+      inner Real (projectedCoreInput operator hClosed samples test) output := by
+  have h := projectedCore_adjoint_graph_iff operator hClosed samples hDense hDomain input output
+  rwa [LinearPMap.isSelfAdjoint_def.mp hSelf] at h
+
 end
 end JanusFormal.P0EFTJanusProgramPT12ProjectedGraphCore4D

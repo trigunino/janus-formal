@@ -180,6 +180,42 @@ theorem abelianPolynomialSelfAdjointCore_apply (coefficients : PolynomialGhostGr
         (polynomialGhostGraphSamples period hPeriod) coefficients :=
   projectedCore_apply _ _ _ coefficients
 
+/-- Exact weak characterization of the actual graph, including nonsmooth domain elements. -/
+theorem abelianPolynomialSelfAdjointCore_graph_iff
+    (input output : CandidateAAbelianGhostL2 period hPeriod) :
+    (input, output) ∈ (candidateAAbelianGhostOperator period hPeriod data).graph ↔
+    ∀ coefficients : PolynomialGhostGraphCoefficients period,
+      inner Real (projectedCoreOutput (candidateAAbelianGhostOperator period hPeriod data)
+        (candidateAAbelianGhostOperator_isClosed period hPeriod data)
+        (polynomialGhostGraphSamples period hPeriod) coefficients) input =
+      inner Real (projectedCoreInput (candidateAAbelianGhostOperator period hPeriod data)
+        (candidateAAbelianGhostOperator_isClosed period hPeriod data)
+        (polynomialGhostGraphSamples period hPeriod) coefficients) output :=
+  projectedCore_selfAdjoint_graph_iff _ _ _
+    (polynomialGhostGraphSamples_denseRange period hPeriod)
+    (candidateAAbelianGhostOperator_dense_domain period hPeriod data)
+    (candidateAAbelianGhostOperator_selfAdjoint period hPeriod data) input output
+
+theorem abelianPolynomialSelfAdjointCore_domain_iff
+    (input : CandidateAAbelianGhostL2 period hPeriod) :
+    input ∈ (candidateAAbelianGhostOperator period hPeriod data).domain ↔
+    ∃ output, ∀ coefficients : PolynomialGhostGraphCoefficients period,
+      inner Real (projectedCoreOutput (candidateAAbelianGhostOperator period hPeriod data)
+        (candidateAAbelianGhostOperator_isClosed period hPeriod data)
+        (polynomialGhostGraphSamples period hPeriod) coefficients) input =
+      inner Real (projectedCoreInput (candidateAAbelianGhostOperator period hPeriod data)
+        (candidateAAbelianGhostOperator_isClosed period hPeriod data)
+        (polynomialGhostGraphSamples period hPeriod) coefficients) output := by
+  constructor
+  · intro hInput
+    exact ⟨_, (abelianPolynomialSelfAdjointCore_graph_iff period hPeriod data _ _).mp
+      ((candidateAAbelianGhostOperator period hPeriod data).mem_graph ⟨input, hInput⟩)⟩
+  · rintro ⟨output, hPair⟩
+    obtain ⟨vector, hInput, _⟩ := (LinearPMap.mem_graph_iff _).mp
+      ((abelianPolynomialSelfAdjointCore_graph_iff period hPeriod data input output).mpr hPair)
+    change (vector : CandidateAAbelianGhostL2 period hPeriod) = input at hInput
+    exact hInput ▸ vector.property
+
 end
 end P0EFTJanusProgramPT12AbelianPolynomialProjectedCore4D
 end JanusFormal
