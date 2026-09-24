@@ -1,4 +1,5 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12AbelianConstantAugmentedKernel4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NullQuotientObservation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedNullPMapSelfAdjoint4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NullQuotientFredholm4D
 
@@ -403,6 +404,73 @@ theorem abelianConstantPairReducedOperator_fredholm_of_estimate
   P0EFTJanusProgramPT12FiniteObservationEstimate4D.selfAdjoint_fredholm_of_finite_observation _
     (abelianConstantPairReducedOperator_selfAdjoint period hPeriod configuration data analysis realization
       plusBase minusBase hBase hCenter physical) observation C hEstimate
+
+/-- Canonical observation valued in the actual eight-dimensional null space. -/
+def abelianConstantPairObservation : CandidateAAbelianMixedHilbert period hPeriod data →L[Real]
+    abelianConstantPairNullSpace period hPeriod configuration data :=
+  (abelianConstantPairNullSpace period hPeriod configuration data).orthogonalProjectionOnto
+
+theorem abelianConstantPairObservation_norm_le (u : CandidateAAbelianMixedHilbert period hPeriod data) :
+    ‖abelianConstantPairObservation period hPeriod configuration data u‖ ≤ ‖u‖ :=
+  (abelianConstantPairNullSpace period hPeriod configuration data).norm_orthogonalProjectionOnto_apply_le u
+
+theorem abelianConstantPairObservation_norm_of_mem
+    (u : abelianConstantPairNullSpace period hPeriod configuration data) :
+    ‖abelianConstantPairObservation period hPeriod configuration data u.val‖ = ‖u.val‖ :=
+  (abelianConstantPairNullSpace period hPeriod configuration data).norm_orthogonalProjectionOnto_apply u.property
+
+theorem abelianConstantPairObservation_norm_decomposition
+    (u : CandidateAAbelianMixedHilbert period hPeriod data) :
+    ‖u‖ ^ 2 = ‖(abelianConstantPairNullSpace period hPeriod configuration data).mkQ u‖ ^ 2 +
+      ‖abelianConstantPairObservation period hPeriod configuration data u‖ ^ 2 :=
+  P0EFTJanusProgramPT12NullQuotientObservation4D.norm_sq_eq_quotient_add_observation _ u
+
+/-- The full actual output has no component in the observed null modes. -/
+theorem abelianConstantPairObservation_output_zero
+    (u : (candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical).domain) :
+    abelianConstantPairObservation period hPeriod configuration data
+      (candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+        plusBase minusBase hBase hCenter physical u) = 0 :=
+  (abelianConstantPairNullSpace period hPeriod configuration data).orthogonalProjectionOnto_eq_zero_iff.mpr
+    (output_mem_orthogonal _ _
+      (augmented_symmetric period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical)
+      (abelianConstantPairNullSpace_graph period hPeriod configuration data analysis realization
+        plusBase minusBase hBase hCenter physical) u)
+
+/-- Append finite observations of any remaining null modes; the eight known modes are already covered. -/
+def abelianLiftedObservation {F : Type*} [NormedAddCommGroup F] [NormedSpace Real F]
+    (observation : (CandidateAAbelianMixedHilbert period hPeriod data ⧸
+      abelianConstantPairNullSpace period hPeriod configuration data) →L[Real] F) :
+    CandidateAAbelianMixedHilbert period hPeriod data →L[Real]
+      (abelianConstantPairNullSpace period hPeriod configuration data) × F :=
+  P0EFTJanusProgramPT12NullQuotientObservation4D.liftedObservation _ observation
+
+theorem abelianLiftedObservation_dimension {F : Type*}
+    [NormedAddCommGroup F] [NormedSpace Real F] [FiniteDimensional Real F] :
+    Module.finrank Real ((abelianConstantPairNullSpace period hPeriod configuration data) × F) =
+      8 + Module.finrank Real F := by
+  rw [Module.finrank_prod, abelianConstantPairNullSpace_finrank]
+
+theorem abelianConstantPairReduced_estimate_lifts
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace Real F]
+    (observation : (CandidateAAbelianMixedHilbert period hPeriod data ⧸
+      abelianConstantPairNullSpace period hPeriod configuration data) →L[Real] F) (C : NNReal)
+    (hEstimate : ∀ u : (abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+        plusBase minusBase hBase hCenter physical).domain,
+      ‖u.val‖ ≤ C *
+        (‖abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+          plusBase minusBase hBase hCenter physical u‖ + ‖observation u.val‖))
+    (u : (candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical).domain) :
+    ‖u.val‖ ≤ (C + 1 : NNReal) *
+      (‖candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+          plusBase minusBase hBase hCenter physical u‖ +
+        ‖abelianLiftedObservation period hPeriod configuration data observation u.val‖) :=
+  P0EFTJanusProgramPT12NullQuotientObservation4D.quotient_estimate_lifts _ _
+    (augmented_symmetric period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical)
+    (abelianConstantPairNullSpace_graph period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical) observation C hEstimate u
 
 end
 end
