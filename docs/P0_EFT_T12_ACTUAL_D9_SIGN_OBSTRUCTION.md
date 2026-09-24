@@ -3986,3 +3986,37 @@ Audit des cinq déclarations : vert, pic 3848 Mo ; dépendances limitées à
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Import du résultat dans le hub T12 : vert, pic 4029 Mo.
 Git diff --check OK.
+
+### 2026-09-24 — borne globale H1 de la correction FP
+
+`FPIntrinsicFirstOrder4D` construit l'onde scalaire et le gradient relevé
+pour la métrique réellement fournie. La formule locale de la correction
+d'adjoint est identifiée au différentiel intrinsèque :
+
+    (P*_can - P)c = r [P(r^(-1)) c + 2 dc(sharp_g d(r^(-1)))].
+
+`CanonicalDirectionalH1L24D` construit le dérivateur directionnel borné
+H1 -> L2, à partir des dix générateurs canoniques et de leurs coefficients
+lisses. L'accord avec le différentiel intrinsèque est prouvé sur le cœur
+lisse. H1 désigne ici la complétion du premier jet du repère à dix flux.
+
+`FPVolumeH1Bound4D` assemble les multiplicateurs lisses et ce dérivateur.
+Le prolongement C_g : H1 -> L2 est continu, et son action sur chaque
+composante d'un ghost lisse est exactement P*_can - P. En particulier,
+
+    ||(P*_can - P)c||_L2 <= ||C_g|| ||c||_H1.
+
+Aucune hypothèse de gap ou d'image fermée n'entre dans cette construction.
+Cette borne H1 ne constitue pas une borne en norme de graphe du FP et
+n'identifie pas les domaines minimal et adjoint complet. L'image fermée
+du FP et la finitude du noyau adjoint restent à prouver ; T12 reste ouvert.
+
+Validation : trois modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 3847, 3695 et 3881 Mo.
+Audit des vingt déclarations : vert, pic 3698 Mo. Les sept déclarations
+intrinsèques utilisent seulement `propext`, `Classical.choice`, `Quot.sound`.
+Les treize déclarations utilisant le repère canonique héritent aussi de
+l'axiome IPP préexistant
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert, pic 4029 Mo ; git diff --check OK. Quillen et T08 inchangés.
