@@ -3834,3 +3834,30 @@ conservent la dépendance IPP préexistante
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert (pic 4029 Mo) ; git diff --check OK.
+
+### 2026-09-24 — une seule condition de noyau pour le BRST abélien réel
+
+`CandidateAFPVolumeGraph4D` construit l'injection linéaire concrète
+ker(FP_min) -> ker(FP_min-adjoint), donnée par la multiplication par la
+densité de volume réelle. La preuve compose la conjugaison du graphe minimal
+formel avec son inclusion dans l'adjoint complet. Elle n'identifie pas ces
+deux domaines et ne suppose aucune approximation supplémentaire.
+
+La finitude du noyau adjoint entraîne donc celle du noyau minimal.
+`CandidateAAbelianGhostSelfAdjoint4D` réduit exactement le critère Fredholm
+à deux conditions : image fermée du FP minimal et noyau de son adjoint fini.
+La même simplification est disponible pour les défauts normaux bornés.
+`CandidateAAbelianMixedAugmented4D` la transporte au bloc abélien réel avec
+H11 : les conditions propres au facteur potentiel--B restent présentes.
+
+Cette étape retire une obligation indépendante ; elle ne prouve encore ni
+l'image fermée du FP ni la finitude du noyau adjoint. T12 reste ouvert.
+Quillen et T08 inchangés ; aucun domaine minimal=maximal supposé.
+
+Validation : trois modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 3935, 4012 et 4275 Mo.
+Audit des sept nouvelles déclarations : vert, pic 3933 Mo ; dépendances
+`propext`, `Classical.choice`, `Quot.sound` et IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
