@@ -2,6 +2,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedFeatureOperator4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GraphClosureEstimate4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NormalGraphResolvent4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12MinimalNormInverse4D
 
 /-! The actual Candidate-A FP as a minimal closed operator in canonical L2. -/
 namespace JanusFormal
@@ -214,6 +215,39 @@ theorem candidateAFPNormalResolvent_fixed_iff_null (u : GlobalPairedGaugeLieL2 p
     candidateAFPNormalResolvent period hPeriod data u = u ↔
       (u, 0) ∈ (candidateAFPCanonicalMinimal period hPeriod data).graph :=
   normalResolvent_fixed_iff_null _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data) u
+
+open P0EFTJanusProgramPT12MinimalNormInverse4D
+
+/-- The actual unshifted FP inverse on its range, with minimum-norm output. -/
+def candidateAFPMinimalInverse :
+    GlobalPairedGaugeLieL2 period hPeriod →ₗ.[Real] GlobalPairedGaugeLieL2 period hPeriod :=
+  minimalNormInverse (candidateAFPCanonicalMinimal period hPeriod data)
+
+theorem candidateAFPMinimalInverse_isClosed :
+    (candidateAFPMinimalInverse period hPeriod data).IsClosed :=
+  minimalNormInverse_isClosed _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+
+theorem candidateAFPMinimalInverse_domain :
+    (candidateAFPMinimalInverse period hPeriod data).domain =
+      LinearMap.range (candidateAFPCanonicalMinimal period hPeriod data).toFun :=
+  minimalNormInverse_domain _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+
+theorem candidateAFPMinimalInverse_solves
+    (rhs : (candidateAFPMinimalInverse period hPeriod data).domain) :
+    ∃ u : (candidateAFPCanonicalMinimal period hPeriod data).domain,
+      candidateAFPCanonicalMinimal period hPeriod data u = rhs.val ∧
+      u.val = candidateAFPMinimalInverse period hPeriod data rhs ∧
+      ∀ v : (candidateAFPCanonicalMinimal period hPeriod data).domain,
+        candidateAFPCanonicalMinimal period hPeriod data v = rhs.val → ‖u.val‖ ≤ ‖v.val‖ := by
+  have hGraph := (minimalNormInverse_solves (candidateAFPCanonicalMinimal period hPeriod data) rhs).1
+  let u : (candidateAFPCanonicalMinimal period hPeriod data).domain :=
+    ⟨candidateAFPMinimalInverse period hPeriod data rhs, LinearPMap.mem_domain_of_mem_graph hGraph⟩
+  refine ⟨u, ?_, rfl, ?_⟩
+  · exact (candidateAFPCanonicalMinimal period hPeriod data).mem_graph_snd_inj
+      ((candidateAFPCanonicalMinimal period hPeriod data).mem_graph u) hGraph rfl
+  · intro v hv
+    exact minimalNormInverse_norm_le_solution _
+      (candidateAFPCanonicalMinimal_isClosed period hPeriod data) rhs v hv
 
 end
 end P0EFTJanusProgramPT12CandidateAFPCanonicalClosed4D
