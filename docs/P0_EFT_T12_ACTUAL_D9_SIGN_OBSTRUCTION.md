@@ -3347,3 +3347,28 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
+
+## 2026-09-24 — Cœur lisse après les deux réductions BRST
+
+`ClosedColumnSourceCore4D` prouve que le quotient par un sous-espace source
+nul conserve la fermeture du graphe lisse et son cœur. L'inclusion lisse
+n'a pas besoin d'être injective, ce qui est nécessaire après annulation
+des classes fantômes.
+
+`DiffeomorphismAugmentedReducedCore4D` identifie le graphe BRST + H11 réduit
+des deux côtés à la fermeture du graphe lisse original projeté. Les classes
+lisses constituent un véritable cœur de l'opérateur fermé. La restriction
+à ce cœur est densément définie et fermable ; sa fermeture redonne exactement
+la réalisation réduite, avec le même adjoint Hilbert.
+
+Les conditions restent `hZero`, `hMetric`, `hWeights` et la mesure canonique.
+Aucune nouvelle extension ni hypothèse d'intertwining n'est introduite.
+L'accord modal signé et le certificat global T12 restent ouverts.
+
+Validation : deux modules, audit des 12 déclarations et hub T12 verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des modules : 1925 et 4306 Mo ; audit : 3816 Mo ; hub : 4026 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
