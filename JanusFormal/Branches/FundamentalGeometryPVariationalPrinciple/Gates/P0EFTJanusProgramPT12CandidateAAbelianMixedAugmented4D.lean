@@ -7,6 +7,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12AbelianGhostSmoothRotation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12AbelianLorenzShearPhysical4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ProductFirstPerturbation4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ProductFredholm4D
 
 /-! All H11 output sectors are retained by the continuous mixed abelian column. -/
 namespace JanusFormal
@@ -248,16 +249,25 @@ theorem candidateAAbelianMixedPhysicalLift_pureGhost_zero
     (abelianPotentialGraphInclusion period hPeriod (globalCandidateAMetricBySector period hPeriod data) 0) = 0
   simp only [map_zero]
 
+theorem candidateAAbelianMixedPhysicalColumn_pureGhost_zero
+    (ghost : CandidateAAbelianGhostL2 period hPeriod) :
+    candidateAAbelianMixedPhysicalColumn period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical (WithLp.toLp 2 (0, ghost)) = 0 := by
+  change strongPhysicalRiesz (measure := measure) period hPeriod configuration data analysis realization
+    plusBase minusBase hBase hCenter physical
+    (candidateAAbelianMixedPhysicalLift period hPeriod configuration data analysis (WithLp.toLp 2 (0, ghost))) = 0
+  rw [candidateAAbelianMixedPhysicalLift_pureGhost_zero, map_zero]
+
 /-- Every completed ghost vector has zero H11 column, not merely the constant modes. -/
 theorem candidateAAbelianMixedH11_pureGhost_zero
     (ghost : CandidateAAbelianGhostL2 period hPeriod) :
     candidateAAbelianMixedH11 period hPeriod configuration data analysis realization
       plusBase minusBase hBase hCenter physical (WithLp.toLp 2 (0, ghost)) = 0 := by
   change (candidateAAbelianMixedPhysicalLift period hPeriod configuration data analysis).adjoint
-    (strongPhysicalRiesz (measure := measure) period hPeriod configuration data analysis realization
+    (candidateAAbelianMixedPhysicalColumn period hPeriod configuration data analysis realization
       plusBase minusBase hBase hCenter physical
-      (candidateAAbelianMixedPhysicalLift period hPeriod configuration data analysis (WithLp.toLp 2 (0, ghost)))) = 0
-  rw [candidateAAbelianMixedPhysicalLift_pureGhost_zero, map_zero, map_zero]
+      (WithLp.toLp 2 (0, ghost))) = 0
+  rw [candidateAAbelianMixedPhysicalColumn_pureGhost_zero, map_zero]
 
 abbrev CandidateAAbelianPotentialBHilbert := WithLp 2
   (GlobalPairedAbelianLorenzGraphHilbert period hPeriod (globalCandidateAMetricBySector period hPeriod data) ×
@@ -296,6 +306,27 @@ theorem candidateAAbelianMixedAugmentedOperator_eq_product :
       plusBase minusBase hBase hCenter physical)
     (candidateAAbelianMixedH11_pureGhost_zero period hPeriod configuration data analysis realization
       plusBase minusBase hBase hCenter physical) _ _
+
+/-- The real abelian Fredholm problem separates into its two actual factors. -/
+theorem candidateAAbelianMixedAugmentedOperator_fredholm_iff_factors :
+    let full := candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    let potentialB := candidateAAbelianPotentialBHessian period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    let ghost := candidateAAbelianGhostOperator period hPeriod data
+    (IsClosed (LinearMap.range full.toFun : Set (CandidateAAbelianMixedHilbert period hPeriod data)) ∧
+      FiniteDimensional Real (LinearMap.ker full.toFun) ∧
+      FiniteDimensional Real (CandidateAAbelianMixedHilbert period hPeriod data ⧸ LinearMap.range full.toFun)) ↔
+    ((IsClosed (LinearMap.range potentialB.toFun : Set (CandidateAAbelianPotentialBHilbert period hPeriod configuration data)) ∧
+      FiniteDimensional Real (LinearMap.ker potentialB.toFun)) ∧
+     (IsClosed (LinearMap.range ghost.toFun : Set (CandidateAAbelianGhostL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker ghost.toFun))) := by
+  dsimp only
+  rw [candidateAAbelianMixedAugmentedOperator_eq_product]
+  exact P0EFTJanusProgramPT12ProductFredholm4D.productOperator_fredholm_iff _ _
+    (candidateAAbelianPotentialBHessian_selfAdjoint period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical)
+    (candidateAAbelianGhostOperator_selfAdjoint period hPeriod data)
 
 end
 end
