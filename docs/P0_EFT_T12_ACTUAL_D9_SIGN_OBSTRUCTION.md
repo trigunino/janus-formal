@@ -3954,3 +3954,35 @@ conservent la dépendance IPP préexistante
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
+
+### 2026-09-24 — correction géométrique de volume du FP
+
+`FPSmoothWeightProduct4D` prouve, pour toute métrique réellement fournie,
+tout poids scalaire lisse w et chaque composante ghost c, la formule locale
+
+    P(w c) = w P(c) + c □_g w + 2 g^(-1)(dw, dc),  P = delta_g d.
+
+La preuve compose l'identification géométrique du FP avec l'onde scalaire
+et la règle de produit des jets covariants ; aucun symbole diagonal n'est
+postulé. La formule vaut dans toute carte holonome admise.
+
+`FPVolumeFirstOrder4D` applique cette identité au rapport de volume r :
+sur les ghosts lisses, l'adjoint formel canonique satisfait
+
+    P*_can(c) = P(c) + r [c □_g(r^(-1)) + 2 g^(-1)(d(r^(-1)), dc)].
+
+La correction est définie explicitement, et son égalité pour deux ghosts
+ayant la même valeur et le même gradient local est prouvée. Elle ne dépend
+donc d'aucune dérivée seconde du ghost. Cela identifie les termes d'ordre
+inférieur réels sans supposer l'égalité des domaines minimal et maximal.
+
+Ces identités ne prouvent ni l'image fermée du FP ni la finitude du noyau
+adjoint. T12 reste ouvert ; Quillen et T08 inchangés.
+
+Validation : deux modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 3977 et 3863 Mo.
+Audit des cinq déclarations : vert, pic 3848 Mo ; dépendances limitées à
+`propext`, `Classical.choice`, `Quot.sound`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Import du résultat dans le hub T12 : vert, pic 4029 Mo.
+Git diff --check OK.
