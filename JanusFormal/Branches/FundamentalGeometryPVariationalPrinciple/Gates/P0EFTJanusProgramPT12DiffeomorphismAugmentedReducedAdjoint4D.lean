@@ -1,0 +1,302 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedColumnSourceAdjoint4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismAugmentedReducedCore4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12RectangularDoubleAdjoint4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedColumnSourceQuotient4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismAugmentedGhostL2Null4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismAugmentedQuotientMinimal4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismAugmentedMinimal4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedColumnTargetQuotient4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismAugmentedAdjointDensity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismAugmentedL2Core4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismH11AdjointDensity4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DenseAdjointMinimalClosure4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismCommonL2Column4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismH11Core4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismGraphRieszBridge4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismH11Smooth4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12InjectiveSmoothColumn4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismH11MetricDependence4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAAbelianMixedPhysical4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12JointQuotientDiffeomorphismSmoothPairing4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismMetricSmooth4D
+
+/-! Exact adjoint transport and double adjunction for the two-sided reduced actual BRST column. -/
+namespace JanusFormal
+namespace P0EFTJanusProgramPT12DiffeomorphismAugmentedReducedAdjoint4D
+set_option autoImplicit false
+
+set_option maxHeartbeats 800000
+set_option synthInstance.maxHeartbeats 600000
+noncomputable section
+
+open Set MeasureTheory
+open scoped ENNReal lp Manifold ContDiff InnerProductSpace
+open P0EFTJanusMappingTorusQuotient
+open P0EFTJanusMappingTorusSmoothAtlasFrontier
+open P0EFTJanusMappingTorusSmoothQuotientManifold
+open P0EFTJanusMappingTorusGeneralLorentzTensor4D
+open P0EFTJanusMappingTorusGeneralScalarFunctionalAction4D
+open P0EFTJanusProgramPGlobalFieldSpace4D
+open P0EFTJanusProgramPGlobalTypedNonminimalFieldSpace4D
+open P0EFTJanusProgramPGlobalCovariantAction4D
+open P0EFTJanusProgramPGlobalAnalysisDomain4D
+open P0EFTJanusProgramPGlobalCandidateABulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalLocalVariationalChart4D
+open P0EFTJanusProgramPGlobalAbelianBRSTOffShellGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianGaugeFixedAction4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianExtendedBulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateAAbelianExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalDiffeomorphismBRSTOffShellGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkGraphC2Chart4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalCovariantHessianResidualBridge4D
+open P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D
+open P0EFTJanusProgramPGlobalMetricTangentIntrinsicEmbedding4D
+open P0EFTJanusProgramPGlobalCandidateACanonicalStablePerturbation4D
+open P0EFTJanusProgramPGlobalCandidateACommonAugmentedAnalyticDomain4D
+open P0EFTJanusProgramPGlobalCandidateAMatterLLSameActionClosure4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalGraphProjections4D
+open P0EFTJanusProgramPGlobalFullLLGraphRiesz4D
+open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedLorentzChartCenter4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalLocalActionFamilyCenter4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalAdmissibleLocalActionFamily4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalLLC0FirstJetProjection4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongComponentPDEBlockPairing4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLLWeakFirstVariation4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongLocalEuler4D
+open P0EFTJanusProgramPRegularGeneralMetricC2PairedMinimalPhysicalStrongSpinCTotalEuler4D
+open P0EFTJanusProgramPT12GaugeFixedLLFriedrichsPhysicalRieszTransport4D
+open P0EFTJanusProgramPT12LLCanonicalH1ClosedDomain4D
+open P0EFTJanusProgramPT12LLCanonicalH1L2Bridge4D
+open P0EFTJanusProgramPT12StrongLLPhysicalMixedHessianZero4D
+open P0EFTJanusProgramPT12StrongMatterLLSameActionBridge4D
+open P0EFTJanusProgramPT12StrongPhysicalSecondJet4D
+open P0EFTJanusProgramPT12StrongToH11PhysicalSecondJet4D
+open P0EFTJanusMappingTorusCanonicalDivergenceFreeLLFrame4D
+
+attribute [local instance]
+  GlobalCandidateALocalVariationalChart.normedAddCommGroup
+  GlobalCandidateALocalVariationalChart.normedSpace
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2DiffeomorphismNormedAddCommGroup
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2DiffeomorphismInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2AbelianInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2MatterInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2MatterCompleteSpace
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2LLInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2LLCompleteSpace
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkNormedAddCommGroup
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkInnerProductSpace
+  P0EFTJanusProgramPGlobalCandidateADiagonalExtendedBulkL2Riesz4D.diagonalL2ExtendedBulkCompleteSpace
+  P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D.programPPrimitiveSpinCMatterHilbertRealInnerProductSpace
+
+variable (period : Real) (hPeriod : period ≠ 0)
+
+private abbrev EffectiveQuotient :=
+  MappingTorus (reflectedSphereData period hPeriod)
+
+local instance : ChartedSpace CoverModel (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotientChartedSpace period hPeriod
+
+local instance : IsManifold coverModelWithCorners ω
+    (EffectiveQuotient period hPeriod) :=
+  reflectedSphereQuotient_isManifold period hPeriod
+
+local instance : MeasurableSpace (EffectiveQuotient period hPeriod) := borel _
+
+local instance : BorelSpace (EffectiveQuotient period hPeriod) where
+  measurable_eq := rfl
+
+section
+
+variable {couplings : GlobalCandidateAActionCouplings}
+variable {NonNullFace NullFace : Type*}
+variable [Fintype NonNullFace] [Fintype NullFace]
+open P0EFTJanusMappingTorusCanonicalLorentzVolumeGluing4D
+variable (configuration : GlobalGaugeFixedFieldConfiguration period hPeriod)
+variable (data : GlobalCandidateAActionData period hPeriod
+  configuration.physical couplings NonNullFace NullFace)
+variable (analysis : GlobalAnalysisData period hPeriod configuration.physical)
+
+set_option backward.isDefEq.respectTransparency false
+open P0EFTJanusProgramPT12StrongCompletedMatterLLPhysicalRieszZero4D
+open P0EFTJanusProgramPT12LLQuotientFriedrichsRealization4D
+open P0EFTJanusProgramPT12LLQuotientFriedrichsSmoothPairing4D
+open P0EFTJanusProgramPT12LLFullJacobiHilbertQuotient4D
+
+open P0EFTJanusProgramPT12StrongFullLLQuotientColumn4D
+open P0EFTJanusProgramPGlobalLLAuxMeasureGraphRiesz4D
+open P0EFTJanusProgramPT12LLFullJacobiZeroFluxKernel4D
+open P0EFTJanusProgramPT12DiagonalGhostHilbertQuotient4D
+open P0EFTJanusProgramPCandidateADiagonalDiffeomorphismKineticAdjointBridge4D
+
+open P0EFTJanusProgramPT12StrongGhostLLNullSpace4D
+open P0EFTJanusProgramPT12ClosedNullQuotient4D
+open P0EFTJanusProgramPGlobalCandidateAMinimalPhysicalLocalHessianBridge4D
+
+open P0EFTJanusProgramPT12StrongGhostLLHilbertQuotient4D
+open P0EFTJanusProgramPT12JointQuotientAbelianFactor4D
+open P0EFTJanusProgramPT12SignedBRSTAugmentedPairing4D
+open P0EFTJanusProgramPT12AbelianSignedBRSTRealization4D
+open P0EFTJanusProgramPT12DiffeomorphismSignedBRSTRealization4D
+local instance : IsFiniteMeasure (intrinsicCanonicalLorentzVolumeMeasure period hPeriod) :=
+  intrinsicCanonicalLorentzVolumeMeasure_isFinite period hPeriod
+variable (realization : ProgramPPrimitiveSpinCMatterSmoothGraphRealization4D
+  period hPeriod couplings.matterMassSquared)
+variable (plusBase minusBase : RegularGeneralLorentzMetric period hPeriod)
+variable (hBase : RegularGeneralMetricC2PairedLorentzChartBaseCompatible
+  period hPeriod plusBase minusBase)
+variable (hCenter : RegularGeneralMetricC2PairedMinimalPhysicalCenterCompatible
+  period hPeriod configuration.physical plusBase minusBase hBase)
+
+variable (physical : GlobalCandidateASevenPhysicalCommonDomainExtension4D
+  period hPeriod configuration data analysis
+  (strongChart (measure := intrinsicCanonicalLorentzVolumeMeasure period hPeriod) period hPeriod configuration data analysis realization plusBase minusBase hBase)
+  (strongBridge (measure := intrinsicCanonicalLorentzVolumeMeasure period hPeriod) period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter))
+
+open P0EFTJanusProgramPT12JointQuotientAbelianColumn4D
+open P0EFTJanusProgramPGlobalEulerLagrangeMinimalPhysicalHilbertAugmentationObstruction4D
+
+open P0EFTJanusProgramPT12JointQuotientAbelianSmoothPairing4D
+open P0EFTJanusProgramPT12AbelianLorenzGraphShear4D
+open P0EFTJanusProgramPT12AbelianBRSTNegativePhysicalColumn4D
+open P0EFTJanusProgramPT12JointQuotientPhysicalRiesz4D
+
+open P0EFTJanusProgramPT12AbelianGhostSmoothRotation4D
+open P0EFTJanusProgramPGlobalPairedAbelianBRSTGaugeFermion4D
+open P0EFTJanusProgramPGlobalGaugeTangentIntrinsicEmbedding4D
+
+open P0EFTJanusProgramPT12CandidateAAbelianMixedOperator4D
+open P0EFTJanusProgramPT12CandidateAAbelianMixedPotential4D
+open P0EFTJanusProgramPT12AbelianPotentialGraphInclusion4D
+open P0EFTJanusProgramPT12AbelianGhostRotationPhysical4D
+
+open P0EFTJanusProgramPT12JointQuotientDiffeomorphismFactor4D
+open P0EFTJanusProgramPT12JointQuotientDiffeomorphismSmoothPairing4D
+open P0EFTJanusProgramPT12DiffeomorphismMetricSmooth4D
+
+open P0EFTJanusProgramPT12DiffeomorphismH11MetricDependence4D
+
+open P0EFTJanusProgramPT12DiffeomorphismH11Smooth4D
+open P0EFTJanusProgramPT12DiffeomorphismL2Core4D
+open P0EFTJanusProgramPT12InjectiveSmoothColumn4D
+
+local instance physicalSourceInnerProductSpace : InnerProductSpace Real (DiffeomorphismL2 period hPeriod (globalCandidateAMetricBySector period hPeriod data .plus)) :=
+  Submodule.innerProductSpace (𝕜 := Real) (E := DiffeomorphismL2Ambient period hPeriod)
+    (diffeomorphismL2Space period hPeriod (globalCandidateAMetricBySector period hPeriod data .plus))
+
+open P0EFTJanusProgramPT12DiffeomorphismGraphToL24D
+open P0EFTJanusProgramPT12DiffeomorphismGraphRieszBridge4D
+open P0EFTJanusProgramPT12HessianSmoothRiesz4D
+open P0EFTJanusProgramPT12HessianL2OperatorCore4D
+
+open P0EFTJanusProgramPT12DiffeomorphismCommonL2Column4D
+open P0EFTJanusProgramPT12DiffeomorphismH11Core4D
+open P0EFTJanusProgramPT12DiffeomorphismHessianExtension4D
+open P0EFTJanusProgramPT12DiffeomorphismHessianRealization4D
+open P0EFTJanusProgramPT12JointQuotientDiffeomorphismColumn4D
+
+variable (reference : RegularGeneralLorentzMetric period hPeriod)
+
+open P0EFTJanusProgramPT12DiffeomorphismAugmentedL2Core4D
+open P0EFTJanusProgramPT12DiffeomorphismH11Adjoint4D
+open P0EFTJanusProgramPT12DiffeomorphismH11AdjointDensity4D
+open P0EFTJanusProgramPT12DenseAdjointMinimalClosure4D
+
+open P0EFTJanusProgramPT12DiffeomorphismAugmentedAdjointDensity4D
+
+open P0EFTJanusProgramPT12DiffeomorphismAugmentedMinimal4D
+open P0EFTJanusProgramPT12ClosedColumnTargetQuotient4D
+open P0EFTJanusProgramPT12ClosedNullPMapQuotient4D
+
+variable (hZero : (data.boundary.llFields period hPeriod).llField = 0)
+variable (hMetric : globalCandidateAMetricBySector period hPeriod data .plus =
+  globalCandidateAMetricBySector period hPeriod data .minus)
+variable (hWeights : candidateAPlusEinsteinKineticWeight couplings + candidateAMinusEinsteinKineticWeight couplings = 0)
+
+open P0EFTJanusProgramPT12ClosedColumnSourceQuotient4D
+open P0EFTJanusProgramPT12DiffeomorphismAugmentedGhostL2Null4D
+open P0EFTJanusProgramPT12DiffeomorphismAugmentedClosedQuotient4D
+
+attribute [local irreducible] diffeomorphismAugmentedMinimal diffeomorphismAugmentedClosedQuotient
+
+open P0EFTJanusProgramPT12ClosedColumnSourceAdjoint4D
+open P0EFTJanusProgramPT12DiffeomorphismAugmentedReducedL24D
+open P0EFTJanusProgramPT12DiffeomorphismAugmentedQuotientMinimal4D
+open P0EFTJanusProgramPT12RectangularDoubleAdjoint4D
+
+attribute [local irreducible] diffeomorphismAugmentedReduced
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedReduced_adjoint_graph_iff
+    (input : JointGhostLLQuotient period hPeriod configuration data analysis)
+    (output : ReducedDiffeomorphismL2 period hPeriod configuration data) :
+    (input, output) ∈ (diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.graph ↔
+      (input, quotientLift (diffeomorphismGhostL2NullSpace period hPeriod configuration data) output) ∈
+        (diffeomorphismAugmentedClosedQuotient period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.graph := by
+  unfold diffeomorphismAugmentedReduced
+  exact sourceQuotient_adjoint_graph_iff _ _
+    (diffeomorphismAugmentedClosedQuotient_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights)
+    (diffeomorphismAugmentedClosedQuotient_ghostNull_zero period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hMetric hWeights) input output
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedReduced_adjoint_mk_graph_iff
+    (input : CommonAugmentedHilbert period hPeriod configuration data analysis)
+    (output : ReducedDiffeomorphismL2 period hPeriod configuration data) :
+    ((jointGhostLLNullSpace period hPeriod configuration data analysis).mkQ input, output) ∈
+      (diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.graph ↔
+      (input, quotientLift (diffeomorphismGhostL2NullSpace period hPeriod configuration data) output) ∈
+        (diffeomorphismAugmentedL2Core period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.graph := by
+  rw [diffeomorphismAugmentedReduced_adjoint_graph_iff period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights,
+    diffeomorphismAugmentedClosedQuotient_adjoint_mk_graph_iff period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights]
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedReduced_adjoint_domain :
+    (diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.domain =
+      (diffeomorphismAugmentedClosedQuotient period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.domain := by
+  unfold diffeomorphismAugmentedReduced
+  exact sourceQuotient_adjoint_domain _ _
+    (diffeomorphismAugmentedClosedQuotient_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights)
+    (diffeomorphismAugmentedClosedQuotient_ghostNull_zero period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hMetric hWeights)
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedReduced_adjoint_mk_domain_iff
+    (input : CommonAugmentedHilbert period hPeriod configuration data analysis) :
+    (jointGhostLLNullSpace period hPeriod configuration data analysis).mkQ input ∈
+      (diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.domain ↔
+      input ∈ (diffeomorphismAugmentedL2Core period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.domain := by
+  rw [diffeomorphismAugmentedReduced_adjoint_domain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights]
+  exact diffeomorphismAugmentedClosedQuotient_adjoint_mk_domain_iff period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights input
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedReduced_adjoint_denseDomain :
+    Dense ((diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.domain :
+      Set (JointGhostLLQuotient period hPeriod configuration data analysis)) := by
+  rw [diffeomorphismAugmentedReduced_adjoint_domain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights]
+  exact diffeomorphismAugmentedClosedQuotient_adjoint_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedReduced_adjoint_isClosed :
+    (diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.IsClosed :=
+  LinearPMap.adjoint_isClosed (diffeomorphismAugmentedReduced_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights)
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedReduced_adjoint_adjoint :
+    (diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.adjoint =
+      diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference :=
+  closedRectangularOperator_adjoint_adjoint _
+    (diffeomorphismAugmentedReduced_isClosed period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference)
+    (diffeomorphismAugmentedReduced_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights)
+    (diffeomorphismAugmentedReduced_adjoint_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights)
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedReduced_adjoint_mk_zero_graph_iff
+    (input : CommonAugmentedHilbert period hPeriod configuration data analysis) :
+    ((jointGhostLLNullSpace period hPeriod configuration data analysis).mkQ input, 0) ∈
+      (diffeomorphismAugmentedReduced period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.graph ↔
+      (input, 0) ∈ (diffeomorphismAugmentedL2Core period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.graph := by
+  rw [diffeomorphismAugmentedReduced_adjoint_mk_graph_iff period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights, map_zero]
+
+end
+end
+end P0EFTJanusProgramPT12DiffeomorphismAugmentedReducedAdjoint4D
+end JanusFormal
