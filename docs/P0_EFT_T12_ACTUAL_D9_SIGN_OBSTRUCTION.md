@@ -3283,3 +3283,32 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
+
+## 2026-09-24 — Cœur minimal et adjoint du BRST complet quotienté
+
+`ClosedColumnTargetCore4D` prouve que le quotient orthogonal de la cible
+commute avec la fermeture minimale du graphe lisse. Il conserve le cœur
+lisse original. `ClosedColumnTargetAdjoint4D` transporte exactement le
+graphe et le domaine de l'adjoint Hilbert : une classe quotientée appartient
+au domaine adjoint si et seulement si son représentant original y appartient.
+La densité du domaine adjoint passe ainsi au quotient.
+
+`DiffeomorphismAugmentedQuotientMinimal4D` applique ces résultats à BRST + H11.
+La réalisation fermée quotientée construite précédemment est exactement la
+fermeture du `diffeomorphismAugmentedL2QuotientCore` existant. Le cœur lisse
+L2 est conservé et l'adjoint reste celui de ce cœur. Son graphe et son domaine
+se transportent exactement depuis l'adjoint de la colonne actual complète ;
+ce domaine est dense. Les hypothèses sont les conditions déjà présentes
+`hZero`, `hMetric`, `hWeights`, avec la mesure canonique.
+
+Aucune extension supplémentaire ni hypothèse terminale d'intertwining n'est
+introduite. L'accord géométrique avec les modes signés et le certificat global
+restent ouverts ; T12 reste non coché.
+
+Validation : trois modules, audit des 16 déclarations et hub T12 verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des modules : 1938, 1907 et 4363 Mo ; audit : 3923 Mo ; hub : 4025 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
