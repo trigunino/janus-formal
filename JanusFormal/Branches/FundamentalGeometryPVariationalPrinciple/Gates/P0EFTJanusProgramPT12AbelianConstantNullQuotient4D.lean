@@ -382,6 +382,28 @@ theorem abelianConstantPairReducedOperator_fredholm_iff :
       plusBase minusBase hBase hCenter physical)).trans
     (P0EFTJanusProgramPT12NullQuotientFredholm4D.selfAdjoint_fredholm_iff _ hSelf)
 
+/-- One finite-observation estimate on the actual reduced domain implies all Fredholm obligations. -/
+theorem abelianConstantPairReducedOperator_fredholm_of_estimate
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace Real F] [FiniteDimensional Real F]
+    (observation : (CandidateAAbelianMixedHilbert period hPeriod data ⧸
+      abelianConstantPairNullSpace period hPeriod configuration data) →L[Real] F)
+    (C : NNReal)
+    (hEstimate : ∀ u : (abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+        plusBase minusBase hBase hCenter physical).domain,
+      ‖u.val‖ ≤ C *
+        (‖abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+          plusBase minusBase hBase hCenter physical u‖ + ‖observation u.val‖)) :
+    let reduced := abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    IsClosed (LinearMap.range reduced.toFun : Set
+        (CandidateAAbelianMixedHilbert period hPeriod data ⧸ abelianConstantPairNullSpace period hPeriod configuration data)) ∧
+      FiniteDimensional Real (LinearMap.ker reduced.toFun) ∧
+      FiniteDimensional Real ((CandidateAAbelianMixedHilbert period hPeriod data ⧸
+        abelianConstantPairNullSpace period hPeriod configuration data) ⧸ LinearMap.range reduced.toFun) :=
+  P0EFTJanusProgramPT12FiniteObservationEstimate4D.selfAdjoint_fredholm_of_finite_observation _
+    (abelianConstantPairReducedOperator_selfAdjoint period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical) observation C hEstimate
+
 end
 end
 end P0EFTJanusProgramPT12AbelianConstantNullQuotient4D
