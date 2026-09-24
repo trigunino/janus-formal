@@ -4,6 +4,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NormalGraphResolvent4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12MinimalNormInverse4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ResolventInverseConvergence4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ResolventInverseError4D
 
 /-! The actual Candidate-A FP as a minimal closed operator in canonical L2. -/
 namespace JanusFormal
@@ -274,6 +275,28 @@ theorem candidateAFPInverseApproximation_graph_tendsto
       (𝓝 (candidateAFPMinimalInverse period hPeriod data rhs, rhs.val)) :=
   resolventInverseAverage_tendsto_inverse_graph _
     (candidateAFPCanonicalMinimal_isClosed period hPeriod data) rhs
+
+theorem candidateAFPInverseApproximation_error_bound (n : Nat)
+    (u : (candidateAFPCanonicalMinimal period hPeriod data).domain) :
+    ∃ v : (candidateAFPCanonicalMinimal period hPeriod data).domain,
+      v.val = candidateAFPInverseApproximation period hPeriod data n
+        (candidateAFPCanonicalMinimal period hPeriod data u) ∧
+      2 * ((n + 1 : Nat) : Real) *
+        ‖candidateAFPCanonicalMinimal period hPeriod data v -
+          candidateAFPCanonicalMinimal period hPeriod data u‖ ^ 2 ≤ ‖u.val‖ ^ 2 :=
+  P0EFTJanusProgramPT12ResolventInverseError4D.resolventInverseAverage_error_bound _
+    (candidateAFPCanonicalMinimal_isClosed period hPeriod data) n u
+
+theorem candidateAFPInverseApproximation_rhs_error_bound (n : Nat)
+    (rhs : (candidateAFPMinimalInverse period hPeriod data).domain) :
+    ∃ v : (candidateAFPCanonicalMinimal period hPeriod data).domain,
+      v.val = candidateAFPInverseApproximation period hPeriod data n rhs.val ∧
+      2 * ((n + 1 : Nat) : Real) *
+        ‖candidateAFPCanonicalMinimal period hPeriod data v - rhs.val‖ ^ 2 ≤
+          ‖candidateAFPMinimalInverse period hPeriod data rhs‖ ^ 2 := by
+  obtain ⟨u, hu, hMinimal, _⟩ := candidateAFPMinimalInverse_solves period hPeriod data rhs
+  obtain ⟨v, hv, hBound⟩ := candidateAFPInverseApproximation_error_bound period hPeriod data n u
+  exact ⟨v, by simpa only [hu] using hv, by simpa only [hu, hMinimal] using hBound⟩
 
 end
 end P0EFTJanusProgramPT12CandidateAFPCanonicalClosed4D
