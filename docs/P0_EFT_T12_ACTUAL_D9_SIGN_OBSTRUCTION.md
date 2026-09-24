@@ -3928,3 +3928,29 @@ conservent la dépendance IPP préexistante
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
+
+### 2026-09-24 — contrôle quantitatif du résidu FP
+
+`ResolventInverseError4D` renforce l'identité d'énergie de la résolvante en
+||R u||^2 + 2 ||A R u||^2 <= ||u||^2. La sommation télescopique sur les
+itérés contrôle la somme des énergies. Cauchy-Schwarz donne ensuite, pour
+les approximations J_n déjà construites et toute solution A u = f,
+
+    2 (n + 1) ||A(J_n f) - f||^2 <= ||u||^2.
+
+L'appartenance de J_n f au domaine réel de A figure dans le théorème.
+`CandidateAFPCanonicalClosed4D` spécialise cette estimation au FP minimal
+réel et à la solution de norme minimale I f. Le résidu est donc contrôlé
+par ||I f|| / sqrt(2 (n + 1)), sans hypothèse de gap ni d'image fermée.
+Cette norme de solution n'est pas remplacée par une constante fois ||f|| :
+la borne uniforme de I et la finitude du noyau adjoint restent à établir.
+T12 reste ouvert ; Quillen et T08 inchangés.
+
+Validation : deux modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 2189 et 3934 Mo.
+Audit des six nouvelles déclarations : vert, pic 3896 Mo ; dépendances
+`propext`, `Classical.choice`, `Quot.sound`. Les deux spécialisations FP
+conservent la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
