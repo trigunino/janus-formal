@@ -2896,3 +2896,40 @@ utilisant les adjoints de Stokes, l'axiome natif préexistant
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+## Factorisation exacte du Hessien natif par les jets (24 septembre 2026)
+
+`CurvatureJetSymbol4D` expose les formules finies de Koszul, de dérivée
+de connexion, de Riemann, de Ricci et de courbure scalaire. Elles sont
+C∞ dans les quatre blocs : valeur métrique, inverse métrique, premier
+jet, second jet ordonné. L'inverse est un argument indépendant de cette
+formule polynomiale ; il n'est pas supposé indépendant dans l'action.
+
+`NativeCurvatureJetBridge4D` identifie chaque formule à l'implémentation
+C0 native, point par point, avec les véritables coefficients d'anholonomie
+et leurs dérivées. L'accord scalaire ne requiert pas d'hypothèse ajoutée.
+
+`NonlinearHessianPullback4D` conserve les deux termes de la règle de
+chaîne d'ordre deux : Hessien extérieur sur les deux vitesses du jet,
+et gradient extérieur appliqué à l'accélération du jet.
+`NativeCurvatureJetHessian4D` prouve la régularité du jet natif au centre
+et applique cette règle à la vraie courbure scalaire.
+
+`EinsteinJetHessianIntegral4D` ajoute le volume stocké et les couplages,
+puis identifie exactement `nativeEinsteinHilbertHessian` à l'intégrale
+de cette expression finie. Le passage de la dérivée seconde sous
+l'intégration utilise l'application linéaire continue C0 déjà construite.
+Ni jauge de volume, ni stationnarité, ni suppression de l'accélération
+du jet ne sont postulées.
+
+Il reste à expliciter les vitesses et accélérations de ces blocs,
+notamment la variation seconde de l'inverse métrique, et à convertir
+l'expression intégrée en coefficients lisses de `tensorSecondJetFunctional`
+pour un test fixé. Les bornes L2 génériques précédentes pourront alors
+s'appliquer. Le Hessien métrique complet, la densité du domaine adjoint
+H11 et le certificat global actual→D9 restent ouverts. T12 reste non coché.
+Validation : cinq gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 1790, 3880, 1789, 4144 et 4147 Mo.
+Audit des 43 déclarations et hub T12 verts, pics 3660 et 4020 Mo.
+Les déclarations ne dépendent que de `propext`, `Classical.choice`
+et `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
