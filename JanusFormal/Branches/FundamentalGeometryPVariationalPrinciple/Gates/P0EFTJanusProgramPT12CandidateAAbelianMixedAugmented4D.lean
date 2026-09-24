@@ -353,6 +353,30 @@ theorem candidateAAbelianMixedAugmentedOperator_fredholm_iff_fp_conditions :
       (candidateAAbelianGhostOperator_selfAdjoint period hPeriod data),
     hGhost]
 
+/-- The actual volume injection removes the independent minimal FP kernel condition, including H11. -/
+theorem candidateAAbelianMixedAugmentedOperator_fredholm_iff_adjoint_conditions :
+    let full := candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    let potentialB := candidateAAbelianPotentialBHessian period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    let fp := P0EFTJanusProgramPT12CandidateAFPCanonicalClosed4D.candidateAFPCanonicalMinimal period hPeriod data
+    (IsClosed (LinearMap.range full.toFun : Set (CandidateAAbelianMixedHilbert period hPeriod data)) ∧
+      FiniteDimensional Real (LinearMap.ker full.toFun) ∧
+      FiniteDimensional Real (CandidateAAbelianMixedHilbert period hPeriod data ⧸ LinearMap.range full.toFun)) ↔
+    ((IsClosed (LinearMap.range potentialB.toFun : Set (CandidateAAbelianPotentialBHilbert period hPeriod configuration data)) ∧
+      FiniteDimensional Real (LinearMap.ker potentialB.toFun)) ∧
+     (IsClosed (LinearMap.range fp.toFun : Set (GlobalPairedGaugeLieL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker fp.adjoint.toFun))) := by
+  dsimp only
+  have hFactors := candidateAAbelianMixedAugmentedOperator_fredholm_iff_factors
+    period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical
+  have hGhost := candidateAAbelianGhostOperator_fredholm_iff_adjoint_kernel period hPeriod data
+  dsimp only at hFactors hGhost
+  rw [hFactors,
+    ← P0EFTJanusProgramPT12NullQuotientFredholm4D.selfAdjoint_fredholm_iff _
+      (candidateAAbelianGhostOperator_selfAdjoint period hPeriod data),
+    hGhost]
+
 end
 end
 end P0EFTJanusProgramPT12CandidateAAbelianMixedAugmented4D
