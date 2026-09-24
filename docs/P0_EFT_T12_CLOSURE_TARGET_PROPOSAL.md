@@ -14,6 +14,19 @@ sans cette exigence existe. La fermeture requiert désormais le raccord de
 l'action complète à des données habitables ; aucune élimination du type
 vide ne sera utilisée pour remplir le certificat T12.
 
+La reprise construit désormais `intrinsicBulkAction` sur un domaine ouvert
+contenant zéro, avec les couplages conservés, et sa vraie Hessienne symétrique
+`intrinsicBulkHessian`. Bulk et bord utilisent `finiteSmoothTangentFrame` ;
+le cœur C3 est fidèle sur sa projection C2. La base GHY à deux feuilles et
+les évaluations continues sur le graphe mobile sont construites. Cela ne
+constitue pas encore l'extension GHY conjointement C2 ni le raccord H11 global.
+
+L'injectivité H1 vers L2 et les domaines minimaux H1 du FP et de son adjoint
+formel sont maintenant établis sans données vides. L'adjonction s'étend aux
+deux graphes minimaux L2 ; le FP intrinsèque y est symétrique et son défaut
+de pairing des ghosts est nul. Aucune égalité avec le domaine maximal ni
+propriété Fredholm n'est déduite de ces résultats.
+
 Le raccord sectoriel à la fibre D9/Friedrichs positive est exclu par
 `no_actual_to_fullFriedrichs_sector_pairing` : un champ Nakanishi–Lautrup
 pur non nul a un auto-pairing strictement négatif, H11 compris, alors que

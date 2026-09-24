@@ -4111,3 +4111,46 @@ Les quarante-quatre autres heritent aussi de l'axiome IPP preexistant
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert, pic 4026 Mo ; git diff --check OK.
+
+## Reprise : domaines fidèles et cœur intrinsèque habitable
+
+Les seize nouveaux modules `ProgramPT12...4D` établissent :
+
+- `FrameFreeFrameDerivativeClosed`, `FrameFreeScalarH1Injective` : fermeture
+  des dérivées réelles par Stokes et injectivité H1 vers L2 sans métrique
+  globalement repérée.
+- `FrameFreeFPFormalAdjointCore`, `FrameFreeFPH1Domain`,
+  `FrameFreeFPMinimalAdjunction`, `IntrinsicFPSymmetry` : domaine commun
+  minimal H1, adjonction sur les deux graphes minimaux L2, inclusion dans
+  l'adjoint de Hilbert et symétrie du FP intrinsèque. Le défaut de pairing
+  des ghosts intrinsèques est nul. Aucune égalité minimale/maximale annoncée.
+- `IntrinsicBulkGeometry`, `IntrinsicBulkActionCore`, `IntrinsicBulkHessian`,
+  `IntrinsicBulkBoundaryBase` : géométrie concrète, inverse de Sylvester
+  prouvé, domaine ouvert contenant zéro, action bulk C2 avec tous les
+  couplages conservés, vraie dérivée d'Euler symétrique et transport linéaire
+  exact. La même métrique fournit la base GHY réelle à deux feuilles.
+- `FrameFreeBoundaryC3Core`, `FrameFreeBoundaryC3Evaluation`,
+  `FrameFreeBoundaryC3Faithful`, `FrameFreeBoundaryJointCore` : complétion
+  métrique C3, projections et évaluations continues, compatibilité faible
+  D2/D3, injectivité C3 vers C2 pour `finiteSmoothTangentFrame`, cœur joint
+  métrique/déplacement et accord des évaluations mobiles avec les champs
+  lisses. Le bulk utilise désormais ce même frame.
+- `IntrinsicTemporalLocalDivergence`, `IntrinsicTemporalGradient` : densité
+  stéréographique exacte, divergence temporelle égale à la dérivée seconde
+  négative, descente des profils périodiques et vrai gradient intrinsèque.
+  Le raccord complet FP/modal reste à composer dans un même patch ; aucune
+  estimation spectrale n'est supposée.
+
+T12 reste ouverte : les évaluations continues ne prouvent pas encore la
+substitution conjointement C2 ni l'extension GHY/H11 globale. La propriété
+Fredholm de la famille signée réelle, son transport global et le certificat
+terminal restent à établir. Les données historiques vides ne sont pas
+utilisées pour conclure. Quillen et T08 inchangés.
+
+Validation : seize modules verts, Lean séquentiel gardé, priorité haute,
+réserve 4096 Mo ; pic maximal 4196 Mo. Audit des 126 déclarations vert,
+pic 3920 Mo : 95 dépendent seulement de `propext`, `Classical.choice`,
+`Quot.sound` ; 31 héritent aussi de
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`, déjà présent.
+Aucun nouvel axiome, `sorry`/`admit`, ni augmentation des budgets.
+Hub T12 vert, pic 4051 Mo ; `git diff --check` OK. T12 non cochée.

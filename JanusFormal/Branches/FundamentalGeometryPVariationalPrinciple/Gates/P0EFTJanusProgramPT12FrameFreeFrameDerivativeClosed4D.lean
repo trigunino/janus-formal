@@ -50,14 +50,14 @@ open P0EFTJanusProgramPT12DenseAdjointGraphClosable4D
 open P0EFTJanusProgramPT12ClosedFeatureOperator4D
 open P0EFTJanusMappingTorusCanonicalPhysicalScalarSmoothApproximation4D
 
-def frameFreeCanonicalFrameDerivativeAdjoint 
+def frameFreeCanonicalFrameDerivativeAdjoint
     (frame : SmoothD8Frame period hPeriod) (index : Fin frame.count)
     (test : SmoothQuotientField period hPeriod Real) : SmoothQuotientField period hPeriod Real :=
   -frameFreeTenFlowDivergence period hPeriod (intrinsicSmoothGeneralLorentzMetric period hPeriod)
     (smoothScalarSMulTangentField period hPeriod test (frameTangentField period hPeriod frame index))
 
 theorem frameFreeCanonicalFrameDerivativeAdjoint_integral
-    
+
     (frame : SmoothD8Frame period hPeriod) (index : Fin frame.count)
     (field test : SmoothQuotientField period hPeriod Real) :
     (∫ point, canonicalFrameDerivativeSmooth period hPeriod frame index field point * test point
@@ -91,7 +91,7 @@ theorem frameFreeCanonicalFrameDerivativeAdjoint_integral
       ring
 
 theorem frameFreeCanonicalFrameDerivativeAdjoint_pairing
-    
+
     (frame : SmoothD8Frame period hPeriod) (index : Fin frame.count)
     (field test : SmoothQuotientField period hPeriod Real) :
     inner Real (canonicalFrameDerivativeL2 period hPeriod frame index field)
