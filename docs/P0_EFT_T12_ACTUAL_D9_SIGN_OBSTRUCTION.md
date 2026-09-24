@@ -3895,3 +3895,36 @@ conservent également la dépendance IPP préexistante
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
+
+### 2026-09-24 — approximation bornée convergente de l'inverse FP réel
+
+`ResolventInverseApproximation4D` construit S_0 = (A R)-adjoint,
+S_(n+1) = R S_n + (A R)-adjoint, puis les moyennes J_n des S_0,...,S_n.
+Chaque J_n est un opérateur linéaire continu sur le Hilbert ambiant.
+Pour u dans le véritable domaine de A, S_n(Au) = u - R^(n+1)u.
+Si M_n est la moyenne de I,R,...,R^n, le graphe réel contient exactement
+(J_n(Au), Au - A R M_n u), avec J_n(Au) = u - R M_n u.
+
+`ResolventInverseConvergence4D` applique le théorème ergodique moyen à R,
+contraction déjà construite. Son espace de points fixes est exactement le
+noyau ambiant complet de A. Les M_n u convergent vers la projection sur ce
+noyau, que A R annule. Il en résulte la convergence conjointe du champ J_n f
+et de son image A(J_n f) vers (I f, f), pour chaque f dans l'image de A,
+où I est l'inverse de norme minimale déjà construit.
+
+`CandidateAFPCanonicalClosed4D` installe ces approximations et leur convergence
+dans le graphe du FP minimal réel. Aucun gap, aucune image fermée, aucune
+finitude du noyau ni égalité minimal=maximal ne sont supposés.
+La convergence est ponctuelle sur l'image réelle du FP ; elle ne fournit
+ni borne uniforme des J_n ou de I, ni taux uniforme de convergence.
+La borne de l'inverse et la finitude du noyau adjoint restent ouvertes.
+T12 reste ouvert ; Quillen et T08 inchangés.
+
+Validation : trois modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 2192, 2186 et 3932 Mo.
+Audit des 15 nouvelles déclarations : vert, pic 3896 Mo ; dépendances
+`propext`, `Classical.choice`, `Quot.sound`. Les trois spécialisations FP
+conservent la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
