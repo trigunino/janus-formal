@@ -3597,3 +3597,44 @@ Les résultats génériques utilisent seulement `propext`, `Classical.choice`,
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 Hub T12 vert (pic 4026 Mo) ; git diff --check OK.
+
+## 2026-09-24 — Séparation exacte du FP réel et du bloc potentiel–B/H11
+
+`ProductFirstPerturbation4D` prouve qu'une perturbation bornée symétrique qui
+annule tout le second facteur agit uniquement sur le premier. La compression
+sur le premier facteur est auto-adjointe. L'opérateur perturbé est exactement
+le produit de la perturbation du premier opérateur et du second opérateur
+inchangé : égalité des graphes complets, pas seulement des pairings lisses.
+
+Dans `CandidateAAbelianMixedAugmented4D`, tout vecteur L2 ghost/antighost pur
+annule le relèvement physique, puis la colonne H11 entière à valeurs dans le
+Hilbert commun. La propriété dépasse les seuls quatre modes constants.
+Le bloc abélien augmenté est exactement le produit de :
+
+- `candidateAAbelianPotentialBHessian`, le bloc potentiel–B avec H11, auto-adjoint
+  et de domaine total dans son Hilbert mixte ;
+- `candidateAAbelianGhostOperator`, le bloc fermé FP/FP-adjoint réel existant,
+  avec son domaine inchangé.
+
+`ProductFredholm4D` identifie l'image au produit des images et construit un
+isomorphisme linéaire entre le noyau total et le produit des noyaux. Image
+fermée et noyau fini sont ainsi équivalents aux propriétés correspondantes
+sur les deux facteurs. L'auto-adjonction traite le cokernel.
+
+`candidateAAbelianMixedAugmentedOperator_fredholm_iff_factors` spécialise ce
+critère aux deux facteurs réels ci-dessus, sans symbole D9 prescrit ni
+hypothèse Fredholm terminale. La séparation établit en particulier que H11
+ne modifie pas le problème analytique propre au FP/FP-adjoint abélien.
+
+Portée : décomposition exacte et critère analytique, pas encore preuve des
+estimations de fermeture d'image et de finitude des noyaux des facteurs.
+T12 demeure ouvert ; Quillen et T08 restent inchangés.
+
+Validation : deux nouveaux modules et module abélien verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics : 2183, 2199 et 4268 Mo. Audit des 20 déclarations : vert, 3927 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` ; seul le critère Fredholm
+spécialisé conserve en plus la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
