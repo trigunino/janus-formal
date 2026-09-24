@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAAbelianFaithfulRealization4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedFeatureOperator4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GraphClosureEstimate4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NormalGraphResolvent4D
 
 /-! The actual Candidate-A FP as a minimal closed operator in canonical L2. -/
 namespace JanusFormal
@@ -159,6 +160,60 @@ theorem candidateAFPCanonicalMinimal_finite_observation
     FiniteDimensional Real (LinearMap.ker (candidateAFPCanonicalMinimal period hPeriod data).toFun) :=
   P0EFTJanusProgramPT12GraphClosureEstimate4D.closedFeatureOperator_finite_observation _ _
     (candidateAPairedFPGraph_input_injective period hPeriod data) observation C hEstimate
+
+open P0EFTJanusProgramPT12NormalGraphResolvent4D
+
+/-- Auxiliary normal resolvent of the installed FP; no change to the FP action or domain. -/
+def candidateAFPNormalResolvent : GlobalPairedGaugeLieL2 period hPeriod →L[Real]
+    GlobalPairedGaugeLieL2 period hPeriod :=
+  normalResolvent (candidateAFPCanonicalMinimal period hPeriod data)
+    (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+
+theorem candidateAFPNormalResolvent_opNorm_le : ‖candidateAFPNormalResolvent period hPeriod data‖ ≤ 1 :=
+  normalResolvent_opNorm_le _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+
+theorem candidateAFPNormalResolvent_selfAdjoint : IsSelfAdjoint (candidateAFPNormalResolvent period hPeriod data) :=
+  normalResolvent_selfAdjoint _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+
+theorem candidateAFPNormalResolvent_nonnegative (f : GlobalPairedGaugeLieL2 period hPeriod) :
+    0 ≤ inner Real f (candidateAFPNormalResolvent period hPeriod data f) :=
+  normalResolvent_nonnegative _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data) f
+
+theorem candidateAFPNormalResolvent_solves (f : GlobalPairedGaugeLieL2 period hPeriod) :
+    ∃ (u : (candidateAFPCanonicalMinimal period hPeriod data).domain)
+      (hImage : candidateAFPCanonicalMinimal period hPeriod data u ∈
+        (candidateAFPCanonicalMinimal period hPeriod data).adjoint.domain),
+      u.val = candidateAFPNormalResolvent period hPeriod data f ∧
+      u.val + (candidateAFPCanonicalMinimal period hPeriod data).adjoint
+        ⟨candidateAFPCanonicalMinimal period hPeriod data u, hImage⟩ = f ∧
+      ‖u.val‖ ≤ ‖f‖ ∧ 2 * ‖candidateAFPCanonicalMinimal period hPeriod data u‖ ≤ ‖f‖ := by
+  let A := candidateAFPCanonicalMinimal period hPeriod data
+  let hClosed := candidateAFPCanonicalMinimal_isClosed period hPeriod data
+  let u : A.domain := ⟨normalResolvent A hClosed f, normalResolvent_mem_domain A hClosed f⟩
+  have hImage : A u ∈ A.adjoint.domain := by
+    rw [normalResolvent_apply]
+    exact normalResolventImage_mem_adjoint_domain A hClosed f
+  refine ⟨u, hImage, rfl, ?_, normalResolvent_norm_le A hClosed f, ?_⟩
+  · change u.val + A.adjoint ⟨A u, hImage⟩ = f
+    simpa only [u, normalResolvent_apply] using
+      normalResolvent_equation A hClosed (candidateAFPCanonicalMinimal_dense_domain period hPeriod data) f
+  · rw [normalResolvent_apply]
+    exact normalResolventImage_norm_le_half A hClosed f
+
+theorem candidateAFPNormalResolvent_unique (f : GlobalPairedGaugeLieL2 period hPeriod)
+    (u : (candidateAFPCanonicalMinimal period hPeriod data).domain)
+    (hImage : candidateAFPCanonicalMinimal period hPeriod data u ∈
+      (candidateAFPCanonicalMinimal period hPeriod data).adjoint.domain)
+    (hEquation : u.val + (candidateAFPCanonicalMinimal period hPeriod data).adjoint
+      ⟨candidateAFPCanonicalMinimal period hPeriod data u, hImage⟩ = f) :
+    u.val = candidateAFPNormalResolvent period hPeriod data f :=
+  normalResolvent_unique _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+    (candidateAFPCanonicalMinimal_dense_domain period hPeriod data) f u hImage hEquation
+
+theorem candidateAFPNormalResolvent_fixed_iff_null (u : GlobalPairedGaugeLieL2 period hPeriod) :
+    candidateAFPNormalResolvent period hPeriod data u = u ↔
+      (u, 0) ∈ (candidateAFPCanonicalMinimal period hPeriod data).graph :=
+  normalResolvent_fixed_iff_null _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data) u
 
 end
 end P0EFTJanusProgramPT12CandidateAFPCanonicalClosed4D
