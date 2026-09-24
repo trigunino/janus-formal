@@ -11,6 +11,19 @@ variable {E F : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
   [NormedAddCommGroup F] [InnerProductSpace Real F] [CompleteSpace F]
 variable (operator : E →ₗ.[Real] F) (nullSpace : Submodule Real F) [IsClosed (nullSpace : Set F)]
 
+omit [CompleteSpace F] in
+/-- A closed output constraint passes from a smooth graph to its closure. -/
+theorem closure_range_output_mem {D : Type*} [AddCommGroup D] [Module Real D]
+    (inclusion : D →ₗ[Real] E) (column : D →ₗ[Real] F)
+    (subspace : Submodule Real F) (hClosed : IsClosed (subspace : Set F))
+    (hMem : ∀ field, column field ∈ subspace)
+    (input : E) (output : F)
+    (hGraph : (input, output) ∈ (inclusion.prod column).range.topologicalClosure) :
+    output ∈ subspace := by
+  have hClosedPair : IsClosed {pair : E × F | pair.2 ∈ subspace} :=
+    hClosed.preimage continuous_snd
+  exact closure_minimal (by rintro _ ⟨field, rfl⟩; exact hMem field) hClosedPair hGraph
+
 def targetQuotientGraph : Submodule Real (E × (F ⧸ nullSpace)) :=
   operator.graph.comap ((LinearMap.id : E →ₗ[Real] E).prodMap (quotientLift nullSpace).toLinearMap)
 
