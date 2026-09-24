@@ -3187,3 +3187,37 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et, pour les bornes L2,
 la seule dépendance IPP existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+
+## 2026-09-24 — Borne L2 interaction BRST et tests métriques H11
+
+La borne d'interaction laissée ouverte dans l'entrée précédente est prouvée.
+`StrongInteractionBRSTL24D.strongInteractionBRSTHessian_eq_covector` représente
+la Hessienne réelle par un covecteur continu sur le L2 BRST ;
+`strongInteractionBRSTHessian_metric_bound` donne la borne dans la norme
+métrique réelle, sans remplacer celle-ci par une norme de graphe C2.
+
+La preuve utilise la localité ponctuelle de la racine sélectionnée : la
+surjectivité du Sylvester C2, appliquée aux matrices constantes, donne
+l'injectivité du Sylvester fini en chaque point. La localité passe ensuite
+au gradient puis à la Hessienne réelle de la densité d'interaction.
+`InteractionHessianCoefficients4D` construit ses 32 coefficients C2 et
+prouve la formule exacte de reconstruction. `NativeInteractionHessianL24D`
+intègre cette identité et fournit le représentant L2. Les gates
+`RelativeMatrixL2Readout4D` et `InteractionBRSTMatrixReadout4D` raccordent
+ces coordonnées au véritable espace L2 des tenseurs/BRST.
+
+`DiffeomorphismH11MetricTests4D` assemble les bornes interaction,
+Einstein et Maxwell. Son théorème `diffeomorphismH11_metric_test_mem_adjoint`
+place les tests métriques physiques lisses dans le domaine adjoint H11
+complet. Cette étape ferme la borne et l'appartenance annoncées ; elle
+ne constitue pas encore le certificat terminal global actual→D9.
+T12 reste non coché ; Quillen et T08 inchangés.
+
+Validation : dix gates, audit des 39 déclarations et hub T12 verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pic maximal des gates : 4259 Mo ; audit : 3946 Mo ; hub : 4024 Mo.
+L'interaction BRST n'utilise que `propext`, `Classical.choice`, `Quot.sound`.
+L'assemblage H11 reprend uniquement la dépendance IPP déjà présente dans
+Einstein–Maxwell : `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; aucun fichier externe/T08 modifié.
