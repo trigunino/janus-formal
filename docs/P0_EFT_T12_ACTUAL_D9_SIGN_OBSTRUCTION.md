@@ -3372,3 +3372,31 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
+
+## 2026-09-24 — Adjoint complet après réduction de source et de cible
+
+`ClosedColumnSourceAdjoint4D` transporte exactement l'adjoint lors du quotient
+d'un sous-espace source nul. Le domaine adjoint est inchangé ; ses sorties
+originales sont orthogonales au sous-espace annulé et se projettent dans le
+quotient. Le graphe adjoint se relève exactement et son noyau est conservé.
+La densité du domaine adjoint passe ainsi à la réalisation réduite.
+
+`DiffeomorphismAugmentedReducedAdjoint4D` compose ce transport avec celui de
+la cible commune fantômes–LL. Le graphe adjoint BRST + H11 réduit est relié
+explicitement à l'adjoint du cœur actual original : projection de l'entrée
+commune et relèvement orthogonal de la sortie L2 réduite. L'appartenance au
+domaine adjoint est équivalente à celle du représentant original. Ce domaine
+est dense, l'adjoint est fermé et le double adjoint redonne exactement la
+réalisation réduite déjà construite. Les sorties adjointes nulles sont aussi
+caractérisées par l'adjoint du cœur original.
+
+Les conditions restent `hZero`, `hMetric`, `hWeights` et la mesure canonique.
+L'accord modal signé et le certificat global T12 restent ouverts.
+
+Validation : deux modules, audit des 14 déclarations et hub T12 verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des modules : 1932 et 4145 Mo ; audit : 3757 Mo ; hub : 4026 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
