@@ -3007,3 +3007,44 @@ priorité haute, réserve 4096 Mo ; pics 1789, 4159, 3895, 1791, 1894 et
 Axiomes : uniquement `propext`, `Classical.choice`, `Quot.sound`.
 Aucun `sorry`/`admit`, nouvel axiome ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+## 2026-09-24 — Régularité et borne L2 du Hessien Einstein BRST concret
+
+`CurvatureJetJointSmooth4D` établit la régularité conjointe du symbole de
+courbure dans le jet métrique, les coefficients du repère et leurs dérivées.
+`EinsteinSymbolJointSmooth4D` donne celle du symbole Einstein, de son
+gradient partiel et de son Hessien partiel en conservant les paramètres.
+`NativeJetSpatialSmooth4D` prouve la régularité spatiale du vrai jet au
+centre, de l'inverse, du repère et des jets covariants de variation.
+`MetricJetLinearizationSmooth4D` traite la vitesse et l'accélération mixte.
+
+`NativeEinsteinCoefficientFields4D` compose ces résultats et réalise les
+trois familles de coefficients déjà identifiées comme de véritables
+champs scalaires lisses. Aucune régularité de coefficient n'est postulée.
+
+`NativeEinsteinHessianL24D` raccorde exactement le Hessien natif à
+`tensorSecondJetFunctional`. L'intégration par parties existante produit
+`nativeEinsteinHessianL2` et son identité de pairing, puis la borne par
+la norme L2 du tenseur test. Il s'agit bien de la dérivée seconde de
+l'action, avec le terme d'accélération de l'inverse et le volume stocké.
+
+`PairedEinsteinHessianL24D` rassemble les deux secteurs dans un covecteur
+sur l'espace L2 BRST réel. Sa borne ne dépend que de la norme métrique
+du test. `StrongEinsteinBRSTL24D` identifie ce covecteur à la somme des
+Hessiennes des deux blocs Einstein réels sur les inclusions BRST lisses.
+`strongEinsteinBRSTHessian_metric_bound` donne la borne métrique de cette
+somme pour chaque premier champ BRST lisse fixé.
+
+Le contrôle L2 gravitationnel est donc établi. Restent l'assemblage des
+blocs physiques pour la borne métrique totale, le domaine adjoint H11
+métrique et sa densité, puis le certificat global actual→D9. Ces résultats
+ne ferment pas à eux seuls T12, qui reste non coché. Quillen n'est pas refait.
+
+Validation : huit gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 1788, 1795, 3876, 1889, 3895,
+4142, 4140 et 3965 Mo. Audit des 44 déclarations et hub T12 verts, pics
+3899 et 4019 Mo. Axiomes standards `propext`, `Classical.choice`, `Quot.sound` ;
+les réalisations L2 et leurs conséquences réutilisent seulement l'axiome
+natif de Stokes déjà présent
+`P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; T08 et les fichiers externes préservés.
