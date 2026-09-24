@@ -3221,3 +3221,32 @@ L'assemblage H11 reprend uniquement la dépendance IPP déjà présente dans
 Einstein–Maxwell : `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; aucun fichier externe/T08 modifié.
+
+## 2026-09-24 — Fermeture minimale H11 et transport exact au quotient
+
+`DiffeomorphismH11AdjointDensity4D` place tout le cœur lisse commun dans
+le domaine adjoint H11 : tests métriques, abéliens et matière–LL complétée.
+La densité en résulte. `DenseAdjointMinimalClosure4D` prouve le passage
+abstrait de cette densité à la fermeture minimale, avec le même adjoint.
+
+`DiffeomorphismH11Minimal4D` construit ainsi la réalisation fermée de la
+colonne physique réelle H11, avec domaine dense et cœur lisse explicite.
+`DiffeomorphismH11QuotientMinimal4D` construit la réalisation correspondante
+sur le quotient par le noyau joint fantômes–LL et identifie son adjoint.
+
+`DiffeomorphismH11ClosedQuotientTransport4D` transporte exactement les graphes
+fermés par projection et relèvement orthogonal. Les domaines sources sont
+égaux ; les sorties restent orthogonales au noyau joint. Norme, pairing et
+noyau de la colonne fermée sont conservés par le quotient.
+
+Ces résultats ne supposent aucun intertwiner terminal. Le certificat global
+actual→D9 reste à construire ; T12 reste non coché. Quillen et T08 inchangés.
+
+Validation : cinq gates, audit des 31 déclarations et hub T12 verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des gates : 4274, 2235, 4002, 4066 et 4138 Mo ; audit : 3918 Mo ;
+hub : 4025 Mo. Axiomes : `propext`, `Classical.choice`, `Quot.sound` et
+la seule dépendance IPP existante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; aucun fichier externe/T08 modifié.
