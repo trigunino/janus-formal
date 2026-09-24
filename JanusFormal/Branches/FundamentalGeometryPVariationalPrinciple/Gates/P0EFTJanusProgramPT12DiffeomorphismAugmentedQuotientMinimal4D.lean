@@ -1,3 +1,4 @@
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedColumnTargetAdjoint4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedColumnTargetCore4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismAugmentedClosedQuotient4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12DiffeomorphismAugmentedL2Quotient4D
@@ -260,6 +261,41 @@ theorem diffeomorphismAugmentedClosedQuotient_adjoint_eq :
   exact minimalClosure_adjoint_eq _
     (diffeomorphismAugmentedL2QuotientCore_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference)
     (diffeomorphismAugmentedL2QuotientCore_isClosable period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights)
+
+open P0EFTJanusProgramPT12ClosedColumnTargetAdjoint4D
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedClosedQuotient_adjoint_mk_graph_iff
+    (input : CommonAugmentedHilbert period hPeriod configuration data analysis)
+    (output : DiffeomorphismL2 period hPeriod (globalCandidateAMetricBySector period hPeriod data .plus)) :
+    ((jointGhostLLNullSpace period hPeriod configuration data analysis).mkQ input, output) ∈
+      (diffeomorphismAugmentedClosedQuotient period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.graph ↔
+      (input, output) ∈ (diffeomorphismAugmentedL2Core period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.graph := by
+  rw [← diffeomorphismAugmentedMinimal_adjoint_eq period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference]
+  exact targetQuotient_adjoint_mk_graph_iff _ _
+    (diffeomorphismAugmentedMinimal_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference)
+    (diffeomorphismAugmentedMinimal_output_orthogonal period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights) input output
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedClosedQuotient_adjoint_mk_domain_iff
+    (input : CommonAugmentedHilbert period hPeriod configuration data analysis) :
+    (jointGhostLLNullSpace period hPeriod configuration data analysis).mkQ input ∈
+      (diffeomorphismAugmentedClosedQuotient period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.domain ↔
+      input ∈ (diffeomorphismAugmentedL2Core period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.domain := by
+  rw [← diffeomorphismAugmentedMinimal_adjoint_eq period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference]
+  exact targetQuotient_adjoint_mk_domain_iff _ _
+    (diffeomorphismAugmentedMinimal_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference)
+    (diffeomorphismAugmentedMinimal_output_orthogonal period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights) input
+
+include hZero hMetric hWeights in
+theorem diffeomorphismAugmentedClosedQuotient_adjoint_denseDomain :
+    Dense ((diffeomorphismAugmentedClosedQuotient period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference).adjoint.domain :
+      Set (JointGhostLLQuotient period hPeriod configuration data analysis)) := by
+  apply targetQuotient_adjoint_denseDomain _ _
+    (diffeomorphismAugmentedMinimal_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference)
+    (diffeomorphismAugmentedMinimal_output_orthogonal period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference hZero hMetric hWeights)
+  rw [diffeomorphismAugmentedMinimal_adjoint_eq]
+  exact diffeomorphismAugmentedAdjoint_denseDomain period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical reference
 
 end
 end
