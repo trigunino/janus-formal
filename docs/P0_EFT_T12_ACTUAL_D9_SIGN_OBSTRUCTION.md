@@ -2933,3 +2933,37 @@ Audit des 43 déclarations et hub T12 verts, pics 3660 et 4020 Mo.
 Les déclarations ne dépendent que de `propext`, `Classical.choice`
 et `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+## 2026-09-24 — Accélération native de l'inverse et des jets métriques
+
+`C2InverseHessian4D` calcule la dérivée seconde de l'inversion dans
+l'algèbre C², sur son ouvert d'inversibilité. Au centre identité elle
+vaut `K H + H K` : les deux ordres non commutatifs sont conservés.
+`VectorHessianPullback4D` transporte les Hessiennes vectorielles par
+entrée affine et sortie linéaire continue.
+
+`NativeInverseMetricHessian4D` applique ces résultats à l'inverse
+relatif puis à l'inverse métrique effectivement utilisés par l'action.
+`InverseMetricHessianPointwise4D` donne l'évaluation ponctuelle, sa
+spécialisation aux directions covariantes lisses et chaque coefficient
+scalaire. On obtient exactement
+`g⁻¹ k g⁻¹ h g⁻¹ + g⁻¹ h g⁻¹ k g⁻¹`, sans hypothèse d'accord ajoutée.
+
+`MetricJetAcceleration4D` prouve que les Hessiennes paramétriques C0
+du coefficient métrique, de son premier jet et de son second jet ordonné
+sont nulles. Les opérateurs de dérivée spatiale sont réalisés comme
+applications linéaires continues avant d'utiliser l'affinité du cœur C².
+Ces annulations ne s'appliquent pas au bloc inverse, dont l'accélération
+est celle calculée ci-dessus.
+
+Prochaine étape : assembler ces résultats avec les vitesses lisses déjà
+présentes dans le jet de courbure natif, puis extraire les coefficients
+lisses de `tensorSecondJetFunctional` pour un test fixé. La borne L2 du
+Hessien Einstein, le secteur métrique du domaine adjoint H11, sa densité
+et le certificat global actual→D9 restent ouverts. T12 reste non coché.
+
+Validation : cinq gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3902, 1796, 4125, 4135 et 4135 Mo.
+Audit des 12 théorèmes et hub T12 verts, pics 3634 et 4020 Mo.
+Axiomes : uniquement `propext`, `Classical.choice`, `Quot.sound`.
+Aucun `sorry`/`admit`, nouvel axiome ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
