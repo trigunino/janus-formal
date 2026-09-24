@@ -2967,3 +2967,43 @@ Audit des 12 théorèmes et hub T12 verts, pics 3634 et 4020 Mo.
 Axiomes : uniquement `propext`, `Classical.choice`, `Quot.sound`.
 Aucun `sorry`/`admit`, nouvel axiome ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+## 2026-09-24 — Coefficients concrets du Hessien Einstein natif
+
+`CurvatureJetDifferentials4D` assemble les dérivées première et seconde
+du jet fini à partir de ses coordonnées, par lectures linéaires continues.
+`NativeCurvatureJetAcceleration4D` identifie l'accélération complète du
+jet natif : seuls les coefficients inverses contribuent, avec les deux
+ordres matriciels déjà prouvés. `NativeCurvatureJetVelocity4D` identifie
+sa vitesse sur toute direction covariante lisse : valeur, inverse,
+première dérivée et seconde dérivée spatiale ordonnée.
+
+`MetricJetCovector4D` décompose un jet de variation en bases finies et
+extrait exactement les trois familles de coefficients d'une forme
+linéaire. `MetricJetLinearization4D` réalise comme applications linéaires
+continues la vitesse du jet et son accélération mixte, pour un premier
+test fixé. La forme obtenue conserve le gradient extérieur appliqué à
+l'accélération de l'inverse ; ce terme n'est pas supprimé.
+
+`NativeEinsteinJetCoefficients4D` construit alors les coefficients réels
+`nativeEinsteinJetValueCoefficient`, `nativeEinsteinJetFirstCoefficient`
+et `nativeEinsteinJetSecondCoefficient`. Leur combinaison avec la valeur,
+le premier jet et le second jet du test est exactement la densité du
+Hessien natif. `nativeEinsteinHilbertHessian_eq_coefficientsIntegral`
+identifie le vrai Hessien Einstein à l'intégrale de cette combinaison,
+sans hypothèse d'accord, de stationnarité ou de jauge de volume ajoutée.
+
+Les coefficients sont maintenant construits et leur accord avec le
+Hessien est prouvé. Leur régularité spatiale reste à formaliser : les
+fonctions nommées `smooth...` ci-dessus désignent les formules sur des
+directions lisses, sans ajouter par leur nom un théorème de régularité.
+Il faut encore réaliser ces coefficients comme champs scalaires lisses,
+les raccorder à `tensorSecondJetFunctional`, puis appliquer la borne L2.
+Le secteur métrique du domaine adjoint H11, sa densité et le certificat
+global actual→D9 restent ouverts. T12 reste non coché.
+
+Validation : six gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 1789, 4159, 3895, 1791, 1894 et
+4133 Mo. Audit des 33 déclarations et hub T12 verts, pics 3857 et 4020 Mo.
+Axiomes : uniquement `propext`, `Classical.choice`, `Quot.sound`.
+Aucun `sorry`/`admit`, nouvel axiome ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
