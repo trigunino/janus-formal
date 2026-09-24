@@ -3400,3 +3400,30 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
+## 2026-09-24 — Paquets temporels concrets du BRST abélien
+
+`AbelianTemporalFourierCore4D` injecte fidèlement les coefficients de Fourier
+temporels finis, secteur par secteur, dans les ghosts lisses puis L2 réels.
+Pour une période strictement positive, les couples antighost/ghost obtenus
+appartiennent au domaine de l'opérateur BRST abélien fermé. Leur graphe est
+exactement donné par FP sur le ghost et FP† sur l'antighost.
+
+`AbelianTemporalFourierMatrix4D` construit les modes par secteur, fréquence
+et composante réelle/imaginaire. Pour toute famille finie de ces modes,
+la matrice des pairings FP réels restitue exactement le pairing des paquets.
+Le pairing BRST complet est la somme du bloc FP et du bloc transposé,
+par l'identité d'adjonction canonique déjà prouvée. Les coefficients restent
+ceux de la métrique réelle ; aucune hypothèse de symbole diagonal n'est ajoutée.
+
+Portée : reconstruction finie des pairings temporels uniquement. Elle ne
+prouve ni invariance des paquets sous FP, ni complétude dans le L2 géométrique
+4D, ni diagonalisation signée. Le transport modal global et le certificat
+terminal T12 restent ouverts.
+
+Validation : deux modules, audit des 16 déclarations publiques et hub T12
+verts sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des modules : 4167 et 3925 Mo ; audit : 3896 Mo ; hub : 4026 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
