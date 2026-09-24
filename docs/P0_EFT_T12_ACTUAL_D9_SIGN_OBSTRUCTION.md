@@ -3486,3 +3486,39 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
+
+## 2026-09-24 — Cœurs projetés et domaine abélien complet
+
+`ProjectedGraphCore4D` projette orthogonalement des échantillons denses de
+H ⊕ H sur le graphe d'un opérateur fermé. Les premières composantes forment
+un véritable cœur d'opérateur ; les secondes sont leurs images exactes.
+La fermeture de ces couples est le graphe entier. Pour un opérateur
+à domaine dense, leurs pairings caractérisent exactement le graphe adjoint ;
+pour un opérateur auto-adjoint, ils caractérisent son propre graphe.
+
+`AbelianPolynomialProjectedCore4D` applique cette construction aux échantillons
+polynomiaux spatiaux du mapping torus. Deux cœurs distincts sont construits :
+celui du BRST abélien minimal fermé et celui de sa réalisation auto-adjointe.
+Le graphe et le domaine complets de cette dernière sont caractérisés par les
+pairings contre les échantillons projetés, y compris pour les champs non lisses.
+
+Portée : les échantillons APRÈS projection ne sont pas affirmés lisses ou
+polynomiaux. La projection utilise le graphe fermé réel déjà construit ; elle
+n'est ni une diagonalisation ni une formule spectrale explicite. Aucune densité
+en norme de graphe des polynômes non projetés, aucune égalité minimal/maximal,
+aucune propriété Fredholm globale n'est déduite de cette construction.
+
+La direction signée réelle est retenue sous la délégation explicite de
+l'utilisateur ; aucune validation personnelle n'est attendue. Le critère
+`hessianMatchesNaturalFredholmFamily` demeure inchangé et non coché.
+Le point analytique central restant est la propriété Fredholm de la réalisation
+signée réelle couplée, avec les colonnes H11 et les quotients justifiés, puis
+son raccord au certificat global et à Quillen existant.
+
+Validation : les deux modules, audit des 22 déclarations publiques et hub T12
+verts sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des dernières compilations : 2178 et 4063 Mo ; audit : 3861 Mo ; hub : 4023 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+Quillen, T08 et fichiers externes préservés.

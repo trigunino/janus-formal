@@ -1,6 +1,8 @@
-# T12 — proposition de correction de la cible terminale
+# T12 — correction de la cible terminale
 
-Statut : proposition à valider ; T12 reste ouvert.
+Statut : direction de travail retenue sous la délégation explicite de l'utilisateur
+du 2026-09-24 ; T12 reste ouvert. Aucune validation personnelle supplémentaire
+n'est attendue. La fermeture dépend des preuves ci-dessous.
 
 Le raccord sectoriel à la fibre D9/Friedrichs positive est exclu par
 `no_actual_to_fullFriedrichs_sector_pairing` : un champ Nakanishi–Lautrup
@@ -8,7 +10,7 @@ pur non nul a un auto-pairing strictement négatif, H11 compris, alors que
 sa cible sectorielle a un pairing non négatif. La densité L2 ne change pas
 cette incompatibilité.
 
-## Modification proposée
+## Direction retenue
 
 Conserver le critère `hessianMatchesNaturalFredholmFamily`, la même action,
 la géométrie réelle, les ghosts et antighosts, H11 et les quotients justifiés.
