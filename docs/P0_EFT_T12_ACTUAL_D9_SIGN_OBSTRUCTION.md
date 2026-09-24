@@ -3083,3 +3083,46 @@ priorité haute, réserve 4096 Mo ; pics 1790, 3896, 4135, 1790, 4130,
 3914 et 4023 Mo. Axiomes : uniquement `propext`, `Classical.choice`,
 `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+## 2026-09-24 — Jet Maxwell natif explicite et identité intégrale du Hessien
+
+`MaxwellJetSymbol4D` construit le symbole fini Maxwell, son gradient
+et son Hessien partiels dans l'inverse métrique et la courbure de jauge.
+Leur régularité conjointe avec le volume stocké est prouvée.
+`NativeMaxwellJetBridge4D` fournit les deux slots depuis la vraie carte
+complétée, prouve l'égalité exacte de densité et leur régularité C².
+
+`MaxwellJetHessianIntegral4D` identifie l'entrée métrique–métrique du
+Hessien mobile réel à l'intégrale de la formule de chaîne du jet fini.
+Le terme gradient appliqué à l'accélération complète du jet est conservé.
+
+`GaugeCurvatureReadout4D` réalise la courbure comme application linéaire
+continue du cœur de coefficients C² vers les valeurs finies, avec le
+terme de crochet du repère et l'accord sur les champs lisses.
+`MobileCurvatureDifferentials4D` calcule sa vitesse et son accélération
+sur le paquet transporté en utilisant les dérivées de la racine validées.
+Le domaine de cette lecture bornée est le cœur C².
+
+`MaxwellJetDifferentials4D` assemble les dérivées du jet par coordonnées.
+`NativeMaxwellJetDifferentials4D` identifie la vitesse et l'accélération
+du jet natif complet sur toute direction du cœur métrique complété :
+la vitesse inverse vaut `-H g⁻¹`, son accélération `(KH + HK) g⁻¹`,
+et la courbure reçoit les lectures des transports `(1/2) Hᵀa` et
+`-(1/8) (HK + KH)ᵀa`. Les deux ordres matriciels sont conservés.
+
+`NativeMaxwellExplicitHessian4D` remplace les dérivées de la carte dans
+la densité par ces expressions calculées et prouve
+`nativeMobileMaxwellHessian_eq_explicitIntegral`. Les dérivées restantes
+sont celles du symbole polynomial fini. Aucune stationnarité ni hypothèse
+d'accord avec le Hessien n'est ajoutée.
+
+Prochaine étape : extraire les coefficients en valeur et premier jet du
+tenseur test dans la courbure transportée, établir leur régularité spatiale,
+puis appliquer l'intégration par parties pour la borne L2 métrique Maxwell.
+Restent ensuite l'assemblage physique H11, la densité du domaine adjoint
+et le certificat global actual→D9. T12 reste non coché.
+Validation : huit gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 1790, 3892, 4148, 4058, 4146,
+1796, 4151 et 4131 Mo. Audit des 38 déclarations et hub T12 verts,
+pics 3851 et 4024 Mo. Axiomes : uniquement `propext`, `Classical.choice`,
+`Quot.sound`. Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
