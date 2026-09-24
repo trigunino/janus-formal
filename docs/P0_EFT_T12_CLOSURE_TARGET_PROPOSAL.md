@@ -4,6 +4,16 @@ Statut : direction de travail retenue sous la délégation explicite de l'utilis
 du 2026-09-24 ; T12 reste ouvert. Aucune validation personnelle supplémentaire
 n'est attendue. La fermeture dépend des preuves ci-dessous.
 
+Audit du 2026-09-24 : `regularGeneralLorentzMetric_isEmpty` prouve que le
+repère tangent global lisse demandé par le type historique est impossible
+sur D8 réfléchi. `globalCandidateAActionData_isEmpty` en déduit que les
+données globales historiques sont vides. Les théorèmes qui prennent ces
+données en paramètre ne constituent donc pas une réalisation concrète.
+`smoothGeneralLorentzMetric_nonempty` confirme que la géométrie intrinsèque
+sans cette exigence existe. La fermeture requiert désormais le raccord de
+l'action complète à des données habitables ; aucune élimination du type
+vide ne sera utilisée pour remplir le certificat T12.
+
 Le raccord sectoriel à la fibre D9/Friedrichs positive est exclu par
 `no_actual_to_fullFriedrichs_sector_pairing` : un champ Nakanishi–Lautrup
 pur non nul a un auto-pairing strictement négatif, H11 compris, alors que

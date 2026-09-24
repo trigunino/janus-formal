@@ -4053,3 +4053,61 @@ Les dix-huit déclarations géométriques conservent la dépendance IPP
 préexistante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome ni `sorry`/`admit`, aucune augmentation des budgets.
 Hub T12 vert, pic 4029 Mo ; git diff --check OK.
+
+### 2026-09-24 — entree globale impossible et reparation concrete du FP
+
+`RegularMetricFrameNoGo4D.regularGeneralLorentzMetric_isEmpty` prouve
+l'impossibilite du type historique de metrique globalement reperee. La
+preuve releve ses quatre champs par l'inverse de la vraie derivee du
+quotient, prouve leur continuite et leur equivariance, puis prend leur
+determinant dans la vraie trivialisation radiale stable. Sur une courbe
+d'equateur fixe, ce determinant serait continu, non nul et antiperiodique.
+Le theoreme des valeurs intermediaires donne la contradiction.
+
+`CandidateAFrameInputAudit4D.globalCandidateAActionData_isEmpty` transporte
+cette obstruction aux donnees globales historiques via `plusGravity.metric`.
+Les enonces dependants de ces donnees restent des theoremes conditionnels ;
+ils ne fournissent pas une instance physique. En revanche,
+`smoothGeneralLorentzMetric_nonempty` construit la metrique lorentzienne
+intrinseque sans repere global. Aucune elimination du type vide n'est
+utilisee pour les nouvelles conclusions analytiques ni pour fermer T12.
+
+La reparation abelienne utilise seulement `SmoothGeneralLorentzMetric` :
+
+- `FrameFreeDirectionalH1L24D`, `FrameFreeFPVolumeH1Bound4D` et
+  `FrameFreePairedFPH1Correction4D` reconstruisent la derivee directionnelle
+  et la correction FP H1 -> L2 pour les quatre composantes reelles.
+- `FrameFreeCurrentPullback4D` utilise la vraie derivee inverse des cartes.
+  Les modules `FrameFreeGeneratorsDivergenceZero4D`,
+  `FrameFreeCurrentLocalDivergence4D`, `FrameFreeDivergenceStokes4D`,
+  `FrameFreeMetricDivergenceStokes4D` et `FrameFreeMetricLocalDivergence4D`
+  etablissent les identites de divergence et de Stokes sans repere global.
+- `FrameFreeLorenzRaisedCurrent4D` et `FrameFreeLorenzGlobalStokes4D`
+  donnent le vrai courant releve, l'identite de Green et la symetrie du
+  FP dans sa mesure metrique.
+- `FrameFreeFPCanonicalPairing4D` etablit le pairing adjoint reel, scalaire
+  puis apparie, dans L2 canonique. `FrameFreeFPClosed4D` construit la
+  fermeture minimale du vrai FP : graphe monovalue, operateur ferme,
+  domaine dense, accord sur le coeur lisse et minimalite.
+
+Le repere a dix generateurs est redondant ; aucune base tangente globale
+n'est exigee. Ces conclusions analytiques s'appliquent notamment a la
+metrique intrinseque effectivement construite.
+
+T12 reste ouverte. La migration de l'action globale complete, du BRST
+diffeomorphisme et des colonnes H11 n'est pas accomplie par la reparation
+abelienne. L'image fermee et la finitude des noyaux restent a etablir pour
+la famille effectivement retenue. L'injectivite H1 -> L2 et les identites
+de domaines anciens qui demandaient une metrique reguliere ne sont pas
+annoncees comme migrees. Le certificat terminal et la case T12 ne sont
+pas remplis. Quillen et T08 inchanges.
+
+Validation : dix-huit modules verts sous `run_lean_guarded`, Lean
+sequentiel, priorite haute, reserve 4096 Mo ; pic maximal 4094 Mo.
+Audit des 78 declarations : vert, pic 3888 Mo. Trente-quatre declarations,
+dont les deux resultats d'impossibilite et l'existence intrinseque,
+n'utilisent que `propext`, `Classical.choice` et `Quot.sound`.
+Les quarante-quatre autres heritent aussi de l'axiome IPP preexistant
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert, pic 4026 Mo ; git diff --check OK.
