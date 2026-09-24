@@ -4020,3 +4020,36 @@ l'axiome IPP préexistant
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert, pic 4029 Mo ; git diff --check OK. Quillen et T08 inchangés.
+
+### 2026-09-24 — domaine H1 commun du FP et de son adjoint formel
+
+`PairedFPH1Correction4D` assemble les quatre composantes réelles des ghosts
+appariés dans la complétion H1 à dix flux. Leur cœur lisse est dense,
+l'oubli H1 -> L2 coïncide avec l'inclusion physique sur ce cœur, et la
+correction bornée reproduit exactement le FP adjoint formel moins le FP.
+
+`SobolevFeatureGraph4D` traite une source normée, sans imposer un produit
+scalaire au premier jet muni de sa norme de graphe. Une correction bornée
+C transforme la fermeture de (E, P) en celle de (E, P + CE) par
+(u, v) -> (u, v + Cu). Les domaines sources sont égaux. Un oubli continu
+vers un opérateur L2 fermé établit la monovaluation et l'inclusion du graphe.
+
+`CandidateAFPH1Domain4D` applique ces résultats aux métriques Candidate-A
+réelles : les fermetures H1 -> L2 du FP et de l'adjoint formel sont fermées,
+ont le même domaine dense, et leurs sorties diffèrent exactement par la
+correction construite. L'oubli vers L2 est injectif et envoie chaque graphe
+dans son graphe minimal L2 déjà construit.
+
+Il s'agit des fermetures dans H1 x L2, pas d'une identification de tous les
+domaines L2 minimal/maximal. Aucune inclusion inverse après oubli n'est
+postulée. Image fermée du FP et finitude du noyau adjoint restent ouvertes ;
+T12 reste ouvert. Quillen et T08 inchangés.
+
+Validation : trois modules verts sous `run_lean_guarded`, séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 3889, 2190 et 4186 Mo.
+Audit des trente-deux déclarations : vert, pic 3895 Mo. Les quatorze
+résultats généraux n'utilisent que `propext`, `Classical.choice`, `Quot.sound`.
+Les dix-huit déclarations géométriques conservent la dépendance IPP
+préexistante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome ni `sorry`/`admit`, aucune augmentation des budgets.
+Hub T12 vert, pic 4029 Mo ; git diff --check OK.
