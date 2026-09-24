@@ -3126,3 +3126,33 @@ priorité haute, réserve 4096 Mo ; pics 1790, 3892, 4148, 4058, 4146,
 pics 3851 et 4024 Mo. Axiomes : uniquement `propext`, `Classical.choice`,
 `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+
+## 2026-09-24 — Borne L2 Maxwell métrique complète
+
+Le bloc Maxwell métrique est désormais représenté dans le véritable L2
+BRST, avec la variation de la racine et les deux ordres matriciels.
+`NativeMaxwellHessianL24D.nativeMobileMaxwellHessian_metric_bound`
+borne la Hessienne native métrique–métrique, pour toute première
+variation lisse fixée, par la norme L2 du tenseur test.
+`StrongMaxwellBRSTL24D.strongMaxwellBRSTHessian_metric_bound`
+porte cette borne sur la somme des blocs Maxwell plus/minus de l'action
+forte, dans la norme `diffeomorphismMetricSmooth`.
+
+La chaîne de preuve extrait le covecteur du premier jet relatif,
+identifie son intégrale à la Hessienne réelle, prouve la régularité
+spatiale de ses coefficients et leur applique l'adjoint du repère.
+Le retour de `g⁻¹h` au tenseur covariant est explicite dans
+`RelativeTensorFirstJetL24D`. Aucune borne en norme C2 n'est substituée
+à la borne L2, aucune stationnarité ni hypothèse d'intertwining n'est ajoutée.
+
+Cette étape ferme la borne L2 Maxwell annoncée dans l'entrée précédente.
+T12 reste ouvert : l'assemblage physique H11 et le certificat global
+actual→D9 ne sont pas établis par ces seuls résultats. Quillen inchangé.
+Validation : onze gates, audit des 65 déclarations et hub T12 verts sous
+`run_lean_guarded`, un seul Lean, priorité haute, réserve 4096 Mo.
+Pic maximal des gates : 4153 Mo ; audit : 3901 Mo ; hub : 4023 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound`, et, pour l'IPP/L2,
+la dépendance existante
+`JanusFormal.P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; T08 et les fichiers externes préservés.
