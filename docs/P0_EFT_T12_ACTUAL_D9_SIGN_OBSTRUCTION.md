@@ -3669,3 +3669,35 @@ constructions génériques utilisent seulement `propext`, `Classical.choice`,
 IPP préexistante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 Hub T12 vert (pic 4027 Mo) ; git diff --check OK.
+
+### 2026-09-24 — huit modes nuls ghosts/antighosts réels
+
+`FPCanonicalFormalAdjoint4D` établit la conjugaison exacte sur les champs
+lisses : FP-adjoint(r f) = r FP(f), où r est le rapport de volumes réel.
+La multiplication par r est injective, d'où l'équivalence des annulations
+lisses. Cela n'identifie pas les domaines minimal et maximal.
+
+`CandidateAAbelianConstantKernel4D` construit les antighosts r c pour les
+quatre constantes sectorielles c et prouve leur appartenance au noyau de
+l'adjoint canonique fermé. Avec les quatre ghosts constants, ils donnent
+un sous-espace de dimension exactement huit du noyau BRST réel.
+Aucune exhaustion du noyau n'est affirmée.
+
+`AbelianConstantAugmentedKernel4D` transporte ces huit modes dans le bloc
+abélien augmenté et prouve l'annulation de leur colonne H11 entière.
+`AbelianConstantNullQuotient4D` ajoute le quotient par ce sous-espace :
+auto-adjonction, domaine projeté exact, pairing conservé et équivalence
+Fredholm. Le quotient antérieur par les seuls quatre ghosts reste inchangé.
+
+Portée : modes nuls concrets et quotient justifié, sans hypothèse de gap.
+La fermeture d'image et la finitude du noyau résiduel restent à prouver ;
+T12 demeure ouvert. Quillen et T08 inchangés.
+
+Validation : quatre modules verts sous `run_lean_guarded`, priorité haute,
+Lean séquentiel, réserve 4096 Mo. Pics : 3864, 4182, 4262 et 4319 Mo.
+Audit des 30 nouvelles déclarations publiques : vert, pic 3901 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound`, avec la dépendance
+IPP préexistante `canonicalFlowIndex_card._native.native_decide.ax_1_1`
+lorsque les domaines adjoints ou l'auto-adjonction sont utilisés.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert (pic 4023 Mo) ; git diff --check OK.
