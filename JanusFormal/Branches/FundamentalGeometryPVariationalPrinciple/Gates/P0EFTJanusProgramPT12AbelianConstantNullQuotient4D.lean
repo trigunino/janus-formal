@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12AbelianConstantAugmentedKernel4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedNullPMapSelfAdjoint4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NullQuotientFredholm4D
 
 /-! Remove exactly the four constructed constant ghost modes, retaining H11 and all other outputs. -/
 namespace JanusFormal
@@ -260,6 +261,27 @@ theorem abelianConstantReducedOperator_pairing
     (augmented_symmetric period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical)
     (abelianConstantNullSpace_graph period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical)
     vector test hDomain
+
+/- The finite null quotient preserves all Fredholm obligations. The two genuine
+analytic requirements remain on the actual augmented operator. -/
+theorem abelianConstantReducedOperator_fredholm_iff :
+    let original := candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    let reduced := abelianConstantReducedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    (IsClosed (LinearMap.range reduced.toFun : Set
+        (CandidateAAbelianMixedHilbert period hPeriod data ⧸ abelianConstantNullSpace period hPeriod configuration data)) ∧
+      FiniteDimensional Real (LinearMap.ker reduced.toFun) ∧
+      FiniteDimensional Real ((CandidateAAbelianMixedHilbert period hPeriod data ⧸
+        abelianConstantNullSpace period hPeriod configuration data) ⧸ LinearMap.range reduced.toFun)) ↔
+    (IsClosed (LinearMap.range original.toFun : Set (CandidateAAbelianMixedHilbert period hPeriod data)) ∧
+      FiniteDimensional Real (LinearMap.ker original.toFun)) := by
+  have hSelf := candidateAAbelianMixedAugmentedOperator_selfAdjoint period hPeriod configuration data analysis realization
+    plusBase minusBase hBase hCenter physical
+  exact (P0EFTJanusProgramPT12NullQuotientFredholm4D.quotientPMap_fredholm_iff _ hSelf _
+    (abelianConstantNullSpace_graph period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical)).trans
+    (P0EFTJanusProgramPT12NullQuotientFredholm4D.selfAdjoint_fredholm_iff _ hSelf)
 
 end
 end
