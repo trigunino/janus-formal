@@ -3,6 +3,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12OffDiagonalFredholm4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NormalDefectClosedRange4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAFPVolumeGraph4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12MinimalNormInverseBound4D
 
 /-! The actual abelian ghost block on canonical L2, with its full adjoint domain. -/
 namespace JanusFormal
@@ -270,6 +271,21 @@ theorem candidateAAbelianGhostOperator_fredholm_iff_adjoint_normalDefect :
     (candidateAFPCanonicalMinimal_dense_domain period hPeriod data)
     (candidateAFPCanonicalAdjoint_dense_domain period hPeriod data),
     normalDefect_kernel_finite_iff]
+  exact candidateAAbelianGhostOperator_fredholm_iff_adjoint_kernel period hPeriod data
+
+/-- The remaining analytic bound is on the unshifted real FP inverse, on its exact range. -/
+theorem candidateAAbelianGhostOperator_fredholm_iff_minimalInverse_bound :
+    let ghost := candidateAAbelianGhostOperator period hPeriod data
+    let fp := candidateAFPCanonicalMinimal period hPeriod data
+    (IsClosed (LinearMap.range ghost.toFun : Set (CandidateAAbelianGhostL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker ghost.toFun) ∧
+      FiniteDimensional Real (CandidateAAbelianGhostL2 period hPeriod ⧸ LinearMap.range ghost.toFun)) ↔
+    ((∃ C : NNReal, ∀ rhs : (candidateAFPMinimalInverse period hPeriod data).domain,
+        ‖candidateAFPMinimalInverse period hPeriod data rhs‖ ≤ C * ‖rhs.val‖) ∧
+      FiniteDimensional Real (LinearMap.ker fp.adjoint.toFun)) := by
+  dsimp only [candidateAFPMinimalInverse]
+  rw [P0EFTJanusProgramPT12MinimalNormInverseBound4D.minimalNormInverse_bounded_iff_closedRange _
+    (candidateAFPCanonicalMinimal_isClosed period hPeriod data)]
   exact candidateAAbelianGhostOperator_fredholm_iff_adjoint_kernel period hPeriod data
 
 end
