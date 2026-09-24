@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAAbelianFaithfulRealization4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ClosedFeatureOperator4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GraphClosureEstimate4D
 
 /-! The actual Candidate-A FP as a minimal closed operator in canonical L2. -/
 namespace JanusFormal
@@ -142,6 +143,22 @@ theorem candidateAFPCanonicalMinimal_le_closed_extension
     candidateAFPCanonicalMinimal period hPeriod data ≤ extension :=
   closedFeatureOperator_minimal _ _ (candidateAPairedFPGraph_input_injective period hPeriod data)
     extension hClosed hExtends
+
+/-- A smooth a priori estimate suffices for both analytic properties of the minimal actual FP.
+The estimate remains an explicit obligation; no spectral or ellipticity hypothesis is inserted. -/
+theorem candidateAFPCanonicalMinimal_finite_observation
+    {F : Type*} [NormedAddCommGroup F] [NormedSpace Real F] [FiniteDimensional Real F]
+    (observation : GlobalPairedGaugeLieL2 period hPeriod →L[Real] F) (C : NNReal)
+    (hEstimate : ∀ field : GlobalPairedGaugeLieSmooth period hPeriod,
+      ‖globalPairedGaugeLieL2LinearMap period hPeriod field‖ ≤ C *
+        (‖globalPairedAbelianFPL2LinearMap period hPeriod
+          (globalCandidateAMetricBySector period hPeriod data) field‖ +
+          ‖observation (globalPairedGaugeLieL2LinearMap period hPeriod field)‖)) :
+    IsClosed (LinearMap.range (candidateAFPCanonicalMinimal period hPeriod data).toFun :
+      Set (GlobalPairedGaugeLieL2 period hPeriod)) ∧
+    FiniteDimensional Real (LinearMap.ker (candidateAFPCanonicalMinimal period hPeriod data).toFun) :=
+  P0EFTJanusProgramPT12GraphClosureEstimate4D.closedFeatureOperator_finite_observation _ _
+    (candidateAPairedFPGraph_input_injective period hPeriod data) observation C hEstimate
 
 end
 end P0EFTJanusProgramPT12CandidateAFPCanonicalClosed4D
