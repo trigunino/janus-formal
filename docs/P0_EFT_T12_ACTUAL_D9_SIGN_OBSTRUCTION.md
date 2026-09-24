@@ -3560,3 +3560,40 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 Hub T12 vert (pic 4027 Mo) ; git diff --check OK.
+
+## 2026-09-24 — Équivalence Fredholm exacte après quotient des constantes
+
+`ClosedNullPMapRange4D` identifie l'image du quotient par son relèvement
+orthogonal dans l'image réelle. L'image initiale est l'intersection de
+l'orthogonal du sous-espace nul avec la préimage de l'image réduite.
+La fermeture de l'image est donc équivalente avant et après quotient.
+
+`ClosedNullPMapKernel4D` construit la projection sur le noyau réduit et un
+relèvement qui en est une section. Le noyau initial s'injecte linéairement
+dans le produit du sous-espace nul retiré et du noyau réduit. Pour un
+sous-espace nul fini, la finitude des deux noyaux est équivalente.
+
+`NullQuotientFredholm4D` identifie l'orthogonal de l'image au noyau de l'adjoint.
+Pour l'opérateur auto-adjoint à image fermée, le cokernel est ainsi
+linéairement isomorphe au noyau. Les trois conditions Fredholm sont conservées
+par le quotient nul fini, sans hypothèse Fredholm ajoutée.
+
+`abelianConstantReducedOperator_fredholm_iff` spécialise cette équivalence
+au véritable bloc abélien augmenté H11, avec le quotient des quatre modes
+constants déjà construit. Le critère complet pour le quotient équivaut
+exactement à : image fermée et noyau fini du bloc augmenté initial.
+La preuve utilise les domaines et graphes réels, sans modèle D9 imposé.
+
+Portée : équivalence et réduction des obligations analytiques. Ni la fermeture
+de l'image réelle ni la finitude du noyau entier ne sont encore établies.
+Le quotient ne peut donc pas masquer une image non fermée ou un noyau infini.
+T12 demeure ouvert ; Quillen et T08 sont préservés.
+
+Validation : trois nouveaux modules et spécialisation abélienne verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics : 1907, 1940, 1930 et 4277 Mo. Audit des 16 déclarations : vert, 3927 Mo.
+Les résultats génériques utilisent seulement `propext`, `Classical.choice`,
+`Quot.sound` ; la spécialisation conserve la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+Hub T12 vert (pic 4026 Mo) ; git diff --check OK.
