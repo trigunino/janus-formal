@@ -2,6 +2,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12OffDiagonalSelfAdjoint4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12OffDiagonalFredholm4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NormalDefectClosedRange4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAFPVolumeGraph4D
 
 /-! The actual abelian ghost block on canonical L2, with its full adjoint domain. -/
 namespace JanusFormal
@@ -234,6 +235,42 @@ theorem candidateAAbelianGhostOperator_fredholm_iff_normalDefects :
     (candidateAFPCanonicalAdjoint_dense_domain period hPeriod data),
     normalDefect_kernel_finite_iff, normalDefect_kernel_finite_iff]
   exact candidateAAbelianGhostOperator_fredholm_iff period hPeriod data
+
+/-- The volume injection makes the minimal-kernel finiteness condition redundant. -/
+theorem candidateAAbelianGhostOperator_fredholm_iff_adjoint_kernel :
+    let ghost := candidateAAbelianGhostOperator period hPeriod data
+    let fp := candidateAFPCanonicalMinimal period hPeriod data
+    (IsClosed (LinearMap.range ghost.toFun : Set (CandidateAAbelianGhostL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker ghost.toFun) ∧
+      FiniteDimensional Real (CandidateAAbelianGhostL2 period hPeriod ⧸ LinearMap.range ghost.toFun)) ↔
+    (IsClosed (LinearMap.range fp.toFun : Set (GlobalPairedGaugeLieL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker fp.adjoint.toFun)) := by
+  have h := candidateAAbelianGhostOperator_fredholm_iff period hPeriod data
+  dsimp only at h ⊢
+  rw [h]
+  constructor
+  · intro h
+    exact ⟨h.1, h.2.2⟩
+  · intro h
+    letI := h.2
+    exact ⟨h.1,
+      P0EFTJanusProgramPT12CandidateAFPVolumeGraph4D.candidateAFPKernel_finite_of_adjoint
+        period hPeriod data, h.2⟩
+
+theorem candidateAAbelianGhostOperator_fredholm_iff_adjoint_normalDefect :
+    let ghost := candidateAAbelianGhostOperator period hPeriod data
+    (IsClosed (LinearMap.range ghost.toFun : Set (CandidateAAbelianGhostL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker ghost.toFun) ∧
+      FiniteDimensional Real (CandidateAAbelianGhostL2 period hPeriod ⧸ LinearMap.range ghost.toFun)) ↔
+    (IsClosed (LinearMap.range (candidateAFPNormalDefect period hPeriod data).toLinearMap :
+        Set (GlobalPairedGaugeLieL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker (candidateAFPAdjointNormalDefect period hPeriod data).toLinearMap)) := by
+  dsimp only [candidateAFPNormalDefect, candidateAFPAdjointNormalDefect]
+  rw [normalDefect_range_isClosed_iff _ _
+    (candidateAFPCanonicalMinimal_dense_domain period hPeriod data)
+    (candidateAFPCanonicalAdjoint_dense_domain period hPeriod data),
+    normalDefect_kernel_finite_iff]
+  exact candidateAAbelianGhostOperator_fredholm_iff_adjoint_kernel period hPeriod data
 
 end
 end P0EFTJanusProgramPT12CandidateAAbelianGhostSelfAdjoint4D
