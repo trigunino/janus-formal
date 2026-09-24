@@ -3638,3 +3638,34 @@ spécialisé conserve en plus la dépendance IPP préexistante
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
+
+### 2026-09-24 — image fermée de FP et de son adjoint
+
+`ClosedRangeAdjoint4D` prouve le théorème d'image fermée pour les opérateurs
+non bornés : sur un Hilbert réel, pour un opérateur fermé densément défini
+à image fermée, l'image de son adjoint est exactement l'orthogonal de son
+noyau ambiant. La preuve descend une forme continue depuis le graphe par
+le théorème de l'application ouverte, puis utilise Riesz. La double
+adjonction donne l'équivalence des fermetures d'image quand le domaine de
+l'adjoint est dense ; aucune égalité minimal=maximal n'est supposée.
+
+`OffDiagonalFredholm4D` identifie l'image du bloc hors diagonale au produit
+des images, et son noyau au noyau du produit à facteurs inversés. Pour
+FP/FP-adjoint, son caractère Fredholm équivaut exactement à : image de FP
+fermée, noyau de FP fini, noyau de FP-adjoint fini. La fermeture d'image
+de l'adjoint est donc déduite et ne constitue plus une obligation séparée.
+
+Ces résultats sont spécialisés dans `CandidateAAbelianGhostSelfAdjoint4D`
+et composés avec la séparation potentiel–B/H11 dans
+`CandidateAAbelianMixedAugmented4D`. Les domaines réels sont conservés.
+Les propriétés analytiques restantes ne sont pas postulées ni démontrées
+par cette réduction : T12 demeure ouvert. Quillen et T08 inchangés.
+
+Validation : quatre modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 2188, 2193, 3926 et 4270 Mo.
+Audit des 12 déclarations publiques : vert, pic 3931 Mo. Les neuf
+constructions génériques utilisent seulement `propext`, `Classical.choice`,
+`Quot.sound` ; les trois spécialisations conservent aussi la dépendance
+IPP préexistante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+Hub T12 vert (pic 4027 Mo) ; git diff --check OK.
