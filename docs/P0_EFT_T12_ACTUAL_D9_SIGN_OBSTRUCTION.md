@@ -3427,3 +3427,30 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
+
+## 2026-09-24 — Séries infinies dans le graphe minimal abélien
+
+`ClosedGraphSeries4D` normalise chaque couple champ/image `(uᵢ, Buᵢ)` par
+`wᵢ = 1 + ‖(uᵢ, Buᵢ)‖`. Tout coefficient réel absolument sommable `cᵢ`
+donne une série convergente de graphes `Σ (cᵢ / wᵢ) • (uᵢ, Buᵢ)`.
+La fermeture du graphe prouve l'appartenance au domaine, l'image exacte
+et une borne par `Σ ‖cᵢ‖`, sans hypothèse de continuité de l'opérateur non borné.
+
+`AbelianTemporalFourierSeries4D` applique cette construction aux paquets
+Fourier temporels réels : chaque couple appartient au graphe minimal lisse
+fermé, avec FP sur le ghost et FP† sur l'antighost. La série infinie reste
+dans ce graphe minimal, donc aussi dans l'extension auto-adjointe existante.
+Son pairing contre tout paquet temporel test converge vers la somme des
+pairings FP réels et transposés déjà établis au niveau fini.
+
+Portée : séries de modes normalisés avec coefficients ℓ¹. Aucun accord
+minimal/maximal, aucune complétude spatiale 4D ni diagonalisation signée
+n'est supposé ou démontré. Le transport modal global et T12 restent ouverts.
+
+Validation : deux modules, audit des 22 déclarations publiques et hub T12
+verts sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des modules : 1888 et 3928 Mo ; audit : 3895 Mo ; hub : 4025 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
