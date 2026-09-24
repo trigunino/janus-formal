@@ -3250,3 +3250,36 @@ la seule dépendance IPP existante
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; aucun fichier externe/T08 modifié.
+
+## 2026-09-24 — Fermeture de la colonne BRST complète avec H11
+
+`DiffeomorphismAugmentedAdjointDensity4D` traite la colonne réelle entière,
+somme du BRST diffeomorphisme et de H11, avec la mesure canonique. Le readout
+d'un test commun lisse est son véritable représentant L2 diffeomorphisme.
+La symétrie du BRST et les tests H11 déjà prouvés placent tout le cœur commun
+dans le domaine adjoint. Sa densité prouve la fermabilité de la somme.
+
+`DiffeomorphismAugmentedMinimal4D` construit sa fermeture minimale : graphe
+fermé, domaine dense, cœur lisse original et adjoint inchangé. Le graphe
+contient exactement les couples lisses source L2 / sortie de
+`strongAugmentedRiesz`, sans hypothèse terminale d'intertwining.
+
+`ClosedColumnTargetQuotient4D` donne le transport général d'une colonne
+fermée dont les sorties sont orthogonales au sous-espace quotienté.
+`DiffeomorphismAugmentedClosedQuotient4D` l'applique à la colonne complète.
+Sous les conditions existantes `hZero`, `hMetric`, `hWeights` (fond LL nul,
+métriques plus/minus égales, somme des poids cinétiques nulle), toutes les
+sorties fermées sont orthogonales au noyau joint fantômes–LL. La réalisation
+quotientée conserve le domaine dense et réalise la colonne actual projetée.
+Son graphe se relève exactement dans le graphe réel ; son noyau est inchangé.
+
+Cette étape construit une colonne BRST réelle fermée avec H11 et sa réduction.
+Le certificat global actual→D9 reste ouvert ; T12 reste non coché.
+
+Validation : quatre modules, audit des 31 déclarations et hub T12 verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des modules : 4058, 4007, 1930 et 4220 Mo ; audit : 3924 Mo ; hub : 4026 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
