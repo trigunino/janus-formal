@@ -283,6 +283,105 @@ theorem abelianConstantReducedOperator_fredholm_iff :
       plusBase minusBase hBase hCenter physical)).trans
     (P0EFTJanusProgramPT12NullQuotientFredholm4D.selfAdjoint_fredholm_iff _ hSelf)
 
+/-- Remove the eight constructed ghost/weighted-antighost modes. -/
+def abelianConstantPairNullSpace : Submodule Real (CandidateAAbelianMixedHilbert period hPeriod data) :=
+  (constantPairMixed period hPeriod configuration data).range
+
+instance abelianConstantPairNullSpace_finite : FiniteDimensional Real
+    (abelianConstantPairNullSpace period hPeriod configuration data) :=
+  inferInstanceAs (FiniteDimensional Real (constantPairMixed period hPeriod configuration data).range)
+
+instance abelianConstantPairNullSpace_closed : IsClosed
+    (abelianConstantPairNullSpace period hPeriod configuration data : Set (CandidateAAbelianMixedHilbert period hPeriod data)) :=
+  Submodule.closed_of_finiteDimensional _
+
+theorem abelianConstantPairNullSpace_finrank :
+    Module.finrank Real (abelianConstantPairNullSpace period hPeriod configuration data) = 8 := by
+  change Module.finrank Real (constantPairMixed period hPeriod configuration data).range = 8
+  rw [LinearMap.finrank_range_of_inj (constantPairMixed_injective period hPeriod configuration data)]
+  rw [← LinearMap.finrank_range_of_inj (constantPairBRSTKernel_injective period hPeriod data)]
+  exact constantPairBRSTKernel_range_finrank period hPeriod data
+
+theorem abelianConstantPairNullSpace_graph : ∀ vector ∈ abelianConstantPairNullSpace period hPeriod configuration data,
+    (vector, (0 : CandidateAAbelianMixedHilbert period hPeriod data)) ∈
+      (candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+        plusBase minusBase hBase hCenter physical).graph := by
+  rintro _ ⟨value, rfl⟩
+  exact constantPairMixed_augmented_graph period hPeriod configuration data analysis realization
+    plusBase minusBase hBase hCenter physical value
+
+local instance constantPairQuotientComplete : CompleteSpace
+    (CandidateAAbelianMixedHilbert period hPeriod data ⧸ abelianConstantPairNullSpace period hPeriod configuration data) :=
+  inferInstance
+
+local instance constantPairQuotientInner : InnerProductSpace Real
+    (CandidateAAbelianMixedHilbert period hPeriod data ⧸ abelianConstantPairNullSpace period hPeriod configuration data) :=
+  inferInstance
+
+def abelianConstantPairReducedOperator :
+    (CandidateAAbelianMixedHilbert period hPeriod data ⧸ abelianConstantPairNullSpace period hPeriod configuration data) →ₗ.[Real]
+    (CandidateAAbelianMixedHilbert period hPeriod data ⧸ abelianConstantPairNullSpace period hPeriod configuration data) :=
+  quotientPMap (candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+    plusBase minusBase hBase hCenter physical) (abelianConstantPairNullSpace period hPeriod configuration data)
+
+theorem abelianConstantPairReducedOperator_selfAdjoint : IsSelfAdjoint
+    (abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical) :=
+  quotientPMap_selfAdjoint _ _
+    (candidateAAbelianMixedAugmentedOperator_selfAdjoint period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical)
+    (abelianConstantPairNullSpace_graph period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical)
+
+theorem abelianConstantPairReducedOperator_domain :
+    (abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical).domain =
+    (candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical).domain.map
+      (abelianConstantPairNullSpace period hPeriod configuration data).mkQ :=
+  quotientPMap_domain _ _
+    (augmented_symmetric period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical)
+    (abelianConstantPairNullSpace_graph period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical)
+
+theorem abelianConstantPairReducedOperator_pairing
+    (vector : (candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical).domain)
+    (test : CandidateAAbelianMixedHilbert period hPeriod data)
+    (hDomain : (abelianConstantPairNullSpace period hPeriod configuration data).mkQ vector.val ∈
+      (abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+        plusBase minusBase hBase hCenter physical).domain) :
+    inner Real ((abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical)
+        ⟨(abelianConstantPairNullSpace period hPeriod configuration data).mkQ vector.val, hDomain⟩)
+      ((abelianConstantPairNullSpace period hPeriod configuration data).mkQ test) =
+    inner Real ((candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical) vector) test :=
+  quotientPMap_pairing _ _
+    (augmented_symmetric period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical)
+    (abelianConstantPairNullSpace_graph period hPeriod configuration data analysis realization plusBase minusBase hBase hCenter physical)
+    vector test hDomain
+
+/- The finite null quotient preserves all Fredholm obligations. The two genuine
+analytic requirements remain on the actual augmented operator. -/
+theorem abelianConstantPairReducedOperator_fredholm_iff :
+    let original := candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    let reduced := abelianConstantPairReducedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+    (IsClosed (LinearMap.range reduced.toFun : Set
+        (CandidateAAbelianMixedHilbert period hPeriod data ⧸ abelianConstantPairNullSpace period hPeriod configuration data)) ∧
+      FiniteDimensional Real (LinearMap.ker reduced.toFun) ∧
+      FiniteDimensional Real ((CandidateAAbelianMixedHilbert period hPeriod data ⧸
+        abelianConstantPairNullSpace period hPeriod configuration data) ⧸ LinearMap.range reduced.toFun)) ↔
+    (IsClosed (LinearMap.range original.toFun : Set (CandidateAAbelianMixedHilbert period hPeriod data)) ∧
+      FiniteDimensional Real (LinearMap.ker original.toFun)) := by
+  have hSelf := candidateAAbelianMixedAugmentedOperator_selfAdjoint period hPeriod configuration data analysis realization
+    plusBase minusBase hBase hCenter physical
+  exact (P0EFTJanusProgramPT12NullQuotientFredholm4D.quotientPMap_fredholm_iff _ hSelf _
+    (abelianConstantPairNullSpace_graph period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical)).trans
+    (P0EFTJanusProgramPT12NullQuotientFredholm4D.selfAdjoint_fredholm_iff _ hSelf)
+
 end
 end
 end P0EFTJanusProgramPT12AbelianConstantNullQuotient4D
