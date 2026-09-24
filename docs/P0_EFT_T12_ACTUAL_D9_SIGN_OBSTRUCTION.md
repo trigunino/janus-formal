@@ -3156,3 +3156,34 @@ la dépendance existante
 `JanusFormal.P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; T08 et les fichiers externes préservés.
+
+## 2026-09-24 — Assemblage du pairing H11 métrique
+
+`PhysicalMetricHessianReduction4D` retire exactement les Hessiennes Robin
+et BV finie par leur gradient localement nul. `StrongPhysicalBRSTMetricHessian4D`
+spécialise la réduction aux deux directions BRST réelles : interaction,
+Einstein plus/minus et Maxwell plus/minus, sans hypothèse de stationnarité.
+
+`StrongEinsteinMaxwellBRSTL24D` assemble les quatre blocs Einstein–Maxwell
+en un unique covecteur L2. `DiffeomorphismH11MetricPairing4D` raccorde ce
+résultat au véritable pairing H11 sur les tests métriques lisses :
+interaction native plus ce covecteur. La différence entre le pairing H11
+et l'interaction est bornée dans la norme métrique BRST.
+
+`StrongInteractionHessianPullback4D.strongInteractionActionHessian_eq_native`
+identifie ensuite la Hessienne d'interaction forte à celle de l'action C2
+paire, via la projection métrique réelle. L'admissibilité au centre et
+la régularité C2 sont dérivées des données existantes.
+
+Pour terminer cette colonne métrique, la borne L2 à établir est celle de
+cette interaction native. Le présent assemblage ne prouve donc pas encore
+l'appartenance des tests métriques au domaine adjoint complet. T12 reste
+non coché ; aucune hypothèse terminale d'intertwining n'est introduite.
+
+Validation : cinq gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3762, 4030, 3959, 4002 et 4297 Mo.
+Audit des 15 déclarations et hub T12 verts, pics 3914 et 4023 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et, pour les bornes L2,
+la seule dépendance IPP existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
