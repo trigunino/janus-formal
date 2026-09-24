@@ -3769,3 +3769,35 @@ spécialisations utilisant le noyau réel ou l'auto-adjonction conservent
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 Hub T12 vert (pic 4027 Mo) ; git diff --check OK.
+
+### 2026-09-24 — résolvante normale du FP réel, sans hypothèse de gap
+
+`ProjectedGraphCore4D` expose l'orthogonalité de la projection sur le vrai
+graphe fermé. `NormalGraphResolvent4D` en déduit R = (1 + A-adjoint A)^(-1),
+avec existence et unicité sur le domaine de la composition réelle.
+Pour v = R f, v appartient au domaine de A, Av appartient au domaine complet
+de A-adjoint et v + A-adjoint(Av) = f.
+
+Les estimations sont démontrées sans prémisse de coercivité :
+||v|| <= ||f|| et 2 ||Av|| <= ||f||. L'identité d'énergie est
+||v||^2 + ||Av||^2 = <f,v>. R est positif, auto-adjoint et de norme au plus
+un. Ses points fixes sont exactement les vecteurs du noyau ambiant de A.
+
+`CandidateAFPCanonicalClosed4D` construit cette résolvante pour le FP minimal
+installé, avec sa fermeture et son adjoint déjà prouvés. Les conclusions
+précédentes sont spécialisées, sans égalité minimal=maximal supposée.
+
+Portée : solvabilité et bornes inconditionnelles pour le problème normal
+avec le terme identité. La résolvante est auxiliaire ; elle ne remplace ni
+le Hessien signé ni sa cible terminale. Ces bornes ne prouvent pas encore
+le gap à zéro du FP, la borne résiduelle sur le quotient ou la finitude
+du noyau restant. T12 demeure ouvert ; Quillen et T08 inchangés.
+
+Validation : trois modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 2180, 2206 et 4145 Mo.
+Audit des 26 nouvelles déclarations : vert, pic 3893 Mo.
+Axiomes génériques : `propext`, `Classical.choice`, `Quot.sound` ; les sept
+spécialisations FP conservent également la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
