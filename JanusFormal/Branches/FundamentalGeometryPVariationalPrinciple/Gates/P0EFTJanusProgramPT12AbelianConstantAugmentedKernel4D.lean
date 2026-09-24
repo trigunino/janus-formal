@@ -239,6 +239,38 @@ theorem constantGhostMixedAugmentedKernel_range_finrank :
   rw [← LinearMap.finrank_range_of_inj (constantGhostBRSTKernel_injective period hPeriod data)]
   exact constantGhostBRSTKernel_range_finrank period hPeriod data
 
+def constantPairMixed : ((Sector → GaugeLieAlgebra) × (Sector → GaugeLieAlgebra)) →ₗ[Real]
+    CandidateAAbelianMixedHilbert period hPeriod data where
+  toFun value := WithLp.toLp 2 (0, constantPairBRST period hPeriod data value)
+  map_add' _ _ := by apply WithLp.ofLp_injective 2; exact Prod.ext (zero_add _).symm (map_add _ _ _)
+  map_smul' _ _ := by apply WithLp.ofLp_injective 2; exact Prod.ext (smul_zero _).symm (map_smul _ _ _)
+
+theorem constantPairMixed_injective : Function.Injective (constantPairMixed period hPeriod configuration data) := by
+  intro first second h
+  exact constantPairBRST_injective period hPeriod data (congrArg WithLp.snd h)
+
+theorem constantPairMixed_physicalColumn_zero
+    (value : (Sector → GaugeLieAlgebra) × (Sector → GaugeLieAlgebra)) :
+    candidateAAbelianMixedPhysicalColumn period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical (constantPairMixed period hPeriod configuration data value) = 0 :=
+  candidateAAbelianMixedPhysicalColumn_pureGhost_zero period hPeriod configuration data analysis realization
+    plusBase minusBase hBase hCenter physical _
+
+theorem constantPairMixed_augmented_graph
+    (value : (Sector → GaugeLieAlgebra) × (Sector → GaugeLieAlgebra)) :
+    (constantPairMixed period hPeriod configuration data value, 0) ∈
+      (candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+        plusBase minusBase hBase hCenter physical).graph := by
+  rw [candidateAAbelianMixedAugmentedOperator_eq_product]
+  exact (productOperator_mem_graph_iff _ _ _ _).mpr
+    ⟨Submodule.zero_mem _, constantPairBRST_graph period hPeriod data value⟩
+
+theorem constantPairMixed_range_finrank :
+    Module.finrank Real (constantPairMixed period hPeriod configuration data).range = 8 := by
+  rw [LinearMap.finrank_range_of_inj (constantPairMixed_injective period hPeriod configuration data)]
+  rw [← LinearMap.finrank_range_of_inj (constantPairBRSTKernel_injective period hPeriod data)]
+  exact constantPairBRSTKernel_range_finrank period hPeriod data
+
 end
 end
 end P0EFTJanusProgramPT12AbelianConstantAugmentedKernel4D
