@@ -3522,3 +3522,41 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 Quillen, T08 et fichiers externes préservés.
+
+## 2026-09-24 — Quatre modes constants BRST, H11 et quotient auto-adjoint
+
+`CandidateAAbelianConstantKernel4D` réalise les constantes du groupe abélien
+pairé dans le L2 géométrique réel. L'injection est fidèle. La formule réelle
+FP = delta_g d annule ces champs pour toute métrique fournie ; leur graphe
+appartient au FP minimal fermé, puis au BRST abélien auto-adjoint.
+L'image dans ce noyau a exactement quatre dimensions réelles.
+
+`AbelianConstantAugmentedKernel4D` insère ces mêmes champs dans le bloc mixte
+potentiel/B/antighost/ghost. Sa colonne H11 complète, à valeurs dans le Hilbert
+commun, est nulle sur ces champs : leur potentiel est nul. Les quatre modes
+restent donc dans le noyau du bloc abélien augmenté, sous les hypothèses
+existantes de réalisation forte et d'extension physique H11.
+
+`ClosedNullPMapSelfAdjoint4D` prouve que le quotient par un sous-espace fermé
+du noyau d'un opérateur auto-adjoint conserve l'auto-adjonction complète.
+La preuve utilise les graphes adjoints et leurs pairings ; ni finitude du
+noyau ni fermeture de l'image n'est supposée pour ce résultat.
+
+`AbelianConstantNullQuotient4D` applique ce résultat au sous-espace concret de
+ces quatre modes, prouvé fermé. L'opérateur augmenté descend sur le quotient
+avec son domaine projeté exact et le même pairing contre tout test projeté.
+Le quotient conserve la colonne H11 ; il ne remplace pas l'opérateur par un
+modèle modal abstrait et ne suppose aucun intertwiner terminal.
+
+Portée : quatre modes connus sont retirés. Aucune affirmation que le noyau
+entier se limite à ces constantes. La fermeture de l'image et la finitude des
+défauts restants, donc la propriété Fredholm globale, restent à démontrer.
+Le critère T12 demeure ouvert. Quillen et T08 ne sont pas modifiés.
+
+Validation : quatre modules et audit des 32 déclarations publiques verts sous
+`run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics : 3981, 1906, 4256 et 4128 Mo ; audit : 3931 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+Hub T12 vert (pic 4027 Mo) ; git diff --check OK.
