@@ -3454,3 +3454,35 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
+
+## 2026-09-24 — Densité spatiale explicite sur le mapping torus complet
+
+`MappingTorusScalarCoordinateFields4D` construit sept champs lisses réels :
+les trois coordonnées spatiales non réfléchies, les deux produits de la
+coordonnée réfléchie par les phases demi-fréquence cosinus/sinus, et les
+deux coordonnées du premier caractère temporel. Leur invariance respecte
+exactement la réflexion lors du recollement, pour une période positive.
+
+`MappingTorusScalarCoordinateDensity4D` prouve que ces coordonnées séparent
+tous les points du quotient. Leur algèbre polynomiale est lisse et uniformément
+dense par Stone-Weierstrass. `MappingTorusScalarCoordinateL24D` en déduit
+une réalisation dense dans le L2 scalaire de la mesure canonique, avec accord
+exact avec l'inclusion des champs lisses existante.
+
+`AbelianPolynomialDenseDomain4D` assemble ces polynômes sur les deux secteurs
+et les deux composantes de Lie. Leurs couples antighost/ghost sont denses
+dans le L2 abélien complet et appartiennent au domaine minimal BRST réel.
+Le graphe fournit exactement FP(ghost) et FP†(antighost), avec la métrique
+réelle. La restriction aux seuls paquets temporels est ainsi dépassée.
+
+Portée : densité L2 spatiale, pas encore densité pour la norme du graphe.
+Aucune égalité minimal/maximal ni diagonalisation de référence n'est supposée.
+Le transport modal global signé et le certificat terminal T12 restent ouverts.
+
+Validation : quatre modules, audit des 27 déclarations publiques et hub T12
+verts sous `run_lean_guarded`, Lean séquentiel, priorité haute, réserve 4096 Mo.
+Pics des modules : 3788, 3602, 3600 et 3925 Mo ; audit : 3897 Mo ; hub : 4026 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
