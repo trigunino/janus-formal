@@ -3312,3 +3312,38 @@ Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IP
 existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
+
+## 2026-09-24 — Réduction de la source L2 fantôme et de la cible commune
+
+`ClosedColumnSourceQuotient4D` construit le quotient de source d'une colonne
+fermée par un sous-espace fermé nul. Le graphe se relève orthogonalement ;
+le domaine est exactement l'image quotientée du domaine original et reste
+dense. Le résultat s'applique aux colonnes rectangulaires, sans supposer
+leur autoadjonction.
+
+`DiffeomorphismAugmentedGhostL2Null4D` construit le sous-espace fermé engendré
+par les vrais fantômes et antighosts partagés dans le L2 diffeomorphisme.
+Sous `hMetric` et `hWeights`, son graphe entier à sortie nulle appartient
+à la réalisation fermée BRST + H11. La preuve part de l'action augmentée
+réelle sur les fantômes lisses, puis utilise la fermeture du graphe.
+
+`DiffeomorphismAugmentedReducedL24D` compose ce quotient de source avec le
+quotient de cible fantômes–LL. La réalisation obtenue est fermée et, sous
+`hZero`, `hMetric`, `hWeights`, densément définie. Son domaine est exactement
+l'image du domaine réel fermé par la projection de source. Son graphe se
+relève des deux côtés dans le graphe réel. Les représentants lisses réels
+donnent la sortie augmentée projetée, et tous les fantômes lisses partagés
+ont désormais une classe source nulle. Les classes lisses forment un
+sous-espace dense du L2 source réduit.
+
+Cette réduction ne prouve pas la finitude du noyau résiduel ni l'accord
+avec les modes signés. Le certificat global T12 reste ouvert.
+
+Validation : trois modules, audit des 25 déclarations publiques (instance
+incluse) et hub T12 verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics des modules : 2165, 4085 et 4029 Mo ;
+audit : 3922 Mo ; hub : 4025 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et la seule dépendance IPP
+existante `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et fichiers externes préservés.
