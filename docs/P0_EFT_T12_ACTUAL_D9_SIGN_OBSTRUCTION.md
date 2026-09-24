@@ -4154,3 +4154,25 @@ pic 3920 Mo : 95 dépendent seulement de `propext`, `Classical.choice`,
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`, déjà présent.
 Aucun nouvel axiome, `sorry`/`admit`, ni augmentation des budgets.
 Hub T12 vert, pic 4051 Mo ; `git diff --check` OK. T12 non cochée.
+
+## Reprise : FP temporel réel, évaluations C2 et colonne B/B
+
+Quatorze modules supplémentaires composent le courant et la densité dans
+une même carte holonomique, puis prouvent FP = -f'' sur tout le quotient
+pour les quatre composantes temporelles périodiques. Les jets de latitude
+sont compatibles par calcul sur l'image lisse dense et fermeture ; les
+évaluations conjointes de g et Dg sont C2. Les coefficients tangents réels
+sont reconstruits sans base globale, et la contraction métrique induite
+est C2. Son identification au pullback lisse et l'action GHY restent à établir.
+
+Le bulk conserve toutes ses constantes et tous ses couplages dans la
+restriction B : S(jB B) = S(0) - P(B,B)/2, avec P donné par une vraie intégrale.
+Sa dérivée seconde donne H(jB B,jB C) = -P(B,C). Le Lorenz projeté continu
+est identifié au codifférentiel réel sur les potentiels lisses.
+
+Validation : quatorze modules verts, pic maximal 4189 Mo. Audit Lean gardé
+des 118 déclarations publiques vert, pic 3843 Mo : uniquement `propext`,
+`Classical.choice` et `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit`
+ni augmentation des budgets. T12 reste ouverte ; aucune propriété Fredholm
+ou fermeture terminale n'est déduite de ces résultats.
+Hub T12 vert, pic 4189 Mo ; `git diff --check` OK. Quillen et T08 inchangés.

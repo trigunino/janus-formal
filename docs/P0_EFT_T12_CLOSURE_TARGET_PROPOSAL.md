@@ -18,8 +18,19 @@ La reprise construit désormais `intrinsicBulkAction` sur un domaine ouvert
 contenant zéro, avec les couplages conservés, et sa vraie Hessienne symétrique
 `intrinsicBulkHessian`. Bulk et bord utilisent `finiteSmoothTangentFrame` ;
 le cœur C3 est fidèle sur sa projection C2. La base GHY à deux feuilles et
-les évaluations continues sur le graphe mobile sont construites. Cela ne
-constitue pas encore l'extension GHY conjointement C2 ni le raccord H11 global.
+les évaluations conjointement C2 de la métrique et de Dg sur le graphe mobile
+sont construites. Les tangentes sont reconstruites dans la famille redondante ;
+leur contraction métrique est C2. L'identification de cette contraction au
+pullback lisse, le domaine non nul et l'action GHY C2 restent à raccorder.
+Le raccord H11 global n'est pas encore obtenu.
+
+La restriction réelle du bulk aux champs B donne exactement
+`H(jB B,jB C) = -P(B,C)`, avec P défini par l'intégrale des champs.
+Le Lorenz projeté continu coïncide avec le codifférentiel géométrique sur
+les potentiels lisses. Pour les quatre composantes des ghosts temporels
+périodiques, le FP intrinsèque vaut exactement -f'' sur tout le quotient,
+par calcul du courant et de la densité dans les mêmes cartes réelles.
+Ces identités n'impliquent pas la propriété Fredholm globale.
 
 L'injectivité H1 vers L2 et les domaines minimaux H1 du FP et de son adjoint
 formel sont maintenant établis sans données vides. L'adjonction s'étend aux
