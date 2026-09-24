@@ -93,5 +93,44 @@ theorem canonicalFPFormalAdjoint_component_pairing
       change _ = field point component * (globalMetricVolumeRatio period hPeriod metric.metric point * _)
       ring)))
 
+theorem smoothGaugeWeight_metric_injective (metric : SmoothGeneralLorentzMetric period hPeriod) :
+    Function.Injective (smoothGaugeWeight period hPeriod (globalSmoothMetricVolumeRatio period hPeriod metric)) := by
+  intro first second h
+  apply SmoothQuotientField.ext period hPeriod GaugeLieAlgebra
+  intro point
+  have hp := congrArg (fun field : SmoothQuotientField period hPeriod GaugeLieAlgebra => field point) h
+  change globalMetricVolumeRatio period hPeriod metric point • first point =
+    globalMetricVolumeRatio period hPeriod metric point • second point at hp
+  exact (smul_right_injective _ (globalMetricVolumeRatio_pos period hPeriod metric point).ne') hp
+
+/-- Multiplication by the actual density conjugates FP to its canonical formal adjoint. -/
+theorem canonicalFPFormalAdjoint_weight (metric : SmoothGeneralLorentzMetric period hPeriod)
+    (field : SmoothQuotientField period hPeriod GaugeLieAlgebra) :
+    canonicalFPFormalAdjoint period hPeriod metric
+      (smoothGaugeWeight period hPeriod (globalSmoothMetricVolumeRatio period hPeriod metric) field) =
+    smoothGaugeWeight period hPeriod (globalSmoothMetricVolumeRatio period hPeriod metric)
+      (globalGeneralMetricAbelianFaddeevPopovLinearMap period hPeriod metric field) := by
+  have hCancel : smoothGaugeWeight period hPeriod (inverseSmoothMetricRatio period hPeriod metric)
+      (smoothGaugeWeight period hPeriod (globalSmoothMetricVolumeRatio period hPeriod metric) field) = field := by
+    apply SmoothQuotientField.ext period hPeriod GaugeLieAlgebra
+    intro point
+    change (globalMetricVolumeRatio period hPeriod metric point)⁻¹ •
+      (globalMetricVolumeRatio period hPeriod metric point • field point) = field point
+    rw [smul_smul, inv_mul_cancel₀ (globalMetricVolumeRatio_pos period hPeriod metric point).ne', one_smul]
+  change smoothGaugeWeight period hPeriod (globalSmoothMetricVolumeRatio period hPeriod metric)
+    (globalGeneralMetricAbelianFaddeevPopovLinearMap period hPeriod metric
+      (smoothGaugeWeight period hPeriod (inverseSmoothMetricRatio period hPeriod metric)
+        (smoothGaugeWeight period hPeriod (globalSmoothMetricVolumeRatio period hPeriod metric) field))) = _
+  rw [hCancel]
+
+theorem canonicalFPFormalAdjoint_weight_eq_zero_iff (metric : SmoothGeneralLorentzMetric period hPeriod)
+    (field : SmoothQuotientField period hPeriod GaugeLieAlgebra) :
+    canonicalFPFormalAdjoint period hPeriod metric
+      (smoothGaugeWeight period hPeriod (globalSmoothMetricVolumeRatio period hPeriod metric) field) = 0 ↔
+    globalGeneralMetricAbelianFaddeevPopovLinearMap period hPeriod metric field = 0 := by
+  rw [canonicalFPFormalAdjoint_weight]
+  exact (smoothGaugeWeight period hPeriod (globalSmoothMetricVolumeRatio period hPeriod metric)).map_eq_zero_iff
+    (smoothGaugeWeight_metric_injective period hPeriod metric)
+
 end
 end JanusFormal.P0EFTJanusProgramPT12FPCanonicalFormalAdjoint4D
