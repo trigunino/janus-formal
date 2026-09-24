@@ -6,6 +6,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12AbelianGhostRotationPhysical4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12AbelianGhostSmoothRotation4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12AbelianLorenzShearPhysical4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ProductFirstPerturbation4D
 
 /-! All H11 output sectors are retained by the continuous mixed abelian column. -/
 namespace JanusFormal
@@ -233,6 +234,68 @@ theorem candidateAAbelianMixedAugmentedOperator_smooth_actual
   congr 1
   exact (pairedAbelianSignedRiesz_pairing period hPeriod
     (globalCandidateAMetricBySector period hPeriod data) _ _).symm
+
+open P0EFTJanusProgramPT12ProductFirstPerturbation4D
+open P0EFTJanusProgramPT12ProductClosedOperator4D
+open P0EFTJanusProgramPT12ProductSelfAdjoint4D
+open P0EFTJanusProgramPT12BRSTSaddleProduct4D
+open P0EFTJanusProgramPT12CandidateAAbelianGhostSelfAdjoint4D
+
+theorem candidateAAbelianMixedPhysicalLift_pureGhost_zero
+    (ghost : CandidateAAbelianGhostL2 period hPeriod) :
+    candidateAAbelianMixedPhysicalLift period hPeriod configuration data analysis (WithLp.toLp 2 (0, ghost)) = 0 := by
+  change actualAbelianInclusion period hPeriod configuration data analysis
+    (abelianPotentialGraphInclusion period hPeriod (globalCandidateAMetricBySector period hPeriod data) 0) = 0
+  simp only [map_zero]
+
+/-- Every completed ghost vector has zero H11 column, not merely the constant modes. -/
+theorem candidateAAbelianMixedH11_pureGhost_zero
+    (ghost : CandidateAAbelianGhostL2 period hPeriod) :
+    candidateAAbelianMixedH11 period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical (WithLp.toLp 2 (0, ghost)) = 0 := by
+  change (candidateAAbelianMixedPhysicalLift period hPeriod configuration data analysis).adjoint
+    (strongPhysicalRiesz (measure := measure) period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical
+      (candidateAAbelianMixedPhysicalLift period hPeriod configuration data analysis (WithLp.toLp 2 (0, ghost)))) = 0
+  rw [candidateAAbelianMixedPhysicalLift_pureGhost_zero, map_zero, map_zero]
+
+abbrev CandidateAAbelianPotentialBHilbert := WithLp 2
+  (GlobalPairedAbelianLorenzGraphHilbert period hPeriod (globalCandidateAMetricBySector period hPeriod data) ×
+    GlobalPairedGaugeLieL2 period hPeriod)
+
+/-- The potential--B saddle, including its complete internal H11 perturbation. -/
+def candidateAAbelianPotentialBHessian :
+    CandidateAAbelianPotentialBHilbert period hPeriod configuration data →ₗ.[Real]
+      CandidateAAbelianPotentialBHilbert period hPeriod configuration data :=
+  boundedPerturbation
+    ((nonminimalSaddle (globalPairedAbelianLorenzFeatureProjection period hPeriod
+      (globalCandidateAMetricBySector period hPeriod data))).toPMap ⊤)
+    (firstCompression (candidateAAbelianMixedH11 period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical))
+
+theorem candidateAAbelianPotentialBHessian_domain :
+    (candidateAAbelianPotentialBHessian period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical).domain = ⊤ := rfl
+
+theorem candidateAAbelianPotentialBHessian_selfAdjoint : IsSelfAdjoint
+    (candidateAAbelianPotentialBHessian period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical) :=
+  boundedPerturbation_selfAdjoint _ _
+    (bounded_toPMap_selfAdjoint _ (nonminimalSaddle_symmetric _))
+    (firstCompression_selfAdjoint _ (candidateAAbelianMixedH11_selfAdjoint period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical))
+
+/-- Exact operator equality on the full domains: H11 leaves the actual FP/FP-adjoint block unchanged. -/
+theorem candidateAAbelianMixedAugmentedOperator_eq_product :
+    candidateAAbelianMixedAugmentedOperator period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical =
+    productOperator (candidateAAbelianPotentialBHessian period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical) (candidateAAbelianGhostOperator period hPeriod data) :=
+  product_firstPerturbation _
+    (candidateAAbelianMixedH11_selfAdjoint period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical)
+    (candidateAAbelianMixedH11_pureGhost_zero period hPeriod configuration data analysis realization
+      plusBase minusBase hBase hCenter physical) _ _
 
 end
 end
