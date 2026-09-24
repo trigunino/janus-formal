@@ -1,6 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAFPCanonicalAdjoint4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12OffDiagonalSelfAdjoint4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12OffDiagonalFredholm4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NormalDefectClosedRange4D
 
 /-! The actual abelian ghost block on canonical L2, with its full adjoint domain. -/
 namespace JanusFormal
@@ -190,6 +191,49 @@ theorem candidateAAbelianGhostOperator_fredholm_iff :
     (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
     (candidateAFPCanonicalMinimal_dense_domain period hPeriod data)
     (candidateAFPCanonicalAdjoint_dense_domain period hPeriod data)
+
+open P0EFTJanusProgramPT12NormalResolventDefect4D
+open P0EFTJanusProgramPT12NormalDefectClosedRange4D
+
+def candidateAFPNormalDefect : GlobalPairedGaugeLieL2 period hPeriod →L[Real]
+    GlobalPairedGaugeLieL2 period hPeriod :=
+  normalDefect (candidateAFPCanonicalMinimal period hPeriod data)
+    (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+
+def candidateAFPAdjointNormalDefect : GlobalPairedGaugeLieL2 period hPeriod →L[Real]
+    GlobalPairedGaugeLieL2 period hPeriod :=
+  normalDefect (candidateAFPCanonicalMinimal period hPeriod data).adjoint
+    (LinearPMap.adjoint_isClosed (candidateAFPCanonicalMinimal_dense_domain period hPeriod data))
+
+theorem candidateAFPNormalDefects_selfAdjoint :
+    IsSelfAdjoint (candidateAFPNormalDefect period hPeriod data) ∧
+    IsSelfAdjoint (candidateAFPAdjointNormalDefect period hPeriod data) :=
+  ⟨normalDefect_selfAdjoint _ _, normalDefect_selfAdjoint _ _⟩
+
+theorem candidateAFPNormalDefects_bounds (u : GlobalPairedGaugeLieL2 period hPeriod) :
+    (0 ≤ inner Real u (candidateAFPNormalDefect period hPeriod data u) ∧
+      ‖candidateAFPNormalDefect period hPeriod data u‖ ≤ ‖u‖) ∧
+    (0 ≤ inner Real u (candidateAFPAdjointNormalDefect period hPeriod data u) ∧
+      ‖candidateAFPAdjointNormalDefect period hPeriod data u‖ ≤ ‖u‖) :=
+  ⟨⟨normalDefect_nonnegative _ _ u, normalDefect_norm_le _ _ u⟩,
+    ⟨normalDefect_nonnegative _ _ u, normalDefect_norm_le _ _ u⟩⟩
+
+/-- Exact reduction to two bounded operators derived from the real FP and full adjoint. -/
+theorem candidateAAbelianGhostOperator_fredholm_iff_normalDefects :
+    let ghost := candidateAAbelianGhostOperator period hPeriod data
+    (IsClosed (LinearMap.range ghost.toFun : Set (CandidateAAbelianGhostL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker ghost.toFun) ∧
+      FiniteDimensional Real (CandidateAAbelianGhostL2 period hPeriod ⧸ LinearMap.range ghost.toFun)) ↔
+    (IsClosed (LinearMap.range (candidateAFPNormalDefect period hPeriod data).toLinearMap :
+        Set (GlobalPairedGaugeLieL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker (candidateAFPNormalDefect period hPeriod data).toLinearMap) ∧
+      FiniteDimensional Real (LinearMap.ker (candidateAFPAdjointNormalDefect period hPeriod data).toLinearMap)) := by
+  dsimp only [candidateAFPNormalDefect, candidateAFPAdjointNormalDefect]
+  rw [normalDefect_range_isClosed_iff _ _
+    (candidateAFPCanonicalMinimal_dense_domain period hPeriod data)
+    (candidateAFPCanonicalAdjoint_dense_domain period hPeriod data),
+    normalDefect_kernel_finite_iff, normalDefect_kernel_finite_iff]
+  exact candidateAAbelianGhostOperator_fredholm_iff period hPeriod data
 
 end
 end P0EFTJanusProgramPT12CandidateAAbelianGhostSelfAdjoint4D
