@@ -3048,3 +3048,38 @@ natif de Stokes déjà présent
 `P0EFTJanusMappingTorusCanonicalTenFlowIPP4D.canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; T08 et les fichiers externes préservés.
+## 2026-09-24 — Accélération du transport Maxwell et Hessien BRST métrique
+
+`BilinearHessian4D` prouve les quatre termes de la dérivée seconde
+bilinéaire. `C2RootHessian4D` différentie l'identité réelle de la branche
+racine C² : au centre, son Hessien vaut `-(1/8) • (HK + KH)`.
+Les deux ordres matriciels sont conservés, sans commutation supposée.
+
+`MobileGaugeTransportHessian4D` transporte cette accélération au paquet
+de jauge fixe, puis au cœur métrique complété natif. `GraphHessian4D`
+isole le calcul des dérivées d'une carte graphe ; `MobileMetricChartHessian4D`
+l'applique à la vraie carte `(variation, transport variation coefficients)`.
+Sa vitesse est `(h, (1/2) Hᵀa)` et son accélération n'a qu'une composante
+jauge, donnée par la racine précédente.
+
+`MaxwellMetricHessianTransport4D` identifie exactement l'entrée
+métrique–métrique du Hessien mobile natif avec le Hessien à repère fixe
+sur les deux vitesses transportées, plus le gradient à repère fixe
+appliqué à l'accélération. Ce dernier terme n'est pas supprimé ; aucune
+stationnarité du fond n'est postulée.
+
+`StrongMaxwellBRSTMetricHessian4D` raccorde cette formule aux deux blocs
+Maxwell réels sur les inclusions BRST difféomorphes, avec leurs facteurs
+de couplage respectifs. Il ne s'agit pas d'une hypothèse d'accord ajoutée.
+
+Il reste à réaliser cette formule Maxwell comme covecteur L2 métrique,
+puis à assembler les blocs physiques restants pour H11 métrique,
+établir la densité du domaine adjoint et le certificat global actual→D9.
+La présente étape établit le Hessien et son transport, pas encore sa
+borne L2 métrique. T12 reste non coché ; Quillen n'est pas refait.
+Validation : sept gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 1790, 3896, 4135, 1790, 4130,
+4152 et 4231 Mo. Audit des 21 déclarations et hub T12 verts, pics
+3914 et 4023 Mo. Axiomes : uniquement `propext`, `Classical.choice`,
+`Quot.sound`. Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
