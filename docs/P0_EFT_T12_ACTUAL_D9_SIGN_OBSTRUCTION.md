@@ -3639,39 +3639,6 @@ spécialisé conserve en plus la dépendance IPP préexistante
 Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
 
-### 2026-09-24 — réduction exacte du BRST abélien aux défauts bornés
-
-`NormalResolventDefect4D` construit B = I - R à partir de la résolvante
-normale du véritable opérateur fermé A. B est positif, auto-adjoint et
-contractant. Son noyau est linéairement équivalent à celui de A ; sur le
-domaine de A, B u = (A R)-adjoint(Au) et 2 ||Bu|| <= ||Au||.
-Son image est exactement celle de A-adjoint A sur le domaine composé.
-
-`NormalDefectClosedRange4D` prouve que l'image de B est fermée si et seulement
-si celle de A est fermée, lorsque A et son adjoint ont des domaines denses.
-Dans ce cas, l'image de B est celle de A-adjoint. La finitude du noyau de B
-équivaut également à celle du noyau de A.
-
-`CandidateAAbelianGhostSelfAdjoint4D` spécialise ces constructions au FP
-minimal réel et à son adjoint complet. La propriété Fredholm du bloc ghost
-est exactement équivalente à : image fermée du défaut FP, noyau fini de ce
-défaut et noyau fini du défaut associé à l'adjoint.
-Cette réduction n'ajoute aucune hypothèse analytique et n'identifie pas les
-domaines minimal et maximal. Les défauts bornés sont auxiliaires ; le Hessien
-signé et sa cible terminale restent inchangés.
-
-Les trois conditions ne sont pas encore établies pour le FP réel : aucune
-fermeture de T12 n'est revendiquée. Quillen et T08 inchangés.
-
-Validation : trois modules verts sous `run_lean_guarded`, Lean séquentiel,
-priorité haute, réserve 4096 Mo. Pics : 2189, 2191 et 3921 Mo.
-Audit des 20 nouvelles déclarations : vert, pic 3897 Mo.
-Axiomes : `propext`, `Classical.choice`, `Quot.sound` ; quatre spécialisations
-conservent la dépendance IPP préexistante
-`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
-Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
-Hub T12 vert (pic 4029 Mo) ; git diff --check OK.
-
 ### 2026-09-24 — image fermée de FP et de son adjoint
 
 `ClosedRangeAdjoint4D` prouve le théorème d'image fermée pour les opérateurs
@@ -3834,3 +3801,36 @@ spécialisations FP conservent également la dépendance IPP préexistante
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
+
+### 2026-09-24 — réduction exacte du BRST abélien aux défauts bornés
+
+`NormalResolventDefect4D` construit B = I - R à partir de la résolvante
+normale du véritable opérateur fermé A. B est positif, auto-adjoint et
+contractant. Son noyau est linéairement équivalent à celui de A ; sur le
+domaine de A, B u = (A R)-adjoint(Au) et 2 ||Bu|| <= ||Au||.
+Son image est exactement celle de A-adjoint A sur le domaine composé.
+
+`NormalDefectClosedRange4D` prouve que l'image de B est fermée si et seulement
+si celle de A est fermée, lorsque A et son adjoint ont des domaines denses.
+Dans ce cas, l'image de B est celle de A-adjoint. La finitude du noyau de B
+équivaut également à celle du noyau de A.
+
+`CandidateAAbelianGhostSelfAdjoint4D` spécialise ces constructions au FP
+minimal réel et à son adjoint complet. La propriété Fredholm du bloc ghost
+est exactement équivalente à : image fermée du défaut FP, noyau fini de ce
+défaut et noyau fini du défaut associé à l'adjoint.
+Cette réduction n'ajoute aucune hypothèse analytique et n'identifie pas les
+domaines minimal et maximal. Les défauts bornés sont auxiliaires ; le Hessien
+signé et sa cible terminale restent inchangés.
+
+Les trois conditions ne sont pas encore établies pour le FP réel : aucune
+fermeture de T12 n'est revendiquée. Quillen et T08 inchangés.
+
+Validation : trois modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 2189, 2191 et 3921 Mo.
+Audit des 20 nouvelles déclarations : vert, pic 3897 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` ; quatre spécialisations
+conservent la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert (pic 4029 Mo) ; git diff --check OK.
