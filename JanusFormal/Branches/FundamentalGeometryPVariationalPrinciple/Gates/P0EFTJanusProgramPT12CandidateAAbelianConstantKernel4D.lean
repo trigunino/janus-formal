@@ -196,6 +196,106 @@ theorem constantGhostBRSTKernel_range_finrank :
   simp [Module.finrank_pi_fintype, GaugeLieAlgebra,
     P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.GhostFiber, hCard]
 
+open P0EFTJanusMappingTorusFrameFreeRelativeLorentzVolume4D
+
+/-- The canonical antighost zero modes carry the actual metric volume density. -/
+def pairedWeightedConstantAntighost
+    (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) :
+    (Sector → GaugeLieAlgebra) →ₗ[Real] GlobalPairedGaugeLieSmooth period hPeriod where
+  toFun value sector := smoothGaugeWeight period hPeriod
+    (globalSmoothMetricVolumeRatio period hPeriod (metric sector))
+    (pairedConstantGhost period hPeriod value sector)
+  map_add' _ _ := by funext sector; simp only [map_add, Pi.add_apply]
+  map_smul' _ _ := by funext sector; simp only [map_smul, Pi.smul_apply, RingHom.id_apply]
+
+theorem pairedWeightedConstantAntighost_injective
+    (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) :
+    Function.Injective (pairedWeightedConstantAntighost period hPeriod metric) := by
+  intro first second h
+  apply pairedConstantGhost_injective period hPeriod
+  funext sector
+  exact smoothGaugeWeight_metric_injective period hPeriod (metric sector)
+    (congrArg (fun field => field sector) h)
+
+theorem pairedWeightedConstantAntighost_adjoint_zero
+    (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) (value : Sector → GaugeLieAlgebra) :
+    pairedFPCanonicalAdjointL2 period hPeriod metric
+      (pairedWeightedConstantAntighost period hPeriod metric value) = 0 := by
+  have hSmooth : pairedFPCanonicalAdjointSmooth period hPeriod metric
+      (pairedWeightedConstantAntighost period hPeriod metric value) = 0 := by
+    funext sector
+    apply (canonicalFPFormalAdjoint_weight_eq_zero_iff period hPeriod (metric sector) _).mpr
+    change globalGeneralMetricAbelianLorenzCodifferentialLinearMap period hPeriod (metric sector)
+      (exactGaugePotential period hPeriod (constantGhost period hPeriod (value sector))) = 0
+    rw [exactGaugePotential_constantGhost, map_zero]
+  change globalPairedGaugeLieL2LinearMap period hPeriod
+    (pairedFPCanonicalAdjointSmooth period hPeriod metric _) = 0
+  rw [hSmooth, map_zero]
+
+def pairedWeightedConstantAntighostL2
+    (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) :
+    (Sector → GaugeLieAlgebra) →ₗ[Real] GlobalPairedGaugeLieL2 period hPeriod :=
+  (globalPairedGaugeLieL2LinearMap period hPeriod).comp
+    (pairedWeightedConstantAntighost period hPeriod metric)
+
+theorem pairedWeightedConstantAntighostL2_injective
+    (metric : Sector → SmoothGeneralLorentzMetric period hPeriod) :
+    Function.Injective (pairedWeightedConstantAntighostL2 period hPeriod metric) :=
+  (globalPairedGaugeLieL2LinearMap_injective period hPeriod).comp
+    (pairedWeightedConstantAntighost_injective period hPeriod metric)
+
+theorem pairedWeightedConstantAntighost_adjoint_graph (value : Sector → GaugeLieAlgebra) :
+    (pairedWeightedConstantAntighostL2 period hPeriod
+      (globalCandidateAMetricBySector period hPeriod data) value, 0) ∈
+      (candidateAFPCanonicalMinimal period hPeriod data).adjoint.graph := by
+  have h := (candidateAFPCanonicalMinimal period hPeriod data).adjoint.mem_graph
+    ⟨_, candidateAFPCanonicalAdjoint_smooth_mem period hPeriod data
+      (pairedWeightedConstantAntighost period hPeriod (globalCandidateAMetricBySector period hPeriod data) value)⟩
+  rw [candidateAFPCanonicalAdjoint_smooth_apply, pairedWeightedConstantAntighost_adjoint_zero] at h
+  exact h
+
+def constantPairBRST : ((Sector → GaugeLieAlgebra) × (Sector → GaugeLieAlgebra)) →ₗ[Real]
+    CandidateAAbelianGhostL2 period hPeriod :=
+  (WithLp.prodContinuousLinearEquiv 2 Real
+    (GlobalPairedGaugeLieL2 period hPeriod) (GlobalPairedGaugeLieL2 period hPeriod)).symm.toLinearMap.comp
+    ((pairedWeightedConstantAntighostL2 period hPeriod (globalCandidateAMetricBySector period hPeriod data)).prodMap
+      (pairedConstantGhostL2 period hPeriod))
+
+theorem constantPairBRST_injective : Function.Injective (constantPairBRST period hPeriod data) := by
+  intro first second h
+  exact Prod.ext
+    (pairedWeightedConstantAntighostL2_injective period hPeriod _ (congrArg WithLp.fst h))
+    (pairedConstantGhostL2_injective period hPeriod (congrArg WithLp.snd h))
+
+theorem constantPairBRST_graph (value : (Sector → GaugeLieAlgebra) × (Sector → GaugeLieAlgebra)) :
+    (constantPairBRST period hPeriod data value, 0) ∈
+      (candidateAAbelianGhostOperator period hPeriod data).graph :=
+  (offDiagonalOperator_mem_graph_iff _ _ _ _).mpr
+    ⟨pairedConstantGhost_minimal_graph period hPeriod data value.2,
+      pairedWeightedConstantAntighost_adjoint_graph period hPeriod data value.1⟩
+
+def constantPairBRSTKernel : ((Sector → GaugeLieAlgebra) × (Sector → GaugeLieAlgebra)) →ₗ[Real]
+    LinearMap.ker (candidateAAbelianGhostOperator period hPeriod data).toFun where
+  toFun value := ⟨⟨constantPairBRST period hPeriod data value,
+    LinearPMap.mem_domain_of_mem_graph (constantPairBRST_graph period hPeriod data value)⟩,
+      (candidateAAbelianGhostOperator period hPeriod data).mem_graph_snd_inj
+        ((candidateAAbelianGhostOperator period hPeriod data).mem_graph _)
+        (constantPairBRST_graph period hPeriod data value) rfl⟩
+  map_add' _ _ := by apply Subtype.ext; apply Subtype.ext; exact map_add _ _ _
+  map_smul' _ _ := by apply Subtype.ext; apply Subtype.ext; exact map_smul _ _ _
+
+theorem constantPairBRSTKernel_injective : Function.Injective (constantPairBRSTKernel period hPeriod data) := by
+  intro first second h
+  exact constantPairBRST_injective period hPeriod data (congrArg (fun state => state.val.val) h)
+
+/-- Eight independent actual zero modes; no claim that these exhaust the kernel. -/
+theorem constantPairBRSTKernel_range_finrank :
+    Module.finrank Real (constantPairBRSTKernel period hPeriod data).range = 8 := by
+  rw [LinearMap.finrank_range_of_inj (constantPairBRSTKernel_injective period hPeriod data)]
+  have hCard : Fintype.card Sector = 2 := by decide
+  simp [Module.finrank_prod, Module.finrank_pi_fintype, GaugeLieAlgebra,
+    P0EFTJanusMappingTorusSmoothGlobalFieldConfiguration4D.GhostFiber, hCard]
+
 end
 end P0EFTJanusProgramPT12CandidateAAbelianConstantKernel4D
 end JanusFormal
