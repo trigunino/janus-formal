@@ -3701,3 +3701,35 @@ IPP préexistante `canonicalFlowIndex_card._native.native_decide.ax_1_1`
 lorsque les domaines adjoints ou l'auto-adjonction sont utilisés.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert (pic 4023 Mo) ; git diff --check OK.
+
+### 2026-09-24 — critère analytique par observations finies
+
+`FiniteObservationEstimate4D` démontre que, pour un opérateur fermé A,
+une borne ||u|| <= C (||Au|| + ||J u||), avec J continu à valeurs dans
+un espace de dimension finie, entraîne image fermée et noyau fini.
+La preuve travaille sur le graphe Banach de A : l'application augmentée
+(A,J) est minorée ; sa projection conserve l'image fermée grâce à la
+correction de dimension finie. J est injectif sur le noyau de A.
+Pour A auto-adjoint, le cokernel fini en découle également.
+
+`GraphClosureEstimate4D` transporte cette borne depuis le vrai graphe
+lisse vers sa fermeture. `candidateAFPCanonicalMinimal_finite_observation`
+applique ce résultat au FP réel, avec ses métriques et sa mesure installées.
+La seule densité L2 ne sert pas de substitut à la fermeture du graphe.
+
+`abelianConstantPairReducedOperator_fredholm_of_estimate` applique le
+critère au quotient réel par les huit modes, avec H11 et son domaine exact.
+Ce sont des critères suffisants prouvés, pas une estimation géométrique
+établie : aucun J ni C satisfaisant la borne n'est encore construit pour
+le problème global. La borne reste explicite dans les prémisses, sans
+certificat terminal conditionnel ni changement du statut T12.
+Quillen et T08 inchangés.
+
+Validation : quatre modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 1934, 2162, 3910 et 4306 Mo.
+Audit des six nouvelles déclarations publiques : vert, pic 3932 Mo.
+Axiomes génériques : `propext`, `Classical.choice`, `Quot.sound` ; les deux
+spécialisations conservent la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert (pic 4026 Mo) ; git diff --check OK.
