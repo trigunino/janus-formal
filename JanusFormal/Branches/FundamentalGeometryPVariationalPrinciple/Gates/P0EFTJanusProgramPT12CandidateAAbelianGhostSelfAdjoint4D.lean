@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12CandidateAFPCanonicalAdjoint4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12OffDiagonalSelfAdjoint4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12OffDiagonalFredholm4D
 
 /-! The actual abelian ghost block on canonical L2, with its full adjoint domain. -/
 namespace JanusFormal
@@ -163,6 +164,32 @@ theorem candidateAAbelianGhostOperator_smooth_apply
   exact congrArg (WithLp.toLp 2) (Prod.ext
     (candidateAFPCanonicalMinimal_smooth_apply period hPeriod data ghost)
     (candidateAFPCanonicalAdjoint_smooth_apply period hPeriod data antighost))
+
+/-- The adjoint introduces no independent closed-range obligation. -/
+theorem candidateAAbelianGhostOperator_range_isClosed_iff :
+    IsClosed (LinearMap.range (candidateAAbelianGhostOperator period hPeriod data).toFun :
+      Set (CandidateAAbelianGhostL2 period hPeriod)) ↔
+    IsClosed (LinearMap.range (candidateAFPCanonicalMinimal period hPeriod data).toFun :
+      Set (GlobalPairedGaugeLieL2 period hPeriod)) :=
+  P0EFTJanusProgramPT12OffDiagonalFredholm4D.offDiagonalAdjoint_range_isClosed_iff _
+    (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+    (candidateAFPCanonicalMinimal_dense_domain period hPeriod data)
+    (candidateAFPCanonicalAdjoint_dense_domain period hPeriod data)
+
+/-- Exact remaining FP conditions, without identifying minimal and maximal domains. -/
+theorem candidateAAbelianGhostOperator_fredholm_iff :
+    let ghost := candidateAAbelianGhostOperator period hPeriod data
+    let fp := candidateAFPCanonicalMinimal period hPeriod data
+    (IsClosed (LinearMap.range ghost.toFun : Set (CandidateAAbelianGhostL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker ghost.toFun) ∧
+      FiniteDimensional Real (CandidateAAbelianGhostL2 period hPeriod ⧸ LinearMap.range ghost.toFun)) ↔
+    (IsClosed (LinearMap.range fp.toFun : Set (GlobalPairedGaugeLieL2 period hPeriod)) ∧
+      FiniteDimensional Real (LinearMap.ker fp.toFun) ∧
+      FiniteDimensional Real (LinearMap.ker fp.adjoint.toFun)) :=
+  P0EFTJanusProgramPT12OffDiagonalFredholm4D.offDiagonalAdjoint_fredholm_iff _
+    (candidateAFPCanonicalMinimal_isClosed period hPeriod data)
+    (candidateAFPCanonicalMinimal_dense_domain period hPeriod data)
+    (candidateAFPCanonicalAdjoint_dense_domain period hPeriod data)
 
 end
 end P0EFTJanusProgramPT12CandidateAAbelianGhostSelfAdjoint4D
