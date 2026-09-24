@@ -3861,3 +3861,37 @@ Audit des sept nouvelles déclarations : vert, pic 3933 Mo ; dépendances
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
+
+### 2026-09-24 — inverse non décalé du FP sur son image réelle
+
+`MinimalNormInverse4D` construit l'inverse partiel dont le graphe est donné
+par Au = f et u orthogonal au noyau ambiant complet de A. Pour A fermé,
+ce graphe est fermé et son domaine est exactement l'image de A, même si
+cette image n'est pas fermée. Sur toute solution v de Av = f, l'inverse
+renvoie la projection de v sur l'orthogonal du noyau, de norme au plus ||v||.
+
+`CandidateAFPCanonicalClosed4D` installe cette construction pour le FP minimal
+réel : chaque second membre de son image possède la solution choisie,
+dans le vrai domaine du FP, avec la propriété de norme minimale.
+Aucune identification des domaines minimal et maximal n'est utilisée.
+
+`MinimalNormInverseBound4D` prouve que l'image de A est fermée si et seulement
+si l'inverse construit satisfait ||I f|| <= C ||f|| pour une constante C
+uniforme sur son domaine. Le sens direct utilise le théorème du graphe fermé ;
+le sens réciproque utilise la complétude du graphe de I et la projection
+antilipschitzienne sur la première composante.
+
+`CandidateAAbelianGhostSelfAdjoint4D` raccorde cette équivalence au critère
+BRST réel : bornitude de cet inverse FP et finitude du noyau adjoint.
+La borne ||I f|| <= ||v|| pour chaque solution v ne fournit pas la borne
+uniforme en ||f||. Cette dernière et la finitude du noyau adjoint restent
+à démontrer. T12 reste ouvert ; Quillen et T08 inchangés.
+
+Validation : quatre modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 2181, 3924, 2191 et 4179 Mo.
+Audit des 18 nouvelles déclarations : vert, pic 3891 Mo ; dépendances
+`propext`, `Classical.choice`, `Quot.sound`. Quatre théorèmes spécialisés
+conservent également la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
+Hub T12 vert (pic 4028 Mo) ; git diff --check OK.
