@@ -3733,3 +3733,39 @@ spécialisations conservent la dépendance IPP préexistante
 `canonicalFlowIndex_card._native.native_decide.ax_1_1`.
 Aucun nouvel axiome, `sorry`/`admit` ni augmentation des budgets.
 Hub T12 vert (pic 4026 Mo) ; git diff --check OK.
+
+### 2026-09-24 — observation canonique des huit modes et contrôle des normes
+
+`NullQuotientObservation4D` construit l'observation d'un sous-espace nul
+fermé par projection orthogonale. Il prouve l'identité exacte : norme au
+carré du champ = norme au carré de sa classe quotient + norme au carré de
+son observation. Le relèvement orthogonal est isométrique et son
+observation nulle.
+
+Les observations résiduelles J sont relevées en (P_K, J compose mkQ),
+avec norme majorée par max(1, ||J||). Une estimation sur le quotient de
+constante C donne une estimation sur le champ complet de constante C+1,
+avec l'opérateur réel et son domaine conservés.
+
+Dans `AbelianConstantNullQuotient4D`, K est le sous-espace réel de dimension
+huit déjà construit. `abelianConstantPairObservation` est donc une
+observation effectivement définie, de norme au plus un, préservant la
+norme sur ces huit modes. Elle annule toutes les sorties de l'opérateur
+abélien augmenté, H11 compris. Les observations supplémentaires sur le
+quotient donnent un espace d'observation de dimension 8 + dim(F).
+
+Portée : construction et bornes inconditionnelles pour l'observation des
+modes connus ; transport quantitatif des estimations résiduelles.
+L'estimation sur le quotient, les observations des éventuels modes nuls
+résiduels et la fermeture globale T12 restent à établir. Les huit modes
+ne sont pas supposés épuiser le noyau. Quillen et T08 inchangés.
+
+Validation : deux modules verts sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo. Pics : 1930 et 4322 Mo.
+Audit des 17 nouvelles déclarations : vert, pic 3925 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` ; seules les trois
+spécialisations utilisant le noyau réel ou l'auto-adjonction conservent
+également la dépendance IPP préexistante
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+Hub T12 vert (pic 4027 Mo) ; git diff --check OK.
