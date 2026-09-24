@@ -2864,3 +2864,35 @@ Audit des 21 déclarations et hub T12 verts, pics 3752 et 4022 Mo.
 Les 21 déclarations ne dépendent que de `propext`, `Classical.choice`
 et `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
 `git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
+## Covecteurs L2 des jets métriques d'ordre deux (24 septembre 2026)
+
+`RegularFrameSecondJetAdjoint4D` prouve l'intégration par parties ordonnée
+contre la mesure canonique. Le terme `c X_outer(X_inner h)` devient
+`(X_inner* (X_outer* c)) h` ; les champs du repère ne sont pas supposés
+commuter. Les termes d'ordre zéro, un et deux sont assemblés en un
+coefficient adjoint lisse explicite, sans jauge de volume.
+
+`TensorSecondJetL24D` applique cette formule aux seize coefficients du
+tenseur dans le repère régulier. Il construit le vecteur de Riesz dans
+le L2 tensoriel physique, prouve son pairing exact avec l'expression de
+jets et la borne en norme L2 du tenseur variable.
+
+`PairedTensorSecondJetL24D` assemble les deux secteurs et transporte leur
+covecteur dans le L2 BRST difféomorphisme. La borne finale ne dépend que
+de la norme métrique, donc a la forme requise pour les tests H11.
+
+Les coefficients d'ordre zéro, un et deux sont des données lisses
+arbitraires dans ces résultats. Aucun accord avec le Hessien natif n'est
+supposé ni annoncé : la prochaine étape est d'extraire ses coefficients
+pour un test métrique lisse fixé et de prouver l'égalité avec
+`tensorSecondJetFunctional`. La borne du Hessien complet, la densité du
+domaine adjoint H11 et le certificat global actual→D9 restent ouverts.
+T12 n'est pas coché ; aucun intertwiner terminal n'est supposé.
+Validation : trois gates vertes sous `run_lean_guarded`, Lean séquentiel,
+priorité haute, réserve 4096 Mo ; pics 3868, 4113 et 3875 Mo.
+Audit des 15 déclarations et hub T12 verts, pics 3845 et 4022 Mo.
+Axiomes : `propext`, `Classical.choice`, `Quot.sound` et, pour les résultats
+utilisant les adjoints de Stokes, l'axiome natif préexistant
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`.
+Aucun nouvel axiome, `sorry`/`admit` ni budget augmenté.
+`git diff --check` OK ; Quillen, T08 et les fichiers externes préservés.
