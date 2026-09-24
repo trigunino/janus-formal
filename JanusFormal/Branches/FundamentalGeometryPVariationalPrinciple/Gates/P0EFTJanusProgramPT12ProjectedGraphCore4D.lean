@@ -37,6 +37,14 @@ theorem closedGraphProjection_fixed (point : H × H) (hPoint : point ∈ operato
     (hilbertGraph operator).starProjection_eq_self_iff.mpr hPoint
   exact congrArg (WithLp.ofLp (p := 2)) h
 
+theorem closedGraphProjection_orthogonality (point : WithLp 2 (H × H))
+    (test : H × H) (hTest : test ∈ operator.graph) :
+    inner Real (point.fst - (closedGraphProjection operator hClosed point).1) test.1 +
+      inner Real (point.snd - (closedGraphProjection operator hClosed point).2) test.2 = 0 := by
+  letI : CompleteSpace (hilbertGraph operator) := (hilbertGraph_closed operator hClosed).completeSpace_coe
+  have h := (hilbertGraph operator).sub_starProjection_mem_orthogonal point
+  exact ((hilbertGraph operator).mem_orthogonal' _).mp h (WithLp.toLp 2 test) hTest
+
 variable (samples : D →ₗ[Real] WithLp 2 (H × H))
 
 def projectedGraphSamples : D →ₗ[Real] H × H :=
