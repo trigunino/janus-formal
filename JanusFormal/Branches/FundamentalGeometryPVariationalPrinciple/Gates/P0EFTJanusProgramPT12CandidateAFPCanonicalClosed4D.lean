@@ -3,6 +3,7 @@ import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFT
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12GraphClosureEstimate4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12NormalGraphResolvent4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12MinimalNormInverse4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12ResolventInverseConvergence4D
 
 /-! The actual Candidate-A FP as a minimal closed operator in canonical L2. -/
 namespace JanusFormal
@@ -248,6 +249,31 @@ theorem candidateAFPMinimalInverse_solves
   · intro v hv
     exact minimalNormInverse_norm_le_solution _
       (candidateAFPCanonicalMinimal_isClosed period hPeriod data) rhs v hv
+
+open P0EFTJanusProgramPT12ResolventInverseApproximation4D
+open P0EFTJanusProgramPT12ResolventInverseConvergence4D
+
+def candidateAFPInverseApproximation (n : Nat) :
+    GlobalPairedGaugeLieL2 period hPeriod →L[Real] GlobalPairedGaugeLieL2 period hPeriod :=
+  resolventInverseAverage (candidateAFPCanonicalMinimal period hPeriod data)
+    (candidateAFPCanonicalMinimal_isClosed period hPeriod data) n
+
+theorem candidateAFPInverseApproximation_mem_domain (n : Nat)
+    (rhs : (candidateAFPMinimalInverse period hPeriod data).domain) :
+    candidateAFPInverseApproximation period hPeriod data n rhs.val ∈
+      (candidateAFPCanonicalMinimal period hPeriod data).domain :=
+  resolventInverseAverage_mem_domain _ (candidateAFPCanonicalMinimal_isClosed period hPeriod data) n rhs
+
+/-- Both the field and its actual FP image converge, with no closed-range or gap premise. -/
+theorem candidateAFPInverseApproximation_graph_tendsto
+    (rhs : (candidateAFPMinimalInverse period hPeriod data).domain) :
+    Filter.Tendsto (fun n =>
+      (candidateAFPInverseApproximation period hPeriod data n rhs.val,
+        candidateAFPCanonicalMinimal period hPeriod data
+          ⟨_, candidateAFPInverseApproximation_mem_domain period hPeriod data n rhs⟩)) Filter.atTop
+      (𝓝 (candidateAFPMinimalInverse period hPeriod data rhs, rhs.val)) :=
+  resolventInverseAverage_tendsto_inverse_graph _
+    (candidateAFPCanonicalMinimal_isClosed period hPeriod data) rhs
 
 end
 end P0EFTJanusProgramPT12CandidateAFPCanonicalClosed4D
