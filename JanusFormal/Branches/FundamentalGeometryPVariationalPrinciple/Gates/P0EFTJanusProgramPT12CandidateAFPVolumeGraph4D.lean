@@ -213,6 +213,53 @@ theorem candidateAFPFormalAdjointMinimal_volume_apply
   rw [weight.symm_apply_apply]
   exact hValue.symm.trans (congrArg (candidateAFPCanonicalMinimal period hPeriod data) (Subtype.ext hVector))
 
+/-- Volume multiplication sends every minimal FP null vector into the full adjoint kernel. -/
+theorem candidateAFPKernel_volume_adjoint_graph
+    (u : LinearMap.ker (candidateAFPCanonicalMinimal period hPeriod data).toFun) :
+    (pairedVolumeL2Equiv period hPeriod (globalCandidateAMetricBySector period hPeriod data)
+      u.val.val, 0) ∈ (candidateAFPCanonicalMinimal period hPeriod data).adjoint.graph := by
+  apply LinearPMap.le_graph_of_le
+    (candidateAFPFormalAdjointMinimal_le_adjoint period hPeriod data)
+  apply (candidateAFPFormalAdjointMinimal_volume_mem_graph_iff period hPeriod data _ _).mpr
+  rw [ContinuousLinearEquiv.symm_apply_apply, map_zero]
+  have h := (candidateAFPCanonicalMinimal period hPeriod data).mem_graph u.val
+  have hu : candidateAFPCanonicalMinimal period hPeriod data u.val = 0 := u.property
+  rwa [hu] at h
+
+/-- A concrete injection; no equality of the minimal and maximal adjoint domains is used. -/
+def candidateAFPKernelToAdjointKernel :
+    LinearMap.ker (candidateAFPCanonicalMinimal period hPeriod data).toFun →ₗ[Real]
+      LinearMap.ker (candidateAFPCanonicalMinimal period hPeriod data).adjoint.toFun where
+  toFun u :=
+    ⟨⟨_, LinearPMap.mem_domain_of_mem_graph
+      (candidateAFPKernel_volume_adjoint_graph period hPeriod data u)⟩,
+      (candidateAFPCanonicalMinimal period hPeriod data).adjoint.mem_graph_snd_inj
+        ((candidateAFPCanonicalMinimal period hPeriod data).adjoint.mem_graph _)
+        (candidateAFPKernel_volume_adjoint_graph period hPeriod data u) rfl⟩
+  map_add' u v := by
+    apply Subtype.ext
+    apply Subtype.ext
+    exact map_add _ u.val.val v.val.val
+  map_smul' c u := by
+    apply Subtype.ext
+    apply Subtype.ext
+    exact map_smul _ c u.val.val
+
+theorem candidateAFPKernelToAdjointKernel_injective :
+    Function.Injective (candidateAFPKernelToAdjointKernel period hPeriod data) := by
+  intro u v huv
+  apply Subtype.ext
+  apply Subtype.ext
+  apply (pairedVolumeL2Equiv period hPeriod
+    (globalCandidateAMetricBySector period hPeriod data)).injective
+  exact congrArg (fun w => w.val.val) huv
+
+theorem candidateAFPKernel_finite_of_adjoint
+    [FiniteDimensional Real (LinearMap.ker (candidateAFPCanonicalMinimal period hPeriod data).adjoint.toFun)] :
+    FiniteDimensional Real (LinearMap.ker (candidateAFPCanonicalMinimal period hPeriod data).toFun) :=
+  FiniteDimensional.of_injective (candidateAFPKernelToAdjointKernel period hPeriod data)
+    (candidateAFPKernelToAdjointKernel_injective period hPeriod data)
+
 end
 end P0EFTJanusProgramPT12CandidateAFPVolumeGraph4D
 end JanusFormal
