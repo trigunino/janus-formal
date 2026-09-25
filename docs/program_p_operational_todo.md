@@ -3499,6 +3499,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   certifie ce cœur et conserve le Hessien Maxwell natif sur celui-ci.
   Validation gardée verte, pic 3958 Mo ; aucune hypothèse de cœur quotient
   n'est ajoutée. Le Fredholm et le raccord terminal global restent ouverts.
+  `P0EFTJanusProgramPT12IntrinsicAbelianLorenzSmoothAdjoint4D` construit
+  les colonnes adjointes du Lorenz natif dans le L² physique des potentiels,
+  avec égalité exacte de pairing par Stokes canonique et coefficients de
+  Koszul. Validation `run_lean_guarded.ps1 -ReserveMB 4096` verte, pic
+  3895 Mo ; aucune métrique régulière historique n'est supposée. La fermeture
+  physique du bloc mixte Maxwell–BRST reste à assembler.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
