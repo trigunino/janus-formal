@@ -3718,6 +3718,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   avec borne L² explicite. La restriction précédente aux tests purement
   diagonaux est levée, sans supposer de lissité de toute la complétion.
   Validation gardée verte, pic 4211 Mo ; colonnes métriques physiques ouvertes.
+  `P0EFTJanusProgramPT12IntrinsicBulkAbelianColumnProjection4D` construit
+  le readout abélien apparié et factorise par lui les colonnes BRST contre
+  tout test bulk. En composant avec la colonne Maxwell physique déjà prouvée,
+  le Hessien bulk total sur chaque entrée abélienne appariée factorise aussi
+  par ce readout : les métriques et les autres secteurs du test sont libres.
+  Validation gardée verte, pic 4221 Mo ; aucune assertion Fredholm ajoutée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
