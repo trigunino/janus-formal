@@ -3362,6 +3362,17 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   `(point, paramètre) ↦ normalGraph paramètre point` l'est aussi. Après
   transport le long du graphe nul, sa dérivée en zéro est exactement le lift
   normal orthogonal global de la classe différentielle correspondante.
+- Complément analytique T12 (`SUPPORT`, 2026-09-25) :
+  `P0EFTJanusProgramPT12FrameFreeFrameDerivativeAdjoint4D` construit l'adjoint
+  canonique de chaque dérivée d'une famille finie lisse et des colonnes
+  scalaires pondérées du premier ordre. Les identités intégrale et L² sont
+  prouvées par le Stokes des dix flots, avec une simple métrique lorentzienne
+  lisse ; aucune `RegularGeneralLorentzMetric` ni base tangentielle globale.
+  La limite « aucune identité de Green différentielle » est donc dépassée
+  pour ces colonnes scalaires, sans conclusion Fredholm sur le Hessien couplé.
+  Validation : `scripts/run_lean_guarded.ps1 -Module <module>.lean
+  -Output .b/l/<module>.olean -ReserveMB 4096` vert, priorité haute, Lean
+  séquentiel ; pic 3708 Mo. `T12` reste ouverte, compteur `6/14`.
 - Limite : aucune identité de Green différentielle ni coercivité/range fermé
   LL off-shell n'est déduite; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
