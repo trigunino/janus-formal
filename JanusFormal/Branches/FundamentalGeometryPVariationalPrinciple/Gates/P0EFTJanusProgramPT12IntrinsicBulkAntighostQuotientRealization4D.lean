@@ -143,5 +143,73 @@ theorem intrinsicBulkAntighostQuotientRealization_injective :
     (projectedSmoothInsertion_ker period hPeriod couplings).symm.le
     (projectedSmoothInsertion_ker period hPeriod couplings).le)
 
+def intrinsicBulkAntighostBRSTCoreEquiv :
+    IntrinsicBulkSmoothAntighostBRSTQuotient period hPeriod ≃ₗ[Real]
+      (intrinsicBulkAntighostQuotientRealization period hPeriod couplings).range :=
+  LinearEquiv.ofInjective (intrinsicBulkAntighostQuotientRealization period hPeriod couplings)
+    (intrinsicBulkAntighostQuotientRealization_injective period hPeriod couplings)
+
+/-- The actual BRST differential on the realized smooth core of the C² quotient. -/
+def intrinsicBulkAntighostBRSTCore :
+    (intrinsicBulkAntighostQuotientRealization period hPeriod couplings).range →ₗ[Real]
+      (intrinsicBulkAntighostQuotientRealization period hPeriod couplings).range :=
+  (intrinsicBulkAntighostBRSTCoreEquiv period hPeriod couplings).toLinearMap.comp
+    ((intrinsicBulkSmoothAntighostQuotientBRST period hPeriod).comp
+      (intrinsicBulkAntighostBRSTCoreEquiv period hPeriod couplings).symm.toLinearMap)
+
+theorem intrinsicBulkAntighostBRSTCore_square_zero
+    (point : (intrinsicBulkAntighostQuotientRealization period hPeriod couplings).range) :
+    intrinsicBulkAntighostBRSTCore period hPeriod couplings
+      (intrinsicBulkAntighostBRSTCore period hPeriod couplings point) = 0 := by
+  simp only [intrinsicBulkAntighostBRSTCore, LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.symm_apply_apply, intrinsicBulkSmoothAntighostQuotientBRST_square_zero,
+    (intrinsicBulkAntighostBRSTCoreEquiv period hPeriod couplings).map_zero]
+
+theorem intrinsicBulkAntighostBRSTCore_intertwining
+    (point : IntrinsicBulkSmoothAntighostBRSTQuotient period hPeriod) :
+    (intrinsicBulkAntighostBRSTCore period hPeriod couplings
+      (intrinsicBulkAntighostBRSTCoreEquiv period hPeriod couplings point) : Reduced) =
+    intrinsicBulkAntighostQuotientRealization period hPeriod couplings
+      (intrinsicBulkSmoothAntighostQuotientBRST period hPeriod point) := by
+  have h := congrArg (fun source : IntrinsicBulkSmoothAntighostBRSTQuotient period hPeriod =>
+    (intrinsicBulkAntighostBRSTCoreEquiv period hPeriod couplings
+      (intrinsicBulkSmoothAntighostQuotientBRST period hPeriod source) : Reduced))
+    ((intrinsicBulkAntighostBRSTCoreEquiv period hPeriod couplings).symm_apply_apply point)
+  exact h
+
+theorem intrinsicBulkAntighostBRSTCore_smooth (state : State) :
+    (intrinsicBulkAntighostBRSTCore period hPeriod couplings
+      (intrinsicBulkAntighostBRSTCoreEquiv period hPeriod couplings
+        (intrinsicBulkSmoothAntighostQuotientMap period hPeriod state)) : Reduced) =
+    intrinsicBulkAntighostQuotientMap period hPeriod couplings
+      (intrinsicBulkSmoothBRSTInsertion period hPeriod couplings
+        (intrinsicBulkSmoothBRST period hPeriod state)) :=
+  (intrinsicBulkAntighostBRSTCore_intertwining period hPeriod couplings
+    (intrinsicBulkSmoothAntighostQuotientMap period hPeriod state)).trans
+      (intrinsicBulkAntighostQuotientRealization_mk period hPeriod couplings
+        (intrinsicBulkSmoothBRST period hPeriod state))
+
+open P0EFTJanusProgramPCandidateADiagonalDiffeomorphismKineticAdjointBridge4D
+open P0EFTJanusProgramPT12IntrinsicBulkHessian4D P0EFTJanusReciprocalBimetricPotential
+
+theorem intrinsicBulkAntighostQuotientRealization_pairing
+    (interactionScale : Real) (coefficients : PotentialCoefficients)
+    (hWeights : candidateAPlusEinsteinKineticWeight couplings + candidateAMinusEinsteinKineticWeight couplings = 0)
+    (first second : State) :
+    intrinsicBulkAntighostQuotientHessian period hPeriod couplings interactionScale coefficients hWeights
+      (intrinsicBulkAntighostQuotientRealization period hPeriod couplings
+        (intrinsicBulkSmoothAntighostQuotientMap period hPeriod first))
+      (intrinsicBulkAntighostQuotientRealization period hPeriod couplings
+        (intrinsicBulkSmoothAntighostQuotientMap period hPeriod second)) =
+    intrinsicBulkHessian period hPeriod couplings interactionScale coefficients
+      (intrinsicBulkSmoothBRSTInsertion period hPeriod couplings first)
+      (intrinsicBulkSmoothBRSTInsertion period hPeriod couplings second) := by
+  have h := congrArg₂ (fun left right : Reduced =>
+    intrinsicBulkAntighostQuotientHessian period hPeriod couplings interactionScale coefficients hWeights left right)
+    (intrinsicBulkAntighostQuotientRealization_mk period hPeriod couplings first)
+    (intrinsicBulkAntighostQuotientRealization_mk period hPeriod couplings second)
+  exact h.trans (intrinsicBulkAntighostQuotientHessian_mk period hPeriod couplings
+    interactionScale coefficients hWeights _ _)
+
 end
 end JanusFormal.P0EFTJanusProgramPT12IntrinsicBulkAntighostQuotientRealization4D
