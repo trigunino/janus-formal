@@ -3406,6 +3406,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   injective et dense ; l'espace est complet. Cela ne fournit pas encore
   l'opérateur différentiel de Maxwell. Validation par la commande gardée
   ci-dessus : verte, pic 3877 Mo ; aucune nouvelle hypothèse analytique.
+  `P0EFTJanusProgramPT12IntrinsicAbelianCurvatureL2Graph4D` ferme ensuite
+  le graphe natif potentiel→courbure dans ces espaces L². L'identité faible
+  de Cartan persiste dans la fermeture et exclut toute composante verticale :
+  la courbure native est donc closable sans métrique régulière historique.
+  La réalisation comme opérateur partiel reste à certifier. Même validation
+  gardée verte, pic 3896 Mo ; aucune assertion Fredholm.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
