@@ -4352,3 +4352,28 @@ canonique, soit 274 déclarations, seulement `propext`, `Classical.choice`,
 `Quot.sound` (journal `janus-lean-937d4886-df92-4cdc-bfb1-f55a7c9853a6.out`).
 Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni augmentation de budget.
 `git diff --check` OK ; Quillen et T08 inchangés.
+
+## Réalisation commune Maxwell et BRST abélien hors couche
+
+`IntrinsicAbelianFullGraph4D` complète l'image des mêmes états lisses dans
+le produit des graphes Maxwell–Lorenz et BRST hors couche. L'inclusion est
+injective et dense ; les deux projections sont contractantes. Les potentiels,
+B, ghosts et antighosts sont conservés dans cette réalisation commune.
+
+`IntrinsicAbelianFullGraphRiesz4D` réalise la somme des deux formes par un
+opérateur borné auto-adjoint. Son pairing sur le cœur lisse est exactement
+le vrai Hessien bulk du secteur abélien complet, avec les deux poids Maxwell.
+`IntrinsicAbelianFullGraphBoundaryPairing4D` établit la même égalité pour le
+Hessien bulk + GHY sur les insertions abéliennes compatibles.
+
+La réalisation utilise la norme du graphe commun. La propriété Fredholm
+globale et le certificat terminal ne sont pas déduits de cette construction ;
+T12 reste ouverte. Aucun intertwiner terminal n'est postulé.
+
+Validation : trois gates vertes, pics 4197, 4193 et 3989 Mo. Audit cumulatif
+des 39 modules : 295 déclarations publiques et le cardinal canonique, soit
+296 déclarations avec seulement `propext`, `Classical.choice`, `Quot.sound`
+(journal `janus-lean-776522f5-4254-4ce9-9c62-45fbeeeadd79.out`).
+Hub T12 vert, pic 4073 Mo ; `git diff --check` OK.
+Lean séquentiel gardé, priorité haute, réserve 4096 Mo ; aucun nouvel axiome,
+`sorry`/`admit`, `native_decide` ni augmentation de budget. Quillen et T08 inchangés.
