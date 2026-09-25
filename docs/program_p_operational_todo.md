@@ -3432,6 +3432,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   et ont une sortie nulle. Validation gardée verte, pic 3901 Mo. Ce résultat
   prépare le quotient de jauge ; il n'identifie pas tout le noyau et ne
   prouve ni cohomologie finie ni Fredholm. `T12` demeure ouverte (`6/14`).
+  `P0EFTJanusProgramPT12IntrinsicAbelianCurvatureAdjointColumns4D` construit
+  les représentants physiques des colonnes adjointes de courbure. Les tests
+  lisses portés par une coordonnée appartiennent au domaine de l'adjoint L²,
+  avec formule explicite et pairing contre tout le domaine fermé de courbure.
+  Validation gardée verte, pic 4058 Mo ; aucune hypothèse d'adjoint fournie.
+  Le Jacobi fort Maxwell n'est pas encore identifié par ces seules colonnes.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
