@@ -3448,6 +3448,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   à partir du volume canonique relatif et de l'inverse métrique. Le facteur
   Maxwell −1/4 est conservé. Validation gardée verte, pic 3861 Mo ; aucune
   positivité de ces poids lorentziens ni coercivité n'est affirmée.
+  `P0EFTJanusProgramPT12IntrinsicAbelianCurvatureWeightColumns4D` construit
+  les colonnes bornées à coefficient lisse, prouve leur identité de
+  transposition et que leurs images de tests lisses appartiennent au domaine
+  de l'adjoint de courbure. Validation gardée verte, pic 3982 Mo ; le raccord
+  du Jacobi au Hessien natif reste à effectuer.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
