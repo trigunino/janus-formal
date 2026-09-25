@@ -4297,6 +4297,11 @@ lisses, le quotient porte le BRST induit par `mapQ`, avec intertwining et
 carré nul prouvés. Une application linéaire injective réalise ce quotient
 lisse dans le quotient C2 ; son accord sur les représentants est exact.
 
+Le BRST est maintenant réalisé sur cette image effective dans le quotient C2.
+Son carré est nul et son action sur chaque représentant lisse est celle du
+BRST natif. Le pairing du Hessien quotient sur cette réalisation est exactement
+le Hessien bulk initial, sous la même condition explicite de poids opposés.
+
 Cette construction n'affirme ni continuité de BRST sur toute la complétion
 C2, ni équivalence de cohomologie. Elle concerne la Hessienne au fond,
 sans affirmer la descente de toute l'action non linéaire. La propriété
@@ -4304,9 +4309,9 @@ Fredholm globale, le transport terminal et le certificat T12 restent ouverts.
 
 Validation depuis le point précédent : neuf nouveaux modules verts et formule
 scalaire du Hessien complet, pic maximal des validations réussies 4286 Mo.
-Audit cumulatif des 33 modules : 229 déclarations publiques et le cardinal
-canonique, soit 230 déclarations avec seulement `propext`, `Classical.choice`,
-`Quot.sound`. Hub T12 vert, pic 4071 Mo ; audit Programme P/P-F vert, compteur
+Audit cumulatif des 33 modules : 235 déclarations publiques et le cardinal
+canonique, soit 236 déclarations avec seulement `propext`, `Classical.choice`,
+`Quot.sound`. Hub T12 vert, pic 4074 Mo ; audit Programme P/P-F vert, compteur
 terminal inchangé à 6/14. Aucun nouvel axiome, `sorry`/`admit`, `native_decide`
 ni augmentation des budgets. Lean séquentiel gardé, réserve 4096 Mo et priorité
 haute ; `git diff --check` OK. Quillen et T08 inchangés.
