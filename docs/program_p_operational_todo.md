@@ -3391,20 +3391,21 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   vers le graphe BRST abélien hors couche. Aucune surjectivité, équivalence
   de normes ou propriété Fredholm n'est affirmée. Validation gardée verte,
   pic 3930 Mo.
-  Raccord importé par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
-  hub vert avec la même commande gardée, pic 4091 Mo. Audit cumulatif Lean
-  `#print axioms` sur 43 modules, 308 déclarations publiques plus le cardinal
-  canonique : 309 déclarations contrôlées, seulement `propext`,
-  `Classical.choice`, `Quot.sound` ; pic 3938 Mo, journal
-  `janus-lean-2c0fb710-0b81-4c8b-bc2f-0f49f03f23dc.out`.
+  Réalisation L² et secteur exact intégrés par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
+  hub vert avec les imports de la réalisation fermée et du complexe exact,
+  même commande gardée, pic 4094 Mo. Audit cumulatif Lean
+  `#print axioms` sur 48 modules, 339 déclarations publiques plus le cardinal
+  canonique : 340 déclarations contrôlées, seulement `propext`,
+  `Classical.choice`, `Quot.sound` ; pic 3947 Mo, journal
+  `janus-lean-301b1009-78c6-4725-abc9-73b640e8ba34.out`.
   Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni relèvement des budgets.
   `git diff --check` et `python scripts/check_program_p_registry_sync.py --staged`
   verts ; `T12` reste ouverte, compteur `6/14`.
   `P0EFTJanusProgramPT12IntrinsicAbelianPotentialL2Core4D` construit le
   complété physique L² des potentiels appariés, comme fermeture de leur
   image native dans les coordonnées redondantes. Son inclusion lisse est
-  injective et dense ; l'espace est complet. Cela ne fournit pas encore
-  l'opérateur différentiel de Maxwell. Validation par la commande gardée
+  injective et dense ; l'espace est complet. La réalisation différentielle
+  ci-dessous utilise ce complété. Validation par la commande gardée
   ci-dessus : verte, pic 3877 Mo ; aucune nouvelle hypothèse analytique.
   `P0EFTJanusProgramPT12IntrinsicAbelianCurvatureL2Graph4D` ferme ensuite
   le graphe natif potentiel→courbure dans ces espaces L². L'identité faible
