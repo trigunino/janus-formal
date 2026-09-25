@@ -3667,6 +3667,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Candidate-A exacts. Pairing égal au Hessien diagonal d'origine et symétrie
   lisse prouvés, pour deux métriques lisses quelconques. Validation gardée
   verte, pic 4181 Mo ; fermeture diagonale et Fredholm non déduits ici.
+  `P0EFTJanusProgramPT12FrameFreeDiagonalDiffeomorphismStrongClosed4D`
+  ferme cet opérateur diagonal : domaine dense, cœur lisse certifié,
+  symétrie sur tout le domaine et pairing natif exact sur le cœur. Le
+  triplet partagé et les deux poids sont conservés. Validation gardée
+  verte, pic 4193 Mo, budgets inchangés ; aucune auto-adjonction ni propriété
+  Fredholm après quotient n'est affirmée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
