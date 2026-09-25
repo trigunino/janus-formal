@@ -3477,6 +3477,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   lisse certifié, accord exact avec D* W D et symétrie sur tout le domaine.
   Validation gardée verte, pic 3935 Mo. L'auto-adjonction, l'identification
   Sobolev du domaine et le Fredholm du quotient restent ouverts.
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellStrongPhysical4D` raccorde
+  explicitement ce représentant L² au Hessien physique même-action, ainsi
+  qu'à sa colonne contre tout test bulk de lecture potentielle lisse donnée.
+  L'opérateur fermé représente ce Hessien sur son cœur lisse certifié.
+  Validation gardée verte, pic 4236 Mo ; les limites Fredholm précédentes
+  restent inchangées, sans nouvelle hypothèse d'intertwining.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
