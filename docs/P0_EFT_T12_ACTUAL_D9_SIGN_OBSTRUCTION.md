@@ -4285,6 +4285,14 @@ bulk + bord. Les deux colonnes GHY sont nulles contre tout test ; la colonne
 complète est celle du BRST bulk. Sur deux entrées ghosts lisses, son pairing
 est exactement celui de l'opérateur L2 auto-adjoint déjà construit.
 
+Le paquet abélien complet, potentiels physiques inclus, est également inséré
+fidèlement dans ce cœur compatible. Sa colonne physique Maxwell et sa colonne
+BRST sont réunies contre tout test bulk C2. La colonne complète avec GHY se
+raccorde exactement au bulk contre tout test du cœur compatible ; sur deux paquets,
+le pairing est la somme explicite Maxwell + BRST, avec les couplages natifs.
+Cette identification du Hessien C2 ne fournit pas encore les estimations L2
+nécessaires à la propriété Fredholm.
+
 Pour l'antighost difféomorphe partagé, la colonne du vrai Hessien bulk,
 puis du Hessien complet avec GHY, s'annule contre tout test sous la condition
 explicite `plusWeight + minusWeight = 0`. La différentielle BRST sur les états
@@ -4307,11 +4315,11 @@ C2, ni équivalence de cohomologie. Elle concerne la Hessienne au fond,
 sans affirmer la descente de toute l'action non linéaire. La propriété
 Fredholm globale, le transport terminal et le certificat T12 restent ouverts.
 
-Validation depuis le point précédent : neuf nouveaux modules verts et formule
-scalaire du Hessien complet, pic maximal des validations réussies 4286 Mo.
-Audit cumulatif des 33 modules : 235 déclarations publiques et le cardinal
-canonique, soit 236 déclarations avec seulement `propext`, `Classical.choice`,
-`Quot.sound`. Hub T12 vert, pic 4074 Mo ; audit Programme P/P-F vert, compteur
+Validation depuis le point précédent : neuf nouveaux modules verts et raccords
+du Hessien complet, pic maximal des validations réussies 4304 Mo.
+Audit cumulatif des 33 modules : 245 déclarations publiques et le cardinal
+canonique, soit 246 déclarations avec seulement `propext`, `Classical.choice`,
+`Quot.sound`. Hub T12 vert, pic 4072 Mo ; audit Programme P/P-F vert, compteur
 terminal inchangé à 6/14. Aucun nouvel axiome, `sorry`/`admit`, `native_decide`
 ni augmentation des budgets. Lean séquentiel gardé, réserve 4096 Mo et priorité
 haute ; `git diff --check` OK. Quillen et T08 inchangés.
