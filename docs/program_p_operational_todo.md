@@ -3391,14 +3391,14 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   vers le graphe BRST abélien hors couche. Aucune surjectivité, équivalence
   de normes ou propriété Fredholm n'est affirmée. Validation gardée verte,
   pic 3930 Mo.
-  Réalisations Maxwell–BRST et BRST diagonal bulk intégrées par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
-  hub vert avec le domaine abélien maximal, le raccord FP au graphe d'origine
-  et la réalisation diagonale fermée du Hessien BRST bulk natif, sans témoin
-  régulier ; même commande gardée, pic 4313 Mo. Audit cumulatif Lean
-  `#print axioms` sur 89 modules, 584 déclarations publiques plus le cardinal
-  canonique : 585 déclarations contrôlées, seulement `propext`,
-  `Classical.choice`, `Quot.sound` ; pic 3946 Mo, journal
-  `janus-lean-04b93d66-cef5-4ba0-8602-a097d9c74812.out`.
+  Réalisations Maxwell–BRST et BRST bulk sur le support H11 intégrées par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
+  hub vert avec le domaine abélien maximal, le raccord FP au graphe d'origine,
+  la réalisation diagonale fermée et son raccord au L² source H11, sans témoin
+  régulier ; même commande gardée, pic 4103 Mo. Audit cumulatif Lean
+  `#print axioms` sur 93 modules, 607 déclarations publiques plus le cardinal
+  canonique : 608 déclarations contrôlées, seulement `propext`,
+  `Classical.choice`, `Quot.sound` ; pic 3945 Mo, journal
+  `janus-lean-561580b1-e306-435f-aa7e-aebf7cd798be.out`.
   Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni relèvement des budgets.
   `git diff --check` et `python scripts/check_program_p_registry_sync.py --staged`
   verts ; `T12` reste ouverte, compteur `6/14`.
