@@ -3612,6 +3612,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   avec cœur lisse certifié et action native exacte. Les tests adjoints
   éliminent toute sortie verticale de sa fermeture. Validation gardée verte,
   pic 4061 Mo ; aucun témoin régulier, Fredholm ni auto-adjonction n'est ajouté.
+  `P0EFTJanusProgramPT12FrameFreeDiffeomorphismFPGraphBridge4D` raccorde
+  chaque vecteur du graphe BRST difféomorphe complété au graphe physique
+  fermé de FP : la lecture fantôme appartient à son domaine et la feature
+  FP est sa valeur exacte. Deux lectures fantômes égales ont donc la même
+  sortie FP ; le pairing adjoint vaut sur toute la complétion d'origine.
+  Validation gardée verte, pic 4164 Mo. Ce raccord ne prétend ni identifier
+  tout le graphe BRST au seul graphe FP, ni fermer le Jacobi global.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
