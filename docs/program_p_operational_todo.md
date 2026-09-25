@@ -3505,6 +3505,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Koszul. Validation `run_lean_guarded.ps1 -ReserveMB 4096` verte, pic
   3895 Mo ; aucune métrique régulière historique n'est supposée. La fermeture
   physique du bloc mixte Maxwell–BRST reste à assembler.
+  `P0EFTJanusProgramPT12IntrinsicAbelianLorenzAdjoint4D` assemble ces
+  colonnes en une application linéaire sur les multiplicateurs lisses
+  appariés, avec pairing exact du Lorenz natif dans la mesure canonique.
+  Validation gardée verte, pic 3898 Mo ; aucune fermeture ni auto-adjonction
+  supplémentaire n'est déduite de cette seule identité lisse.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
