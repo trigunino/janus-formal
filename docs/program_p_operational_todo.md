@@ -3521,6 +3521,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Leur pairing L² égale exactement le Hessien Maxwell–BRST du graphe natif,
   avec symétrie prouvée et sans hypothèse de réalisation D9. Validation
   gardée verte, pic 4008 Mo ; fermeture et Fredholm restent distincts.
+  La limite de fermeture est levée par
+  `P0EFTJanusProgramPT12IntrinsicAbelianFullStrongClosed4D` : Jacobi
+  Maxwell–BRST natif fermé symétrique dans le L² physique à quatre slots,
+  domaine dense, cœur lisse certifié et minimalité parmi les extensions
+  fermées. Son pairing sur ce cœur égale le Hessien bulk abélien même-action,
+  deux colonnes fantômes incluses. Validation gardée verte, pic 4263 Mo ;
+  aucune auto-adjonction ni propriété Fredholm globale n'est postulée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
