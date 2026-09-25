@@ -3391,13 +3391,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   vers le graphe BRST abélien hors couche. Aucune surjectivité, équivalence
   de normes ou propriété Fredholm n'est affirmée. Validation gardée verte,
   pic 3930 Mo.
-  Jacobi Maxwell L² et quotient exact intégrés par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
-  hub vert avec les imports du raccord au Hessien physique et du cœur quotient,
-  même commande gardée, pic 4094 Mo. Audit cumulatif Lean
-  `#print axioms` sur 60 modules, 412 déclarations publiques plus le cardinal
-  canonique : 413 déclarations contrôlées, seulement `propext`,
-  `Classical.choice`, `Quot.sound` ; pic 3955 Mo, journal
-  `janus-lean-76a35350-95fe-4bc1-a6ff-dcfb5ecf396b.out`.
+  Jacobi Maxwell–BRST L² intégré par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
+  hub vert avec le Jacobi physique fermé, son cœur et le transport au graphe natif,
+  même commande gardée, pic 4097 Mo. Audit cumulatif Lean
+  `#print axioms` sur 66 modules, 444 déclarations publiques plus le cardinal
+  canonique : 445 déclarations contrôlées, seulement `propext`,
+  `Classical.choice`, `Quot.sound` ; pic 3940 Mo, journal
+  `janus-lean-3566e09a-be43-4c68-a79c-1e46e6700b54.out`.
   Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni relèvement des budgets.
   `git diff --check` et `python scripts/check_program_p_registry_sync.py --staged`
   verts ; `T12` reste ouverte, compteur `6/14`.
