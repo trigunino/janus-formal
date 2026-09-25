@@ -3724,6 +3724,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   le Hessien bulk total sur chaque entrée abélienne appariée factorise aussi
   par ce readout : les métriques et les autres secteurs du test sont libres.
   Validation gardée verte, pic 4221 Mo ; aucune assertion Fredholm ajoutée.
+  `P0EFTJanusProgramPT12IntrinsicAbelianStrongFullTestPairing4D` réalise
+  ces colonnes Maxwell–BRST totales dans le L² physique abélien existant,
+  aussi sur le cœur lisse certifié de l'opérateur fermé. Les tests bulk
+  ont un readout abélien lisse et toutes leurs autres composantes sont libres ;
+  le pairing et sa borne L² sont exacts. Validation gardée verte, pic 4246 Mo.
+  Ceci remplace la restriction aux tests uniquement abéliens pour ce raccord ;
+  les colonnes métriques physiques et l'assemblage Fredholm restent ouverts.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
