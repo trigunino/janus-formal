@@ -3528,6 +3528,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   fermées. Son pairing sur ce cœur égale le Hessien bulk abélien même-action,
   deux colonnes fantômes incluses. Validation gardée verte, pic 4263 Mo ;
   aucune auto-adjonction ni propriété Fredholm globale n'est postulée.
+  `P0EFTJanusProgramPT12IntrinsicAbelianFullStrongGraphBridge4D` construit
+  la lecture continue du graphe natif dans le L² physique, d'image dense et
+  exacte sur les champs lisses. Le pairing du Jacobi vaut contre tout test
+  du graphe complété ; le Riesz du graphe est exactement le transport adjoint
+  de sa colonne physique. Validation gardée verte, pic 4289 Mo. Aucune
+  identification bijective des domaines fermés n'est supposée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
