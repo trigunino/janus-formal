@@ -3682,6 +3682,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Validation gardée verte, pic 4218 Mo. Ce résultat porte sur la contribution
   BRST native ; il ne ferme pas le Hessien bulk total, les colonnes H11 ni
   le certificat terminal Fredholm. `T12` reste ouverte (`6/14`).
+  `P0EFTJanusProgramPT12FrameFreeDiffeomorphismH11Readouts4D` construit
+  les lectures sectorielles bornées du L² source H11 existant vers les
+  complétés physiques natifs h/B/antighost/ghost. Les coordonnées redondantes
+  restent dans leurs véritables images complétées et les deux secteurs
+  lisent le même triplet. Accord lisse exact, sans témoin régulier ; validation
+  gardée verte, pic 4053 Mo. Le transport du bloc BRST reste à assembler.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
