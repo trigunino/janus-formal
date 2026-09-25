@@ -3600,6 +3600,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   aussi l'action de Cartan dans le vrai L² tensoriel. La limite de l'adjoint
   Cartan sans témoin régulier est levée. Validation gardée verte, pic 3889 Mo ;
   fermeture et composition FP restent distinctes.
+  `P0EFTJanusProgramPT12FrameFreeDiffeomorphismFPAdjoint4D` compose
+  concrètement les transpositions scalaires de Donder et de Cartan : chaque
+  colonne du véritable `B_g(L_c g)` a son représentant adjoint dans le L²
+  fantôme physique normalisé, avec identité de Green canonique exacte.
+  La limite de composition FP sans témoin régulier est levée. Validation
+  gardée verte, pic 3916 Mo ; la fermeture physique FP reste à certifier.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
