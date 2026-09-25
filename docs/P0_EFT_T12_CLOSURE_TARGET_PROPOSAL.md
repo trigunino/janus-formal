@@ -20,9 +20,17 @@ contenant zéro, avec les couplages conservés, et sa vraie Hessienne symétriqu
 le cœur C3 est fidèle sur sa projection C2. La base GHY à deux feuilles et
 les évaluations conjointement C2 de la métrique et de Dg sur le graphe mobile
 sont construites. Les tangentes sont reconstruites dans la famille redondante ;
-leur contraction métrique est C2. L'identification de cette contraction au
-pullback lisse, le domaine non nul et l'action GHY C2 restent à raccorder.
-Le raccord H11 global n'est pas encore obtenu.
+leur contraction métrique C2 coïncide avec le pullback lisse. Le lift fidèle,
+son domaine non nul, la densité induite positive et l'inverse ambiant mobile
+sont construits avec leurs accords géométriques. L'action GHY C2 complète
+et le raccord H11 global restent à obtenir.
+
+Le cœur commun impose la compatibilité des deux métriques C3 avec les
+métriques du bulk et partage un seul déplacement normal. Il est complet,
+son oubli vers bulk × déplacement est injectif et la Hessienne du bulk
+s'y transporte exactement. La base des domaines du bord est admissible
+pour tout paramètre fixé, notamment 1. Aucun terme GHY n'est encore ajouté
+à cette action sur le cœur commun.
 
 La restriction réelle du bulk aux champs B donne exactement
 `H(jB B,jB C) = -P(B,C)`, avec P défini par l'intégrale des champs.
@@ -31,6 +39,22 @@ les potentiels lisses. Pour les quatre composantes des ghosts temporels
 périodiques, le FP intrinsèque vaut exactement -f'' sur tout le quotient,
 par calcul du courant et de la densité dans les mêmes cartes réelles.
 Ces identités n'impliquent pas la propriété Fredholm globale.
+
+La colonne mixte est également calculée : H(jB B,jA A) vaut l'intégrale
+B·δA. La projection qui efface uniquement les champs non minimaux conserve
+exactement EH, interaction, Maxwell, SpinC et LL. Sa Hessienne physique
+est le pullback prouvé de la Hessienne du bulk ; ses colonnes B et ghosts
+sont nulles pour tous les couplages. Les contributions GHY ne sont pas
+incluses dans cette conclusion.
+
+Aux poids Einstein opposés et aux deux métriques intrinsèques égales,
+la colonne complète de chaque ghost difféomorphisme partagé est nulle.
+Pour une période positive, leur insertion fidèle donne un noyau infini
+du bulk non réduit. Une réalisation fidèle sur ces ghosts, préservant
+ce pairing sur des tests denses, ne peut donc avoir un noyau fini.
+La forme bilinéaire descend par la fermeture de leur image lisse réelle.
+Cela ne prouve ni la descente de l'action ou du BRST, ni la propriété
+Fredholm du quotient, ni l'impossibilité de toutes les réductions autorisées.
 
 L'injectivité H1 vers L2 et les domaines minimaux H1 du FP et de son adjoint
 formel sont maintenant établis sans données vides. L'adjonction s'étend aux

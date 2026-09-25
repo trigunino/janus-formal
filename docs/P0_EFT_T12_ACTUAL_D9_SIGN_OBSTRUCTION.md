@@ -4176,3 +4176,35 @@ des 118 déclarations publiques vert, pic 3843 Mo : uniquement `propext`,
 ni augmentation des budgets. T12 reste ouverte ; aucune propriété Fredholm
 ou fermeture terminale n'est déduite de ces résultats.
 Hub T12 vert, pic 4189 Mo ; `git diff --check` OK. Quillen et T08 inchangés.
+
+## Reprise : colonnes BRST, quotient bilinéaire et cœur bulk–bord
+
+Dix-neuf modules supplémentaires établissent la colonne mixte B/A du bulk
+comme intégrale réelle B·δA. La projection physique conserve les métriques,
+potentiels et matière–LL ; son action est identifiée à la somme physique
+native et sa Hessienne au pullback exact. Ses colonnes non minimales
+difféomorphes et abéliennes pairées sont nulles. GHY reste à ajouter.
+
+À métriques intrinsèques égales et poids d'Einstein opposés, les insertions
+lisses fidèles de ghosts difféomorphes donnent un noyau infini de la Hessienne
+bulk non réduite. Une réalisation à pairing exact sur des tests denses,
+fidèle sur ces ghosts, ne peut donc avoir un noyau fini. La Hessienne descend
+au quotient par la fermeture de leur image réelle ; ce résultat bilinéaire
+ne prouve ni descente de l'action ou du BRST, ni propriété Fredholm du quotient.
+
+Le pullback métrique induit, son relèvement fidèle, ses inverses, son domaine
+ouvert et sa densité volumique C2 sont construits avec accord lisse. Le
+fond est admissible à tout paramètre fixé, notamment 1. Le cœur commun
+bulk–bord impose la compatibilité C3/C2 et un déplacement partagé : il est
+complet, son oubli vers bulk × déplacement est injectif, et sa vraie
+Hessienne bulk est transportée exactement. La normale unitaire, la courbure
+et l'action GHY conjointement C2 restent à construire.
+
+Validation : dix-neuf modules verts, pic maximal 4415 Mo. Audit Lean gardé
+des 150 déclarations publiques vert, pic 3851 Mo : 149 dépendent seulement
+de `propext`, `Classical.choice`, `Quot.sound` ; une hérite aussi de
+`canonicalFlowIndex_card._native.native_decide.ax_1_1`, déjà présent.
+Aucun nouvel axiome, `sorry`/`admit`, ni augmentation des budgets.
+Hub T12 vert, pic 4358 Mo ; Lean séquentiel, priorité haute, réserve 4096 Mo.
+T12 reste ouverte : réduction BRST justifiée, famille signée Fredholm réelle,
+transport global et certificat terminal manquent encore. Quillen et T08 inchangés.
