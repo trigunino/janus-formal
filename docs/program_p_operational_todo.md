@@ -3541,6 +3541,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   graphe Maxwell–BRST complet est injective, sans mode vertical ajouté.
   Validation `run_lean_guarded.ps1 -ReserveMB 4096` verte, pic 4231 Mo ;
   cela ne donne ni équivalence des normes, ni auto-adjonction, ni Fredholm.
+  `P0EFTJanusProgramPT12IntrinsicAbelianFullStrongMaximal4D` construit
+  l'adjoint physique maximal du Jacobi minimal natif : opérateur fermé à
+  domaine dense, contenant le minimal. Son graphe est caractérisé exactement
+  par les tests lisses d'origine, sans régularité faible ajoutée en hypothèse.
+  Validation gardée verte, pic 3995 Mo ; l'égalité minimal/maximal et le
+  Fredholm ne sont pas déduits de cette construction.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
