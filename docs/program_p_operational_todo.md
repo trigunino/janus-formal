@@ -3631,6 +3631,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   tensorielle de Donder*. Domaine adjoint dense et fermé, formule exacte
   sur tout le domaine minimal ; validation gardée verte, pic 3929 Mo.
   L'assemblage du Hessien BRST complet et son Fredholm restent à établir.
+  `P0EFTJanusProgramPT12FrameFreeMetricFlat4D` construit l'abaissement
+  métrique comme application bornée du L² vectoriel physique vers le L²
+  covectoriel, puis son représentant physique. L'accord avec le terme natif
+  B-flat est exact sur les champs lisses ; aucune positivité lorentzienne
+  n'est supposée. Validation gardée verte, pic 3919 Mo.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
