@@ -3443,6 +3443,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   est dense dans le L² cible et appartient au domaine de l'adjoint, dont la
   fermeture et la densité de domaine sont établies. Validation gardée verte,
   pic 3894 Mo ; aucune assertion que cette famille est un cœur de l'adjoint.
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellSmoothWeight4D` identifie
+  les poids C⁰ du Hessien natif au fond avec des fonctions lisses construites
+  à partir du volume canonique relatif et de l'inverse métrique. Le facteur
+  Maxwell −1/4 est conservé. Validation gardée verte, pic 3861 Mo ; aucune
+  positivité de ces poids lorentziens ni coercivité n'est affirmée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
