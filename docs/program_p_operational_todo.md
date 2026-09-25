@@ -3688,6 +3688,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   restent dans leurs véritables images complétées et les deux secteurs
   lisent le même triplet. Accord lisse exact, sans témoin régulier ; validation
   gardée verte, pic 4053 Mo. Le transport du bloc BRST reste à assembler.
+  `P0EFTJanusProgramPT12FrameFreeH11BRSTStrongSmooth4D` réalise ce bloc
+  dans le L² source H11 existant, en conservant sa norme et son unique
+  triplet. Au fond métrique commun, les adjoints des lectures sectorielles
+  donnent le pairing diagonal natif exact et la symétrie lisse, avec les
+  poids Candidate-A d'origine. Validation gardée verte, pic 3937 Mo.
+  Les couplages physiques hors bloc BRST ne sont pas identifiés ici.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
