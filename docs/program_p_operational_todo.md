@@ -3372,9 +3372,15 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   pour ces colonnes scalaires, sans conclusion Fredholm sur le Hessien couplé.
   Validation : `scripts/run_lean_guarded.ps1 -Module <module>.lean
   -Output .b/l/<module>.olean -ReserveMB 4096` vert, priorité haute, Lean
-  séquentiel ; pic 3708 Mo. `T12` reste ouverte, compteur `6/14`.
-- Limite : aucune identité de Green différentielle ni coercivité/range fermé
-  LL off-shell n'est déduite; la conclusion Fredholm LL est limitée au quotient
+  séquentiel ; pic 3708 Mo.
+  `P0EFTJanusProgramPT12FrameFreeMaxwellCurvaturePairing4D` prouve ensuite
+  l'identité de Green pour la courbure Maxwell native : dérivées adjointes
+  et coefficients de structure donnent son pairing à partir des seules
+  valeurs du potentiel. La famille finie reste redondante et la métrique
+  simplement lisse. Même commande gardée verte, pic 3846 Mo ; aucune
+  fermeture Fredholm n'en est déduite. `T12` reste ouverte, compteur `6/14`.
+- Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
+  LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
   pas encore identifiée au pullback de l'action covariante non linéaire
   complète. Le produit physique bulk n'est
