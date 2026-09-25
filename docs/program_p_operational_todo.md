@@ -3488,6 +3488,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Jacobi Maxwell fermé. Toute sortie de ce Jacobi est orthogonale à ces
   directions. Validation gardée verte, pic 3930 Mo ; cette inclusion ne
   prétend pas identifier l'ensemble du noyau ni sa dimension après quotient.
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellReduced4D` construit la
+  descente sur le quotient L² physique par ce secteur exact complété :
+  opérateur fermé symétrique à domaine dense, domaine projeté explicitement
+  et conservation du pairing sur tout le domaine. Aucun résultat non nul
+  n'est effacé par la projection. Validation gardée verte, pic 4125 Mo ;
+  cette descente ne prouve pas encore la finitude du noyau résiduel.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
