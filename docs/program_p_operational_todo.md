@@ -3711,6 +3711,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   quelconques ; leur annulation découle du Hessien global natif. Ceci lève
   la restriction sectorielle des tests pour cette colonne BRST, sans réaliser
   les couplages physiques métriques. Validation gardée verte, pic 4215 Mo.
+  `P0EFTJanusProgramPT12IntrinsicH11BRSTFullTestPairing4D` raccorde cette
+  factorisation à la réalisation L² H11 : seul le readout diagonal du test
+  doit provenir d'un état lisse ; ses autres composantes bulk sont libres.
+  Pour une entrée non minimale, le pairing représente le Hessien bulk total
+  avec borne L² explicite. La restriction précédente aux tests purement
+  diagonaux est levée, sans supposer de lissité de toute la complétion.
+  Validation gardée verte, pic 4211 Mo ; colonnes métriques physiques ouvertes.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
