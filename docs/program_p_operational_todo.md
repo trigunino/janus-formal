@@ -3673,6 +3673,15 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   triplet partagé et les deux poids sont conservés. Validation gardée
   verte, pic 4193 Mo, budgets inchangés ; aucune auto-adjonction ni propriété
   Fredholm après quotient n'est affirmée.
+  `P0EFTJanusProgramPT12IntrinsicDiffeomorphismBRSTStrongPhysical4D`
+  spécialise cette réalisation au fond bulk intrinsèque réel : l'opérateur
+  fermé, symétrique, à domaine dense et cœur lisse certifié représente
+  exactement `intrinsicBulkBRSTHessian` sur les insertions BRST lisses
+  diagonales. Les deux colonnes métriques et le triplet partagé sont
+  conservés, sans métrique régulière historique ni intertwiner supposé.
+  Validation gardée verte, pic 4218 Mo. Ce résultat porte sur la contribution
+  BRST native ; il ne ferme pas le Hessien bulk total, les colonnes H11 ni
+  le certificat terminal Fredholm. `T12` reste ouverte (`6/14`).
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
