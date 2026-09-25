@@ -3588,6 +3588,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   repère fini, pour une simple métrique lisse. Cette reconstruction ne
   suppose aucun repère régulier. Validation `run_lean_guarded.ps1
   -ReserveMB 4096` verte, pic 3886 Mo ; les adjoints Cartan/FP restent à composer.
+  `P0EFTJanusProgramPT12FrameFreeCartanScalar4D` exprime la véritable
+  action de Lie métrique en colonnes scalaires du premier ordre sur ces
+  coefficients récupérés, corrections de crochets du repère fini incluses.
+  L'identité vaut pour tout tenseur symétrique lisse et tout fantôme lisse,
+  sans témoin régulier. Validation gardée verte, pic 3882 Mo ; aucune
+  fermeture différentielle n'est déduite de cette seule identité.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
