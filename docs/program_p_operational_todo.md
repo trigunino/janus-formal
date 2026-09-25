@@ -3795,6 +3795,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   seconde dérivée est nulle sur tout le cœur C². Validation gardée verte,
   pic 3911 Mo. Les slots non linéaires de l'inverse et du volume ne sont
   pas annulés par ce résultat.
+  `P0EFTJanusProgramPT12FrameFreeNativeInverseJetVariation4D` calcule
+  la seconde variation de l'inverse relatif puis des coefficients du vrai
+  inverse métrique, pour un nombre arbitraire de générateurs. Toute lecture
+  linéaire bornée, dont les valeurs et dérivées spatiales premières, commute
+  avec ce Hessien. Validation gardée verte, pic 4154 Mo. Seul l'endomorphisme
+  relatif étendu est inversé ; aucune inversion de la matrice de Gram
+  redondante. L'expansion spatiale complète et le raccord L² restent ouverts.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
