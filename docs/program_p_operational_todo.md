@@ -3758,6 +3758,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   hypothèse terminale d'intertwining. Validation gardée verte, pic 4515 Mo.
   Prochain verrou local : représenter en L² ce Hessien Einstein–interaction
   natif sans repère régulier ; l'assemblage Fredholm global reste ouvert.
+  `P0EFTJanusProgramPT12FrameFreeSecondJetAdjoint4D` construit l'adjoint
+  scalaire des jets jusqu'à l'ordre deux pour toute famille finie de
+  générateurs lisses, sans repère régulier. Les adjoints sont composés dans
+  l'ordre inverse, sans commutation des dérivées ; pairing, intégrale
+  canonique et borne L² sont prouvés. Validation gardée verte, pic 3866 Mo.
+  Les coefficients effectifs du Hessien Einstein–interaction restent à extraire.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
