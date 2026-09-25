@@ -3842,6 +3842,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   features et n'assume aucun intertwiner. Validation gardée verte,
   pic 3930 Mo. Les coefficients spatiaux lisses, l'intégration et le
   raccord Einstein–interaction vers L² restent à établir.
+  `P0EFTJanusProgramPT12FiniteEinsteinJetCovector4D` réalise la formule
+  finie comme covecteur continu explicite en son jet test, avec une borne
+  par sa norme d'opérateur. Les termes de volume et d'accélération inverse
+  sont inclus. Validation gardée verte, pic 4119 Mo. Cette borne porte
+  sur les jets ponctuels ; aucune borne physique L² n'est déduite ici.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
