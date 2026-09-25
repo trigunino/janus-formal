@@ -3562,6 +3562,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Aucun repère régulier global n'est fourni en hypothèse. Validation
   `run_lean_guarded.ps1 -ReserveMB 4096` verte, pic 3866 Mo ; les colonnes
   adjointes et la fermeture physique de ce bloc restent à raccorder.
+  `P0EFTJanusProgramPT12FrameFreeDeDonderAdjoint4D` lève la limite des
+  colonnes adjointes : chaque composante de Donder a un représentant exact
+  dans le vrai complété L² des tenseurs symétriques, relations des coordonnées
+  redondantes conservées. La transposition comprend les deux connexions et
+  la trace, avec Stokes canonique et une simple métrique lisse. Validation
+  gardée verte, pic 3888 Mo ; la fermeture est encore distincte du Fredholm.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
