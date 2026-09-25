@@ -3751,6 +3751,14 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   sa constante au centre et la régularité C² est prouvée sans témoin de
   repère régulier. Validation gardée verte, pic 4217 Mo. L'identification
   contre tout test bulk est exacte ; le représentant L² de ce Hessien reste ouvert.
+  `P0EFTJanusProgramPT12IntrinsicH11PhysicalMetricRemainder4D` raccorde
+  ce Hessien natif au support H11 : le Hessien total sur une entrée diagonale
+  lisse est exactement la somme Einstein–interaction et du pairing BRST L²
+  déjà construit, contre les tests bulk de readout diagonal lisse.
+  Le reste après soustraction du pairing BRST est donc identifié sans
+  hypothèse terminale d'intertwining. Validation gardée verte, pic 4515 Mo.
+  Prochain verrou local : représenter en L² ce Hessien Einstein–interaction
+  natif sans repère régulier ; l'assemblage Fredholm global reste ouvert.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
