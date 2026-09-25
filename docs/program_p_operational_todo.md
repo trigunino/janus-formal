@@ -3547,6 +3547,15 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   par les tests lisses d'origine, sans régularité faible ajoutée en hypothèse.
   Validation gardée verte, pic 3995 Mo ; l'égalité minimal/maximal et le
   Fredholm ne sont pas déduits de cette construction.
+  `P0EFTJanusProgramPT12IntrinsicAbelianFullStrongFormDomain4D` étend
+  le raccord au-delà du cœur lisse : pour toute entrée complétée `u`,
+  `(i u, v)` appartient au graphe physique maximal si et seulement si
+  `i* v = R u`. Le domaine correspond exactement aux `R u` dans l'image
+  de `i*`, le pairing vaut contre tout test complété et le noyau faible
+  coïncide avec celui du Riesz sur ce domaine fidèle. Cette caractérisation
+  lève la limite du seul transport sur entrées lisses ; elle ne prétend pas
+  que toute entrée complétée admet une sortie L². Validation gardée verte,
+  pic 4270 Mo ; auto-adjonction et Fredholm restent ouverts.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
