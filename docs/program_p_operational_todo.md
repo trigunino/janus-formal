@@ -3556,6 +3556,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   lève la limite du seul transport sur entrées lisses ; elle ne prétend pas
   que toute entrée complétée admet une sortie L². Validation gardée verte,
   pic 4270 Mo ; auto-adjonction et Fredholm restent ouverts.
+  `P0EFTJanusProgramPT12FrameFreeDeDonderScalar4D` donne l'expression
+  scalaire exacte du de Donder natif pour toute métrique lorentzienne lisse :
+  contraction finie, deux corrections de Koszul et dérivée de trace complète.
+  Aucun repère régulier global n'est fourni en hypothèse. Validation
+  `run_lean_guarded.ps1 -ReserveMB 4096` verte, pic 3866 Mo ; les colonnes
+  adjointes et la fermeture physique de ce bloc restent à raccorder.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
