@@ -3699,6 +3699,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   cœur lisse certifié, symétrie sur le domaine et pairing diagonal exact.
   Validation gardée verte, pic 3939 Mo ; fond métrique commun seulement,
   sans auto-adjonction ni conclusion Fredholm.
+  `P0EFTJanusProgramPT12IntrinsicH11BRSTStrongPairing4D` identifie cette
+  réalisation au Hessien BRST bulk natif sur le cœur diagonal lisse.
+  Lorsque la première entrée est non minimale (perturbations métriques nulles),
+  le pairing égale le Hessien bulk total et satisfait la borne L² correspondante.
+  Validation gardée verte, pic 4191 Mo. Tests diagonaux lisses seulement :
+  les colonnes physiques H11 générales et la propriété Fredholm restent ouvertes.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
