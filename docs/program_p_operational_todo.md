@@ -3655,6 +3655,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   cœur lisse certifié et pairing natif conservé. Validation gardée verte,
   pic 4170 Mo. L'auto-adjonction, le Fredholm après quotient et le raccord
   terminal global ne sont pas déduits ; `T12` reste ouverte (`6/14`).
+  `P0EFTJanusProgramPT12FrameFreeDiagonalDiffeomorphismL2Core4D` construit
+  le L² physique diagonal comme fermeture de l'image des deux secteurs
+  natifs avec leur unique triplet partagé, pour deux métriques lisses
+  quelconques. Inclusion lisse injective et dense, complétude et lectures
+  sectorielles bornées exactes ; aucune feature dérivée dans cette norme.
+  Validation gardée verte, pic 4173 Mo. L'opérateur diagonal reste à assembler.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
