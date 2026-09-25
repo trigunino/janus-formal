@@ -3771,6 +3771,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   et borne L² sont exacts sans repère régulier. Validation gardée verte,
   pic 3874 Mo. Ce résultat fournit le transfert analytique pour des coefficients
   lisses donnés ; leur identification au Hessien Einstein–interaction reste à prouver.
+  `P0EFTJanusProgramPT12ProjectedCurvatureJetSymbol4D` construit la
+  formule polynomiale de courbure pour un nombre arbitraire de générateurs,
+  avec le projecteur dans la trace de Ricci et les dérivées ordonnées de
+  l'inverse comme slots explicites. La densité Einstein avec volume et
+  constante cosmologique est C∞ en ces features. Validation gardée verte,
+  pic 1791 Mo. Leur réalisation native et leurs variations doivent être raccordées.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
