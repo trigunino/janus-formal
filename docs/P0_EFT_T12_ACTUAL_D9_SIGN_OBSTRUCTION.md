@@ -4277,3 +4277,36 @@ Hub T12 vert, pic 4066 Mo ; `git diff --check` OK.
 T12 reste ouverte : réduction BRST justifiée, famille signée Fredholm réelle
 (image fermée et noyau fini), transport global et certificat terminal.
 Aucun intertwiner terminal n'est postulé. Quillen et T08 sont inchangés.
+
+## Pairing complet et réduction antighost difféomorphe
+
+L'insertion abélienne ghost/antighost est fidèle dans le cœur compatible
+bulk + bord. Les deux colonnes GHY sont nulles contre tout test ; la colonne
+complète est celle du BRST bulk. Sur deux entrées ghosts lisses, son pairing
+est exactement celui de l'opérateur L2 auto-adjoint déjà construit.
+
+Pour l'antighost difféomorphe partagé, la colonne du vrai Hessien bulk,
+puis du Hessien complet avec GHY, s'annule contre tout test sous la condition
+explicite `plusWeight + minusWeight = 0`. La différentielle BRST sur les états
+annule un état purement antighost, indépendamment de cette condition.
+
+Le bloc antighost C2 est exactement `ker(id - j.comp r) = range(j)`, où
+`j` est l'insertion bornée et `r` sa rétraction. Il est fermé ; le Hessien
+bulk descend par deux `liftQL`, avec pairing exact et symétrie. Sur les états
+lisses, le quotient porte le BRST induit par `mapQ`, avec intertwining et
+carré nul prouvés. Une application linéaire injective réalise ce quotient
+lisse dans le quotient C2 ; son accord sur les représentants est exact.
+
+Cette construction n'affirme ni continuité de BRST sur toute la complétion
+C2, ni équivalence de cohomologie. Elle concerne la Hessienne au fond,
+sans affirmer la descente de toute l'action non linéaire. La propriété
+Fredholm globale, le transport terminal et le certificat T12 restent ouverts.
+
+Validation depuis le point précédent : neuf nouveaux modules verts et formule
+scalaire du Hessien complet, pic maximal des validations réussies 4286 Mo.
+Audit cumulatif des 33 modules : 229 déclarations publiques et le cardinal
+canonique, soit 230 déclarations avec seulement `propext`, `Classical.choice`,
+`Quot.sound`. Hub T12 vert, pic 4071 Mo ; audit Programme P/P-F vert, compteur
+terminal inchangé à 6/14. Aucun nouvel axiome, `sorry`/`admit`, `native_decide`
+ni augmentation des budgets. Lean séquentiel gardé, réserve 4096 Mo et priorité
+haute ; `git diff --check` OK. Quillen et T08 inchangés.
