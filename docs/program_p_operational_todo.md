@@ -3418,6 +3418,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   lisse certifié. Validation gardée verte, pic 3898 Mo. Il s'agit du premier
   ordre de courbure ; le Jacobi Maxwell fort d'ordre deux et son Fredholm
   ne sont pas déduits de ce résultat.
+  `P0EFTJanusProgramPT12IntrinsicAbelianCurvatureGraphBridge4D` raccorde
+  tous les vecteurs des graphes Maxwell–Lorenz et Maxwell–BRST existants
+  au graphe de cet opérateur fermé : leur potentiel appartient au domaine
+  et leur feature de courbure est exactement la valeur de l'opérateur.
+  Validation gardée verte, pic 3929 Mo ; aucune égalité des domaines
+  Maxwell–Lorenz et courbure seule n'est postulée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
