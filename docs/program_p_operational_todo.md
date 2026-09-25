@@ -3594,6 +3594,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   L'identité vaut pour tout tenseur symétrique lisse et tout fantôme lisse,
   sans témoin régulier. Validation gardée verte, pic 3882 Mo ; aucune
   fermeture différentielle n'est déduite de cette seule identité.
+  `P0EFTJanusProgramPT12FrameFreeCartanAdjoint4D` construit chaque
+  colonne adjointe de Cartan dans le complété fantôme physique d'origine,
+  avec pairing canonique exact pour tout tenseur symétrique lisse. Il fournit
+  aussi l'action de Cartan dans le vrai L² tensoriel. La limite de l'adjoint
+  Cartan sans témoin régulier est levée. Validation gardée verte, pic 3889 Mo ;
+  fermeture et composition FP restent distinctes.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
