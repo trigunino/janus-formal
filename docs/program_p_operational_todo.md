@@ -3438,6 +3438,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   avec formule explicite et pairing contre tout le domaine fermé de courbure.
   Validation gardée verte, pic 4058 Mo ; aucune hypothèse d'adjoint fournie.
   Le Jacobi fort Maxwell n'est pas encore identifié par ces seules colonnes.
+  `P0EFTJanusProgramPT12IntrinsicAbelianCurvatureSmoothAdjoint4D` étend la
+  formule à toute famille lisse de coefficients de courbure. Cette famille
+  est dense dans le L² cible et appartient au domaine de l'adjoint, dont la
+  fermeture et la densité de domaine sont établies. Validation gardée verte,
+  pic 3894 Mo ; aucune assertion que cette famille est un cœur de l'adjoint.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
