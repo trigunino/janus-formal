@@ -3810,6 +3810,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   verte, pic 4149 Mo. Aucun choix de repère régulier ni branche positive
   supposée : la valeur absolue de la racine C² est traitée explicitement.
   Le raccord complet Einstein–interaction vers L² reste à construire.
+  `P0EFTJanusProgramPT12FrameFreeNativeInverseVelocity4D` calcule la
+  première variation de l'inverse relatif (-A), des coefficients inverses
+  physiques (-A·B) et de leurs lectures bornées. Validation gardée verte,
+  pic 3924 Mo ; budgets inchangés. Cela complète le Hessien inverse déjà
+  acquis ; l'expansion des dérivées spatiales est traitée séparément.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
