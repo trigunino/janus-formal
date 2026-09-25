@@ -3738,6 +3738,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   dans l'identité d'action ; aucune stationnarité n'est supposée.
   Validation gardée verte, pic 4236 Mo. Cette séparation prépare les colonnes
   métriques ; leur représentant L² et Fredholm restent à construire.
+  `P0EFTJanusProgramPT12IntrinsicBulkPhysicalMetricColumn4D` construit
+  l'insertion et le readout métriques C² natifs. La colonne physique métrique
+  contre tout test bulk dépend exactement des deux seuls slots métriques :
+  les composantes matière/LL et non minimales sont éliminées, et le couplage
+  métrique–potentiel Maxwell au centre est nul par la colonne déjà prouvée.
+  Validation gardée verte, pic 4258 Mo. Il s'agit du centre bulk natif,
+  sans assertion de découplage à potentiel de fond non nul ni représentant L².
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
