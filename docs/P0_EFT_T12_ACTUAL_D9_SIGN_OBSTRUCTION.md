@@ -4323,3 +4323,32 @@ canonique, soit 246 déclarations avec seulement `propext`, `Classical.choice`,
 terminal inchangé à 6/14. Aucun nouvel axiome, `sorry`/`admit`, `native_decide`
 ni augmentation des budgets. Lean séquentiel gardé, réserve 4096 Mo et priorité
 haute ; `git diff --check` OK. Quillen et T08 inchangés.
+
+## Complétion Maxwell–Lorenz et Riesz physique abélien
+
+`IntrinsicAbelianMaxwellLorenzGraph4D` complète le graphe Lorenz avec les
+coefficients L2 de la courbure Maxwell native. L'inclusion lisse est injective
+et dense ; les projections Lorenz et courbure sont bornées par la norme du
+graphe. La construction utilise la géométrie intrinsèque habitée et sa famille
+finie redondante, sans métrique régulière historique vide.
+
+`IntrinsicAbelianMaxwellGraphPairing4D` prolonge le pairing Maxwell natif en
+une forme bilinéaire bornée sur ce graphe, avec égalité exacte sur le cœur
+lisse, densité canonique, facteur −1/4 et deux poids sectoriels conservés.
+`IntrinsicAbelianMaxwellGraphRiesz4D` réalise son Hessien symétrisé par un
+opérateur borné auto-adjoint. Son pairing lisse égale le vrai Hessien physique
+bulk ; l'égalité de colonne vaut aussi contre tout test bulk dont la projection
+potentielle est le représentant lisse considéré.
+
+Cette réalisation porte la norme Maxwell–Lorenz. Elle ne prouve ni la
+fermeture de l'opérateur différentiel dans L2, ni l'injectivité de la projection
+du graphe complété vers le seul graphe Lorenz, ni la propriété Fredholm globale.
+T12 reste ouverte ; aucun certificat terminal n'est ajouté.
+
+Validation : trois gates et hub T12 verts sous `run_lean_guarded`, un Lean,
+priorité haute, réserve 4096 Mo. Pics : 3925, 3930, 4260 Mo ; hub : 4074 Mo.
+Audit cumulatif des 36 modules : 273 déclarations publiques et le cardinal
+canonique, soit 274 déclarations, seulement `propext`, `Classical.choice`,
+`Quot.sound` (journal `janus-lean-937d4886-df92-4cdc-bfb1-f55a7c9853a6.out`).
+Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni augmentation de budget.
+`git diff --check` OK ; Quillen et T08 inchangés.
