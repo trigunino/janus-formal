@@ -3641,6 +3641,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   et dense. La norme ne contient aucune feature dérivée ; tous les slots
   natifs sont conservés. Validation gardée verte, pic 3912 Mo ; aucune
   réalisation forte ni propriété Fredholm n'est déduite de ce seul support.
+  `P0EFTJanusProgramPT12FrameFreeDiffeomorphismStrongSmooth4D` lève la
+  limite d'assemblage : les quatre colonnes physiques du Hessien BRST
+  difféomorphe natif sont construites pour toute métrique lisse. Le pairing
+  égale exactement le Hessien hors couche d'origine, avec les deux signes
+  fantômes négatifs et le terme B-flat symétrisé. La symétrie lisse est
+  prouvée, sans témoin régulier ni intertwiner supposé. Validation gardée
+  verte, pic 3958 Mo ; la fermeture forte et le Fredholm restent ouverts ici.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
