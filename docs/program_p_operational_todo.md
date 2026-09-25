@@ -3424,6 +3424,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   et leur feature de courbure est exactement la valeur de l'opérateur.
   Validation gardée verte, pic 3929 Mo ; aucune égalité des domaines
   Maxwell–Lorenz et courbure seule n'est postulée.
+  `P0EFTJanusProgramPT12IntrinsicAbelianCurvatureExactComplex4D` prouve
+  l'annulation de la courbure native des potentiels exacts, puis l'inclusion
+  de leur enveloppe linéaire fermée L² dans le noyau fermé de l'opérateur.
+  Toutes ces directions complétées appartiennent donc réellement au domaine
+  et ont une sortie nulle. Validation gardée verte, pic 3901 Mo. Ce résultat
+  prépare le quotient de jauge ; il n'identifie pas tout le noyau et ne
+  prouve ni cohomologie finie ni Fredholm. `T12` demeure ouverte (`6/14`).
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
