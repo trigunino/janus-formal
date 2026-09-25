@@ -3515,6 +3515,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   lisse injective et dense, complétude, potentiel mesuré en L² sans dérivée.
   Validation gardée verte, pic 4036 Mo ; le Jacobi complet reste à assembler
   sur ce support fidèle.
+  La limite d'assemblage lisse est levée par
+  `P0EFTJanusProgramPT12IntrinsicAbelianFullStrongSmooth4D` : les sorties
+  physiques sont `(Maxwell A + Lorenz* B, Lorenz A − B, FP c, FP* antighost)`.
+  Leur pairing L² égale exactement le Hessien Maxwell–BRST du graphe natif,
+  avec symétrie prouvée et sans hypothèse de réalisation D9. Validation
+  gardée verte, pic 4008 Mo ; fermeture et Fredholm restent distincts.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
