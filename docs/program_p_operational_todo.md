@@ -3410,8 +3410,14 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   le graphe natif potentiel→courbure dans ces espaces L². L'identité faible
   de Cartan persiste dans la fermeture et exclut toute composante verticale :
   la courbure native est donc closable sans métrique régulière historique.
-  La réalisation comme opérateur partiel reste à certifier. Même validation
-  gardée verte, pic 3896 Mo ; aucune assertion Fredholm.
+  Même validation gardée verte, pic 3896 Mo ; aucune assertion Fredholm.
+  La limite de réalisation comme opérateur partiel est levée par
+  `P0EFTJanusProgramPT12IntrinsicAbelianCurvatureClosed4D` : opérateur natif
+  potentiel L²→courbure L² fermé, à domaine dense, avec accord exact sur
+  les potentiels lisses, minimalité parmi les extensions fermées et cœur
+  lisse certifié. Validation gardée verte, pic 3898 Mo. Il s'agit du premier
+  ordre de courbure ; le Jacobi Maxwell fort d'ordre deux et son Fredholm
+  ne sont pas déduits de ce résultat.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
