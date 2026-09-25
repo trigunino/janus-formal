@@ -3648,6 +3648,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   fantômes négatifs et le terme B-flat symétrisé. La symétrie lisse est
   prouvée, sans témoin régulier ni intertwiner supposé. Validation gardée
   verte, pic 3958 Mo ; la fermeture forte et le Fredholm restent ouverts ici.
+  `P0EFTJanusProgramPT12FrameFreeDiffeomorphismStrongClosed4D` lève la
+  limite de fermeture forte : réalisation minimale fermée et symétrique du
+  Hessien BRST difféomorphe complet dans son L² physique, domaine dense,
+  cœur lisse certifié et pairing natif conservé. Validation gardée verte,
+  pic 4170 Mo. L'auto-adjonction, le Fredholm après quotient et le raccord
+  terminal global ne sont pas déduits ; `T12` reste ouverte (`6/14`).
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
