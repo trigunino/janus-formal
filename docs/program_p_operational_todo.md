@@ -3835,6 +3835,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Les accélérations métriques sont nulles ; celles du volume et de l'inverse
   restent explicites. Validation gardée verte, pic 3991 Mo, sans relèvement
   des budgets. Ce raccord ponctuel ne fournit pas encore le représentant L².
+  `P0EFTJanusProgramPT12FrameFreeEinsteinFiniteJetHessian4D` factorise
+  exactement le Hessien de la densité Einstein native par une lecture
+  bornée finie : jets tensoriels jusqu'à l'ordre deux et jets relatifs
+  jusqu'à l'ordre un. La formule conserve le terme d'accélération des
+  features et n'assume aucun intertwiner. Validation gardée verte,
+  pic 3930 Mo. Les coefficients spatiaux lisses, l'intégration et le
+  raccord Einstein–interaction vers L² restent à établir.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
