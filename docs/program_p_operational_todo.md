@@ -3510,6 +3510,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   appariés, avec pairing exact du Lorenz natif dans la mesure canonique.
   Validation gardée verte, pic 3898 Mo ; aucune fermeture ni auto-adjonction
   supplémentaire n'est déduite de cette seule identité lisse.
+  `P0EFTJanusProgramPT12IntrinsicAbelianFullL2Core4D` fournit le Hilbert
+  physique commun aux quatre slots appariés A/B/antighost/ghost : inclusion
+  lisse injective et dense, complétude, potentiel mesuré en L² sans dérivée.
+  Validation gardée verte, pic 4036 Mo ; le Jacobi complet reste à assembler
+  sur ce support fidèle.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
