@@ -1,5 +1,6 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12IntrinsicBoundaryAbelianGhostCore4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12IntrinsicBoundaryCompleteAction4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12IntrinsicBulkMaxwellColumn4D
 
 /-! The faithful Abelian ghost insertion represents the second variation of
 the complete bulk + two GHY actions by the existing self-adjoint L² ghost block. -/
@@ -234,6 +235,61 @@ theorem intrinsicBoundaryCompleteHessian_ghost_eq_L2_pairing
     plusEinsteinScale minusEinsteinScale interactionScale coefficients a c
     (intrinsicBoundarySmoothAbelianGhostInsertion period hPeriod couplings b d)).trans
     (intrinsicBulkBRSTHessian_ghost_eq_L2_pairing period hPeriod couplings a c b d)
+
+open P0EFTJanusProgramPT12IntrinsicBulkPairedAbelianHessian4D
+open P0EFTJanusProgramPT12IntrinsicBulkMaxwellRestriction4D
+open P0EFTJanusProgramPT12IntrinsicBulkMaxwellColumn4D
+
+private theorem pairedAbelian_plusGHY_zero (einsteinScale : Real)
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) (test : Core) :
+    scalarActionSecondDerivative (intrinsicBoundaryPlusGHYAction period hPeriod couplings einsteinScale)
+      (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings fields) test = 0 :=
+  secondDerivative_linear_zero_left (intrinsicBoundaryFixedGHYAction period hPeriod einsteinScale)
+    (intrinsicBoundaryBulkPlusJoint period hPeriod couplings)
+    (intrinsicBoundaryFixedGHYAction_contDiffAt_zero period hPeriod einsteinScale) _ test
+    (intrinsicBoundaryPairedAbelianInsertion_plusJoint period hPeriod couplings fields)
+
+private theorem pairedAbelian_minusGHY_zero (einsteinScale : Real)
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) (test : Core) :
+    scalarActionSecondDerivative (intrinsicBoundaryMinusGHYAction period hPeriod couplings einsteinScale)
+      (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings fields) test = 0 :=
+  secondDerivative_linear_zero_left (intrinsicBoundaryFixedGHYAction period hPeriod einsteinScale)
+    (intrinsicBoundaryBulkMinusJoint period hPeriod couplings)
+    (intrinsicBoundaryFixedGHYAction_contDiffAt_zero period hPeriod einsteinScale) _ test
+    (intrinsicBoundaryPairedAbelianInsertion_minusJoint period hPeriod couplings fields)
+
+/-- The complete Abelian column includes the physical potentials and every BRST field. -/
+theorem intrinsicBoundaryCompleteHessian_pairedAbelian_eq_bulk
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) (test : Core) :
+    intrinsicBoundaryCompleteHessian period hPeriod couplings
+      plusEinsteinScale minusEinsteinScale interactionScale coefficients
+      (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings fields) test =
+    intrinsicBulkHessian period hPeriod couplings interactionScale coefficients
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields)
+      (intrinsicBoundaryBulkProjection period hPeriod couplings test) := by
+  have hSum := intrinsicBoundaryCompleteHessian_apply period hPeriod couplings
+    plusEinsteinScale minusEinsteinScale interactionScale coefficients
+    (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings fields) test
+  have hPlus := pairedAbelian_plusGHY_zero period hPeriod couplings plusEinsteinScale fields test
+  have hMinus := pairedAbelian_minusGHY_zero period hPeriod couplings minusEinsteinScale fields test
+  have h := scalar_sum_drop hSum hPlus hMinus
+  exact h.trans (intrinsicBoundaryBulkAction_hessian period hPeriod couplings interactionScale coefficients
+    (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings fields) test)
+
+theorem intrinsicBoundaryCompleteHessian_pairedAbelian
+    (first second : IntrinsicBulkPairedAbelianCore period hPeriod) :
+    intrinsicBoundaryCompleteHessian period hPeriod couplings
+      plusEinsteinScale minusEinsteinScale interactionScale coefficients
+      (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings first)
+      (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings second) =
+    (intrinsicBulkMaxwellPairing period hPeriod couplings (first.1.1, first.2.1) (second.1.1, second.2.1) +
+      intrinsicBulkMaxwellPairing period hPeriod couplings (second.1.1, second.2.1) (first.1.1, first.2.1)) +
+    (intrinsicBulkPairedAbelianBilinear period hPeriod first second +
+      intrinsicBulkPairedAbelianBilinear period hPeriod second first) :=
+  (intrinsicBoundaryCompleteHessian_pairedAbelian_eq_bulk period hPeriod couplings
+    plusEinsteinScale minusEinsteinScale interactionScale coefficients first
+    (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings second)).trans
+    (intrinsicBulkHessian_pairedAbelian period hPeriod couplings interactionScale coefficients first second)
 
 end
 end JanusFormal.P0EFTJanusProgramPT12IntrinsicBoundaryAbelianGhostPairing4D
