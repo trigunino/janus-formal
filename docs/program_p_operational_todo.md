@@ -3745,6 +3745,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   métrique–potentiel Maxwell au centre est nul par la colonne déjà prouvée.
   Validation gardée verte, pic 4258 Mo. Il s'agit du centre bulk natif,
   sans assertion de découplage à potentiel de fond non nul ni représentant L².
+  `P0EFTJanusProgramPT12IntrinsicBulkEinsteinInteractionHessian4D`
+  identifie cette colonne au Hessien de la somme native des deux actions
+  Einstein et de l'interaction réciproque. La restriction d'action conserve
+  sa constante au centre et la régularité C² est prouvée sans témoin de
+  repère régulier. Validation gardée verte, pic 4217 Mo. L'identification
+  contre tout test bulk est exacte ; le représentant L² de ce Hessien reste ouvert.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
