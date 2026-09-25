@@ -3582,6 +3582,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   du raccord entre ces deux réalisations est donc levée pour toute métrique
   lisse. Validation gardée verte, pic 3887 Mo ; les colonnes Cartan/FP
   difféomorphes sans témoin régulier et le Fredholm global restent à établir.
+  `P0EFTJanusProgramPT12FrameFreeGhostL2Core4D` construit le complété
+  fidèle des coordonnées fantômes normalisées d'origine : inclusion lisse
+  injective et dense, puis reconstruction bornée de chaque coefficient du
+  repère fini, pour une simple métrique lisse. Cette reconstruction ne
+  suppose aucun repère régulier. Validation `run_lean_guarded.ps1
+  -ReserveMB 4096` verte, pic 3886 Mo ; les adjoints Cartan/FP restent à composer.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
