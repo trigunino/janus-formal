@@ -3705,6 +3705,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   le pairing égale le Hessien bulk total et satisfait la borne L² correspondante.
   Validation gardée verte, pic 4191 Mo. Tests diagonaux lisses seulement :
   les colonnes physiques H11 générales et la propriété Fredholm restent ouvertes.
+  `P0EFTJanusProgramPT12IntrinsicBulkDiffeomorphismColumnProjection4D`
+  factorise la colonne BRST difféomorphe complète par la projection diagonale
+  du test bulk. Les composantes abéliennes, matière et LL du test sont
+  quelconques ; leur annulation découle du Hessien global natif. Ceci lève
+  la restriction sectorielle des tests pour cette colonne BRST, sans réaliser
+  les couplages physiques métriques. Validation gardée verte, pic 4215 Mo.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
