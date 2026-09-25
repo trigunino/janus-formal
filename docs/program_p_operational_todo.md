@@ -3483,6 +3483,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   L'opérateur fermé représente ce Hessien sur son cœur lisse certifié.
   Validation gardée verte, pic 4236 Mo ; les limites Fredholm précédentes
   restent inchangées, sans nouvelle hypothèse d'intertwining.
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellStrongGaugeKernel4D` prouve
+  que tout le secteur exact complété appartient au domaine et au noyau du
+  Jacobi Maxwell fermé. Toute sortie de ce Jacobi est orthogonale à ces
+  directions. Validation gardée verte, pic 3930 Mo ; cette inclusion ne
+  prétend pas identifier l'ensemble du noyau ni sa dimension après quotient.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
