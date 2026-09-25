@@ -1,5 +1,7 @@
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12IntrinsicBulkMaxwellRestriction4D
 import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12BilinearSecondJetFreeze4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12IntrinsicBulkPairedAbelianHessian4D
+import JanusFormal.Branches.FundamentalGeometryPVariationalPrinciple.Gates.P0EFTJanusProgramPT12IntrinsicBulkGlobalBRSTHessian4D
 
 /-! The actual physical bulk Maxwell column against every C² bulk test.
 The pairing retains the native curvature, density and two Maxwell couplings. -/
@@ -14,6 +16,13 @@ open P0EFTJanusProgramPT12BilinearSecondJetFreeze4D
 section Calculus
 variable {E F : Type*} [NormedAddCommGroup E] [NormedSpace Real E]
   [NormedAddCommGroup F] [NormedSpace Real F]
+
+private theorem split_bilinear_apply
+    (total physical brst : E →L[Real] E →L[Real] Real)
+    (hSplit : total = physical + brst) (first second : E) :
+    total first second = physical first second + brst first second := by
+  rw [hSplit]
+  rfl
 local instance : NormedAddCommGroup (E →L[Real] Real) := inferInstance
 local instance : NormedSpace Real (E →L[Real] Real) := inferInstance
 local instance : NormedAddCommGroup (E →L[Real] E →L[Real] Real) := inferInstance
@@ -144,6 +153,66 @@ theorem intrinsicBulkPhysicalHessian_potential_column
     (intrinsicBulkPotentialReflection_insert period hPeriod couplings) potential test).trans
       (intrinsicBulkPhysicalHessian_potential_potential period hPeriod couplings interactionScale coefficients
         potential (intrinsicBulkAbelianPotentialReadout period hPeriod couplings test))
+
+open P0EFTJanusProgramPT12IntrinsicBulkHessian4D
+open P0EFTJanusProgramPT12IntrinsicBulkPairedAbelianHessian4D
+open P0EFTJanusProgramPT12IntrinsicBulkGlobalBRSTHessian4D
+
+/-- The physical column of both complete Abelian packets, against every bulk test. -/
+theorem intrinsicBulkPhysicalHessian_pairedAbelian_column
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) (test : Core) :
+    intrinsicBulkPhysicalHessian period hPeriod couplings interactionScale coefficients
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields) test =
+    intrinsicBulkMaxwellPairing period hPeriod couplings (fields.1.1, fields.2.1)
+      (intrinsicBulkAbelianPotentialReadout period hPeriod couplings test) +
+    intrinsicBulkMaxwellPairing period hPeriod couplings
+      (intrinsicBulkAbelianPotentialReadout period hPeriod couplings test) (fields.1.1, fields.2.1) := by
+  have hFields := intrinsicBulkPhysicalHessian_apply period hPeriod couplings interactionScale coefficients
+    (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields) test
+  have hPotential := intrinsicBulkPhysicalHessian_apply period hPeriod couplings interactionScale coefficients
+    (intrinsicBulkAbelianAInsertion period hPeriod couplings (fields.1.1, fields.2.1)) test
+  have hEqual := hFields.trans hPotential.symm
+  exact hEqual.trans (intrinsicBulkPhysicalHessian_potential_column period hPeriod couplings
+    interactionScale coefficients (fields.1.1, fields.2.1) test)
+
+/-- Native H11 and BRST together, with no omitted mixed tests. -/
+theorem intrinsicBulkHessian_pairedAbelian_column
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) (test : Core) :
+    intrinsicBulkHessian period hPeriod couplings interactionScale coefficients
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields) test =
+    (intrinsicBulkMaxwellPairing period hPeriod couplings (fields.1.1, fields.2.1)
+      (intrinsicBulkAbelianPotentialReadout period hPeriod couplings test) +
+    intrinsicBulkMaxwellPairing period hPeriod couplings
+      (intrinsicBulkAbelianPotentialReadout period hPeriod couplings test) (fields.1.1, fields.2.1)) +
+    (intrinsicBulkGlobalBRSTBilinearFamily period hPeriod couplings 0
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields) test +
+    intrinsicBulkGlobalBRSTBilinearFamily period hPeriod couplings 0 test
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields)) := by
+  have hSplit := split_bilinear_apply _ _ _
+    (intrinsicBulkHessian_eq_physical_add_BRST period hPeriod couplings interactionScale coefficients)
+    (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields) test
+  exact hSplit.trans (congrArg₂ (fun physical brst : Real => physical + brst)
+    (intrinsicBulkPhysicalHessian_pairedAbelian_column period hPeriod couplings interactionScale coefficients fields test)
+    (intrinsicBulkBRSTHessian_eq_globalBilinear period hPeriod couplings
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields) test))
+
+theorem intrinsicBulkHessian_pairedAbelian
+    (first second : IntrinsicBulkPairedAbelianCore period hPeriod) :
+    intrinsicBulkHessian period hPeriod couplings interactionScale coefficients
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings first)
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings second) =
+    (intrinsicBulkMaxwellPairing period hPeriod couplings (first.1.1, first.2.1) (second.1.1, second.2.1) +
+      intrinsicBulkMaxwellPairing period hPeriod couplings (second.1.1, second.2.1) (first.1.1, first.2.1)) +
+    (intrinsicBulkPairedAbelianBilinear period hPeriod first second +
+      intrinsicBulkPairedAbelianBilinear period hPeriod second first) := by
+  have hSplit := split_bilinear_apply _ _ _
+    (intrinsicBulkHessian_eq_physical_add_BRST period hPeriod couplings interactionScale coefficients)
+    (intrinsicBulkPairedAbelianInsertion period hPeriod couplings first)
+    (intrinsicBulkPairedAbelianInsertion period hPeriod couplings second)
+  exact hSplit.trans (congrArg₂ (fun physical brst : Real => physical + brst)
+    (intrinsicBulkPhysicalHessian_pairedAbelian_column period hPeriod couplings interactionScale coefficients first
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings second))
+    (intrinsicBulkBRSTHessian_pairedAbelian period hPeriod couplings first second))
 
 end
 end JanusFormal.P0EFTJanusProgramPT12IntrinsicBulkMaxwellColumn4D
