@@ -3815,6 +3815,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   physiques (-A·B) et de leurs lectures bornées. Validation gardée verte,
   pic 3924 Mo ; budgets inchangés. Cela complète le Hessien inverse déjà
   acquis ; l'expansion des dérivées spatiales est traitée séparément.
+  `P0EFTJanusProgramPT12FiniteFrameMatrixFirstJet4D` construit la lecture
+  bornée des valeurs et premiers jets matriciels pour un nombre arbitraire
+  de générateurs. Elle respecte exactement le produit via Leibniz et les
+  réalisations lisses ; le produit des jets est C∞. Validation gardée verte,
+  pic 4151 Mo. Le résultat porte sur le cœur C² natif, sans identification
+  abusive de coordonnées redondantes à une base.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
