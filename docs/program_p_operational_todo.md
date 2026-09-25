@@ -3378,7 +3378,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   et coefficients de structure donnent son pairing à partir des seules
   valeurs du potentiel. La famille finie reste redondante et la métrique
   simplement lisse. Même commande gardée verte, pic 3846 Mo ; aucune
-  fermeture Fredholm n'en est déduite. `T12` reste ouverte, compteur `6/14`.
+  fermeture Fredholm n'en est déduite.
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellGraphFaithful4D` prolonge cette
+  identité au graphe Maxwell–Lorenz et prouve que deux potentiels L² égaux
+  ont la même courbure complétée. La projection vers le graphe Lorenz est
+  injective : l'ancienne limite sur son injectivité est levée. Cela ne
+  prouve ni une estimation inverse bornée ni le Fredholm du Hessien.
+  Même validation gardée verte, pic 3906 Mo. `T12` reste ouverte, compteur `6/14`.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
