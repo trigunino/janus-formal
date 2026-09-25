@@ -52,6 +52,15 @@ private theorem secondDerivative_sumThree (f g h : E → Real)
   (secondDerivative_add (fun x => f x + g x) h (hf.add hg) hh).trans
     (congrArg (fun K => K + scalarActionSecondDerivative h) (secondDerivative_add f g hf hg))
 
+private theorem secondDerivative_sumThree_apply (f g h : E → Real)
+    (hf : ContDiffAt Real 2 f 0) (hg : ContDiffAt Real 2 g 0) (hh : ContDiffAt Real 2 h 0)
+    (first second : E) :
+    scalarActionSecondDerivative (fun x => f x + g x + h x) first second =
+      scalarActionSecondDerivative f first second + scalarActionSecondDerivative g first second +
+        scalarActionSecondDerivative h first second := by
+  rw [secondDerivative_sumThree f g h hf hg hh]
+  rfl
+
 private theorem secondDerivative_symmetric (f : E → Real) (hf : ContDiffAt Real 2 f 0) (x y : E) :
     scalarActionSecondDerivative f x y = scalarActionSecondDerivative f y x :=
   hf.isSymmSndFDerivAt (by norm_num) x y
@@ -216,6 +225,17 @@ theorem intrinsicBoundaryCompleteHessian_eq_sum :
     (intrinsicBoundaryBulkAction_contDiffAt_zero period hPeriod couplings interactionScale coefficients)
     (intrinsicBoundaryPlusGHYAction_contDiffAt_zero period hPeriod couplings plusEinsteinScale)
     (intrinsicBoundaryMinusGHYAction_contDiffAt_zero period hPeriod couplings minusEinsteinScale)
+
+theorem intrinsicBoundaryCompleteHessian_apply (first second : Core) :
+    intrinsicBoundaryCompleteHessian period hPeriod couplings
+        plusEinsteinScale minusEinsteinScale interactionScale coefficients first second =
+      intrinsicBoundaryBulkHessian period hPeriod couplings interactionScale coefficients first second +
+        scalarActionSecondDerivative (intrinsicBoundaryPlusGHYAction period hPeriod couplings plusEinsteinScale) first second +
+        scalarActionSecondDerivative (intrinsicBoundaryMinusGHYAction period hPeriod couplings minusEinsteinScale) first second :=
+  secondDerivative_sumThree_apply _ _ _
+    (intrinsicBoundaryBulkAction_contDiffAt_zero period hPeriod couplings interactionScale coefficients)
+    (intrinsicBoundaryPlusGHYAction_contDiffAt_zero period hPeriod couplings plusEinsteinScale)
+    (intrinsicBoundaryMinusGHYAction_contDiffAt_zero period hPeriod couplings minusEinsteinScale) first second
 
 theorem intrinsicBoundaryCompleteHessian_symmetric (first second : Core) :
     intrinsicBoundaryCompleteHessian period hPeriod couplings
