@@ -3636,6 +3636,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   covectoriel, puis son représentant physique. L'accord avec le terme natif
   B-flat est exact sur les champs lisses ; aucune positivité lorentzienne
   n'est supposée. Validation gardée verte, pic 3919 Mo.
+  `P0EFTJanusProgramPT12FrameFreeDiffeomorphismFullL2Core4D` fournit le
+  Hilbert physique commun h/B/antighost/ghost avec inclusion lisse injective
+  et dense. La norme ne contient aucune feature dérivée ; tous les slots
+  natifs sont conservés. Validation gardée verte, pic 3912 Mo ; aucune
+  réalisation forte ni propriété Fredholm n'est déduite de ce seul support.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
