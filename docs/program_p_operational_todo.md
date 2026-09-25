@@ -3471,6 +3471,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   de Green vaut contre tout le domaine fermé de courbure et la symétrie
   lisse est prouvée. Validation gardée verte, pic 3921 Mo. La fermeture du
   Jacobi et son caractère Fredholm ne sont pas encore déduits ici.
+  La limite de fermeture est levée par
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellStrongClosed4D` : réalisation
+  minimale fermée du Jacobi natif dans le L² physique, domaine dense, cœur
+  lisse certifié, accord exact avec D* W D et symétrie sur tout le domaine.
+  Validation gardée verte, pic 3935 Mo. L'auto-adjonction, l'identification
+  Sobolev du domaine et le Fredholm du quotient restent ouverts.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
