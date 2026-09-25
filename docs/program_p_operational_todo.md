@@ -3391,13 +3391,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   vers le graphe BRST abélien hors couche. Aucune surjectivité, équivalence
   de normes ou propriété Fredholm n'est affirmée. Validation gardée verte,
   pic 3930 Mo.
-  Réalisations Maxwell–BRST L² intégrées par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
-  hub vert avec l'injectivité physique du graphe et le domaine maximal exact,
-  même commande gardée, pic 4103 Mo. Audit cumulatif Lean
-  `#print axioms` sur 69 modules, 456 déclarations publiques plus le cardinal
-  canonique : 457 déclarations contrôlées, seulement `propext`,
-  `Classical.choice`, `Quot.sound` ; pic 3943 Mo, journal
-  `janus-lean-3b17e888-68a7-44aa-8205-afbc7c5e8954.out`.
+  Réalisations Maxwell–BRST et de Donder intégrées par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
+  hub vert avec le domaine abélien maximal et le de Donder physique natif
+  sans témoin régulier, même commande gardée, pic 4097 Mo. Audit cumulatif Lean
+  `#print axioms` sur 73 modules, 479 déclarations publiques plus le cardinal
+  canonique : 480 déclarations contrôlées, seulement `propext`,
+  `Classical.choice`, `Quot.sound` ; pic 3922 Mo, journal
+  `janus-lean-9eb82a8f-bdf4-4916-a070-65def429a092.out`.
   Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni relèvement des budgets.
   `git diff --check` et `python scripts/check_program_p_registry_sync.py --staged`
   verts ; `T12` reste ouverte, compteur `6/14`.
