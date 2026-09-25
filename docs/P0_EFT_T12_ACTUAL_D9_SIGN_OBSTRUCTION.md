@@ -4208,3 +4208,38 @@ Aucun nouvel axiome, `sorry`/`admit`, ni augmentation des budgets.
 Hub T12 vert, pic 4358 Mo ; Lean séquentiel, priorité haute, réserve 4096 Mo.
 T12 reste ouverte : réduction BRST justifiée, famille signée Fredholm réelle,
 transport global et certificat terminal manquent encore. Quillen et T08 inchangés.
+
+## Reprise : BRST natif réalisé et normale unitaire du bord
+
+Dix-neuf nouveaux modules réalisent fidèlement les états BRST lisses
+difféomorphes et abéliens pairés dans le bulk habitable. Les lectures
+métriques et de potentiels sont exactement celles des différentiels natifs,
+avec sA = -dc ; le carré abélien inséré est nul. Le ghost temporel sinusoïdal
+donne une variation de Cartan métrique explicitement non nulle.
+
+L'action et la Hessienne bulk se décomposent exactement en parties physique
+et BRST. Les colonnes non minimales BRST sont celles du bulk, avec les
+pairings B/B et B/A déjà calculés. Les opérateurs Lorenz et FP abéliens sont
+réalisés en familles C∞ de CLM. L'action native abélienne vaut K(h)(u,u),
+où K(h) est une vraie forme bilinéaire continue C2. Un lemme de calcul
+différentiel prouve sa Hessienne en zéro : K(0)(u,v) + K(0)(v,u).
+Aucun gel de coefficient, pairing ou intertwiner n'est supposé.
+
+Au bord, la projection tangentielle et la normale orthogonale sont
+reconstruites. Le carré de cette normale vaut 1 au fond ; la racine positive
+et son inverse donnent une normale unitaire C2 sur un ouvert contenant
+(0,1), avec accord géométrique exact. Les vrais coefficients métriques et
+leurs premiers jets, la connexion de Koszul, les deux jets spatiaux de
+latitude et la dérivée des tangentes mobiles sont évalués conjointement C2
+et identifiés sur les champs lisses. Les facteurs de l'arctangente sont conservés.
+
+Ces résultats ne prouvent pas encore la seconde forme/GHY complète,
+le transport BRST au graphe pairé, la réduction compatible avec BRST,
+la famille signée Fredholm ni le certificat terminal. T12 reste non cochée.
+
+Validation : dix-neuf modules verts, pic maximal 4196 Mo. Audit des
+137 déclarations publiques vert, pic 3881 Mo : seulement `propext`,
+`Classical.choice`, `Quot.sound`. Aucun nouvel axiome, `sorry`/`admit`,
+`native_decide` ni augmentation des budgets. Hub T12 vert, pic 4066 Mo.
+Lean séquentiel gardé, priorité haute, réserve 4096 Mo ;
+`git diff --check` OK. Quillen et T08 inchangés.

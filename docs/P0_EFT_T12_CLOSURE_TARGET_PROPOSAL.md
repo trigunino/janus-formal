@@ -22,8 +22,12 @@ les évaluations conjointement C2 de la métrique et de Dg sur le graphe mobile
 sont construites. Les tangentes sont reconstruites dans la famille redondante ;
 leur contraction métrique C2 coïncide avec le pullback lisse. Le lift fidèle,
 son domaine non nul, la densité induite positive et l'inverse ambiant mobile
-sont construits avec leurs accords géométriques. L'action GHY C2 complète
-et le raccord H11 global restent à obtenir.
+sont construits avec leurs accords géométriques. La normale unitaire C2
+est désormais construite sur un ouvert contenant le fond au paramètre 1,
+avec accord géométrique exact. Les jets spatiaux de latitude, la dérivée
+des tangentes mobiles et la connexion de Koszul sont C2 et raccordés aux
+champs lisses réels. La contraction en seconde forme, l'action GHY C2
+complète et le raccord H11 global restent à obtenir.
 
 Le cœur commun impose la compatibilité des deux métriques C3 avec les
 métriques du bulk et partage un seul déplacement normal. Il est complet,
@@ -46,6 +50,22 @@ exactement EH, interaction, Maxwell, SpinC et LL. Sa Hessienne physique
 est le pullback prouvé de la Hessienne du bulk ; ses colonnes B et ghosts
 sont nulles pour tous les couplages. Les contributions GHY ne sont pas
 incluses dans cette conclusion.
+
+Les secteurs BRST difféomorphe et abélien pairé lisses s'insèrent fidèlement
+dans le bulk. Leurs lectures physiques sont celles des différentiels
+natifs, avec le signe abélien sA = -dc. L'action bulk et sa vraie Hessienne
+se décomposent exactement en parties physique et BRST. Les colonnes non
+minimales de cette Hessienne BRST coïncident avec celles du bulk ; les
+pairings B/B et B/A sont donc aussi calculés pour l'action BRST native.
+Cela ne constitue pas encore une réalisation Fredholm du complexe réduit.
+
+Pour le secteur abélien, Lorenz et FP sont réalisés en familles C∞ de CLM
+sur le domaine métrique. L'action BRST native est identifiée à K(h)(u,u),
+avec K une vraie forme bilinéaire continue C2 en h. Sa Hessienne en zéro
+vaut exactement K(0)(u,v) + K(0)(v,u), même avec directions métriques.
+Le gel des coefficients au second ordre est prouvé par calcul différentiel,
+sans hypothèse de pairing ni de réalisation. Le transport au graphe pairé
+et le raccord analogue du secteur difféomorphe restent à composer.
 
 Aux poids Einstein opposés et aux deux métriques intrinsèques égales,
 la colonne complète de chaque ghost difféomorphisme partagé est nulle.
