@@ -3391,13 +3391,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   vers le graphe BRST abélien hors couche. Aucune surjectivité, équivalence
   de normes ou propriété Fredholm n'est affirmée. Validation gardée verte,
   pic 3930 Mo.
-  Réalisation L² et secteur exact intégrés par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
-  hub vert avec les imports de la réalisation fermée et du complexe exact,
+  Jacobi Maxwell L² et quotient exact intégrés par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
+  hub vert avec les imports du raccord au Hessien physique et du cœur quotient,
   même commande gardée, pic 4094 Mo. Audit cumulatif Lean
-  `#print axioms` sur 48 modules, 339 déclarations publiques plus le cardinal
-  canonique : 340 déclarations contrôlées, seulement `propext`,
-  `Classical.choice`, `Quot.sound` ; pic 3947 Mo, journal
-  `janus-lean-301b1009-78c6-4725-abc9-73b640e8ba34.out`.
+  `#print axioms` sur 60 modules, 412 déclarations publiques plus le cardinal
+  canonique : 413 déclarations contrôlées, seulement `propext`,
+  `Classical.choice`, `Quot.sound` ; pic 3955 Mo, journal
+  `janus-lean-76a35350-95fe-4bc1-a6ff-dcfb5ecf396b.out`.
   Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni relèvement des budgets.
   `git diff --check` et `python scripts/check_program_p_registry_sync.py --staged`
   verts ; `T12` reste ouverte, compteur `6/14`.
@@ -3491,8 +3491,8 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellReduced4D` construit la
   descente sur le quotient L² physique par ce secteur exact complété :
   opérateur fermé symétrique à domaine dense, domaine projeté explicitement
-  et conservation du pairing sur tout le domaine. Aucun résultat non nul
-  n'est effacé par la projection. Validation gardée verte, pic 4125 Mo ;
+  et conservation du pairing sur tout le domaine. Aucune sortie non nulle
+  n'est effacée par la projection. Validation gardée verte, pic 4125 Mo ;
   cette descente ne prouve pas encore la finitude du noyau résiduel.
   `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellReducedCore4D` identifie
   exactement le graphe quotient à la fermeture du graphe lisse projeté,
