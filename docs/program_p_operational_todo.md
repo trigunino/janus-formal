@@ -3384,7 +3384,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   ont la même courbure complétée. La projection vers le graphe Lorenz est
   injective : l'ancienne limite sur son injectivité est levée. Cela ne
   prouve ni une estimation inverse bornée ni le Fredholm du Hessien.
-  Même validation gardée verte, pic 3906 Mo. `T12` reste ouverte, compteur `6/14`.
+  Même validation gardée verte, pic 3906 Mo.
+  `P0EFTJanusProgramPT12IntrinsicAbelianFullGraphFaithful4D` prouve l'accord
+  des copies Maxwell et BRST du potentiel et de sa divergence de Lorenz,
+  puis l'injectivité et la densité d'image de la projection du graphe commun
+  vers le graphe BRST abélien hors couche. Aucune surjectivité, équivalence
+  de normes ou propriété Fredholm n'est affirmée. Validation gardée verte,
+  pic 3930 Mo ; `T12` reste ouverte, compteur `6/14`.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
