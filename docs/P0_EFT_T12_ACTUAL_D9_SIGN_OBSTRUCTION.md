@@ -4243,3 +4243,37 @@ Validation : dix-neuf modules verts, pic maximal 4196 Mo. Audit des
 `native_decide` ni augmentation des budgets. Hub T12 vert, pic 4066 Mo.
 Lean séquentiel gardé, priorité haute, réserve 4096 Mo ;
 `git diff --check` OK. Quillen et T08 inchangés.
+
+## Raccords BRST natifs et action GHY complète
+
+Les pairings des Hessiennes BRST abélienne et difféomorphe natives sont
+identifiés aux graphes historiques habitables. La formule BRST globale vaut
+K(0)(u,v) + K(0)(v,u) pour tous les tests bulk, sans supposer les termes
+croisés nuls. Les familles Cartan, de Donder et FP conservent la métrique
+variable. Le bloc ghost abélien est réellement auto-adjoint sur
+D(FP*) × D(FP), avec accord lisse et H1 ; son pairing L2 est celui de la
+Hessienne native. La colonne physique Maxwell est calculée contre tout test
+bulk, avec les deux couplages et la courbure natifs.
+
+Au bord, les générateurs dans la vraie carte source, leur accélération,
+la seconde forme de Gauss/Weingarten et sa trace sont raccordés exactement.
+La trace utilise la synthèse de la famille redondante et le véritable inverse
+induit. L'action GHY est conjointement C2 et égale à l'action historique,
+avec sa mesure, son orientation et son facteur de deux feuillets.
+L'action bulk + GHY des deux métriques est C2 au fond sur le cœur compatible
+existant, avec déplacement partagé et paramètre fixé à 1. Sa Hessienne est
+la vraie dérivée seconde, symétrique et égale à la somme des trois contributions.
+Les deux coefficients GHY restent les paramètres libres des sources historiques.
+
+Validation : vingt-quatre nouveaux modules verts, pic maximal 4302 Mo.
+Audit des 158 déclarations publiques et du cardinal canonique : 159 déclarations,
+seulement `propext`, `Classical.choice`, `Quot.sound`.
+Le `native_decide` historique du cardinal des dix indices est remplacé par
+`decide` ; les 22 modules concernés ont été reconstruits, puis l'audit a confirmé
+la disparition de cette dépendance. Aucun `sorry`/`admit`, nouvel axiome,
+ni augmentation des budgets. Lean séquentiel gardé, priorité haute, réserve 4096 Mo.
+Hub T12 vert, pic 4066 Mo ; `git diff --check` OK.
+
+T12 reste ouverte : réduction BRST justifiée, famille signée Fredholm réelle
+(image fermée et noyau fini), transport global et certificat terminal.
+Aucun intertwiner terminal n'est postulé. Quillen et T08 sont inchangés.
