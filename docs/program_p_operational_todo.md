@@ -3400,6 +3400,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni relèvement des budgets.
   `git diff --check` et `python scripts/check_program_p_registry_sync.py --staged`
   verts ; `T12` reste ouverte, compteur `6/14`.
+  `P0EFTJanusProgramPT12IntrinsicAbelianPotentialL2Core4D` construit le
+  complété physique L² des potentiels appariés, comme fermeture de leur
+  image native dans les coordonnées redondantes. Son inclusion lisse est
+  injective et dense ; l'espace est complet. Cela ne fournit pas encore
+  l'opérateur différentiel de Maxwell. Validation par la commande gardée
+  ci-dessus : verte, pic 3877 Mo ; aucune nouvelle hypothèse analytique.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
