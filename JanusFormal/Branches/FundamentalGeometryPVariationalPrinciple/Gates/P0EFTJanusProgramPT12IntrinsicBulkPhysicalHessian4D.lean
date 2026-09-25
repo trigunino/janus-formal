@@ -16,6 +16,10 @@ open P0EFTJanusMappingTorusFiniteSmoothTangentGenerators4D
 open P0EFTJanusProgramPGlobalCovariantAction4D
 open P0EFTJanusProgramPPrimitiveSpinCMatterGraphSameActionHessian4D
 open P0EFTJanusFiniteFrameDiffeomorphismC2Core4D
+open P0EFTJanusFiniteFrameC2AbelianOperators4D
+open P0EFTJanusFiniteFrameC2AbelianBRSTAction4D
+open P0EFTJanusFiniteFramePairedC2FullBRSTGaugeAction4D
+open P0EFTJanusFiniteFramePairedC2PhysicalAction4D
 open P0EFTJanusProgramPT12IntrinsicBulkGeometry4D P0EFTJanusProgramPT12IntrinsicBulkActionCore4D
 open P0EFTJanusProgramPT12IntrinsicBulkHessian4D
 open P0EFTJanusProgramPT12IntrinsicBulkAbelianBRestriction4D
@@ -63,6 +67,23 @@ local instance : NormedSpace Real Core :=
   P0EFTJanusFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLAction4D.instNormedSpaceRealFiniteFramePairedC2PhysicalMaxwellSpinCMatterLLCore
     period hPeriod (intrinsicBulkGeometry period hPeriod) (finiteSmoothTangentFrame period hPeriod) couplings
 local notation "projection" => intrinsicBulkPhysicalProjection period hPeriod couplings
+
+abbrev IntrinsicBulkAbelianNonminimalCore :=
+  FiniteFrameAbelianNonminimalC2Core period hPeriod × FiniteFrameAbelianNonminimalC2Core period hPeriod
+local notation "AbelianPacket" => IntrinsicBulkAbelianNonminimalCore period hPeriod
+
+def intrinsicBulkAbelianNonminimalInsertion : AbelianPacket →L[Real] Core :=
+  let fields : AbelianPacket →L[Real] FiniteFramePairedC2AbelianGaugeFields period hPeriod
+      (finiteSmoothTangentFrame period hPeriod) (finiteSmoothTangentFrame period hPeriod) :=
+    ((0 : AbelianPacket →L[Real] _).prod (ContinuousLinearMap.fst Real _ _)).prod
+      ((0 : AbelianPacket →L[Real] _).prod (ContinuousLinearMap.snd Real _ _))
+  let physical : AbelianPacket →L[Real] FiniteFramePairedC2PhysicalCore period hPeriod
+      (intrinsicBulkGeometry period hPeriod) (finiteSmoothTangentFrame period hPeriod) :=
+    (0 : AbelianPacket →L[Real] _).prod (fields.prod 0)
+  (physical.prod 0).prod 0
+
+theorem intrinsicBulkPhysicalProjection_abelianNonminimal (fields : AbelianPacket) :
+    projection (intrinsicBulkAbelianNonminimalInsertion period hPeriod couplings fields) = 0 := rfl
 
 theorem intrinsicBulkPhysicalProjection_abelianB (field : BCore) :
     projection (intrinsicBulkAbelianBInsertion period hPeriod couplings field) = 0 := rfl
@@ -117,6 +138,15 @@ theorem intrinsicBulkPhysicalHessian_diffeomorphismGhost_zero (ghost : Ghost) (t
       (intrinsicBulkDiffeomorphismGhostInsertion period hPeriod couplings ghost) test = 0 :=
   intrinsicBulkPhysicalHessian_diffeomorphism_zero period hPeriod couplings interactionScale coefficients
     (0, (0, ghost)) test
+
+theorem intrinsicBulkPhysicalHessian_abelianNonminimal_zero (fields : AbelianPacket) (test : Core) :
+    intrinsicBulkPhysicalHessian period hPeriod couplings interactionScale coefficients
+      (intrinsicBulkAbelianNonminimalInsertion period hPeriod couplings fields) test = 0 :=
+  (intrinsicBulkPhysicalHessian_apply period hPeriod couplings interactionScale coefficients
+    (intrinsicBulkAbelianNonminimalInsertion period hPeriod couplings fields) test).trans
+      (bilinear_zero_left (intrinsicBulkHessian period hPeriod couplings interactionScale coefficients)
+        (projection (intrinsicBulkAbelianNonminimalInsertion period hPeriod couplings fields))
+        (projection test) (intrinsicBulkPhysicalProjection_abelianNonminimal period hPeriod couplings fields))
 
 end
 end JanusFormal.P0EFTJanusProgramPT12IntrinsicBulkPhysicalHessian4D
