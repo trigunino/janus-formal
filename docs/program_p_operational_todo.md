@@ -3829,6 +3829,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   sont conservées. Les slots inverses sont ainsi exprimés en jets finis ;
   l'assemblage des coefficients Einstein–interaction et le raccord L²
   global restent ouverts.
+  `P0EFTJanusProgramPT12FrameFreeNativeEinsteinFeatureVariation4D`
+  assemble les premières et secondes variations de toutes les features
+  Einstein natives : volume, jets métriques affines et premiers jets inverses.
+  Les accélérations métriques sont nulles ; celles du volume et de l'inverse
+  restent explicites. Validation gardée verte, pic 3991 Mo, sans relèvement
+  des budgets. Ce raccord ponctuel ne fournit pas encore le représentant L².
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
