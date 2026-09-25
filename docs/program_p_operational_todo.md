@@ -3803,6 +3803,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   avec ce Hessien. Validation gardée verte, pic 4154 Mo. Seul l'endomorphisme
   relatif étendu est inversé ; aucune inversion de la matrice de Gram
   redondante. L'expansion spatiale complète et le raccord L² restent ouverts.
+  `P0EFTJanusProgramPT12FrameFreeNativeVolumeJet4D` identifie exactement
+  le volume canonique à sa formule ponctuelle √det(I+A) sur le domaine natif.
+  Son Hessien au centre se factorise par la seule valeur de la matrice
+  relative, via un symbole fini C∞ près de l'identité. Validation gardée
+  verte, pic 4149 Mo. Aucun choix de repère régulier ni branche positive
+  supposée : la valeur absolue de la racine C² est traitée explicitement.
+  Le raccord complet Einstein–interaction vers L² reste à construire.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
