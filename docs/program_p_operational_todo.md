@@ -3464,6 +3464,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   et l'opérateur symétrique est exactement la forme native existante, secteur
   par secteur puis pour les deux couplages. Validation gardée verte, pic
   4206 Mo. Le représentant fort dans le L² des potentiels reste à construire.
+  Cette dernière limite est levée sur le cœur lisse par
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellStrongSmooth4D` : le Jacobi
+  natif est construit comme D* W D dans le L² physique des potentiels. Son
+  pairing est exactement le Hessien Maxwell du graphe existant ; l'identité
+  de Green vaut contre tout le domaine fermé de courbure et la symétrie
+  lisse est prouvée. Validation gardée verte, pic 3921 Mo. La fermeture du
+  Jacobi et son caractère Fredholm ne sont pas encore déduits ici.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
