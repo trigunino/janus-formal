@@ -3732,6 +3732,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   le pairing et sa borne L² sont exacts. Validation gardée verte, pic 4246 Mo.
   Ceci remplace la restriction aux tests uniquement abéliens pour ce raccord ;
   les colonnes métriques physiques et l'assemblage Fredholm restent ouverts.
+  `P0EFTJanusProgramPT12IntrinsicBulkGaugeMatterHessianSplit4D` sépare
+  exactement l'action physique native, puis son Hessien, entre le bloc
+  métrique/jauge et les blocs matière/LL. La constante au centre est conservée
+  dans l'identité d'action ; aucune stationnarité n'est supposée.
+  Validation gardée verte, pic 4236 Mo. Cette séparation prépare les colonnes
+  métriques ; leur représentant L² et Fredholm restent à construire.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
