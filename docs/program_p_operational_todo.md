@@ -3625,6 +3625,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   Green vaut contre tout le domaine minimal ; l'adjoint est fermé et son
   domaine est dense. Validation gardée verte, pic 3906 Mo. Aucune assertion
   que ces tests sont un cœur de l'adjoint, ni auto-adjonction, n'est ajoutée.
+  `P0EFTJanusProgramPT12FrameFreeDeDonderSmoothAdjoint4D` donne de même
+  l'adjoint physique de de Donder sur toutes les familles lisses, puis
+  l'application linéaire native des multiplicateurs B vers la colonne
+  tensorielle de Donder*. Domaine adjoint dense et fermé, formule exacte
+  sur tout le domaine minimal ; validation gardée verte, pic 3929 Mo.
+  L'assemblage du Hessien BRST complet et son Fredholm restent à établir.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
