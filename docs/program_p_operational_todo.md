@@ -3459,6 +3459,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   de l'adjoint de courbure, sans hypothèse supplémentaire de régularité.
   Validation `run_lean_guarded.ps1 -ReserveMB 4096` verte, pic 3901 Mo.
   La symétrie est établie ; aucune positivité lorentzienne n'est supposée.
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellCurvatureFactor4D` lève
+  la limite du raccord des poids au Hessien : sa factorisation par la courbure
+  et l'opérateur symétrique est exactement la forme native existante, secteur
+  par secteur puis pour les deux couplages. Validation gardée verte, pic
+  4206 Mo. Le représentant fort dans le L² des potentiels reste à construire.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
