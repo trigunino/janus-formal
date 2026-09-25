@@ -3694,6 +3694,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   donnent le pairing diagonal natif exact et la symétrie lisse, avec les
   poids Candidate-A d'origine. Validation gardée verte, pic 3937 Mo.
   Les couplages physiques hors bloc BRST ne sont pas identifiés ici.
+  `P0EFTJanusProgramPT12FrameFreeH11BRSTStrongClosed4D` ferme cette
+  réalisation BRST dans le L² source H11 d'origine : domaine dense,
+  cœur lisse certifié, symétrie sur le domaine et pairing diagonal exact.
+  Validation gardée verte, pic 3939 Mo ; fond métrique commun seulement,
+  sans auto-adjonction ni conclusion Fredholm.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
