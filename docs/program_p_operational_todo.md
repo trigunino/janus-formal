@@ -3390,7 +3390,16 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   puis l'injectivité et la densité d'image de la projection du graphe commun
   vers le graphe BRST abélien hors couche. Aucune surjectivité, équivalence
   de normes ou propriété Fredholm n'est affirmée. Validation gardée verte,
-  pic 3930 Mo ; `T12` reste ouverte, compteur `6/14`.
+  pic 3930 Mo.
+  Raccord importé par `P0EFTJanusProgramPT12LLStrongJacobiShiftedInverseOnRange4D` :
+  hub vert avec la même commande gardée, pic 4091 Mo. Audit cumulatif Lean
+  `#print axioms` sur 43 modules, 308 déclarations publiques plus le cardinal
+  canonique : 309 déclarations contrôlées, seulement `propext`,
+  `Classical.choice`, `Quot.sound` ; pic 3938 Mo, journal
+  `janus-lean-2c0fb710-0b81-4c8b-bc2f-0f49f03f23dc.out`.
+  Aucun nouvel axiome, `sorry`/`admit`, `native_decide` ni relèvement des budgets.
+  `git diff --check` et `python scripts/check_program_p_registry_sync.py --staged`
+  verts ; `T12` reste ouverte, compteur `6/14`.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
