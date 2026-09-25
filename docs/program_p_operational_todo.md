@@ -3661,6 +3661,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   quelconques. Inclusion lisse injective et dense, complétude et lectures
   sectorielles bornées exactes ; aucune feature dérivée dans cette norme.
   Validation gardée verte, pic 4173 Mo. L'opérateur diagonal reste à assembler.
+  `P0EFTJanusProgramPT12FrameFreeDiagonalDiffeomorphismStrongSmooth4D` lève
+  cette limite : les adjoints des lectures sectorielles assemblent les deux
+  opérateurs natifs sur le triplet partagé, avec les poids cinétiques
+  Candidate-A exacts. Pairing égal au Hessien diagonal d'origine et symétrie
+  lisse prouvés, pour deux métriques lisses quelconques. Validation gardée
+  verte, pic 4181 Mo ; fermeture diagonale et Fredholm non déduits ici.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
