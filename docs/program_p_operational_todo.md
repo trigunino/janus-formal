@@ -3619,6 +3619,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   sortie FP ; le pairing adjoint vaut sur toute la complétion d'origine.
   Validation gardée verte, pic 4164 Mo. Ce raccord ne prétend ni identifier
   tout le graphe BRST au seul graphe FP, ni fermer le Jacobi global.
+  `P0EFTJanusProgramPT12FrameFreeDiffeomorphismFPSmoothAdjoint4D` construit
+  l'action de l'adjoint physique de FP sur toutes les familles lisses de
+  tests, y compris les coordonnées natives des antighosts. L'identité de
+  Green vaut contre tout le domaine minimal ; l'adjoint est fermé et son
+  domaine est dense. Validation gardée verte, pic 3906 Mo. Aucune assertion
+  que ces tests sont un cœur de l'adjoint, ni auto-adjonction, n'est ajoutée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
