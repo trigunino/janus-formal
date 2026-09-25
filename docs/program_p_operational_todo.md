@@ -3606,6 +3606,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   fantôme physique normalisé, avec identité de Green canonique exacte.
   La limite de composition FP sans témoin régulier est levée. Validation
   gardée verte, pic 3916 Mo ; la fermeture physique FP reste à certifier.
+  `P0EFTJanusProgramPT12FrameFreeDiffeomorphismFPClosed4D` lève cette
+  limite : le véritable FP difféomorphe possède sa réalisation minimale
+  fermée du L² fantôme physique vers le L² covectoriel, à domaine dense,
+  avec cœur lisse certifié et action native exacte. Les tests adjoints
+  éliminent toute sortie verticale de sa fermeture. Validation gardée verte,
+  pic 4061 Mo ; aucun témoin régulier, Fredholm ni auto-adjonction n'est ajouté.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
