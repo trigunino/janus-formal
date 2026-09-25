@@ -111,7 +111,7 @@ inductive CanonicalFlowIndex
   deriving DecidableEq, Fintype
 
 theorem canonicalFlowIndex_card : Fintype.card CanonicalFlowIndex = 10 := by
-  native_decide
+  decide
 
 /-- Uniform access to all ten canonical invariant flows. -/
 def canonicalVolumePreservingFlow (index : CanonicalFlowIndex) :
