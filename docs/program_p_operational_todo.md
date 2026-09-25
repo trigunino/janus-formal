@@ -3568,6 +3568,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   redondantes conservées. La transposition comprend les deux connexions et
   la trace, avec Stokes canonique et une simple métrique lisse. Validation
   gardée verte, pic 3888 Mo ; la fermeture est encore distincte du Fredholm.
+  `P0EFTJanusProgramPT12FrameFreeDeDonderClosed4D` lève la limite de
+  fermeture : les pairings faibles éliminent toute sortie verticale et
+  construisent le de Donder minimal fermé, à domaine dense dans le L²
+  physique tensoriel et sortie dans le L² covectoriel. Son graphe est
+  exactement la fermeture des données lisses natives ; son action lisse et
+  sa minimalité sont prouvées. Validation gardée verte, pic 3880 Mo ; aucun
+  témoin régulier n'est requis, ni propriété Fredholm ajoutée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
