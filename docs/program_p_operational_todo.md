@@ -3764,6 +3764,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   l'ordre inverse, sans commutation des dérivées ; pairing, intégrale
   canonique et borne L² sont prouvés. Validation gardée verte, pic 3866 Mo.
   Les coefficients effectifs du Hessien Einstein–interaction restent à extraire.
+  `P0EFTJanusProgramPT12FrameFreeTensorSecondJetL24D` construit ensuite
+  le représentant des fonctionnelles de jets tensoriels d'ordre deux dans
+  le vrai complété L² tensoriel natif. Les adjoints des lectures de coordonnées
+  préservent les relations du repère redondant ; pairing, covecteur continu
+  et borne L² sont exacts sans repère régulier. Validation gardée verte,
+  pic 3874 Mo. Ce résultat fournit le transfert analytique pour des coefficients
+  lisses donnés ; leur identification au Hessien Einstein–interaction reste à prouver.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
