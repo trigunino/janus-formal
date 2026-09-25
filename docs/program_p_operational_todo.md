@@ -3453,6 +3453,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   transposition et que leurs images de tests lisses appartiennent au domaine
   de l'adjoint de courbure. Validation gardée verte, pic 3982 Mo ; le raccord
   du Jacobi au Hessien natif reste à effectuer.
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellCurvatureWeight4D` assemble
+  ces colonnes avec les deux couplages Maxwell en un opérateur borné symétrique
+  sur le L² de courbure. Son image des familles lisses appartient au domaine
+  de l'adjoint de courbure, sans hypothèse supplémentaire de régularité.
+  Validation `run_lean_guarded.ps1 -ReserveMB 4096` verte, pic 3901 Mo.
+  La symétrie est établie ; aucune positivité lorentzienne n'est supposée.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
