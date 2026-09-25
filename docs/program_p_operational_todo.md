@@ -3777,6 +3777,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   l'inverse comme slots explicites. La densité Einstein avec volume et
   constante cosmologique est C∞ en ces features. Validation gardée verte,
   pic 1791 Mo. Leur réalisation native et leurs variations doivent être raccordées.
+  `P0EFTJanusProgramPT12FrameFreeNativeCurvatureJet4D` réalise ces
+  features par les coefficients du vrai cœur métrique C² : métrique, inverse,
+  dérivées premières et secondes ordonnées, dérivée de l'inverse. Les identités
+  exactes de Riemann, Ricci projeté, courbure scalaire et densité Einstein sont
+  prouvées, volume et terme cosmologique inclus. Validation gardée verte,
+  pic 4012 Mo. Aucun repère régulier ; les variations de ces features restent à développer.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
