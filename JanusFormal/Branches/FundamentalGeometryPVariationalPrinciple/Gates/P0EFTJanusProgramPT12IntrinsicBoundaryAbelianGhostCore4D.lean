@@ -145,5 +145,41 @@ theorem intrinsicBulkSmoothGhostPair_mem_nonminimal
       (pureAbelianGhostPair period hPeriod antighost ghost))
     (Prod.ext hFields rfl)) rfl) rfl
 
+open P0EFTJanusProgramPT12IntrinsicBulkPairedAbelianHessian4D
+
+private theorem pairedAbelian_metricProjection_zero
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) :
+    intrinsicBulkMetricPairProjection period hPeriod couplings
+      (intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields) = 0 := rfl
+
+/-- Both complete Abelian packets in the genuine compatible bulk/boundary core. -/
+def intrinsicBoundaryPairedAbelianInsertion
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) : Core :=
+  (⟨(intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields, 0),
+    zeroBoundary_compatible period hPeriod couplings _
+      (pairedAbelian_metricProjection_zero period hPeriod couplings fields)⟩, 0)
+
+theorem intrinsicBoundaryPairedAbelianInsertion_bulk
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) :
+    intrinsicBoundaryBulkProjection period hPeriod couplings
+      (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings fields) =
+    intrinsicBulkPairedAbelianInsertion period hPeriod couplings fields := rfl
+
+theorem intrinsicBoundaryPairedAbelianInsertion_plusJoint
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) :
+    intrinsicBoundaryBulkPlusJoint period hPeriod couplings
+      (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings fields) = 0 := rfl
+
+theorem intrinsicBoundaryPairedAbelianInsertion_minusJoint
+    (fields : IntrinsicBulkPairedAbelianCore period hPeriod) :
+    intrinsicBoundaryBulkMinusJoint period hPeriod couplings
+      (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings fields) = 0 := rfl
+
+theorem intrinsicBoundaryPairedAbelianInsertion_injective :
+    Function.Injective (intrinsicBoundaryPairedAbelianInsertion period hPeriod couplings) := by
+  intro first second hEqual
+  exact congrArg (fun input : Core =>
+    (intrinsicBoundaryBulkProjection period hPeriod couplings input).1.1.2.1) hEqual
+
 end
 end JanusFormal.P0EFTJanusProgramPT12IntrinsicBoundaryAbelianGhostCore4D
