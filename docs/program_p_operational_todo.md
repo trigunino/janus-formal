@@ -3847,6 +3847,14 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   par sa norme d'opérateur. Les termes de volume et d'accélération inverse
   sont inclus. Validation gardée verte, pic 4119 Mo. Cette borne porte
   sur les jets ponctuels ; aucune borne physique L² n'est déduite ici.
+  `P0EFTJanusProgramPT12FiniteEinsteinJetCoefficients4D` extrait les
+  coefficients par évaluation du covecteur sur cinq familles de jets
+  élémentaires : valeurs, premières et secondes dérivées tensorielles,
+  valeurs et premières dérivées relatives. La somme finie reconstitue
+  exactement le Hessien fini. Validation gardée verte, pic 3894 Mo.
+  L'extraction algébrique est acquise ; la régularité spatiale de ces
+  coefficients, la reconstruction relative→tensorielle et le transfert
+  intégré L² restent ouverts.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
