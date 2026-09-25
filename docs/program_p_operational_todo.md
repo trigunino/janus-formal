@@ -3575,6 +3575,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   exactement la fermeture des données lisses natives ; son action lisse et
   sa minimalité sont prouvées. Validation gardée verte, pic 3880 Mo ; aucun
   témoin régulier n'est requis, ni propriété Fredholm ajoutée.
+  `P0EFTJanusProgramPT12FrameFreeDeDonderCore4D` identifie le graphe
+  de Donder original à ce domaine physique : lecture tensorielle continue
+  injective, image exactement égale au domaine minimal, caractéristique
+  égale à la sortie de l'opérateur et vrai cœur lisse certifié. La limite
+  du raccord entre ces deux réalisations est donc levée pour toute métrique
+  lisse. Validation gardée verte, pic 3887 Mo ; les colonnes Cartan/FP
+  difféomorphes sans témoin régulier et le Fredholm global restent à établir.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
