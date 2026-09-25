@@ -3494,6 +3494,11 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   et conservation du pairing sur tout le domaine. Aucun résultat non nul
   n'est effacé par la projection. Validation gardée verte, pic 4125 Mo ;
   cette descente ne prouve pas encore la finitude du noyau résiduel.
+  `P0EFTJanusProgramPT12IntrinsicAbelianMaxwellReducedCore4D` identifie
+  exactement le graphe quotient à la fermeture du graphe lisse projeté,
+  certifie ce cœur et conserve le Hessien Maxwell natif sur celui-ci.
+  Validation gardée verte, pic 3958 Mo ; aucune hypothèse de cœur quotient
+  n'est ajoutée. Le Fredholm et le raccord terminal global restent ouverts.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
