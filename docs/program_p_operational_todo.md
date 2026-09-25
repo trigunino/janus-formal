@@ -3534,6 +3534,13 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   du graphe complété ; le Riesz du graphe est exactement le transport adjoint
   de sa colonne physique. Validation gardée verte, pic 4289 Mo. Aucune
   identification bijective des domaines fermés n'est supposée.
+  `P0EFTJanusProgramPT12IntrinsicAbelianFullGraphPhysicalFaithful4D` lève
+  la limite d'injectivité de cette lecture : Lorenz et FP satisfont leurs
+  pairings faibles natifs sur toute la complétion, qui déterminent leurs
+  sorties à partir du potentiel et du ghost physiques. La lecture L² du
+  graphe Maxwell–BRST complet est injective, sans mode vertical ajouté.
+  Validation `run_lean_guarded.ps1 -ReserveMB 4096` verte, pic 4231 Mo ;
+  cela ne donne ni équivalence des normes, ni auto-adjonction, ni Fredholm.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
