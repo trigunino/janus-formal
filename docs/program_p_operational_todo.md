@@ -3789,6 +3789,12 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   de l'inverse et de sa dérivée sont conservées. Validation gardée verte,
   pic 4158 Mo. L'expansion en jets métriques bruts à coefficients lisses
   et le transfert du Hessien Einstein–interaction vers L² restent à établir.
+  `P0EFTJanusProgramPT12FrameFreeNativeMetricJetVariation4D` construit
+  la lecture linéaire bornée des valeurs et jets métriques ordonnés d'ordres
+  un et deux. Le jet natif est affine, sa dérivée est cette lecture et sa
+  seconde dérivée est nulle sur tout le cœur C². Validation gardée verte,
+  pic 3911 Mo. Les slots non linéaires de l'inverse et du volume ne sont
+  pas annulés par ce résultat.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
