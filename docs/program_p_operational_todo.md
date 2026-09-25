@@ -3821,6 +3821,14 @@ Mise à jour `L²` bulk abélien étendu — 1 août 2026 :
   réalisations lisses ; le produit des jets est C∞. Validation gardée verte,
   pic 4151 Mo. Le résultat porte sur le cœur C² natif, sans identification
   abusive de coordonnées redondantes à une base.
+  `P0EFTJanusProgramPT12FrameFreeNativeInverseSpatialJet4D` identifie
+  les valeurs et dérivées spatiales de l'inverse natif à cette lecture.
+  Leur première variation est -J(A)J(B), leur seconde est
+  (J(A₂)J(A₁)+J(A₁)J(A₂))J(B), avec le produit de Leibniz ci-dessus.
+  Validation gardée verte, pic 4164 Mo. Les dérivées des coefficients fixes
+  sont conservées. Les slots inverses sont ainsi exprimés en jets finis ;
+  l'assemblage des coefficients Einstein–interaction et le raccord L²
+  global restent ouverts.
 - Limite : les identités de Green ci-dessus ne donnent aucune coercivité/range fermé
   LL off-shell ; la conclusion Fredholm LL est limitée au quotient
   stationnaire à flux nul. La somme quadratique bulk n'est
